@@ -18,29 +18,8 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_MAINWINDOW_H
-#define GPUI_MAINWINDOW_H
-
-#include "gui.h"
-
-#include <QtWidgets>
+#include "model.h"
 
 namespace gpui {
 
-    class MainWindowPrivate;
-
-    class GPUI_GUI_EXPORT MainWindow : public QMainWindow {
-        Q_OBJECT
-
-    public:
-        // construction and destruction
-        MainWindow(QWidget *parent = 0);
-        ~MainWindow();
-
-    private:
-
-        MainWindowPrivate* const d;
-    };
 }
-
-#endif // GPUI_MAINWINDOW_H

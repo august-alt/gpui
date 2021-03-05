@@ -18,16 +18,19 @@
 **
 ***********************************************************************************************************************/
 
-#pragma once
+#ifndef GPUI_GUI_H
+#define GPUI_GUI_H
 
-#include <boost/config.hpp>
+#include "../model/common.h"
 
 #ifdef GPUI_GUI_LIBRARY
-    #define GPUI_GUI_EXPORT BOOST_SYMBOL_EXPORT
+    #define GPUI_GUI_EXPORT GPUI_SYMBOL_EXPORT
 #else
-    #define GPUI_GUI_EXPORT BOOST_SYMBOL_IMPORT
+    #define GPUI_GUI_EXPORT GPUI_SYMBOL_IMPORT
 #endif
 
 namespace gpui {
 
 }
+
+#endif // GPUI_GUI_H

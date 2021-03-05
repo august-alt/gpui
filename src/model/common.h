@@ -18,29 +18,21 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_MAINWINDOW_H
-#define GPUI_MAINWINDOW_H
+#ifndef GPUI_COMMON_H
+#define GPUI_COMMON_H
 
-#include "gui.h"
-
-#include <QtWidgets>
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(__CYGWIN__)
+#define GPUI_SYMBOL_EXPORT __attribute__((__dllexport__))
+#define GPUI_SYMBOL_IMPORT __attribute__((__dllimport__))
+#else
+#define GPUI_SYMBOL_EXPORT __attribute__((__visibility__("default")))
+#define GPUI_SYMBOL_IMPORT
+#endif
 
 namespace gpui {
 
-    class MainWindowPrivate;
-
-    class GPUI_GUI_EXPORT MainWindow : public QMainWindow {
-        Q_OBJECT
-
-    public:
-        // construction and destruction
-        MainWindow(QWidget *parent = 0);
-        ~MainWindow();
-
-    private:
-
-        MainWindowPrivate* const d;
-    };
 }
 
-#endif // GPUI_MAINWINDOW_H
+#endif // GPUI_COMMON_H
+
+

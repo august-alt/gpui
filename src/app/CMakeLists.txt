@@ -16,9 +16,9 @@ macro(add_gpui_executable name)
 endmacro(add_gpui_executable)
 
 find_package(GPUI COMPONENTS gui REQUIRED)
+include_directories(${GPUI_INCLUDE_DIRS})
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
-include_directories(${GPUI_INCLUDE_DIRS})
 
 add_gpui_executable(main main.cpp)
 

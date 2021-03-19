@@ -3,11 +3,13 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 set(HEADERS
     gui.h
     mainwindow.h
+    presentationbuilder.h
 )
 
 set(SOURCES
     gui.cpp
     mainwindow.cpp
+    presentationbuilder.cpp
 )
 
 set(UI_FORMS

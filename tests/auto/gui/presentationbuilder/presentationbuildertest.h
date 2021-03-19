@@ -18,19 +18,19 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_MODEL_H
-#define GPUI_MODEL_H
+#ifndef GPUI_PRESENTATIONBUILDER_TEST_H
+#define GPUI_PRESENTATIONBUILDER_TEST_H
 
-#include "common.h"
+#include <QtTest>
 
-#ifdef GPUI_MODEL_LIBRARY
-    #define GPUI_MODEL_EXPORT GPUI_SYMBOL_EXPORT
-#else
-    #define GPUI_MODEL_EXPORT GPUI_SYMBOL_IMPORT
-#endif
+namespace tests {
+    class PresentationBuilderTest : public QObject
+    {
+        Q_OBJECT
 
-namespace gpui {
-
+        private slots:
+            void build();
+    };
 }
 
-#endif // GPUI_MODEL_H
+#endif // GPUI_PRESENTATIONBUILDER_TEST_H

@@ -1,6 +1,16 @@
 set(HEADERS
     common.h
     model.h
+    admx/policybooleanelement.h
+    admx/policydecimalelement.h
+    admx/policyelement.h
+    admx/policyenumelement.h
+    admx/policy.h
+    admx/policylistelement.h
+    admx/policylongdecimalelement.h
+    admx/policymultitextelement.h
+    admx/policytextelement.h
+    admx/policytype.h
     presentation/checkbox.h
     presentation/combobox.h
     presentation/decimaltextbox.h

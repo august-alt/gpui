@@ -31,7 +31,7 @@ namespace model
     namespace admx
     {
         /*!
-         * \brief The PolicyTextElement class
+         * \brief The PolicyTextElement class represents a text element in a policy.
          */
         class PolicyTextElement : public PolicyElement
         {

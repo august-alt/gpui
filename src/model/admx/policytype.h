@@ -28,7 +28,8 @@ namespace model
     namespace admx
     {
         /*!
-         * \brief The PolicyType enum
+         * \brief The PolicyType enum can be defined as "User," "Machine," or "Both."
+         * Identifies whether the policy will be located under a single (computer or user) or both nodes.
          */
         enum class PolicyType
         {

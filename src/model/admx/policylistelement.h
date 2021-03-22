@@ -31,7 +31,7 @@ namespace model
     namespace admx
     {
         /*!
-         * \brief The PolicyListElement class
+         * \brief The PolicyListElement class sets a list of different registry subkeys when a policy setting is enabled.
          */
         class PolicyListElement : public PolicyElement
         {

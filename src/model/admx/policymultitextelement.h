@@ -29,7 +29,7 @@ namespace model
     namespace admx
     {
         /*!
-         * \brief The PolicyMultiTextElement class
+         * \brief The PolicyMultiTextElement class represents a multi-text element in a policy.
          */
         class PolicyMultiTextElement : public PolicyElement
         {

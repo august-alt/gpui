@@ -32,7 +32,7 @@ namespace model
     namespace admx
     {
         /*!
-         * \brief The PolicyElement class
+         * \brief The PolicyElement class represents the types of optional parameters defined in a policy setting.
          */
         class PolicyElement
         {

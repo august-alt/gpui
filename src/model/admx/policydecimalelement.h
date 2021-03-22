@@ -31,7 +31,8 @@ namespace model
     namespace admx
     {
         /*!
-         * \brief A number/decimal element in a policy. The value can be stored in either a numeric or string representation of the value.
+         * \brief A number/decimal element in a policy. The value can be stored in either a numeric or string
+         * representation of the value.
          */
         class PolicyDecimalElement : public PolicyElement
         {

@@ -20,17 +20,17 @@
 
 #include "presentationbuildertest.h"
 
-#include "../../../../src/model/presentation.h"
+#include "../../../../src/model/presentation/presentation.h"
 
-#include "../../../../src/model/checkbox.h"
-#include "../../../../src/model/combobox.h"
-#include "../../../../src/model/decimaltextbox.h"
-#include "../../../../src/model/dropdownlist.h"
-#include "../../../../src/model/listbox.h"
-#include "../../../../src/model/longdecimaltextbox.h"
-#include "../../../../src/model/multitextbox.h"
-#include "../../../../src/model/text.h"
-#include "../../../../src/model/textbox.h"
+#include "../../../../src/model/presentation/checkbox.h"
+#include "../../../../src/model/presentation/combobox.h"
+#include "../../../../src/model/presentation/decimaltextbox.h"
+#include "../../../../src/model/presentation/dropdownlist.h"
+#include "../../../../src/model/presentation/listbox.h"
+#include "../../../../src/model/presentation/longdecimaltextbox.h"
+#include "../../../../src/model/presentation/multitextbox.h"
+#include "../../../../src/model/presentation/text.h"
+#include "../../../../src/model/presentation/textbox.h"
 
 #include "../../../../src/gui/presentationbuilder.h"
 

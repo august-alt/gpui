@@ -18,10 +18,10 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_DECIMALTEXTBOX_H
-#define GPUI_DECIMALTEXTBOX_H
+#ifndef GPUI_CHECKBOX_H
+#define GPUI_CHECKBOX_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
@@ -30,41 +30,33 @@ namespace model
     namespace presentation
     {
         /*!
-         * \class DecimalTextBox
-         * \brief The DecimalTextBox class represents a text box with or without a spin control for entering decimal numbers.
+         * \class CheckBox
+         * \brief The CheckBox element represents a check box parameter.
          *
          * \ingroup model
          * \ingroup presentation
+         *
+         * The CheckBox element must be associated with a boolean element defined in the elements element.
          */
-        class GPUI_MODEL_EXPORT DecimalTextBox : public PresentationWidget
+        class GPUI_MODEL_EXPORT CheckBox : public PresentationWidget
         {
         public:
             /*!
-             * \brief defaultValue Specifies a default value.
+             * \brief defaultChecked True if the default value is displayed with a checkmark.
              */
-            unsigned int defaultValue = 1;
+            bool defaultChecked = false;
 
-            /*!
-             * \brief spin If true, create a spin control; otherwise, create a text box for numeric entry.
-             */
-            bool spin = true;
-
-            /*!
-             * \brief spinStep The increment of change for the spin control.
-             */
-            unsigned int spinStep = 1;
-
-            DecimalTextBox(Presentation* presentation)
+            CheckBox(Presentation* presentation)
                 : PresentationWidget(presentation)
             {
 
             }
 
             virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitDecimalTextBox(*this);
+                visitor.visitCheckBox(*this);
             }
         };
     }
 }
 
-#endif // GPUI_DECIMALTEXTBOX_H
+#endif // GPUI_CHECKBOX_H

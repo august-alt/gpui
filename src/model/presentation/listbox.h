@@ -18,10 +18,10 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_CHECKBOX_H
-#define GPUI_CHECKBOX_H
+#ifndef GPUI_LISTBOX_H
+#define GPUI_LISTBOX_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
@@ -30,33 +30,26 @@ namespace model
     namespace presentation
     {
         /*!
-         * \class CheckBox
-         * \brief The CheckBox element represents a check box parameter.
+         * \class ListBox
+         * \brief The ListBox class represents a listbox display element.
          *
          * \ingroup model
          * \ingroup presentation
-         *
-         * The CheckBox element must be associated with a boolean element defined in the elements element.
          */
-        class GPUI_MODEL_EXPORT CheckBox : public PresentationWidget
+        class GPUI_MODEL_EXPORT ListBox : public PresentationWidget
         {
         public:
-            /*!
-             * \brief defaultChecked True if the default value is displayed with a checkmark.
-             */
-            bool defaultChecked = false;
-
-            CheckBox(Presentation* presentation)
+            ListBox(Presentation* presentation)
                 : PresentationWidget(presentation)
             {
 
             }
 
             virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitCheckBox(*this);
+                visitor.visitListBox(*this);
             }
         };
     }
 }
 
-#endif // GPUI_CHECKBOX_H
+#endif // GPUI_LISTBOX_H

@@ -18,31 +18,49 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PRESENTATION_H
-#define GPUI_PRESENTATION_H
+#ifndef GPUI_DROPDOWNLIST_H
+#define GPUI_DROPDOWNLIST_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
-
-#include <memory>
-#include <vector>
+#include "presentationwidgetvisitor.h"
 
 namespace model
 {
     namespace presentation
     {
         /*!
-         * \brief The Presentation class A presentation element representing parameters for a policy setting.
+         * \class DropdownList
+         * \brief The DropdownList class is a drop-down list display element, with which a user can pick one of the displayed entries.
          *
          * \ingroup model
          * \ingroup presentation
          */
-        class GPUI_MODEL_EXPORT Presentation
+        class GPUI_MODEL_EXPORT DropdownList : public PresentationWidget
         {
         public:
-            std::vector<std::unique_ptr<PresentationWidget>> widgets;
+            /*!
+             * \brief noSort
+             */
+            bool noSort = false;
+
+            /*!
+             * \brief defaultItem The numerical value identifying the default choice of the list of items.
+             * The item list is numbered starting from 0.
+             */
+            unsigned int defaultItem = 0;
+
+            DropdownList(Presentation* presentation)
+                : PresentationWidget(presentation)
+            {
+
+            }
+
+            virtual void accept(const PresentationWidgetVisitor& visitor) const override {
+                visitor.visitDropdownList(*this);
+            }
         };
     }
 }
 
-#endif // GPUI_PRESENTATION_H
+#endif // GPUI_DROPDOWNLIST_H

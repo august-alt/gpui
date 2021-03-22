@@ -18,10 +18,10 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_TEXT_H
-#define GPUI_TEXT_H
+#ifndef GPUI_MULTITEXTBOX_H
+#define GPUI_MULTITEXTBOX_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
@@ -32,29 +32,41 @@ namespace model
     namespace presentation
     {
         /*!
-         * \class Text
-         * \brief The Text class The text element, when used within the presentation element,
-         * is a localized string displayed within the parameter box.
+         * \brief The MultiTextBox class represents a multi-line textbox display element.
+         * Can be associated with a multiTextElement.
          *
          * \ingroup model
          * \ingroup presentation
          */
-        class Text : public PresentationWidget
+        class GPUI_MODEL_EXPORT MultiTextBox : public PresentationWidget
         {
         public:
-            std::string content;
+            /*!
+             * \brief refId A reference Id.
+             */
+            std::string refId;
 
-            Text(Presentation* presentation)
+            /*!
+             * \brief showAsDialog If we need to display multitext as a dialog.
+             */
+            bool showAsDialog = false;
+
+            /*!
+             * \brief defaultHeight Deafult height of the widget.
+             */
+            unsigned int defaultHeight = 3;
+
+            MultiTextBox(Presentation* presentation)
                 : PresentationWidget(presentation)
             {
 
             }
 
             virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitText(*this);
+                visitor.visitMultiTextBox(*this);
             }
         };
     }
 }
 
-#endif // GPUI_TEXT_H
+#endif // GPUI_MULTITEXTBOX_H

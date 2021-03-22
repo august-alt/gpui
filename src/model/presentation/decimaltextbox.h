@@ -18,55 +18,53 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_TEXTBOX_H
-#define GPUI_TEXTBOX_H
+#ifndef GPUI_DECIMALTEXTBOX_H
+#define GPUI_DECIMALTEXTBOX_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
-
-#include <string>
 
 namespace model
 {
     namespace presentation
     {
         /*!
-         * \class TextBox
-         * \brief The TextBox class represents a text box display element.
+         * \class DecimalTextBox
+         * \brief The DecimalTextBox class represents a text box with or without a spin control for entering decimal numbers.
          *
          * \ingroup model
          * \ingroup presentation
          */
-        class TextBox : public PresentationWidget
+        class GPUI_MODEL_EXPORT DecimalTextBox : public PresentationWidget
         {
         public:
             /*!
-             * \brief refId A reference Id.
+             * \brief defaultValue Specifies a default value.
              */
-            std::string refId;
+            unsigned int defaultValue = 1;
 
             /*!
-             * \brief label Text associated with the input box to provide prompt text.
+             * \brief spin If true, create a spin control; otherwise, create a text box for numeric entry.
              */
-            std::string label;
+            bool spin = true;
 
             /*!
-             * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
+             * \brief spinStep The increment of change for the spin control.
              */
-            std::string defaultValue;
+            unsigned int spinStep = 1;
 
-            TextBox(Presentation* presentation)
+            DecimalTextBox(Presentation* presentation)
                 : PresentationWidget(presentation)
             {
 
             }
 
             virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitTextBox(*this);
+                visitor.visitDecimalTextBox(*this);
             }
         };
     }
 }
 
-#endif // GPUI_TEXTBOX_H
+#endif // GPUI_DECIMALTEXTBOX_H

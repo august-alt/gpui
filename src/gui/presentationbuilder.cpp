@@ -20,19 +20,19 @@
 
 #include "presentationbuilder.h"
 
-#include "../model/presentationwidget.h"
-#include "../model/presentationwidgetvisitor.h"
-#include "../model/presentation.h"
+#include "../model/presentation/presentationwidget.h"
+#include "../model/presentation/presentationwidgetvisitor.h"
+#include "../model/presentation/presentation.h"
 
-#include "../model/checkbox.h"
-#include "../model/combobox.h"
-#include "../model/decimaltextbox.h"
-#include "../model/dropdownlist.h"
-#include "../model/listbox.h"
-#include "../model/longdecimaltextbox.h"
-#include "../model/multitextbox.h"
-#include "../model/text.h"
-#include "../model/textbox.h"
+#include "../model/presentation/checkbox.h"
+#include "../model/presentation/combobox.h"
+#include "../model/presentation/decimaltextbox.h"
+#include "../model/presentation/dropdownlist.h"
+#include "../model/presentation/listbox.h"
+#include "../model/presentation/longdecimaltextbox.h"
+#include "../model/presentation/multitextbox.h"
+#include "../model/presentation/text.h"
+#include "../model/presentation/textbox.h"
 
 #include <QVBoxLayout>
 

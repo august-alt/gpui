@@ -18,55 +18,55 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_LONGDECIMALTEXTBOX_H
-#define GPUI_LONGDECIMALTEXTBOX_H
+#ifndef GPUI_TEXTBOX_H
+#define GPUI_TEXTBOX_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
+
+#include <string>
 
 namespace model
 {
     namespace presentation
     {
         /*!
-         * \class LongDecimalTextBox
-         * \brief The LongDecimalTextBox class represents a text box with or without a spin
-         * control for entering 64-bit decimal numbers.
-         * Can be associated with either a LongDecimalElement or TextElement.
+         * \class TextBox
+         * \brief The TextBox class represents a text box display element.
          *
          * \ingroup model
          * \ingroup presentation
          */
-        class GPUI_MODEL_EXPORT LongDecimalTextBox : public PresentationWidget
+        class TextBox : public PresentationWidget
         {
         public:
             /*!
-             * \brief defaultValue Specifies a default value.
+             * \brief refId A reference Id.
              */
-            unsigned int defaultValue = 1;
+            std::string refId;
 
             /*!
-             * \brief spin If true, create a spin control; otherwise, create a text box for numeric entry.
+             * \brief label Text associated with the input box to provide prompt text.
              */
-            bool spin = true;
+            std::string label;
 
             /*!
-             * \brief spinStep the increment of change for the spin control.
+             * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
              */
-            unsigned int spinStep = 1;
+            std::string defaultValue;
 
-            LongDecimalTextBox(Presentation* presentation)
+            TextBox(Presentation* presentation)
                 : PresentationWidget(presentation)
             {
 
             }
 
             virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitLongDecimalTextBox(*this);
+                visitor.visitTextBox(*this);
             }
         };
     }
 }
 
-#endif // GPUI_LONGDECIMALTEXTBOX_H
+#endif // GPUI_TEXTBOX_H

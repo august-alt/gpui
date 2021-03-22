@@ -21,7 +21,7 @@
 #ifndef GPUI_PRESENTATIONWIDGETVISITOR_H
 #define GPUI_PRESENTATIONWIDGETVISITOR_H
 
-#include "model.h"
+#include "../model.h"
 
 namespace model
 {

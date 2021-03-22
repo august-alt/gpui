@@ -18,62 +18,43 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_COMBOBOX_H
-#define GPUI_COMBOBOX_H
+#ifndef GPUI_TEXT_H
+#define GPUI_TEXT_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
 #include <string>
-#include <vector>
 
 namespace model
 {
     namespace presentation
     {
         /*!
-         * \class ComboBox
-         * \brief Represents a combo box display element with default/suggested entries.
+         * \class Text
+         * \brief The Text class The text element, when used within the presentation element,
+         * is a localized string displayed within the parameter box.
          *
          * \ingroup model
          * \ingroup presentation
          */
-        class GPUI_MODEL_EXPORT ComboBox : public PresentationWidget
+        class Text : public PresentationWidget
         {
         public:
-            /*!
-             * \brief refId A reference Id.
-             */
-            std::string refId;
+            std::string content;
 
-            /*!
-             * \brief label Text associated with the input box to provide prompt text.
-             */
-            std::string label;
-
-            /*!
-             * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
-             */
-            std::string defaultValue;
-
-            /*!
-             * \brief suggestions A suggested value to be placed in the drop-down list.
-             * Multiple suggestion elements result in multiple suggestions.
-             */
-            std::vector<std::string> suggestions;
-
-            ComboBox(Presentation* presentation)
+            Text(Presentation* presentation)
                 : PresentationWidget(presentation)
             {
 
             }
 
             virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitComboBox(*this);
+                visitor.visitText(*this);
             }
         };
     }
 }
 
-#endif // GPUI_COMBOBOX_H
+#endif // GPUI_TEXT_H

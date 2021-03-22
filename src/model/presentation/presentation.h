@@ -18,38 +18,31 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_LISTBOX_H
-#define GPUI_LISTBOX_H
+#ifndef GPUI_PRESENTATION_H
+#define GPUI_PRESENTATION_H
 
-#include "model.h"
+#include "../model.h"
 #include "presentationwidget.h"
-#include "presentationwidgetvisitor.h"
+
+#include <memory>
+#include <vector>
 
 namespace model
 {
     namespace presentation
     {
         /*!
-         * \class ListBox
-         * \brief The ListBox class represents a listbox display element.
+         * \brief The Presentation class A presentation element representing parameters for a policy setting.
          *
          * \ingroup model
          * \ingroup presentation
          */
-        class GPUI_MODEL_EXPORT ListBox : public PresentationWidget
+        class GPUI_MODEL_EXPORT Presentation
         {
         public:
-            ListBox(Presentation* presentation)
-                : PresentationWidget(presentation)
-            {
-
-            }
-
-            virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitListBox(*this);
-            }
+            std::vector<std::unique_ptr<PresentationWidget>> widgets;
         };
     }
 }
 
-#endif // GPUI_LISTBOX_H
+#endif // GPUI_PRESENTATION_H

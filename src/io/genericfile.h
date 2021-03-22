@@ -21,6 +21,8 @@
 #ifndef GPUI_GENERICFILE_H
 #define GPUI_GENERICFILE_H
 
+#include "io.h"
+
 #include <iostream>
 #include <string>
 
@@ -28,7 +30,7 @@
 
 namespace io {
     template <class File, class Format>
-    class GenericFile
+    class GPUI_IO_EXPORT GenericFile
     {
     public:
         void setFileName(const std::string& fileName);

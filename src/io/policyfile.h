@@ -18,8 +18,10 @@
 **
 ***********************************************************************************************************************/
 
-#if !defined(_POLICYFILE_H)
-#define _POLICYFILE_H
+#ifndef GPUI_POLICYFILE_H
+#define GPUI_POLICYFILE_H
+
+#include "io.h"
 
 #include "genericfile.h"
 #include "policyfileformat.h"
@@ -35,7 +37,7 @@ namespace model {
 namespace io {
     class PolicyFilePrivate;
 
-    class PolicyFile : public GenericFile<PolicyFile, PolicyFileFormat>
+    class GPUI_IO_EXPORT PolicyFile : public GenericFile<PolicyFile, PolicyFileFormat>
     {
     public:
         PolicyFile();
@@ -61,4 +63,4 @@ namespace io {
     };
 }
 
-#endif  //_POLICYFILE_H
+#endif // GPUI_POLICYFILE_H

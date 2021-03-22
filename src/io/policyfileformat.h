@@ -21,6 +21,8 @@
 #ifndef GPUI_POLICYFILEFORMAT_H
 #define GPUI_POLICYFILEFORMAT_H
 
+#include "io.h"
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -30,7 +32,7 @@ namespace io {
 
     class PolicyFileFormatPrivate;
 
-    class PolicyFileFormat
+    class GPUI_IO_EXPORT PolicyFileFormat
     {
     public:
         std::string getName();

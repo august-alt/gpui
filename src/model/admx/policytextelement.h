@@ -42,7 +42,7 @@ namespace model
             std::string valueName;
 
             /*!
-             * \brief True if the value is required.
+             * \brief Requirement to enter a value in the parameter box.
              */
             bool required = false;
 
@@ -52,12 +52,13 @@ namespace model
             unsigned int maxLength = 1023;
 
             /*!
-             * \brief True if the string can be expanded.
+             * \brief The registry subkey value will be created as an expandable string type (REG_EXPAND_SZ)
+             * instead of a string type (REG_SZ).
              */
             bool expandable = false;
 
             /*!
-             * \brief soft
+             * \brief soft This attribute flags whether to overwrite an existing subkey.
              */
             bool soft = false;
         };

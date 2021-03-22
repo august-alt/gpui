@@ -24,45 +24,69 @@
 #include "../model.h"
 #include "policytype.h"
 
+#include <memory>
+#include <string>
+#include <vector>
+
 namespace model
 {
     namespace admx
     {
+        class PolicyElement;
+
         /*!
-         * \brief The Policy class
+         * \brief The Policy class corresponds to a single Group Policy setting.
          */
         class Policy
         {
         public:
             /*!
-             * \brief displayName
+             * \brief name Specifies a logical name to use for a specific supported application and revision.
              */
-            int displayName;
+            std::string name;
 
             /*!
-             * \brief explainText
+             * \brief displayName The reference to the policy setting title text string located in the string
+             * table of the .adml file.
              */
-            int explainText;
+            std::string displayName;
 
             /*!
-             * \brief presentation
+             * \brief explainText Explain or Help text associated with a specific policy setting.
              */
-            int presentation;
+            std::string explainText;
 
             /*!
-             * \brief key
+             * \brief key The registry key location under which the registry value will be created.
              */
-            int key;
+            std::string key;
 
             /*!
-             * \brief valueName
+             * \brief valueName The registry value that will be configured for this specific policy element.
              */
-            int valueName;
+            std::string valueName;
 
             /*!
-             * \brief policyType
+             * \brief policyType Identifies whether the policy will be located under a single node
+             * (computer or user) or both nodes.
              */
             PolicyType policyType;
+
+            /*!
+             * \brief parentCategory Reference to parent of the current category.
+             */
+            std::string parentCategory;
+
+            /*!
+             * \brief seeAlso The seeAlso element is a descriptive phrase that can be used to reference related
+             * categories or policy settings.
+             */
+            std::string seeAlso;
+
+            /*!
+             * \brief elements One of five parameters types that can be set in a policy setting.
+             */
+            std::vector<std::unique_ptr<PolicyElement>> elements;
         };
     }
 }

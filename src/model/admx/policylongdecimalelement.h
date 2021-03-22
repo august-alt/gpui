@@ -62,7 +62,7 @@ namespace model
             bool storeAsText = false;
 
             /*!
-             * \brief soft
+             * \brief soft This attribute flags whether to overwrite an existing subkey.
              */
             bool soft = false;
         };

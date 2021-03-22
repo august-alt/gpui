@@ -31,7 +31,7 @@ namespace model
          * \brief The PolicyType enum can be defined as "User," "Machine," or "Both."
          * Identifies whether the policy will be located under a single (computer or user) or both nodes.
          */
-        enum class PolicyType
+        enum class GPUI_MODEL_EXPORT PolicyType
         {
             User        = 0,
             Machine     = 1,

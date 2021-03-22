@@ -33,7 +33,7 @@ namespace model
         /*!
          * \brief A choice element in a policy with associated values for the true and false cases.
          */
-        class PolicyBoolElement : public PolicyElement
+        class GPUI_MODEL_EXPORT PolicyBoolElement : public PolicyElement
         {
         public:
             /*!

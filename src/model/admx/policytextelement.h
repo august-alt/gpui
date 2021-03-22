@@ -33,7 +33,7 @@ namespace model
         /*!
          * \brief The PolicyTextElement class represents a text element in a policy.
          */
-        class PolicyTextElement : public PolicyElement
+        class GPUI_MODEL_EXPORT PolicyTextElement : public PolicyElement
         {
         public:
             /*!

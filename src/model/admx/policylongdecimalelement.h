@@ -33,7 +33,7 @@ namespace model
         /*!
          * \brief A QWORD (64-bit unsigned integer) number/decimal element in a policy.
          */
-        class PolicyLongDecimalElement : public PolicyElement
+        class GPUI_MODEL_EXPORT PolicyLongDecimalElement : public PolicyElement
         {
         public:
             /*!

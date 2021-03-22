@@ -34,7 +34,7 @@ namespace model
         /*!
          * \brief The PolicyElement class represents the types of optional parameters defined in a policy setting.
          */
-        class PolicyElement
+        class GPUI_MODEL_EXPORT PolicyElement
         {
         public:
             /*!

@@ -37,7 +37,7 @@ namespace model
         /*!
          * \brief The Policy class corresponds to a single Group Policy setting.
          */
-        class Policy
+        class GPUI_MODEL_EXPORT Policy
         {
         public:
             /*!

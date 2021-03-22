@@ -33,7 +33,7 @@ namespace model
         /*!
          * \brief The PolicyListElement class sets a list of different registry subkeys when a policy setting is enabled.
          */
-        class PolicyListElement : public PolicyElement
+        class GPUI_MODEL_EXPORT PolicyListElement : public PolicyElement
         {
         public:
             /*!

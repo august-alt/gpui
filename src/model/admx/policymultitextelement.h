@@ -31,7 +31,7 @@ namespace model
         /*!
          * \brief The PolicyMultiTextElement class represents a multi-text element in a policy.
          */
-        class PolicyMultiTextElement : public PolicyElement
+        class GPUI_MODEL_EXPORT PolicyMultiTextElement : public PolicyElement
         {
         public:
             /*!

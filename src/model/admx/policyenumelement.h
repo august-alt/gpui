@@ -33,7 +33,7 @@ namespace model
         /*!
          * \brief An enumeration element in a policy.
          */
-        class PolicyEnumElement : public PolicyElement
+        class GPUI_MODEL_EXPORT PolicyEnumElement : public PolicyElement
         {
         public:
             /*!

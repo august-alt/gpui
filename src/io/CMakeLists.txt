@@ -2,13 +2,13 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 
 set(HEADERS
     genericfile.h
+    genericfile.inl
     io.h
     policyfile.h
     policyfileformat.h
 )
 
-set(SOURCES
-    genericfile.cpp
+set(SOURCES    
     io.cpp
     policyfile.cpp
     policyfileformat.cpp

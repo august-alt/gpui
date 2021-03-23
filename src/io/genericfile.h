@@ -24,6 +24,7 @@
 #include "io.h"
 
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include <QVariant>
@@ -33,9 +34,15 @@ namespace io {
     class GPUI_IO_EXPORT GenericFile
     {
     public:
+        GenericFile();
+
+        virtual ~GenericFile() = default;
+
         void setFileName(const std::string& fileName);
 
-        void setFileFormat(const std::string& format);
+        bool setFileFormat(const std::string& formatName);
+
+        void setFileFormat(const Format* format);
 
         std::string getFileFormat();
 
@@ -51,7 +58,18 @@ namespace io {
 
     protected:
         void setErrorString(const std::string& error);
+
+    private:
+        std::unique_ptr<Format> m_format;
+
+        std::string m_fileName;
+
+        std::string m_errorString;
+
+        QVariantMap m_data;
     };
 }
+
+#include "genericfile.inl"
 
 #endif // GPUI_GENERICFILE_H

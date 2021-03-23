@@ -1,0 +1,14 @@
+# GPUI cmake configuration file
+#
+# the following variables are defined:
+#   GPUI_LIBRARIES  - list of enabled gpui libraries
+
+# directory where the gpui libraries are installed
+set(GPUI_LIBRARY_DIR @CMAKE_INSTALL_PREFIX@/lib)
+
+# set GPUI_LIBRARY variables
+set(GPUI_GUI_LIBRARY gpui-gui)
+set(GPUI_IO_LIBRARY gpui-io)
+set(GPUI_MODEL_LIBRARY gpui-model)
+
+set(GPUI_LIBRARIES ${GPUI_GUI_LIBRARY} ${GPUI_IO_LIBRARY} ${GPUI_MODEL_LIBRARY})

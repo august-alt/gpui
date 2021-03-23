@@ -42,7 +42,7 @@ namespace io {
     public:
         PolicyFile();
 
-        ~PolicyFile();
+        ~PolicyFile() = default;
 
         void addPolicy(std::shared_ptr<model::admx::Policy> policy);
 
@@ -56,7 +56,7 @@ namespace io {
 
         std::shared_ptr<model::admx::Policy> getPolicy(const std::string& name);
 
-        bool contains();
+        bool contains(const std::string& name);
 
     private:
         std::unique_ptr<PolicyFilePrivate> d;

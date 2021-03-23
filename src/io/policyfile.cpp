@@ -49,6 +49,11 @@ PolicyFile::PolicyFile()
 
 }
 
+PolicyFile::~PolicyFile()
+{
+    delete d;
+}
+
 /*!
  * \brief PolicyFile::addPolicy Adds policy to the file.
  * \param policy Policy to add.
@@ -64,11 +69,11 @@ void PolicyFile::addPolicy(std::shared_ptr<Policy> policy)
  */
 void PolicyFile::removePolicy(std::shared_ptr<Policy> policy)
 {
-    std::remove_if(d->policies.begin(), d->policies.end(),
-                   [policy](std::shared_ptr<Policy> currentPolicy)
-                   {
-                        return currentPolicy == policy;
-                   });
+    d->policies.erase(std::remove_if(d->policies.begin(), d->policies.end(),
+                                     [policy](std::shared_ptr<Policy> currentPolicy)
+                                     {
+                                           return currentPolicy == policy;
+                                     }));
 }
 
 /*!

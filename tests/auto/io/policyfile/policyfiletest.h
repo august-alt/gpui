@@ -18,49 +18,20 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_POLICYFILE_H
-#define GPUI_POLICYFILE_H
+#ifndef GPUI_POLICYFILE_TEST_H
+#define GPUI_POLICYFILE_TEST_H
 
-#include "io.h"
+#include <QtTest>
 
-#include "genericfile.h"
-#include "policyfileformat.h"
-
-#include <memory>
-
-namespace model {
-    namespace admx {
-        class Policy;
-    }
-}
-
-namespace io {
-    class PolicyFilePrivate;
-
-    class GPUI_IO_EXPORT PolicyFile : public GenericFile<PolicyFile, PolicyFileFormat>
+namespace tests {
+    class PolciyFileTest : public QObject
     {
-    public:
-        PolicyFile();
+        Q_OBJECT
 
-        ~PolicyFile();
-
-        void addPolicy(std::shared_ptr<model::admx::Policy> policy);
-
-        void removePolicy(std::shared_ptr<model::admx::Policy> policy);
-
-        std::vector<std::shared_ptr<model::admx::Policy>> getPolicies();
-
-        size_t policyCount();
-
-        std::shared_ptr<model::admx::Policy> getPolicy(const size_t index);
-
-        std::shared_ptr<model::admx::Policy> getPolicy(const std::string& name);
-
-        bool contains(const std::string& name);
-
-    private:
-        PolicyFilePrivate* const d;
+        private slots:
+            void getPolicy();
+            void contains();
     };
 }
 
-#endif // GPUI_POLICYFILE_H
+#endif // GPUI_POLICYFILE_TEST_H

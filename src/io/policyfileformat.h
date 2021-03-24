@@ -47,7 +47,7 @@ namespace io {
 
         static std::vector<std::string> getFormats();
 
-        virtual ~PolicyFileFormat() = 0;
+        virtual ~PolicyFileFormat();
 
     protected:
         void setErrorString(const std::string& error);
@@ -55,7 +55,7 @@ namespace io {
         PolicyFileFormat(const std::string& name);
 
     private:
-        std::unique_ptr<PolicyFileFormatPrivate> d;
+        PolicyFileFormatPrivate* const d;
     };
 }
 

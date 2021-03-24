@@ -72,4 +72,10 @@ PolicyFileFormat::PolicyFileFormat(const std::string &name)
     Q_UNUSED(name);
 }
 
+PolicyFileFormat::~PolicyFileFormat()
+{
+    delete d;
+}
+
+
 }

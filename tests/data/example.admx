@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="example2" namespace="Microsoft.Policies.Example2" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+
+  <supportedOn>
+    <products>
+      <!-- SAMPLES -->
+      <product name="SAMPLE_PRODUCT_1" displayName="$(string.SAMPLE_PRODUCT_1)">
+        <majorVersion name="SAMPLE15_1" displayName="$(string.SAMPLE15_1)" versionIndex="15" />
+        <majorVersion name="SAMPLE20_1" displayName="$(string.SAMPLE20_1)" versionIndex="20" />
+        <majorVersion name="SAMPLE35_1" displayName="$(string.SAMPLE35_1)" versionIndex="35" />
+      </product>
+
+      <product name="SAMPLE_PRODUCT_2" displayName="$(string.SAMPLE_PRODUCT_2)">
+        <majorVersion name="SAMPLE15_2" displayName="$(string.SAMPLE15_2)" versionIndex="15" />
+      </product>
+    </products>
+
+    <!-- Special supportedOn definitions -->
+    <definitions>
+      <!--Sample Product 1 and 2-->
+      <definition name="SUPPORTED_Sample_1_AND_SAMPLE_2"
+                  displayName="$(string.SUPPORTED_Sample_1_AND_SAMPLE_2)">
+        <and>
+          <reference ref="SAMPLE_PRODUCT_1"/>
+          <reference ref="SAMPLE_PRODUCT_2"/>
+        </and>
+
+      </definition>
+      <!--Sample Product 1 or 2-->
+      <definition name="SUPPORTED_Sample_1_or_SAMPLE_2"
+                  displayName="$(string.SUPPORTED_Sample_1_or_SAMPLE_2)">
+        <or>
+          <reference ref="SAMPLE_PRODUCT_1"/>
+          <reference ref="SAMPLE_PRODUCT_2"/>
+        </or>
+      </definition>
+      <!--Sample Product with range-->
+      <definition name="SUPPORTED_MIXED"
+                  displayName="$(string.SUPPORTED_MIXED)">
+        <or>
+          <reference ref="SAMPLE_PRODUCT_2"/>
+          <range ref="SAMPLE_PRODUCT_1" minVersionIndex="15" maxVersionIndex="20"/>
+        </or>
+      </definition>
+
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category name="SAMPLE" displayName="$(string.SAMPLE)" explainText="$(string.SAMPLEHELP)" />
+    <category name="ACTIONLIST_CATEGORY" displayName="$(string.ACTIONLIST_CATEGORY)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+    <category name="CHECKBOXTWOTYPES_CATEGORY" displayName="$(string.CHECKBOXTWOTYPES_CATEGORY)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+    <category name="COMBOBOX_CATEGORY" displayName="$(string.COMBOBOX_CATEGORY)">
+      <parentCategory ref="SAMPLE"/>
+    </category>
+    <category name="DROPDOWNLIST_CATEGORY" displayName="$(string.DROPDOWNLIST_CATEGORY)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+    <category name="EXPANDSZ_CATEGORY" displayName="$(string.EXPANDSZ_CATEGORY)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+    <category name="LISTBOX_CATEGORY" displayName="$(string.LISTBOX_CATEGORY)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+    <category name="NOParam_CATEGORY" displayName="$(string.NOParam_CATEGORY)" explainText="$(string.NOPARAMHELP)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+    <category name="NUMBERINPUT_CATEGORY" displayName="$(string.NUMBERINPUT_CATEGORY)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+    <category name="TEXTBOX_CATEGORY" displayName="$(string.TEXTBOX_CATEGORY)">
+      <parentCategory ref="SAMPLE" />
+    </category>
+  </categories>
+  <policies>
+    <policy name="Sample_Actionlist" class="Both" displayName="$(string.Sample_Actionlist)" explainText="$(string.Sample_Actionlist_Help)" key="Software\Policies\Examples">
+      <parentCategory ref="ACTIONLIST_CATEGORY" />
+      <supportedOn ref="example2:SUPPORTED_Sample_1_AND_SAMPLE_2" />
+      <enabledList>
+        <item key="Software\Policies\Examples" valueName="Example2ActionList1">
+          <value>
+            <string>1</string>
+          </value>
+        </item>
+        <item key="Software\Policies\Examples" valueName="Example2ActionList2">
+          <value>
+            <decimal value="11" />
+          </value>
+        </item>
+        <item key="Software\Policies\Examples" valueName="Example2ActionList3">
+          <value>
+            <string>String3</string>
+          </value>
+        </item>
+      </enabledList>
+      <disabledList>
+        <item key="Software\Policies\Examples" valueName="Example2ActionList1">
+          <value>
+            <string>0</string>
+          </value>
+        </item>
+        <item key="Software\Policies\Examples" valueName="Example2ActionList2">
+          <value>
+            <decimal value="10" />
+          </value>
+        </item>
+        <item key="Software\Policies\Examples" valueName="Example2ActionList3">
+          <value>
+            <delete />
+          </value>
+        </item>
+      </disabledList>
+    </policy>
+    <policy name="Sample_Checkbox" class="Both" displayName="$(string.Sample_Checkbox)" explainText="$(string.Sample_Checkbox_Help)" presentation="$(presentation.Sample_Checkbox)" key="Software\Policies\Examples">
+      <parentCategory ref="CHECKBOXTWOTYPES_CATEGORY" />
+      <supportedOn ref="example2:SUPPORTED_Sample_1_or_SAMPLE_2" />
+      <elements>
+        <boolean id="Checkbox_1" valueName="Example2Checkbox1">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+          <trueList>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList1">
+              <value>
+                <string>1</string>
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList2">
+              <value>
+                <decimal value="11" />
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList3">
+              <value>
+                <string>String3</string>
+              </value>
+            </item>
+          </trueList>
+          <falseList>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList1">
+              <value>
+                <string>0</string>
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList2">
+              <value>
+                <decimal value="10" />
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList3">
+              <value>
+                <delete />
+              </value>
+            </item>
+          </falseList>
+
+      </boolean>
+        <boolean id="Checkbox_2" valueName="Example2Checkbox2">
+          <trueValue>
+            <decimal value="0" />
+          </trueValue>
+          <falseValue>
+            <decimal value="1" />
+          </falseValue>
+          <trueList>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList11">
+              <value>
+                <string>1</string>
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList21">
+              <value>
+                <decimal value="11" />
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList31">
+              <value>
+                <string>String3</string>
+              </value>
+            </item>
+          </trueList>
+          <falseList>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList12">
+              <value>
+                <string>0</string>
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList22">
+              <value>
+                <decimal value="10" />
+              </value>
+            </item>
+            <item key="Software\Policies\Examples" valueName="Example2ActionList32">
+              <value>
+                <delete />
+              </value>
+            </item>
+          </falseList>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="Sample_ComboBox" class="Both" displayName="$(string.Sample_ComboBox)" explainText="$(string.Sample_ComboBox_Help)" presentation="$(presentation.Sample_ComboBox)" key="Software\Policies\Examples">
+      <parentCategory ref="COMBOBOX_CATEGORY"/>
+      <supportedOn ref="SUPPORTED_ProductOnly"/>
+      <elements>
+        <text id="Sample_ComboBox_Filename" valueName="Example2ComboboxFilename"/>
+        <text id="Sample_ComboBox_Filename_Unsorted" valueName="Example2ComboboxFilename_Unsorted"/>
+      </elements>
+    </policy>
+    <policy name="Sample_DropDownList" class="Both" displayName="$(string.Sample_DropDownList)" explainText="$(string.Sample_DropDownList_Help)" presentation="$(presentation.Sample_DropDownList)" key="Software\Policies\Examples">
+      <parentCategory ref="DROPDOWNLIST_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <enum id="Sample_Dropdownlist_Box" valueName="Example2DropDownList" required="true">
+          <item displayName="$(string.Sample_DropDownList_First)">
+            <value>
+              <decimal value="1" />
+            </value>
+          </item>
+          <item displayName="$(string.Sample_DropDownList_Second)">
+            <value>
+              <decimal value="2" />
+            </value>
+          </item>
+          <item displayName="$(string.Sample_DropDownList_Third)">
+            <value>
+              <decimal value="3" />
+            </value>
+          </item>
+          <item displayName="$(string.Sample_DropDownList_Fourth)">
+            <value>
+              <decimal value="4" />
+            </value>
+          </item>
+        </enum>
+        <enum id="Sample_Dropdownlist_UnSorted_Box" valueName="Example2DropDownList_Unsorted" required="true">
+          <item displayName="$(string.Sample_DropDownList_First)">
+            <value>
+              <decimal value="1" />
+            </value>
+          </item>
+          <item displayName="$(string.Sample_DropDownList_Second)">
+            <value>
+              <decimal value="2" />
+            </value>
+          </item>
+          <item displayName="$(string.Sample_DropDownList_Third)">
+            <value>
+              <decimal value="3" />
+            </value>
+          </item>
+          <item displayName="$(string.Sample_DropDownList_Fourth)">
+            <value>
+              <decimal value="4" />
+            </value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+    <policy name="Sample_textboxExpandsz" class="Both" displayName="$(string.Sample_textboxExpandsz)" explainText="$(string.Sample_textboxExpandsz_Help)" presentation="$(presentation.Sample_textboxExpandsz)" key="Software\Policies\Examples">
+      <parentCategory ref="EXPANDSZ_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <text id="Sample_textboxExpandszPrompt" valueName="Example2TextboxExpandsz" required="true" expandable="true" />
+      </elements>
+    </policy>
+    <policy name="Sample_ListBox_DoubleColumn" class="Both" displayName="$(string.Sample_ListBox_DoubleColumn)" explainText="$(string.Sample_ListBox_DoubleColumn_Help)" presentation="$(presentation.Sample_ListBox_DoubleColumn)" key="Software\Policies\Examples">
+      <parentCategory ref="LISTBOX_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <list id="Sample_ListBox_DoubleList" key="Software\Policies\Examples\listbox2" explicitValue="true" />
+      </elements>
+    </policy>
+    <policy name="Sample_ListBox_SingleColumn" class="Both" displayName="$(string.Sample_ListBox_SingleColumn)" explainText="$(string.Sample_ListBox_SingleColumn_Help)" presentation="$(presentation.Sample_ListBox_SingleColumn)" key="Software\Policies\Examples">
+      <parentCategory ref="LISTBOX_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <list id="Sample_ListBox_SingleColumn_Param" key="Software\Policies\Examples\listbox1" valuePrefix="SAMPLE" />
+      </elements>
+    </policy>
+    <policy name="Sample_NoParamPolicy_First" class="Both" displayName="$(string.Sample_NoParamPolicy_First)" explainText="$(string.Sample_NoParamPolicy_First_Help)" key="Software\Policies\Examples" valueName="Example2NoParams_First">
+      <parentCategory ref="NOParam_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <enabledValue>
+        <string>1</string>
+      </enabledValue>
+      <disabledValue>
+        <string>0</string>
+      </disabledValue>
+    </policy>
+    <policy name="Sample_NoParamPolicy_sz" class="Both" displayName="$(string.Sample_NoParamPolicy_sz)" explainText="$(string.Sample_NoParamPolicy_sz_Help)" key="Software\Policies\Examples" valueName="Example2NoParamsz">
+      <parentCategory ref="NOParam_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <enabledValue>
+        <string>1</string>
+      </enabledValue>
+      <disabledValue>
+        <string>0</string>
+      </disabledValue>
+    </policy>
+    <policy name="Sample_NoParamPolicy" class="Both" displayName="$(string.Sample_NoParamPolicy)" explainText="$(string.Sample_NoParamPolicy_Help)" key="Software\Policies\Examples" valueName="Example2NoParam">
+      <parentCategory ref="NOParam_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <enabledValue>
+        <longDecimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <longDecimal value="0" />
+      </disabledValue>
+    </policy>
+    <policy name="Sample_NoParamPolicy_Last" class="Both" displayName="$(string.Sample_NoParamPolicy_Last)" explainText="$(string.Sample_NoParamPolicy_Last_Help)" key="Software\Policies\Examples" valueName="Example2NoParams_Last">
+      <parentCategory ref="NOParam_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <enabledValue>
+        <string>1</string>
+      </enabledValue>
+      <disabledValue>
+        <string>0</string>
+      </disabledValue>
+    </policy>
+    <policy name="Sample_NumericSpin" class="Both" displayName="$(string.Sample_NumericSpin)" explainText="$(string.Sample_NumericSpin_Help)" presentation="$(presentation.Sample_NumericSpin)" key="Software\Policies\Examples">
+      <parentCategory ref="NUMBERINPUT_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <decimal id="Sample_NumericTextLabel" valueName="Example2NumericSpin" maxValue="599940"  />
+      </elements>
+    </policy>
+    <policy name="Sample_LongNumericSpin" class="Both" displayName="$(string.Sample_LongNumericSpin)" explainText="$(string.Sample_LongNumericSpin_Help)" presentation="$(presentation.Sample_LongNumericSpin)" key="Software\Policies\Examples">
+      <parentCategory ref="NUMBERINPUT_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <longDecimal id="Sample_LongNumericTextLabel" valueName="Example2LongNumericSpin" maxValue="18446744073709551615"  />
+      </elements>
+    </policy>
+    <policy name="Sample_NumericText" class="Both" displayName="$(string.Sample_NumericText)" explainText="$(string.Sample_NumericText_Help)" presentation="$(presentation.Sample_NumericText)" key="Software\Policies\Examples">
+      <parentCategory ref="NUMBERINPUT_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <decimal id="Sample_NumericTextLabel" valueName="Example2NumericText" required="true" minValue="10" maxValue="60" storeAsText="true" />
+      </elements>
+    </policy>
+    <policy name="Sample_LongNumericText" class="Both" displayName="$(string.Sample_LongNumericText)" explainText="$(string.Sample_LongNumericText_Help)" presentation="$(presentation.Sample_LongNumericText)" key="Software\Policies\Examples">
+      <parentCategory ref="NUMBERINPUT_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <longDecimal id="Sample_LongNumericTextLabel" valueName="Example2LongNumericText" required="true" minValue="10" maxValue="18446744073709551615" storeAsText="true" />
+      </elements>
+    </policy>
+    <policy name="Sample_Textbox" class="Both" displayName="$(string.Sample_Textbox)" explainText="$(string.Sample_Textbox_Help)" presentation="$(presentation.Sample_Textbox)" key="Software\Policies\Examples">
+      <parentCategory ref="TEXTBOX_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <text id="Sample_TextboxPrompt" valueName="Example2textbox" />
+      </elements>
+    </policy>
+    <policy name="Sample_MultiTextbox" class="Both" displayName="$(string.Sample_MultiTextbox)" explainText="$(string.Sample_MultiTextbox_Help)" presentation="$(presentation.Sample_MultiTextbox)" key="Software\Policies\Examples">
+      <parentCategory ref="TEXTBOX_CATEGORY" />
+      <supportedOn ref="windows:SUPPORTED_ProductOnly" />
+      <elements>
+        <multiText id="Sample_MultiTextboxPrompt" valueName="Example2MultiTextbox" maxStrings="6" maxLength="20"/>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

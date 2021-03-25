@@ -25,13 +25,347 @@
 #include "../../../src/io/policyfile.h"
 
 #include "../../../src/model/admx/policy.h"
+
 #include "../../../src/model/admx/policyelement.h"
+#include "../../../src/model/admx/policybooleanelement.h"
+#include "../../../src/model/admx/policydecimalelement.h"
+#include "../../../src/model/admx/policyenumelement.h"
+#include "../../../src/model/admx/policylistelement.h"
+#include "../../../src/model/admx/policylongdecimalelement.h"
+#include "../../../src/model/admx/policymultitextelement.h"
+#include "../../../src/model/admx/policytextelement.h"
 
 #include "basetypes.h"
 
 using namespace io;
 
 namespace gpui {
+
+//================================= Helper Functions ===================================================================
+
+template<typename TInput, typename TOutput>
+void assign_if_exists(TOutput& output, const TInput& input)
+{
+    if (input.present())
+    {
+        output = input.get();
+    }
+}
+
+//================================= Helper Functions ===================================================================
+
+//================================= Adapters ===========================================================================
+
+template <typename ElementType>
+void adapter_base(model::admx::PolicyElement* output, const ElementType& input)
+{
+    output->id = input.id();
+
+    if (input.clientExtension().present()) {
+        output->clientExtension = QUuid(input.clientExtension().get().c_str());
+    }
+
+    assign_if_exists(output->key, input.key());
+}
+
+template<typename TInput, typename TOutput>
+void decimal_adapter_base(TOutput* output, const TInput& input)
+{
+    adapter_base(output, input);
+
+    output->maxValue      = input.maxValue();
+    output->minValue      = input.minValue();
+    output->required      = input.required();
+    output->soft          = input.soft();
+    output->storeAsText   = input.storeAsText();
+
+    assign_if_exists(output->valueName, input.valueName());
+}
+
+class XsdPolicyAdapter : public model::admx::Policy {
+public:
+    XsdPolicyAdapter(const ::GroupPolicy::PolicyDefinitions::PolicyDefinition& definition)
+        : model::admx::Policy()
+    {
+        this->name = definition.name();
+        this->displayName = definition.displayName();
+
+        assign_if_exists(this->explainText, definition.explainText());
+
+        this->key = definition.key();
+
+        if (definition.parentCategory().present()) {
+            this->parentCategory = definition.parentCategory()->ref();
+        }
+
+        assign_if_exists(this->valueName, definition.valueName());
+
+        for (const auto& seeAlso : definition.seeAlso()) {
+            this->seeAlso.append(seeAlso);
+        }
+
+        switch (definition.class_()) {
+            case ::GroupPolicy::PolicyDefinitions::PolicyClass::Machine:
+                this->policyType = model::admx::PolicyType::Machine;
+                break;
+            case ::GroupPolicy::PolicyDefinitions::PolicyClass::User:
+                this->policyType = model::admx::PolicyType::User;
+                break;
+            case ::GroupPolicy::PolicyDefinitions::PolicyClass::Both:
+                this->policyType = model::admx::PolicyType::Both;
+                break;
+            default:
+                break;
+        }
+    }
+
+    static std::shared_ptr<model::admx::Policy> create(const ::GroupPolicy::PolicyDefinitions::PolicyDefinition& input)
+    {
+        return std::make_shared<XsdPolicyAdapter>(input);
+    }
+};
+
+class XsdBooleanElementAdapter : public model::admx::PolicyBoolElement {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::BooleanElement BooleanElement;
+
+public:
+    XsdBooleanElementAdapter(const BooleanElement& element)
+    {
+        adapter_base(this, element);
+
+        assign_if_exists(this->valueName, element.valueName());
+    }
+
+    static std::unique_ptr<model::admx::PolicyBoolElement> create(const BooleanElement& element)
+    {
+        return std::make_unique<XsdBooleanElementAdapter>(element);
+    }
+};
+
+class XsdDecimalElementAdapter : public model::admx::PolicyDecimalElement {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::DecimalElement DecimalElement;
+
+public:
+    XsdDecimalElementAdapter(const DecimalElement& element)
+    {
+        decimal_adapter_base(this, element);
+    }
+
+    static std::unique_ptr<model::admx::PolicyDecimalElement> create(const DecimalElement& element)
+    {
+        return std::make_unique<XsdDecimalElementAdapter>(element);
+    }
+};
+
+class XsdListElementAdapter : public model::admx::PolicyListElement {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::ListElement ListElement;
+
+public:
+    XsdListElementAdapter(const ListElement& element)
+    {
+        adapter_base(this, element);
+
+        assign_if_exists(this->valuePrefix, element.valuePrefix());
+
+        this->additive = element.additive();
+
+        this->expandable = element.expandable();
+
+        this->explicitValue = element.explicitValue();
+    }
+
+    static std::unique_ptr<model::admx::PolicyListElement> create(const ListElement& element)
+    {
+        return std::make_unique<XsdListElementAdapter>(element);
+    }
+};
+
+class XsdTextElementAdapter : public model::admx::PolicyTextElement {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::TextElement TextElement;
+
+public:
+    XsdTextElementAdapter(const TextElement& element)
+    {
+        adapter_base(this, element);
+
+        assign_if_exists(this->valueName, element.valueName());
+
+        this->required = element.required();
+
+        this->maxLength = element.maxLength();
+
+        this->expandable = element.expandable();
+
+        this->soft = element.soft();
+    }
+
+    static std::unique_ptr<model::admx::PolicyTextElement> create(const TextElement& element)
+    {
+        return std::make_unique<XsdTextElementAdapter>(element);
+    }
+};
+
+class XsdLongDecimalElementAdapter : public model::admx::PolicyLongDecimalElement {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::LongDecimalElement LongDecimalElement;
+
+public:
+    XsdLongDecimalElementAdapter(const LongDecimalElement& element)
+    {
+        decimal_adapter_base(this, element);
+    }
+
+    static std::unique_ptr<model::admx::PolicyLongDecimalElement> create(const LongDecimalElement& element)
+    {
+        return std::make_unique<XsdLongDecimalElementAdapter>(element);
+    }
+};
+
+class XsdMultiTextElementAdapter : public model::admx::PolicyMultiTextElement {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::MultiTextElement MultiTextElement;
+
+public:
+    XsdMultiTextElementAdapter(const MultiTextElement& element)
+    {
+        adapter_base(this, element);
+
+        assign_if_exists(this->valueName, element.valueName());
+    }
+
+    static std::unique_ptr<model::admx::PolicyMultiTextElement> create(const MultiTextElement& element)
+    {
+        return std::make_unique<XsdMultiTextElementAdapter>(element);
+    }
+};
+
+//================================= Adapters ===========================================================================
+
+//================================= Operators ==========================================================================
+
+std::ostream& operator << (std::ostream& os, const model::admx::Policy& policy)
+{
+    os << "Name: "             << policy.name << std::endl;
+    os << "Display Name: "     << policy.displayName << std::endl;
+    os << "Key: "              << policy.key << std::endl;
+    os << "Value: "            << policy.valueName << std::endl;
+    os << "Explain: "          << policy.explainText << std::endl;
+    os << "Parent: "           << policy.parentCategory << std::endl;
+    os << "See Also: "         << policy.seeAlso << std::endl;
+
+    os << "Policy Type: " << (policy.policyType == model::admx::PolicyType::Machine
+                              ? "Machine"
+                              : policy.policyType == model::admx::PolicyType::User
+                                  ? "User" : "Both") << std::endl;
+
+    os << std::endl;
+
+    return os;
+}
+
+inline void element_operator_base(std::ostream& os, const model::admx::PolicyElement& element, const std::string& type)
+{
+    os << "\t" << type << ":"      << std::endl;
+    os << "\t\tID: "               << element.id << std::endl;
+    os << "\t\tClient Extension: " << element.clientExtension.toString().toStdString() << std::endl;
+    os << "\t\tKey: "              << element.key << std::endl;
+}
+
+template <typename TElement>
+inline void element_with_value_base(std::ostream& os, const TElement& element, const std::string& type)
+{
+    element_operator_base(os, element, type);
+    os << "\t\tValue: " << element.valueName << std::endl;
+}
+
+template <typename TElement>
+void decimal_element_operator_base(std::ostream& os, const TElement& element, const std::string& type)
+{
+    element_with_value_base(os, element, type);
+
+    os << "\t\tMax Value:"         << element.maxValue << std::endl;
+    os << "\t\tMin Value:"         << element.minValue << std::endl;
+    os << "\t\tRequired:"          << element.required << std::endl;
+    os << "\t\tSoft:"              << element.soft << std::endl;
+    os << "\t\tStore As Text:"     << element.storeAsText << std::endl;
+
+    os << std::endl;
+}
+
+std::ostream& operator << (std::ostream& os, const model::admx::PolicyBoolElement& element)
+{
+    element_with_value_base(os, element, "BooleanElement");
+    os << std::endl;
+
+    return os;
+}
+
+std::ostream& operator << (std::ostream& os, const model::admx::PolicyDecimalElement& element)
+{
+    decimal_element_operator_base(os, element, "DecimalElement");
+
+    return os;
+}
+
+std::ostream& operator << (std::ostream& os, const model::admx::PolicyListElement& element)
+{
+    element_operator_base(os, element, "ListElement");
+
+    os << "\t\tAdditive:"          << element.additive << std::endl;
+    os << "\t\tExpandable:"        << element.expandable << std::endl;
+    os << "\t\tExplicit Value:"    << element.explicitValue << std::endl;
+
+    os << std::endl;
+
+    return os;
+}
+
+std::ostream& operator << (std::ostream& os, const model::admx::PolicyTextElement& element)
+{
+    element_with_value_base(os, element, "TextElement");
+
+    os << "\t\tExpandable:"        << element.expandable << std::endl;
+    os << "\t\tMax Length:"        << element.maxLength  << std::endl;
+    os << "\t\tRequired:"          << element.required   << std::endl;
+    os << "\t\tSoft:"              << element.soft       << std::endl;
+
+    os << std::endl;
+
+    return os;
+}
+
+std::ostream& operator << (std::ostream& os, const model::admx::PolicyLongDecimalElement& element)
+{
+    decimal_element_operator_base(os, element, "LongDecimalElement");
+
+    return os;
+}
+
+std::ostream& operator << (std::ostream& os, const model::admx::PolicyMultiTextElement& element)
+{
+    element_with_value_base(os, element, "MultiTextElement");
+    os << std::endl;
+
+    return os;
+}
+
+//================================= Operators ==========================================================================
+
+template <typename AdapterType, typename SequenceType>
+void adapt_elements(const SequenceType& sequence, std::vector<std::unique_ptr<model::admx::PolicyElement>>& elements)
+{
+    for (const auto& adaptee : sequence) {
+        auto adaptedElement = AdapterType::create(adaptee);
+
+        std::cout << (*adaptedElement.get());
+
+        elements.push_back(std::move(adaptedElement));
+    }
+}
 
 AdmxFormat::AdmxFormat()
     : PolicyFileFormat("admx")
@@ -46,15 +380,29 @@ bool AdmxFormat::read(std::istream &input, PolicyFile *file)
         std::unique_ptr<::GroupPolicy::PolicyDefinitions::PolicyDefinitions> policyDefinitions
             = GroupPolicy::PolicyDefinitions::policyDefinitions(input, ::xsd::cxx::tree::flags::dont_validate);
 
-        std::shared_ptr<model::admx::Policy> ourPolicy = std::make_shared<model::admx::Policy>();
-
         if (policyDefinitions->policies().present()) {
             for (const auto& policy : policyDefinitions->policies()->policy()) {
-                std::cout << policy.name() << std::endl;
-            }
-        }
+                auto ourPolicy = XsdPolicyAdapter::create(policy);
 
-        file->addPolicy(ourPolicy);
+                std::cout << (*ourPolicy.get());
+
+                if (policy.elements().present()) {
+                    adapt_elements<XsdBooleanElementAdapter>(policy.elements()->boolean(), ourPolicy->elements);
+
+                    adapt_elements<XsdDecimalElementAdapter>(policy.elements()->decimal(), ourPolicy->elements);
+
+                    adapt_elements<XsdTextElementAdapter>(policy.elements()->text(), ourPolicy->elements);
+
+                    adapt_elements<XsdListElementAdapter>(policy.elements()->list(), ourPolicy->elements);
+
+                    adapt_elements<XsdLongDecimalElementAdapter>(policy.elements()->longDecimal(), ourPolicy->elements);
+
+                    adapt_elements<XsdMultiTextElementAdapter>(policy.elements()->multiText(), ourPolicy->elements);
+                }
+
+                file->addPolicy(ourPolicy);
+            }
+        }        
 
         return true;
     }

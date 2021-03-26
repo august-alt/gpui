@@ -81,7 +81,7 @@ namespace model
              * \brief seeAlso The seeAlso element is a descriptive phrase that can be used to reference related
              * categories or policy settings.
              */
-            std::string seeAlso;
+            std::vector<std::string> seeAlso;
 
             /*!
              * \brief elements One of five parameters types that can be set in a policy setting.

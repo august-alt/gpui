@@ -44,7 +44,7 @@ namespace gpui {
 //================================= Helper Functions ===================================================================
 
 template<typename TInput, typename TOutput>
-void assign_if_exists(TOutput& output, const TInput& input)
+inline void assign_if_exists(TOutput& output, const TInput& input)
 {
     if (input.present())
     {
@@ -101,7 +101,7 @@ public:
         assign_if_exists(this->valueName, definition.valueName());
 
         for (const auto& seeAlso : definition.seeAlso()) {
-            this->seeAlso.append(seeAlso);
+            this->seeAlso.emplace_back(seeAlso);
         }
 
         switch (definition.class_()) {
@@ -275,7 +275,10 @@ std::ostream& operator << (std::ostream& os, const model::admx::Policy& policy)
     os << "Value: "            << policy.valueName << std::endl;
     os << "Explain: "          << policy.explainText << std::endl;
     os << "Parent: "           << policy.parentCategory << std::endl;
-    os << "See Also: "         << policy.seeAlso << std::endl;
+
+    for (const auto& tag : policy.seeAlso) {
+        os << "See Also: " << tag << std::endl;
+    }
 
     os << "Policy Type: " << (policy.policyType == model::admx::PolicyType::Machine
                               ? "Machine"

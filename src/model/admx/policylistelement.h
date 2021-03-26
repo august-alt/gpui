@@ -42,17 +42,20 @@ namespace model
             std::string valuePrefix;
 
             /*!
-             * \brief additive
+             * \brief additive If this option is specified true, existing subkeys are not deleted,
+             * and the values set in the list box are appended to the existing subkeys.
              */
             bool additive = false;
 
             /*!
-             * \brief expandable
+             * \brief expandable The registry subkey value will be created as an expandable string type (REG_EXPAND_SZ)
+             * instead of a string type (REG_SZ).
              */
             bool expandable = false;
 
             /*!
-             * \brief explicitValue
+             * \brief explicitValue If this option is specified true the user must specify the registry subkey value
+             * and the registry subkey name. The list box shows two columns, one for the name and one for the data.
              */
             bool explicitValue = false;
         };

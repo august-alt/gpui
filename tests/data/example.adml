@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+   <displayName>Just a sample</displayName>
+   <description>A sample</description>
+   <resources>
+     <stringTable>
+       <string id="ACTIONLIST_CATEGORY">Action list example</string>
+       <string id="CHECKBOXTWOTYPES_CATEGORY">Checkbox example</string>
+       <string id="COMBOBOX_CATEGORY">Combo box example</string>
+       <string id="DROPDOWNLIST_CATEGORY">Drop-down list box example</string>
+       <string id="EXPANDSZ_CATEGORY">EXPANDSZ registry value example</string>
+       <string id="LISTBOX_CATEGORY">List box example</string>
+       <string id="NOParam_CATEGORY">Parameter-less example</string>
+       <string id="NOPARAMHELP">policy setting - either SZ or DWORD registry value without a parameter</string>
+       <string id="NUMBERINPUT_CATEGORY">Numeric parameter example</string>
+       <string id="SAMPLE">Example 2 Policy settings</string>
+       <string id="TEXTBOX_CATEGORY">Text box parameter example</string>
+       <!-- BITS -->
+       <string id="SAMPLE_PRODUCT_1">First Sample Product</string>
+       <string id="SAMPLE 15_1">SAMPLE V1 1.5</string>
+       <string id="SAMPLE 20_2">SAMPLE V1 2.0</string>
+       <string id="SAMPLE 35_3">SAMPLE V1 3.5</string>
+       <string id="SAMPLE_PRODUCT_2">Second Sample Product</string>
+       <string id="SAMPLE 15_2">SAMPLE V2 1.5</string>
+       <string id="SUPPORTED_Sample_1_AND_SAMPLE_2">Sample V1 and V2 both installed.</string>
+       <string id="SUPPORTED MIXED">Sample with Mixed products and versions.</string>
+       <string id="SUPPORTED_Sample_1_OR_SAMPLE_2">Sample V1 or V2; one installed.</string>
+       <string id="Sample_Actionlist">Sets policy setting parameters via an action list</string>
+       <string id="Sample_Actionlist_Help">This is an example of a Group Policy setting that configures parameters using an action list.
+  
+ If you enable this policy setting, three registry values will be set.
+ Note:The action list parameter does not create a unique user interface and can be used to set as many registry values as needed.
+  
+ If you disable this policy setting, the first two values will be set and one value will be deleted.
+  
+ If you do not configure this policy setting, all values will be deleted, if currently set.
+  
+ Note: This policy setting changes the Example2Actionlist1, Example2Actionlist2 and Example2Actionlist3 registry values.</string>
+       <string id="sample_actionlisthelp1">Optional lines of text that provide additional</string>
+       <string id="sample_actionlisthelp2">help text within the parameter display.</string>
+       <string id="sample_actionlistlabel">Spin control label:</string>
+       <string id="Sample_Checkbox">Sets policy setting parameter via a check box</string>
+       <string id="Sample_Checkbox_Help">This is an example of a Group Policy setting that configures a parameter using a check box.
+  
+ If you enable this policy setting, check box1 and check box2 will be active.
+ Note: Check box2 will be checked by default.
+  
+ If you disable this policy setting, no check box will be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2Checkbox1 and Example2Checkbox2 registry values.</string>
+       <string id="Sample_ComboBox">Sets policy setting parameter via a combo box</string>
+       <string id="Sample_ComboBox_Filename">Prompt label for combobox</string>
+       <string id="Sample_ComboBox_Help">This is an example of a Group Policy setting that configures a parameter using a combo box.
+  
+ If you enable this policy setting, the combo box will be active.
+ The text entered in the Edit field will be stored in the registry.
+  
+ If you disable this policy setting, no combo box will be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2ComboboxFilename registry values.</string>
+       <string id="Sample_DropDownList">Sets policy setting parameter via a drop-down list box</string>
+       <string id="Sample_DropDownList_First">First Choice</string>
+       <string id="Sample_DropDownList_Help">This is an example of a Group Policy setting that configures a parameter using a drop-down list box.
+  
+ If you enable this policy setting, a drop-down list box presenting three choices will be active.
+ Note: First choice is displayed by default.
+  
+ If you disable this policy setting, the drop-down list box will be inactive.
+  
+ If you do not configure this policy setting, the registry value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2DropDownList registry value.</string>
+       <string id="Sample_DropDownList_Second">Second Choice</string>
+       <string id="Sample_DropDownList_Third">Third Choice</string>
+       <string id="Sample_DropDownList_Fourth">Fourth Choice</string>
+       <string id="Sample_ListBox_DoubleColumn">Sets policy setting parameter via a two-column listbox</string>
+       <string id="Sample_ListBox_DoubleColumn_Help">This is an example of a Group Policy setting that configures a parameter using a two-column list box.
+  
+ If you enable this policy setting, a list box will be active.
+ Note:The item name is used to create the registry value name.
+  
+ If you disable this policy setting, the two-column list box will be inactive.
+  
+ If you do not configure this policy setting, the registry key and values associated with this policy setting will be deleted, if currently set to a value.
+  
+ Note: This policy setting creates registry values under the Software\Policies\Examples\listbox2 registry key.</string>
+       <string id="Sample_ListBox_SingleColumn">Sets policy setting parameter via a one-column listbox</string>
+       <string id="Sample_ListBox_SingleColumn_Help">This is an example of a Group Policy setting that configures a parameter using a one-column list box.
+  
+ If you enable this policy setting, a list box will be active.
+ Note: The prefix text "sample" will be prepended to the registry value name.
+  
+ If you disable this policy setting, the one-column list box will be inactive.
+  
+ If you do not configure this policy setting, the registry key and values associated with this policy setting will be deleted, if currently set to a value.
+  
+ Note: This policy setting creates registry values under the Software\Policies\Examples\listbox1 registry key.</string>
+  
+       <string id="Sample_NoParamPolicy_First">This is a no param policy that will be filtered away</string>
+       <string id="Sample_NoParamPolicy_First_Help">
+         This will be  filtered away
+       </string>
+       <string id="Sample_NoParamPolicy_sz">Sets enabled, disabled, or not configured state only (string)</string>
+       <string id="Sample_NoParamPolicy_sz_Help">
+         This is an example of a Group Policy setting that only sets a value for the enabled, disabled or not configured states.
+  
+         If you enable this policy setting, the Example2NoParamsz value will be set to 1.
+  
+         If you disable this policy setting, the Example2NoParamsz will be set to 0.
+  
+         If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+         Note: All values are stored as string (SZ).
+       </string>
+  
+       <string id="Sample_NoParamPolicy">Sets enabled, disabled, or not configured state only (numeric)</string>
+       <string id="Sample_NoParamPolicy_Help">This is an example of a Group Policy setting that only sets a value for the enabled, disabled, or not configured 
+ states.
+  
+ If you enable this policy setting, the Example2NoParam value will be set to 1.
+  
+ If you disable this policy setting, the Example2NoParam will be set to 0.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: All values are stored as numeric (DWORD).</string>
+       <string id="Sample_NoParamPolicy_Last">This is a no param policy that will be filtered away</string>
+       <string id="Sample_NoParamPolicy_Last_Help">
+         This will be filtered away
+       </string>
+       
+       <string id="sample_numericfreqspin">Spin control label:</string>
+       <string id="Sample_NumericSpin">Sets policy setting numeric parameter via a spin box</string>
+       <string id="Sample_NumericSpin_Help">This is an example of a Group Policy setting that configures a numeric parameter using a spin box.
+  
+ If you enable this policy setting, the spin box will be active.
+  
+ If you disable this policy setting, the spin box will not be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2NumericSpin registry value.</string>
+       <string id="sample_numericspin_tip1">This is an optional line of help text.</string>
+       <string id="Sample_LongNumericSpin">Sets policy setting long numeric parameter via a spin box</string>
+       <string id="Sample_LongNumericSpin_Help">This is an example of a Group Policy setting that configures a numeric parameter using a spin box.
+  
+ If you enable this policy setting, the spin box will be active.
+  
+ If you disable this policy setting, the spin box will not be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2LongNumericSpin registry value.</string>
+       <string id="Sample_NumericText">Sets policy setting numeric parameter stored as a string value</string>
+       <string id="Sample_NumericText_Help">This is an example of a Group Policy setting that configures a numeric parameter stored as a string registry 
+ value.
+  
+ If you enable this policy setting, the spin box will be active.
+ Note:The parameter value entered via the spin box is stored as a string registry value.
+  
+ If you disable this policy setting, the spin control will not be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2NumericText registry value.</string>
+       <string id="Sample_LongNumericText">Sets policy setting long numeric parameter stored as a string value</string>
+       <string id="Sample_LongNumericText_Help">This is an example of a Group Policy setting that configures a numeric parameter stored as a string registry 
+ value.
+  
+ If you enable this policy setting, the spin box will be active.
+ Note:The parameter value entered via the spin box is stored as a string registry value.
+  
+ If you disable this policy setting, the spin control will not be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2LongNumericText registry value.</string>
+       <string id="Sample_Textbox">Sets policy setting parameter via a text box</string>
+       <string id="Sample_Textbox_Help">This is an example of a Group Policy setting that configures a parameter using a text box.
+  
+ If you enable this policy setting, the text box will be active.
+  
+ If you disable this policy setting, the text box will not be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2textbox registry value.</string>
+       <string id="Sample_textboxExpandsz">Sets text box parameter as a REG_EXPAND_SZ value</string>
+       <string id="Sample_textboxExpandsz_Help">This is an example of a Group Policy setting that configures a REG_EXPAND_SZ registry value using a text box 
+ parameter.
+  
+ If you enable this policy setting, the Example2TextboxExpandsz value will be set via a text box with default value of %SYSTEMROOT%\example.
+  
+ If you disable or do not configure this policy setting, the Example2TextboxExpandsz value will be deleted, if currently set.
+  
+ Note:The REG_EXPAND_SZ registry value type is a null-terminated string that contains unexpanded references to environment variables (for example, "%PATH
+ %").</string>
+       <string id="Sample_MultiTextbox">Sets policy setting parameter via a multi-line text box</string>
+       <string id="Sample_MultiTextbox_Help">This is an example of a Group Policy setting that configures a parameter using a multi-line text box. This is 
+ used to configure REG_MULTI_SZ registry settings.
+  
+ If you enable this policy setting, the text box will be active.
+  
+ If you disable this policy setting, the text box will not be active.
+  
+ If you do not configure this policy setting, the value will be deleted, if currently set to a value.
+  
+ Note: This policy setting changes the Example2textbox registry value.</string>
+       <string id="SAMPLEHELP">Contains examples of different policy types.
+  
+ Should display policy settings the same as 
+ ADMX File - Example Policy settings category.</string>
+       <string id="supported_productonly">Only works on placeholder product.</string>      
+     </stringTable>
+     <presentationTable>
+       <presentation id="Sample_Checkbox">
+         <checkBox refId="Checkbox_1">First check box parameter</checkBox>
+         <checkBox refId="Checkbox_2" defaultChecked="true">Second check box parameter - checked by default</checkBox>
+       </presentation>
+       <presentation id="Sample_ComboBox">
+         <comboBox refId="Sample_ComboBox_Filename">
+           <label>Sorted combobox</label>
+           <suggestion>Filename A</suggestion>
+           <suggestion>EXECUTABLE.EXE</suggestion>
+           <suggestion>Filename B</suggestion>          
+         </comboBox>
+         <comboBox refId="Sample_ComboBox_Filename_Unsorted" noSort="true">
+           <label>UnSorted combobox</label>
+           <suggestion>Filename A</suggestion>
+           <suggestion>EXECUTABLE.EXE</suggestion>
+           <suggestion>Filename B</suggestion>          
+         </comboBox>
+       </presentation>
+       <presentation id="Sample_DropDownList">
+         <dropdownList refId="Sample_Dropdownlist_Box" defaultItem="0">Sorted drop-down</dropdownList>
+         <dropdownList refId="Sample_Dropdownlist_UnSorted_Box" defaultItem="0" noSort="true">Unsorted drop-down</dropdownList>
+       </presentation>
+       <presentation id="Sample_ListBox_DoubleColumn">
+         <text>Prompt text can be added above the listbox parameter.</text>
+         <text>Enter an item name paired with a value as described below.</text>
+         <text> </text>
+         <listBox refId="Sample_ListBox_DoubleList">name pair:</listBox>
+         <text> </text>
+         <text>Possible values:</text>
+         <text>value1 stored as a string representing configuration or action 1</text>
+         <text>value2 stored as a string representing configuration or action 2</text>
+       </presentation>
+       <presentation id="Sample_ListBox_SingleColumn">
+         <listBox refId="Sample_ListBox_SingleColumn_Param">Single Column Title</listBox>
+       </presentation>
+       <presentation id="Sample_NumericSpin">
+         <text>These are optional lines of text that provide</text>
+         <text>additional help text within the parameter display.</text>
+         <text> </text>
+         <decimalTextBox refId="Sample_NumericTextLabel" defaultValue="900" spinStep="60">Spin box label:</decimalTextBox>
+       </presentation>
+       <presentation id="Sample_LongNumericSpin">
+         <text>These are optional lines of text that provide</text>
+         <text>additional help text within the parameter display.</text>
+         <text> </text>
+         <longDecimalTextBox refId="Sample_LongNumericTextLabel" defaultValue="900" spinStep="60000">Spin box label:</longDecimalTextBox>
+       </presentation>
+       <presentation id="Sample_NumericText">
+         <text>These are optional lines of text that provide</text>
+         <text>additional help text within the parameter display.</text>
+         <text> </text>
+         <decimalTextBox refId="Sample_NumericTextLabel">Spin box label:</decimalTextBox>
+       </presentation>
+       <presentation id="Sample_LongNumericText">
+         <text>These are optional lines of text that provide</text>
+         <text>additional help text within the parameter display.</text>
+         <text> </text>
+         <longDecimalTextBox refId="Sample_LongNumericTextLabel">Spin box label:</longDecimalTextBox>
+       </presentation>
+       <presentation id="Sample_Textbox">
+         <textBox refId="Sample_TextboxPrompt">
+           <label>Prompt label for textbox</label>
+         </textBox>  
+       </presentation>
+       <presentation id="Sample_textboxExpandsz">
+         <textBox refId="Sample_textboxExpandszPrompt">
+           <label>This text box allows input of environment variables:</label>
+           <defaultValue>%SYSTEMROOT%\Example</defaultValue>
+         </textBox>
+       </presentation>
+       <presentation id="Sample_MultiTextbox">
+         <multiTextBox refId="Sample_MultiTextboxPrompt">Multi-line items to enter:</multiTextBox>
+       </presentation>     
+     </presentationTable>
+   </resources>
+ </policyDefinitionResources>

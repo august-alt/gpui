@@ -159,6 +159,26 @@ public:
     }
 };
 
+class XsdEnumElementAdapter : public model::admx::PolicyEnumElement {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::EnumerationElement EnumElement;
+
+public:
+    XsdEnumElementAdapter(const EnumElement& element)
+    {
+        adapter_base(this, element);
+
+        assign_if_exists(this->valueName, element.valueName());
+
+        this->required = element.required();
+    }
+
+    static std::unique_ptr<model::admx::PolicyEnumElement> create(const EnumElement& element)
+    {
+        return std::make_unique<XsdEnumElementAdapter>(element);
+    }
+};
+
 class XsdListElementAdapter : public model::admx::PolicyListElement {
 private:
     typedef ::GroupPolicy::PolicyDefinitions::ListElement ListElement;
@@ -311,6 +331,14 @@ std::ostream& operator << (std::ostream& os, const model::admx::PolicyDecimalEle
     return os;
 }
 
+std::ostream& operator << (std::ostream& os, const model::admx::PolicyEnumElement& element)
+{
+    element_with_value_base(os, element, "EnumElement");
+    os << std::endl;
+
+    return os;
+}
+
 std::ostream& operator << (std::ostream& os, const model::admx::PolicyListElement& element)
 {
     element_operator_base(os, element, "ListElement");
@@ -390,6 +418,8 @@ bool AdmxFormat::read(std::istream &input, PolicyFile *file)
                     adapt_elements<XsdBooleanElementAdapter>(policy.elements()->boolean(), ourPolicy->elements);
 
                     adapt_elements<XsdDecimalElementAdapter>(policy.elements()->decimal(), ourPolicy->elements);
+
+                    adapt_elements<XsdEnumElementAdapter>(policy.elements()->enum_(), ourPolicy->elements);
 
                     adapt_elements<XsdTextElementAdapter>(policy.elements()->text(), ourPolicy->elements);
 

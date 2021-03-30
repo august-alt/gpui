@@ -28,6 +28,7 @@ set(HEADERS
     presentation/listbox.h
     presentation/longdecimaltextbox.h
     presentation/multitextbox.h
+    presentation/policyresources.h
     presentation/presentation.h
     presentation/presentationwidget.h
     presentation/presentationwidgetvisitor.h

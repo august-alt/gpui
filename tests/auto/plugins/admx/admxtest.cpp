@@ -20,7 +20,7 @@
 
 #include "admxtest.h"
 
-#include "../../../../src/io/policyfile.h"
+#include "../../../../src/io/policydefinitionsfile.h"
 #include "../../../../src/model/admx/policy.h"
 #include "../../../../src/model/admx/policyelement.h"
 #include "../../../../src/plugins/admx/admxformat.h"
@@ -43,7 +43,7 @@ void AdmxTest::read()
     file.open (dataPath + "example.admx", std::ifstream::in);
 
     if (file.good()) {
-        std::unique_ptr<io::PolicyFile> policies = std::make_unique<io::PolicyFile>();
+        std::unique_ptr<io::PolicyDefinitionsFile> policies = std::make_unique<io::PolicyDefinitionsFile>();
 
         format.read(file, policies.get());
     }

@@ -20,8 +20,8 @@
 
 #include "policyfiletest.h"
 
-#include "../../../../src/io/policyfile.h"
-#include "../../../../src/model/admx/policy.h"
+#include "../../../../src/io/policydefinitionsfile.h"
+#include "../../../../src/model/admx/policydefinitions.h"
 #include "../../../../src/model/admx/policyelement.h"
 
 using namespace io;
@@ -31,48 +31,36 @@ namespace tests {
 
 void PolciyFileTest::getPolicy()
 {
-    PolicyFile file;
+    PolicyDefinitionsFile file;
 
-    auto policyA = std::make_shared<Policy>();
-    auto policyB = std::make_shared<Policy>();
-    auto policyC = std::make_shared<Policy>();
+    auto policyA = std::make_shared<PolicyDefinitions>();
+    auto policyB = std::make_shared<PolicyDefinitions>();
+    auto policyC = std::make_shared<PolicyDefinitions>();
 
-    file.addPolicy(policyA);
-    file.addPolicy(policyB);
-    file.addPolicy(policyC);
+    file.addPolicyDefinitions(policyA);
+    file.addPolicyDefinitions(policyB);
+    file.addPolicyDefinitions(policyC);
 
-    QVERIFY(file.getPolicy(0) == policyA);
-    QVERIFY(file.getPolicy(1) == policyB);
-    QVERIFY(file.getPolicy(2) == policyC);
-
-    policyA->name = "policyA";
-    policyB->name = "policyB";
-    policyC->name = "policyC";
-
-    QVERIFY(file.getPolicy("policyC") == policyC);
-    QVERIFY(file.getPolicy("policyA") == policyA);
-    QVERIFY(file.getPolicy("policyB") == policyB);
-    QVERIFY(file.getPolicy("no-policy") == nullptr);
+    QVERIFY(file.getPolicyDefinitions(0) == policyA);
+    QVERIFY(file.getPolicyDefinitions(1) == policyB);
+    QVERIFY(file.getPolicyDefinitions(2) == policyC);
+    QVERIFY(file.getPolicyDefinitions(3) == nullptr);
 }
 
-void PolciyFileTest::contains()
+void PolciyFileTest::policyDefinitionsCount()
 {
-    PolicyFile file;
+    PolicyDefinitionsFile file;
 
-    QVERIFY(file.policyCount() == 0);
+    QVERIFY(file.policyDefinitionsCount() == 0);
 
-    auto policy = std::make_shared<Policy>();
-    policy->name = "policy";
+    auto policy = std::make_shared<PolicyDefinitions>();
 
-    file.addPolicy(policy);
+    file.addPolicyDefinitions(policy);
+    QVERIFY(file.policyDefinitionsCount() == 1);
 
-    QVERIFY(file.policyCount() == 1);
-    QVERIFY(file.contains("policy"));
 
-    file.removePolicy(policy);
-
-    QVERIFY(file.policyCount() == 0);
-    QVERIFY(file.contains("policy") == false);
+    file.removePolicyDefinitions(policy);
+    QVERIFY(file.policyDefinitionsCount() == 0);
 }
 
 }

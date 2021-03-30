@@ -30,7 +30,7 @@ namespace tests {
 
         private slots:
             void getPolicy();
-            void contains();
+            void policyDefinitionsCount();
     };
 }
 

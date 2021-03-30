@@ -40,7 +40,7 @@ namespace model
         class GPUI_MODEL_EXPORT Presentation
         {
         public:
-            std::vector<std::unique_ptr<PresentationWidget>> widgets;
+            std::vector<std::shared_ptr<PresentationWidget>> widgets;
         };
     }
 }

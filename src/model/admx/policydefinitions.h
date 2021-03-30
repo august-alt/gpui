@@ -71,7 +71,7 @@ namespace model {
             /*!
              * \brief supportedOn Mapping of products and definitions.
              */
-            std::vector<std::shared_ptr<SupportedOn>> supportedOn;
+            std::shared_ptr<SupportedOn> supportedOn;
 
             /*!
              * \brief categories Contains a list of categories under which Group Policy

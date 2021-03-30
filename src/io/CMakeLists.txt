@@ -4,14 +4,16 @@ set(HEADERS
     genericfile.h
     genericfile.inl
     io.h
-    policyfile.h
+    policydefinitionsfile.h
+    policyresourcesfile.h
     policyfileformat.h
+    policyfileformat.inl
 )
 
 set(SOURCES    
     io.cpp
-    policyfile.cpp
-    policyfileformat.cpp
+    policydefinitionsfile.cpp
+    policyresourcesfile.cpp
 )
 
 add_definitions(

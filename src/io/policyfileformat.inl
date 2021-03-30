@@ -18,7 +18,6 @@
 **
 ***********************************************************************************************************************/
 
-#include "policyfileformat.h"
 #include <QtCore>
 
 namespace io {
@@ -28,51 +27,60 @@ class PolicyFileFormatPrivate
 public:
 };
 
-std::string PolicyFileFormat::getName()
+template <typename TPolicyFile>
+std::string PolicyFileFormat<TPolicyFile>::getName()
 {
     return std::string();
 }
 
-void PolicyFileFormat::read(std::istream& input, PolicyFile* file)
+template <typename TPolicyFile>
+void PolicyFileFormat<TPolicyFile>::read(std::istream& input, TPolicyFile* file)
 {
     Q_UNUSED(input);
     Q_UNUSED(file);
 }
 
-void PolicyFileFormat::write(std::istream& output, PolicyFile* file)
+template <typename TPolicyFile>
+void PolicyFileFormat<TPolicyFile>::write(std::istream& output, TPolicyFile *file)
 {
     Q_UNUSED(output);
     Q_UNUSED(file);
 }
 
-std::string PolicyFileFormat::getErrorString()
+template <typename TPolicyFile>
+std::string PolicyFileFormat<TPolicyFile>::getErrorString()
 {
     return std::string();
 }
 
-PolicyFileFormat* PolicyFileFormat::create(const std::string& name)
+template <typename TPolicyFile>
+PolicyFileFormat<TPolicyFile>* PolicyFileFormat<TPolicyFile>::create(const std::string& name)
 {
     Q_UNUSED(name);
     return nullptr;
 }
 
-std::vector<std::string> PolicyFileFormat::getFormats()
+template <typename TPolicyFile>
+std::vector<std::string> PolicyFileFormat<TPolicyFile>::getFormats()
 {
     return std::vector<std::string>();
 }
 
-void PolicyFileFormat::setErrorString(const std::string& error)
+template <typename TPolicyFile>
+void PolicyFileFormat<TPolicyFile>::setErrorString(const std::string& error)
 {
     Q_UNUSED(error);
 }
 
-PolicyFileFormat::PolicyFileFormat(const std::string &name)
+template <typename TPolicyFile>
+PolicyFileFormat<TPolicyFile>::PolicyFileFormat(const std::string &name)
     : d(new PolicyFileFormatPrivate())
 {
     Q_UNUSED(name);
 }
 
-PolicyFileFormat::~PolicyFileFormat()
+template <typename TPolicyFile>
+PolicyFileFormat<TPolicyFile>::~PolicyFileFormat()
 {
     delete d;
 }

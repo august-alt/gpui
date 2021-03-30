@@ -18,8 +18,8 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_POLICYFILE_H
-#define GPUI_POLICYFILE_H
+#ifndef GPUI_POLICYDEFINITIONSFILE_H
+#define GPUI_POLICYDEFINITIONSFILE_H
 
 #include "io.h"
 
@@ -30,37 +30,33 @@
 
 namespace model {
     namespace admx {
-        class Policy;
+        class PolicyDefinitions;
     }
 }
 
 namespace io {
-    class PolicyFilePrivate;
+    class PolicyDefinitionsFilePrivate;
 
-    class GPUI_IO_EXPORT PolicyFile : public GenericFile<PolicyFile, PolicyFileFormat>
+    class GPUI_IO_EXPORT PolicyDefinitionsFile : public GenericFile<PolicyDefinitionsFile, PolicyFileFormat<PolicyDefinitionsFile>>
     {
     public:
-        PolicyFile();
+        PolicyDefinitionsFile();
 
-        ~PolicyFile();
+        ~PolicyDefinitionsFile();
 
-        void addPolicy(std::shared_ptr<model::admx::Policy> policy);
+        void addPolicyDefinitions(std::shared_ptr<model::admx::PolicyDefinitions> policyDefinitions);
 
-        void removePolicy(std::shared_ptr<model::admx::Policy> policy);
+        void removePolicyDefinitions(std::shared_ptr<model::admx::PolicyDefinitions> policyDefinitions);
 
-        std::vector<std::shared_ptr<model::admx::Policy>> getPolicies();
+        std::vector<std::shared_ptr<model::admx::PolicyDefinitions>> getAllPolicyDefinitions();
 
-        size_t policyCount();
+        size_t policyDefinitionsCount();
 
-        std::shared_ptr<model::admx::Policy> getPolicy(const size_t index);
-
-        std::shared_ptr<model::admx::Policy> getPolicy(const std::string& name);
-
-        bool contains(const std::string& name);
+        std::shared_ptr<model::admx::PolicyDefinitions> getPolicyDefinitions(const size_t index);
 
     private:
-        PolicyFilePrivate* const d;
+        PolicyDefinitionsFilePrivate* const d;
     };
 }
 
-#endif // GPUI_POLICYFILE_H
+#endif // GPUI_POLICYDEFINITIONSFILE_H

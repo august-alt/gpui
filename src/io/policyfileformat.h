@@ -28,18 +28,17 @@
 #include <vector>
 
 namespace io {
-    class PolicyFile;
-
     class PolicyFileFormatPrivate;
 
+    template <typename TPolicyFile>
     class GPUI_IO_EXPORT PolicyFileFormat
     {
     public:
         std::string getName();
 
-        void read(std::istream& input, PolicyFile* file);
+        void read(std::istream& input, TPolicyFile* file);
 
-        void write(std::istream& output, PolicyFile* file);
+        void write(std::istream& output, TPolicyFile* file);
 
         std::string getErrorString();
 
@@ -58,5 +57,7 @@ namespace io {
         PolicyFileFormatPrivate* const d;
     };
 }
+
+#include "policyfileformat.inl"
 
 #endif // GPUI_POLICYFILEFORMAT_H

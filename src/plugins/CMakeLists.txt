@@ -14,6 +14,8 @@ macro(add_gpui_plugin name)
 
 endmacro(add_gpui_plugin)
 
+add_subdirectory(adml)
 add_subdirectory(admx)
+add_subdirectory(common)
 add_subdirectory(spol)
 add_subdirectory(reg)

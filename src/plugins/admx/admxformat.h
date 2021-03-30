@@ -23,14 +23,15 @@
 
 #include "../../../src/model/common.h"
 
+#include "../../../src/io/policydefinitionsfile.h"
 #include "../../../src/io/policyfileformat.h"
 
 namespace gpui {
-    class GPUI_SYMBOL_EXPORT AdmxFormat : public io::PolicyFileFormat {
+    class GPUI_SYMBOL_EXPORT AdmxFormat : public io::PolicyFileFormat<io::PolicyDefinitionsFile> {
     public:
         AdmxFormat();
 
-        bool read(std::istream& input, io::PolicyFile* file);
+        bool read(std::istream& input, io::PolicyDefinitionsFile* file);
     };
 }
 

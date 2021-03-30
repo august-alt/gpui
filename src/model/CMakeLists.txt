@@ -1,8 +1,12 @@
 set(HEADERS
     common.h
     model.h
+    admx/category.h
+    admx/majorversion.h
+    admx/minorversion.h
     admx/policybooleanelement.h
     admx/policydecimalelement.h
+    admx/policydefinitions.h
     admx/policyelement.h
     admx/policyenumelement.h
     admx/policy.h
@@ -11,6 +15,12 @@ set(HEADERS
     admx/policymultitextelement.h
     admx/policytextelement.h
     admx/policytype.h
+    admx/registryvalue.h
+    admx/registryvaluetype.h
+    admx/resources.h
+    admx/supporteddefinition.h
+    admx/supportedon.h
+    admx/supportedproduct.h
     presentation/checkbox.h
     presentation/combobox.h
     presentation/decimaltextbox.h

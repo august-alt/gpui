@@ -1,3 +1,5 @@
+find_package(Qt5 COMPONENTS Core REQUIRED)
+
 set(HEADERS
     common.h
     model.h
@@ -21,6 +23,9 @@ set(HEADERS
     admx/supporteddefinition.h
     admx/supportedon.h
     admx/supportedproduct.h
+    bundle/policybundle.h
+    bundle/policytreemodel.h
+    bundle/policytreemodelitem.h
     presentation/checkbox.h
     presentation/combobox.h
     presentation/decimaltextbox.h
@@ -38,7 +43,8 @@ set(HEADERS
 
 set(SOURCES
     model.cpp
-    presentation/presentationwidget.cpp
+    bundle/policybundle.cpp
+    presentation/presentationwidget.cpp    
 )
 
 add_definitions(
@@ -46,4 +52,4 @@ add_definitions(
 )
 
 add_gpui_library(gpui-model ${SOURCES})
-target_link_libraries(gpui-model)
+target_link_libraries(gpui-model Qt5::Core)

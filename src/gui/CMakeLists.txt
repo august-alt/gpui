@@ -1,5 +1,7 @@
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 set(HEADERS
     gui.h
     mainwindow.h
@@ -27,5 +29,5 @@ add_definitions(
     -DGPUI_GUI_LIBRARY
 )
 
-add_gpui_library(gpui-gui ${SOURCES} ${UI_SOURCES} ${MOC_SOURCES})
+add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES})
 target_link_libraries(gpui-gui Qt5::Widgets)

@@ -19,6 +19,7 @@
 ***********************************************************************************************************************/
 
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 namespace gpui {
 
@@ -29,12 +30,16 @@ public:
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
+    , ui(new Ui::MainWindow())
 {
+    ui->setupUi(this);
 }
 
 MainWindow::~MainWindow()
 {
     delete d;
+
+    delete ui;
 }
 
 }

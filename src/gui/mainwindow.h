@@ -25,6 +25,10 @@
 
 #include <QtWidgets>
 
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
+
 namespace gpui {
 
     class MainWindowPrivate;
@@ -40,6 +44,8 @@ namespace gpui {
     private:
 
         MainWindowPrivate* const d;
+
+        Ui::MainWindow *ui;
     };
 }
 

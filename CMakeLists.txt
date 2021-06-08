@@ -19,6 +19,8 @@ install(FILES ${CMAKE_BINARY_DIR}/GPUIConfig.cmake DESTINATION lib/gpui)
 # export the GPUI package
 export(PACKAGE GPUI)
 
+option(GPUI_BUILD_TESTS "Build the gpui tests." OFF)
+
 add_subdirectory(src)
 
 enable_testing()

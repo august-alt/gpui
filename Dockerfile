@@ -2,7 +2,7 @@
 FROM alt:p9
 
 RUN apt-get update \
-&& apt-get install -y cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel qt5-base-common doxygen libxerces-c-devel \
+&& apt-get install -y cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel qt5-base-common doxygen libxerces-c-devel rpm-build gear \
 && useradd -ms /bin/bash builder && mkdir /app && chown root:builder /app
 
 # Copies your code file from your action repository to the filesystem path `/` of the container

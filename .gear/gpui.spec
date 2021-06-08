@@ -56,5 +56,5 @@ cd BUILD
 %_libdir/gpui/plugins/libspol-plugin.so
 
 %changelog
-* Tue Jun 08 2021 <august@altlinux.org> 0.1.0-alt1
+* Tue Jun 08 2021 Vladimir Rubanov <august@altlinux.org> 0.1.0-alt1
 - Initial build

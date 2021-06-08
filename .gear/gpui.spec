@@ -18,9 +18,11 @@ BuildRequires(pre): qt5-tools-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
+BuildRequires: libxerces-c-devel
 
 Requires: qt5-base-common
 Requires: libqt5-help
+Requires: libxerces-c
 
 Source0: %name-%version.tar
 
@@ -31,7 +33,7 @@ Group policy editor
 %setup -q
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=%_libdir
+%cmake
 %cmake_build VERBOSE=1
 
 %install

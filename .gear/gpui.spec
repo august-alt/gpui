@@ -19,6 +19,7 @@ BuildRequires(pre): qt5-tools-devel
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
+BuildRequires: xsd
 
 Requires: qt5-base-common
 Requires: libqt5-help

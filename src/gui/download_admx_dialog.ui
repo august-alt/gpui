@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DownloadDefinitionsDialog</class>
+ <widget class="QDialog" name="DownloadDefinitionsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>390</width>
+    <height>139</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Download ADMX Dialog</string>
+  </property>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>371</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0" colspan="2">
+     <widget class="QLineEdit" name="pathLineEdit">
+      <property name="placeholderText">
+       <string notr="true">/usr/local/share/PolicyDefinitions</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <widget class="QLabel" name="downloadLabel">
+      <property name="text">
+       <string>Download the full set of definitions from Microsoft.</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="browseButton">
+      <property name="text">
+       <string>Browse...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1" colspan="2">
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DownloadDefinitionsDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

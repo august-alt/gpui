@@ -18,13 +18,13 @@
 **
 ***********************************************************************************************************************/
 
-#include "../gui/mainwindow.h"
+#include "../gui/download_admx_dialog.h"
 
 #include <QApplication>
 
 int main(int argc, char ** argv) {
     QApplication app(argc, argv);
-    gpui::MainWindow window;
+    gpui::DownloadADMXDialog window;
     window.show();
     return app.exec();
 }

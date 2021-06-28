@@ -21,8 +21,12 @@
 #include "download_admx_dialog.h"
 #include "ui_download_admx_dialog.h"
 
+#include "download_manager.h"
+
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QStandardPaths>
+#include <QProcess>
 
 #include <QDebug>
 
@@ -31,9 +35,13 @@ namespace gpui {
 class DownloadADMXDialogPrivate {
 public:
     static const QString downloadUrl;
+    QString downloadDirectory;
+    DownloadManager manager;
+    QProcess msiextract;
 };
 
-const QString DownloadADMXDialogPrivate::downloadUrl = "";
+const QString DownloadADMXDialogPrivate::downloadUrl
+= "https://download.microsoft.com/download/3/0/6/30680643-987a-450c-b906-a455fff4aee8/Administrative%20Templates%20(.admx)%20for%20Windows%2010%20October%202020%20Update.msi";
 
 DownloadADMXDialog::DownloadADMXDialog(QWidget *parent)
     : QDialog(parent)
@@ -42,10 +50,45 @@ DownloadADMXDialog::DownloadADMXDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->pathLineEdit->setPlaceholderText(QDir::homePath());
+    setDownloadDirectory(QDir::homePath());
 
     connect(ui->browseButton, SIGNAL(clicked()), SLOT(onBrowseClick()));
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(onOKClick()));
+
+
+    connect(&d->manager, &DownloadManager::updateProgress, [&](qint64 bytesReceived, qint64 bytesTotal)
+    {
+        ui->progressBar->setValue(bytesReceived/bytesTotal);
+        ui->progressBar->update();
+    });
+
+    connect(&d->manager, &DownloadManager::finished, [&]()
+    {
+        ui->progressBar->setValue(100);
+        ui->progressBar->update();
+
+        unpackMSI(d->manager.getLastDownloadedFileName(), d->downloadDirectory);
+    });
+
+    connect(this, &DownloadADMXDialog::folderIsNotEmpty, [&]()
+    {
+        QMessageBox msg;
+        msg.setText("Selected folder is not empty: " + d->downloadDirectory);
+        msg.exec();
+    });
+    connect(this, &DownloadADMXDialog::folderIsNotWriteable, [&]()
+    {
+        QMessageBox msg;
+        msg.setText("Selected folder is not writeable: " + d->downloadDirectory);
+        msg.exec();
+    });
+
+    connect(&d->msiextract , static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred), [&](QProcess::ProcessError error)
+    {
+        qWarning() << error;
+        ui->progressBar->setValue(100);
+        ui->progressBar->update();
+    });
 }
 
 DownloadADMXDialog::~DownloadADMXDialog()
@@ -55,22 +98,45 @@ DownloadADMXDialog::~DownloadADMXDialog()
     delete ui;
 }
 
-void DownloadADMXDialog::downloadFiles(const QString& url, const QFileInfo& outputFolder)
+void DownloadADMXDialog::downloadFiles(const QString& url, const QString& outputFolder)
 {
-    (void)url;
-    (void)outputFolder;
+    QDir dir(outputFolder);
+    if (!(dir.exists()))
+    {
+        emit folderIsNotWriteable();
+        return;
+    }
 
-    qDebug() << "Downloading files ...";
+    if (!dir.isEmpty(QDir::NoDotAndDotDot|QDir::AllEntries))
+    {
+        emit folderIsNotEmpty();
+        return;
+    }
 
-    unpackMSI(outputFolder.path() + "file.msi", outputFolder);
+    d->manager.setOutputDirectory(outputFolder + QDir::separator());
+    d->manager.append(url);
 }
 
-void DownloadADMXDialog::unpackMSI(const QString& inputMSI, const QFileInfo& outputFolder)
+void DownloadADMXDialog::unpackMSI(const QString& inputMSI, const QString& outputFolder)
 {
-    (void)inputMSI;
-    (void)outputFolder;
+    ui->progressBar->setValue(50);
+    ui->progressBar->update();
 
-    qDebug() << "Unpacking MSI ...";
+    QStringList arguments;
+    arguments.append(inputMSI);
+    arguments.append("-C");
+    arguments.append(outputFolder);
+    d->msiextract.startDetached("msiextract", arguments);
+    d->msiextract.waitForFinished();
+
+    ui->progressBar->setValue(100);
+    ui->progressBar->update();
+}
+
+void DownloadADMXDialog::setDownloadDirectory(const QString& directory)
+{
+    ui->pathLineEdit->setText(directory);
+    d->downloadDirectory = directory;
 }
 
 void DownloadADMXDialog::onBrowseClick()
@@ -80,12 +146,12 @@ void DownloadADMXDialog::onBrowseClick()
                 tr("Open Directory"),
                 QDir::homePath(),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    ui->pathLineEdit->setText(dir);
+    setDownloadDirectory(dir);
 }
 
 void DownloadADMXDialog::onOKClick()
 {
-    downloadFiles(d->downloadUrl, QStandardPaths::standardLocations(QStandardPaths::TempLocation).first());
+    downloadFiles(d->downloadUrl, d->downloadDirectory);
 }
 
 }

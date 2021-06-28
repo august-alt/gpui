@@ -50,14 +50,21 @@ namespace gpui {
         Ui::DownloadDefinitionsDialog *ui;
 
     private:
-        void downloadFiles(const QString& url, const QFileInfo& outputFolder);
+        void downloadFiles(const QString& url, const QString &outputFolder);
 
-        void unpackMSI(const QString& inputMSI, const QFileInfo& outputFolder);
+        void unpackMSI(const QString& inputMSI, const QString &outputFolder);
+
+        void setDownloadDirectory(const QString& directory);
 
     private slots:
         void onBrowseClick();
 
         void onOKClick();
+
+    signals:
+        void folderIsNotWriteable();
+
+        void folderIsNotEmpty();
     };
 }
 

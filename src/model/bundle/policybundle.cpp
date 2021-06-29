@@ -22,6 +22,11 @@
 
 #include <QDir>
 
+#include "../../plugins/adml/admlformat.h"
+#include "../../plugins/admx/admxformat.h"
+
+#include <fstream>
+
 namespace model {
 
 namespace bundle {
@@ -49,9 +54,39 @@ std::shared_ptr<PolicyTreeModel> PolicyBundle::loadFolder(const std::string& pat
 bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::string& language,
                                    const std::string& fallbackLanguage)
 {
-    Q_UNUSED(admxFileName);
-    Q_UNUSED(language);
-    Q_UNUSED(fallbackLanguage);
+    gpui::AdmxFormat admxFormat;
+
+    std::ifstream file;
+
+    file.open(admxFileName.path().toStdString(), std::ifstream::in);
+
+    if (file.good())
+    {
+        std::unique_ptr<io::PolicyDefinitionsFile> policies = std::make_unique<io::PolicyDefinitionsFile>();
+
+        admxFormat.read(file, policies.get());
+    }
+
+    file.close();
+
+    QString admlFileInLanguage(admxFileName.path());
+    admlFileInLanguage.prepend(QString::fromStdString(language) + QDir::separator());
+
+    QString admlFileInFallbackLanguage(admxFileName.path());
+    admlFileInFallbackLanguage.prepend(QString::fromStdString(fallbackLanguage) + QDir::separator());
+
+    file.open(admlFileInLanguage.toStdString(), std::fstream::in);
+
+    gpui::AdmlFormat admlFormat;
+
+    if (file.good())
+    {
+        std::unique_ptr<io::PolicyResourcesFile> policies = std::make_unique<io::PolicyResourcesFile>();
+
+        admlFormat.read(file, policies.get());
+    }
+
+    file.close();
 
     // TODO: Load admx and adml files.
     return false;

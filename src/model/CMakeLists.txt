@@ -3,6 +3,8 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 set(HEADERS
     common.h
     model.h
+    plugin.h
+    pluginstorage.h
     admx/category.h
     admx/majorversion.h
     admx/minorversion.h
@@ -43,6 +45,7 @@ set(HEADERS
 
 set(SOURCES
     model.cpp
+    pluginstorage.cpp
     bundle/policybundle.cpp
     presentation/presentationwidget.cpp    
 )

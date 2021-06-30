@@ -18,33 +18,44 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PLUGIN_H
-#define GPUI_PLUGIN_H
+#include "plugin.h"
 
-#include <memory>
-
-class QLibrary;
-class QString;
+#include <QLibrary>
 
 namespace gpui {
-    class PluginPrivate;
 
-    class Plugin
+    class PluginPrivate
     {
     public:
-        ~Plugin();
-
-        const QString& getName() const;
-
-        void setLibrary(std::unique_ptr<QLibrary> library);
-        QLibrary* getLibrary() const;
-
-    protected:
-        Plugin(const QString& name);
-
-    private:
-        PluginPrivate* d;
+        QString name;
+        std::unique_ptr<QLibrary> library;
     };
-}
 
-#endif // GPUI_PLUGIN_H
+    Plugin::~Plugin()
+    {
+        d->library->unload();
+
+        delete d;
+    }
+
+    const QString& Plugin::getName() const
+    {
+        return d->name;
+    }
+
+    void Plugin::setLibrary(std::unique_ptr<QLibrary> library)
+    {
+        d->library = std::move(library);
+    }
+
+    QLibrary* Plugin::getLibrary() const
+    {
+        return d->library.get();
+    }
+
+    Plugin::Plugin(const QString& name)
+        : d(new PluginPrivate())
+    {
+        d->name = name;
+    }
+}

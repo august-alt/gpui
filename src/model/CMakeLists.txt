@@ -45,6 +45,7 @@ set(HEADERS
 
 set(SOURCES
     model.cpp
+    plugin.cpp
     pluginstorage.cpp
     bundle/policybundle.cpp
     presentation/presentationwidget.cpp    

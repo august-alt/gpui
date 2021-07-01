@@ -29,7 +29,7 @@ namespace gpui {
         AdmlPlugin()
             : Plugin("adml")
         {
-            GPUI_REGISTER_PLUGIN_CLASS(this->getName(), AdmlFormat);
+            GPUI_REGISTER_PLUGIN_CLASS(typeid(AdmlFormat).name(), AdmlFormat);
         }
     };
 }

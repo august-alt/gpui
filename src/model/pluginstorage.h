@@ -21,6 +21,8 @@
 #ifndef GPUI_PLUGINSTORAGE_H
 #define GPUI_PLUGINSTORAGE_H
 
+#include "model.h"
+
 #include <QString>
 
 #include <functional>
@@ -39,7 +41,7 @@ class PluginStoragePrivate;
  *
  * \ingroup gpui
  */
-class PluginStorage
+class GPUI_MODEL_EXPORT PluginStorage
 {
 public:
     /*!
@@ -75,6 +77,11 @@ public:
      * \return
      */
     bool unloadPlugin(Plugin* plugin);
+
+    /**
+     * @brief loadDefaultPlugins
+     */
+    void loadDefaultPlugins();
 
     /*!
      *  \brief createPluginClass

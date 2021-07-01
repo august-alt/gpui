@@ -18,6 +18,20 @@
 **
 ***********************************************************************************************************************/
 
-namespace gpui {
+#include "../../model/plugin.h"
 
-}
+#include "admlformat.h"
+
+//namespace gpui {
+    class AdmlPlugin : public gpui::Plugin
+    {
+    public:
+        AdmlPlugin()
+            : Plugin("adml")
+        {
+            GPUI_REGISTER_PLUGIN_CLASS(this->getName(), gpui::AdmlFormat);
+        }
+    };
+//}
+
+GPUI_EXPORT_PLUGIN(adml, AdmlPlugin)

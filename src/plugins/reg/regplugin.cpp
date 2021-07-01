@@ -17,3 +17,19 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 ***********************************************************************************************************************/
+
+#include "../../model/plugin.h"
+
+namespace gpui {
+    class RegPlugin : public Plugin
+    {
+    public:
+        RegPlugin()
+            : Plugin("reg")
+        {
+
+        }
+    };
+}
+
+GPUI_EXPORT_PLUGIN(reg, gpui::RegPlugin)

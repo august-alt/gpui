@@ -15,3 +15,4 @@ set(SOURCES
 add_gpui_plugin(admx-plugin ${SOURCES})
 target_link_libraries(admx-plugin Qt5::Core)
 target_link_libraries(admx-plugin ${GPUI_LIBRARIES} policy-common)
+target_link_libraries(admx-plugin xerces-c)

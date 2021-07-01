@@ -20,11 +20,18 @@
 
 #include "../gui/mainwindow.h"
 
+#include "../model/pluginstorage.h"
+
 #include <QApplication>
 
 int main(int argc, char ** argv) {
+    // Create window.
     QApplication app(argc, argv);
     gpui::MainWindow window;
     window.show();
+
+    // Load plugins.
+    gpui::PluginStorage::instance()->loadDefaultPlugins();
+
     return app.exec();
 }

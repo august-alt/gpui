@@ -21,6 +21,12 @@
 #ifndef GPUI_PLUGIN_H
 #define GPUI_PLUGIN_H
 
+#include "model.h"
+
+#include "common.h"
+
+#include <functional>
+#include <map>
 #include <memory>
 
 class QLibrary;
@@ -28,8 +34,9 @@ class QString;
 
 namespace gpui {
     class PluginPrivate;
+    class PluginStorage;
 
-    class Plugin
+    class GPUI_MODEL_EXPORT Plugin
     {
     public:
         ~Plugin();
@@ -39,12 +46,26 @@ namespace gpui {
         void setLibrary(std::unique_ptr<QLibrary> library);
         QLibrary* getLibrary() const;
 
+        const std::map<QString, std::function<void()>>& getPluginClasses() const;
+
     protected:
-        Plugin(const QString& name);
+        explicit Plugin(const QString& name);
+        explicit Plugin(const char* name);
+
+        void registerPluginClass(const QString& name, std::function<void()> constructor);
 
     private:
         PluginPrivate* d;
     };
 }
+
+#define GPUI_EXPORT_PLUGIN(name, className) \
+    extern "C" GPUI_SYMBOL_EXPORT gpui::Plugin* gpui_plugin_init() \
+    { \
+        return new className; \
+    }
+
+#define GPUI_REGISTER_PLUGIN_CLASS(name, pluginClass) \
+    registerPluginClass(name, [](){ return new pluginClass(); })
 
 #endif // GPUI_PLUGIN_H

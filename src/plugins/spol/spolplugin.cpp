@@ -17,3 +17,19 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 ***********************************************************************************************************************/
+
+#include "../../model/plugin.h"
+
+namespace gpui {
+    class SpolPlugin : public Plugin
+    {
+    public:
+        SpolPlugin()
+            : Plugin("spol")
+        {
+
+        }
+    };
+}
+
+GPUI_EXPORT_PLUGIN(spol, gpui::SpolPlugin)

@@ -15,3 +15,4 @@ set(SOURCES
 add_gpui_plugin(adml-plugin ${SOURCES})
 target_link_libraries(adml-plugin Qt5::Core)
 target_link_libraries(adml-plugin ${GPUI_LIBRARIES} policy-common)
+target_link_libraries(adml-plugin xerces-c)

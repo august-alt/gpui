@@ -22,16 +22,16 @@
 
 #include "admlformat.h"
 
-//namespace gpui {
-    class AdmlPlugin : public gpui::Plugin
+namespace gpui {
+    class AdmlPlugin : public Plugin
     {
     public:
         AdmlPlugin()
             : Plugin("adml")
         {
-            GPUI_REGISTER_PLUGIN_CLASS(this->getName(), gpui::AdmlFormat);
+            GPUI_REGISTER_PLUGIN_CLASS(this->getName(), AdmlFormat);
         }
     };
-//}
+}
 
-GPUI_EXPORT_PLUGIN(adml, AdmlPlugin)
+GPUI_EXPORT_PLUGIN(adml, gpui::AdmlPlugin)

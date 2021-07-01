@@ -22,16 +22,16 @@
 
 #include "admxformat.h"
 
-//namespace gpui {
-    class AdmxPlugin : public gpui::Plugin
+namespace gpui {
+    class AdmxPlugin : public Plugin
     {
     public:
         AdmxPlugin()
             : Plugin("admx")
         {
-            GPUI_REGISTER_PLUGIN_CLASS(this->getName(), gpui::AdmxFormat);
+            GPUI_REGISTER_PLUGIN_CLASS(this->getName(), AdmxFormat);
         }
     };
-//}
+}
 
-GPUI_EXPORT_PLUGIN(admx, AdmxPlugin)
+GPUI_EXPORT_PLUGIN(admx, gpui::AdmxPlugin)

@@ -30,7 +30,7 @@ namespace gpui {
     public:
         QString name;
         std::unique_ptr<QLibrary> library;
-        std::map<QString, std::function<void()> > pluginClasses;
+        std::map<QString, std::function<void*()> > pluginClasses;
     };
 
     Plugin::~Plugin()
@@ -55,7 +55,7 @@ namespace gpui {
         return d->library.get();
     }
 
-    const std::map<QString, std::function<void ()> >& Plugin::getPluginClasses() const
+    const std::map<QString, std::function<void*()> >& Plugin::getPluginClasses() const
     {
         return d->pluginClasses;
     }
@@ -72,7 +72,7 @@ namespace gpui {
 
     }
 
-    void Plugin::registerPluginClass(const QString &name, std::function<void ()> constructor)
+    void Plugin::registerPluginClass(const QString &name, std::function<void*()> constructor)
     {
         d->pluginClasses[name] = constructor;
     }

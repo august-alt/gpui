@@ -1,3 +1,4 @@
 add_subdirectory(gui)
 add_subdirectory(io)
+add_subdirectory(model)
 add_subdirectory(plugins)

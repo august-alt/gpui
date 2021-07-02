@@ -33,7 +33,7 @@ class PluginStoragePrivate
 {
 public:    
     std::map<QString, std::unique_ptr<Plugin> > pluginMap;
-    std::map<QString, std::map<QString, std::function<void()> > > classMap;
+    std::map<QString, std::map<QString, std::function<void*()> > > classMap;
 };
 
 PluginStorage::PluginStorage()
@@ -144,26 +144,14 @@ void PluginStorage::loadDefaultPlugins()
     loadPluginDirectory("/lib64/gpui/plugins/");
 }
 
-template<typename T>
-T* PluginStorage::createPluginClass(const QString& pluginName)
-{
-    auto search = d->classMap.find(pluginName);
-    if (search != d->classMap.end())
-    {
-        return search->second[typeid(T).name()]();
-    }
-
-    return nullptr;
-}
-
-void PluginStorage::registerPluginClass(const QString& pluginName, const QString& className, std::function<void()> constructor)
+void PluginStorage::registerPluginClass(const QString& pluginName, const QString& className, std::function<void*()> constructor)
 {
     auto search = d->classMap.find(pluginName);
     if (search == d->classMap.end())
     {
-        d->classMap[pluginName] = std::map<QString, std::function<void()> >();
+        d->classMap[pluginName] = std::map<QString, std::function<void*()> >();
     }
-    std::map<QString, std::function<void()> >& pluginConstructors = d->classMap[pluginName];
+    std::map<QString, std::function<void*()> >& pluginConstructors = d->classMap[pluginName];
     pluginConstructors[className] = constructor;
 }
 
@@ -180,6 +168,17 @@ bool PluginStorage::unregisterPluginClass(const QString& pluginName, const QStri
     }
 
     return false;
+}
+
+void* PluginStorage::createPluginClass(const QString &className, const QString &pluginName)
+{
+    auto search = d->classMap.find(pluginName);
+    if (search != d->classMap.end())
+    {
+        return search->second[className]();
+    }
+
+    return nullptr;
 }
 
 }

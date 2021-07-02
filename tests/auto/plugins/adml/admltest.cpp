@@ -43,7 +43,8 @@ void AdmlTest::read()
 
     std::ifstream file;
 
-    file.open (dataPath + "example.adml", std::ifstream::in);
+//    file.open (dataPath + "example.adml", std::ifstream::in);
+    file.open("/home/august/Downloads/ADMX/Program Files/Microsoft Group Policy/Windows 10 October 2020 Update (20H2)/PolicyDefinitions/ru-ru/ActiveXInstallService.adml", std::fstream::in);
 
     if (file.good())
     {

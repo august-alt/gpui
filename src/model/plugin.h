@@ -46,13 +46,13 @@ namespace gpui {
         void setLibrary(std::unique_ptr<QLibrary> library);
         QLibrary* getLibrary() const;
 
-        const std::map<QString, std::function<void()>>& getPluginClasses() const;
+        const std::map<QString, std::function<void *()> > &getPluginClasses() const;
 
     protected:
         explicit Plugin(const QString& name);
         explicit Plugin(const char* name);
 
-        void registerPluginClass(const QString& name, std::function<void()> constructor);
+        void registerPluginClass(const QString& name, std::function<void*()> constructor);
 
     private:
         PluginPrivate* d;

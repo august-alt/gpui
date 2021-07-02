@@ -57,3 +57,4 @@ add_definitions(
 
 add_gpui_library(gpui-model ${SOURCES})
 target_link_libraries(gpui-model Qt5::Core)
+target_link_libraries(gpui-model gpui-io)

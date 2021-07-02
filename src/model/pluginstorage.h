@@ -87,13 +87,18 @@ public:
      *  \brief createPluginClass
      */
     template<typename T>
-    T* createPluginClass(const QString& pluginName);
+    T* createPluginClass(const QString& pluginName)
+    {
+        return reinterpret_cast<T*>(createPluginClass(typeid(T).name(), pluginName));
+    }
 
     static PluginStorage* instance();
 
 private:
-    void registerPluginClass(const QString& pluginName, const QString& className, std::function<void()> constructor);
+    void registerPluginClass(const QString& pluginName, const QString& className, std::function<void*()> constructor);
     bool unregisterPluginClass(const QString& pluginName, const QString& className);
+
+    void *createPluginClass(const QString& className, const QString& pluginName);
 
     PluginStorage();
     ~PluginStorage();

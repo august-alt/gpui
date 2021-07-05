@@ -25,32 +25,20 @@ namespace io {
 class PolicyFileFormatPrivate
 {
 public:
+    std::string name;
+    std::string error;
 };
 
 template <typename TPolicyFile>
 std::string PolicyFileFormat<TPolicyFile>::getName()
 {
-    return std::string();
-}
-
-template <typename TPolicyFile>
-void PolicyFileFormat<TPolicyFile>::read(std::istream& input, TPolicyFile* file)
-{
-    Q_UNUSED(input);
-    Q_UNUSED(file);
-}
-
-template <typename TPolicyFile>
-void PolicyFileFormat<TPolicyFile>::write(std::istream& output, TPolicyFile *file)
-{
-    Q_UNUSED(output);
-    Q_UNUSED(file);
+    return d->name;
 }
 
 template <typename TPolicyFile>
 std::string PolicyFileFormat<TPolicyFile>::getErrorString()
 {
-    return std::string();
+    return d->error;
 }
 
 template <typename TPolicyFile>
@@ -69,14 +57,14 @@ std::vector<std::string> PolicyFileFormat<TPolicyFile>::getFormats()
 template <typename TPolicyFile>
 void PolicyFileFormat<TPolicyFile>::setErrorString(const std::string& error)
 {
-    Q_UNUSED(error);
+    d->error = error;
 }
 
 template <typename TPolicyFile>
 PolicyFileFormat<TPolicyFile>::PolicyFileFormat(const std::string &name)
     : d(new PolicyFileFormatPrivate())
 {
-    Q_UNUSED(name);
+    d->name = name;
 }
 
 template <typename TPolicyFile>

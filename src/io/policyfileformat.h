@@ -36,9 +36,9 @@ namespace io {
     public:
         std::string getName();
 
-        void read(std::istream& input, TPolicyFile* file);
+        virtual bool read(std::istream& input, TPolicyFile* file) = 0;
 
-        void write(std::istream& output, TPolicyFile* file);
+        virtual bool write(std::ostream& output, TPolicyFile* file) = 0;
 
         std::string getErrorString();
 

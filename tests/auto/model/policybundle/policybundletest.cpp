@@ -28,3 +28,5 @@ using namespace model::admx;
 
 namespace tests {
 }
+
+QTEST_MAIN(tests::PolciyBundleTest)

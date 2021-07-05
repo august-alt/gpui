@@ -46,6 +46,9 @@ namespace gpui {
         MainWindowPrivate* const d;
 
         Ui::MainWindow *ui;
+
+    private slots:
+        void onDirectoryOpen();
     };
 }
 

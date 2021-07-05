@@ -21,10 +21,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "../model/bundle/policybundle.h"
+
 namespace gpui {
 
 class MainWindowPrivate {
 public:
+    std::unique_ptr<QStandardItemModel> model;
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -33,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow())
 {
     ui->setupUi(this);
+
+    connect(ui->actionOpen_Policy_Directory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +45,20 @@ MainWindow::~MainWindow()
     delete d;
 
     delete ui;
+}
+
+void MainWindow::onDirectoryOpen()
+{
+    QString directory = QFileDialog::getExistingDirectory(
+                        this,
+                        tr("Open Directory"),
+                        QDir::homePath(),
+                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    auto bundle = std::make_unique<model::bundle::PolicyBundle>();
+    d->model = bundle->loadFolder(directory.toStdString(), "ru-ru", "en-US");
+
+    ui->treeView->setModel(d->model.get());
 }
 
 }

@@ -99,6 +99,7 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="actionOpen_Policy_Directory"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -274,6 +275,14 @@
    </property>
    <property name="toolTip">
     <string>Customize</string>
+   </property>
+  </action>
+  <action name="actionOpen_Policy_Directory">
+   <property name="text">
+    <string>Open &amp;Policy Directory</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

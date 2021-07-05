@@ -28,26 +28,30 @@
 #include <string>
 
 class QFileInfo;
+class QString;
+class QStandardItemModel;
 
 namespace model
 {
     namespace bundle
     {
-        class ILogger;
+        class PolicyBundlePrivate;
 
         class GPUI_MODEL_EXPORT PolicyBundle
         {
         public:
-            PolicyBundle(const ILogger& logger);
+            PolicyBundle();
 
-            std::shared_ptr<PolicyTreeModel> loadFolder(const std::string& path, const std::string& language,
+            std::unique_ptr<QStandardItemModel> loadFolder(const std::string& path, const std::string& language,
                                                         const std::string& fallbackLanguage);
 
         private:
             bool loadAdmxAndAdml(const QFileInfo &admxFileName, const std::string& language,
                                  const std::string& fallbackLanguage);
 
-            void logError(const std::string& error);
+            QString constructFileName(const QFileInfo &fileName, const std::string &language);
+
+            PolicyBundlePrivate* d;
         };
     }
 }

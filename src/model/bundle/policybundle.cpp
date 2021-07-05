@@ -26,7 +26,11 @@
 #include "../../plugins/adml/admlformat.h"
 #include "../../io/genericfile.h"
 
+#include "../admx/policydefinitions.h"
+#include "../presentation/policyresources.h"
+
 #include <QDir>
+#include <QStandardItemModel>
 
 #include <fstream>
 
@@ -34,24 +38,32 @@ namespace model {
 
 namespace bundle {
 
-PolicyBundle::PolicyBundle(const ILogger& logger)
+class PolicyBundlePrivate
 {
-    Q_UNUSED(logger);
+public:
+    std::unique_ptr<QStandardItemModel> treeModel;
+};
+
+PolicyBundle::PolicyBundle()
+    : d(new PolicyBundlePrivate())
+{
 }
 
-std::shared_ptr<PolicyTreeModel> PolicyBundle::loadFolder(const std::string& path, const std::string& language,
+std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& path, const std::string& language,
                                                           const std::string& fallbackLanguage)
 {
+    d->treeModel = std::make_unique<QStandardItemModel>();
+
     const QDir dir(path.c_str());
-    const QFileInfoList files = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+    const QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
 
     for (const QFileInfo& file : files) {
-        if (file.completeBaseName().toLower().endsWith(".admx")) {
+        if (file.fileName().toLower().endsWith(".admx")) {
             loadAdmxAndAdml(file, language, fallbackLanguage);
         }
     }
 
-    return std::shared_ptr<PolicyTreeModel>(nullptr);
+    return std::move(d->treeModel);
 }
 
 template<typename TPolicies, typename TFormat>
@@ -73,7 +85,10 @@ std::unique_ptr<TPolicies> loadPolicies(const QString& pluginName, const QFileIn
     if (file.good()) {
         policies = std::make_unique<TPolicies>();
 
-        reinterpret_cast<io::PolicyFileFormat<TPolicies>*>(format)->read(file, policies.get());
+        if (!format->read(file, policies.get()))
+        {
+            qWarning() << QString::fromStdString(format->getErrorString());
+        }
     }
 
     file.close();
@@ -81,30 +96,54 @@ std::unique_ptr<TPolicies> loadPolicies(const QString& pluginName, const QFileIn
     return policies;
 }
 
+QString PolicyBundle::constructFileName(const QFileInfo& fileName, const std::string& language)
+{
+    QString admlFileName = fileName.fileName();
+    admlFileName.replace(admlFileName.length() - 4, 4, "adml");
+    admlFileName.prepend(QDir::separator() + QString::fromStdString(language) + QDir::separator());
+    admlFileName.prepend(fileName.absolutePath());
+    return admlFileName;
+}
+
 bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::string& language,
                                    const std::string& fallbackLanguage)
 {
-    Q_UNUSED(admxFileName);
-    Q_UNUSED(language);
     Q_UNUSED(fallbackLanguage);
 
-    auto policyDefinitions = loadPolicies<io::PolicyDefinitionsFile, gpui::AdmxFormat>("admx", admxFileName);
+    auto policyDefinitions = loadPolicies<io::PolicyDefinitionsFile, io::PolicyFileFormat<io::PolicyDefinitionsFile>>("admx", admxFileName);
+    if (!policyDefinitions.get())
+    {
+        return false;
+    }
+    QString admlFileName = constructFileName(admxFileName, language);
+    auto policyResources = loadPolicies<io::PolicyResourcesFile, io::PolicyFileFormat<io::PolicyResourcesFile>>("adml", admlFileName);
+    if (!policyResources.get())
+    {
+        return false;
+    }
 
-    QString admlFilePath = admxFileName.absolutePath();
-    admlFilePath.replace(admlFilePath.length() - 4, 4, "adml");
+    QStandardItem * rootItem = d->treeModel->invisibleRootItem();
 
-    qWarning() << admlFilePath;
+    for (auto& definition : policyDefinitions->getAllPolicyDefinitions())
+    {
+        for (auto& categories : definition->categories)
+        {
+            QString displayName = QString::fromStdString(categories->displayName).replace("$(string.", "");
+            displayName.replace(")", "");
+            for (auto& policyResource : policyResources->getAll())
+            {
+                if (policyResource->stringTable.find(displayName.toStdString()) != policyResource->stringTable.end())
+                {
+                    displayName = QString::fromStdString(policyResource->stringTable[displayName.toStdString()]);
+                }
+            }
 
-    //auto policyResources = loadPolicies<io::PolicyResourcesFile, gpui::AdmlFormat>()
+            rootItem->appendRow(new QStandardItem(displayName));
+        }
+    }
 
     // TODO: Load admx and adml files.
-    return false;
-}
-
-void PolicyBundle::logError(const std::string& error)
-{
-    Q_UNUSED(error);
-    // TODO: Implement logging.
+    return true;
 }
 
 }

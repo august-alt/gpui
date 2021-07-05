@@ -4238,7 +4238,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, DecimalElement >
     _xsd_DecimalElement_type_factory_init (
       "DecimalElement",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // LongDecimalElement
     //
@@ -4431,7 +4431,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, LongDecimalElement >
     _xsd_LongDecimalElement_type_factory_init (
       "LongDecimalElement",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // BooleanElement
     //
@@ -4503,7 +4503,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "trueValue",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< TrueValueType >,
               false, true, i, n, f, this));
 
@@ -4531,7 +4531,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "falseValue",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< FalseValueType >,
               false, true, i, n, f, this));
 
@@ -4559,7 +4559,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "trueList",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< TrueListType >,
               false, true, i, n, f, this));
 
@@ -4587,7 +4587,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "falseList",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< FalseListType >,
               false, true, i, n, f, this));
 
@@ -4686,7 +4686,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, BooleanElement >
     _xsd_BooleanElement_type_factory_init (
       "BooleanElement",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // TextElement
     //
@@ -4864,7 +4864,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, TextElement >
     _xsd_TextElement_type_factory_init (
       "TextElement",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // EnumerationElement
     //
@@ -4926,7 +4926,7 @@ namespace GroupPolicy
 
         // item
         //
-        if (n.name () == "item" && n.namespace_ () == "http://www.microsoft.com/GroupPolicy/PolicyDefinitions")
+        if (n.name () == "item" && n.namespace_ () == "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions")
         {
           ::std::unique_ptr< ItemType > r (
             ItemTraits::create (i, f, this));
@@ -5021,7 +5021,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, EnumerationElement >
     _xsd_EnumerationElement_type_factory_init (
       "EnumerationElement",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ListElement
     //
@@ -5184,7 +5184,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ListElement >
     _xsd_ListElement_type_factory_init (
       "ListElement",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // Value
     //
@@ -5240,7 +5240,7 @@ namespace GroupPolicy
 
         // delete
         //
-        if (n.name () == "delete" && n.namespace_ () == "http://www.microsoft.com/GroupPolicy/PolicyDefinitions")
+        if (n.name () == "delete" && n.namespace_ () == "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions")
         {
           ::std::unique_ptr< DeleteType > r (
             DeleteTraits::create (i, f, this));
@@ -5254,7 +5254,7 @@ namespace GroupPolicy
 
         // decimal
         //
-        if (n.name () == "decimal" && n.namespace_ () == "http://www.microsoft.com/GroupPolicy/PolicyDefinitions")
+        if (n.name () == "decimal" && n.namespace_ () == "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions")
         {
           ::std::unique_ptr< DecimalType > r (
             DecimalTraits::create (i, f, this));
@@ -5268,7 +5268,7 @@ namespace GroupPolicy
 
         // longDecimal
         //
-        if (n.name () == "longDecimal" && n.namespace_ () == "http://www.microsoft.com/GroupPolicy/PolicyDefinitions")
+        if (n.name () == "longDecimal" && n.namespace_ () == "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions")
         {
           ::std::unique_ptr< LongDecimalType > r (
             LongDecimalTraits::create (i, f, this));
@@ -5282,7 +5282,7 @@ namespace GroupPolicy
 
         // string
         //
-        if (n.name () == "string" && n.namespace_ () == "http://www.microsoft.com/GroupPolicy/PolicyDefinitions")
+        if (n.name () == "string" && n.namespace_ () == "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions")
         {
           ::std::unique_ptr< StringType > r (
             StringTraits::create (i, f, this));
@@ -5329,7 +5329,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, Value >
     _xsd_Value_type_factory_init (
       "Value",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ValueList
     //
@@ -5383,7 +5383,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "item",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ItemType >,
               false, true, i, n, f, this));
 
@@ -5448,7 +5448,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ValueList >
     _xsd_ValueList_type_factory_init (
       "ValueList",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ValueItem
     //
@@ -5516,7 +5516,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "value",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ValueType >,
               false, true, i, n, f, this));
 
@@ -5545,7 +5545,7 @@ namespace GroupPolicy
       {
         throw ::xsd::cxx::tree::expected_element< char > (
           "value",
-          "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+          "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
       }
 
       while (p.more_attributes ())
@@ -5605,7 +5605,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ValueItem >
     _xsd_ValueItem_type_factory_init (
       "ValueItem",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // MultiTextElement
     //
@@ -5783,7 +5783,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, MultiTextElement >
     _xsd_MultiTextElement_type_factory_init (
       "multiTextElement",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // DataElementContent
     //
@@ -6110,7 +6110,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, DecimalTextBox >
     _xsd_DecimalTextBox_type_factory_init (
       "DecimalTextBox",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // LongDecimalTextBox
     //
@@ -6263,7 +6263,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, LongDecimalTextBox >
     _xsd_LongDecimalTextBox_type_factory_init (
       "LongDecimalTextBox",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // TextBox
     //
@@ -6329,7 +6329,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "label",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< LabelType >,
               false, true, i, n, f, this));
 
@@ -6357,7 +6357,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "defaultValue",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DefaultValueType >,
               false, true, i, n, f, this));
 
@@ -6386,7 +6386,7 @@ namespace GroupPolicy
       {
         throw ::xsd::cxx::tree::expected_element< char > (
           "label",
-          "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+          "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
       }
     }
 
@@ -6419,7 +6419,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, TextBox >
     _xsd_TextBox_type_factory_init (
       "TextBox",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // MultiTextBox
     //
@@ -6524,7 +6524,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, MultiTextBox >
     _xsd_MultiTextBox_type_factory_init (
       "MultiTextBox",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // CheckBox
     //
@@ -6641,7 +6641,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, CheckBox >
     _xsd_CheckBox_type_factory_init (
       "CheckBox",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ComboBox
     //
@@ -6715,7 +6715,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "label",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< LabelType >,
               false, true, i, n, f, this));
 
@@ -6743,7 +6743,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "default",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DefaultType >,
               false, true, i, n, f, this));
 
@@ -6771,7 +6771,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "suggestion",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< SuggestionType >,
               false, true, i, n, f, this));
 
@@ -6797,7 +6797,7 @@ namespace GroupPolicy
       {
         throw ::xsd::cxx::tree::expected_element< char > (
           "label",
-          "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+          "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
       }
 
       p.reset_attributes ();
@@ -6852,7 +6852,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ComboBox >
     _xsd_ComboBox_type_factory_init (
       "ComboBox",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // DropdownList
     //
@@ -6982,7 +6982,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, DropdownList >
     _xsd_DropdownList_type_factory_init (
       "DropdownList",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ListBox
     //
@@ -7049,7 +7049,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ListBox >
     _xsd_ListBox_type_factory_init (
       "ListBox",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // PolicyPresentation
     //
@@ -7127,7 +7127,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "text",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< TextType >,
               false, true, i, n, f, this));
 
@@ -7152,7 +7152,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "decimalTextBox",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DecimalTextBoxType >,
               false, true, i, n, f, this));
 
@@ -7177,7 +7177,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "textBox",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< TextBoxType >,
               false, true, i, n, f, this));
 
@@ -7202,7 +7202,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "checkBox",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< CheckBoxType >,
               false, true, i, n, f, this));
 
@@ -7227,7 +7227,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "comboBox",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ComboBoxType >,
               false, true, i, n, f, this));
 
@@ -7252,7 +7252,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "dropdownList",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DropdownListType >,
               false, true, i, n, f, this));
 
@@ -7277,7 +7277,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "listBox",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ListBoxType >,
               false, true, i, n, f, this));
 
@@ -7302,7 +7302,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "longDecimalTextBox",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< LongDecimalTextBoxType >,
               false, true, i, n, f, this));
 
@@ -7327,7 +7327,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "multiTextBox",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< MultiTextBoxType >,
               false, true, i, n, f, this));
 
@@ -7407,7 +7407,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, PolicyPresentation >
     _xsd_PolicyPresentation_type_factory_init (
       "PolicyPresentation",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // CategoryReference
     //
@@ -7495,7 +7495,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, CategoryReference >
     _xsd_CategoryReference_type_factory_init (
       "CategoryReference",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // Category
     //
@@ -7565,7 +7565,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "annotation",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< AnnotationType >,
               false, true, i, n, f, this));
 
@@ -7590,7 +7590,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "parentCategory",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ParentCategoryType >,
               false, true, i, n, f, this));
 
@@ -7618,7 +7618,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "seeAlso",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< SeeAlsoType >,
               false, true, i, n, f, this));
 
@@ -7643,7 +7643,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "keywords",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< KeywordsType >,
               false, true, i, n, f, this));
 
@@ -7742,7 +7742,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, Category >
     _xsd_Category_type_factory_init (
       "Category",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedProducts
     //
@@ -7793,7 +7793,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "product",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ProductType >,
               false, true, i, n, f, this));
 
@@ -7844,7 +7844,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedProducts >
     _xsd_SupportedProducts_type_factory_init (
       "SupportedProducts",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedProduct
     //
@@ -7902,7 +7902,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "majorVersion",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< MajorVersionType >,
               false, true, i, n, f, this));
 
@@ -7988,7 +7988,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedProduct >
     _xsd_SupportedProduct_type_factory_init (
       "SupportedProduct",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedMajorVersion
     //
@@ -8050,7 +8050,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "minorVersion",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< MinorVersionType >,
               false, true, i, n, f, this));
 
@@ -8150,7 +8150,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedMajorVersion >
     _xsd_SupportedMajorVersion_type_factory_init (
       "SupportedMajorVersion",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedMinorVersion
     //
@@ -8274,7 +8274,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedMinorVersion >
     _xsd_SupportedMinorVersion_type_factory_init (
       "SupportedMinorVersion",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedOnReference
     //
@@ -8362,7 +8362,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedOnReference >
     _xsd_SupportedOnReference_type_factory_init (
       "SupportedOnReference",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedOnRange
     //
@@ -8470,7 +8470,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedOnRange >
     _xsd_SupportedOnRange_type_factory_init (
       "SupportedOnRange",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedAndCondition
     //
@@ -8524,7 +8524,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "range",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< RangeType >,
               false, true, i, n, f, this));
 
@@ -8549,7 +8549,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "reference",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ReferenceType >,
               false, true, i, n, f, this));
 
@@ -8601,7 +8601,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedAndCondition >
     _xsd_SupportedAndCondition_type_factory_init (
       "SupportedAndCondition",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedOrCondition
     //
@@ -8655,7 +8655,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "range",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< RangeType >,
               false, true, i, n, f, this));
 
@@ -8680,7 +8680,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "reference",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ReferenceType >,
               false, true, i, n, f, this));
 
@@ -8732,7 +8732,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedOrCondition >
     _xsd_SupportedOrCondition_type_factory_init (
       "SupportedOrCondition",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedOnDefinition
     //
@@ -8793,7 +8793,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "or",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< OrType >,
               false, true, i, n, f, this));
 
@@ -8821,7 +8821,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "and",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< AndType >,
               false, true, i, n, f, this));
 
@@ -8911,7 +8911,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedOnDefinition >
     _xsd_SupportedOnDefinition_type_factory_init (
       "SupportedOnDefinition",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // SupportedOnDefinitions
     //
@@ -8962,7 +8962,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "definition",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DefinitionType >,
               false, true, i, n, f, this));
 
@@ -9013,7 +9013,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, SupportedOnDefinitions >
     _xsd_SupportedOnDefinitions_type_factory_init (
       "SupportedOnDefinitions",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // PolicyClass
     //
@@ -9091,7 +9091,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, PolicyClass >
     _xsd_PolicyClass_type_factory_init (
       "PolicyClass",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // PolicyDefinition
     //
@@ -9221,7 +9221,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "annotation",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< AnnotationType >,
               false, true, i, n, f, this));
 
@@ -9246,7 +9246,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "parentCategory",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ParentCategoryType >,
               false, true, i, n, f, this));
 
@@ -9274,7 +9274,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "seeAlso",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< SeeAlsoType >,
               false, true, i, n, f, this));
 
@@ -9299,7 +9299,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "keywords",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< KeywordsType >,
               false, true, i, n, f, this));
 
@@ -9327,7 +9327,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "supportedOn",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< SupportedOnType >,
               false, true, i, n, f, this));
 
@@ -9355,7 +9355,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "enabledValue",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< EnabledValueType >,
               false, true, i, n, f, this));
 
@@ -9383,7 +9383,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "disabledValue",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DisabledValueType >,
               false, true, i, n, f, this));
 
@@ -9411,7 +9411,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "enabledList",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< EnabledListType >,
               false, true, i, n, f, this));
 
@@ -9439,7 +9439,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "disabledList",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DisabledListType >,
               false, true, i, n, f, this));
 
@@ -9467,7 +9467,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "elements",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ElementsType >,
               false, true, i, n, f, this));
 
@@ -9496,7 +9496,7 @@ namespace GroupPolicy
       {
         throw ::xsd::cxx::tree::expected_element< char > (
           "supportedOn",
-          "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+          "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
       }
 
       while (p.more_attributes ())
@@ -9621,7 +9621,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, PolicyDefinition >
     _xsd_PolicyDefinition_type_factory_init (
       "PolicyDefinition",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // PolicyElements
     //
@@ -9690,7 +9690,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "boolean",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< BooleanType >,
               false, true, i, n, f, this));
 
@@ -9715,7 +9715,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "decimal",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< DecimalType >,
               false, true, i, n, f, this));
 
@@ -9740,7 +9740,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "text",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< TextType >,
               false, true, i, n, f, this));
 
@@ -9765,7 +9765,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "enum",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< EnumType >,
               false, true, i, n, f, this));
 
@@ -9790,7 +9790,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "list",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ListType >,
               false, true, i, n, f, this));
 
@@ -9815,7 +9815,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "longDecimal",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< LongDecimalType >,
               false, true, i, n, f, this));
 
@@ -9840,7 +9840,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "multiText",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< MultiTextType >,
               false, true, i, n, f, this));
 
@@ -9897,7 +9897,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, PolicyElements >
     _xsd_PolicyElements_type_factory_init (
       "PolicyElements",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // Item
     //
@@ -9965,7 +9965,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "value",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ValueType >,
               false, true, i, n, f, this));
 
@@ -9993,7 +9993,7 @@ namespace GroupPolicy
           ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
             ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
               "valueList",
-              "http://www.microsoft.com/GroupPolicy/PolicyDefinitions",
+              "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions",
               &::xsd::cxx::tree::factory_impl< ValueListType >,
               false, true, i, n, f, this));
 
@@ -10022,7 +10022,7 @@ namespace GroupPolicy
       {
         throw ::xsd::cxx::tree::expected_element< char > (
           "value",
-          "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+          "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
       }
 
       while (p.more_attributes ())

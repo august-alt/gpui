@@ -270,7 +270,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, GUID >
     _xsd_GUID_type_factory_init (
       "GUID",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // VersionString
     //
@@ -348,7 +348,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, VersionString >
     _xsd_VersionString_type_factory_init (
       "versionString",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // StringReference
     //
@@ -426,7 +426,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, StringReference >
     _xsd_StringReference_type_factory_init (
       "stringReference",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // PresentationReference
     //
@@ -504,7 +504,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, PresentationReference >
     _xsd_PresentationReference_type_factory_init (
       "presentationReference",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ResourceID
     //
@@ -582,7 +582,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ResourceID >
     _xsd_ResourceID_type_factory_init (
       "resourceID",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // Annotation
     //
@@ -709,7 +709,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, Annotation >
     _xsd_Annotation_type_factory_init (
       "Annotation",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ItemName
     //
@@ -787,7 +787,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ItemName >
     _xsd_ItemName_type_factory_init (
       "itemName",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // ItemReference
     //
@@ -865,7 +865,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, ItemReference >
     _xsd_ItemReference_type_factory_init (
       "itemReference",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // LocalizedString
     //
@@ -977,7 +977,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, LocalizedString >
     _xsd_LocalizedString_type_factory_init (
       "LocalizedString",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // RegistryKey
     //
@@ -1055,7 +1055,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, RegistryKey >
     _xsd_RegistryKey_type_factory_init (
       "registryKey",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // RegistryValueName
     //
@@ -1133,7 +1133,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, RegistryValueName >
     _xsd_RegistryValueName_type_factory_init (
       "registryValueName",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
 
     // FileName
     //
@@ -1211,7 +1211,7 @@ namespace GroupPolicy
     const ::xsd::cxx::tree::type_factory_initializer< 0, char, FileName >
     _xsd_FileName_type_factory_init (
       "fileName",
-      "http://www.microsoft.com/GroupPolicy/PolicyDefinitions");
+      "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions");
   }
 }
 

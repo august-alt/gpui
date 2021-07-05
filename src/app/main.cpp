@@ -25,13 +25,13 @@
 #include <QApplication>
 
 int main(int argc, char ** argv) {
+    // Load plugins.
+    gpui::PluginStorage::instance()->loadDefaultPlugins();
+
     // Create window.
     QApplication app(argc, argv);
     gpui::MainWindow window;
     window.show();
-
-    // Load plugins.
-    gpui::PluginStorage::instance()->loadDefaultPlugins();
 
     return app.exec();
 }

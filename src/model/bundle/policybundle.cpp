@@ -87,7 +87,7 @@ std::unique_ptr<TPolicies> loadPolicies(const QString& pluginName, const QFileIn
 
         if (!format->read(file, policies.get()))
         {
-            qWarning() << QString::fromStdString(format->getErrorString());
+            qWarning() << admxFileName.fileName() + " " + QString::fromStdString(format->getErrorString());
         }
     }
 

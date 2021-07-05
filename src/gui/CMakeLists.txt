@@ -31,3 +31,4 @@ add_definitions(
 
 add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES})
 target_link_libraries(gpui-gui Qt5::Widgets)
+target_link_libraries(gpui-gui gpui-model)

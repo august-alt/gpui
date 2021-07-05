@@ -242,7 +242,7 @@ public:
         {
             for (const auto& string : resources.resources().stringTable()->string())
             {
-                this->stringTable.push_back(string);
+                this->stringTable[string.id()] = string;
             }
         }
 
@@ -304,6 +304,14 @@ bool AdmlFormat::read(std::istream &input, io::PolicyResourcesFile *file)
 
         return false;
     }
+
+    return false;
+}
+
+bool AdmlFormat::write(std::ostream &output, io::PolicyResourcesFile *file)
+{
+    Q_UNUSED(output);
+    Q_UNUSED(file);
 
     return false;
 }

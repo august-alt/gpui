@@ -525,4 +525,12 @@ bool AdmxFormat::read(std::istream &input, PolicyDefinitionsFile *file)
     return false;
 }
 
+bool AdmxFormat::write(std::ostream &output, PolicyDefinitionsFile *file)
+{
+    Q_UNUSED(output);
+    Q_UNUSED(file);
+
+    return false;
+}
+
 }

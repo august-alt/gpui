@@ -31,7 +31,9 @@ namespace gpui {
     public:
         AdmlFormat();
 
-        bool read(std::istream& input, io::PolicyResourcesFile* file);
+        bool read(std::istream& input, io::PolicyResourcesFile* file) override;
+
+        bool write(std::ostream& output, io::PolicyResourcesFile* file) override;
     };
 }
 

@@ -9,21 +9,17 @@ License: GPLv2+
 Group: Other
 Url: https://github.com/august-alt/gpui
 
-BuildRequires(pre): cmake
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): cmake-modules
-BuildRequires(pre): gcc-c++
-BuildRequires(pre): qt5-base-devel
-BuildRequires(pre): qt5-tools-devel
+BuildRequires: cmake
+BuildRequires: rpm-macros-cmake
+BuildRequires: cmake-modules
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
 BuildRequires: xsd
-
-Requires: qt5-base-common
-Requires: libqt5-help
-Requires: libxerces-c
 
 Source0: %name-%version.tar
 
@@ -35,11 +31,10 @@ Group policy editor
 
 %build
 %cmake
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-cd BUILD
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %doc README.md

@@ -23,6 +23,7 @@
 
 #include "../model.h"
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -63,7 +64,7 @@ namespace model
             /*!
              * \brief stringTable A table of localized strings.
              */
-            std::vector<std::string> stringTable;
+            std::map<std::string, std::string> stringTable;
 
             /*!
              * \brief presentationTable A table of presentation elements representing policy setting parameters.

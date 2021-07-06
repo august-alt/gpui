@@ -5,12 +5,14 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 
 set(HEADERS
     basetypes.h
+    exceptionhandler.h
     policydefinitionfiles.h
     policydefinitions.h
 )
 
-set(SOURCES
+set(SOURCES    
     basetypes.cpp
+    exceptionhandler.cpp
     policydefinitionfiles.cpp
     policydefinitions.cpp
 )

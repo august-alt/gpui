@@ -36,6 +36,8 @@
 #include "../../../src/model/presentation/text.h"
 #include "../../../src/model/presentation/textbox.h"
 
+#include "../common/exceptionhandler.h"
+
 namespace gpui {
 
 class XsdCheckBoxAdapter : public model::presentation::CheckBox {
@@ -277,35 +279,19 @@ AdmlFormat::AdmlFormat()
 
 bool AdmlFormat::read(std::istream &input, io::PolicyResourcesFile *file)
 {
-    try
-    {
+    std::unique_ptr<::GroupPolicy::PolicyDefinitions::PolicyDefinitions> policyDefinitions;
+    auto operation = [&]() {
         std::unique_ptr<::GroupPolicy::PolicyDefinitions::PolicyDefinitionResources> policyDefinitionResources
             = GroupPolicy::PolicyDefinitions::policyDefinitionResources(input, ::xsd::cxx::tree::flags::dont_validate);
 
         file->add(XsdResourcesAdapter::create(*policyDefinitionResources));
+    };
 
-        return true;
-    }
-    catch (const xsd::cxx::tree::exception<char>& e)
-    {
-        setErrorString(e.what());
+    auto errorHandler = [&](const std::string& error){
+        this->setErrorString(error);
+    };
 
-        return false;
-    }
-    catch (const xsd::cxx::xml::invalid_utf16_string&)
-    {
-        setErrorString("Invalid UTF-16 text in DOM model.");
-
-        return false;
-    }
-    catch (const xsd::cxx::xml::invalid_utf8_string&)
-    {
-        setErrorString("invalid UTF-8 text in object model.");
-
-        return false;
-    }
-
-    return false;
+    return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
 bool AdmlFormat::write(std::ostream &output, io::PolicyResourcesFile *file)

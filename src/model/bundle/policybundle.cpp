@@ -69,6 +69,11 @@ PolicyBundle::PolicyBundle()
 {
 }
 
+PolicyBundle::~PolicyBundle()
+{
+    delete d;
+}
+
 std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& path, const std::string& language,
                                                           const std::string& fallbackLanguage)
 {
@@ -122,6 +127,8 @@ std::unique_ptr<TPolicies> loadPolicies(const QString& pluginName, const QFileIn
     }
 
     file.close();
+
+    delete format;
 
     return policies;
 }
@@ -271,6 +278,11 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
         else if (item.type == model::admx::PolicyType::Machine)
         {
             assignParentCategory(item.category, item.item, nullptr);
+        }
+        else
+        {
+            QStandardItem* copyItem = createItem(item.item->data().value<QString>(), "text-x-generic");
+            assignParentCategory(item.category, item.item, copyItem);
         }
     }
 }

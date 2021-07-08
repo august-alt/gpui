@@ -42,6 +42,7 @@ namespace model
         {
         public:
             PolicyBundle();
+            ~PolicyBundle();
 
             std::unique_ptr<QStandardItemModel> loadFolder(const std::string& path, const std::string& language,
                                                         const std::string& fallbackLanguage);

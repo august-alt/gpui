@@ -39,7 +39,7 @@ namespace gpui {
     class GPUI_MODEL_EXPORT Plugin
     {
     public:
-        ~Plugin();
+        virtual ~Plugin();
 
         const QString& getName() const;
 

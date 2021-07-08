@@ -35,8 +35,6 @@ namespace gpui {
 
     Plugin::~Plugin()
     {
-        d->library->unload();
-
         delete d;
     }
 

@@ -36,6 +36,8 @@
 #include "../../../src/model/presentation/text.h"
 #include "../../../src/model/presentation/textbox.h"
 
+#include "../../../src/model/presentation/presentation.h"
+
 #include "../common/exceptionhandler.h"
 
 namespace gpui {
@@ -220,12 +222,24 @@ public:
 };
 
 template <typename AdapterType, typename SequenceType>
-void adapt_widgets(const SequenceType& sequence, std::vector<std::shared_ptr<model::presentation::PresentationWidget>>& widgets)
+void adapt_widgets(const SequenceType& sequence,
+                   std::map<std::string, std::shared_ptr<model::presentation::PresentationWidget>>& widgets)
+{
+    for (const auto& adaptee : sequence) {
+        auto adaptedElement = AdapterType::create(adaptee);        
+
+        widgets[adaptee.refId()] = std::move(adaptedElement);
+    }
+}
+
+template <typename AdapterType, typename SequenceType = ::GroupPolicy::PolicyDefinitions::PolicyPresentation::TextSequence>
+void adapt_widgets(const ::GroupPolicy::PolicyDefinitions::PolicyPresentation::TextSequence& sequence,
+                   std::map<std::string, std::shared_ptr<model::presentation::PresentationWidget>>& widgets)
 {
     for (const auto& adaptee : sequence) {
         auto adaptedElement = AdapterType::create(adaptee);
 
-        widgets.push_back(std::move(adaptedElement));
+        widgets[adaptee] = std::move(adaptedElement);
     }
 }
 
@@ -252,15 +266,18 @@ public:
         {
             for (const auto& presentation : resources.resources().presentationTable()->presentation())
             {
-                adapt_widgets<XsdCheckBoxAdapter>(presentation.checkBox(), this->presentationTable);
-                adapt_widgets<XsdComboBoxAdapter>(presentation.comboBox(), this->presentationTable);
-                adapt_widgets<XsdDecimalTextBoxAdapter>(presentation.decimalTextBox(), this->presentationTable);
-                adapt_widgets<XsdDropdownListAdapter>(presentation.dropdownList(), this->presentationTable);
-                adapt_widgets<XsdListBoxAdapter>(presentation.listBox(), this->presentationTable);
-                adapt_widgets<XsdLongDecimalTextBoxAdapter>(presentation.longDecimalTextBox(), this->presentationTable);
-                adapt_widgets<XsdMultiTextBoxAdapter>(presentation.multiTextBox(), this->presentationTable);
-                adapt_widgets<XsdTextBoxAdapter>(presentation.textBox(), this->presentationTable);
-                adapt_widgets<XsdTextAdapter>(presentation.text(), this->presentationTable);
+                this->presentationTable[presentation.id()] = std::make_shared<model::presentation::Presentation>();
+                auto& widgets = this->presentationTable[presentation.id()]->widgets;
+
+                adapt_widgets<XsdCheckBoxAdapter>(presentation.checkBox(), widgets);
+                adapt_widgets<XsdComboBoxAdapter>(presentation.comboBox(), widgets);
+                adapt_widgets<XsdDecimalTextBoxAdapter>(presentation.decimalTextBox(), widgets);
+                adapt_widgets<XsdDropdownListAdapter>(presentation.dropdownList(), widgets);
+                adapt_widgets<XsdListBoxAdapter>(presentation.listBox(), widgets);
+                adapt_widgets<XsdLongDecimalTextBoxAdapter>(presentation.longDecimalTextBox(), widgets);
+                adapt_widgets<XsdMultiTextBoxAdapter>(presentation.multiTextBox(), widgets);
+                adapt_widgets<XsdTextBoxAdapter>(presentation.textBox(), widgets);
+                adapt_widgets<XsdTextAdapter>(presentation.text(), widgets);
             }
         }
     }

@@ -24,8 +24,8 @@
 #include "../model.h"
 #include "presentationwidget.h"
 
+#include <map>
 #include <memory>
-#include <vector>
 
 namespace model
 {
@@ -40,7 +40,7 @@ namespace model
         class GPUI_MODEL_EXPORT Presentation
         {
         public:
-            std::vector<std::shared_ptr<PresentationWidget>> widgets;
+            std::map<std::string, std::shared_ptr<PresentationWidget>> widgets;
         };
     }
 }

@@ -32,6 +32,8 @@ namespace model
 {
     namespace presentation
     {
+        class Presentation;
+
         class PresentationWidget;
         /*!
          * \brief The PolicyResources class Represents container for localized policy resources and display elements.
@@ -69,7 +71,7 @@ namespace model
             /*!
              * \brief presentationTable A table of presentation elements representing policy setting parameters.
              */
-            std::vector<std::shared_ptr<PresentationWidget>> presentationTable;
+            std::map<std::string, std::shared_ptr<Presentation>> presentationTable;
         };
     }
 }

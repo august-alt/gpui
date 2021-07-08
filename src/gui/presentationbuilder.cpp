@@ -169,7 +169,7 @@ namespace gui
 
         for (const auto& widget : presentation.widgets) {
             QWidget* policyWidget = nullptr;
-            widget->accept(*d);
+            widget.second->accept(*d);
 
             if (policyWidget) {
                 layout->addWidget(policyWidget);

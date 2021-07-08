@@ -29,6 +29,7 @@
 
 class QFileInfo;
 class QString;
+class QStandardItem;
 class QStandardItemModel;
 
 namespace model
@@ -52,6 +53,11 @@ namespace model
             QString constructFileName(const QFileInfo &fileName, const std::string &language);
 
             PolicyBundlePrivate* d;
+
+            void rearrangeTreeItems();
+            void assignParentCategory(const std::string& rawCategory, QStandardItem *machineItem, QStandardItem* userItem);
+
+            QStandardItem *createItem(const QString& displayName, const QString &iconName);
         };
     }
 }

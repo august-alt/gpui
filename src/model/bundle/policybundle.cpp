@@ -1,4 +1,4 @@
-/***********************************************************************************************************************
+﻿/***********************************************************************************************************************
 **
 ** Copyright (C) 2021 BaseALT Ltd.
 **
@@ -27,7 +27,9 @@
 #include "../../io/genericfile.h"
 
 #include "../admx/policydefinitions.h"
+#include "../admx/policyelement.h"
 #include "../presentation/policyresources.h"
+#include "../presentation/presentationwidget.h"
 
 #include <QDir>
 #include <QStandardItemModel>
@@ -38,10 +40,28 @@ namespace model {
 
 namespace bundle {
 
+struct CategoryStorage
+{
+    QStandardItem* machineItem;
+    QStandardItem* userItem;
+    model::admx::Category category;
+};
+
+struct PolicyStorage
+{
+    model::admx::PolicyType type;
+    std::string category;
+    QStandardItem* item;
+};
+
 class PolicyBundlePrivate
 {
 public:
     std::unique_ptr<QStandardItemModel> treeModel;
+    std::map<std::string, CategoryStorage> categoryItemMap;
+    std::vector<PolicyStorage> unassignedItems;
+    QStandardItem* rootMachineItem;
+    QStandardItem* rootUserItem;
 };
 
 PolicyBundle::PolicyBundle()
@@ -54,6 +74,14 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
 {
     d->treeModel = std::make_unique<QStandardItemModel>();
 
+    QStandardItem* rootItem = d->treeModel->invisibleRootItem();
+
+    d->rootMachineItem = new QStandardItem("Machine");
+    d->rootUserItem = new QStandardItem("User");
+
+    rootItem->appendRow(d->rootMachineItem);
+    rootItem->appendRow(d->rootUserItem);
+
     const QDir dir(path.c_str());
     const QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
 
@@ -62,6 +90,8 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
             loadAdmxAndAdml(file, language, fallbackLanguage);
         }
     }
+
+    rearrangeTreeItems();
 
     return std::move(d->treeModel);
 }
@@ -105,6 +135,44 @@ QString PolicyBundle::constructFileName(const QFileInfo& fileName, const std::st
     return admlFileName;
 }
 
+std::string findStringById(const std::string& id, const std::unique_ptr<io::PolicyResourcesFile>& resource)
+{
+    if (id.length() < 10 || id.compare(0, 9, "$(string.") != 0)
+    {
+        return id;
+    }
+    std::string pureId = id.substr(9, id.length() - 10);
+    for (auto& currentResource : resource->getAll())
+    {
+        auto search = currentResource->stringTable.find(pureId);
+        if (search != currentResource->stringTable.end())
+        {
+            return search->second;
+        }
+    }
+
+    return pureId;
+}
+
+std::shared_ptr<model::presentation::Presentation> findPresentationById(const std::string& id, const std::unique_ptr<io::PolicyResourcesFile>& resource)
+{
+    if (id.length() < 16 || id.compare(0, 15, "$(presentation.") != 0)
+    {
+        return nullptr;
+    }
+    std::string pureId = id.substr(15, id.length() - 16);
+    for (auto& currentResource : resource->getAll())
+    {
+        auto search = currentResource->presentationTable.find(pureId);
+        if (search != currentResource->presentationTable.end())
+        {
+            return search->second;
+        }
+    }
+
+    return nullptr;
+}
+
 bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::string& language,
                                    const std::string& fallbackLanguage)
 {
@@ -122,28 +190,89 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
         return false;
     }
 
-    QStandardItem * rootItem = d->treeModel->invisibleRootItem();
-
     for (auto& definition : policyDefinitions->getAllPolicyDefinitions())
     {
-        for (auto& categories : definition->categories)
+        for (auto& category : definition->categories)
         {
-            QString displayName = QString::fromStdString(categories->displayName).replace("$(string.", "");
-            displayName.replace(")", "");
-            for (auto& policyResource : policyResources->getAll())
-            {
-                if (policyResource->stringTable.find(displayName.toStdString()) != policyResource->stringTable.end())
-                {
-                    displayName = QString::fromStdString(policyResource->stringTable[displayName.toStdString()]);
-                }
-            }
+            QString displayName = QString::fromStdString(findStringById(category->displayName, policyResources));
 
-            rootItem->appendRow(new QStandardItem(displayName));
+            d->categoryItemMap[category->name].machineItem = createItem(displayName, "folder");
+            d->categoryItemMap[category->name].userItem = createItem(displayName, "folder");
+            d->categoryItemMap[category->name].category = *category;
+
+            if (category->parentCategory.size() == 0)
+            {
+                d->rootUserItem->appendRow(d->categoryItemMap[category->name].userItem);
+                d->rootMachineItem->appendRow(d->categoryItemMap[category->name].machineItem);
+            }
+        }
+        for (auto& policy : definition->policies)
+        {
+            QString displayName = QString::fromStdString(findStringById(policy->displayName, policyResources));
+            auto policyItem = createItem(displayName, "text-x-generic");
+
+            PolicyStorage container;
+            container.category = policy->parentCategory;
+            container.item = policyItem;
+            container.type = policy->policyType;
+
+            d->unassignedItems.push_back(container);
         }
     }
 
-    // TODO: Load admx and adml files.
     return true;
+}
+
+void model::bundle::PolicyBundle::assignParentCategory(const std::string& rawCategory, QStandardItem* machineItem, QStandardItem* userItem)
+{
+    std::string parentCategory = rawCategory;
+    std::string::size_type position = parentCategory.find(':');
+    if (position != std::string::npos)
+    {
+       parentCategory = parentCategory.substr(position + 1);
+    }
+
+    auto search = d->categoryItemMap.find(parentCategory);
+    if (search != d->categoryItemMap.end())
+    {
+        if (machineItem) {
+            search->second.machineItem->appendRow(machineItem);
+        }
+        if (userItem)
+        {
+            search->second.userItem->appendRow(userItem);
+        }
+    }
+    else if (rawCategory.size() > 0)
+    {
+        qWarning() << "Unable to find parent category: " << rawCategory.c_str();
+    }
+}
+
+QStandardItem *PolicyBundle::createItem(const QString &displayName, const QString& iconName)
+{
+    QStandardItem* categoryItem = new QStandardItem(displayName);
+    categoryItem->setIcon(QIcon::fromTheme(iconName));
+    return categoryItem;
+}
+
+void model::bundle::PolicyBundle::rearrangeTreeItems()
+{
+    for (const auto& entry : d->categoryItemMap)
+    {
+        assignParentCategory(entry.second.category.parentCategory, entry.second.machineItem, entry.second.userItem);
+    }
+
+    for (const auto& item : d->unassignedItems)
+    {
+        if (item.type == model::admx::PolicyType::User) {
+            assignParentCategory(item.category, nullptr, item.item);
+        }
+        else if (item.type == model::admx::PolicyType::Machine)
+        {
+            assignParentCategory(item.category, item.item, nullptr);
+        }
+    }
 }
 
 }

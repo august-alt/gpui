@@ -83,15 +83,15 @@ void PresentationBuilderTest::build()
     textBox->label = "label";
     textBox->refId = "refId_textBox";
 
-    presentation.widgets.push_back(std::move(checkBox));
-    presentation.widgets.push_back(std::move(comboBox));
-    presentation.widgets.push_back(std::move(decimalTextBox));
-    presentation.widgets.push_back(std::move(dropdownList));
-    presentation.widgets.push_back(std::move(listBox));
-    presentation.widgets.push_back(std::move(longDecimalTextBox));
-    presentation.widgets.push_back(std::move(multiTextBox));
-    presentation.widgets.push_back(std::move(text));
-    presentation.widgets.push_back(std::move(textBox));
+    presentation.widgets["checkBox"] = (std::move(checkBox));
+    presentation.widgets["comboBox"] = (std::move(comboBox));
+    presentation.widgets["decimalTextBox"] = (std::move(decimalTextBox));
+    presentation.widgets["dropdownList"] = (std::move(dropdownList));
+    presentation.widgets["listBox"] = (std::move(listBox));
+    presentation.widgets["longDecimalTextBox"] = (std::move(longDecimalTextBox));
+    presentation.widgets["multiTextBox"] = (std::move(multiTextBox));
+    presentation.widgets["text"] = (std::move(text));
+    presentation.widgets["textBox"] = (std::move(textBox));
 
     auto widget = PresentationBuilder::build(presentation);
     widget->show();

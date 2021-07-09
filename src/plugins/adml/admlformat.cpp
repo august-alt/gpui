@@ -269,6 +269,8 @@ public:
                 this->presentationTable[presentation.id()] = std::make_shared<model::presentation::Presentation>();
                 auto& widgets = this->presentationTable[presentation.id()]->widgets;
 
+                // TODO: Iterate items using dom.
+
                 adapt_widgets<XsdCheckBoxAdapter>(presentation.checkBox(), widgets);
                 adapt_widgets<XsdComboBoxAdapter>(presentation.comboBox(), widgets);
                 adapt_widgets<XsdDecimalTextBoxAdapter>(presentation.decimalTextBox(), widgets);

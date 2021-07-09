@@ -81,8 +81,8 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
 
     QStandardItem* rootItem = d->treeModel->invisibleRootItem();
 
-    d->rootMachineItem = new QStandardItem("Machine");
-    d->rootUserItem = new QStandardItem("User");
+    d->rootMachineItem = createItem("Machine", "folder", "Machine level policies");
+    d->rootUserItem = createItem("User", "folder", "User level policies");
 
     rootItem->appendRow(d->rootMachineItem);
     rootItem->appendRow(d->rootUserItem);
@@ -202,9 +202,10 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
         for (auto& category : definition->categories)
         {
             QString displayName = QString::fromStdString(findStringById(category->displayName, policyResources));
+            QString explainText = QString::fromStdString(findStringById(category->explainText, policyResources));
 
-            d->categoryItemMap[category->name].machineItem = createItem(displayName, "folder");
-            d->categoryItemMap[category->name].userItem = createItem(displayName, "folder");
+            d->categoryItemMap[category->name].machineItem = createItem(displayName, "folder", explainText);
+            d->categoryItemMap[category->name].userItem = createItem(displayName, "folder", explainText);
             d->categoryItemMap[category->name].category = *category;
 
             if (category->parentCategory.size() == 0)
@@ -216,7 +217,9 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
         for (auto& policy : definition->policies)
         {
             QString displayName = QString::fromStdString(findStringById(policy->displayName, policyResources));
-            auto policyItem = createItem(displayName, "text-x-generic");
+            QString explainText = QString::fromStdString(findStringById(policy->explainText, policyResources));
+
+            auto policyItem = createItem(displayName, "text-x-generic", explainText);
 
             PolicyStorage container;
             container.category = policy->parentCategory;
@@ -256,10 +259,12 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string& rawCat
     }
 }
 
-QStandardItem *PolicyBundle::createItem(const QString &displayName, const QString& iconName)
+QStandardItem *PolicyBundle::createItem(const QString &displayName, const QString& iconName, const QString& explainText)
 {
     QStandardItem* categoryItem = new QStandardItem(displayName);
     categoryItem->setIcon(QIcon::fromTheme(iconName));
+    categoryItem->setFlags(categoryItem->flags() & (~Qt::ItemIsEditable));
+    categoryItem->setData(explainText, Qt::UserRole + 2);
     return categoryItem;
 }
 
@@ -281,7 +286,8 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
         }
         else
         {
-            QStandardItem* copyItem = createItem(item.item->data().value<QString>(), "text-x-generic");
+            QStandardItem* copyItem = createItem(item.item->text(), "text-x-generic",
+                                                 item.item->data(Qt::UserRole + 2).value<QString>());
             assignParentCategory(item.category, item.item, copyItem);
         }
     }

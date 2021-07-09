@@ -58,7 +58,7 @@ namespace model
             void rearrangeTreeItems();
             void assignParentCategory(const std::string& rawCategory, QStandardItem *machineItem, QStandardItem* userItem);
 
-            QStandardItem *createItem(const QString& displayName, const QString &iconName);
+            QStandardItem *createItem(const QString& displayName, const QString &iconName, const QString &explainText);
         };
     }
 }

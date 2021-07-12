@@ -34,6 +34,10 @@ class QStandardItemModel;
 
 namespace model
 {
+    namespace admx {
+        class Policy;
+    }
+
     namespace bundle
     {
         class PolicyBundlePrivate;
@@ -58,7 +62,8 @@ namespace model
             void rearrangeTreeItems();
             void assignParentCategory(const std::string& rawCategory, QStandardItem *machineItem, QStandardItem* userItem);
 
-            QStandardItem *createItem(const QString& displayName, const QString &iconName, const QString &explainText);
+            QStandardItem *createItem(const QString& displayName, const QString &iconName, const QString &explainText,
+                                      const uint itemType = 0);
         };
     }
 }

@@ -219,7 +219,7 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
             QString displayName = QString::fromStdString(findStringById(policy->displayName, policyResources));
             QString explainText = QString::fromStdString(findStringById(policy->explainText, policyResources));
 
-            auto policyItem = createItem(displayName, "text-x-generic", explainText);
+            auto policyItem = createItem(displayName, "text-x-generic", explainText, 1);
 
             PolicyStorage container;
             container.category = policy->parentCategory;
@@ -259,12 +259,14 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string& rawCat
     }
 }
 
-QStandardItem *PolicyBundle::createItem(const QString &displayName, const QString& iconName, const QString& explainText)
+QStandardItem *PolicyBundle::createItem(const QString &displayName, const QString& iconName, const QString& explainText,
+                                        const uint itemType)
 {
     QStandardItem* categoryItem = new QStandardItem(displayName);
     categoryItem->setIcon(QIcon::fromTheme(iconName));
     categoryItem->setFlags(categoryItem->flags() & (~Qt::ItemIsEditable));
     categoryItem->setData(explainText, Qt::UserRole + 2);
+    categoryItem->setData(itemType, Qt::UserRole + 1);
     return categoryItem;
 }
 
@@ -287,7 +289,7 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
         else
         {
             QStandardItem* copyItem = createItem(item.item->text(), "text-x-generic",
-                                                 item.item->data(Qt::UserRole + 2).value<QString>());
+                                                 item.item->data(Qt::UserRole + 2).value<QString>(), 1);
             assignParentCategory(item.category, item.item, copyItem);
         }
     }

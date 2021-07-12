@@ -43,6 +43,11 @@ PluginStorage::PluginStorage()
 
 PluginStorage::~PluginStorage()
 {
+    for (auto& plugin : d->pluginMap)
+    {
+        unloadPlugin(plugin.first);
+    }
+
     delete d;
 }
 
@@ -97,6 +102,8 @@ bool PluginStorage::loadPlugin(const QFileInfo& fileName)
     {
         registerPluginClass(plugin->getName(), entry.first, entry.second);
     }
+
+    delete plugin;
 
     return true;
 }

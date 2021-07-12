@@ -21,6 +21,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "contentwidget.h"
+#include "policydialog.h"
+
 #include "../model/bundle/policybundle.h"
 
 namespace gpui {
@@ -28,6 +31,7 @@ namespace gpui {
 class MainWindowPrivate {
 public:
     std::unique_ptr<QStandardItemModel> model;
+    ContentWidget* contentWidget;
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -37,7 +41,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    d->contentWidget = new ContentWidget(this);
+
+    ui->splitter->addWidget(d->contentWidget);
+
     connect(ui->actionOpen_Policy_Directory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
+    connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 }
 
 MainWindow::~MainWindow()
@@ -59,6 +68,9 @@ void MainWindow::onDirectoryOpen()
     d->model = bundle->loadFolder(directory.toStdString(), "ru-ru", "en-US");
 
     ui->treeView->setModel(d->model.get());
+    d->contentWidget->setModel(d->model.get());
+
+    d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
 }
 
 }

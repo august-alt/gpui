@@ -22,6 +22,8 @@
 
 #include "ui_contentwidget.h"
 
+#include "policydialog.h"
+
 namespace gpui {
 
 ContentWidget::ContentWidget(QWidget *parent)
@@ -55,8 +57,15 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
+        auto item = model->itemFromIndex(index);
+
         ui->contentListView->setRootIndex(index);
-        ui->descriptionTextEdit->setText(model->itemFromIndex(index)->data(Qt::UserRole + 2).value<QString>());
+        ui->descriptionTextEdit->setText(item->data(Qt::UserRole + 2).value<QString>());
+
+        if (item->data(Qt::UserRole + 1).value<uint>() == 1)
+        {
+            (new PolicyDialog(this, *item))->show();
+        }
     }
 }
 

@@ -43,8 +43,7 @@ void AdmlTest::read()
 
     std::ifstream file;
 
-//    file.open (dataPath + "example.adml", std::ifstream::in);
-    file.open("/home/august/Downloads/ADMX/Program Files/Microsoft Group Policy/Windows 10 October 2020 Update (20H2)/PolicyDefinitions/ru-ru/ActiveXInstallService.adml", std::fstream::in);
+    file.open (dataPath + "example.adml", std::ifstream::in);
 
     if (file.good())
     {
@@ -55,13 +54,15 @@ void AdmlTest::read()
 
         auto policyResource = policies->get(0);
         if (policyResource) {
-            Presentation presentation;
-            presentation.widgets = policyResource->presentationTable;
+            if (policyResource->presentationTable.size() > 0)
+            {
+                Presentation presentation = *policyResource->presentationTable.begin()->second;
 
-            auto widget = gui::PresentationBuilder::build(presentation);
-            widget->show();
+                auto widget = gui::PresentationBuilder::build(presentation);
+                widget->show();
 
-            QTest::qWait(10000);
+                QTest::qWait(10000);
+            }
         }
     }
 

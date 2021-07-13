@@ -265,7 +265,7 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string& rawCat
 QStandardItem *PolicyBundle::createItem(const QString &displayName, const QString& iconName, const QString& explainText,
                                         const uint itemType)
 {
-    QStandardItem* categoryItem = new QStandardItem(displayName);
+    QStandardItem* categoryItem = new QStandardItem(displayName.trimmed());
     categoryItem->setIcon(QIcon::fromTheme(iconName));
     categoryItem->setFlags(categoryItem->flags() & (~Qt::ItemIsEditable));
     categoryItem->setData(explainText, Qt::UserRole + 2);

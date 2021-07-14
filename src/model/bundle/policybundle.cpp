@@ -28,8 +28,11 @@
 
 #include "../admx/policydefinitions.h"
 #include "../admx/policyelement.h"
+#include "../admx/policyenumelement.h"
 #include "../presentation/policyresources.h"
 #include "../presentation/presentationwidget.h"
+#include "../presentation/presentation.h"
+#include "../presentation/dropdownlist.h"
 
 #include <QDir>
 #include <QStandardItemModel>
@@ -180,6 +183,42 @@ std::shared_ptr<model::presentation::Presentation> findPresentationById(const st
     return nullptr;
 }
 
+std::string findSupportedById(const std::string& id, const std::unique_ptr<io::PolicyDefinitionsFile>& resource)
+{
+    Q_UNUSED(resource);
+    // TODO: Implement.
+
+    return id;
+}
+
+void handlePresentation(const std::shared_ptr<model::presentation::Presentation>& presentation,
+                        const std::shared_ptr<model::admx::Policy>& policy,
+                        const std::unique_ptr<io::PolicyResourcesFile>& policyResources)
+{
+    for (auto& widget : presentation->widgetsVector)
+    {
+        auto dropdownList = dynamic_cast<model::presentation::DropdownList*>(widget.get());
+        if (dropdownList)
+        {
+            for (auto& item : policy->elements)
+            {
+                if (item->id.compare(dropdownList->refId) == 0)
+                {
+                    auto enumItem = dynamic_cast<model::admx::PolicyEnumElement*>(item.get());
+                    if (enumItem)
+                    {
+                        for (auto& value : enumItem->items)
+                        {
+                            auto name = findStringById(value.first, policyResources);
+                            dropdownList->values.push_back(name);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::string& language,
                                    const std::string& fallbackLanguage)
 {
@@ -218,6 +257,11 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
         {
             QString displayName = QString::fromStdString(findStringById(policy->displayName, policyResources));
             QString explainText = QString::fromStdString(findStringById(policy->explainText, policyResources));
+            QString supportedOnPart;
+            for (auto& supportedOn : policy->supportedOn)
+            {
+                 supportedOnPart += QString::fromStdString(findSupportedById(supportedOn, policyDefinitions)) + " ";
+            }
 
             auto policyItem = createItem(displayName, "text-x-generic", explainText, 1);
 
@@ -225,6 +269,17 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
             container.category = policy->parentCategory;
             container.item = policyItem;
             container.type = policy->policyType;
+
+            policyItem->setData(supportedOnPart, Qt::UserRole + 4);
+
+            if (policy->presentation) {
+                auto presentation = findPresentationById(*policy->presentation.get(), policyResources);
+                if (presentation)
+                {
+                    policyItem->setData(QVariant::fromValue(presentation), Qt::UserRole + 5);
+                    handlePresentation(presentation, policy, policyResources);
+                }
+            }
 
             d->unassignedItems.push_back(container);
         }
@@ -290,6 +345,8 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
         {
             QStandardItem* copyItem = createItem(item.item->text(), "text-x-generic",
                                                  item.item->data(Qt::UserRole + 2).value<QString>(), 1);
+            copyItem->setData(item.item->data(Qt::UserRole + 4), Qt::UserRole + 4);
+            copyItem->setData(item.item->data(Qt::UserRole + 5), Qt::UserRole + 5);
             assignParentCategory(item.category, item.item, copyItem);
         }
     }
@@ -298,3 +355,5 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
 }
 
 }
+
+Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)

@@ -269,17 +269,64 @@ public:
                 this->presentationTable[presentation.id()] = std::make_shared<model::presentation::Presentation>();
                 auto& widgets = this->presentationTable[presentation.id()]->widgets;
 
-                // TODO: Iterate items using dom.
+                const xercesc::DOMNode* n = presentation._node();
+                assert (n->getNodeType () == xercesc::DOMNode::ELEMENT_NODE);
+                const xercesc::DOMElement* re = static_cast<const xercesc::DOMElement*>(n);
 
-                adapt_widgets<XsdCheckBoxAdapter>(presentation.checkBox(), widgets);
-                adapt_widgets<XsdComboBoxAdapter>(presentation.comboBox(), widgets);
-                adapt_widgets<XsdDecimalTextBoxAdapter>(presentation.decimalTextBox(), widgets);
-                adapt_widgets<XsdDropdownListAdapter>(presentation.dropdownList(), widgets);
-                adapt_widgets<XsdListBoxAdapter>(presentation.listBox(), widgets);
-                adapt_widgets<XsdLongDecimalTextBoxAdapter>(presentation.longDecimalTextBox(), widgets);
-                adapt_widgets<XsdMultiTextBoxAdapter>(presentation.multiTextBox(), widgets);
-                adapt_widgets<XsdTextBoxAdapter>(presentation.textBox(), widgets);
-                adapt_widgets<XsdTextAdapter>(presentation.text(), widgets);
+                for (n = re->getFirstChild (); n != 0; n = n->getNextSibling ())
+                {
+                    if (n->getNodeType () == xercesc::DOMNode::ELEMENT_NODE)
+                    {
+                        auto elementNode = static_cast<const xercesc::DOMElement*>(n);
+                        auto elementType = QString::fromStdU16String(elementNode->getTagName());
+                        if (elementType.compare("checkBox") == 0)
+                        {
+                            auto checkBox = std::make_unique<::GroupPolicy::PolicyDefinitions::CheckBox>(*elementNode);
+                            widgets[checkBox->refId()] = XsdCheckBoxAdapter::create(*checkBox);
+
+                        }
+                        else if (elementType.compare("comboBox") == 0)
+                        {
+                            auto comboBox = std::make_unique<::GroupPolicy::PolicyDefinitions::ComboBox>(*elementNode);
+                            widgets[comboBox->refId()] = XsdComboBoxAdapter::create(*comboBox);
+                        }
+                        else if (elementType.compare("decimalTextBox") == 0)
+                        {
+                            auto decimalTextBox = std::make_unique<::GroupPolicy::PolicyDefinitions::DecimalTextBox>(*elementNode);
+                            widgets[decimalTextBox->refId()] = XsdDecimalTextBoxAdapter::create(*decimalTextBox);
+                        }
+                        else if (elementType.compare("dropdownList") == 0)
+                        {
+                            auto dropdownList = std::make_unique<::GroupPolicy::PolicyDefinitions::DropdownList>(*elementNode);
+                            widgets[dropdownList->refId()] = XsdDropdownListAdapter::create(*dropdownList);
+                        }
+                        else if (elementType.compare("listBox") == 0)
+                        {
+                            auto listBox = std::make_unique<::GroupPolicy::PolicyDefinitions::ListBox>(*elementNode);
+                            widgets[listBox->refId()] = XsdListBoxAdapter::create(*listBox);
+                        }
+                        else if (elementType.compare("longDecimalTextBox") == 0)
+                        {
+                            auto longDecimalTextBox = std::make_unique<::GroupPolicy::PolicyDefinitions::LongDecimalTextBox>(*elementNode);
+                            widgets[longDecimalTextBox->refId()] = XsdLongDecimalTextBoxAdapter::create(*longDecimalTextBox);
+                        }
+                        else if (elementType.compare("multiTextBox") == 0)
+                        {
+                            auto multiTextBox = std::make_unique<::GroupPolicy::PolicyDefinitions::MultiTextBox>(*elementNode);
+                            widgets[multiTextBox->refId()] = XsdMultiTextBoxAdapter::create(*multiTextBox);
+                        }
+                        else if (elementType.compare("textBox") == 0)
+                        {
+                            auto textBox = std::make_unique<::GroupPolicy::PolicyDefinitions::TextBox>(*elementNode);
+                            widgets[textBox->refId()] = XsdTextBoxAdapter::create(*textBox);
+                        }
+                        else if (elementType.compare("text") == 0)
+                        {
+                            auto text = std::make_unique<::GroupPolicy::PolicyDefinitions::String>(*elementNode);
+                            widgets[*text] = XsdTextAdapter::create(*text);
+                        }
+                    }
+                }
             }
         }
     }
@@ -301,7 +348,10 @@ bool AdmlFormat::read(std::istream &input, io::PolicyResourcesFile *file)
     std::unique_ptr<::GroupPolicy::PolicyDefinitions::PolicyDefinitions> policyDefinitions;
     auto operation = [&]() {
         std::unique_ptr<::GroupPolicy::PolicyDefinitions::PolicyDefinitionResources> policyDefinitionResources
-            = GroupPolicy::PolicyDefinitions::policyDefinitionResources(input, ::xsd::cxx::tree::flags::dont_validate);
+            = GroupPolicy::PolicyDefinitions::policyDefinitionResources(input,
+                                                                        ::xsd::cxx::tree::flags::dont_validate
+                                                                        | ::xsd::cxx::tree::flags::keep_dom
+                                                                        | ::xsd::cxx::tree::flags::own_dom);
 
         file->add(XsdResourcesAdapter::create(*policyDefinitionResources));
     };

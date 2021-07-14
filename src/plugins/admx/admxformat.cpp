@@ -188,6 +188,24 @@ public:
         assign_if_exists(this->valueName, element.valueName());
 
         this->required = element.required();
+
+        for (auto& item : element.item())
+        {
+            if (item.value().decimal().present())
+            {
+                this->items[item.displayName()] = std::make_unique<model::admx::DecimalValue>(item.value().decimal().get().value());
+            }
+
+            if (item.value().longDecimal().present())
+            {
+                this->items[item.displayName()] = std::make_unique<model::admx::LongDecimalValue>(item.value().longDecimal().get().value());
+            }
+
+            if (item.value().string().present())
+            {
+                this->items[item.displayName()] = std::make_unique<model::admx::StringValue>(item.value().string().get());
+            }
+        }
     }
 
     static std::unique_ptr<model::admx::PolicyEnumElement> create(const EnumElement& element)

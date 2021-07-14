@@ -24,12 +24,47 @@
 #include "../model.h"
 #include "policyelement.h"
 
+#include <map>
+#include <memory>
 #include <string>
 
 namespace model
 {
     namespace admx
     {
+        struct EnumValue
+        {
+            EnumValue()
+            {}
+        };
+
+        struct DecimalValue : EnumValue
+        {
+            unsigned int value;
+
+            DecimalValue(unsigned int value)
+                : value(value)
+            {}
+        };
+
+        struct LongDecimalValue : EnumValue
+        {
+            unsigned long long value;
+
+            LongDecimalValue(unsigned long long value)
+                : value(value)
+            {}
+        };
+
+        struct StringValue : EnumValue
+        {
+            std::string value;
+
+            StringValue(const std::string& value)
+                : value(value)
+            {}
+        };
+
         /*!
          * \brief An enumeration element in a policy.
          */
@@ -45,6 +80,11 @@ namespace model
              * \brief True if the value is required.
              */
             bool required = false;
+
+            /*!
+             * \brief items List of enum items.
+             */
+            std::map<std::string, std::unique_ptr<EnumValue> > items;
         };
     }
 }

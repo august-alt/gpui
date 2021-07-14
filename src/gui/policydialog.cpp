@@ -31,7 +31,7 @@ PolicyDialog::PolicyDialog(QWidget *parent, const QStandardItem& item)
 {
     ui->setupUi(this);
 
-    ui->commentTextEdit->setText(item.data(Qt::UserRole + 2).value<QString>());
+    ui->helpTextEdit->setText(item.data(Qt::UserRole + 2).value<QString>());
 
     this->setWindowTitle(item.text());
 }

@@ -51,6 +51,8 @@ namespace model
              * \brief A valid registry key path (without reference to local system or user hive).
              */
             std::string key;
+
+            virtual ~PolicyElement() {}
         };
     }
 }

@@ -56,6 +56,11 @@ namespace model
              */
             unsigned int defaultHeight = 3;
 
+            /*!
+             * \brief label Text associated with the text box.
+             */
+            std::string label;
+
             MultiTextBox(Presentation* presentation)
                 : PresentationWidget(presentation)
             {

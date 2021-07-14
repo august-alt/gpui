@@ -25,6 +25,8 @@
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
+#include <string>
+
 namespace model
 {
     namespace presentation
@@ -55,6 +57,11 @@ namespace model
              * \brief spinStep the increment of change for the spin control.
              */
             unsigned int spinStep = 1;
+
+            /*!
+             * \brief label Text associated with the text box.
+             */
+            std::string label;
 
             LongDecimalTextBox(Presentation* presentation)
                 : PresentationWidget(presentation)

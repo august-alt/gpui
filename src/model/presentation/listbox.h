@@ -25,6 +25,8 @@
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
+#include <string>
+
 namespace model
 {
     namespace presentation
@@ -39,6 +41,11 @@ namespace model
         class GPUI_MODEL_EXPORT ListBox : public PresentationWidget
         {
         public:
+            /*!
+             * \brief label Text associated with the list box.
+             */
+            std::string label;
+
             ListBox(Presentation* presentation)
                 : PresentationWidget(presentation)
             {

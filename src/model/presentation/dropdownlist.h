@@ -25,6 +25,7 @@
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
+#include <string>
 namespace model
 {
     namespace presentation
@@ -50,6 +51,10 @@ namespace model
              */
             unsigned int defaultItem = 0;
 
+            /*!
+             * \brief label Text associated with the drop-down list.
+             */
+            std::string label;
             DropdownList(Presentation* presentation)
                 : PresentationWidget(presentation)
             {

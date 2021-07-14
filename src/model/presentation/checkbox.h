@@ -25,6 +25,8 @@
 #include "presentationwidget.h"
 #include "presentationwidgetvisitor.h"
 
+#include <string>
+
 namespace model
 {
     namespace presentation
@@ -45,6 +47,11 @@ namespace model
              * \brief defaultChecked True if the default value is displayed with a checkmark.
              */
             bool defaultChecked = false;
+
+            /*!
+             * \brief label Text associated with the check box.
+             */
+            std::string label;
 
             CheckBox(Presentation* presentation)
                 : PresentationWidget(presentation)

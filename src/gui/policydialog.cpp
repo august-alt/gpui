@@ -19,9 +19,9 @@
 ***********************************************************************************************************************/
 
 #include "policydialog.h"
-
-
 #include "ui_policydialog.h"
+
+#include "presentationbuilder.h"
 
 namespace gpui {
 
@@ -34,6 +34,22 @@ PolicyDialog::PolicyDialog(QWidget *parent, const QStandardItem& item)
     ui->helpTextEdit->setText(item.data(Qt::UserRole + 2).value<QString>());
 
     this->setWindowTitle(item.text());
+
+    ui->policyNameLabel->setText(item.text());
+    ui->policyNameLabel->setWordWrap(true);
+
+    auto presentation = item.data(Qt::UserRole +5).value<std::shared_ptr<model::presentation::Presentation>>();
+
+    if (presentation)
+    {
+        auto widgets = ::gui::PresentationBuilder::build(*presentation);
+
+        ui->optionsFrame->setLayout(widgets);
+    }
+
+    ui->notConfiguredRadioButton->setChecked(true);
+
+    ui->supportedOnTextEdit->setText(item.data(Qt::UserRole + 4).value<QString>());
 }
 
 PolicyDialog::~PolicyDialog()
@@ -42,3 +58,5 @@ PolicyDialog::~PolicyDialog()
 }
 
 }
+
+Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)

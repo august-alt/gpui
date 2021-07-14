@@ -98,9 +98,6 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
 
     rearrangeTreeItems();
 
-    cleanupModel(d->rootUserItem);
-    cleanupModel(d->rootMachineItem);
-
     return std::move(d->treeModel);
 }
 
@@ -271,36 +268,6 @@ QStandardItem *PolicyBundle::createItem(const QString &displayName, const QStrin
     categoryItem->setData(explainText, Qt::UserRole + 2);
     categoryItem->setData(itemType, Qt::UserRole + 1);
     return categoryItem;
-}
-
-void model::bundle::PolicyBundle::cleanupModel(QStandardItem* rootItem)
-{
-    if (!rootItem || !rootItem->isEnabled())
-    {
-        return;
-    }
-
-    QStandardItemModel* model = rootItem->model();
-    std::vector<QStandardItem*> itemsToDelete;
-
-    for (int r = 0; r < model->rowCount(rootItem->index()); ++r) {
-        QModelIndex index = model->index(r, 0, rootItem->index());
-        QStandardItem* item = model->itemFromIndex(index);
-
-        if (item->data(Qt::UserRole + 1).value<uint>() != 1) {
-            if (item->hasChildren())
-            {
-                cleanupModel(item);
-            } else {
-                itemsToDelete.push_back(item);
-            }
-        }
-    }
-
-    for (auto& item : itemsToDelete)
-    {
-        qDeleteAll(rootItem->takeRow(item->row()));
-    }
 }
 
 void model::bundle::PolicyBundle::rearrangeTreeItems()

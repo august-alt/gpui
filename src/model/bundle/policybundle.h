@@ -64,8 +64,6 @@ namespace model
 
             QStandardItem *createItem(const QString& displayName, const QString &iconName, const QString &explainText,
                                       const uint itemType = 0);
-
-            void cleanupModel(QStandardItem* rootItem);
         };
     }
 }

@@ -30,6 +30,8 @@
 
 #include <fstream>
 
+#include <QVBoxLayout>
+
 const std::string dataPath = "../../../data/";
 
 using namespace io;
@@ -58,7 +60,9 @@ void AdmlTest::read()
             {
                 Presentation presentation = *policyResource->presentationTable.begin()->second;
 
-                auto widget = gui::PresentationBuilder::build(presentation);
+                auto layout = gui::PresentationBuilder::build(presentation);
+                auto widget = std::make_unique<QWidget>();
+                widget->setLayout(layout);
                 widget->show();
 
                 QTest::qWait(10000);

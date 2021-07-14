@@ -36,6 +36,8 @@
 
 #include <memory>
 
+#include <QVBoxLayout>
+
 namespace tests {
 
 using namespace gui;
@@ -93,7 +95,9 @@ void PresentationBuilderTest::build()
     presentation.widgets["text"] = (std::move(text));
     presentation.widgets["textBox"] = (std::move(textBox));
 
-    auto widget = PresentationBuilder::build(presentation);
+    auto layout = PresentationBuilder::build(presentation);
+    auto widget = std::make_unique<QWidget>();
+    widget->setLayout(layout);
     widget->show();
 
     QTest::qWait(1000);

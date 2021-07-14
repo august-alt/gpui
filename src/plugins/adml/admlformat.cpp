@@ -122,6 +122,8 @@ public:
         }
         this->noSort = widget.noSort();
         this->label = widget;
+
+        this->refId = widget.refId();
     }
 
     static std::unique_ptr<model::presentation::DropdownList> create(const DropdownList& widget)

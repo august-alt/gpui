@@ -51,6 +51,8 @@ public:
         : model::presentation::CheckBox(nullptr)
     {
         this->defaultChecked = widget.defaultChecked();
+
+        this->label = widget;
     }
 
     static std::unique_ptr<model::presentation::CheckBox> create(const CheckBox& widget)
@@ -97,6 +99,7 @@ public:
         this->defaultValue = widget.defaultValue();
         this->spin = widget.spin();
         this->spinStep = widget.spinStep();
+        this->label = widget;
     }
 
     static std::unique_ptr<model::presentation::DecimalTextBox> create(const DecimalTextBox& widget)
@@ -118,6 +121,7 @@ public:
             this->defaultItem = widget.defaultItem().get();
         }
         this->noSort = widget.noSort();
+        this->label = widget;
     }
 
     static std::unique_ptr<model::presentation::DropdownList> create(const DropdownList& widget)
@@ -134,7 +138,7 @@ public:
     XsdListBoxAdapter(const ListBox& widget)
         : model::presentation::ListBox(nullptr)
     {
-        Q_UNUSED(widget);
+        this->label = widget;
     }
 
     static std::unique_ptr<model::presentation::ListBox> create(const ListBox& widget)
@@ -154,6 +158,7 @@ public:
         this->defaultValue = widget.defaultValue();
         this->spin = widget.spin();
         this->spinStep = widget.spinStep();
+        this->label = widget;
     }
 
     static std::unique_ptr<model::presentation::LongDecimalTextBox> create(const LongDecimalTextBox& widget)

@@ -26,6 +26,8 @@
 #include "presentationwidgetvisitor.h"
 
 #include <string>
+#include <vector>
+
 namespace model
 {
     namespace presentation
@@ -55,6 +57,17 @@ namespace model
              * \brief label Text associated with the drop-down list.
              */
             std::string label;
+
+            /*!
+             * \brief values Values of the drop-down list.
+             */
+            std::vector<std::string> values;
+
+            /*!
+             * \brief refId A mapping to the element.
+             */
+            std::string refId;
+
             DropdownList(Presentation* presentation)
                 : PresentationWidget(presentation)
             {

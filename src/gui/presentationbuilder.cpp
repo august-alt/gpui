@@ -55,9 +55,20 @@ namespace gui
     public:
         virtual void visitCheckBox(const CheckBox &widget) const override
         {
+            QLabel* label = new QLabel(QString::fromStdString(widget.label));
             QCheckBox* checkBox = new QCheckBox();
+
             checkBox->setChecked(widget.defaultChecked);
-            addToLayout(checkBox);
+            label->setBuddy(checkBox);
+            label->setWordWrap(true);
+
+            QHBoxLayout* container = new QHBoxLayout();
+            container->addWidget(checkBox);
+            container->addSpacing(8);
+            container->addWidget(label);
+            container->addStretch();
+
+            addToLayout(container);
         }
 
         virtual void visitComboBox(const ComboBox &widget) const override
@@ -68,7 +79,16 @@ namespace gui
             {
                 comboBox->addItem(QString::fromStdString(item));
             }
-            addToLayout(comboBox);
+
+            QLabel* label = new QLabel(QString::fromStdString(widget.label));
+            label->setBuddy(comboBox);
+            label->setWordWrap(true);
+
+            QVBoxLayout* container = new QVBoxLayout();
+            container->addWidget(label);
+            container->addWidget(comboBox);
+
+            addToLayout(container);
         }
 
         virtual void visitDecimalTextBox(const DecimalTextBox &widget) const override
@@ -80,15 +100,42 @@ namespace gui
         {
             QComboBox* comboBox = new QComboBox();
             comboBox->setCurrentIndex(widget.defaultItem);
-            addToLayout(comboBox);
+
+            QLabel* label = new QLabel(QString::fromStdString(widget.label));
+            label->setBuddy(comboBox);
+            label->setWordWrap(true);
+
+            QVBoxLayout* container = new QVBoxLayout();
+            container->addWidget(label);
+            container->addWidget(comboBox);
+
+            if (widget.values.size() > 0) {
+                for (auto& value : widget.values)
+                {
+                    comboBox->addItem(QString::fromStdString(value));
+                }
+                if (widget.defaultItem < widget.values.size())
+                {
+                    comboBox->setCurrentIndex(widget.defaultItem);
+                }
+            }
+
+            addToLayout(container);
         }
 
         virtual void visitListBox(const ListBox &widget) const override
         {
-            Q_UNUSED(widget);
             QListWidget* listWidget = new QListWidget();
-            // TODO: Create list widget content from associated enum.
-            addToLayout(listWidget);
+
+            QLabel* label = new QLabel(QString::fromStdString(widget.label));
+            label->setBuddy(listWidget);
+            label->setWordWrap(true);
+
+            QVBoxLayout* container = new QVBoxLayout();
+            container->addWidget(label);
+            container->addWidget(listWidget);
+
+            addToLayout(container);
         }
 
         virtual void visitLongDecimalTextBox(const LongDecimalTextBox &widget) const override
@@ -107,6 +154,7 @@ namespace gui
         {
             QLabel* label = new QLabel();
             label->setText(QString::fromStdString(widget.content));
+            label->setWordWrap(true);
             addToLayout(label);
         }
 
@@ -114,7 +162,16 @@ namespace gui
         {
             QLineEdit* lineEdit = new QLineEdit();
             lineEdit->setText(QString::fromStdString(widget.defaultValue));
-            addToLayout(lineEdit);
+
+            QLabel* label = new QLabel(QString::fromStdString(widget.label));
+            label->setBuddy(lineEdit);
+            label->setWordWrap(true);
+
+            QVBoxLayout* container = new QVBoxLayout();
+            container->addWidget(label);
+            container->addWidget(lineEdit);
+
+            addToLayout(container);
         }
 
         void setLayout(QLayout* layout) {
@@ -127,6 +184,14 @@ namespace gui
         void addToLayout(QWidget* widget) const {
             if (m_layout) {
                 m_layout->addWidget(widget);
+            }
+        }
+
+        void addToLayout(QLayoutItem* container) const
+        {
+            if (container)
+            {
+                m_layout->addItem(container);
             }
         }
 
@@ -161,23 +226,21 @@ namespace gui
         return checkBox;
     }
 
-    QWidget* PresentationBuilder::build(const Presentation& presentation)
+    QVBoxLayout* PresentationBuilder::build(const Presentation& presentation)
     {
-        QWidget* mainWidget = new QWidget();
         QVBoxLayout* layout = new QVBoxLayout();
         d->setLayout(layout);
 
-        for (const auto& widget : presentation.widgets) {
+        for (const auto& widget : presentation.widgetsVector) {
             QWidget* policyWidget = nullptr;
-            widget.second->accept(*d);
+            widget->accept(*d);
 
             if (policyWidget) {
                 layout->addWidget(policyWidget);
             }
         }
+        layout->addStretch();
 
-        mainWidget->setLayout(layout);
-
-        return mainWidget;
+        return layout;
     }
 }

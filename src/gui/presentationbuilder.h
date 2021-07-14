@@ -25,6 +25,8 @@
 
 #include <QWidget>
 
+class QVBoxLayout;
+
 namespace model {
     namespace presentation {
         class Presentation;
@@ -49,7 +51,7 @@ namespace gui
          * @param presentation Defines a reference to policy representation.
          * @return nullptr if build failed, and widget associated with policy otherwise.
          */
-        static QWidget* build(const model::presentation::Presentation& presentation);
+        static QVBoxLayout *build(const model::presentation::Presentation& presentation);
 
     private:
         static PresentationBuilderPrivate* d;

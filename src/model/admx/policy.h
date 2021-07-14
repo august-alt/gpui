@@ -89,6 +89,12 @@ namespace model
             std::vector<std::string> seeAlso;
 
             /*!
+             * \brief supportedOn A reference to a supported product definition, either a single version
+             * or a complex definition.
+             */
+            std::vector<std::string> supportedOn;
+
+            /*!
              * \brief elements One of five parameters types that can be set in a policy setting.
              */
             std::vector<std::unique_ptr<PolicyElement>> elements;

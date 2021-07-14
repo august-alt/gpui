@@ -134,6 +134,8 @@ public:
         if (definition.presentation().present()) {
             this->presentation = std::make_unique<std::string>(definition.presentation().get());
         }
+
+        this->supportedOn.push_back(definition.supportedOn().ref());
     }
 
     static std::shared_ptr<model::admx::Policy> create(const ::GroupPolicy::PolicyDefinitions::PolicyDefinition& input)

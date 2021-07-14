@@ -26,6 +26,7 @@
 
 #include <map>
 #include <memory>
+#include <vector>
 
 namespace model
 {
@@ -41,6 +42,7 @@ namespace model
         {
         public:
             std::map<std::string, std::shared_ptr<PresentationWidget>> widgets;
+            std::vector<std::shared_ptr<PresentationWidget>> widgetsVector;
         };
     }
 }

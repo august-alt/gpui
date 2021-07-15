@@ -146,7 +146,7 @@ namespace gui
         virtual void visitMultiTextBox(const MultiTextBox &widget) const override
         {
             QTextEdit* textEdit = new QTextEdit();
-            textEdit->setFixedHeight(widget.defaultHeight * textEdit->fontMetrics().height());
+            textEdit->setMaximumHeight(widget.defaultHeight * textEdit->fontMetrics().height());
             addToLayout(textEdit);
         }
 

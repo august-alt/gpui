@@ -51,6 +51,20 @@ using namespace model::presentation;
 
 namespace gui
 {
+    template <typename TLayoutItem>
+    QLayoutItem* createAndAttachLabel(QWidget* buddy, const QString& text)
+    {
+        QLabel* label = new QLabel(text);
+        label->setBuddy(buddy);
+        label->setWordWrap(true);
+
+        TLayoutItem* container = new TLayoutItem();
+        container->addWidget(label);
+        container->addWidget(buddy);
+
+        return container;
+    }
+
     class PresentationBuilderPrivate : public PresentationWidgetVisitor {
     public:
         virtual void visitCheckBox(const CheckBox &widget) const override
@@ -80,20 +94,18 @@ namespace gui
                 comboBox->addItem(QString::fromStdString(item));
             }
 
-            QLabel* label = new QLabel(QString::fromStdString(widget.label));
-            label->setBuddy(comboBox);
-            label->setWordWrap(true);
-
-            QVBoxLayout* container = new QVBoxLayout();
-            container->addWidget(label);
-            container->addWidget(comboBox);
+            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(comboBox, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
 
         virtual void visitDecimalTextBox(const DecimalTextBox &widget) const override
         {
-            createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
+            QWidget* textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
+
+            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(textBox, QString::fromStdString(widget.label));
+
+            addToLayout(container);
         }
 
         virtual void visitDropdownList(const DropdownList &widget) const override
@@ -101,13 +113,7 @@ namespace gui
             QComboBox* comboBox = new QComboBox();
             comboBox->setCurrentIndex(widget.defaultItem);
 
-            QLabel* label = new QLabel(QString::fromStdString(widget.label));
-            label->setBuddy(comboBox);
-            label->setWordWrap(true);
-
-            QVBoxLayout* container = new QVBoxLayout();
-            container->addWidget(label);
-            container->addWidget(comboBox);
+            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(comboBox, QString::fromStdString(widget.label));
 
             if (widget.values.size() > 0) {
                 for (auto& value : widget.values)
@@ -127,20 +133,18 @@ namespace gui
         {
             QListWidget* listWidget = new QListWidget();
 
-            QLabel* label = new QLabel(QString::fromStdString(widget.label));
-            label->setBuddy(listWidget);
-            label->setWordWrap(true);
-
-            QVBoxLayout* container = new QVBoxLayout();
-            container->addWidget(label);
-            container->addWidget(listWidget);
+            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(listWidget, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
 
         virtual void visitLongDecimalTextBox(const LongDecimalTextBox &widget) const override
         {
-            createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
+            QWidget* textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
+
+            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(textBox, QString::fromStdString(widget.label));
+
+            addToLayout(container);
         }
 
         virtual void visitMultiTextBox(const MultiTextBox &widget) const override
@@ -163,13 +167,7 @@ namespace gui
             QLineEdit* lineEdit = new QLineEdit();
             lineEdit->setText(QString::fromStdString(widget.defaultValue));
 
-            QLabel* label = new QLabel(QString::fromStdString(widget.label));
-            label->setBuddy(lineEdit);
-            label->setWordWrap(true);
-
-            QVBoxLayout* container = new QVBoxLayout();
-            container->addWidget(label);
-            container->addWidget(lineEdit);
+            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(lineEdit, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
@@ -196,24 +194,21 @@ namespace gui
         }
 
         template<typename Number>
-        void createAnyDecimalTextBox(bool spin, Number value, Number step) const {
+        QWidget* createAnyDecimalTextBox(bool spin, Number value, Number step) const {
             if (spin)
             {
                 QSpinBox* spinBox = new QSpinBox();
-                // TODO: Replace maximum and minimum values with parameters specified in ADMX/ADML documents.
                 spinBox->setMinimum(0);
                 spinBox->setMaximum(9999);
                 spinBox->setSingleStep(step);
                 spinBox->setValue(value);
-                addToLayout(spinBox);
-                return;
+                return spinBox;
             }
 
             QLineEdit* edit = new QLineEdit();
             edit->setText(QString::number(value));
-            // TODO: Create int validator for decimal text box.
             edit->setValidator(new QIntValidator(0, 9999));
-            addToLayout(edit);
+            return edit;
         }
     };
 

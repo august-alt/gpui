@@ -27,6 +27,7 @@
 #include "supporteddefinition.h"
 
 #include <memory>
+#include <vector>
 
 namespace model
 {
@@ -39,14 +40,14 @@ namespace model
         {
         public:
             /*!
-             * \brief product The products element is a table of product elements for the supportedOn text.
+             * \brief products The products element is a table of product elements for the supportedOn text.
              */
-            std::unique_ptr<SupportedProduct> products;
+            std::vector<std::shared_ptr<SupportedProduct> > products;
 
             /*!
-             * \brief definition The definitions element is a table of definition elements for the supportedOn text.
+             * \brief definitions The definitions element is a table of definition elements for the supportedOn text.
              */
-            std::unique_ptr<SupportedDefinition> definitions;
+            std::vector<std::shared_ptr<SupportedDefinition> > definitions;
         };
     }
 }

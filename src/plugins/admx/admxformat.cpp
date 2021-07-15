@@ -135,7 +135,7 @@ public:
             this->presentation = std::make_unique<std::string>(definition.presentation().get());
         }
 
-        this->supportedOn.push_back(definition.supportedOn().ref());
+        this->supportedOn = definition.supportedOn().ref();
     }
 
     static std::shared_ptr<model::admx::Policy> create(const ::GroupPolicy::PolicyDefinitions::PolicyDefinition& input)
@@ -329,6 +329,44 @@ public:
     }
 };
 
+class XsdSupportedDefinitionAdapter : public model::admx::SupportedDefinition
+{
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::SupportedOnDefinition SupportedOnDefinition;
+
+public:
+    XsdSupportedDefinitionAdapter(const SupportedOnDefinition& category)
+        : model::admx::SupportedDefinition()
+    {
+        this->displayName = category.displayName();
+        this->name = category.name();
+    }
+
+    static std::shared_ptr<model::admx::SupportedDefinition> create(const SupportedOnDefinition& element)
+    {
+        return std::make_shared<XsdSupportedDefinitionAdapter>(element);
+    }
+};
+
+class XsdSupportedProductAdapter : public model::admx::SupportedProduct
+{
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::SupportedProduct SupportedProduct;
+
+public:
+    XsdSupportedProductAdapter(const SupportedProduct& category)
+        : model::admx::SupportedProduct()
+    {
+        this->displayName = category.displayName();
+        this->name = category.name();
+    }
+
+    static std::shared_ptr<model::admx::SupportedProduct> create(const SupportedProduct& element)
+    {
+        return std::make_shared<XsdSupportedProductAdapter>(element);
+    }
+};
+
 class XsdPolicyDefinitionsAdapter : public model::admx::PolicyDefinitions {
 private:
     typedef ::GroupPolicy::PolicyDefinitions::PolicyDefinitions PolicyDefinitions;
@@ -340,7 +378,7 @@ public:
         this->revision = definitions.revision();
         this->schemaVersion = definitions.schemaVersion();
 
-        // TODO: this->policyNamespaces;
+        // TODO: Implement namsepaces.
 
         for (const auto& adm : definitions.supersededAdm()) {
             this->supersededAdm.push_back(adm.fileName());
@@ -349,7 +387,27 @@ public:
         this->resources.minRequiredRevision = definitions.resources().minRequiredRevision();
         this->resources.fallbackCulture = definitions.resources().fallbackCulture();
 
-        // TODO: this->supportedOn
+        if (definitions.supportedOn().present())
+        {
+            this->supportedOn = std::make_shared<::model::admx::SupportedOn>();
+
+            if (definitions.supportedOn()->definitions().present())
+            {
+                for (const auto& definition : definitions.supportedOn()->definitions()->definition())
+                {
+
+                    this->supportedOn->definitions.push_back(XsdSupportedDefinitionAdapter::create(definition));
+                }
+            }
+
+            if (definitions.supportedOn()->products().present())
+            {
+                for (const auto& product : definitions.supportedOn()->products()->product())
+                {
+                    this->supportedOn->products.push_back(XsdSupportedProductAdapter::create(product));
+                }
+            }
+        }
 
         if (definitions.categories().present()) {
             for (const auto& category : definitions.categories()->category()) {

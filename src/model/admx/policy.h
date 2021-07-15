@@ -92,7 +92,7 @@ namespace model
              * \brief supportedOn A reference to a supported product definition, either a single version
              * or a complex definition.
              */
-            std::vector<std::string> supportedOn;
+            std::string supportedOn;
 
             /*!
              * \brief elements One of five parameters types that can be set in a policy setting.

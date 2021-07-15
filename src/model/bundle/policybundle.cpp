@@ -65,6 +65,8 @@ public:
     std::vector<PolicyStorage> unassignedItems;
     QStandardItem* rootMachineItem;
     QStandardItem* rootUserItem;
+    std::vector<QStandardItem*> items;
+    std::map<std::string, std::string> supportedOnMap;
 };
 
 PolicyBundle::PolicyBundle()
@@ -100,6 +102,7 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
     }
 
     rearrangeTreeItems();
+    assignSupportedOn();
 
     return std::move(d->treeModel);
 }
@@ -185,9 +188,6 @@ std::shared_ptr<model::presentation::Presentation> findPresentationById(const st
 
 std::string findSupportedById(const std::string& id, const std::unique_ptr<io::PolicyDefinitionsFile>& resource)
 {
-    Q_UNUSED(resource);
-    // TODO: Implement.
-
     return id;
 }
 
@@ -253,15 +253,19 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
                 d->rootMachineItem->appendRow(d->categoryItemMap[category->name].machineItem);
             }
         }
+
+        if (definition->supportedOn)
+        {
+            for (auto& supportedOn : definition->supportedOn->definitions)
+            {
+                d->supportedOnMap[supportedOn->name] = findStringById(supportedOn->displayName, policyResources);
+            }
+        }
+
         for (auto& policy : definition->policies)
         {
             QString displayName = QString::fromStdString(findStringById(policy->displayName, policyResources));
             QString explainText = QString::fromStdString(findStringById(policy->explainText, policyResources));
-            QString supportedOnPart;
-            for (auto& supportedOn : policy->supportedOn)
-            {
-                 supportedOnPart += QString::fromStdString(findSupportedById(supportedOn, policyDefinitions)) + " ";
-            }
 
             auto policyItem = createItem(displayName, "text-x-generic", explainText, 1);
 
@@ -270,7 +274,7 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
             container.item = policyItem;
             container.type = policy->policyType;
 
-            policyItem->setData(supportedOnPart, Qt::UserRole + 4);
+            policyItem->setData(QString::fromStdString(policy->supportedOn), Qt::UserRole + 4);
 
             if (policy->presentation) {
                 auto presentation = findPresentationById(*policy->presentation.get(), policyResources);
@@ -322,6 +326,9 @@ QStandardItem *PolicyBundle::createItem(const QString &displayName, const QStrin
     categoryItem->setFlags(categoryItem->flags() & (~Qt::ItemIsEditable));
     categoryItem->setData(explainText, Qt::UserRole + 2);
     categoryItem->setData(itemType, Qt::UserRole + 1);
+
+    d->items.push_back(categoryItem);
+
     return categoryItem;
 }
 
@@ -348,6 +355,36 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
             copyItem->setData(item.item->data(Qt::UserRole + 4), Qt::UserRole + 4);
             copyItem->setData(item.item->data(Qt::UserRole + 5), Qt::UserRole + 5);
             assignParentCategory(item.category, item.item, copyItem);
+        }
+    }
+}
+
+void PolicyBundle::assignSupportedOn()
+{
+    for (auto& item : d->items)
+    {
+        if (item->data(Qt::UserRole + 1).value<uint>() == 1)
+        {
+            QStringList supportedRaw = item->data(Qt::UserRole + 4).value<QString>().split(':');
+            QString* toFind = nullptr;
+            if (supportedRaw.size() > 1)
+            {
+                toFind = &supportedRaw[1];
+            }
+            else
+            {
+                toFind = &supportedRaw[0];
+            }
+
+            auto search = d->supportedOnMap.find(toFind->toStdString());
+            if (search != d->supportedOnMap.end())
+            {
+                item->setData(QString::fromStdString(search->second), Qt::UserRole + 4);
+            }
+            else
+            {
+                qWarning() << "Not found support for: " << *toFind;
+            }
         }
     }
 }

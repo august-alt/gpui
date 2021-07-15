@@ -69,25 +69,6 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QFrame" name="optionsFrame">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>230</y>
-     <width>311</width>
-     <height>556</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
-    <bool>true</bool>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::Box</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
-   </property>
-  </widget>
   <widget class="QLabel" name="helpLabel">
    <property name="geometry">
     <rect>
@@ -258,6 +239,29 @@
    <property name="text">
     <string>Example of long policy name</string>
    </property>
+  </widget>
+  <widget class="QScrollArea" name="optionsScrollArea">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>310</width>
+     <height>556</height>
+    </rect>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>306</width>
+      <height>552</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

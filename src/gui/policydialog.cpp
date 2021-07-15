@@ -25,31 +25,32 @@
 
 namespace gpui {
 
+typedef std::shared_ptr<::model::presentation::Presentation> PresentationPtr;
+
 PolicyDialog::PolicyDialog(QWidget *parent, const QStandardItem& item)
     : QDialog(parent)
     , ui(new Ui::PolicyDialog())
 {
     ui->setupUi(this);
 
-    ui->helpTextEdit->setText(item.data(Qt::UserRole + 2).value<QString>());
-
     this->setWindowTitle(item.text());
 
     ui->policyNameLabel->setText(item.text());
     ui->policyNameLabel->setWordWrap(true);
 
-    auto presentation = item.data(Qt::UserRole +5).value<std::shared_ptr<model::presentation::Presentation>>();
+    ui->notConfiguredRadioButton->setChecked(true);
+
+    ui->helpTextEdit->setText(item.data(Qt::UserRole + 2).value<QString>());
+    ui->supportedOnTextEdit->setText(item.data(Qt::UserRole + 4).value<QString>());
+
+    auto presentation = item.data(Qt::UserRole +5).value<PresentationPtr>();
 
     if (presentation)
     {
-        auto widgets = ::gui::PresentationBuilder::build(*presentation);
+        auto layout = ::gui::PresentationBuilder::build(*presentation);
 
-        ui->optionsFrame->setLayout(widgets);
+        ui->optionsScrollArea->widget()->setLayout(layout);
     }
-
-    ui->notConfiguredRadioButton->setChecked(true);
-
-    ui->supportedOnTextEdit->setText(item.data(Qt::UserRole + 4).value<QString>());
 }
 
 PolicyDialog::~PolicyDialog()

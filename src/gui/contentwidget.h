@@ -39,9 +39,6 @@ namespace gpui {
         ContentWidget(QWidget *parent = 0);
         ~ContentWidget();
 
-        void setModel(QStandardItemModel* model);
-        void setSelectionModel(QItemSelectionModel *selectionModel);
-
     signals:
         void modelItemSelected(const QModelIndex& index);
 
@@ -50,6 +47,9 @@ namespace gpui {
 
     private slots:
         void onListItemClicked(const QModelIndex& index);
+
+    private:
+        void setPolicyWidgetsVisible(bool visible);
     };
 }
 

@@ -24,7 +24,11 @@
 
 #include "policydialog.h"
 
+#include "presentationbuilder.h"
+
 namespace gpui {
+
+typedef std::shared_ptr<::model::presentation::Presentation> PresentationPtr;
 
 ContentWidget::ContentWidget(QWidget *parent)
     : QWidget(parent)
@@ -32,7 +36,8 @@ ContentWidget::ContentWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
+    setPolicyWidgetsVisible(false);
+
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
 }
 
@@ -41,32 +46,55 @@ ContentWidget::~ContentWidget()
     delete ui;
 }
 
-void ContentWidget::setModel(QStandardItemModel *model)
-{
-    ui->contentListView->setModel(model);
-}
-
-void ContentWidget::setSelectionModel(QItemSelectionModel *selectionModel)
-{
-    ui->contentListView->setSelectionModel(selectionModel);
-}
-
 void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
     const QStandardItemModel* model = dynamic_cast<const QStandardItemModel*>(index.model());
+
+    if (ui->contentScrollArea->widget()->layout())
+    {
+        delete ui->contentScrollArea->takeWidget();
+
+        ui->contentScrollArea->setWidget(new QWidget(this));
+    }
 
     if (model)
     {
         auto item = model->itemFromIndex(index);
 
-        ui->contentListView->setRootIndex(index);
         ui->descriptionTextEdit->setText(item->data(Qt::UserRole + 2).value<QString>());
 
         if (item->data(Qt::UserRole + 1).value<uint>() == 1)
         {
-            (new PolicyDialog(this, *item))->show();
+            setPolicyWidgetsVisible(true);
+
+            ui->notConfiguredRadioButton->setChecked(true);
+            ui->supportedOnTextEdit->setText(item->data(Qt::UserRole + 4).value<QString>());
+
+            auto presentation = item->data(Qt::UserRole +5).value<PresentationPtr>();
+
+            if (presentation)
+            {
+                auto layout = ::gui::PresentationBuilder::build(*presentation);
+
+                ui->contentScrollArea->widget()->setLayout(layout);
+            }
+        }
+        else
+        {
+            setPolicyWidgetsVisible(false);
         }
     }
 }
 
+
+void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
+{
+    ui->supportedOnLabel->setVisible(visible);
+    ui->supportedOnTextEdit->setVisible(visible);
+
+    ui->groupBox->setVisible(visible);
 }
+
+}
+
+Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)

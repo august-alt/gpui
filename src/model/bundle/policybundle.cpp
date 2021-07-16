@@ -186,11 +186,6 @@ std::shared_ptr<model::presentation::Presentation> findPresentationById(const st
     return nullptr;
 }
 
-std::string findSupportedById(const std::string& id, const std::unique_ptr<io::PolicyDefinitionsFile>& resource)
-{
-    return id;
-}
-
 void handlePresentation(const std::shared_ptr<model::presentation::Presentation>& presentation,
                         const std::shared_ptr<model::admx::Policy>& policy,
                         const std::unique_ptr<io::PolicyResourcesFile>& policyResources)

@@ -79,8 +79,7 @@ PolicyBundle::~PolicyBundle()
     delete d;
 }
 
-std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& path, const std::string& language,
-                                                          const std::string& fallbackLanguage)
+std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& path, const std::string& language)
 {
     d->treeModel = std::make_unique<QStandardItemModel>();
 
@@ -97,7 +96,7 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
 
     for (const QFileInfo& file : files) {
         if (file.fileName().toLower().endsWith(".admx")) {
-            loadAdmxAndAdml(file, language, fallbackLanguage);
+            loadAdmxAndAdml(file, language);
         }
     }
 
@@ -214,11 +213,8 @@ void handlePresentation(const std::shared_ptr<model::presentation::Presentation>
     }
 }
 
-bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::string& language,
-                                   const std::string& fallbackLanguage)
+bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::string& language)
 {
-    Q_UNUSED(fallbackLanguage);
-
     auto policyDefinitions = loadPolicies<io::PolicyDefinitionsFile, io::PolicyFileFormat<io::PolicyDefinitionsFile>>("admx", admxFileName);
     if (!policyDefinitions.get())
     {

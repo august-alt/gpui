@@ -64,7 +64,7 @@ void MainWindow::onDirectoryOpen()
                         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
-    d->model = bundle->loadFolder(directory.toStdString(), "ru-ru", "en-US");
+    d->model = bundle->loadFolder(directory.toStdString(), "ru-ru");
 
     ui->treeView->setModel(d->model.get());
     d->contentWidget->setModel(d->model.get());

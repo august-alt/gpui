@@ -54,9 +54,15 @@ namespace gui
     template <typename TLayoutItem>
     QLayoutItem* createAndAttachLabel(QWidget* buddy, const QString& text)
     {
-        QLabel* label = new QLabel(text);
+        QLabel* label = new QLabel(text.trimmed());
         label->setBuddy(buddy);
         label->setWordWrap(true);
+
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(1);
+
+        label->setSizePolicy(sizePolicy);
+        buddy->setSizePolicy(sizePolicy);
 
         TLayoutItem* container = new TLayoutItem();
         container->addWidget(label);
@@ -65,22 +71,24 @@ namespace gui
         return container;
     }
 
+    QHBoxLayout* createCaptions()
+    {
+        QHBoxLayout* horizontalLayout = new QHBoxLayout();
+        QLabel* descriptionLabel = new QLabel("Description:");
+        QLabel* optionLabel = new QLabel("Options:");
+        horizontalLayout->addWidget(descriptionLabel);
+        horizontalLayout->addWidget(optionLabel);
+        return horizontalLayout;
+    }
+
     class PresentationBuilderPrivate : public PresentationWidgetVisitor {
     public:
         virtual void visitCheckBox(const CheckBox &widget) const override
         {
-            QLabel* label = new QLabel(QString::fromStdString(widget.label));
             QCheckBox* checkBox = new QCheckBox();
 
             checkBox->setChecked(widget.defaultChecked);
-            label->setBuddy(checkBox);
-            label->setWordWrap(true);
-
-            QHBoxLayout* container = new QHBoxLayout();
-            container->addWidget(checkBox);
-            container->addSpacing(8);
-            container->addWidget(label);
-            container->addStretch();
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(checkBox, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
@@ -94,7 +102,7 @@ namespace gui
                 comboBox->addItem(QString::fromStdString(item));
             }
 
-            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(comboBox, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
@@ -103,7 +111,7 @@ namespace gui
         {
             QWidget* textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
-            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(textBox, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
@@ -113,7 +121,7 @@ namespace gui
             QComboBox* comboBox = new QComboBox();
             comboBox->setCurrentIndex(widget.defaultItem);
 
-            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(comboBox, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(widget.label));
 
             if (widget.values.size() > 0) {
                 for (auto& value : widget.values)
@@ -133,7 +141,7 @@ namespace gui
         {
             QListWidget* listWidget = new QListWidget();
 
-            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(listWidget, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(listWidget, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
@@ -142,7 +150,7 @@ namespace gui
         {
             QWidget* textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
-            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(textBox, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
@@ -159,6 +167,7 @@ namespace gui
             QLabel* label = new QLabel();
             label->setText(QString::fromStdString(widget.content));
             label->setWordWrap(true);
+            label->setAlignment(Qt::AlignHCenter);
             addToLayout(label);
         }
 
@@ -167,7 +176,7 @@ namespace gui
             QLineEdit* lineEdit = new QLineEdit();
             lineEdit->setText(QString::fromStdString(widget.defaultValue));
 
-            QLayoutItem* container = createAndAttachLabel<QVBoxLayout>(lineEdit, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(lineEdit, QString::fromStdString(widget.label));
 
             addToLayout(container);
         }
@@ -225,6 +234,9 @@ namespace gui
     {
         QVBoxLayout* layout = new QVBoxLayout();
         d->setLayout(layout);
+
+        QHBoxLayout* captions = createCaptions();
+        layout->addLayout(captions);
 
         for (const auto& widget : presentation.widgetsVector) {
             QWidget* policyWidget = nullptr;

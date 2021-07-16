@@ -22,7 +22,6 @@
 #include "ui_mainwindow.h"
 
 #include "contentwidget.h"
-#include "policydialog.h"
 
 #include "../model/bundle/policybundle.h"
 

@@ -22,8 +22,6 @@
 
 #include "ui_contentwidget.h"
 
-#include "policydialog.h"
-
 #include "presentationbuilder.h"
 
 namespace gpui {

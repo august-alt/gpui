@@ -6,7 +6,6 @@ set(HEADERS
     contentwidget.h
     gui.h
     mainwindow.h
-    policydialog.h
     presentationbuilder.h
 )
 
@@ -14,20 +13,17 @@ set(SOURCES
     contentwidget.cpp
     gui.cpp
     mainwindow.cpp
-    policydialog.cpp
     presentationbuilder.cpp
 )
 
 set(UI_FORMS
     contentwidget.ui
     mainwindow.ui
-    policydialog.ui
 )
 
 set(MOC_HEADERS
     contentwidget.h
     mainwindow.h
-    policydialog.h
 )
 
 qt5_wrap_ui(UI_SOURCES ${UI_FORMS})

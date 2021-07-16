@@ -38,12 +38,23 @@ ContentWidget::ContentWidget(QWidget *parent)
 
     setPolicyWidgetsVisible(false);
 
+    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
 }
 
 ContentWidget::~ContentWidget()
 {
     delete ui;
+}
+
+void ContentWidget::setModel(QStandardItemModel* model)
+{
+    ui->contentListView->setModel(model);
+}
+
+void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
+{
+    ui->contentListView->setSelectionModel(selectionModel);
 }
 
 void ContentWidget::onListItemClicked(const QModelIndex &index)
@@ -82,6 +93,8 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
         else
         {
             setPolicyWidgetsVisible(false);
+
+            ui->contentListView->setRootIndex(index);
         }
     }
 }
@@ -93,6 +106,9 @@ void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
     ui->supportedOnTextEdit->setVisible(visible);
 
     ui->groupBox->setVisible(visible);
+
+    ui->contentScrollArea->setVisible(visible);
+    ui->contentListView->setVisible(!visible);
 }
 
 }

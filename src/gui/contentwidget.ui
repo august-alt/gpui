@@ -39,6 +39,9 @@
       <number>0</number>
      </property>
      <item>
+      <widget class="QListView" name="contentListView"/>
+     </item>
+     <item>
       <widget class="QScrollArea" name="contentScrollArea">
        <property name="widgetResizable">
         <bool>true</bool>
@@ -48,7 +51,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>492</width>
+          <width>236</width>
           <height>452</height>
          </rect>
         </property>

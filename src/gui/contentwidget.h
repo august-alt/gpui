@@ -39,6 +39,9 @@ namespace gpui {
         ContentWidget(QWidget *parent = 0);
         ~ContentWidget();
 
+        void setModel(QStandardItemModel* model);
+        void setSelectionModel(QItemSelectionModel* selectionModel);
+
     signals:
         void modelItemSelected(const QModelIndex& index);
 

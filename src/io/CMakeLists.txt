@@ -8,6 +8,10 @@ set(HEADERS
     policyresourcesfile.h
     policyfileformat.h
     policyfileformat.inl
+    registryfile.h
+    registryfile.cpp
+    registryfileformat.h
+    registryfileformat.inl
 )
 
 set(SOURCES    

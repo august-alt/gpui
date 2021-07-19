@@ -41,6 +41,10 @@ set(HEADERS
     presentation/presentationwidgetvisitor.h
     presentation/textbox.h
     presentation/text.h
+    registry/abstractregistryentry.h
+    registry/registry.h
+    registry/registryentry.h
+    registry/registryentrytype.h
 )
 
 set(SOURCES

@@ -9,7 +9,6 @@ set(HEADERS
     policyfileformat.h
     policyfileformat.inl
     registryfile.h
-    registryfile.cpp
     registryfileformat.h
     registryfileformat.inl
 )
@@ -18,6 +17,7 @@ set(SOURCES
     io.cpp
     policydefinitionsfile.cpp
     policyresourcesfile.cpp
+    registryfile.cpp
 )
 
 add_definitions(

@@ -44,9 +44,9 @@ namespace io {
 
         ~RegistryFile();
 
-        void addRegistryEntry(std::shared_ptr<model::registry::Registry> registryEntry);
+        void setRegistry(std::shared_ptr<model::registry::Registry> registryEntry);
 
-        void removeRegistryEntry(std::shared_ptr<model::registry::Registry> registryEntry);
+        void removeRegistry();
 
         std::shared_ptr<model::registry::Registry> getRegistry();
 

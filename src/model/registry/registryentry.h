@@ -31,7 +31,7 @@ namespace model {
          * \brief The RegistryEntry class holds data for registry entry.
          */
         template <typename TData>
-        class GPUI_MODEL_EXPORT RegistryEntry : AbstractRegistryEntry
+        class GPUI_MODEL_EXPORT RegistryEntry : public AbstractRegistryEntry
         {
         public:
             /*!

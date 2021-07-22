@@ -30,6 +30,38 @@ namespace gpui {
 
 class RegistryEntryAdapter
 {
+private:
+    static std::unique_ptr<model::registry::AbstractRegistryEntry>adaptCharEntry(const preg::PregEntry& entry,
+                                                                             model::registry::RegistryEntryType type)
+    {
+        auto registryEntry = std::make_unique<model::registry::RegistryEntry<std::vector<char> > >();
+        registryEntry->key = entry.key.c_str();
+        registryEntry->type = type;
+        registryEntry->value = entry.value.c_str();
+        if (entry.data) {
+            registryEntry->data = std::vector<char>(*entry.data);
+            delete[] entry.data;
+        }
+
+        return registryEntry;
+    }
+
+    template<typename TData>
+    static std::unique_ptr<model::registry::AbstractRegistryEntry>adaptIntEntry(const preg::PregEntry& entry,
+                                                                             model::registry::RegistryEntryType type)
+    {
+        auto registryEntry = std::make_unique<model::registry::RegistryEntry<TData> >();
+        registryEntry->key = entry.key.c_str();
+        registryEntry->type = type;
+        registryEntry->value = entry.value.c_str();
+        if (entry.data) {
+            registryEntry->data = static_cast<TData>(*entry.data);
+            delete[] entry.data;
+        }
+
+        return registryEntry;
+    }
+
 public:
     static std::unique_ptr<model::registry::AbstractRegistryEntry> create(const preg::PregEntry& entry)
     {
@@ -37,120 +69,63 @@ public:
         {
         case preg::REG_BINARY:
         {
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<char*> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_BINARY;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = entry.data;
-
-            return registryEntry;
+            return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
         case preg::REG_DWORD_LITTLE_ENDIAN:
         {
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint32_t> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_DWORD;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = static_cast<unsigned int>(*entry.data);
-
-            return registryEntry;
+            return adaptIntEntry<uint32_t>(entry, model::registry::REG_DWORD);
         } break;
 
         case preg::REG_DWORD_BIG_ENDIAN:
         {
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint32_t> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_DWORD_BIG_ENDIAN;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = static_cast<unsigned int>(*entry.data);
-
-            return registryEntry;
+            return adaptIntEntry<uint32_t>(entry, model::registry::REG_DWORD_BIG_ENDIAN);
         } break;
 
         case preg::REG_EXPAND_SZ:
         {
             // TODO: Implement.
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<char*> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_BINARY;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = entry.data;
-
-            return registryEntry;
+            return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
         case preg::REG_LINK:
         {
             // TODO: Implement.
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<char*> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_BINARY;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = entry.data;
-
-            return registryEntry;
+            return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
         case preg::REG_MULTI_SZ:
         {
             // TODO: Implement.
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<char*> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_BINARY;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = entry.data;
-
-            return registryEntry;
+            return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
         case preg::REG_NONE:
         {
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<char*> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_BINARY;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = entry.data;
-
-            return registryEntry;
+            return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
         case preg::REG_QWORD:
         {
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint64_t> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_QWORD;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = static_cast<uint64_t>(*entry.data);
-
-            return registryEntry;
+            return adaptIntEntry<uint64_t>(entry, model::registry::REG_QWORD);
         } break;
 
         case preg::REG_QWORD_LITTLE_ENDIAN:
         {
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint64_t> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_QWORD;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = static_cast<uint64_t>(*entry.data);
-
-            return registryEntry;
+            return adaptIntEntry<uint64_t>(entry, model::registry::REG_QWORD);
         } break;
 
         case preg::REG_SZ:
         {
             // TODO: Implement.
-            auto registryEntry = std::make_unique<model::registry::RegistryEntry<char*> >();
-            registryEntry->key = entry.key.c_str();
-            registryEntry->type = model::registry::REG_BINARY;
-            registryEntry->value = entry.value.c_str();
-            registryEntry->data = entry.data;
-
-            return registryEntry;
+            return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
         default:
-            break;
+        {
+            std::cout << "Unrecognized data type detected!" << std::endl;
+            delete[] entry.data;
+        } break;
         };
 
         return nullptr;

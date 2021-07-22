@@ -22,6 +22,8 @@
 
 #include "iconvwrapper.h"
 
+#include <cstring>
+
 namespace preg {
 
 namespace {
@@ -196,7 +198,16 @@ std::unique_ptr<PregEntry> PregParser::readEntry(KeyEntry kentry) {
     appentry->value = std::string(kn, 0, kn.length() - 1);
     appentry->type = parse_type(results.at(2).c_str());
     appentry->size = buffer2uint32(results.at(3).c_str());
-    appentry->data = const_cast<char *>(results.at(4).c_str());
+
+    if (results.size() >= 5 && results.at(4).size() > 0)
+    {
+        char* dataDouble = new char[results.at(4).length() + 1];
+        strcpy(dataDouble, results.at(4).c_str());
+        dataDouble[results.at(4).length()] = '\0';
+        appentry->data = dataDouble;
+    } else {
+        appentry->data = nullptr;
+    }
 
     return appentry;
 }

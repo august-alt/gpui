@@ -27,6 +27,10 @@
 
 namespace gpui {
 
+const QString MAIN_WINDOW_GEOMETRY = "mainwindow/geometry";
+const QString MAIN_WINDOW_STATE = "mainwindow/state";
+const QString MAIN_WINDOW_SPLITTER_STATE = "mainwindow/splitterState";
+
 class MainWindowPrivate {
 public:
     std::unique_ptr<QStandardItemModel> model;
@@ -44,6 +48,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->splitter->addWidget(d->contentWidget);
 
+    // Restore settings
+    const QSettings settings;
+
+    const QByteArray geometry = settings.value(MAIN_WINDOW_GEOMETRY).toByteArray();
+    restoreGeometry(geometry);
+
+    const QByteArray state = settings.value(MAIN_WINDOW_STATE).toByteArray();
+    restoreState(state);
+
+    const QByteArray splitterState = settings.value(MAIN_WINDOW_SPLITTER_STATE).toByteArray();
+    ui->splitter->restoreState(splitterState);
+
     connect(ui->actionOpen_Policy_Directory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 }
@@ -53,6 +69,23 @@ MainWindow::~MainWindow()
     delete d;
 
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    // Save settings
+    QSettings settings;
+
+    const QByteArray geometry = saveGeometry();
+    settings.setValue(MAIN_WINDOW_GEOMETRY, geometry);
+
+    const QByteArray state = saveState();
+    settings.setValue(MAIN_WINDOW_STATE, state);
+
+    const QByteArray splitterState = ui->splitter->saveState();
+    settings.setValue(MAIN_WINDOW_SPLITTER_STATE, splitterState);
+
+    QMainWindow::closeEvent(event);
 }
 
 void MainWindow::onDirectoryOpen()

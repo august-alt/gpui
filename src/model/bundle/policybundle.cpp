@@ -306,6 +306,15 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string& rawCat
     else if (rawCategory.size() > 0)
     {
         qWarning() << "Unable to find parent category: " << rawCategory.c_str();
+        if (machineItem)
+        {
+            d->rootMachineItem->appendRow(machineItem);
+        }
+
+        if (userItem)
+        {
+            d->rootUserItem->appendRow(userItem);
+        }
     }
 }
 

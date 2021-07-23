@@ -30,6 +30,13 @@ int main(int argc, char ** argv) {
 
     // Create window.
     QApplication app(argc, argv);
+
+    // NOTE: set app variables which will be used to
+    // construct settings path
+    app.setOrganizationName("BaseALT");
+    app.setOrganizationDomain("basealt.ru");
+    app.setApplicationName("GPUI");
+    
     gpui::MainWindow window;
     window.show();
 

@@ -95,6 +95,66 @@ void decimal_adapter_base(TOutput* output, const TInput& input)
     assign_if_exists(output->valueName, input.valueName());
 }
 
+class XsdRegistryValueAdapter
+{
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::ValueItem::ValueType Value;
+
+public:
+    static std::unique_ptr<model::admx::AbstractRegistryValue> create(const Value& element)
+    {
+        if (element.decimal().present())
+        {
+            auto value = std::make_unique<model::admx::RegistryValue<uint32_t>>(element.decimal()->value());
+            value->type = model::admx::RegistryValueType::DECIMAL;
+            return value;
+        }
+
+        if (element.longDecimal().present())
+        {
+            auto value = std::make_unique<model::admx::RegistryValue<uint64_t>>(element.longDecimal()->value());
+            value->type = model::admx::RegistryValueType::LONG_DECIMAL;
+            return value;
+        }
+
+        if (element.string().present())
+        {
+            auto value = std::make_unique<model::admx::RegistryValue<std::string>>(element.string().get());
+            value->type = model::admx::RegistryValueType::STRING;
+            return value;
+        }
+
+        if (element.delete_().present())
+        {
+            auto value = std::make_unique<model::admx::RegistryValue<int>>(0);
+            value->type = model::admx::RegistryValueType::DELETE;
+            return value;
+        }
+
+        return nullptr;
+    }
+};
+
+class XsdPolicyItemAdapter : public model::admx::PolicyItem {
+private:
+    typedef ::GroupPolicy::PolicyDefinitions::ValueItem PolicyItem;
+
+public:
+    XsdPolicyItemAdapter(const PolicyItem& element)
+    {
+        assign_if_exists(this->key, element.key());
+
+        valueName = element.valueName();
+
+        value = XsdRegistryValueAdapter::create(element.value());
+    }
+
+    static std::unique_ptr<model::admx::PolicyItem> create(const PolicyItem& element)
+    {
+        return std::make_unique<XsdPolicyItemAdapter>(element);
+    }
+};
+
 class XsdPolicyAdapter : public model::admx::Policy {
 public:
     XsdPolicyAdapter(const ::GroupPolicy::PolicyDefinitions::PolicyDefinition& definition)
@@ -136,6 +196,32 @@ public:
         }
 
         this->supportedOn = definition.supportedOn().ref();
+
+        if (definition.enabledList().present())
+        {
+            for (auto item : definition.enabledList()->item())
+            {
+                this->disabledList.push_back(XsdPolicyItemAdapter::create(item));
+            }
+        }
+
+        if (definition.disabledList().present())
+        {
+            for (auto item : definition.disabledList()->item())
+            {
+                this->disabledList.push_back(XsdPolicyItemAdapter::create(item));
+            }
+        }
+
+        if (definition.enabledValue().present())
+        {
+            this->enabledValue = XsdRegistryValueAdapter::create(definition.enabledValue().get());
+        }
+
+        if (definition.disabledValue().present())
+        {
+            this->disabledValue = XsdRegistryValueAdapter::create(definition.disabledValue().get());
+        }
     }
 
     static std::shared_ptr<model::admx::Policy> create(const ::GroupPolicy::PolicyDefinitions::PolicyDefinition& input)

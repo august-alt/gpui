@@ -77,3 +77,4 @@ compile_commands.json
 
 # Build directory
 build/
+docs/

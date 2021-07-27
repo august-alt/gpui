@@ -6,6 +6,7 @@ set(HEADERS
     contentwidget.h
     gui.h
     mainwindow.h
+    mainwindowsettings.h
     presentationbuilder.h
 )
 
@@ -13,6 +14,7 @@ set(SOURCES
     contentwidget.cpp
     gui.cpp
     mainwindow.cpp
+    mainwindowsettings.cpp
     presentationbuilder.cpp
 )
 
@@ -24,6 +26,7 @@ set(UI_FORMS
 set(MOC_HEADERS
     contentwidget.h
     mainwindow.h
+    mainwindowsettings.h
 )
 
 qt5_wrap_ui(UI_SOURCES ${UI_FORMS})
@@ -35,4 +38,4 @@ add_definitions(
 
 add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES})
 target_link_libraries(gpui-gui Qt5::Widgets)
-target_link_libraries(gpui-gui gpui-model)
+target_link_libraries(gpui-gui gpui-model gpui-io)

@@ -22,7 +22,9 @@
 #define GPUI_POLICY_H
 
 #include "../model.h"
+#include "policyitem.h"
 #include "policytype.h"
+#include "registryvalue.h"
 
 #include <memory>
 #include <string>
@@ -98,6 +100,30 @@ namespace model
              * \brief elements One of five parameters types that can be set in a policy setting.
              */
             std::vector<std::unique_ptr<PolicyElement>> elements;
+
+            /*!
+             * \brief enabledList A set of decimal or string values and registry keys
+             * representing the enabled state of the policy element.
+             */
+            std::vector<std::unique_ptr<PolicyItem>> enabledList;
+
+            /*!
+             * \brief disabledList A set of decimal or string values and registry keys
+             * representing the disabled state of the policy element.
+             */
+            std::vector<std::unique_ptr<PolicyItem>> disabledList;
+
+            /*!
+             * \brief enabledValue A decimal or string value representing the enabled
+             * value of the registry valueName element.
+             */
+            std::unique_ptr<AbstractRegistryValue> enabledValue;
+
+            /*!
+             * \brief disabledValue A decimal or string value representing the disabled
+             * value of the registry valueName element.
+             */
+            std::unique_ptr<AbstractRegistryValue> disabledValue;
         };
     }
 }

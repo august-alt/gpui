@@ -14,6 +14,7 @@ set(HEADERS
     admx/policyelement.h
     admx/policyenumelement.h
     admx/policy.h
+    admx/policyitem.h
     admx/policylistelement.h
     admx/policylongdecimalelement.h
     admx/policymultitextelement.h

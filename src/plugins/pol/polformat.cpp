@@ -39,7 +39,7 @@ private:
         registryEntry->type = type;
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
-            registryEntry->data = std::vector<char>(*entry.data);
+            registryEntry->data = std::vector<char>(entry.data, entry.data + entry.size);
             delete[] entry.data;
         }
 

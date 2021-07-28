@@ -18,45 +18,29 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_REGISTRYVALUE_H
-#define GPUI_REGISTRYVALUE_H
+#ifndef GPUI_POLICYITEM_H
+#define GPUI_POLICYITEM_H
 
 #include "../model.h"
-#include "registryvaluetype.h"
+#include "registryvalue.h"
+
+#include <string>
+#include <memory>
 
 namespace model
 {
     namespace admx
     {
-        /*!
-         * \brief The RegistryValue class The value element represents the actions to delete a registry subkey
-         * or set the values of the registry subkey to a decimal or string value.
-         */
-        class GPUI_MODEL_EXPORT AbstractRegistryValue
+        class GPUI_MODEL_EXPORT PolicyItem
         {
         public:
-            /*!
-             * \brief type You must include a choice of either the delete element, decimal element, or string element.
-             */
-            RegistryValueType type;
-        };
+            std::string key;
 
-        template <typename TValueType>
-        class GPUI_MODEL_EXPORT RegistryValue : public AbstractRegistryValue
-        {
-        public:
-            /*!
-             * \brief value
-             */
-            TValueType value;
+            std::string valueName;
 
-            RegistryValue(const TValueType& value)
-                : value(value)
-            {
-
-            }
+            std::unique_ptr<AbstractRegistryValue> value;
         };
     }
 }
 
-#endif // GPUI_REGISTRYVALUE_H
+#endif // GPUI_POLICYITEM_H

@@ -38,7 +38,7 @@ namespace model
         public:
             explicit PresentationWidget(Presentation* parent);
 
-            virtual void accept(const PresentationWidgetVisitor& visitor) const = 0;
+            virtual void accept(const PresentationWidgetVisitor& visitor) = 0;
 
         protected:
             Presentation* parent;            

@@ -1,0 +1,5 @@
+packager="gpui-github-bot@basealt.ru"
+no_sisyphus_check="packager,buildhost,gpg"
+allowed_mountpoints=/dev/pts,/proc,/dev/shm
+lazy_cleanup=1
+

@@ -1,0 +1,43 @@
+name: "CodeQL"
+
+on: [ push, pull_request ]
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    container: alt:p9
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'cpp' ]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Update software
+      run:  apt-get update
+
+    - name: Install software
+      run:  apt-get install -y cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel qt5-base-common doxygen libxerces-c-devel xsd rpm-build
+
+    - name: Configure cmake
+      run:  mkdir build && cd build && cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_MAKE_PROGRAM=`which make` ..
+
+    - name: Make software
+      run:  cd build && make -j `nproc`
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1

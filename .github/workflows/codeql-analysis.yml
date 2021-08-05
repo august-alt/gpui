@@ -31,7 +31,7 @@ jobs:
       run:  apt-get update
 
     - name: Install software
-      run:  apt-get install -y cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel qt5-base-common doxygen libxerces-c-devel xsd rpm-build
+      run:  apt-get install -y git cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel qt5-base-common doxygen libxerces-c-devel xsd rpm-build
 
     - name: Configure cmake
       run:  mkdir build && cd build && cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_MAKE_PROGRAM=`which make` ..

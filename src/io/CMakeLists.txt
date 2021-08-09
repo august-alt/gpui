@@ -3,6 +3,8 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 set(HEADERS
     genericfile.h
     genericfile.inl
+    genericreader.h
+    genericreader.inl
     io.h
     policydefinitionsfile.h
     policyresourcesfile.h

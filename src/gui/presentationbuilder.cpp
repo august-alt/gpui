@@ -83,7 +83,7 @@ namespace gui
 
     class PresentationBuilderPrivate : public PresentationWidgetVisitor {
     public:
-        virtual void visitCheckBox(const CheckBox &widget) const override
+        virtual void visit(CheckBox &widget) const override
         {
             QCheckBox* checkBox = new QCheckBox();
 
@@ -93,7 +93,7 @@ namespace gui
             addToLayout(container);
         }
 
-        virtual void visitComboBox(const ComboBox &widget) const override
+        virtual void visit(ComboBox &widget) const override
         {
             QComboBox* comboBox = new QComboBox();
             comboBox->setCurrentText(QString::fromStdString(widget.defaultValue));
@@ -107,7 +107,7 @@ namespace gui
             addToLayout(container);
         }
 
-        virtual void visitDecimalTextBox(const DecimalTextBox &widget) const override
+        virtual void visit(DecimalTextBox &widget) const override
         {
             QWidget* textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
@@ -116,7 +116,7 @@ namespace gui
             addToLayout(container);
         }
 
-        virtual void visitDropdownList(const DropdownList &widget) const override
+        virtual void visit(DropdownList &widget) const override
         {
             QComboBox* comboBox = new QComboBox();
             comboBox->setCurrentIndex(widget.defaultItem);
@@ -137,7 +137,7 @@ namespace gui
             addToLayout(container);
         }
 
-        virtual void visitListBox(const ListBox &widget) const override
+        virtual void visit(ListBox &widget) const override
         {
             QListWidget* listWidget = new QListWidget();
 
@@ -146,7 +146,7 @@ namespace gui
             addToLayout(container);
         }
 
-        virtual void visitLongDecimalTextBox(const LongDecimalTextBox &widget) const override
+        virtual void visit(LongDecimalTextBox &widget) const override
         {
             QWidget* textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
@@ -155,14 +155,14 @@ namespace gui
             addToLayout(container);
         }
 
-        virtual void visitMultiTextBox(const MultiTextBox &widget) const override
+        virtual void visit(MultiTextBox &widget) const override
         {
             QTextEdit* textEdit = new QTextEdit();
             textEdit->setMaximumHeight(widget.defaultHeight * textEdit->fontMetrics().height());
             addToLayout(textEdit);
         }
 
-        virtual void visitText(const Text &widget) const override
+        virtual void visit(Text &widget) const override
         {
             QLabel* label = new QLabel();
             label->setText(QString::fromStdString(widget.content));
@@ -171,7 +171,7 @@ namespace gui
             addToLayout(label);
         }
 
-        virtual void visitTextBox(const TextBox &widget) const override
+        virtual void visit(TextBox &widget) const override
         {
             QLineEdit* lineEdit = new QLineEdit();
             lineEdit->setText(QString::fromStdString(widget.defaultValue));

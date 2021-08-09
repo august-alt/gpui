@@ -74,8 +74,8 @@ namespace model
 
             }
 
-            virtual void accept(const PresentationWidgetVisitor& visitor) const override {
-                visitor.visitDropdownList(*this);
+            virtual void accept(const PresentationWidgetVisitor& visitor) override {
+                visitor.visit(*this);
             }
         };
     }

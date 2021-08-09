@@ -18,32 +18,52 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PRESENTATIONWIDGET_H
-#define GPUI_PRESENTATIONWIDGET_H
+#include "genericreader.h"
 
-#include "../model.h"
+#include "../model/pluginstorage.h"
 
-namespace model
+#include <fstream>
+
+#include <QString>
+#include <QDebug>
+
+namespace io {
+
+template<typename TData, typename TFormat>
+std::unique_ptr<TData> GenericReader::load(const std::string &fileName)
 {
-    namespace presentation
+    std::unique_ptr<TData> fileData;
+
+    QString pluginName = QString::fromStdString(fileName);
+    pluginName = pluginName.mid(pluginName.lastIndexOf('.') + 1);
+
+    TFormat* format = gpui::PluginStorage::instance()->createPluginClass<TFormat>(pluginName);
+
+    if (!format)
     {
-        class Presentation;
-        class PresentationWidgetVisitor;
+        qWarning() << "Format supporting: " << pluginName << " not found.";
 
-        /*!
-         * \brief The PresentationWidget class base class for all widgets supported by ADMX/ADML format.
-         */
-        class GPUI_MODEL_EXPORT PresentationWidget
-        {
-        public:
-            explicit PresentationWidget(Presentation* parent);
-
-            virtual void accept(const PresentationWidgetVisitor& visitor) = 0;
-
-        protected:
-            Presentation* parent;            
-        };
+        return fileData;
     }
+
+    std::ifstream file;
+
+    file.open(fileName, std::ifstream::in);
+
+    if (file.good()) {
+        fileData = std::make_unique<TData>();
+
+        if (!format->read(file, fileData.get()))
+        {
+            qWarning() << fileName.c_str() << " " << format->getErrorString().c_str();
+        }
+    }
+
+    file.close();
+
+    delete format;
+
+    return fileData;
 }
 
-#endif // GPUI_PRESENTATIONWIDGET_H
+}

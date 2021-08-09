@@ -85,7 +85,23 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             {
                 auto layout = ::gui::PresentationBuilder::build(*presentation);
 
-                ui->contentScrollArea->widget()->setLayout(layout);
+                ui->contentScrollArea->widget()->setLayout(layout);                
+            }
+
+            auto state = item->data(Qt::UserRole + 7).value<unsigned int>();
+            switch (state) {
+            case 0:
+                ui->notConfiguredRadioButton->setChecked(true);
+                break;
+            case 1:
+                ui->enabledRadioButton->setChecked(true);
+                break;
+            case 2:
+                ui->disabledRadioButton->setChecked(true);
+                break;
+            case 3:
+            default:
+                break;
             }
         }
         else
@@ -107,6 +123,8 @@ void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
 
     ui->contentScrollArea->setVisible(visible);
     ui->contentListView->setVisible(!visible);
+    ui->policyStateButtonBox->setVisible(visible);
+    ui->contentWidget->setVisible(visible);
 }
 
 }

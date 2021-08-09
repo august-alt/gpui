@@ -276,6 +276,8 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
                 }
             }
 
+            policyItem->setData(QVariant::fromValue(policy), Qt::UserRole + 6);
+
             d->unassignedItems.push_back(container);
         }
     }
@@ -394,3 +396,4 @@ void PolicyBundle::assignSupportedOn()
 }
 
 Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)
+Q_DECLARE_METATYPE(std::shared_ptr<::model::admx::Policy>)

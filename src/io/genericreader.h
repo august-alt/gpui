@@ -18,32 +18,25 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PRESENTATIONWIDGET_H
-#define GPUI_PRESENTATIONWIDGET_H
+#ifndef GPUI_GENERIC_READER_H
+#define GPUI_GENERIC_READER_H
 
-#include "../model.h"
+#include "io.h"
 
-namespace model
-{
-    namespace presentation
+#include <memory>
+#include <string>
+
+namespace io {
+    class GPUI_IO_EXPORT GenericReader
     {
-        class Presentation;
-        class PresentationWidgetVisitor;
+    public:
+        virtual ~GenericReader() = default;
 
-        /*!
-         * \brief The PresentationWidget class base class for all widgets supported by ADMX/ADML format.
-         */
-        class GPUI_MODEL_EXPORT PresentationWidget
-        {
-        public:
-            explicit PresentationWidget(Presentation* parent);
-
-            virtual void accept(const PresentationWidgetVisitor& visitor) = 0;
-
-        protected:
-            Presentation* parent;            
-        };
-    }
+        template<typename TData, typename TFormat>
+        std::unique_ptr<TData> load(const std::string& fileName);
+    };
 }
 
-#endif // GPUI_PRESENTATIONWIDGET_H
+#include "genericreader.inl"
+
+#endif // GPUI_GENERIC_READER_H

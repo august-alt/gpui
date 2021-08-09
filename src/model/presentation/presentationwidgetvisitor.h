@@ -42,23 +42,25 @@ namespace model
          */
         class GPUI_MODEL_EXPORT PresentationWidgetVisitor {
         public:
-            virtual void visitCheckBox(const CheckBox& widget) const = 0;
+            virtual ~PresentationWidgetVisitor() = default;
 
-            virtual void visitComboBox(const ComboBox& widget) const = 0;
+            virtual void visit(CheckBox& widget) const = 0;
 
-            virtual void visitDecimalTextBox(const DecimalTextBox& widget) const = 0;
+            virtual void visit(ComboBox& widget) const = 0;
 
-            virtual void visitDropdownList(const DropdownList& widget) const = 0;
+            virtual void visit(DecimalTextBox& widget) const = 0;
 
-            virtual void visitListBox(const ListBox& widget) const = 0;
+            virtual void visit(DropdownList& widget) const = 0;
 
-            virtual void visitLongDecimalTextBox(const LongDecimalTextBox& widget) const = 0;
+            virtual void visit(ListBox& widget) const = 0;
 
-            virtual void visitMultiTextBox(const MultiTextBox& widget) const = 0;
+            virtual void visit(LongDecimalTextBox& widget) const = 0;
 
-            virtual void visitText(const Text& widget) const = 0;
+            virtual void visit(MultiTextBox& widget) const = 0;
 
-            virtual void visitTextBox(const TextBox& widget) const = 0;
+            virtual void visit(Text& widget) const = 0;
+
+            virtual void visit(TextBox& widget) const = 0;
         };
     }
 }

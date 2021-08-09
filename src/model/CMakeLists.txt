@@ -43,9 +43,14 @@ set(HEADERS
     presentation/textbox.h
     presentation/text.h
     registry/abstractregistryentry.h
+    registry/abstractregistrysource.h
+    registry/abstractregistrysource.cpp
+    registry/polregistrysource.h
+    registry/polregistrysource.cpp
     registry/registry.h
     registry/registryentry.h
     registry/registryentrytype.h
+    registry/registrysourcetype.h
 )
 
 set(SOURCES

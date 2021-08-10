@@ -36,17 +36,17 @@ namespace model {
         class GPUI_MODEL_EXPORT AbstractRegistrySource
         {
         public:
-            virtual QVariant getValue(const std::string& key, const std::string& valueName) const;
+            virtual QVariant getValue(const std::string& key, const std::string& valueName) const = 0;
             virtual void setValue(const std::string& key, const std::string& valueName,
-                                  RegistryEntryType type, const QVariant& data);
+                                  RegistryEntryType type, const QVariant& data) = 0;
 
-            virtual bool isValuePresent(const std::string& key, const std::string& valueName) const;
+            virtual bool isValuePresent(const std::string& key, const std::string& valueName) const = 0;
 
-            virtual void markValueForDeletion(const std::string& key, const std::string& valueName);
-            virtual void undeleteValue(const std::string& key, const std::string& valueName);
+            virtual void markValueForDeletion(const std::string& key, const std::string& valueName) = 0;
+            virtual void undeleteValue(const std::string& key, const std::string& valueName) = 0;
 
-            virtual std::vector<std::string> getValueNames(const std::string& key) const;
-            virtual void clearKey(const std::string& key);
+            virtual std::vector<std::string> getValueNames(const std::string& key) const = 0;
+            virtual void clearKey(const std::string& key) = 0;
 
             RegistrySourceType getType() const;
 

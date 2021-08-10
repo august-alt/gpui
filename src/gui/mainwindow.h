@@ -53,6 +53,7 @@ namespace gpui {
     private slots:
         void onDirectoryOpen();
         void onRegistrySourceOpen();
+        void onRegistrySourceSave();
     };
 }
 

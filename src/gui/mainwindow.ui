@@ -75,6 +75,7 @@
     <addaction name="actionOpenPolicyDirectory"/>
     <addaction name="separator"/>
     <addaction name="actionOpenRegistrySource"/>
+    <addaction name="actionSaveRegistrySource"/>
     <addaction name="separator"/>
     <addaction name="actionOptions"/>
     <addaction name="separator"/>
@@ -295,6 +296,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionSaveRegistrySource">
+   <property name="text">
+    <string>&amp;Save Registry Source</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

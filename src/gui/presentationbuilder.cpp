@@ -105,7 +105,7 @@ namespace gui
 
                 checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
 
-                checkBox->connect(checkBox, &QCheckBox::toggled, [&](bool checked) {
+                checkBox->connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
                     m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, checked);
                 });
             }
@@ -128,7 +128,7 @@ namespace gui
 
                 comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
 
-                comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [&](int index) {
+                comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
                 });
             }
@@ -171,7 +171,7 @@ namespace gui
 
                 comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
 
-                comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [&](int index) {
+                comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
                 });
             }
@@ -209,7 +209,7 @@ namespace gui
                 auto charVector = m_source->getValue(keyValuePair.first, keyValuePair.second).value<std::vector<char>>();
                 textEdit->setPlainText(&charVector[0]);
 
-                textEdit->connect(textEdit, &QTextEdit::textChanged, [&](){
+                textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
                     auto str = textEdit->toPlainText().toStdString();
                     std::vector<char> value(str.begin(), str.end());
                     m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(value));
@@ -240,7 +240,7 @@ namespace gui
                 auto charVector = m_source->getValue(keyValuePair.first, keyValuePair.second).value<std::vector<char>>();
                 lineEdit->setText(&charVector[0]);
 
-                lineEdit->connect(lineEdit, &QLineEdit::textChanged, [&](const QString& text){
+                lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=](const QString& text){
                     auto str = text.toStdString();
                     std::vector<char> value(str.begin(), str.end());
                     m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(value));
@@ -307,7 +307,7 @@ namespace gui
 
                     spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
 
-                    spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [&](int value) {
+                    spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=](int value) {
                         m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value);
                     });
                 }
@@ -325,7 +325,7 @@ namespace gui
 
                 edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
 
-                edit->connect(edit, &QLineEdit::textChanged, [&](const QString & value) {
+                edit->connect(edit, &QLineEdit::textChanged, [=](const QString & value) {
                     m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value.toUInt());
                 });
             }

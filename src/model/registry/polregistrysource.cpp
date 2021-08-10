@@ -24,6 +24,8 @@
 
 #include "../pluginstorage.h"
 
+#include <QDebug>
+
 namespace model {
 
 namespace registry {
@@ -32,7 +34,7 @@ class PolRegistrySourcePrivate
 {
 public:
     std::string fileName;
-    Registry registry;
+    std::shared_ptr<Registry> registry;
 };
 
 PolRegistrySource::PolRegistrySource(const std::string& fileName)
@@ -46,10 +48,7 @@ PolRegistrySource::PolRegistrySource(std::shared_ptr<Registry> registry)
     : AbstractRegistrySource(POL_REGISTRY_TYPE)
     , d(new PolRegistrySourcePrivate())
 {
-    for (auto& entry : registry->registryEntries)
-    {
-        d->registry.registryEntries.push_back(std::move(entry));
-    }
+    d->registry = registry;
 }
 
 PolRegistrySource::~PolRegistrySource()
@@ -59,7 +58,7 @@ PolRegistrySource::~PolRegistrySource()
 
 QVariant PolRegistrySource::getValue(const std::string &key, const std::string &valueName) const
 {
-    for (const auto& entry : d->registry.registryEntries)
+    for (const auto& entry : d->registry->registryEntries)
     {
         if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
         {
@@ -88,6 +87,8 @@ QVariant PolRegistrySource::getValue(const std::string &key, const std::string &
 
 void PolRegistrySource::setValue(const std::string &key, const std::string &valueName, RegistryEntryType type, const QVariant &data)
 {
+    qWarning() << "Set value" << key.c_str() << valueName.c_str() << data;
+
     if (isValuePresent(key, valueName))
     {
         switch (type) {
@@ -115,12 +116,16 @@ void PolRegistrySource::setValue(const std::string &key, const std::string &valu
         default:
             break;
         }
+
+        return;
     }
+
+    createValue(key, valueName, type, data);
 }
 
 bool PolRegistrySource::isValuePresent(const std::string &key, const std::string &valueName) const
 {
-    for (const auto& entry : d->registry.registryEntries)
+    for (const auto& entry : d->registry->registryEntries)
     {
         if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
         {
@@ -147,7 +152,7 @@ std::vector<std::string> PolRegistrySource::getValueNames(const std::string &key
 {
     std::vector<std::string> result;
 
-    for (const auto& entry : d->registry.registryEntries)
+    for (const auto& entry : d->registry->registryEntries)
     {
         if (entry->key.compare(key.c_str()) == 0)
         {
@@ -180,13 +185,26 @@ bool PolRegistrySource::write()
 template<typename T>
 void PolRegistrySource::updateValue(const std::string &key, const std::string &valueName, const T &data)
 {
-    for (const auto& entry : d->registry.registryEntries)
+    for (const auto& entry : d->registry->registryEntries)
     {
         if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
         {
             static_cast<RegistryEntry<T>*>(entry.get())->data = data;
         }
     }
+}
+
+template<typename T>
+void PolRegistrySource::createValue(const std::string &key, const std::string &valueName,
+                                    RegistryEntryType type, const T &data)
+{
+    auto entry = std::make_unique<RegistryEntry<T>>();
+    entry->key = key.c_str();
+    entry->value = valueName.c_str();
+    entry->type = type;
+    entry->data = data;
+
+    d->registry->registryEntries.push_back(std::move(entry));
 }
 
 }

@@ -26,7 +26,10 @@
 
 #include "../model/bundle/policybundle.h"
 
+#include "../model/registry/registry.h"
 #include "../model/registry/polregistrysource.h"
+
+#include "../io/registryfileformat.h"
 
 #include "../io/genericreader.h"
 #include "../io/registryfile.h"
@@ -36,11 +39,45 @@ namespace gpui {
 
 class MainWindowPrivate {
 public:
-    std::unique_ptr<QStandardItemModel> model;
+    std::unique_ptr<QStandardItemModel> model = nullptr;
     ContentWidget* contentWidget;
-    std::unique_ptr<MainWindowSettings> settings;
-    std::unique_ptr<model::registry::AbstractRegistrySource> registrySource;
+    std::unique_ptr<MainWindowSettings> settings = nullptr;
+    std::unique_ptr<model::registry::AbstractRegistrySource> registrySource = nullptr;
+    std::shared_ptr<model::registry::Registry> registry = nullptr;
 };
+
+void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
+{
+    std::unique_ptr<io::RegistryFile> fileData = std::make_unique<io::RegistryFile>();
+    fileData->setRegistry(registry);
+
+    QString pluginName = QString::fromStdString(fileName);
+    pluginName = pluginName.mid(pluginName.lastIndexOf('.') + 1);
+
+    io::RegistryFileFormat<io::RegistryFile>* format = gpui::PluginStorage::instance()->createPluginClass<io::RegistryFileFormat<io::RegistryFile> >(pluginName);
+
+    if (!format)
+    {
+        qWarning() << "Format supporting: " << pluginName << " not found.";
+
+        return;
+    }
+
+    std::ofstream file;
+
+    file.open(fileName, std::ofstream::out | std::ofstream::binary);
+
+    if (file.good()) {
+        if (!format->write(file, fileData.get()))
+        {
+            qWarning() << fileName.c_str() << " " << format->getErrorString().c_str();
+        }
+    }
+
+    file.close();
+
+    delete format;
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -57,6 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionOpenRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceOpen);
+    connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 }
 
@@ -106,8 +144,21 @@ void MainWindow::onRegistrySourceOpen()
         return;
     }
 
-    d->registrySource = std::make_unique<model::registry::PolRegistrySource>(registryFile->getRegistry());
+    d->registry = registryFile->getRegistry();
+
+    d->registrySource = std::make_unique<model::registry::PolRegistrySource>(d->registry);
     d->contentWidget->setRegistrySource(d->registrySource.get());
+}
+
+void MainWindow::onRegistrySourceSave()
+{
+    QString polFileName = QFileDialog::getSaveFileName(
+                        this,
+                        tr("Open Directory"),
+                        QDir::homePath(),
+                        "*.pol");
+
+    save(polFileName.toStdString(), d->registry);
 }
 
 }

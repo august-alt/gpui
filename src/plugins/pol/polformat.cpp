@@ -22,9 +22,13 @@
 
 #include "pregdata.h"
 #include "pregparser.h"
+#include "pregwriter.h"
 
 #include "../../../src/model/registry/registry.h"
 #include "../../../src/model/registry/registryentry.h"
+#include "../../../src/model/registry/registryentrytype.h"
+
+using namespace model::registry;
 
 namespace gpui {
 
@@ -132,6 +136,47 @@ public:
     }
 };
 
+class PregEntryAdapter
+{
+public:
+    static preg::PregEntry create(const std::unique_ptr<model::registry::AbstractRegistryEntry>& entry)
+    {
+        auto result = preg::PregEntry();
+        result.key = entry->key.toStdString();
+        result.value = entry->value.toStdString();
+        result.type = entry->type;
+
+        switch (entry->type) {
+        case REG_BINARY:
+        case REG_EXPAND_SZ:
+        case REG_MULTI_SZ:
+        case REG_SZ:
+        {
+            auto binaryEntry = static_cast<RegistryEntry<std::vector<char> >* >(entry.get());
+            result.data = &binaryEntry->data[0];
+            result.size = binaryEntry->data.size();
+        } break;
+        case REG_DWORD:
+        case REG_DWORD_BIG_ENDIAN:
+        {
+            auto unit32Entry = static_cast<RegistryEntry<uint32_t>* >(entry.get());
+            result.size = 4;
+            result.data = reinterpret_cast<char*>(&unit32Entry->data);
+        } break;
+        case REG_QWORD:
+        {
+            auto unit64Entry = static_cast<RegistryEntry<uint64_t>* >(entry.get());
+            result.size = 8;
+            result.data = reinterpret_cast<char*>(&unit64Entry->data);
+        }break;
+        default:
+            break;
+        }
+
+        return result;
+    }
+};
+
 PolFormat::PolFormat()
     : RegistryFileFormat("pol")
 {
@@ -165,10 +210,20 @@ bool PolFormat::read(std::istream &input, io::RegistryFile* file)
 
 bool PolFormat::write(std::ostream &output, io::RegistryFile* file)
 {
-    Q_UNUSED(output);
-    Q_UNUSED(file);
+    auto writer = std::make_unique<preg::PregWriter>(&output);
 
-    return false;
+    try {
+        for (const auto& entry : file->getRegistry()->registryEntries)
+        {
+            auto pregEntry = PregEntryAdapter::create(entry);
+            writer->addEntry(pregEntry);
+        }
+    }  catch (std::exception& e) {
+        setErrorString(e.what());
+        return false;
+    }
+
+    return true;
 }
 
 }

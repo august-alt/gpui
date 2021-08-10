@@ -29,7 +29,7 @@ AbstractRegistrySource::AbstractRegistrySource(RegistrySourceType type)
 {
 }
 
-RegistrySourceType AbstractRegistrySource::getType()
+RegistrySourceType AbstractRegistrySource::getType() const
 {
     return type;
 }

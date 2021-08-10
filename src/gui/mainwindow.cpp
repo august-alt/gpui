@@ -26,6 +26,8 @@
 
 #include "../model/bundle/policybundle.h"
 
+#include "../model/registry/polregistrysource.h"
+
 namespace gpui {
 
 class MainWindowPrivate {
@@ -33,6 +35,7 @@ public:
     std::unique_ptr<QStandardItemModel> model;
     ContentWidget* contentWidget;
     std::unique_ptr<MainWindowSettings> settings;
+    std::unique_ptr<model::registry::AbstractRegistrySource> registrySource;
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -48,7 +51,8 @@ MainWindow::MainWindow(QWidget *parent)
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
     d->settings->restoreSettings();
 
-    connect(ui->actionOpen_Policy_Directory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
+    connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
+    connect(ui->actionOpenRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceOpen);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 }
 
@@ -81,6 +85,18 @@ void MainWindow::onDirectoryOpen()
     d->contentWidget->setModel(d->model.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
+}
+
+void MainWindow::onRegistrySourceOpen()
+{
+    QString polFileName = QFileDialog::getOpenFileName(
+                        this,
+                        tr("Open Directory"),
+                        QDir::homePath(),
+                        "*.pol");
+
+    d->registrySource = std::make_unique<model::registry::PolRegistrySource>(polFileName.toStdString());
+
 }
 
 }

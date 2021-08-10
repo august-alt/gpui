@@ -44,9 +44,7 @@ set(HEADERS
     presentation/text.h
     registry/abstractregistryentry.h
     registry/abstractregistrysource.h
-    registry/abstractregistrysource.cpp
     registry/polregistrysource.h
-    registry/polregistrysource.cpp
     registry/registry.h
     registry/registryentry.h
     registry/registryentrytype.h
@@ -59,6 +57,8 @@ set(SOURCES
     pluginstorage.cpp
     bundle/policybundle.cpp
     presentation/presentationwidget.cpp    
+    registry/abstractregistrysource.cpp
+    registry/polregistrysource.cpp
 )
 
 add_definitions(

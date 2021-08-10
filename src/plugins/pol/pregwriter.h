@@ -32,7 +32,7 @@ namespace preg {
 
 class PregWriter {
 private:
-    std::ofstream* preg_file;
+    std::ostream* preg_file;
     char preg_magic[4] { 'P', 'R', 'e', 'g' };
     char preg_version[4] { '\x01', '\x00', '\x00', '\x00' };
 
@@ -41,8 +41,6 @@ public:
     ~PregWriter();
 
     void addEntry(preg::PregEntry &pentry);
-
-    void close();
 
 private:
     void preg_type2buf(uint16_t type);

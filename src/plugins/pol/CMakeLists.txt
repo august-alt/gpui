@@ -17,6 +17,7 @@ set(SOURCES
 
     pregdata.cpp
     pregparser.cpp
+    pregwriter.cpp
     iconvwrapper.cpp
 )
 

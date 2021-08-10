@@ -30,13 +30,6 @@ PregWriter::PregWriter(std::ostream *preg_file) {
 }
 
 PregWriter::~PregWriter() {
-    this->close();
-}
-
-void PregWriter::close() {
-    if (this->preg_file) {
-        this->preg_file->close();
-    }
 }
 
 void PregWriter::addEntry(PregEntry &pentry) {

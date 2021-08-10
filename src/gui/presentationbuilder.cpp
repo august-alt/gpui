@@ -34,6 +34,11 @@
 #include "../model/presentation/text.h"
 #include "../model/presentation/textbox.h"
 
+#include "../model/admx/policy.h"
+#include "../model/admx/policyelement.h"
+
+#include "../model/registry/abstractregistrysource.h"
+
 #include <QVBoxLayout>
 
 #include <QCheckBox>
@@ -45,9 +50,13 @@
 #include <QSpinBox>
 #include <QPlainTextEdit>
 
+#include <QDebug>
+
 #include <iostream>
 
 using namespace model::presentation;
+using namespace model::admx;
+using namespace model::registry;
 
 namespace gui
 {
@@ -90,6 +99,17 @@ namespace gui
             checkBox->setChecked(widget.defaultChecked);
             QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(checkBox, QString::fromStdString(widget.label));
 
+            if (m_policy && m_source)
+            {
+                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
+
+                checkBox->connect(checkBox, &QCheckBox::toggled, [&](bool checked) {
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, checked);
+                });
+            }
+
             addToLayout(container);
         }
 
@@ -100,6 +120,17 @@ namespace gui
             for (const auto& item: widget.suggestions)
             {
                 comboBox->addItem(QString::fromStdString(item));
+            }
+
+            if (m_policy && m_source)
+            {
+                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+
+                comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [&](int index) {
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                });
             }
 
             QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(widget.label));
@@ -134,6 +165,17 @@ namespace gui
                 }
             }
 
+            if (m_policy && m_source)
+            {
+                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+
+                comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [&](int index) {
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                });
+            }
+
             addToLayout(container);
         }
 
@@ -159,6 +201,21 @@ namespace gui
         {
             QTextEdit* textEdit = new QTextEdit();
             textEdit->setMaximumHeight(widget.defaultHeight * textEdit->fontMetrics().height());
+
+            if (m_policy && m_source)
+            {
+                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                auto charVector = m_source->getValue(keyValuePair.first, keyValuePair.second).value<std::vector<char>>();
+                textEdit->setPlainText(&charVector[0]);
+
+                textEdit->connect(textEdit, &QTextEdit::textChanged, [&](){
+                    auto str = textEdit->toPlainText().toStdString();
+                    std::vector<char> value(str.begin(), str.end());
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(value));
+                });
+            }
+
             addToLayout(textEdit);
         }
 
@@ -176,6 +233,20 @@ namespace gui
             QLineEdit* lineEdit = new QLineEdit();
             lineEdit->setText(QString::fromStdString(widget.defaultValue));
 
+            if (m_policy && m_source)
+            {
+                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                auto charVector = m_source->getValue(keyValuePair.first, keyValuePair.second).value<std::vector<char>>();
+                lineEdit->setText(&charVector[0]);
+
+                lineEdit->connect(lineEdit, &QLineEdit::textChanged, [&](const QString& text){
+                    auto str = text.toStdString();
+                    std::vector<char> value(str.begin(), str.end());
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(value));
+                });
+            }
+
             QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(lineEdit, QString::fromStdString(widget.label));
 
             addToLayout(container);
@@ -185,8 +256,26 @@ namespace gui
             m_layout = layout;
         }
 
+        void setPolicy(const Policy& policy)
+        {
+            m_policy = &policy;
+        }
+
+        void setRegistrySource(AbstractRegistrySource& source)
+        {
+            m_source = &source;
+        }
+
+        void setCurrentElementName(std::string elementName)
+        {
+            m_elementName = elementName;
+        }
+
     private:
         QLayout* m_layout = nullptr;
+        const Policy* m_policy = nullptr;
+        AbstractRegistrySource* m_source = nullptr;
+        std::string m_elementName = "";
 
         void addToLayout(QWidget* widget) const {
             if (m_layout) {
@@ -211,36 +300,76 @@ namespace gui
                 spinBox->setMaximum(9999);
                 spinBox->setSingleStep(step);
                 spinBox->setValue(value);
+
+                if (m_policy && m_source)
+                {
+                    std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                    spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
+
+                    spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [&](int index) {
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                    });
+                }
+
                 return spinBox;
             }
 
             QLineEdit* edit = new QLineEdit();
             edit->setText(QString::number(value));
             edit->setValidator(new QIntValidator(0, 9999));
+
+            if (m_policy && m_source)
+            {
+                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
+
+                edit->connect(edit, &QLineEdit::textChanged, [&](const QString & value) {
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, value);
+                });
+            }
+
             return edit;
+        }
+
+        std::pair<std::string, std::string> findKeyAndValueName() const
+        {
+            if (m_policy && m_source)
+            {
+                for (const auto& element : m_policy->elements)
+                {
+                    if (element->id.compare(m_elementName) == 0)
+                    {
+                        return std::make_pair(element->key, element->valueName);
+                    }
+                }
+            }
+
+            qWarning() << "Key and value not found!" << m_elementName.c_str();
+
+            return std::make_pair("", "");
         }
     };
 
     PresentationBuilderPrivate* PresentationBuilder::d = new PresentationBuilderPrivate();
 
-    QWidget* buildWidget(const CheckBox* widget)
-    {
-        QCheckBox* checkBox = new QCheckBox();
-        checkBox->setChecked(widget->defaultChecked);
-        return checkBox;
-    }
-
-    QVBoxLayout* PresentationBuilder::build(const Presentation& presentation)
+    QVBoxLayout* PresentationBuilder::build(const Presentation& presentation,
+                                            const model::admx::Policy &policy,
+                                            model::registry::AbstractRegistrySource &source)
     {
         QVBoxLayout* layout = new QVBoxLayout();
         d->setLayout(layout);
+        d->setPolicy(policy);
+        d->setRegistrySource(source);
 
         QHBoxLayout* captions = createCaptions();
         layout->addLayout(captions);
 
-        for (const auto& widget : presentation.widgetsVector) {
+        for (const auto& widget : presentation.widgets) {
             QWidget* policyWidget = nullptr;
-            widget->accept(*d);
+            d->setCurrentElementName(widget.first);
+            widget.second->accept(*d);
 
             if (policyWidget) {
                 layout->addWidget(policyWidget);

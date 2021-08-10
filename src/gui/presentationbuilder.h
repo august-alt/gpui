@@ -31,6 +31,12 @@ namespace model {
     namespace presentation {
         class Presentation;
     }
+    namespace admx {
+        class Policy;
+    }
+    namespace registry {
+        class AbstractRegistrySource;
+    }
 }
 
 namespace gui
@@ -51,7 +57,9 @@ namespace gui
          * @param presentation Defines a reference to policy representation.
          * @return nullptr if build failed, and widget associated with policy otherwise.
          */
-        static QVBoxLayout *build(const model::presentation::Presentation& presentation);
+        static QVBoxLayout *build(const model::presentation::Presentation& presentation,
+                                  const model::admx::Policy& policy,
+                                  model::registry::AbstractRegistrySource& source);
 
     private:
         static PresentationBuilderPrivate* d;

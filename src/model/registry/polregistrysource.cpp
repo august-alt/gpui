@@ -67,7 +67,6 @@ QVariant PolRegistrySource::getValue(const std::string &key, const std::string &
             case REG_MULTI_SZ:
                 return QVariant(static_cast<RegistryEntry<char*>*>(entry.get())->data);
             case REG_QWORD:
-                return QVariant(static_cast<RegistryEntry<uint64_t>*>(entry.get())->data);
             default:
                 break;
             }

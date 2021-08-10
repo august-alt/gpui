@@ -29,6 +29,12 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class ContentWidget; }
 QT_END_NAMESPACE
 
+namespace model {
+    namespace registry {
+        class AbstractRegistrySource;
+    }
+}
+
 namespace gpui {
 
     class GPUI_GUI_EXPORT ContentWidget : public QWidget {
@@ -41,6 +47,8 @@ namespace gpui {
 
         void setModel(QStandardItemModel* model);
         void setSelectionModel(QItemSelectionModel* selectionModel);
+
+        void setRegistrySource(model::registry::AbstractRegistrySource* registrySource);
 
     signals:
         void modelItemSelected(const QModelIndex& index);

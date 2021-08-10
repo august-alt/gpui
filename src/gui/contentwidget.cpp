@@ -24,9 +24,15 @@
 
 #include "presentationbuilder.h"
 
+#include "../model/registry/abstractregistrysource.h"
+#include "../model/admx/policy.h"
+
 namespace gpui {
 
 typedef std::shared_ptr<::model::presentation::Presentation> PresentationPtr;
+typedef std::shared_ptr<::model::admx::Policy> PolicyPtr;
+
+model::registry::AbstractRegistrySource* source = nullptr;
 
 ContentWidget::ContentWidget(QWidget *parent)
     : QWidget(parent)
@@ -55,6 +61,11 @@ void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     ui->contentListView->setSelectionModel(selectionModel);
 }
 
+void ContentWidget::setRegistrySource(model::registry::AbstractRegistrySource *registrySource)
+{
+    source = registrySource;
+}
+
 void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
     const QStandardItemModel* model = dynamic_cast<const QStandardItemModel*>(index.model());
@@ -80,10 +91,11 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             ui->supportedOnTextEdit->setText(item->data(Qt::UserRole + 4).value<QString>());
 
             auto presentation = item->data(Qt::UserRole +5).value<PresentationPtr>();
+            auto policy = item->data(Qt::UserRole + 6).value<PolicyPtr>();
 
-            if (presentation)
+            if (presentation && policy)
             {
-                auto layout = ::gui::PresentationBuilder::build(*presentation);
+                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, source);
 
                 ui->contentScrollArea->widget()->setLayout(layout);                
             }
@@ -130,3 +142,4 @@ void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
 }
 
 Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)
+Q_DECLARE_METATYPE(std::shared_ptr<::model::admx::Policy>)

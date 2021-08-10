@@ -28,6 +28,10 @@
 
 #include "../model/registry/polregistrysource.h"
 
+#include "../io/genericreader.h"
+#include "../io/registryfile.h"
+#include "../io/registryfileformat.h"
+
 namespace gpui {
 
 class MainWindowPrivate {
@@ -95,8 +99,15 @@ void MainWindow::onRegistrySourceOpen()
                         QDir::homePath(),
                         "*.pol");
 
-    d->registrySource = std::make_unique<model::registry::PolRegistrySource>(polFileName.toStdString());
+    auto reader = std::make_unique<io::GenericReader>();
+    auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile> >(polFileName.toStdString());
+    if (!registryFile)
+    {
+        return;
+    }
 
+    d->registrySource = std::make_unique<model::registry::PolRegistrySource>(registryFile->getRegistry());
+    d->contentWidget->setRegistrySource(d->registrySource.get());
 }
 
 }

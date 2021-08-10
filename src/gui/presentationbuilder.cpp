@@ -307,8 +307,8 @@ namespace gui
 
                     spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
 
-                    spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [&](int index) {
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                    spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [&](int value) {
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value);
                     });
                 }
 
@@ -326,7 +326,7 @@ namespace gui
                 edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
 
                 edit->connect(edit, &QLineEdit::textChanged, [&](const QString & value) {
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, value);
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value.toUInt());
                 });
             }
 

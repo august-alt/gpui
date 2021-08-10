@@ -95,7 +95,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
             if (presentation && policy)
             {
-                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, source);
+                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, *source);
 
                 ui->contentScrollArea->widget()->setLayout(layout);                
             }

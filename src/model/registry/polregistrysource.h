@@ -25,9 +25,12 @@
 
 #include "abstractregistrysource.h"
 
+#include <memory>
+
 namespace model {
     namespace registry {
         class PolRegistrySourcePrivate;
+        class Registry;
 
         /*!
          * \brief The PolRegistrySource class
@@ -36,6 +39,7 @@ namespace model {
         {
         public:
             PolRegistrySource(const std::string &fileName);
+            PolRegistrySource(std::shared_ptr<Registry> registry);
             ~PolRegistrySource();
 
             QVariant getValue(const std::string& key, const std::string& valueName) const override final;

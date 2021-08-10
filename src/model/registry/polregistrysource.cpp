@@ -42,6 +42,16 @@ PolRegistrySource::PolRegistrySource(const std::string& fileName)
     d->fileName = fileName;
 }
 
+PolRegistrySource::PolRegistrySource(std::shared_ptr<Registry> registry)
+    : AbstractRegistrySource(POL_REGISTRY_TYPE)
+    , d(new PolRegistrySourcePrivate())
+{
+    for (auto& entry : registry->registryEntries)
+    {
+        d->registry.registryEntries.push_back(std::move(entry));
+    }
+}
+
 PolRegistrySource::~PolRegistrySource()
 {
     delete d;

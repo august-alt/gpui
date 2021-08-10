@@ -34,10 +34,6 @@ namespace model
         class GPUI_MODEL_EXPORT PolicyMultiTextElement : public PolicyElement
         {
         public:
-            /*!
-             * \brief A valid registry value name.
-             */
-            std::string valueName;
         };
     }
 }

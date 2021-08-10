@@ -37,11 +37,6 @@ namespace model
         {
         public:
             /*!
-             * \brief A valid registry value name.
-             */
-            std::string valueName;
-
-            /*!
              * \brief Requirement to enter a value in the parameter box.
              */
             bool required = false;

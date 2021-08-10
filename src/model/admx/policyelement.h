@@ -52,6 +52,11 @@ namespace model
              */
             std::string key;
 
+            /*!
+             * \brief A valid registry value name.
+             */
+            std::string valueName;
+
             virtual ~PolicyElement() {}
         };
     }

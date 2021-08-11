@@ -37,8 +37,7 @@ namespace model {
          */
         class GPUI_MODEL_EXPORT PolRegistrySource : public AbstractRegistrySource
         {
-        public:
-            PolRegistrySource(const std::string &fileName);
+        public:            
             PolRegistrySource(std::shared_ptr<Registry> registry);
             ~PolRegistrySource();
 
@@ -53,9 +52,6 @@ namespace model {
 
             std::vector<std::string> getValueNames(const std::string& key) const override final;
             void clearKey(const std::string& key) override final;
-
-            bool read();
-            bool write();
 
         private:
             template<typename T>

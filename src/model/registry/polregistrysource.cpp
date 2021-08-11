@@ -37,13 +37,6 @@ public:
     std::shared_ptr<Registry> registry;
 };
 
-PolRegistrySource::PolRegistrySource(const std::string& fileName)
-    : AbstractRegistrySource(POL_REGISTRY_TYPE)
-    , d(new PolRegistrySourcePrivate())
-{
-    d->fileName = fileName;
-}
-
 PolRegistrySource::PolRegistrySource(std::shared_ptr<Registry> registry)
     : AbstractRegistrySource(POL_REGISTRY_TYPE)
     , d(new PolRegistrySourcePrivate())
@@ -170,16 +163,6 @@ void PolRegistrySource::clearKey(const std::string &key)
     {
         markValueForDeletion(key, value);
     }
-}
-
-bool PolRegistrySource::read()
-{
-    return false;
-}
-
-bool PolRegistrySource::write()
-{
-    return false;
 }
 
 template<typename T>

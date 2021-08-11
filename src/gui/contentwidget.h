@@ -41,9 +41,9 @@ namespace gpui {
     public:
         enum PolicyWidgetState
         {
-            STATE_NOT_CONFIGURED,
-            STATE_ENABLED,
-            STATE_DISABLED
+            STATE_NOT_CONFIGURED        = 0,
+            STATE_ENABLED               = 1,
+            STATE_DISABLED              = 2
         };
 
     public:

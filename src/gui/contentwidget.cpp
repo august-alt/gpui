@@ -25,6 +25,7 @@
 #include "presentationbuilder.h"
 
 #include "../model/registry/abstractregistrysource.h"
+#include "../model/registry/policystatemanager.h"
 #include "../model/admx/policy.h"
 
 namespace gpui {
@@ -41,7 +42,6 @@ ContentWidget::ContentWidget(QWidget *parent)
     ui->setupUi(this);
 
     setPolicyWidgetsVisible(false);
-    setPolicyWidgetState(STATE_NOT_CONFIGURED);
 
     connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
@@ -120,7 +120,8 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
         if (item->data(Qt::UserRole + 1).value<uint>() == 1)
         {
-            setPolicyWidgetsVisible(true);            
+            setPolicyWidgetsVisible(true);
+            setPolicyWidgetState(STATE_NOT_CONFIGURED);
 
             ui->notConfiguredRadioButton->setChecked(true);
             ui->supportedOnTextEdit->setText(item->data(Qt::UserRole + 4).value<QString>());
@@ -130,25 +131,29 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
             if (presentation && policy)
             {
+                if (source)
+                {
+                    auto manager = model::registry::PolicyStateManager(*source, *policy);
+                    auto state = manager.determinePolicyState();
+                    if (state == model::registry::PolicyStateManager::STATE_ENABLED)
+                    {
+                        ui->enabledRadioButton->setChecked(true);
+                    }
+
+                    if (state == model::registry::PolicyStateManager::STATE_DISABLED)
+                    {
+                        ui->disabledRadioButton->setChecked(true);
+                    }
+
+                    if (state == model::registry::PolicyStateManager::STATE_NOT_CONFIGURED)
+                    {
+                        ui->notConfiguredRadioButton->setChecked(true);
+                    }
+                }
+
                 auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, *source);
 
                 ui->contentScrollArea->widget()->setLayout(layout);                
-            }
-
-            auto state = item->data(Qt::UserRole + 7).value<unsigned int>();
-            switch (state) {
-            case 0:
-                ui->notConfiguredRadioButton->setChecked(true);
-                break;
-            case 1:
-                ui->enabledRadioButton->setChecked(true);
-                break;
-            case 2:
-                ui->disabledRadioButton->setChecked(true);
-                break;
-            case 3:
-            default:
-                break;
             }
         }
         else

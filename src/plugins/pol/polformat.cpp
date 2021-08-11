@@ -185,11 +185,11 @@ PolFormat::PolFormat()
 
 bool PolFormat::read(std::istream &input, io::RegistryFile* file)
 {
-    auto parser = std::make_unique<preg::PregParser>(input);
-
     auto registry = std::make_shared<model::registry::Registry>();
 
     try {
+        auto parser = std::make_unique<preg::PregParser>(input);
+
         preg::PregEntry entry;
 
         while (auto entryPointer = parser->getNextEntry()) {

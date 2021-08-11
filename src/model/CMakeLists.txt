@@ -44,6 +44,7 @@ set(HEADERS
     presentation/text.h
     registry/abstractregistryentry.h
     registry/abstractregistrysource.h
+    registry/policystatemanager.h
     registry/polregistrysource.h
     registry/registry.h
     registry/registryentry.h
@@ -58,6 +59,7 @@ set(SOURCES
     bundle/policybundle.cpp
     presentation/presentationwidget.cpp    
     registry/abstractregistrysource.cpp
+    registry/policystatemanager.cpp
     registry/polregistrysource.cpp
 )
 

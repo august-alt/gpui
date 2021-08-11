@@ -41,9 +41,29 @@ ContentWidget::ContentWidget(QWidget *parent)
     ui->setupUi(this);
 
     setPolicyWidgetsVisible(false);
+    setPolicyWidgetState(STATE_NOT_CONFIGURED);
 
     connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
+
+    connect(ui->notConfiguredRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
+        if (checked)
+        {
+            setPolicyWidgetState(STATE_NOT_CONFIGURED);
+        }
+    });
+    connect(ui->enabledRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
+        if (checked)
+        {
+            setPolicyWidgetState(STATE_ENABLED);
+        }
+    });
+    connect(ui->disabledRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
+        if (checked)
+        {
+            setPolicyWidgetState(STATE_DISABLED);
+        }
+    });
 }
 
 ContentWidget::~ContentWidget()
@@ -66,6 +86,21 @@ void ContentWidget::setRegistrySource(model::registry::AbstractRegistrySource *r
     source = registrySource;
 }
 
+void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
+{
+    switch (state) {
+    case STATE_ENABLED:
+    {
+        ui->contentScrollArea->setDisabled(false);
+    }break;
+    case STATE_DISABLED:
+    case STATE_NOT_CONFIGURED:
+    default:
+        ui->contentScrollArea->setDisabled(true);
+        break;
+    }
+}
+
 void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
     const QStandardItemModel* model = dynamic_cast<const QStandardItemModel*>(index.model());
@@ -85,7 +120,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
         if (item->data(Qt::UserRole + 1).value<uint>() == 1)
         {
-            setPolicyWidgetsVisible(true);
+            setPolicyWidgetsVisible(true);            
 
             ui->notConfiguredRadioButton->setChecked(true);
             ui->supportedOnTextEdit->setText(item->data(Qt::UserRole + 4).value<QString>());

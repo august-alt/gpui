@@ -36,9 +36,15 @@ namespace model {
 }
 
 namespace gpui {
-
     class GPUI_GUI_EXPORT ContentWidget : public QWidget {
         Q_OBJECT
+    public:
+        enum PolicyWidgetState
+        {
+            STATE_NOT_CONFIGURED,
+            STATE_ENABLED,
+            STATE_DISABLED
+        };
 
     public:
         // construction and destruction
@@ -49,6 +55,8 @@ namespace gpui {
         void setSelectionModel(QItemSelectionModel* selectionModel);
 
         void setRegistrySource(model::registry::AbstractRegistrySource* registrySource);
+
+        void setPolicyWidgetState(PolicyWidgetState state);
 
     signals:
         void modelItemSelected(const QModelIndex& index);

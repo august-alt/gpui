@@ -24,8 +24,9 @@
 
 #include "../admx/policy.h"
 #include "../admx/policyelement.h"
+#include "../admx/registryvalue.h"
 
-#include <QObject>
+#include <algorithm>
 
 namespace model {
 
@@ -84,11 +85,11 @@ void PolicyStateManager::setupPolicyState(PolicyStateManager::PolicyState state)
 
 bool PolicyStateManager::determineIfPolicyEnabled() const
 {
-    if (d->policy.valueName.size() != 0)
+    if (d->policy.enabledValue)
     {
         if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
         {
-            return true;
+            checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.enabledValue.get());
         }
     }
 
@@ -103,37 +104,59 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
         }
     }
 
+    size_t enabledKeys = 0;
+    for (const auto& listEntry : d->policy.enabledList)
+    {
+        if (d->source.isValuePresent(d->policy.key, listEntry->valueName))
+        {
+            if (checkValueState(d->source.getValue(d->policy.key, listEntry->valueName), listEntry->value.get()))
+            {
+                enabledKeys++;
+            }
+        }
+    }
 
-    // TODO: Implement enabled list.
-
-    return false;
+    return enabledKeys > 0 && enabledKeys == d->policy.enabledList.size();
 }
 
 bool PolicyStateManager::determineIfPolicyDisabled() const
 {
-    if (d->policy.valueName.size() != 0)
+    if (d->policy.disabledValue)
     {
-        if (d->source.isValuePresent(d->policy.key, "disabled;" + d->policy.valueName))
+        if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
         {
-            return true;
+            checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.disabledValue.get());
         }
     }
 
-    // TODO: Implement disabled list.
+    size_t disabledKeys = 0;
+    for (const auto& listEntry : d->policy.disabledList)
+    {
+        if (d->source.isValuePresent(d->policy.key, listEntry->valueName))
+        {
+            if (checkValueState(d->source.getValue(d->policy.key, listEntry->valueName), listEntry->value.get()))
+            {
+                disabledKeys++;
+            }
+        }
+    }
 
-    return false;
+    return disabledKeys > 0 && disabledKeys == d->policy.disabledList.size();
 }
 
 void PolicyStateManager::setPolicyStateEnabled()
 {
     if (d->policy.enabledValue)
     {
-        // TODO: Implement enabled value.
+        setValueState(d->policy.key, d->policy.valueName, d->policy.enabledValue.get());
     }
 
     if (d->policy.enabledList.size() > 0)
     {
-        // TODO: Implement enabled list.
+        for (const auto& listEntry : d->policy.enabledList)
+        {
+            setValueState(d->policy.key, listEntry->valueName, listEntry->value.get());
+        }
     }
 }
 
@@ -141,12 +164,59 @@ void PolicyStateManager::setPolicyStateDisabled()
 {
     if (d->policy.disabledValue)
     {
-        // TODO: Implement enabled value.
+       setValueState(d->policy.key, d->policy.valueName, d->policy.disabledValue.get());
     }
 
     if (d->policy.disabledList.size() > 0)
     {
-        // TODO: Implement disabled list.
+        for (const auto& listEntry : d->policy.disabledList)
+        {
+            setValueState(d->policy.key, listEntry->valueName, listEntry->value.get());
+        }
+    }
+}
+
+bool PolicyStateManager::checkValueState(QVariant &&value, model::admx::AbstractRegistryValue* registryValue) const
+{
+    switch (registryValue->type) {
+    case model::admx::RegistryValueType::DECIMAL:
+        return value.value<uint32_t>() == static_cast<model::admx::RegistryValue<uint32_t>*>(registryValue)->value;
+        break;
+    case model::admx::RegistryValueType::LONG_DECIMAL:
+        return value.value<uint64_t>() == static_cast<model::admx::RegistryValue<uint64_t>*>(registryValue)->value;
+        break;
+    case model::admx::RegistryValueType::STRING: {
+            auto v1 = value.value<std::vector<char>>();
+            auto v2 = static_cast<model::admx::RegistryValue<std::vector<char>>*>(registryValue)->value;
+            return std::equal(v1.begin(), v1.end(), v2.begin(), v2.end());
+        } break;
+    case model::admx::RegistryValueType::DELETE:
+        // TODO: Implement.
+        break;
+    }
+
+    return false;
+}
+
+void PolicyStateManager::setValueState(const std::string &key, const std::string &valueName,
+                                       admx::AbstractRegistryValue *registryValue)
+{
+    switch (registryValue->type) {
+    case model::admx::RegistryValueType::DECIMAL:
+        d->source.setValue(key, valueName, RegistryEntryType::REG_DWORD,
+                           static_cast<model::admx::RegistryValue<uint32_t>*>(registryValue)->value);
+        break;
+    case model::admx::RegistryValueType::LONG_DECIMAL:
+        d->source.setValue(key, valueName, RegistryEntryType::REG_QWORD,
+                           QVariant::fromValue(static_cast<model::admx::RegistryValue<uint64_t>*>(registryValue)->value));
+        break;
+    case model::admx::RegistryValueType::STRING:
+        d->source.setValue(key, valueName, RegistryEntryType::REG_SZ,
+                           QVariant::fromValue(static_cast<model::admx::RegistryValue<std::vector<char> >*>(registryValue)->value));
+        break;
+    case model::admx::RegistryValueType::DELETE:
+        // TODO: Implement.
+        break;
     }
 }
 

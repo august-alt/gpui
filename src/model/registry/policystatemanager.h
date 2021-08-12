@@ -1,4 +1,4 @@
-/***********************************************************************************************************************
+﻿/***********************************************************************************************************************
 **
 ** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
 **
@@ -23,9 +23,14 @@
 
 #include "../model.h"
 
+#include <string>
+
+class QVariant;
+
 namespace model {
     namespace admx {
-        class Policy;
+        class AbstractRegistryValue;
+        class Policy;        
     }
 
     namespace registry {
@@ -56,6 +61,10 @@ namespace model {
 
             void setPolicyStateEnabled();
             void setPolicyStateDisabled();
+
+            bool checkValueState(QVariant &&value, model::admx::AbstractRegistryValue* registryValue) const;
+            void setValueState(const std::string &key, const std::string &valueName,
+                               model::admx::AbstractRegistryValue* registryValue);
 
         private:
             PolicyStateManagerPrivate* d;

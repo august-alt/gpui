@@ -36,6 +36,8 @@ namespace model {
 }
 
 namespace gpui {
+    class ContentWidgetPrivate;
+
     class GPUI_GUI_EXPORT ContentWidget : public QWidget {
         Q_OBJECT
     public:
@@ -63,6 +65,7 @@ namespace gpui {
 
     private:
         Ui::ContentWidget *ui;
+        ContentWidgetPrivate* d;
 
     private slots:
         void onListItemClicked(const QModelIndex& index);

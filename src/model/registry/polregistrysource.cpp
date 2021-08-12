@@ -57,18 +57,19 @@ QVariant PolRegistrySource::getValue(const std::string &key, const std::string &
         {
             switch (entry->type) {
             case REG_SZ:
-                return QVariant(static_cast<RegistryEntry<char*>*>(entry.get())->data);
+                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
             case REG_BINARY:
-                return QVariant(static_cast<RegistryEntry<char*>*>(entry.get())->data);
+                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
             case REG_DWORD:
                 return QVariant(static_cast<RegistryEntry<uint32_t>*>(entry.get())->data);
             case REG_DWORD_BIG_ENDIAN:
                 return QVariant(static_cast<RegistryEntry<uint32_t>*>(entry.get())->data);
             case REG_EXPAND_SZ:
-                return QVariant(static_cast<RegistryEntry<char*>*>(entry.get())->data);
+                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
             case REG_MULTI_SZ:
-                return QVariant(static_cast<RegistryEntry<char*>*>(entry.get())->data);
+                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
             case REG_QWORD:
+                return QVariant::fromValue(static_cast<RegistryEntry<uint64_t>*>(entry.get())->data);
             default:
                 break;
             }

@@ -341,7 +341,12 @@ namespace gui
                 {
                     if (element->id.compare(m_elementName) == 0)
                     {
-                        return std::make_pair(element->key, element->valueName);
+                        if (element->key.size() > 0)
+                        {
+                            return std::make_pair(element->key, element->valueName);
+                        } else {
+                            return std::make_pair(m_policy->key, element->valueName);
+                        }
                     }
                 }
             }

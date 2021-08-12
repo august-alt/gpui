@@ -89,7 +89,7 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
     {
         if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
         {
-            checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.enabledValue.get());
+            return checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.enabledValue.get());
         }
     }
 
@@ -125,7 +125,7 @@ bool PolicyStateManager::determineIfPolicyDisabled() const
     {
         if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
         {
-            checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.disabledValue.get());
+            return checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.disabledValue.get());
         }
     }
 

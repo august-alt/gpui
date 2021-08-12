@@ -141,6 +141,13 @@ void PolRegistrySource::undeleteValue(const std::string &key, const std::string 
     Q_UNUSED(valueName);
 }
 
+bool PolRegistrySource::isValueMarkedForDeletion(const std::string &key, const std::string &valueName) const
+{
+    Q_UNUSED(key);
+    Q_UNUSED(valueName);
+    return false;
+}
+
 std::vector<std::string> PolRegistrySource::getValueNames(const std::string &key) const
 {
     std::vector<std::string> result;

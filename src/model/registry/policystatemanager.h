@@ -62,7 +62,8 @@ namespace model {
             void setPolicyStateEnabled();
             void setPolicyStateDisabled();
 
-            bool checkValueState(QVariant &&value, model::admx::AbstractRegistryValue* registryValue) const;
+            bool checkValueState(const std::string &key, const std::string &valueName,
+                                 model::admx::AbstractRegistryValue* registryValue) const;
             void setValueState(const std::string &key, const std::string &valueName,
                                model::admx::AbstractRegistryValue* registryValue);
 

@@ -89,7 +89,7 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
     {
         if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
         {
-            return checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.enabledValue.get());
+            return checkValueState(d->policy.key, d->policy.valueName, d->policy.enabledValue.get());
         }
     }
 
@@ -109,7 +109,7 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
     {
         if (d->source.isValuePresent(d->policy.key, listEntry->valueName))
         {
-            if (checkValueState(d->source.getValue(d->policy.key, listEntry->valueName), listEntry->value.get()))
+            if (checkValueState(d->policy.key, listEntry->valueName, listEntry->value.get()))
             {
                 enabledKeys++;
             }
@@ -125,7 +125,7 @@ bool PolicyStateManager::determineIfPolicyDisabled() const
     {
         if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
         {
-            return checkValueState(d->source.getValue(d->policy.key, d->policy.valueName), d->policy.disabledValue.get());
+            return checkValueState(d->policy.key, d->policy.valueName, d->policy.disabledValue.get());
         }
     }
 
@@ -134,7 +134,7 @@ bool PolicyStateManager::determineIfPolicyDisabled() const
     {
         if (d->source.isValuePresent(d->policy.key, listEntry->valueName))
         {
-            if (checkValueState(d->source.getValue(d->policy.key, listEntry->valueName), listEntry->value.get()))
+            if (checkValueState(d->policy.key, listEntry->valueName, listEntry->value.get()))
             {
                 disabledKeys++;
             }
@@ -158,6 +158,14 @@ void PolicyStateManager::setPolicyStateEnabled()
             setValueState(d->policy.key, listEntry->valueName, listEntry->value.get());
         }
     }
+
+    for (const auto& element : d->policy.elements)
+    {
+        if (!d->source.isValuePresent(element->key, element->valueName))
+        {
+            // TODO: Implement.
+        }
+    }
 }
 
 void PolicyStateManager::setPolicyStateDisabled()
@@ -176,8 +184,10 @@ void PolicyStateManager::setPolicyStateDisabled()
     }
 }
 
-bool PolicyStateManager::checkValueState(QVariant &&value, model::admx::AbstractRegistryValue* registryValue) const
+bool PolicyStateManager::checkValueState(const std::string &key, const std::string &valueName,
+                                         model::admx::AbstractRegistryValue* registryValue) const
 {
+    QVariant value = d->source.getValue(key, valueName);
     switch (registryValue->type) {
     case model::admx::RegistryValueType::DECIMAL:
         return value.value<uint32_t>() == static_cast<model::admx::RegistryValue<uint32_t>*>(registryValue)->value;
@@ -191,7 +201,9 @@ bool PolicyStateManager::checkValueState(QVariant &&value, model::admx::Abstract
             return std::equal(v1.begin(), v1.end(), v2.begin(), v2.end());
         } break;
     case model::admx::RegistryValueType::DELETE:
-        // TODO: Implement.
+        return d->source.isValueMarkedForDeletion(key, valueName);
+        break;
+    default:
         break;
     }
 
@@ -215,7 +227,9 @@ void PolicyStateManager::setValueState(const std::string &key, const std::string
                            QVariant::fromValue(static_cast<model::admx::RegistryValue<std::vector<char> >*>(registryValue)->value));
         break;
     case model::admx::RegistryValueType::DELETE:
-        // TODO: Implement.
+        d->source.markValueForDeletion(key, valueName);
+        break;
+    default:
         break;
     }
 }

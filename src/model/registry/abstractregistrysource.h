@@ -44,6 +44,7 @@ namespace model {
 
             virtual void markValueForDeletion(const std::string& key, const std::string& valueName) = 0;
             virtual void undeleteValue(const std::string& key, const std::string& valueName) = 0;
+            virtual bool isValueMarkedForDeletion(const std::string& key, const std::string& valueName) const = 0;
 
             virtual std::vector<std::string> getValueNames(const std::string& key) const = 0;
             virtual void clearKey(const std::string& key) = 0;

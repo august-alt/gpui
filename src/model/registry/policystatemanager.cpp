@@ -97,7 +97,11 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
     {
         for (const auto& element : d->policy.elements)
         {
-            if (d->source.isValuePresent(element->key, element->valueName))
+            auto key = element->key.size() > 0
+                    ? element->key
+                    : d->policy.key;
+
+            if (d->source.isValuePresent(key, element->valueName))
             {
                 return true;
             }
@@ -161,7 +165,11 @@ void PolicyStateManager::setPolicyStateEnabled()
 
     for (const auto& element : d->policy.elements)
     {
-        if (!d->source.isValuePresent(element->key, element->valueName))
+        auto key = element->key.size() > 0
+                ? element->key
+                : d->policy.key;
+
+        if (!d->source.isValuePresent(key, element->valueName))
         {
             // TODO: Implement.
         }

@@ -29,6 +29,8 @@ set(HEADERS
     bundle/policybundle.h
     bundle/policytreemodel.h
     bundle/policytreemodelitem.h
+    commands/command.h
+    commands/commandgroup.h
     presentation/checkbox.h
     presentation/combobox.h
     presentation/decimaltextbox.h
@@ -57,6 +59,8 @@ set(SOURCES
     plugin.cpp
     pluginstorage.cpp
     bundle/policybundle.cpp
+    commands/command.cpp
+    commands/commandgroup.cpp
     presentation/presentationwidget.cpp    
     registry/abstractregistrysource.cpp
     registry/policystatemanager.cpp

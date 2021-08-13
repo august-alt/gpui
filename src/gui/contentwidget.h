@@ -68,7 +68,10 @@ namespace gpui {
         ContentWidgetPrivate* d;
 
     private slots:
-        void onListItemClicked(const QModelIndex& index);
+        void onListItemClicked(const QModelIndex &index);
+
+        void onApplyClicked();
+        void onCancelClicked();
 
     private:
         void setPolicyWidgetsVisible(bool visible);

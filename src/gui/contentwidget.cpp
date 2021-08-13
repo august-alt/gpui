@@ -28,6 +28,8 @@
 #include "../model/registry/policystatemanager.h"
 #include "../model/admx/policy.h"
 
+#include "../model/commands/commandgroup.h"
+
 namespace gpui {
 
 typedef std::shared_ptr<::model::presentation::Presentation> PresentationPtr;
@@ -38,6 +40,9 @@ class ContentWidgetPrivate
 public:
     model::registry::AbstractRegistrySource* source = nullptr;
     std::unique_ptr<model::registry::PolicyStateManager> manager;
+    model::command::CommandGroup commandGroup;
+    bool cancelFlag = false;
+    QModelIndex currentIndex;
 };
 
 ContentWidget::ContentWidget(QWidget *parent)
@@ -85,6 +90,12 @@ ContentWidget::ContentWidget(QWidget *parent)
             }
         }
     });
+
+    QPushButton* applyButton = ui->policyStateButtonBox->button(QDialogButtonBox::Apply);
+    connect(applyButton, &QPushButton::clicked, ui->policyStateButtonBox, &QDialogButtonBox::accepted);
+
+    connect(ui->policyStateButtonBox, &QDialogButtonBox::accepted, this, &ContentWidget::onApplyClicked);
+    connect(ui->policyStateButtonBox, &QDialogButtonBox::rejected, this, &ContentWidget::onCancelClicked);
 }
 
 ContentWidget::~ContentWidget()
@@ -125,7 +136,25 @@ void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
 
 void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
+    d->currentIndex = index;
+
     const QStandardItemModel* model = dynamic_cast<const QStandardItemModel*>(index.model());
+
+    if (d->commandGroup.canExecute() && !d->cancelFlag)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Save settings dialog",
+                                      "Policy settings were modified do you want to save them?",
+                                      QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::Yes)
+        {
+            onApplyClicked();
+        } else {
+            return;
+        }
+    }
+
+    d->cancelFlag = false;
 
     if (ui->contentScrollArea->widget()->layout())
     {
@@ -176,7 +205,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
             if (presentation && policy)
             {
-                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, *d->source);
+                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, *d->source, d->commandGroup);
 
                 ui->contentScrollArea->widget()->setLayout(layout);                
             }
@@ -188,6 +217,19 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             ui->contentListView->setRootIndex(index);
         }
     }
+}
+
+void ContentWidget::onApplyClicked()
+{
+    d->commandGroup.execute();
+    d->commandGroup.clear();
+}
+
+void ContentWidget::onCancelClicked()
+{
+    d->cancelFlag = true;
+    d->commandGroup.clear();
+    onListItemClicked(d->currentIndex);
 }
 
 

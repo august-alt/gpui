@@ -37,6 +37,9 @@ namespace model {
     namespace registry {
         class AbstractRegistrySource;
     }
+    namespace command {
+        class CommandGroup;
+    }
 }
 
 namespace gui
@@ -59,7 +62,8 @@ namespace gui
          */
         static QVBoxLayout *build(const model::presentation::Presentation& presentation,
                                   const model::admx::Policy& policy,
-                                  model::registry::AbstractRegistrySource& source);
+                                  model::registry::AbstractRegistrySource& source,
+                                  model::command::CommandGroup& commandGroup);
 
     private:
         static PresentationBuilderPrivate* d;

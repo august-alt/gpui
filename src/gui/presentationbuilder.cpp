@@ -37,6 +37,9 @@
 #include "../model/admx/policy.h"
 #include "../model/admx/policyelement.h"
 
+#include "../model/commands/command.h"
+#include "../model/commands/commandgroup.h"
+
 #include "../model/registry/abstractregistrysource.h"
 
 #include <QVBoxLayout>
@@ -57,6 +60,7 @@
 using namespace model::presentation;
 using namespace model::admx;
 using namespace model::registry;
+using namespace model::command;
 
 namespace gui
 {
@@ -106,7 +110,9 @@ namespace gui
                 checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
 
                 checkBox->connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, checked);
+                    createCommand([=](){
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, checked);
+                    });
                 });
             }
 
@@ -129,7 +135,9 @@ namespace gui
                 comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
 
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                    createCommand([=](){
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                    });
                 });
             }
 
@@ -172,7 +180,9 @@ namespace gui
                 comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
 
                 comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                    createCommand([=](){
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                    });
                 });
             }
 
@@ -210,9 +220,11 @@ namespace gui
                 textEdit->setPlainText(&charVector[0]);
 
                 textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
-                    auto str = textEdit->toPlainText().toStdString();
-                    std::vector<char> value(str.begin(), str.end());
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(value));
+                    createCommand([=](){
+                        auto str = textEdit->toPlainText().toStdString();
+                        std::vector<char> value(str.begin(), str.end());
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(value));
+                    });
                 });
             }
 
@@ -238,12 +250,14 @@ namespace gui
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
                 auto charVector = m_source->getValue(keyValuePair.first, keyValuePair.second).value<std::vector<char>>();
-                lineEdit->setText(&charVector[0]);
+                lineEdit->setText(QString::fromLocal8Bit(&charVector[0], charVector.size()));
 
                 lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=](const QString& text){
-                    auto str = text.toStdString();
-                    std::vector<char> value(str.begin(), str.end());
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(value));
+                    createCommand([=](){
+                        auto str = text.toStdString();
+                        std::vector<char> value(str.begin(), str.end());
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(value));
+                    });
                 });
             }
 
@@ -271,10 +285,16 @@ namespace gui
             m_elementName = elementName;
         }
 
+        void setCommandGroup(CommandGroup& commandGroup)
+        {
+            m_commandGroup = &commandGroup;
+        }
+
     private:
         QLayout* m_layout = nullptr;
         const Policy* m_policy = nullptr;
         AbstractRegistrySource* m_source = nullptr;
+        CommandGroup* m_commandGroup = nullptr;
         std::string m_elementName = "";
 
         void addToLayout(QWidget* widget) const {
@@ -308,7 +328,9 @@ namespace gui
                     spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
 
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=](int value) {
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value);
+                        createCommand([=](){
+                            m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value);
+                        });
                     });
                 }
 
@@ -326,7 +348,9 @@ namespace gui
                 edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
 
                 edit->connect(edit, &QLineEdit::textChanged, [=](const QString & value) {
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value.toUInt());
+                    createCommand([=](){
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value.toUInt());
+                    });
                 });
             }
 
@@ -355,18 +379,26 @@ namespace gui
 
             return std::make_pair("", "");
         }
+
+        void createCommand(std::function<void()> function) const
+        {
+            auto command = std::make_unique<LambdaCommand>(function);
+            m_commandGroup->addSubCommand(std::move(command));
+        }
     };
 
     PresentationBuilderPrivate* PresentationBuilder::d = new PresentationBuilderPrivate();
 
     QVBoxLayout* PresentationBuilder::build(const Presentation& presentation,
                                             const model::admx::Policy &policy,
-                                            model::registry::AbstractRegistrySource &source)
+                                            model::registry::AbstractRegistrySource &source,
+                                            model::command::CommandGroup &commandGroup)
     {
         QVBoxLayout* layout = new QVBoxLayout();
         d->setLayout(layout);
         d->setPolicy(policy);
         d->setRegistrySource(source);
+        d->setCommandGroup(commandGroup);
 
         QHBoxLayout* captions = createCaptions();
         layout->addLayout(captions);

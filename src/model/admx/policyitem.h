@@ -39,6 +39,8 @@ namespace model
             std::string valueName;
 
             std::unique_ptr<AbstractRegistryValue> value;
+
+            virtual ~PolicyItem() = default;
         };
     }
 }

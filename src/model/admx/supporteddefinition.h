@@ -46,6 +46,8 @@ namespace model
              * string table of the .adml file.
              */
             std::string displayName;
+
+            virtual ~SupportedDefinition() = default;
         };
     }
 }

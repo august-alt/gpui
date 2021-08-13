@@ -124,6 +124,8 @@ namespace model
              * value of the registry valueName element.
              */
             std::unique_ptr<AbstractRegistryValue> disabledValue;
+
+            virtual ~Policy() = default;
         };
     }
 }

@@ -39,6 +39,8 @@ namespace model
              * \brief type You must include a choice of either the delete element, decimal element, or string element.
              */
             RegistryValueType type;
+
+            virtual ~AbstractRegistryValue() = default;
         };
 
         template <typename TValueType>

@@ -52,6 +52,8 @@ namespace model
              * \brief majorVersion A product version.
              */
             std::vector<MajorVersion> majorVersion;
+
+            virtual ~SupportedProduct() = default;
         };
     }
 }

@@ -63,6 +63,8 @@ namespace model {
              * \brief seeAlso Reference to another element that may be related.
              */
             std::vector<std::string> seeAlso;
+
+            virtual ~Category() = default;
         };
     }
 }

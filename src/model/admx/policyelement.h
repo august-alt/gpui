@@ -57,7 +57,7 @@ namespace model
              */
             std::string valueName;
 
-            virtual ~PolicyElement() {}
+            virtual ~PolicyElement() = default;
         };
     }
 }

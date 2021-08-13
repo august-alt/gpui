@@ -36,6 +36,8 @@ namespace model
         {
             EnumValue()
             {}
+
+            virtual ~EnumValue() = default;
         };
 
         struct DecimalValue : EnumValue

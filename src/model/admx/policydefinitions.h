@@ -83,6 +83,8 @@ namespace model {
              * \brief policies Contains a list of policy setting definitions.
              */
             std::vector<std::shared_ptr<Policy>> policies;
+
+            virtual ~PolicyDefinitions() = default;
         };
     }
 }

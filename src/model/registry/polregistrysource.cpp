@@ -57,17 +57,17 @@ QVariant PolRegistrySource::getValue(const std::string &key, const std::string &
         {
             switch (entry->type) {
             case REG_SZ:
-                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
+                return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
             case REG_BINARY:
-                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
+                return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
             case REG_DWORD:
                 return QVariant(static_cast<RegistryEntry<uint32_t>*>(entry.get())->data);
             case REG_DWORD_BIG_ENDIAN:
                 return QVariant(static_cast<RegistryEntry<uint32_t>*>(entry.get())->data);
             case REG_EXPAND_SZ:
-                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
+                return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
             case REG_MULTI_SZ:
-                return QVariant::fromValue(static_cast<RegistryEntry<std::vector<char>>*>(entry.get())->data);
+                return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
             case REG_QWORD:
                 return QVariant::fromValue(static_cast<RegistryEntry<uint64_t>*>(entry.get())->data);
             default:
@@ -87,7 +87,7 @@ void PolRegistrySource::setValue(const std::string &key, const std::string &valu
     {
         switch (type) {
         case REG_BINARY:
-            updateValue(key, valueName, data.value<std::vector<char>>());
+            updateValue(key, valueName, data.value<QString>());
             break;
         case REG_DWORD:
             updateValue(key, valueName, data.value<uint32_t>());
@@ -96,16 +96,16 @@ void PolRegistrySource::setValue(const std::string &key, const std::string &valu
             updateValue(key, valueName, data.value<uint32_t>());
             break;
         case REG_EXPAND_SZ:
-            updateValue(key, valueName, data.value<std::vector<char>>());
+            updateValue(key, valueName, data.value<QString>());
             break;
         case REG_MULTI_SZ:
-            updateValue(key, valueName, data.value<std::vector<char>>());
+            updateValue(key, valueName, data.value<QString>());
             break;
         case REG_QWORD:
             updateValue(key, valueName, data.value<uint64_t>());
             break;
         case REG_SZ:
-            updateValue(key, valueName, data.value<std::vector<char>>());
+            updateValue(key, valueName, data.value<QString>());
             break;
         default:
             break;

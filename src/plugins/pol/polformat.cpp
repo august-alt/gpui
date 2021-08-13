@@ -38,12 +38,12 @@ private:
     static std::unique_ptr<model::registry::AbstractRegistryEntry>adaptCharEntry(const preg::PregEntry& entry,
                                                                              model::registry::RegistryEntryType type)
     {
-        auto registryEntry = std::make_unique<model::registry::RegistryEntry<std::vector<char> > >();
+        auto registryEntry = std::make_unique<model::registry::RegistryEntry<QString> >();
         registryEntry->key = entry.key.c_str();
         registryEntry->type = type;
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
-            registryEntry->data = std::vector<char>(entry.data, entry.data + entry.size);
+            registryEntry->data = QString::fromLocal8Bit(entry.data, entry.size);
             delete[] entry.data;
         }
 
@@ -152,8 +152,8 @@ public:
         case REG_MULTI_SZ:
         case REG_SZ:
         {
-            auto binaryEntry = static_cast<RegistryEntry<std::vector<char> >* >(entry.get());
-            result.data = &binaryEntry->data[0];
+            auto binaryEntry = static_cast<RegistryEntry<QString>* >(entry.get());
+            result.data = const_cast<char*>(&binaryEntry->data.toStdString().c_str()[0]);
             result.size = binaryEntry->data.size();
         } break;
         case REG_DWORD:

@@ -204,8 +204,8 @@ bool PolicyStateManager::checkValueState(const std::string &key, const std::stri
         return value.value<uint64_t>() == static_cast<model::admx::RegistryValue<uint64_t>*>(registryValue)->value;
         break;
     case model::admx::RegistryValueType::STRING: {
-            auto v1 = value.value<std::vector<char>>();
-            auto v2 = static_cast<model::admx::RegistryValue<std::vector<char>>*>(registryValue)->value;
+            auto v1 = value.value<QString>();
+            auto v2 = static_cast<model::admx::RegistryValue<QString>*>(registryValue)->value;
             return std::equal(v1.begin(), v1.end(), v2.begin(), v2.end());
         } break;
     case model::admx::RegistryValueType::DELETE:
@@ -232,7 +232,7 @@ void PolicyStateManager::setValueState(const std::string &key, const std::string
         break;
     case model::admx::RegistryValueType::STRING:
         d->source.setValue(key, valueName, RegistryEntryType::REG_SZ,
-                           QVariant::fromValue(static_cast<model::admx::RegistryValue<std::vector<char> >*>(registryValue)->value));
+                           QVariant(static_cast<model::admx::RegistryValue<QString>*>(registryValue)->value));
         break;
     case model::admx::RegistryValueType::DELETE:
         d->source.markValueForDeletion(key, valueName);

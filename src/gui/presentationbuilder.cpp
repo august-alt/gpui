@@ -216,14 +216,12 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                auto charVector = m_source->getValue(keyValuePair.first, keyValuePair.second).value<std::vector<char>>();
-                textEdit->setPlainText(&charVector[0]);
+                auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                textEdit->setPlainText(value);
 
                 textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
                     createCommand([=](){
-                        auto str = textEdit->toPlainText().toStdString();
-                        std::vector<char> value(str.begin(), str.end());
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(value));
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(textEdit->toPlainText()));
                     });
                 });
             }
@@ -249,14 +247,12 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                auto charVector = m_source->getValue(keyValuePair.first, keyValuePair.second).value<std::vector<char>>();
-                lineEdit->setText(QString::fromLocal8Bit(&charVector[0], charVector.size()));
+                auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                lineEdit->setText(value);
 
                 lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=](const QString& text){
                     createCommand([=](){
-                        auto str = text.toStdString();
-                        std::vector<char> value(str.begin(), str.end());
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(value));
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(text));
                     });
                 });
             }

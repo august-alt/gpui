@@ -107,7 +107,10 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
+                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                {
+                    checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
+                }
 
                 checkBox->connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
                     createCommand([=](){
@@ -132,7 +135,10 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                {
+                    comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                }
 
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     createCommand([=](){
@@ -177,7 +183,10 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                {
+                    comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                }
 
                 comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     createCommand([=](){
@@ -216,8 +225,11 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
-                textEdit->setPlainText(value);
+                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                {
+                    auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    textEdit->setPlainText(value);
+                }
 
                 textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
                     createCommand([=](){
@@ -247,8 +259,11 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
-                lineEdit->setText(value);
+                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                {
+                    auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    lineEdit->setText(value);
+                }
 
                 lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=](const QString& text){
                     createCommand([=](){
@@ -321,7 +336,10 @@ namespace gui
                 {
                     std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                    spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
+                    if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                    {
+                        spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
+                    }
 
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=](int value) {
                         createCommand([=](){
@@ -341,7 +359,10 @@ namespace gui
             {
                 std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
 
-                edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
+                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                {
+                    edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
+                }
 
                 edit->connect(edit, &QLineEdit::textChanged, [=](const QString & value) {
                     createCommand([=](){

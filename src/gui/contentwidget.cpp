@@ -28,7 +28,10 @@
 #include "../model/registry/policystatemanager.h"
 #include "../model/admx/policy.h"
 
+#include "../model/bundle/policyroles.h"
 #include "../model/commands/commandgroup.h"
+
+using namespace ::model::bundle;
 
 namespace gpui {
 
@@ -167,20 +170,20 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
     {
         auto item = model->itemFromIndex(index);
 
-        ui->descriptionTextEdit->setText(item->data(Qt::UserRole + 2).value<QString>());
+        ui->descriptionTextEdit->setText(item->data(PolicyRoles::EXPLAIN_TEXT).value<QString>());
 
         d->manager = nullptr;
 
-        if (item->data(Qt::UserRole + 1).value<uint>() == 1)
+        if (item->data(PolicyRoles::ITEM_TYPE).value<uint>() == 1)
         {
             setPolicyWidgetsVisible(true);
             setPolicyWidgetState(STATE_NOT_CONFIGURED);
 
             ui->notConfiguredRadioButton->setChecked(true);
-            ui->supportedOnTextEdit->setText(item->data(Qt::UserRole + 4).value<QString>());
+            ui->supportedOnTextEdit->setText(item->data(PolicyRoles::SUPPORTED_ON).value<QString>());
 
-            auto presentation = item->data(Qt::UserRole +5).value<PresentationPtr>();
-            auto policy = item->data(Qt::UserRole + 6).value<PolicyPtr>();
+            auto presentation = item->data(PolicyRoles::PRESENTATION).value<PresentationPtr>();
+            auto policy = item->data(PolicyRoles::POLICY).value<PolicyPtr>();
 
             if (d->source && policy)
             {

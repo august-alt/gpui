@@ -34,6 +34,8 @@
 #include "../presentation/presentation.h"
 #include "../presentation/dropdownlist.h"
 
+#include "policyroles.h"
+
 #include <QDir>
 #include <QStandardItemModel>
 
@@ -265,18 +267,18 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::str
             container.item = policyItem;
             container.type = policy->policyType;
 
-            policyItem->setData(QString::fromStdString(policy->supportedOn), Qt::UserRole + 4);
+            policyItem->setData(QString::fromStdString(policy->supportedOn), PolicyRoles::SUPPORTED_ON);
 
             if (policy->presentation) {
                 auto presentation = findPresentationById(*policy->presentation.get(), policyResources);
                 if (presentation)
                 {
-                    policyItem->setData(QVariant::fromValue(presentation), Qt::UserRole + 5);
+                    policyItem->setData(QVariant::fromValue(presentation), PolicyRoles::PRESENTATION);
                     handlePresentation(presentation, policy, policyResources);
                 }
             }
 
-            policyItem->setData(QVariant::fromValue(policy), Qt::UserRole + 6);
+            policyItem->setData(QVariant::fromValue(policy), PolicyRoles::POLICY);
 
             d->unassignedItems.push_back(container);
         }
@@ -326,8 +328,8 @@ QStandardItem *PolicyBundle::createItem(const QString &displayName, const QStrin
     QStandardItem* categoryItem = new QStandardItem(displayName.trimmed());
     categoryItem->setIcon(QIcon::fromTheme(iconName));
     categoryItem->setFlags(categoryItem->flags() & (~Qt::ItemIsEditable));
-    categoryItem->setData(explainText, Qt::UserRole + 2);
-    categoryItem->setData(itemType, Qt::UserRole + 1);
+    categoryItem->setData(explainText, PolicyRoles::EXPLAIN_TEXT);
+    categoryItem->setData(itemType, PolicyRoles::ITEM_TYPE);
 
     d->items.push_back(categoryItem);
 
@@ -353,9 +355,9 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
         else
         {
             QStandardItem* copyItem = createItem(item.item->text(), "text-x-generic",
-                                                 item.item->data(Qt::UserRole + 2).value<QString>(), 1);
-            copyItem->setData(item.item->data(Qt::UserRole + 4), Qt::UserRole + 4);
-            copyItem->setData(item.item->data(Qt::UserRole + 5), Qt::UserRole + 5);
+                                                 item.item->data(PolicyRoles::EXPLAIN_TEXT).value<QString>(), 1);
+            copyItem->setData(item.item->data(PolicyRoles::SUPPORTED_ON), PolicyRoles::SUPPORTED_ON);
+            copyItem->setData(item.item->data(PolicyRoles::PRESENTATION), PolicyRoles::PRESENTATION);
             assignParentCategory(item.category, item.item, copyItem);
         }
     }
@@ -365,9 +367,9 @@ void PolicyBundle::assignSupportedOn()
 {
     for (auto& item : d->items)
     {
-        if (item->data(Qt::UserRole + 1).value<uint>() == 1)
+        if (item->data(PolicyRoles::ITEM_TYPE).value<uint>() == 1)
         {
-            QStringList supportedRaw = item->data(Qt::UserRole + 4).value<QString>().split(':');
+            QStringList supportedRaw = item->data(PolicyRoles::SUPPORTED_ON).value<QString>().split(':');
             QString* toFind = nullptr;
             if (supportedRaw.size() > 1)
             {
@@ -381,7 +383,7 @@ void PolicyBundle::assignSupportedOn()
             auto search = d->supportedOnMap.find(toFind->toStdString());
             if (search != d->supportedOnMap.end())
             {
-                item->setData(QString::fromStdString(search->second), Qt::UserRole + 4);
+                item->setData(QString::fromStdString(search->second), PolicyRoles::SUPPORTED_ON);
             }
             else
             {

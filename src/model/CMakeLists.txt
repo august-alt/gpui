@@ -27,6 +27,7 @@ set(HEADERS
     admx/supportedon.h
     admx/supportedproduct.h
     bundle/policybundle.h
+    bundle/policyroles.h
     bundle/policytreemodel.h
     bundle/policytreemodelitem.h
     commands/command.h

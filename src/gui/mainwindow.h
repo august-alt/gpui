@@ -29,6 +29,13 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+namespace model {
+    namespace registry {
+        class AbstractRegistrySource;
+        class Registry;
+    }
+}
+
 namespace gpui {
 
     class MainWindowPrivate;
@@ -52,8 +59,13 @@ namespace gpui {
 
     private slots:
         void onDirectoryOpen();
-        void onRegistrySourceOpen();
+        void onMachineRegistrySourceOpen();
+        void onUserRegistrySourceOpen();
         void onRegistrySourceSave();
+
+    private:
+        void onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
+                                  std::unique_ptr<model::registry::AbstractRegistrySource>& source);
     };
 }
 

@@ -56,7 +56,8 @@ namespace gpui {
         void setModel(QStandardItemModel* model);
         void setSelectionModel(QItemSelectionModel* selectionModel);
 
-        void setRegistrySource(model::registry::AbstractRegistrySource* registrySource);
+        void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);
+        void setMachineRegistrySource(model::registry::AbstractRegistrySource* registrySource);
 
         void setPolicyWidgetState(PolicyWidgetState state);
 

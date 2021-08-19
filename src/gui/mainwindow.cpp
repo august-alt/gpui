@@ -42,8 +42,12 @@ public:
     std::unique_ptr<QStandardItemModel> model = nullptr;
     ContentWidget* contentWidget;
     std::unique_ptr<MainWindowSettings> settings = nullptr;
-    std::unique_ptr<model::registry::AbstractRegistrySource> registrySource = nullptr;
-    std::shared_ptr<model::registry::Registry> registry = nullptr;
+
+    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource = nullptr;
+    std::shared_ptr<model::registry::Registry> userRegistry = nullptr;
+
+    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource = nullptr;
+    std::shared_ptr<model::registry::Registry> machineRegistry = nullptr;
 };
 
 void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
@@ -93,7 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
     d->settings->restoreSettings();
 
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
-    connect(ui->actionOpenRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceOpen);
+    connect(ui->actionOpenUserRegistrySource, &QAction::triggered, this, &MainWindow::onUserRegistrySourceOpen);
+    connect(ui->actionOpenMachineRegistrySource, &QAction::triggered, this, &MainWindow::onMachineRegistrySourceOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 }
@@ -129,7 +134,31 @@ void MainWindow::onDirectoryOpen()
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
 }
 
-void MainWindow::onRegistrySourceOpen()
+void MainWindow::onUserRegistrySourceOpen()
+{
+    onRegistrySourceOpen(d->userRegistry, d->userRegistrySource);
+    d->contentWidget->setUserRegistrySource(d->userRegistrySource.get());
+}
+
+void MainWindow::onMachineRegistrySourceOpen()
+{
+    onRegistrySourceOpen(d->machineRegistry, d->machineRegistrySource);
+    d->contentWidget->setMachineRegistrySource(d->machineRegistrySource.get());
+}
+
+void MainWindow::onRegistrySourceSave()
+{
+    QString polFileName = QFileDialog::getSaveFileName(
+                        this,
+                        tr("Open Directory"),
+                        QDir::homePath(),
+                        "*.pol");
+
+    save(polFileName.toStdString(), d->userRegistry);
+}
+
+void MainWindow::onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
+                                      std::unique_ptr<model::registry::AbstractRegistrySource>& source)
 {
     QString polFileName = QFileDialog::getOpenFileName(
                         this,
@@ -144,21 +173,9 @@ void MainWindow::onRegistrySourceOpen()
         return;
     }
 
-    d->registry = registryFile->getRegistry();
+    registry = registryFile->getRegistry();
 
-    d->registrySource = std::make_unique<model::registry::PolRegistrySource>(d->registry);
-    d->contentWidget->setRegistrySource(d->registrySource.get());
-}
-
-void MainWindow::onRegistrySourceSave()
-{
-    QString polFileName = QFileDialog::getSaveFileName(
-                        this,
-                        tr("Open Directory"),
-                        QDir::homePath(),
-                        "*.pol");
-
-    save(polFileName.toStdString(), d->registry);
+    source = std::make_unique<model::registry::PolRegistrySource>(d->userRegistry);
 }
 
 }

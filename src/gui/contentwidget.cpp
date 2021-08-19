@@ -41,7 +41,9 @@ typedef std::shared_ptr<::model::admx::Policy> PolicyPtr;
 class ContentWidgetPrivate
 {
 public:
-    model::registry::AbstractRegistrySource* source = nullptr;
+    model::registry::AbstractRegistrySource* userSource = nullptr;
+    model::registry::AbstractRegistrySource* machineSource = nullptr;
+
     std::unique_ptr<model::registry::PolicyStateManager> manager;
     model::command::CommandGroup commandGroup;
     bool cancelFlag = false;
@@ -117,9 +119,14 @@ void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     ui->contentListView->setSelectionModel(selectionModel);
 }
 
-void ContentWidget::setRegistrySource(model::registry::AbstractRegistrySource *registrySource)
+void ContentWidget::setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource)
 {
-    d->source = registrySource;
+    d->userSource = registrySource;
+}
+
+void ContentWidget::setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource)
+{
+    d->machineSource = registrySource;
 }
 
 void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
@@ -184,10 +191,19 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
             auto presentation = item->data(PolicyRoles::PRESENTATION).value<PresentationPtr>();
             auto policy = item->data(PolicyRoles::POLICY).value<PolicyPtr>();
+            model::registry::AbstractRegistrySource* source = d->userSource;
 
-            if (d->source && policy)
+            if (policy && d->userSource && d->machineSource)
             {
-                d->manager = std::make_unique<model::registry::PolicyStateManager>(*d->source, *policy);
+                if (policy->policyType == model::admx::PolicyType::Machine)
+                {
+                    source = d->machineSource;
+                }
+            }
+
+            if (source && policy)
+            {
+                d->manager = std::make_unique<model::registry::PolicyStateManager>(*source, *policy);
 
                 auto state = d->manager->determinePolicyState();
                 if (state == model::registry::PolicyStateManager::STATE_ENABLED)
@@ -208,7 +224,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
             if (presentation && policy)
             {
-                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, *d->source, d->commandGroup);
+                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, *source, d->commandGroup);
 
                 ui->contentScrollArea->widget()->setLayout(layout);                
             }

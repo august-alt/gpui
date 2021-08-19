@@ -74,7 +74,8 @@
     </property>
     <addaction name="actionOpenPolicyDirectory"/>
     <addaction name="separator"/>
-    <addaction name="actionOpenRegistrySource"/>
+    <addaction name="actionOpenUserRegistrySource"/>
+    <addaction name="actionOpenMachineRegistrySource"/>
     <addaction name="actionSaveRegistrySource"/>
     <addaction name="separator"/>
     <addaction name="actionOptions"/>
@@ -290,9 +291,9 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionOpenRegistrySource">
+  <action name="actionOpenUserRegistrySource">
    <property name="text">
-    <string>Open &amp;Registry Source</string>
+    <string>Open &amp;User Registry Source</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -304,6 +305,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionOpenMachineRegistrySource">
+   <property name="text">
+    <string>Open &amp;Machine Registry Source</string>
    </property>
   </action>
  </widget>

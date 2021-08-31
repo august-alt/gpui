@@ -34,6 +34,9 @@ namespace io {
 
         template<typename TData, typename TFormat>
         std::unique_ptr<TData> load(const std::string& fileName);
+
+        template<typename TData, typename TFormat>
+        std::unique_ptr<TData> load(std::istream& file, const std::string& pluginName);
     };
 }
 

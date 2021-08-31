@@ -66,4 +66,32 @@ std::unique_ptr<TData> GenericReader::load(const std::string &fileName)
     return fileData;
 }
 
+template<typename TData, typename TFormat>
+std::unique_ptr<TData> GenericReader::load(std::istream& fileContent, const std::string& pluginName)
+{
+    std::unique_ptr<TData> fileData;
+
+    TFormat* format = gpui::PluginStorage::instance()->createPluginClass<TFormat>(QString::fromStdString(pluginName));
+
+    if (!format)
+    {
+        qWarning() << "Format supporting: " << pluginName.c_str() << " not found.";
+
+        return fileData;
+    }
+
+    if (fileContent.good()) {
+        fileData = std::make_unique<TData>();
+
+        if (!format->read(fileContent, fileData.get()))
+        {
+            qWarning() << "Error while reading file contents: " << format->getErrorString().c_str();
+        }
+    }
+
+    delete format;
+
+    return fileData;
+}
+
 }

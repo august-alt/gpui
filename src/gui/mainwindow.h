@@ -65,7 +65,8 @@ namespace gpui {
 
     private:
         void onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
-                                  std::unique_ptr<model::registry::AbstractRegistrySource>& source);
+                                  std::unique_ptr<model::registry::AbstractRegistrySource>& source,
+                                  std::function<void(model::registry::AbstractRegistrySource* source)> callback);
     };
 }
 

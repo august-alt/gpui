@@ -35,6 +35,10 @@
 #include "../io/registryfile.h"
 #include "../io/registryfileformat.h"
 
+#include "smbfilebrowser.h"
+
+#include <libnemofolderlistmodel/qsambaclient/smblocationitemfile.h>
+
 namespace gpui {
 
 class MainWindowPrivate {
@@ -136,14 +140,20 @@ void MainWindow::onDirectoryOpen()
 
 void MainWindow::onUserRegistrySourceOpen()
 {
-    onRegistrySourceOpen(d->userRegistry, d->userRegistrySource);
-    d->contentWidget->setUserRegistrySource(d->userRegistrySource.get());
+    onRegistrySourceOpen(d->userRegistry, d->userRegistrySource,
+                         [&](model::registry::AbstractRegistrySource* source)
+    {
+        d->contentWidget->setUserRegistrySource(source);
+    });
 }
 
 void MainWindow::onMachineRegistrySourceOpen()
 {
-    onRegistrySourceOpen(d->machineRegistry, d->machineRegistrySource);
-    d->contentWidget->setMachineRegistrySource(d->machineRegistrySource.get());
+    onRegistrySourceOpen(d->machineRegistry, d->machineRegistrySource,
+                         [&](model::registry::AbstractRegistrySource* source)
+    {
+        d->contentWidget->setMachineRegistrySource(source);
+    });
 }
 
 void MainWindow::onRegistrySourceSave()
@@ -158,24 +168,51 @@ void MainWindow::onRegistrySourceSave()
 }
 
 void MainWindow::onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
-                                      std::unique_ptr<model::registry::AbstractRegistrySource>& source)
+                                      std::unique_ptr<model::registry::AbstractRegistrySource>& source,
+                                      std::function<void(model::registry::AbstractRegistrySource* source)> callback)
 {
-    QString polFileName = QFileDialog::getOpenFileName(
-                        this,
-                        tr("Open Directory"),
-                        QDir::homePath(),
-                        "*.pol");
+    SmbFileBrowser browser(this);
 
-    auto reader = std::make_unique<io::GenericReader>();
-    auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile> >(polFileName.toStdString());
-    if (!registryFile)
+    connect(&browser, &SmbFileBrowser::onPolOpen, this, [&](const QString& path)
     {
-        return;
-    }
+        qWarning() << "Path recieved: " << path;
 
-    registry = registryFile->getRegistry();
+        auto stringvalues = std::make_unique<std::string>();
 
-    source = std::make_unique<model::registry::PolRegistrySource>(d->userRegistry);
+        if (path.startsWith("smb://"))
+        {
+            SmbLocationItemFile smbLocationItemFile(path);
+            smbLocationItemFile.open(QFile::ReadWrite);
+            stringvalues->resize(smbLocationItemFile.size(), 0);
+            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
+        }
+        else
+        {
+            QFile registryFile(path);
+            registryFile.open(QFile::ReadWrite);
+            stringvalues->resize(registryFile.size(), 0);
+            registryFile.read(&stringvalues->at(0), registryFile.size());
+        }
+
+        auto iss = std::make_unique<std::istringstream>(*stringvalues);
+        std::string pluginName("pol");
+
+        auto reader = std::make_unique<io::GenericReader>();
+        auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile> >(*iss, pluginName);
+        if (!registryFile)
+        {
+            qWarning() << "Unable to load registry file contents.";
+            return;
+        }
+
+        registry = registryFile->getRegistry();
+
+        source = std::make_unique<model::registry::PolRegistrySource>(registry);
+
+        callback(source.get());
+    });
+
+    browser.exec();
 }
 
 }

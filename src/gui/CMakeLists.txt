@@ -2,6 +2,14 @@ find_package(Qt5 COMPONENTS Widgets Qml REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+include_directories(
+        /usr/include/libnemofolderlistmodel/
+        /usr/include/libnemofolderlistmodel/net
+        /usr/include/libnemofolderlistmodel/smb
+        /usr/include/libnemofolderlistmodel/disk
+        /usr/include/libnemofolderlistmodel/trash
+    )
+
 set(HEADERS
     contentwidget.h
     gui.h

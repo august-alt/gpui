@@ -193,7 +193,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             auto policy = item->data(PolicyRoles::POLICY).value<PolicyPtr>();
             model::registry::AbstractRegistrySource* source = d->userSource;
 
-            if (policy && d->userSource && d->machineSource)
+            if (policy && d->machineSource)
             {
                 if (policy->policyType == model::admx::PolicyType::Machine)
                 {

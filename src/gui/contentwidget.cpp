@@ -109,7 +109,7 @@ ContentWidget::~ContentWidget()
     delete d;
 }
 
-void ContentWidget::setModel(QStandardItemModel* model)
+void ContentWidget::setModel(QAbstractItemModel* model)
 {
     ui->contentListView->setModel(model);
 }
@@ -148,7 +148,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
     d->currentIndex = index;
 
-    const QStandardItemModel* model = dynamic_cast<const QStandardItemModel*>(index.model());
+    const QAbstractItemModel* model = index.model();
 
     if (d->commandGroup.canExecute() && !d->cancelFlag)
     {
@@ -175,22 +175,20 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
-        auto item = model->itemFromIndex(index);
-
-        ui->descriptionTextEdit->setText(item->data(PolicyRoles::EXPLAIN_TEXT).value<QString>());
+        ui->descriptionTextEdit->setText(model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
 
         d->manager = nullptr;
 
-        if (item->data(PolicyRoles::ITEM_TYPE).value<uint>() == 1)
+        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == 1)
         {
             setPolicyWidgetsVisible(true);
             setPolicyWidgetState(STATE_NOT_CONFIGURED);
 
             ui->notConfiguredRadioButton->setChecked(true);
-            ui->supportedOnTextEdit->setText(item->data(PolicyRoles::SUPPORTED_ON).value<QString>());
+            ui->supportedOnTextEdit->setText(model->data(index, PolicyRoles::SUPPORTED_ON).value<QString>());
 
-            auto presentation = item->data(PolicyRoles::PRESENTATION).value<PresentationPtr>();
-            auto policy = item->data(PolicyRoles::POLICY).value<PolicyPtr>();
+            auto presentation = model->data(index, PolicyRoles::PRESENTATION).value<PresentationPtr>();
+            auto policy = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
             model::registry::AbstractRegistrySource* source = d->userSource;
 
             if (policy && d->machineSource)

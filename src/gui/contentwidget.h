@@ -53,7 +53,7 @@ namespace gpui {
         ContentWidget(QWidget *parent = 0);
         ~ContentWidget();
 
-        void setModel(QStandardItemModel* model);
+        void setModel(QAbstractItemModel *model);
         void setSelectionModel(QItemSelectionModel* selectionModel);
 
         void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);

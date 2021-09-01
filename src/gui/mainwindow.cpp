@@ -53,6 +53,8 @@ public:
     std::shared_ptr<model::registry::Registry> machineRegistry;
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource;
 
+    std::unique_ptr<QSortFilterProxyModel> sortModel = nullptr;
+
     MainWindowPrivate()
         : userRegistry(new model::registry::Registry())
         , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
@@ -143,8 +145,14 @@ void MainWindow::onDirectoryOpen()
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
     d->model = bundle->loadFolder(directory.toStdString(), "ru-ru");
 
-    ui->treeView->setModel(d->model.get());
-    d->contentWidget->setModel(d->model.get());
+    d->sortModel = std::make_unique<QSortFilterProxyModel>();
+    d->sortModel->setSourceModel(d->model.get());
+    d->sortModel->setSortLocaleAware(true);
+    d->sortModel->setSortRole(Qt::DisplayRole);
+    d->sortModel->sort(0);
+
+    ui->treeView->setModel(d->sortModel.get());
+    d->contentWidget->setModel(d->sortModel.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
 }

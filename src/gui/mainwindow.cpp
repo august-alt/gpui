@@ -47,11 +47,19 @@ public:
     ContentWidget* contentWidget;
     std::unique_ptr<MainWindowSettings> settings = nullptr;
 
-    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource = nullptr;
-    std::shared_ptr<model::registry::Registry> userRegistry = nullptr;
+    std::shared_ptr<model::registry::Registry> userRegistry;
+    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource;
 
-    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource = nullptr;
-    std::shared_ptr<model::registry::Registry> machineRegistry = nullptr;
+    std::shared_ptr<model::registry::Registry> machineRegistry;
+    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource;
+
+    MainWindowPrivate()
+        : userRegistry(new model::registry::Registry())
+        , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
+        , machineRegistry(new model::registry::Registry())
+        , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
+    {}
+
 };
 
 void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
@@ -95,6 +103,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     d->contentWidget = new ContentWidget(this);
+    d->contentWidget->setMachineRegistrySource(d->machineRegistrySource.get());
+    d->contentWidget->setUserRegistrySource(d->userRegistrySource.get());
+
     ui->splitter->addWidget(d->contentWidget);
 
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
@@ -164,7 +175,8 @@ void MainWindow::onRegistrySourceSave()
                         QDir::homePath(),
                         "*.pol");
 
-    save(polFileName.toStdString(), d->userRegistry);
+    save(polFileName.replace(".pol","Machine.pol").toStdString(), d->machineRegistry);
+    save(polFileName.replace(".pol","User.pol").toStdString(), d->userRegistry);
 }
 
 void MainWindow::onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,

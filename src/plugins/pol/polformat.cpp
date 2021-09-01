@@ -153,8 +153,10 @@ public:
         case REG_SZ:
         {
             auto binaryEntry = static_cast<RegistryEntry<QString>* >(entry.get());
-            result.data = const_cast<char*>(&binaryEntry->data.toStdString().c_str()[0]);
-            result.size = binaryEntry->data.size();
+            char* stringData = new char[binaryEntry->data.size() + 1];
+            memcpy(stringData, &binaryEntry->data.toStdString().c_str()[0], binaryEntry->data.size() + 1);
+            result.data = stringData;
+            result.size = binaryEntry->data.size() + 1;
         } break;
         case REG_DWORD:
         case REG_DWORD_BIG_ENDIAN:
@@ -217,6 +219,18 @@ bool PolFormat::write(std::ostream &output, io::RegistryFile* file)
         {
             auto pregEntry = PregEntryAdapter::create(entry);
             writer->addEntry(pregEntry);
+
+            switch (pregEntry.type) {
+            case REG_BINARY:
+            case REG_EXPAND_SZ:
+            case REG_MULTI_SZ:
+            case REG_SZ:
+            {
+                delete [] pregEntry.data;
+            }
+            default:
+                break;
+            }
         }
     }  catch (std::exception& e) {
         setErrorString(e.what());

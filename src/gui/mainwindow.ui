@@ -101,6 +101,7 @@
     <addaction name="actionSelectDC"/>
     <addaction name="separator"/>
     <addaction name="actionCustomize"/>
+    <addaction name="actionEditFilter"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -281,6 +282,14 @@
    </property>
    <property name="toolTip">
     <string>Customize</string>
+   </property>
+  </action>
+  <action name="actionEditFilter">
+   <property name="text">
+    <string>&amp;Edit filter</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit filter</string>
    </property>
   </action>
   <action name="actionOpenPolicyDirectory">

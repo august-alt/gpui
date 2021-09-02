@@ -17,6 +17,7 @@ set(HEADERS
     mainwindowsettings.h
     presentationbuilder.h
     smbfilebrowser.h
+    templatefilterdialog.h
 )
 
 set(SOURCES
@@ -27,6 +28,7 @@ set(SOURCES
     presentationbuilder.cpp
     smbfilebrowser.cpp
     smbfilebrowserslots.cpp
+    templatefilterdialog.cpp
 )
 
 set(UI_FORMS
@@ -40,6 +42,7 @@ set(MOC_HEADERS
     mainwindow.h
     mainwindowsettings.h
     smbfilebrowser.h
+    templatefilterdialog.h
 )
 
 qt5_wrap_ui(UI_SOURCES ${UI_FORMS})

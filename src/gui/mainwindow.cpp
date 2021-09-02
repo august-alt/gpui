@@ -22,6 +22,7 @@
 #include "ui_mainwindow.h"
 #include "mainwindowsettings.h"
 
+#include "templatefilterdialog.h"
 #include "contentwidget.h"
 
 #include "../model/templatefiltermodel.h"
@@ -116,11 +117,14 @@ MainWindow::MainWindow(QWidget *parent)
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
     d->settings->restoreSettings();
 
+    auto dialog = new TemplateFilterDialog(this);
+
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionOpenUserRegistrySource, &QAction::triggered, this, &MainWindow::onUserRegistrySourceOpen);
     connect(ui->actionOpenMachineRegistrySource, &QAction::triggered, this, &MainWindow::onMachineRegistrySourceOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
+    connect(ui->treeView, &QTreeView::clicked, dialog, &QDialog::open);
 }
 
 MainWindow::~MainWindow()

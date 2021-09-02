@@ -37,8 +37,9 @@ class GPUI_MODEL_EXPORT TemplateFilter final
 public:
     bool titleFilterEnabled;
     QString titleFilter;
+    
     bool stateFilterEnabled;
-    registry::PolicyStateManager::PolicyState stateFilter;
+    bool stateIsConfigured;
 };
 
 }

@@ -24,12 +24,19 @@
 
 namespace gpui {
 
+enum StateComboItem {
+    ANY,
+    CONFIGURED,
+    NOT_CONFIGURED,
+};
+
 class TemplateFilterDialogPrivate {
 public:
     TemplateFilterDialogPrivate() {
         
     }
 
+    QComboBox *stateFilterEdit;
     QGroupBox *titleFilterGroupBox;
     QLineEdit *titleFilterEdit;
 
@@ -40,6 +47,14 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     , d(new TemplateFilterDialogPrivate())
 {
     setWindowTitle(tr("Filter Options"));
+
+    d->stateFilterEdit = new QComboBox();
+    d->stateFilterEdit->addItem(tr("Any"), StateComboItem::ANY);
+    d->stateFilterEdit->addItem(tr("Configured"), StateComboItem::CONFIGURED);
+    d->stateFilterEdit->addItem(tr("Not configured"), StateComboItem::NOT_CONFIGURED);
+
+    auto stateFilterLayout = new QFormLayout();
+    stateFilterLayout->addRow(tr("Configured:"), d->stateFilterEdit);
 
     d->titleFilterEdit = new QLineEdit();
 
@@ -56,6 +71,7 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 
     auto layout = new QVBoxLayout();
     setLayout(layout);
+    layout->addLayout(stateFilterLayout);
     layout->addWidget(d->titleFilterGroupBox);
     layout->addWidget(buttonBox);
 
@@ -72,10 +88,34 @@ TemplateFilterDialog::~TemplateFilterDialog()
 model::TemplateFilter TemplateFilterDialog::getFilter() const {
     model::TemplateFilter out;
 
-    out.titleFilter = d->titleFilterEdit->text();
     out.titleFilterEnabled = d->titleFilterGroupBox->isChecked();
+    out.titleFilter = d->titleFilterEdit->text();
+
+    const StateComboItem state_item = d->stateFilterEdit->currentData().value<StateComboItem>();
+    
+    out.stateFilterEnabled = [&]()
+    {
+        switch (state_item) {
+            case StateComboItem::ANY: return false;
+            case StateComboItem::CONFIGURED: return true;
+            case StateComboItem::NOT_CONFIGURED: return true;
+        }
+        return false;
+    }();
+
+    out.stateIsConfigured = [&]()
+    {
+        switch (state_item) {
+            case StateComboItem::ANY: return false;
+            case StateComboItem::CONFIGURED: return true;
+            case StateComboItem::NOT_CONFIGURED: return false;
+        }
+        return false;
+    }();
 
     return out;
 }
 
 }
+
+Q_DECLARE_METATYPE(gpui::StateComboItem)

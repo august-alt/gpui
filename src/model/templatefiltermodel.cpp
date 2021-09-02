@@ -48,10 +48,11 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , d(new TemplateFilterModelPrivate())
 {
-    d->filter.titleFilter = QString();
     d->filter.titleFilterEnabled = false;
-    d->filter.stateFilter = registry::PolicyStateManager::STATE_NOT_CONFIGURED;
+    d->filter.titleFilter = QString();
+    
     d->filter.stateFilterEnabled = false;
+    d->filter.stateIsConfigured = false;
 
     setRecursiveFilteringEnabled(true);
 }
@@ -116,7 +117,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         const auto manager = std::make_unique<registry::PolicyStateManager>(*source, *policy);
 
         auto state = manager->determinePolicyState();
-        const bool out = (state == registry::PolicyStateManager::STATE_NOT_CONFIGURED);
+        const bool out = (state == registry::PolicyStateManager::STATE_NOT_CONFIGURED && !d->filter.stateIsConfigured);
 
         return out;
     }();

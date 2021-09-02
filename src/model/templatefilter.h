@@ -24,6 +24,8 @@
 #include "model.h"
 #include "registry/policystatemanager.h"
 
+#include <QSet>
+
 namespace model {
 
 /*!
@@ -39,7 +41,7 @@ public:
     QString titleFilter;
     
     bool stateFilterEnabled;
-    bool stateIsConfigured;
+    QSet<registry::PolicyStateManager::PolicyState> stateFilter;
 };
 
 }

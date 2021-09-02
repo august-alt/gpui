@@ -52,7 +52,7 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     d->filter.titleFilter = QString();
     
     d->filter.stateFilterEnabled = false;
-    d->filter.stateIsConfigured = false;
+    d->filter.stateFilter = QSet<registry::PolicyStateManager::PolicyState>();
 
     setRecursiveFilteringEnabled(true);
 }
@@ -117,7 +117,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         const auto manager = std::make_unique<registry::PolicyStateManager>(*source, *policy);
 
         auto state = manager->determinePolicyState();
-        const bool out = (state == registry::PolicyStateManager::STATE_NOT_CONFIGURED && !d->filter.stateIsConfigured);
+        const bool out = (d->filter.stateFilter.contains(state));
 
         return out;
     }();

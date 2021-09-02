@@ -103,14 +103,23 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
         return false;
     }();
 
-    out.stateIsConfigured = [&]()
+    out.stateFilter = [&]()
     {
         switch (state_item) {
-            case StateComboItem::ANY: return false;
-            case StateComboItem::CONFIGURED: return true;
-            case StateComboItem::NOT_CONFIGURED: return false;
+            case StateComboItem::ANY: return QSet<model::registry::PolicyStateManager::PolicyState>({
+                model::registry::PolicyStateManager::PolicyState::STATE_NOT_CONFIGURED,
+                model::registry::PolicyStateManager::PolicyState::STATE_ENABLED,
+                model::registry::PolicyStateManager::PolicyState::STATE_DISABLED,
+            });
+            case StateComboItem::CONFIGURED: return QSet<model::registry::PolicyStateManager::PolicyState>({
+                model::registry::PolicyStateManager::PolicyState::STATE_ENABLED,
+                model::registry::PolicyStateManager::PolicyState::STATE_DISABLED,
+            });
+            case StateComboItem::NOT_CONFIGURED: return QSet<model::registry::PolicyStateManager::PolicyState>({
+                model::registry::PolicyStateManager::PolicyState::STATE_NOT_CONFIGURED,
+            });
         }
-        return false;
+        return QSet<model::registry::PolicyStateManager::PolicyState>();
     }();
 
     return out;

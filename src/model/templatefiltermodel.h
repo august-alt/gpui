@@ -48,10 +48,10 @@ public:
     TemplateFilterModel(QObject *parent);
     ~TemplateFilterModel();
 
-    void set_title_filter(const QString &title_filter);
-    void set_title_filter_enabled(const bool enabled);
-    void set_state_filter(const model::registry::PolicyStateManager::PolicyState state_filter);
-    void set_state_filter_enabled(const bool enabled);
+    void setTitleFilter(const QString &title_filter);
+    void setTitleFilterEnabled(const bool enabled);
+    void setStateFilter(const model::registry::PolicyStateManager::PolicyState state_filter);
+    void setStateFilterEnabled(const bool enabled);
 
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
     void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);

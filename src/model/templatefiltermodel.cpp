@@ -40,20 +40,20 @@ public:
     registry::AbstractRegistrySource* userSource = nullptr;
     registry::AbstractRegistrySource* machineSource = nullptr;
 
-    QString title_filter;
-    bool title_filter_enabled;
-    registry::PolicyStateManager::PolicyState state_filter;
-    bool state_filter_enabled;
+    QString titleFilter;
+    bool titleFilterEnabled;
+    registry::PolicyStateManager::PolicyState stateFilter;
+    bool stateFilterEnabled;
 };
 
 TemplateFilterModel::TemplateFilterModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , d(new TemplateFilterModelPrivate())
 {
-    d->title_filter = QString();
-    d->title_filter_enabled = false;
-    d->state_filter = registry::PolicyStateManager::STATE_NOT_CONFIGURED;
-    d->state_filter_enabled = false;
+    d->titleFilter = QString();
+    d->titleFilterEnabled = false;
+    d->stateFilter = registry::PolicyStateManager::STATE_NOT_CONFIGURED;
+    d->stateFilterEnabled = false;
 
     setRecursiveFilteringEnabled(true);
 }
@@ -63,24 +63,24 @@ TemplateFilterModel::~TemplateFilterModel()
     delete d;
 }
 
-void TemplateFilterModel::set_title_filter(const QString &title_filter)
+void TemplateFilterModel::setTitleFilter(const QString &titleFilter)
 {
-    d->title_filter = title_filter;
+    d->titleFilter = titleFilter;
 }
 
-void TemplateFilterModel::set_title_filter_enabled(const bool enabled)
+void TemplateFilterModel::setTitleFilterEnabled(const bool enabled)
 {
-    d->title_filter_enabled = enabled;
+    d->titleFilterEnabled = enabled;
 }
 
-void TemplateFilterModel::set_state_filter(const registry::PolicyStateManager::PolicyState state_filter)
+void TemplateFilterModel::setStateFilter(const registry::PolicyStateManager::PolicyState stateFilter)
 {
-    d->state_filter = state_filter;
+    d->stateFilter = stateFilter;
 }
 
-void TemplateFilterModel::set_state_filter_enabled(const bool enabled)
+void TemplateFilterModel::setStateFilterEnabled(const bool enabled)
 {
-    d->state_filter_enabled = enabled;
+    d->stateFilterEnabled = enabled;
 }
 
 bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
@@ -88,7 +88,7 @@ bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &so
     const QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
 
     // TODO: remove magic number "1"
-    const bool item_is_template = [&]()
+    const bool itemIsTemplate = [&]()
     {
         const uint item_type = index.data(bundle::PolicyRoles::ITEM_TYPE).value<uint>();
         const bool out = (item_type == 1);
@@ -96,17 +96,17 @@ bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &so
         return out;
     }();
 
-    const bool title_filter_match = [&]()
+    const bool titleFilterMatch = [&]()
     {
         const QString text = index.data().value<QString>();
-        const bool out = (text.contains(d->title_filter));
+        const bool out = (text.contains(d->titleFilter));
 
         return out;
     }();
 
     // TODO: this is very convoluted, also duplicating
     // part of ContentWidget::onListItemClicked()
-    const bool state_filter_match = [&]()
+    const bool stateFilterMatch = [&]()
     {
         const QAbstractItemModel* model = index.model();
         auto policy = model->data(index, bundle::PolicyRoles::POLICY).value<PolicyPtr>();
@@ -138,17 +138,17 @@ bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &so
 
     // Don't filter non-template types, so that the rest of
     // the tree appears fully
-    if (!item_is_template)
+    if (!itemIsTemplate)
     {
         return true;
     }
 
-    if (d->title_filter_enabled && !title_filter_match)
+    if (d->titleFilterEnabled && !titleFilterMatch)
     {
         return false;
     }
 
-    if (d->state_filter_enabled && !state_filter_match)
+    if (d->stateFilterEnabled && !stateFilterMatch)
     {
         return false;
     }

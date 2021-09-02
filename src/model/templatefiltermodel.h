@@ -35,6 +35,7 @@ namespace model {
 namespace model {
 
 class TemplateFilterModelPrivate;
+class TemplateFilter;
 
 /*!
  * \class TemplateFilterModel
@@ -48,10 +49,7 @@ public:
     TemplateFilterModel(QObject *parent);
     ~TemplateFilterModel();
 
-    void setTitleFilter(const QString &title_filter);
-    void setTitleFilterEnabled(const bool enabled);
-    void setStateFilter(const model::registry::PolicyStateManager::PolicyState state_filter);
-    void setStateFilterEnabled(const bool enabled);
+    void setFilter(const TemplateFilter &filter);
 
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
     void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);

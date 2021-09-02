@@ -25,6 +25,7 @@
 #include "registry/policystatemanager.h"
 #include "admx/policy.h"
 #include "bundle/policyroles.h"
+#include "templatefilter.h"
 
 #include <QDebug>
 
@@ -40,20 +41,17 @@ public:
     registry::AbstractRegistrySource* userSource = nullptr;
     registry::AbstractRegistrySource* machineSource = nullptr;
 
-    QString titleFilter;
-    bool titleFilterEnabled;
-    registry::PolicyStateManager::PolicyState stateFilter;
-    bool stateFilterEnabled;
+    TemplateFilter filter;
 };
 
 TemplateFilterModel::TemplateFilterModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , d(new TemplateFilterModelPrivate())
 {
-    d->titleFilter = QString();
-    d->titleFilterEnabled = false;
-    d->stateFilter = registry::PolicyStateManager::STATE_NOT_CONFIGURED;
-    d->stateFilterEnabled = false;
+    d->filter.titleFilter = QString();
+    d->filter.titleFilterEnabled = false;
+    d->filter.stateFilter = registry::PolicyStateManager::STATE_NOT_CONFIGURED;
+    d->filter.stateFilterEnabled = false;
 
     setRecursiveFilteringEnabled(true);
 }
@@ -63,24 +61,11 @@ TemplateFilterModel::~TemplateFilterModel()
     delete d;
 }
 
-void TemplateFilterModel::setTitleFilter(const QString &titleFilter)
+void TemplateFilterModel::setFilter(const TemplateFilter &filter)
 {
-    d->titleFilter = titleFilter;
-}
+    d->filter = filter;
 
-void TemplateFilterModel::setTitleFilterEnabled(const bool enabled)
-{
-    d->titleFilterEnabled = enabled;
-}
-
-void TemplateFilterModel::setStateFilter(const registry::PolicyStateManager::PolicyState stateFilter)
-{
-    d->stateFilter = stateFilter;
-}
-
-void TemplateFilterModel::setStateFilterEnabled(const bool enabled)
-{
-    d->stateFilterEnabled = enabled;
+    invalidateFilter();
 }
 
 bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
@@ -99,7 +84,7 @@ bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &so
     const bool titleFilterMatch = [&]()
     {
         const QString text = index.data().value<QString>();
-        const bool out = (text.contains(d->titleFilter));
+        const bool out = (text.contains(d->filter.titleFilter));
 
         return out;
     }();
@@ -143,12 +128,12 @@ bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &so
         return true;
     }
 
-    if (d->titleFilterEnabled && !titleFilterMatch)
+    if (d->filter.titleFilterEnabled && !titleFilterMatch)
     {
         return false;
     }
 
-    if (d->stateFilterEnabled && !stateFilterMatch)
+    if (d->filter.stateFilterEnabled && !stateFilterMatch)
     {
         return false;
     }

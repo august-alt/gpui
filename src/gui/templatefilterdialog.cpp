@@ -20,6 +20,8 @@
 
 #include "templatefilterdialog.h"
 
+#include "../model/templatefilter.h"
+
 namespace gpui {
 
 class TemplateFilterDialogPrivate {
@@ -67,14 +69,13 @@ TemplateFilterDialog::~TemplateFilterDialog()
     delete d;
 }
 
-QString TemplateFilterDialog::getTitleFilter() const
-{
-    return d->titleFilterEdit->text();
-}
+model::TemplateFilter TemplateFilterDialog::getFilter() const {
+    model::TemplateFilter out;
 
-bool TemplateFilterDialog::getTitleFilterEnabled() const
-{
-    return d->titleFilterGroupBox->isChecked();
+    out.titleFilter = d->titleFilterEdit->text();
+    out.titleFilterEnabled = d->titleFilterGroupBox->isChecked();
+
+    return out;
 }
 
 }

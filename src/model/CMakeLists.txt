@@ -6,6 +6,7 @@ set(HEADERS
     plugin.h
     pluginstorage.h
     templatefiltermodel.h
+    templatefilter.h
     pluginstorage.h
     admx/category.h
     admx/majorversion.h

@@ -18,43 +18,29 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_TEMPLATEFILTERDIALOG_H
-#define GPUI_TEMPLATEFILTERDIALOG_H
+#ifndef GPUI_TEMPLATEFILTER_H
+#define GPUI_TEMPLATEFILTER_H
 
-#include "gui.h"
-
-#include <QtWidgets>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class TemplateFilterDialog; }
-QT_END_NAMESPACE
+#include "model.h"
+#include "registry/policystatemanager.h"
 
 namespace model {
-    class TemplateFilter;
+
+/*!
+ * \class TemplateFilter
+ * \brief The TemplateFilter class
+ *
+ * \ingroup model
+ */
+class GPUI_MODEL_EXPORT TemplateFilter final
+{
+public:
+    bool titleFilterEnabled;
+    QString titleFilter;
+    bool stateFilterEnabled;
+    registry::PolicyStateManager::PolicyState stateFilter;
+};
+
 }
 
-namespace gpui {
-
-    class TemplateFilterDialogPrivate;
-
-    class GPUI_GUI_EXPORT TemplateFilterDialog final : public QDialog {
-        Q_OBJECT
-
-    public:
-        TemplateFilterDialog(QWidget *parent = 0);
-        ~TemplateFilterDialog();
-
-        model::TemplateFilter getFilter() const;
-
-    private:
-
-        TemplateFilterDialogPrivate* const d;
-
-    private slots:
-
-    private:
-
-    };
-}
-
-#endif // GPUI_TEMPLATEFILTERDIALOG_H
+#endif // GPUI_TEMPLATEFILTER_H

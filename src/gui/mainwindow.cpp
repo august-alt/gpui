@@ -26,6 +26,7 @@
 #include "contentwidget.h"
 
 #include "../model/templatefiltermodel.h"
+#include "../model/templatefilter.h"
 
 #include "../model/bundle/policybundle.h"
 
@@ -256,13 +257,10 @@ void MainWindow::onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>
 
 void MainWindow::loadFilterFromFilterDialog()
 {
-    if (d->filterModel == nullptr)
+    if (d->filterModel != nullptr)
     {
-        return;
+        d->filterModel->setFilter(d->filter_dialog->getFilter());
     }
-
-    d->filterModel->setTitleFilterEnabled(d->filter_dialog->getTitleFilterEnabled());
-    d->filterModel->setTitleFilter(d->filter_dialog->getTitleFilter());
 }
 
 }

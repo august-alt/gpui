@@ -28,6 +28,9 @@ public:
         
     }
 
+    QGroupBox *titleFilterGroupBox;
+    QLineEdit *titleFilterEdit;
+
 };
 
 TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
@@ -36,13 +39,22 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 {
     setWindowTitle(tr("Filter Options"));
 
-    
+    d->titleFilterEdit = new QLineEdit();
+
+    d->titleFilterGroupBox = new QGroupBox(tr("Enable title filter"));
+    d->titleFilterGroupBox->setCheckable(true);
+    d->titleFilterGroupBox->setChecked(false);
+
+    auto title_filter_layout = new QFormLayout();
+    title_filter_layout->addRow(tr("Title:"), d->titleFilterEdit);
+    d->titleFilterGroupBox->setLayout(title_filter_layout);
 
     auto button_box = new QDialogButtonBox();
     button_box->addButton(QDialogButtonBox::Ok);
 
     auto layout = new QVBoxLayout();
     setLayout(layout);
+    layout->addWidget(d->titleFilterGroupBox);
     layout->addWidget(button_box);
 
     connect(
@@ -53,6 +65,16 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 TemplateFilterDialog::~TemplateFilterDialog()
 {
     delete d;
+}
+
+QString TemplateFilterDialog::getTitleFilter() const
+{
+    return d->titleFilterEdit->text();
+}
+
+bool TemplateFilterDialog::getTitleFilterEnabled() const
+{
+    return d->titleFilterGroupBox->isChecked();
 }
 
 }

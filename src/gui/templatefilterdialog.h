@@ -40,6 +40,9 @@ namespace gpui {
         TemplateFilterDialog(QWidget *parent = 0);
         ~TemplateFilterDialog();
 
+        bool getTitleFilterEnabled() const;
+        QString getTitleFilter() const;
+
     private:
 
         TemplateFilterDialogPrivate* const d;

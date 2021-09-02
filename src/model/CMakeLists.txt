@@ -5,6 +5,8 @@ set(HEADERS
     model.h
     plugin.h
     pluginstorage.h
+    templatefiltermodel.h
+    pluginstorage.h
     admx/category.h
     admx/majorversion.h
     admx/minorversion.h
@@ -59,6 +61,7 @@ set(SOURCES
     model.cpp
     plugin.cpp
     pluginstorage.cpp
+    templatefiltermodel.cpp
     bundle/policybundle.cpp
     commands/command.cpp
     commands/commandgroup.cpp

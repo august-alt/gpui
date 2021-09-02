@@ -24,6 +24,8 @@
 
 #include "contentwidget.h"
 
+#include "../model/templatefiltermodel.h"
+
 #include "../model/bundle/policybundle.h"
 
 #include "../model/registry/registry.h"
@@ -54,6 +56,7 @@ public:
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource;
 
     std::unique_ptr<QSortFilterProxyModel> sortModel = nullptr;
+    std::unique_ptr<model::TemplateFilterModel> filterModel = nullptr;
 
     MainWindowPrivate()
         : userRegistry(new model::registry::Registry())
@@ -145,8 +148,13 @@ void MainWindow::onDirectoryOpen()
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
     d->model = bundle->loadFolder(directory.toStdString(), "ru-ru");
 
+    d->filterModel = std::make_unique<model::TemplateFilterModel>(this);
+    d->filterModel->setSourceModel(d->model.get());
+    d->filterModel->setMachineRegistrySource(d->machineRegistrySource.get());
+    d->filterModel->setUserRegistrySource(d->userRegistrySource.get());
+
     d->sortModel = std::make_unique<QSortFilterProxyModel>();
-    d->sortModel->setSourceModel(d->model.get());
+    d->sortModel->setSourceModel(d->filterModel.get());
     d->sortModel->setSortLocaleAware(true);
     d->sortModel->setSortRole(Qt::DisplayRole);
     d->sortModel->sort(0);
@@ -163,6 +171,7 @@ void MainWindow::onUserRegistrySourceOpen()
                          [&](model::registry::AbstractRegistrySource* source)
     {
         d->contentWidget->setUserRegistrySource(source);
+        d->filterModel->setUserRegistrySource(source);
     });
 }
 
@@ -172,6 +181,7 @@ void MainWindow::onMachineRegistrySourceOpen()
                          [&](model::registry::AbstractRegistrySource* source)
     {
         d->contentWidget->setMachineRegistrySource(source);
+        d->filterModel->setMachineRegistrySource(source);
     });
 }
 

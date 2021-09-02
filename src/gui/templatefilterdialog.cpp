@@ -47,20 +47,20 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     d->titleFilterGroupBox->setCheckable(true);
     d->titleFilterGroupBox->setChecked(false);
 
-    auto title_filter_layout = new QFormLayout();
-    title_filter_layout->addRow(tr("Title:"), d->titleFilterEdit);
-    d->titleFilterGroupBox->setLayout(title_filter_layout);
+    auto titleFilterLayout = new QFormLayout();
+    titleFilterLayout->addRow(tr("Title:"), d->titleFilterEdit);
+    d->titleFilterGroupBox->setLayout(titleFilterLayout);
 
-    auto button_box = new QDialogButtonBox();
-    button_box->addButton(QDialogButtonBox::Ok);
+    auto buttonBox = new QDialogButtonBox();
+    buttonBox->addButton(QDialogButtonBox::Ok);
 
     auto layout = new QVBoxLayout();
     setLayout(layout);
     layout->addWidget(d->titleFilterGroupBox);
-    layout->addWidget(button_box);
+    layout->addWidget(buttonBox);
 
     connect(
-        button_box, &QDialogButtonBox::accepted,
+        buttonBox, &QDialogButtonBox::accepted,
         this, &QDialog::accept);
 }
 

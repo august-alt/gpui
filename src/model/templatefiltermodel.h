@@ -51,7 +51,7 @@ public:
 
     void setFilter(const TemplateFilter &filter);
 
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
     void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);
     void setMachineRegistrySource(model::registry::AbstractRegistrySource* registrySource);
 

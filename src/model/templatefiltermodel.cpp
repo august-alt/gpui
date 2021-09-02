@@ -68,9 +68,9 @@ void TemplateFilterModel::setFilter(const TemplateFilter &filter)
     invalidateFilter();
 }
 
-bool TemplateFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    const QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+    const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     // TODO: remove magic number "1"
     const bool itemIsTemplate = [&]()

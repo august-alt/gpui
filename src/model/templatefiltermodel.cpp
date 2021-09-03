@@ -136,6 +136,19 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return false;
     }();
 
+    const bool keywordMatch = [&]()
+    {
+        if (d->filter.titleEnabled && titleMatch) {
+            return true;
+        } else if (d->filter.helpEnabled && helpMatch) {
+            return true;
+        } else if (d->filter.commentEnabled && commentMatch) {
+            return true;
+        } else {
+            return false;
+        }
+    }();
+
     // TODO: this is very convoluted, also duplicating
     // part of ContentWidget::onListItemClicked()
     const bool configuredMatch = [&]()
@@ -175,20 +188,9 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return true;
     }
 
-    if (d->filter.keywordEnabled)
+    if (d->filter.keywordEnabled && keywordMatch)
     {
-        if (d->filter.titleEnabled && !titleMatch)
-        {
-            return false;
-        }
-        if (d->filter.helpEnabled && !helpMatch)
-        {
-            return false;
-        }
-        if (d->filter.commentEnabled && !commentMatch)
-        {
-            return false;
-        }
+        return false;
     }
 
     if (!configuredMatch)

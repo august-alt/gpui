@@ -88,13 +88,12 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return out;
     }();
 
-    // TODO: implement these filters
-    const bool helpMatch = true;
+    // TODO: implement comment filter (comment data not
+    // stored in model yet)
     const bool commentMatch = true;
 
-    const bool titleMatch = [&]()
+    auto checkKeywordMatch = [&](const QString &string)
     {
-        const QString title = index.data().value<QString>();
         const QList<QString> keywordList = d->filter.keywordText.split(" ");
 
         switch (d->filter.keywordType)
@@ -103,7 +102,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
             {
                 for (const QString &keyword : keywordList)
                 {
-                    const bool match = title.contains(keyword);
+                    const bool match = string.contains(keyword);
 
                     if (match) {
                         return true;
@@ -114,7 +113,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
             }
             case KeywordFilterType_EXACT:
             {
-                const bool out = (title.contains(d->filter.keywordText));
+                const bool out = (string.contains(d->filter.keywordText));
 
                 return out;
             }
@@ -122,7 +121,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
             {
                 for (const QString &keyword : keywordList)
                 {
-                    const bool match = title.contains(keyword);
+                    const bool match = string.contains(keyword);
 
                     if (!match) {
                         return false;
@@ -134,6 +133,22 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         }
 
         return false;
+    };
+
+    const bool helpMatch = [&]()
+    {
+        const QString helpText = index.data(PolicyRoles::EXPLAIN_TEXT).value<QString>();
+        const bool out = checkKeywordMatch(helpText);
+        
+        return out;
+    }();
+
+    const bool titleMatch = [&]()
+    {
+        const QString titleText = index.data(Qt::DisplayRole).value<QString>();
+        const bool out = checkKeywordMatch(titleText);
+        
+        return out;
     }();
 
     const bool keywordMatch = [&]()

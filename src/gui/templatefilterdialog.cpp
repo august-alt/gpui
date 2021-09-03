@@ -26,10 +26,10 @@ using namespace model::registry;
 
 namespace gpui {
 
-enum StateComboItem {
+enum FilterComboValue {
     ANY,
-    CONFIGURED,
-    NOT_CONFIGURED,
+    YES,
+    NO,
 };
 
 class TemplateFilterDialogPrivate {
@@ -51,9 +51,9 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     setWindowTitle(tr("Filter Options"));
 
     d->configuredFilterCombo = new QComboBox();
-    d->configuredFilterCombo->addItem(tr("Any"), StateComboItem::ANY);
-    d->configuredFilterCombo->addItem(tr("Yes"), StateComboItem::CONFIGURED);
-    d->configuredFilterCombo->addItem(tr("No"), StateComboItem::NOT_CONFIGURED);
+    d->configuredFilterCombo->addItem(tr("Any"), FilterComboValue::ANY);
+    d->configuredFilterCombo->addItem(tr("Yes"), FilterComboValue::YES);
+    d->configuredFilterCombo->addItem(tr("No"), FilterComboValue::NO);
 
     auto configuredFilterLayout = new QFormLayout();
     configuredFilterLayout->addRow(tr("Configured:"), d->configuredFilterCombo);
@@ -93,21 +93,21 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
     out.titleFilterEnabled = d->titleFilterGroupBox->isChecked();
     out.titleFilter = d->titleFilterEdit->text();
 
-    const StateComboItem state_item = d->configuredFilterCombo->currentData().value<StateComboItem>();
+    const FilterComboValue state_item = d->configuredFilterCombo->currentData().value<FilterComboValue>();
     
     out.configuredFilter = [&]()
     {
         switch (state_item) {
-            case StateComboItem::ANY: return QSet<PolicyStateManager::PolicyState>({
+            case FilterComboValue::ANY: return QSet<PolicyStateManager::PolicyState>({
                 PolicyStateManager::STATE_NOT_CONFIGURED,
                 PolicyStateManager::STATE_ENABLED,
                 PolicyStateManager::STATE_DISABLED,
             });
-            case StateComboItem::CONFIGURED: return QSet<PolicyStateManager::PolicyState>({
+            case FilterComboValue::YES: return QSet<PolicyStateManager::PolicyState>({
                 PolicyStateManager::STATE_ENABLED,
                 PolicyStateManager::STATE_DISABLED,
             });
-            case StateComboItem::NOT_CONFIGURED: return QSet<PolicyStateManager::PolicyState>({
+            case FilterComboValue::NO: return QSet<PolicyStateManager::PolicyState>({
                 PolicyStateManager::STATE_NOT_CONFIGURED,
             });
         }
@@ -119,4 +119,4 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
 
 }
 
-Q_DECLARE_METATYPE(gpui::StateComboItem)
+Q_DECLARE_METATYPE(gpui::FilterComboValue)

@@ -49,7 +49,7 @@ public:
     TemplateFilterModel(QObject *parent);
     ~TemplateFilterModel();
 
-    void setFilter(const TemplateFilter &filter);
+    void setFilter(const TemplateFilter &filter, const bool enabled);
 
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
     void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);

@@ -65,7 +65,7 @@
      <x>0</x>
      <y>0</y>
      <width>995</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -102,6 +102,7 @@
     <addaction name="separator"/>
     <addaction name="actionCustomize"/>
     <addaction name="actionEditFilter"/>
+    <addaction name="actionEnableFilter"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -319,6 +320,14 @@
   <action name="actionOpenMachineRegistrySource">
    <property name="text">
     <string>Open &amp;Machine Registry Source</string>
+   </property>
+  </action>
+  <action name="actionEnableFilter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable filter</string>
    </property>
   </action>
  </widget>

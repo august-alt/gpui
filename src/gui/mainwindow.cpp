@@ -128,7 +128,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
     connect(ui->actionEditFilter, &QAction::triggered, d->filter_dialog, &QDialog::open);
-    connect(d->filter_dialog, &QDialog::accepted, this, &MainWindow::loadFilterFromFilterDialog);
+    connect(d->filter_dialog, &QDialog::accepted, this, &MainWindow::updateFilterModel);
+    connect(ui->actionEnableFilter, &QAction::toggled, this, &MainWindow::updateFilterModel);
 }
 
 MainWindow::~MainWindow()
@@ -161,7 +162,7 @@ void MainWindow::onDirectoryOpen()
     d->filterModel->setMachineRegistrySource(d->machineRegistrySource.get());
     d->filterModel->setUserRegistrySource(d->userRegistrySource.get());
 
-    loadFilterFromFilterDialog();
+    updateFilterModel();
 
     d->sortModel = std::make_unique<QSortFilterProxyModel>();
     d->sortModel->setSourceModel(d->filterModel.get());
@@ -255,11 +256,13 @@ void MainWindow::onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>
     browser.exec();
 }
 
-void MainWindow::loadFilterFromFilterDialog()
+void MainWindow::updateFilterModel()
 {
     if (d->filterModel != nullptr)
     {
-        d->filterModel->setFilter(d->filter_dialog->getFilter());
+        const model::TemplateFilter filter = d->filter_dialog->getFilter();
+        const bool filterEnabled = ui->actionEnableFilter->isChecked();
+        d->filterModel->setFilter(filter, filterEnabled);
     }
 }
 

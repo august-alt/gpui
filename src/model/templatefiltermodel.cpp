@@ -45,6 +45,7 @@ public:
     AbstractRegistrySource* machineSource = nullptr;
 
     TemplateFilter filter;
+    bool enabled;
 };
 
 TemplateFilterModel::TemplateFilterModel(QObject *parent)
@@ -60,6 +61,8 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     
     d->filter.configured = QSet<PolicyStateManager::PolicyState>();
 
+    d->enabled = false;
+
     setRecursiveFilteringEnabled(true);
 }
 
@@ -68,15 +71,20 @@ TemplateFilterModel::~TemplateFilterModel()
     delete d;
 }
 
-void TemplateFilterModel::setFilter(const TemplateFilter &filter)
+void TemplateFilterModel::setFilter(const TemplateFilter &filter, const bool enabled)
 {
     d->filter = filter;
+    d->enabled = enabled;
 
     invalidateFilter();
 }
 
 bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    if (!d->enabled) {
+        return true;
+    }
+
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     // TODO: remove magic number "1"

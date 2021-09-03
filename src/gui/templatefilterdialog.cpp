@@ -156,6 +156,32 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
     return out;
 }
 
+void TemplateFilterDialog::accept() {
+    const bool keywordWithinIsValid = [&]() {
+        if (d->keywordFilterGroupBox->isChecked()) {
+            const QList<bool> keyword_enabled_list = {
+                d->keywordTitleCheck->isChecked(),
+                d->keywordHelpCheck->isChecked(),
+                d->keywordCommentCheck->isChecked(),
+            };
+
+            const bool any_keyword_enabled = keyword_enabled_list.contains(true);
+
+            return any_keyword_enabled;
+        } else {
+            return true;
+        }
+    }();
+
+    if (keywordWithinIsValid) {
+       QDialog::accept();
+    } else {
+        const QString title = tr("Filter Error");
+        const QString text = tr("Please select one or more keyword filter Within options.");
+        QMessageBox::warning(this, title, text);
+    }
+}
+
 }
 
 Q_DECLARE_METATYPE(gpui::FilterComboValue)

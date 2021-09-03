@@ -38,7 +38,9 @@ public:
         
     }
 
+    QComboBox *managedFilterCombo;
     QComboBox *configuredFilterCombo;
+    QComboBox *commentedFilterCombo;
     QGroupBox *titleFilterGroupBox;
     QLineEdit *titleFilterEdit;
 
@@ -50,13 +52,22 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 {
     setWindowTitle(tr("Filter Options"));
 
-    d->configuredFilterCombo = new QComboBox();
-    d->configuredFilterCombo->addItem(tr("Any"), FilterComboValue::ANY);
-    d->configuredFilterCombo->addItem(tr("Yes"), FilterComboValue::YES);
-    d->configuredFilterCombo->addItem(tr("No"), FilterComboValue::NO);
+    auto comboLayout = new QFormLayout();
 
-    auto configuredFilterLayout = new QFormLayout();
-    configuredFilterLayout->addRow(tr("Configured:"), d->configuredFilterCombo);
+    auto makeFilterCombo = [&](const QString &label)
+    {
+        auto combo = new QComboBox();
+        combo->addItem(tr("Any"), FilterComboValue::ANY);
+        combo->addItem(tr("Yes"), FilterComboValue::YES);
+        combo->addItem(tr("No"), FilterComboValue::NO);
+        comboLayout->addRow(label, combo);
+
+        return combo;
+    };
+
+    d->managedFilterCombo = makeFilterCombo(tr("Managed:"));
+    d->configuredFilterCombo = makeFilterCombo(tr("Configured:"));
+    d->commentedFilterCombo = makeFilterCombo(tr("Commented:"));
 
     d->titleFilterEdit = new QLineEdit();
 
@@ -73,7 +84,7 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 
     auto layout = new QVBoxLayout();
     setLayout(layout);
-    layout->addLayout(configuredFilterLayout);
+    layout->addLayout(comboLayout);
     layout->addWidget(d->titleFilterGroupBox);
     layout->addWidget(buttonBox);
 

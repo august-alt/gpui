@@ -95,9 +95,45 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
     const bool titleMatch = [&]()
     {
         const QString title = index.data().value<QString>();
-        const bool out = (title.contains(d->filter.keywordText));
+        const QList<QString> keywordList = d->filter.keywordText.split(" ");
 
-        return out;
+        switch (d->filter.keywordType)
+        {
+            case KeywordFilterType_ANY:
+            {
+                for (const QString &keyword : keywordList)
+                {
+                    const bool match = title.contains(keyword);
+
+                    if (match) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            case KeywordFilterType_EXACT:
+            {
+                const bool out = (title.contains(d->filter.keywordText));
+
+                return out;
+            }
+            case KeywordFilterType_ALL:
+            {
+                for (const QString &keyword : keywordList)
+                {
+                    const bool match = title.contains(keyword);
+
+                    if (!match) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }();
 
     // TODO: this is very convoluted, also duplicating

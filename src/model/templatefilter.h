@@ -43,14 +43,14 @@ enum KeywordFilterType {
 class GPUI_MODEL_EXPORT TemplateFilter final
 {
 public:
-    bool keywordFilterEnabled;
-    bool titleFilterEnabled;
-    bool helpFilterEnabled;
-    bool commentFilterEnabled;
-    KeywordFilterType keywordFilterType;
-    QString keywordFilterText;
+    bool keywordEnabled;
+    bool titleEnabled;
+    bool helpEnabled;
+    bool commentEnabled;
+    KeywordFilterType keywordType;
+    QString keywordText;
     
-    QSet<registry::PolicyStateManager::PolicyState> configuredFilter;
+    QSet<registry::PolicyStateManager::PolicyState> configured;
 };
 
 }

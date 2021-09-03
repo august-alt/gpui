@@ -51,14 +51,14 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , d(new TemplateFilterModelPrivate())
 {
-    d->filter.keywordFilterEnabled = false;
-    d->filter.titleFilterEnabled = false;
-    d->filter.helpFilterEnabled = false;
-    d->filter.commentFilterEnabled = false;
-    d->filter.keywordFilterType = KeywordFilterType_ANY;
-    d->filter.keywordFilterText = QString();;
+    d->filter.keywordEnabled = false;
+    d->filter.titleEnabled = false;
+    d->filter.helpEnabled = false;
+    d->filter.commentEnabled = false;
+    d->filter.keywordType = KeywordFilterType_ANY;
+    d->filter.keywordText = QString();;
     
-    d->filter.configuredFilter = QSet<PolicyStateManager::PolicyState>();
+    d->filter.configured = QSet<PolicyStateManager::PolicyState>();
 
     setRecursiveFilteringEnabled(true);
 }
@@ -89,20 +89,20 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
     }();
 
     // TODO: implement these filters
-    const bool helpFilterMatch = true;
-    const bool commentFilterMatch = true;
+    const bool helpMatch = true;
+    const bool commentMatch = true;
 
-    const bool titleFilterMatch = [&]()
+    const bool titleMatch = [&]()
     {
         const QString title = index.data().value<QString>();
-        const bool out = (title.contains(d->filter.keywordFilterText));
+        const bool out = (title.contains(d->filter.keywordText));
 
         return out;
     }();
 
     // TODO: this is very convoluted, also duplicating
     // part of ContentWidget::onListItemClicked()
-    const bool configuredFilterMatch = [&]()
+    const bool configuredMatch = [&]()
     {
         const QAbstractItemModel* model = index.model();
         auto policy = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
@@ -127,7 +127,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         const auto manager = std::make_unique<PolicyStateManager>(*source, *policy);
 
         auto state = manager->determinePolicyState();
-        const bool out = (d->filter.configuredFilter.contains(state));
+        const bool out = (d->filter.configured.contains(state));
 
         return out;
     }();
@@ -139,23 +139,23 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return true;
     }
 
-    if (d->filter.keywordFilterEnabled)
+    if (d->filter.keywordEnabled)
     {
-        if (d->filter.titleFilterEnabled && !titleFilterMatch)
+        if (d->filter.titleEnabled && !titleMatch)
         {
             return false;
         }
-        if (d->filter.helpFilterEnabled && !helpFilterMatch)
+        if (d->filter.helpEnabled && !helpMatch)
         {
             return false;
         }
-        if (d->filter.commentFilterEnabled && !commentFilterMatch)
+        if (d->filter.commentEnabled && !commentMatch)
         {
             return false;
         }
     }
 
-    if (!configuredFilterMatch)
+    if (!configuredMatch)
     {
         return false;
     }

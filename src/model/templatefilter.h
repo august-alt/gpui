@@ -28,6 +28,12 @@
 
 namespace model {
 
+enum KeywordFilterType {
+    KeywordFilterType_ANY,
+    KeywordFilterType_EXACT,
+    KeywordFilterType_ALL,
+};
+
 /*!
  * \class TemplateFilter
  * \brief The TemplateFilter class
@@ -37,8 +43,12 @@ namespace model {
 class GPUI_MODEL_EXPORT TemplateFilter final
 {
 public:
+    bool keywordFilterEnabled;
     bool titleFilterEnabled;
-    QString titleFilter;
+    bool helpFilterEnabled;
+    bool commentFilterEnabled;
+    KeywordFilterType keywordFilterType;
+    QString keywordFilterText;
     
     QSet<registry::PolicyStateManager::PolicyState> configuredFilter;
 };

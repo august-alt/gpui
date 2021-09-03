@@ -51,8 +51,12 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , d(new TemplateFilterModelPrivate())
 {
+    d->filter.keywordFilterEnabled = false;
     d->filter.titleFilterEnabled = false;
-    d->filter.titleFilter = QString();
+    d->filter.helpFilterEnabled = false;
+    d->filter.commentFilterEnabled = false;
+    d->filter.keywordFilterType = KeywordFilterType_ANY;
+    d->filter.keywordFilterText = QString();;
     
     d->filter.configuredFilter = QSet<PolicyStateManager::PolicyState>();
 
@@ -84,10 +88,14 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return out;
     }();
 
+    // TODO: implement these filters
+    const bool helpFilterMatch = true;
+    const bool commentFilterMatch = true;
+
     const bool titleFilterMatch = [&]()
     {
-        const QString text = index.data().value<QString>();
-        const bool out = (text.contains(d->filter.titleFilter));
+        const QString title = index.data().value<QString>();
+        const bool out = (title.contains(d->filter.keywordFilterText));
 
         return out;
     }();
@@ -131,9 +139,20 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return true;
     }
 
-    if (d->filter.titleFilterEnabled && !titleFilterMatch)
+    if (d->filter.keywordFilterEnabled)
     {
-        return false;
+        if (d->filter.titleFilterEnabled && !titleFilterMatch)
+        {
+            return false;
+        }
+        if (d->filter.helpFilterEnabled && !helpFilterMatch)
+        {
+            return false;
+        }
+        if (d->filter.commentFilterEnabled && !commentFilterMatch)
+        {
+            return false;
+        }
     }
 
     if (!configuredFilterMatch)

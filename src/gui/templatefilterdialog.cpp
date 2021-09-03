@@ -22,6 +22,7 @@
 
 #include "../model/templatefilter.h"
 
+using namespace model;
 using namespace model::registry;
 
 namespace gpui {
@@ -30,12 +31,6 @@ enum FilterComboValue {
     FilterComboValue_ANY,
     FilterComboValue_YES,
     FilterComboValue_NO,
-};
-
-enum KeywordFilterComboValue {
-    KeywordFilterComboValue_ANY,
-    KeywordFilterComboValue_EXACT,
-    KeywordFilterComboValue_ALL,
 };
 
 class TemplateFilterDialogPrivate {
@@ -82,9 +77,9 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     d->keywordFiltersEdit = new QLineEdit();
 
     d->keywordFiltersCombo = new QComboBox();
-    d->keywordFiltersCombo->addItem(tr("Any"), KeywordFilterComboValue_ANY);
-    d->keywordFiltersCombo->addItem(tr("Exact"), KeywordFilterComboValue_EXACT);
-    d->keywordFiltersCombo->addItem(tr("All"), KeywordFilterComboValue_ALL);
+    d->keywordFiltersCombo->addItem(tr("Any"), KeywordFilterType_ANY);
+    d->keywordFiltersCombo->addItem(tr("Exact"), KeywordFilterType_EXACT);
+    d->keywordFiltersCombo->addItem(tr("All"), KeywordFilterType_ALL);
 
     auto keywordEditLayout = new QHBoxLayout();
     keywordEditLayout->addWidget(d->keywordFiltersEdit);
@@ -130,8 +125,12 @@ TemplateFilterDialog::~TemplateFilterDialog()
 model::TemplateFilter TemplateFilterDialog::getFilter() const {
     model::TemplateFilter out;
 
-    out.titleFilterEnabled = d->keywordFiltersGroupBox->isChecked();
-    out.titleFilter = d->keywordFiltersEdit->text();
+    out.keywordFilterEnabled = d->keywordFiltersGroupBox->isChecked();
+    out.titleFilterEnabled = d->keywordTitleCheck->isChecked();
+    out.helpFilterEnabled = d->keywordHelpCheck->isChecked();
+    out.commentFilterEnabled = d->keywordCommentCheck->isChecked();
+    out.keywordFilterText = d->keywordFiltersEdit->text();
+    out.keywordFilterType = d->keywordFiltersCombo->currentData().value<KeywordFilterType>();
 
     const FilterComboValue state_item = d->configuredFilterCombo->currentData().value<FilterComboValue>();
     
@@ -160,3 +159,4 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
 }
 
 Q_DECLARE_METATYPE(gpui::FilterComboValue)
+Q_DECLARE_METATYPE(model::KeywordFilterType)

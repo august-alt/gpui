@@ -131,12 +131,12 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
     out.commentEnabled = d->keywordCommentCheck->isChecked();
     out.keywordText = d->keywordFilterEdit->text();
     out.keywordType = d->keywordFilterCombo->currentData().value<KeywordFilterType>();
-
-    const FilterComboValue state_item = d->configuredCombo->currentData().value<FilterComboValue>();
     
     out.configured = [&]()
     {
-        switch (state_item) {
+        const FilterComboValue configuredState = d->configuredCombo->currentData().value<FilterComboValue>();
+
+        switch (configuredState) {
             case FilterComboValue_ANY: return QSet<PolicyStateManager::PolicyState>({
                 PolicyStateManager::STATE_NOT_CONFIGURED,
                 PolicyStateManager::STATE_ENABLED,
@@ -152,6 +152,9 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
         }
         return QSet<PolicyStateManager::PolicyState>();
     }();
+
+    // TODO: save filters from managed and comment combo
+    // boxes. Not sure what kind of data that will be yet
 
     return out;
 }

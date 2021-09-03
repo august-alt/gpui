@@ -27,9 +27,15 @@ using namespace model::registry;
 namespace gpui {
 
 enum FilterComboValue {
-    ANY,
-    YES,
-    NO,
+    FilterComboValue_ANY,
+    FilterComboValue_YES,
+    FilterComboValue_NO,
+};
+
+enum KeywordFilterComboValue {
+    KeywordFilterComboValue_ANY,
+    KeywordFilterComboValue_EXACT,
+    KeywordFilterComboValue_ALL,
 };
 
 class TemplateFilterDialogPrivate {
@@ -41,8 +47,12 @@ public:
     QComboBox *managedFilterCombo;
     QComboBox *configuredFilterCombo;
     QComboBox *commentedFilterCombo;
-    QGroupBox *titleFilterGroupBox;
-    QLineEdit *titleFilterEdit;
+    QGroupBox *keywordFiltersGroupBox;
+    QLineEdit *keywordFiltersEdit;
+    QComboBox *keywordFiltersCombo;
+    QCheckBox *keywordTitleCheck;
+    QCheckBox *keywordHelpCheck;
+    QCheckBox *keywordCommentCheck;
 
 };
 
@@ -57,9 +67,9 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     auto makeFilterCombo = [&](const QString &label)
     {
         auto combo = new QComboBox();
-        combo->addItem(tr("Any"), FilterComboValue::ANY);
-        combo->addItem(tr("Yes"), FilterComboValue::YES);
-        combo->addItem(tr("No"), FilterComboValue::NO);
+        combo->addItem(tr("Any"), FilterComboValue_ANY);
+        combo->addItem(tr("Yes"), FilterComboValue_YES);
+        combo->addItem(tr("No"), FilterComboValue_NO);
         comboLayout->addRow(label, combo);
 
         return combo;
@@ -69,15 +79,34 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     d->configuredFilterCombo = makeFilterCombo(tr("Configured:"));
     d->commentedFilterCombo = makeFilterCombo(tr("Commented:"));
 
-    d->titleFilterEdit = new QLineEdit();
+    d->keywordFiltersEdit = new QLineEdit();
 
-    d->titleFilterGroupBox = new QGroupBox(tr("Enable title filter"));
-    d->titleFilterGroupBox->setCheckable(true);
-    d->titleFilterGroupBox->setChecked(false);
+    d->keywordFiltersCombo = new QComboBox();
+    d->keywordFiltersCombo->addItem(tr("Any"), KeywordFilterComboValue_ANY);
+    d->keywordFiltersCombo->addItem(tr("Exact"), KeywordFilterComboValue_EXACT);
+    d->keywordFiltersCombo->addItem(tr("All"), KeywordFilterComboValue_ALL);
 
-    auto titleFilterLayout = new QFormLayout();
-    titleFilterLayout->addRow(tr("Title:"), d->titleFilterEdit);
-    d->titleFilterGroupBox->setLayout(titleFilterLayout);
+    auto keywordEditLayout = new QHBoxLayout();
+    keywordEditLayout->addWidget(d->keywordFiltersEdit);
+    keywordEditLayout->addWidget(d->keywordFiltersCombo);
+
+    d->keywordTitleCheck = new QCheckBox(tr("Policy setting title"));
+    d->keywordHelpCheck = new QCheckBox(tr("Help text"));
+    d->keywordCommentCheck = new QCheckBox(tr("Comment"));
+
+    auto keywordCheckLayout = new QHBoxLayout();
+    keywordCheckLayout->addWidget(d->keywordTitleCheck);
+    keywordCheckLayout->addWidget(d->keywordHelpCheck);
+    keywordCheckLayout->addWidget(d->keywordCommentCheck);
+
+    d->keywordFiltersGroupBox = new QGroupBox(tr("Enable Keyword Filters"));
+    d->keywordFiltersGroupBox->setCheckable(true);
+    d->keywordFiltersGroupBox->setChecked(false);
+
+    auto keywordFilterLayout = new QFormLayout();
+    d->keywordFiltersGroupBox->setLayout(keywordFilterLayout);
+    keywordFilterLayout->addRow(tr("Filter for word(s):"), keywordEditLayout);
+    keywordFilterLayout->addRow(tr("Within:"), keywordCheckLayout);
 
     auto buttonBox = new QDialogButtonBox();
     buttonBox->addButton(QDialogButtonBox::Ok);
@@ -85,7 +114,7 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     auto layout = new QVBoxLayout();
     setLayout(layout);
     layout->addLayout(comboLayout);
-    layout->addWidget(d->titleFilterGroupBox);
+    layout->addWidget(d->keywordFiltersGroupBox);
     layout->addWidget(buttonBox);
 
     connect(
@@ -101,24 +130,24 @@ TemplateFilterDialog::~TemplateFilterDialog()
 model::TemplateFilter TemplateFilterDialog::getFilter() const {
     model::TemplateFilter out;
 
-    out.titleFilterEnabled = d->titleFilterGroupBox->isChecked();
-    out.titleFilter = d->titleFilterEdit->text();
+    out.titleFilterEnabled = d->keywordFiltersGroupBox->isChecked();
+    out.titleFilter = d->keywordFiltersEdit->text();
 
     const FilterComboValue state_item = d->configuredFilterCombo->currentData().value<FilterComboValue>();
     
     out.configuredFilter = [&]()
     {
         switch (state_item) {
-            case FilterComboValue::ANY: return QSet<PolicyStateManager::PolicyState>({
+            case FilterComboValue_ANY: return QSet<PolicyStateManager::PolicyState>({
                 PolicyStateManager::STATE_NOT_CONFIGURED,
                 PolicyStateManager::STATE_ENABLED,
                 PolicyStateManager::STATE_DISABLED,
             });
-            case FilterComboValue::YES: return QSet<PolicyStateManager::PolicyState>({
+            case FilterComboValue_YES: return QSet<PolicyStateManager::PolicyState>({
                 PolicyStateManager::STATE_ENABLED,
                 PolicyStateManager::STATE_DISABLED,
             });
-            case FilterComboValue::NO: return QSet<PolicyStateManager::PolicyState>({
+            case FilterComboValue_NO: return QSet<PolicyStateManager::PolicyState>({
                 PolicyStateManager::STATE_NOT_CONFIGURED,
             });
         }

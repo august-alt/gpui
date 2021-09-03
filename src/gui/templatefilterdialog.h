@@ -25,10 +25,6 @@
 
 #include <QtWidgets>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class TemplateFilterDialog; }
-QT_END_NAMESPACE
-
 namespace model {
     class TemplateFilter;
 }

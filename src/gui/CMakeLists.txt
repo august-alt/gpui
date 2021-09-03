@@ -35,6 +35,7 @@ set(UI_FORMS
     contentwidget.ui
     mainwindow.ui
     smbfilebrowser.ui
+    templatefilterdialog.ui
 )
 
 set(MOC_HEADERS

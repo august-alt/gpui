@@ -19,6 +19,7 @@
 ***********************************************************************************************************************/
 
 #include "templatefilterdialog.h"
+#include "ui_templatefilterdialog.h"
 
 #include "../model/templatefilter.h"
 
@@ -39,15 +40,7 @@ public:
         
     }
 
-    QComboBox *managedCombo;
-    QComboBox *configuredCombo;
-    QComboBox *commentedCombo;
-    QGroupBox *keywordGroupBox;
-    QLineEdit *keywordEdit;
-    QComboBox *keywordCombo;
-    QCheckBox *titleCheck;
-    QCheckBox *helpCheck;
-    QCheckBox *commentCheck;
+    Ui::TemplateFilterDialog *ui;
 
     QHash<QWidget *, QVariant> originalState;
 
@@ -58,90 +51,39 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     : QDialog(parent)
     , d(new TemplateFilterDialogPrivate())
 {
+    d->ui = new Ui::TemplateFilterDialog();
+    d->ui->setupUi(this);
+
     setWindowTitle(tr("Filter Options"));
 
-    auto comboLayout = new QFormLayout();
-
-    auto makeFilterCombo = [&](const QString &label)
-    {
-        auto combo = new QComboBox();
-        combo->addItem(tr("Any"), FilterComboValue_ANY);
-        combo->addItem(tr("Yes"), FilterComboValue_YES);
-        combo->addItem(tr("No"), FilterComboValue_NO);
-        comboLayout->addRow(label, combo);
-
-        return combo;
-    };
-
-    d->managedCombo = makeFilterCombo(tr("Managed:"));
-    d->configuredCombo = makeFilterCombo(tr("Configured:"));
-    d->commentedCombo = makeFilterCombo(tr("Commented:"));
-
-    d->keywordEdit = new QLineEdit();
-
-    d->keywordCombo = new QComboBox();
-    d->keywordCombo->addItem(tr("Any"), KeywordFilterType_ANY);
-    d->keywordCombo->addItem(tr("Exact"), KeywordFilterType_EXACT);
-    d->keywordCombo->addItem(tr("All"), KeywordFilterType_ALL);
-
-    auto keywordEditLayout = new QHBoxLayout();
-    keywordEditLayout->addWidget(d->keywordEdit);
-    keywordEditLayout->addWidget(d->keywordCombo);
-
-    d->titleCheck = new QCheckBox(tr("Policy setting title"));
-    d->helpCheck = new QCheckBox(tr("Help text"));
-    d->commentCheck = new QCheckBox(tr("Comment"));
-
-    auto keywordCheckLayout = new QHBoxLayout();
-    keywordCheckLayout->addWidget(d->titleCheck);
-    keywordCheckLayout->addWidget(d->helpCheck);
-    keywordCheckLayout->addWidget(d->commentCheck);
-
-    d->keywordGroupBox = new QGroupBox(tr("Enable Keyword Filter"));
-    d->keywordGroupBox->setCheckable(true);
-    d->keywordGroupBox->setChecked(false);
-
-    auto keywordFilterLayout = new QFormLayout();
-    d->keywordGroupBox->setLayout(keywordFilterLayout);
-    keywordFilterLayout->addRow(tr("Filter for word(s):"), keywordEditLayout);
-    keywordFilterLayout->addRow(tr("Within:"), keywordCheckLayout);
-
-    auto buttonBox = new QDialogButtonBox();
-    buttonBox->addButton(QDialogButtonBox::Ok);
-    buttonBox->addButton(QDialogButtonBox::Cancel);
-
-    auto layout = new QVBoxLayout();
-    setLayout(layout);
-    layout->addLayout(comboLayout);
-    layout->addWidget(d->keywordGroupBox);
-    layout->addWidget(buttonBox);
-
     connect(
-        buttonBox, &QDialogButtonBox::accepted,
+        d->ui->buttonBox, &QDialogButtonBox::accepted,
         this, &TemplateFilterDialog::accept);
     connect(
-        buttonBox, &QDialogButtonBox::rejected,
+        d->ui->buttonBox, &QDialogButtonBox::rejected,
         this, &TemplateFilterDialog::reject);
 }
 
 TemplateFilterDialog::~TemplateFilterDialog()
 {
+    delete d->ui;
+
     delete d;
 }
 
 model::TemplateFilter TemplateFilterDialog::getFilter() const {
     model::TemplateFilter out;
 
-    out.keywordEnabled = d->keywordGroupBox->isChecked();
-    out.titleEnabled = d->titleCheck->isChecked();
-    out.helpEnabled = d->helpCheck->isChecked();
-    out.commentEnabled = d->commentCheck->isChecked();
-    out.keywordText = d->keywordEdit->text();
-    out.keywordType = d->keywordCombo->currentData().value<KeywordFilterType>();
+    out.keywordEnabled = d->ui->keywordGroupBox->isChecked();
+    out.titleEnabled = d->ui->titleCheck->isChecked();
+    out.helpEnabled = d->ui->helpCheck->isChecked();
+    out.commentEnabled = d->ui->commentCheck->isChecked();
+    out.keywordText = d->ui->keywordEdit->text();
+    out.keywordType = (KeywordFilterType) d->ui->keywordCombo->currentIndex();
     
     out.configured = [&]()
     {
-        const FilterComboValue configuredState = d->configuredCombo->currentData().value<FilterComboValue>();
+        const FilterComboValue configuredState = (FilterComboValue) d->ui->configuredCombo->currentIndex();
 
         switch (configuredState) {
             case FilterComboValue_ANY: return QSet<PolicyStateManager::PolicyState>({
@@ -193,11 +135,11 @@ void TemplateFilterDialog::open() {
 
 void TemplateFilterDialog::accept() {
     const bool keywordWithinIsValid = [&]() {
-        if (d->keywordGroupBox->isChecked()) {
+        if (d->ui->keywordGroupBox->isChecked()) {
             const QList<bool> keyword_enabled_list = {
-                d->titleCheck->isChecked(),
-                d->helpCheck->isChecked(),
-                d->commentCheck->isChecked(),
+                d->ui->titleCheck->isChecked(),
+                d->ui->helpCheck->isChecked(),
+                d->ui->commentCheck->isChecked(),
             };
 
             const bool any_keyword_enabled = keyword_enabled_list.contains(true);
@@ -249,15 +191,15 @@ void TemplateFilterDialog::reject() {
 // their state is saved
 QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const {
     const QList<QWidget *> out = {
-        managedCombo,
-        configuredCombo,
-        commentedCombo,
-        keywordGroupBox,
-        keywordEdit,
-        keywordCombo,
-        titleCheck,
-        helpCheck,
-        commentCheck,
+        ui->managedCombo,
+        ui->configuredCombo,
+        ui->commentedCombo,
+        ui->keywordGroupBox,
+        ui->keywordEdit,
+        ui->keywordCombo,
+        ui->titleCheck,
+        ui->helpCheck,
+        ui->commentCheck,
     };
 
     return out;

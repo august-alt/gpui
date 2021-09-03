@@ -38,7 +38,7 @@ public:
         
     }
 
-    QComboBox *stateFilterEdit;
+    QComboBox *configuredFilterCombo;
     QGroupBox *titleFilterGroupBox;
     QLineEdit *titleFilterEdit;
 
@@ -50,13 +50,13 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 {
     setWindowTitle(tr("Filter Options"));
 
-    d->stateFilterEdit = new QComboBox();
-    d->stateFilterEdit->addItem(tr("Any"), StateComboItem::ANY);
-    d->stateFilterEdit->addItem(tr("Configured"), StateComboItem::CONFIGURED);
-    d->stateFilterEdit->addItem(tr("Not configured"), StateComboItem::NOT_CONFIGURED);
+    d->configuredFilterCombo = new QComboBox();
+    d->configuredFilterCombo->addItem(tr("Any"), StateComboItem::ANY);
+    d->configuredFilterCombo->addItem(tr("Yes"), StateComboItem::CONFIGURED);
+    d->configuredFilterCombo->addItem(tr("No"), StateComboItem::NOT_CONFIGURED);
 
-    auto stateFilterLayout = new QFormLayout();
-    stateFilterLayout->addRow(tr("Configured:"), d->stateFilterEdit);
+    auto configuredFilterLayout = new QFormLayout();
+    configuredFilterLayout->addRow(tr("Configured:"), d->configuredFilterCombo);
 
     d->titleFilterEdit = new QLineEdit();
 
@@ -73,7 +73,7 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 
     auto layout = new QVBoxLayout();
     setLayout(layout);
-    layout->addLayout(stateFilterLayout);
+    layout->addLayout(configuredFilterLayout);
     layout->addWidget(d->titleFilterGroupBox);
     layout->addWidget(buttonBox);
 
@@ -93,19 +93,9 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
     out.titleFilterEnabled = d->titleFilterGroupBox->isChecked();
     out.titleFilter = d->titleFilterEdit->text();
 
-    const StateComboItem state_item = d->stateFilterEdit->currentData().value<StateComboItem>();
+    const StateComboItem state_item = d->configuredFilterCombo->currentData().value<StateComboItem>();
     
-    out.stateFilterEnabled = [&]()
-    {
-        switch (state_item) {
-            case StateComboItem::ANY: return false;
-            case StateComboItem::CONFIGURED: return true;
-            case StateComboItem::NOT_CONFIGURED: return true;
-        }
-        return false;
-    }();
-
-    out.stateFilter = [&]()
+    out.configuredFilter = [&]()
     {
         switch (state_item) {
             case StateComboItem::ANY: return QSet<PolicyStateManager::PolicyState>({

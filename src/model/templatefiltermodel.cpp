@@ -54,8 +54,7 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     d->filter.titleFilterEnabled = false;
     d->filter.titleFilter = QString();
     
-    d->filter.stateFilterEnabled = false;
-    d->filter.stateFilter = QSet<PolicyStateManager::PolicyState>();
+    d->filter.configuredFilter = QSet<PolicyStateManager::PolicyState>();
 
     setRecursiveFilteringEnabled(true);
 }
@@ -95,7 +94,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
 
     // TODO: this is very convoluted, also duplicating
     // part of ContentWidget::onListItemClicked()
-    const bool stateFilterMatch = [&]()
+    const bool configuredFilterMatch = [&]()
     {
         const QAbstractItemModel* model = index.model();
         auto policy = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
@@ -120,7 +119,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         const auto manager = std::make_unique<PolicyStateManager>(*source, *policy);
 
         auto state = manager->determinePolicyState();
-        const bool out = (d->filter.stateFilter.contains(state));
+        const bool out = (d->filter.configuredFilter.contains(state));
 
         return out;
     }();
@@ -137,7 +136,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return false;
     }
 
-    if (d->filter.stateFilterEnabled && !stateFilterMatch)
+    if (!configuredFilterMatch)
     {
         return false;
     }

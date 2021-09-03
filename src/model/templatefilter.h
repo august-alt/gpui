@@ -40,8 +40,7 @@ public:
     bool titleFilterEnabled;
     QString titleFilter;
     
-    bool stateFilterEnabled;
-    QSet<registry::PolicyStateManager::PolicyState> stateFilter;
+    QSet<registry::PolicyStateManager::PolicyState> configuredFilter;
 };
 
 }

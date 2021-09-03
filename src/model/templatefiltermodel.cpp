@@ -203,7 +203,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         return true;
     }
 
-    if (d->filter.keywordEnabled && keywordMatch)
+    if (d->filter.keywordEnabled && !keywordMatch)
     {
         return false;
     }

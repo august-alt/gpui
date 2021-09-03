@@ -49,6 +49,9 @@ public:
     QCheckBox *keywordHelpCheck;
     QCheckBox *keywordCommentCheck;
 
+    QHash<QWidget *, QVariant> originalState;
+
+    QList<QWidget *> getWidgetList() const;
 };
 
 TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
@@ -105,6 +108,7 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 
     auto buttonBox = new QDialogButtonBox();
     buttonBox->addButton(QDialogButtonBox::Ok);
+    buttonBox->addButton(QDialogButtonBox::Cancel);
 
     auto layout = new QVBoxLayout();
     setLayout(layout);
@@ -114,7 +118,10 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 
     connect(
         buttonBox, &QDialogButtonBox::accepted,
-        this, &QDialog::accept);
+        this, &TemplateFilterDialog::accept);
+    connect(
+        buttonBox, &QDialogButtonBox::rejected,
+        this, &TemplateFilterDialog::reject);
 }
 
 TemplateFilterDialog::~TemplateFilterDialog()
@@ -159,6 +166,31 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
     return out;
 }
 
+// Save state when opening, to restore it later if
+// dialog is rejected
+void TemplateFilterDialog::open() {
+    const QList<QWidget *> widgetList = d->getWidgetList();
+    
+    for (QWidget *widget : widgetList) {
+        QComboBox *combo = qobject_cast<QComboBox*>(widget);
+        QCheckBox *check = qobject_cast<QCheckBox*>(widget);
+        QGroupBox *groupbox = qobject_cast<QGroupBox*>(widget);
+        QLineEdit *lineedit = qobject_cast<QLineEdit*>(widget);
+
+        if (combo != nullptr) {
+            d->originalState[widget] = combo->currentIndex();
+        } else if (check != nullptr) {
+            d->originalState[widget] = check->isChecked();
+        } else if (groupbox != nullptr) {
+            d->originalState[widget] = groupbox->isChecked();
+        } else if (lineedit != nullptr) {
+            d->originalState[widget] = lineedit->text();
+        }
+    }
+
+    QDialog::open();
+}
+
 void TemplateFilterDialog::accept() {
     const bool keywordWithinIsValid = [&]() {
         if (d->keywordFilterGroupBox->isChecked()) {
@@ -183,6 +215,52 @@ void TemplateFilterDialog::accept() {
         const QString text = tr("Please select one or more keyword filter Within options.");
         QMessageBox::warning(this, title, text);
     }
+}
+
+// Restore original state
+void TemplateFilterDialog::reject() {
+    const QList<QWidget *> widgetList = d->getWidgetList();
+    
+    for (QWidget *widget : widgetList) {
+        QComboBox *combo = qobject_cast<QComboBox*>(widget);
+        QCheckBox *check = qobject_cast<QCheckBox*>(widget);
+        QGroupBox *groupbox = qobject_cast<QGroupBox*>(widget);
+        QLineEdit *lineedit = qobject_cast<QLineEdit*>(widget);
+
+        if (combo != nullptr) {
+            const int index = d->originalState[widget].value<int>();
+            combo->setCurrentIndex(index);
+        } else if (check != nullptr) {
+            const bool isChecked = d->originalState[widget].value<bool>();
+            check->setChecked(isChecked);
+        } else if (groupbox != nullptr) {
+            const bool isChecked = d->originalState[widget].value<bool>();
+            groupbox->setChecked(isChecked);
+        } else if (lineedit != nullptr) {
+            const QString text = d->originalState[widget].value<QString>();
+            lineedit->setText(text);
+        }
+    }
+
+    QDialog::reject();
+}
+
+// NOTE: add any new widgets you add to this list so that
+// their state is saved
+QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const {
+    const QList<QWidget *> out = {
+        managedFilterCombo,
+        configuredCombo,
+        commentedFilterCombo,
+        keywordFilterGroupBox,
+        keywordFilterEdit,
+        keywordFilterCombo,
+        keywordTitleCheck,
+        keywordHelpCheck,
+        keywordCommentCheck,
+    };
+
+    return out;
 }
 
 }

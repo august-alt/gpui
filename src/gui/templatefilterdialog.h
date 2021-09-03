@@ -47,7 +47,9 @@ namespace gpui {
         model::TemplateFilter getFilter() const;
 
     public slots:
+        void open() override;
         void accept() override;
+        void reject() override;
 
     private:
 

@@ -22,6 +22,8 @@
 
 #include "../model/templatefilter.h"
 
+using namespace model::registry;
+
 namespace gpui {
 
 enum StateComboItem {
@@ -106,20 +108,20 @@ model::TemplateFilter TemplateFilterDialog::getFilter() const {
     out.stateFilter = [&]()
     {
         switch (state_item) {
-            case StateComboItem::ANY: return QSet<model::registry::PolicyStateManager::PolicyState>({
-                model::registry::PolicyStateManager::PolicyState::STATE_NOT_CONFIGURED,
-                model::registry::PolicyStateManager::PolicyState::STATE_ENABLED,
-                model::registry::PolicyStateManager::PolicyState::STATE_DISABLED,
+            case StateComboItem::ANY: return QSet<PolicyStateManager::PolicyState>({
+                PolicyStateManager::STATE_NOT_CONFIGURED,
+                PolicyStateManager::STATE_ENABLED,
+                PolicyStateManager::STATE_DISABLED,
             });
-            case StateComboItem::CONFIGURED: return QSet<model::registry::PolicyStateManager::PolicyState>({
-                model::registry::PolicyStateManager::PolicyState::STATE_ENABLED,
-                model::registry::PolicyStateManager::PolicyState::STATE_DISABLED,
+            case StateComboItem::CONFIGURED: return QSet<PolicyStateManager::PolicyState>({
+                PolicyStateManager::STATE_ENABLED,
+                PolicyStateManager::STATE_DISABLED,
             });
-            case StateComboItem::NOT_CONFIGURED: return QSet<model::registry::PolicyStateManager::PolicyState>({
-                model::registry::PolicyStateManager::PolicyState::STATE_NOT_CONFIGURED,
+            case StateComboItem::NOT_CONFIGURED: return QSet<PolicyStateManager::PolicyState>({
+                PolicyStateManager::STATE_NOT_CONFIGURED,
             });
         }
-        return QSet<model::registry::PolicyStateManager::PolicyState>();
+        return QSet<PolicyStateManager::PolicyState>();
     }();
 
     return out;

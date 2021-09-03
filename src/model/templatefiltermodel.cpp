@@ -24,22 +24,25 @@
 #include "registry/abstractregistrysource.h"
 #include "registry/policystatemanager.h"
 #include "admx/policy.h"
-#include "bundle/policyroles.h"
 #include "templatefilter.h"
 
 #include <QDebug>
 
+using namespace model::registry;
+using namespace model::admx;
+using namespace model::bundle;
+
 namespace model {
 
-typedef std::shared_ptr<admx::Policy> PolicyPtr;
+typedef std::shared_ptr<Policy> PolicyPtr;
 
 class TemplateFilterModelPrivate
 {
 public:  
     // TODO: don't like these members, they are already in
     // main window
-    registry::AbstractRegistrySource* userSource = nullptr;
-    registry::AbstractRegistrySource* machineSource = nullptr;
+    AbstractRegistrySource* userSource = nullptr;
+    AbstractRegistrySource* machineSource = nullptr;
 
     TemplateFilter filter;
 };
@@ -52,7 +55,7 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     d->filter.titleFilter = QString();
     
     d->filter.stateFilterEnabled = false;
-    d->filter.stateFilter = QSet<registry::PolicyStateManager::PolicyState>();
+    d->filter.stateFilter = QSet<PolicyStateManager::PolicyState>();
 
     setRecursiveFilteringEnabled(true);
 }
@@ -76,7 +79,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
     // TODO: remove magic number "1"
     const bool itemIsTemplate = [&]()
     {
-        const uint item_type = index.data(bundle::PolicyRoles::ITEM_TYPE).value<uint>();
+        const uint item_type = index.data(PolicyRoles::ITEM_TYPE).value<uint>();
         const bool out = (item_type == 1);
 
         return out;
@@ -95,14 +98,14 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
     const bool stateFilterMatch = [&]()
     {
         const QAbstractItemModel* model = index.model();
-        auto policy = model->data(index, bundle::PolicyRoles::POLICY).value<PolicyPtr>();
+        auto policy = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
 
         if (policy == nullptr) {
             return false;
         }
 
         const auto source = [&]() {
-            if (policy->policyType == admx::PolicyType::Machine)
+            if (policy->policyType == PolicyType::Machine)
             {
                 return d->machineSource;
             } else {
@@ -114,7 +117,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
             return false;
         }
 
-        const auto manager = std::make_unique<registry::PolicyStateManager>(*source, *policy);
+        const auto manager = std::make_unique<PolicyStateManager>(*source, *policy);
 
         auto state = manager->determinePolicyState();
         const bool out = (d->filter.stateFilter.contains(state));
@@ -142,16 +145,16 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
     return true;
 }
 
-void TemplateFilterModel::setUserRegistrySource(registry::AbstractRegistrySource *registrySource)
+void TemplateFilterModel::setUserRegistrySource(AbstractRegistrySource *registrySource)
 {
     d->userSource = registrySource;
 }
 
-void TemplateFilterModel::setMachineRegistrySource(registry::AbstractRegistrySource *registrySource)
+void TemplateFilterModel::setMachineRegistrySource(AbstractRegistrySource *registrySource)
 {
     d->machineSource = registrySource;
 }
 
 }
 
-Q_DECLARE_METATYPE(std::shared_ptr<model::admx::Policy>)
+Q_DECLARE_METATYPE(std::shared_ptr<Policy>)

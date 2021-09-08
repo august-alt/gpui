@@ -17,11 +17,11 @@
    <item row="0" column="0">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>GroupBox</string>
+      <string>Options:</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="stopOnErrorCheckBox">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -34,7 +34,7 @@ error occurs.</string>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_2">
+       <widget class="QCheckBox" name="userContextCheckBox">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -47,7 +47,7 @@ context (user policy option).</string>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_3">
+       <widget class="QCheckBox" name="removeThisCheckBox">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -59,7 +59,7 @@ context (user policy option).</string>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_4">
+       <widget class="QCheckBox" name="applyOnceCheckBox">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -73,7 +73,7 @@ context (user policy option).</string>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QCheckBox" name="checkBox_5">
+         <widget class="QCheckBox" name="itemLevelCheckBox">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -85,7 +85,7 @@ context (user policy option).</string>
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButton">
+         <widget class="QToolButton" name="targetingToolButton">
           <property name="text">
            <string>Targetting...</string>
           </property>
@@ -97,17 +97,17 @@ context (user policy option).</string>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="descriptionLabel">
      <property name="text">
       <string>Description:</string>
      </property>
      <property name="buddy">
-      <cstring>textEdit</cstring>
+      <cstring>descriptionTextEdit</cstring>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QTextEdit" name="textEdit"/>
+    <widget class="QTextEdit" name="descriptionTextEdit"/>
    </item>
   </layout>
  </widget>

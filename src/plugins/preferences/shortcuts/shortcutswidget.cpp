@@ -21,19 +21,63 @@
 #include "shortcutswidget.h"
 #include "ui_shortcutswidget.h"
 
+#include "shortcutroles.h"
+
 namespace gpui
 {
 
-ShortcutsWidget::ShortcutsWidget(QWidget *parent)
+class ShortcutsWidgetPrivate
+{
+public:
+    std::unique_ptr<QDataWidgetMapper> mapper;
+    QStandardItemModel* model;
+    QItemSelectionModel* selectionModel;
+
+    ShortcutsWidgetPrivate(QStandardItemModel* model, QItemSelectionModel* selectionModel)
+        : model(model)
+        , selectionModel(selectionModel)
+    {
+
+    }
+};
+
+ShortcutsWidget::ShortcutsWidget(QStandardItemModel& model, QItemSelectionModel& selectionModel, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ShortcutsWidget())
+    , d(new ShortcutsWidgetPrivate(&model, &selectionModel))
 {
     ui->setupUi(this);
+
+    d->mapper = std::make_unique<QDataWidgetMapper>(this);
+    d->mapper->setModel(d->model);
+
+    connect(d->selectionModel, &QItemSelectionModel::currentRowChanged, d->mapper.get(),
+            &QDataWidgetMapper::setCurrentModelIndex);
+
+    setupModelMapper();
 }
 
 ShortcutsWidget::~ShortcutsWidget()
 {
     delete ui;
+
+    delete d;
+}
+
+void ShortcutsWidget::setupModelMapper()
+{
+    d->mapper->addMapping(ui->actionComboBox, ShortcutRoles::ACTION, "currentIndex");
+    d->mapper->addMapping(ui->argumentsLineEdit, ShortcutRoles::ARGUMENTS);
+    d->mapper->addMapping(ui->commentLineEdit, ShortcutRoles::COMMENT);
+    d->mapper->addMapping(ui->iconFilePathLineEdit, ShortcutRoles::ICON_PATH);
+    d->mapper->addMapping(ui->iconIndexLineEdit, ShortcutRoles::ICON_INDEX);
+    d->mapper->addMapping(ui->shortcutKeyLineEdit, ShortcutRoles::SHORTCUT_KEY);
+    d->mapper->addMapping(ui->nameLineEdit, ShortcutRoles::SHORTCUT_PATH);
+    d->mapper->addMapping(ui->startInLineEdit, ShortcutRoles::START_IN);
+    d->mapper->addMapping(ui->targetPathLineEdit, ShortcutRoles::TARGET_PATH);
+    d->mapper->addMapping(ui->targetTypeComboBox, ShortcutRoles::TARGET_TYPE, "currentIndex");
+
+    d->mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 }
 
 }

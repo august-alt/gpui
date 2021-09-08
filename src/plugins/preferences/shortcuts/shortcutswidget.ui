@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>384</width>
-    <height>397</height>
+    <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,6 +46,11 @@
        <item>
         <property name="text">
          <string>Create</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Replace</string>
         </property>
        </item>
        <item>
@@ -114,7 +119,23 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="targetTypeComboBox"/>
+      <widget class="QComboBox" name="targetTypeComboBox">
+       <item>
+        <property name="text">
+         <string>FILESYSTEM</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>URL</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SHELL</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="locationLabel">
@@ -136,7 +157,88 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QComboBox" name="locationComboBox"/>
+      <widget class="QComboBox" name="locationComboBox">
+       <item>
+        <property name="text">
+         <string>&lt;Specify full path&gt;</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Desktop</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Start Menu</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Programs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartUp</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Explorer Favorites</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Explorer Links</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Send To</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Recent</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Quick Launch ToolBar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>My Network Places</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>All Users Desktop</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>All Users Start Menu</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>All Users Programs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>All Users StartUp</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>All Users Explorer Favorites</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="nameLabel">
@@ -414,7 +516,23 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QComboBox" name="runComboBox"/>
+      <widget class="QComboBox" name="runComboBox">
+       <item>
+        <property name="text">
+         <string>Normal Window</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Minimized</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Maximized</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="commentLabel">

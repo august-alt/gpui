@@ -29,16 +29,22 @@ QT_END_NAMESPACE
 
 namespace gpui
 {
+    class ShortcutsWidgetPrivate;
+
     class ShortcutsWidget : public QWidget
     {
         Q_OBJECT
 
     public:
-        ShortcutsWidget(QWidget *parent = 0);
+        ShortcutsWidget(QStandardItemModel& model, QItemSelectionModel& selectionModel, QWidget *parent = 0);
         ~ShortcutsWidget();
 
     private:
         Ui::ShortcutsWidget *ui;
+        ShortcutsWidgetPrivate* d;
+
+    private:
+        void setupModelMapper();
     };
 }
 

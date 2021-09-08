@@ -6,19 +6,24 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(HEADERS
+    commonroles.h
     commonwidget.h
+    preferencesdialog.h
 )
 
 set(SOURCES
     commonwidget.cpp
+    preferencesdialog.cpp
 )
 
 set(UI_FORMS
     commonwidget.ui
+    preferencesdialog.ui
 )
 
 set(MOC_HEADERS
     commonwidget.h
+    preferencesdialog.h
 )
 
 qt5_wrap_ui(UI_SOURCES ${UI_FORMS})

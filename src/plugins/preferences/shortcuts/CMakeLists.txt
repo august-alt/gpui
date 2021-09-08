@@ -6,10 +6,15 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(HEADERS
-    shortcutswidget.h
+    modelbuilder.h
+    shortcutroles.h
+    shortcutsschema.h
+    shortcutswidget.h    
 )
 
 set(SOURCES
+    modelbuilder.cpp
+    shortcutsschema.cpp
     shortcutswidget.cpp
 )
 

@@ -29,16 +29,22 @@ QT_END_NAMESPACE
 
 namespace gpui
 {
+    class DrivesWidgetPrivate;
+
     class DrivesWidget : public QWidget
     {
         Q_OBJECT
 
     public:
-        DrivesWidget(QWidget *parent = 0);
+        DrivesWidget(QStandardItemModel& model, QItemSelectionModel& selectionModel, QWidget *parent = 0);
         ~DrivesWidget();
 
     private:
         Ui::DrivesWidget *ui;
+        DrivesWidgetPrivate* d;
+
+    private:
+        void setupModelMapper();
     };
 }
 

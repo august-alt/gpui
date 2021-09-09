@@ -578,8 +578,8 @@ namespace xml_schema
 // Forward declarations.
 //
 class Properties_t;
-class Shortcut_t;
-class Shortcuts;
+class Drive_t;
+class Drives;
 
 #include <memory>    // ::std::unique_ptr
 #include <limits>    // std::numeric_limits
@@ -606,140 +606,6 @@ class Shortcuts;
 class Properties_t: public ::xml_schema::Type
 {
   public:
-  /**
-   * @name pidl
-   *
-   * @brief Accessor and modifier functions for the %pidl
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String PidlType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< PidlType > PidlOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< PidlType, char > PidlTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const PidlOptional&
-  pidl () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  PidlOptional&
-  pidl ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  pidl (const PidlType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  pidl (const PidlOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  pidl (::std::unique_ptr< PidlType > p);
-
-  //@}
-
-  /**
-   * @name targetType
-   *
-   * @brief Accessor and modifier functions for the %targetType
-   * required attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String TargetTypeType;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< TargetTypeType, char > TargetTypeTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute.
-   *
-   * @return A constant reference to the attribute.
-   */
-  const TargetTypeType&
-  targetType () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute.
-   *
-   * @return A reference to the attribute.
-   */
-  TargetTypeType&
-  targetType ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  targetType (const TargetTypeType& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  targetType (::std::unique_ptr< TargetTypeType > p);
-
-  //@}
-
   /**
    * @name action
    *
@@ -817,9 +683,9 @@ class Properties_t: public ::xml_schema::Type
   //@}
 
   /**
-   * @name comment
+   * @name thisDrive
    *
-   * @brief Accessor and modifier functions for the %comment
+   * @brief Accessor and modifier functions for the %thisDrive
    * optional attribute.
    */
   //@{
@@ -827,17 +693,17 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String CommentType;
+  typedef ::xml_schema::String ThisDriveType;
 
   /**
    * @brief Attribute optional container type.
    */
-  typedef ::xsd::cxx::tree::optional< CommentType > CommentOptional;
+  typedef ::xsd::cxx::tree::optional< ThisDriveType > ThisDriveOptional;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< CommentType, char > CommentTraits;
+  typedef ::xsd::cxx::tree::traits< ThisDriveType, char > ThisDriveTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute
@@ -845,16 +711,16 @@ class Properties_t: public ::xml_schema::Type
    *
    * @return A constant reference to the optional container.
    */
-  const CommentOptional&
-  comment () const;
+  const ThisDriveOptional&
+  thisDrive () const;
 
   /**
    * @brief Return a read-write reference to the attribute container.
    *
    * @return A reference to the optional container.
    */
-  CommentOptional&
-  comment ();
+  ThisDriveOptional&
+  thisDrive ();
 
   /**
    * @brief Set the attribute value.
@@ -865,7 +731,7 @@ class Properties_t: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  comment (const CommentType& x);
+  thisDrive (const ThisDriveType& x);
 
   /**
    * @brief Set the attribute value.
@@ -877,7 +743,7 @@ class Properties_t: public ::xml_schema::Type
    * Otherwise the attribute container is set the 'not present' state.
    */
   void
-  comment (const CommentOptional& x);
+  thisDrive (const ThisDriveOptional& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -888,14 +754,14 @@ class Properties_t: public ::xml_schema::Type
    * of making a copy.
    */
   void
-  comment (::std::unique_ptr< CommentType > p);
+  thisDrive (::std::unique_ptr< ThisDriveType > p);
 
   //@}
 
   /**
-   * @name shortcutKey
+   * @name allDrives
    *
-   * @brief Accessor and modifier functions for the %shortcutKey
+   * @brief Accessor and modifier functions for the %allDrives
    * optional attribute.
    */
   //@{
@@ -903,17 +769,17 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::UnsignedByte ShortcutKeyType;
+  typedef ::xml_schema::String AllDrivesType;
 
   /**
    * @brief Attribute optional container type.
    */
-  typedef ::xsd::cxx::tree::optional< ShortcutKeyType > ShortcutKeyOptional;
+  typedef ::xsd::cxx::tree::optional< AllDrivesType > AllDrivesOptional;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< ShortcutKeyType, char > ShortcutKeyTraits;
+  typedef ::xsd::cxx::tree::traits< AllDrivesType, char > AllDrivesTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute
@@ -921,16 +787,16 @@ class Properties_t: public ::xml_schema::Type
    *
    * @return A constant reference to the optional container.
    */
-  const ShortcutKeyOptional&
-  shortcutKey () const;
+  const AllDrivesOptional&
+  allDrives () const;
 
   /**
    * @brief Return a read-write reference to the attribute container.
    *
    * @return A reference to the optional container.
    */
-  ShortcutKeyOptional&
-  shortcutKey ();
+  AllDrivesOptional&
+  allDrives ();
 
   /**
    * @brief Set the attribute value.
@@ -941,7 +807,7 @@ class Properties_t: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  shortcutKey (const ShortcutKeyType& x);
+  allDrives (const AllDrivesType& x);
 
   /**
    * @brief Set the attribute value.
@@ -953,72 +819,7 @@ class Properties_t: public ::xml_schema::Type
    * Otherwise the attribute container is set the 'not present' state.
    */
   void
-  shortcutKey (const ShortcutKeyOptional& x);
-
-  //@}
-
-  /**
-   * @name startIn
-   *
-   * @brief Accessor and modifier functions for the %startIn
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String StartInType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< StartInType > StartInOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< StartInType, char > StartInTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const StartInOptional&
-  startIn () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  StartInOptional&
-  startIn ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  startIn (const StartInType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  startIn (const StartInOptional& x);
+  allDrives (const AllDrivesOptional& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -1029,14 +830,14 @@ class Properties_t: public ::xml_schema::Type
    * of making a copy.
    */
   void
-  startIn (::std::unique_ptr< StartInType > p);
+  allDrives (::std::unique_ptr< AllDrivesType > p);
 
   //@}
 
   /**
-   * @name arguments
+   * @name userName
    *
-   * @brief Accessor and modifier functions for the %arguments
+   * @brief Accessor and modifier functions for the %userName
    * optional attribute.
    */
   //@{
@@ -1044,17 +845,17 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String ArgumentsType;
+  typedef ::xml_schema::String UserNameType;
 
   /**
    * @brief Attribute optional container type.
    */
-  typedef ::xsd::cxx::tree::optional< ArgumentsType > ArgumentsOptional;
+  typedef ::xsd::cxx::tree::optional< UserNameType > UserNameOptional;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< ArgumentsType, char > ArgumentsTraits;
+  typedef ::xsd::cxx::tree::traits< UserNameType, char > UserNameTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute
@@ -1062,16 +863,16 @@ class Properties_t: public ::xml_schema::Type
    *
    * @return A constant reference to the optional container.
    */
-  const ArgumentsOptional&
-  arguments () const;
+  const UserNameOptional&
+  userName () const;
 
   /**
    * @brief Return a read-write reference to the attribute container.
    *
    * @return A reference to the optional container.
    */
-  ArgumentsOptional&
-  arguments ();
+  UserNameOptional&
+  userName ();
 
   /**
    * @brief Set the attribute value.
@@ -1082,7 +883,7 @@ class Properties_t: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  arguments (const ArgumentsType& x);
+  userName (const UserNameType& x);
 
   /**
    * @brief Set the attribute value.
@@ -1094,7 +895,7 @@ class Properties_t: public ::xml_schema::Type
    * Otherwise the attribute container is set the 'not present' state.
    */
   void
-  arguments (const ArgumentsOptional& x);
+  userName (const UserNameOptional& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -1105,14 +906,14 @@ class Properties_t: public ::xml_schema::Type
    * of making a copy.
    */
   void
-  arguments (::std::unique_ptr< ArgumentsType > p);
+  userName (::std::unique_ptr< UserNameType > p);
 
   //@}
 
   /**
-   * @name iconIndex
+   * @name cpassword
    *
-   * @brief Accessor and modifier functions for the %iconIndex
+   * @brief Accessor and modifier functions for the %cpassword
    * optional attribute.
    */
   //@{
@@ -1120,17 +921,17 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::UnsignedByte IconIndexType;
+  typedef ::xml_schema::String CpasswordType;
 
   /**
    * @brief Attribute optional container type.
    */
-  typedef ::xsd::cxx::tree::optional< IconIndexType > IconIndexOptional;
+  typedef ::xsd::cxx::tree::optional< CpasswordType > CpasswordOptional;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< IconIndexType, char > IconIndexTraits;
+  typedef ::xsd::cxx::tree::traits< CpasswordType, char > CpasswordTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute
@@ -1138,16 +939,16 @@ class Properties_t: public ::xml_schema::Type
    *
    * @return A constant reference to the optional container.
    */
-  const IconIndexOptional&
-  iconIndex () const;
+  const CpasswordOptional&
+  cpassword () const;
 
   /**
    * @brief Return a read-write reference to the attribute container.
    *
    * @return A reference to the optional container.
    */
-  IconIndexOptional&
-  iconIndex ();
+  CpasswordOptional&
+  cpassword ();
 
   /**
    * @brief Set the attribute value.
@@ -1158,7 +959,7 @@ class Properties_t: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  iconIndex (const IconIndexType& x);
+  cpassword (const CpasswordType& x);
 
   /**
    * @brief Set the attribute value.
@@ -1170,14 +971,25 @@ class Properties_t: public ::xml_schema::Type
    * Otherwise the attribute container is set the 'not present' state.
    */
   void
-  iconIndex (const IconIndexOptional& x);
+  cpassword (const CpasswordOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  cpassword (::std::unique_ptr< CpasswordType > p);
 
   //@}
 
   /**
-   * @name targetPath
+   * @name path
    *
-   * @brief Accessor and modifier functions for the %targetPath
+   * @brief Accessor and modifier functions for the %path
    * required attribute.
    */
   //@{
@@ -1185,28 +997,28 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String TargetPathType;
+  typedef ::xml_schema::String PathType;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< TargetPathType, char > TargetPathTraits;
+  typedef ::xsd::cxx::tree::traits< PathType, char > PathTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute.
    *
    * @return A constant reference to the attribute.
    */
-  const TargetPathType&
-  targetPath () const;
+  const PathType&
+  path () const;
 
   /**
    * @brief Return a read-write reference to the attribute.
    *
    * @return A reference to the attribute.
    */
-  TargetPathType&
-  targetPath ();
+  PathType&
+  path ();
 
   /**
    * @brief Set the attribute value.
@@ -1217,7 +1029,7 @@ class Properties_t: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  targetPath (const TargetPathType& x);
+  path (const PathType& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -1228,14 +1040,14 @@ class Properties_t: public ::xml_schema::Type
    * instead of making a copy.
    */
   void
-  targetPath (::std::unique_ptr< TargetPathType > p);
+  path (::std::unique_ptr< PathType > p);
 
   //@}
 
   /**
-   * @name iconPath
+   * @name label
    *
-   * @brief Accessor and modifier functions for the %iconPath
+   * @brief Accessor and modifier functions for the %label
    * optional attribute.
    */
   //@{
@@ -1243,17 +1055,17 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String IconPathType;
+  typedef ::xml_schema::String LabelType;
 
   /**
    * @brief Attribute optional container type.
    */
-  typedef ::xsd::cxx::tree::optional< IconPathType > IconPathOptional;
+  typedef ::xsd::cxx::tree::optional< LabelType > LabelOptional;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< IconPathType, char > IconPathTraits;
+  typedef ::xsd::cxx::tree::traits< LabelType, char > LabelTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute
@@ -1261,16 +1073,16 @@ class Properties_t: public ::xml_schema::Type
    *
    * @return A constant reference to the optional container.
    */
-  const IconPathOptional&
-  iconPath () const;
+  const LabelOptional&
+  label () const;
 
   /**
    * @brief Return a read-write reference to the attribute container.
    *
    * @return A reference to the optional container.
    */
-  IconPathOptional&
-  iconPath ();
+  LabelOptional&
+  label ();
 
   /**
    * @brief Set the attribute value.
@@ -1281,7 +1093,7 @@ class Properties_t: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  iconPath (const IconPathType& x);
+  label (const LabelType& x);
 
   /**
    * @brief Set the attribute value.
@@ -1293,7 +1105,7 @@ class Properties_t: public ::xml_schema::Type
    * Otherwise the attribute container is set the 'not present' state.
    */
   void
-  iconPath (const IconPathOptional& x);
+  label (const LabelOptional& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -1304,90 +1116,14 @@ class Properties_t: public ::xml_schema::Type
    * of making a copy.
    */
   void
-  iconPath (::std::unique_ptr< IconPathType > p);
+  label (::std::unique_ptr< LabelType > p);
 
   //@}
 
   /**
-   * @name window
+   * @name persistent
    *
-   * @brief Accessor and modifier functions for the %window
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String WindowType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< WindowType > WindowOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< WindowType, char > WindowTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const WindowOptional&
-  window () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  WindowOptional&
-  window ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  window (const WindowType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  window (const WindowOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  window (::std::unique_ptr< WindowType > p);
-
-  //@}
-
-  /**
-   * @name shortcutPath
-   *
-   * @brief Accessor and modifier functions for the %shortcutPath
+   * @brief Accessor and modifier functions for the %persistent
    * required attribute.
    */
   //@{
@@ -1395,28 +1131,28 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String ShortcutPathType;
+  typedef ::xml_schema::UnsignedByte PersistentType;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< ShortcutPathType, char > ShortcutPathTraits;
+  typedef ::xsd::cxx::tree::traits< PersistentType, char > PersistentTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute.
    *
    * @return A constant reference to the attribute.
    */
-  const ShortcutPathType&
-  shortcutPath () const;
+  const PersistentType&
+  persistent () const;
 
   /**
    * @brief Return a read-write reference to the attribute.
    *
    * @return A reference to the attribute.
    */
-  ShortcutPathType&
-  shortcutPath ();
+  PersistentType&
+  persistent ();
 
   /**
    * @brief Set the attribute value.
@@ -1427,7 +1163,101 @@ class Properties_t: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  shortcutPath (const ShortcutPathType& x);
+  persistent (const PersistentType& x);
+
+  //@}
+
+  /**
+   * @name useLetter
+   *
+   * @brief Accessor and modifier functions for the %useLetter
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::UnsignedByte UseLetterType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< UseLetterType, char > UseLetterTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const UseLetterType&
+  useLetter () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  UseLetterType&
+  useLetter ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  useLetter (const UseLetterType& x);
+
+  //@}
+
+  /**
+   * @name letter
+   *
+   * @brief Accessor and modifier functions for the %letter
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String LetterType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< LetterType, char > LetterTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const LetterType&
+  letter () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  LetterType&
+  letter ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  letter (const LetterType& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -1438,7 +1268,7 @@ class Properties_t: public ::xml_schema::Type
    * instead of making a copy.
    */
   void
-  shortcutPath (::std::unique_ptr< ShortcutPathType > p);
+  letter (::std::unique_ptr< LetterType > p);
 
   //@}
 
@@ -1453,7 +1283,7 @@ class Properties_t: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::Boolean DisabledType;
+  typedef ::xml_schema::UnsignedByte DisabledType;
 
   /**
    * @brief Attribute optional container type.
@@ -1516,9 +1346,10 @@ class Properties_t: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  Properties_t (const TargetTypeType&,
-                const TargetPathType&,
-                const ShortcutPathType&);
+  Properties_t (const PathType&,
+                const PersistentType&,
+                const UseLetterType&,
+                const LetterType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -1590,29 +1421,27 @@ class Properties_t: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  PidlOptional pidl_;
-  ::xsd::cxx::tree::one< TargetTypeType > targetType_;
   ActionOptional action_;
-  CommentOptional comment_;
-  ShortcutKeyOptional shortcutKey_;
-  StartInOptional startIn_;
-  ArgumentsOptional arguments_;
-  IconIndexOptional iconIndex_;
-  ::xsd::cxx::tree::one< TargetPathType > targetPath_;
-  IconPathOptional iconPath_;
-  WindowOptional window_;
-  ::xsd::cxx::tree::one< ShortcutPathType > shortcutPath_;
+  ThisDriveOptional thisDrive_;
+  AllDrivesOptional allDrives_;
+  UserNameOptional userName_;
+  CpasswordOptional cpassword_;
+  ::xsd::cxx::tree::one< PathType > path_;
+  LabelOptional label_;
+  ::xsd::cxx::tree::one< PersistentType > persistent_;
+  ::xsd::cxx::tree::one< UseLetterType > useLetter_;
+  ::xsd::cxx::tree::one< LetterType > letter_;
   DisabledOptional disabled_;
 
   //@endcond
 };
 
 /**
- * @brief Class corresponding to the %Shortcut_t schema type.
+ * @brief Class corresponding to the %Drive_t schema type.
  *
  * @nosubgrouping
  */
-class Shortcut_t: public ::xml_schema::Type
+class Drive_t: public ::xml_schema::Type
 {
   public:
   /**
@@ -2201,6 +2030,71 @@ class Shortcut_t: public ::xml_schema::Type
   //@}
 
   /**
+   * @name removePolicy
+   *
+   * @brief Accessor and modifier functions for the %removePolicy
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::Boolean RemovePolicyType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< RemovePolicyType > RemovePolicyOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< RemovePolicyType, char > RemovePolicyTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const RemovePolicyOptional&
+  removePolicy () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  RemovePolicyOptional&
+  removePolicy ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  removePolicy (const RemovePolicyType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  removePolicy (const RemovePolicyOptional& x);
+
+  //@}
+
+  /**
    * @name status
    *
    * @brief Accessor and modifier functions for the %status
@@ -2277,71 +2171,6 @@ class Shortcut_t: public ::xml_schema::Type
   //@}
 
   /**
-   * @name removePolicy
-   *
-   * @brief Accessor and modifier functions for the %removePolicy
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::Boolean RemovePolicyType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< RemovePolicyType > RemovePolicyOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< RemovePolicyType, char > RemovePolicyTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const RemovePolicyOptional&
-  removePolicy () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  RemovePolicyOptional&
-  removePolicy ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  removePolicy (const RemovePolicyType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  removePolicy (const RemovePolicyOptional& x);
-
-  //@}
-
-  /**
    * @name Constructors
    */
   //@{
@@ -2350,9 +2179,9 @@ class Shortcut_t: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  Shortcut_t (const ClsidType&,
-              const NameType&,
-              const UidType&);
+  Drive_t (const ClsidType&,
+           const NameType&,
+           const UidType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -2362,9 +2191,9 @@ class Shortcut_t: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  Shortcut_t (const ::xercesc::DOMElement& e,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  Drive_t (const ::xercesc::DOMElement& e,
+           ::xml_schema::Flags f = 0,
+           ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -2375,9 +2204,9 @@ class Shortcut_t: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Shortcut_t (const Shortcut_t& x,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  Drive_t (const Drive_t& x,
+           ::xml_schema::Flags f = 0,
+           ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -2390,7 +2219,7 @@ class Shortcut_t: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual Shortcut_t*
+  virtual Drive_t*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -2402,8 +2231,8 @@ class Shortcut_t: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Shortcut_t&
-  operator= (const Shortcut_t& x);
+  Drive_t&
+  operator= (const Drive_t& x);
 
   //@}
 
@@ -2411,7 +2240,7 @@ class Shortcut_t: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~Shortcut_t ();
+  ~Drive_t ();
 
   // Implementation.
   //
@@ -2433,24 +2262,24 @@ class Shortcut_t: public ::xml_schema::Type
   DescOptional desc_;
   BypassErrorsOptional bypassErrors_;
   UserContextOptional userContext_;
-  StatusOptional status_;
   RemovePolicyOptional removePolicy_;
+  StatusOptional status_;
 
   //@endcond
 };
 
 /**
- * @brief Class corresponding to the %Shortcuts schema type.
+ * @brief Class corresponding to the %Drives schema type.
  *
  * @nosubgrouping
  */
-class Shortcuts: public ::xml_schema::Type
+class Drives: public ::xml_schema::Type
 {
   public:
   /**
-   * @name Shortcut
+   * @name Drive
    *
-   * @brief Accessor and modifier functions for the %Shortcut
+   * @brief Accessor and modifier functions for the %Drive
    * sequence element.
    */
   //@{
@@ -2458,27 +2287,27 @@ class Shortcuts: public ::xml_schema::Type
   /**
    * @brief Element type.
    */
-  typedef ::Shortcut_t ShortcutType;
+  typedef ::Drive_t DriveType;
 
   /**
    * @brief Element sequence container type.
    */
-  typedef ::xsd::cxx::tree::sequence< ShortcutType > ShortcutSequence;
+  typedef ::xsd::cxx::tree::sequence< DriveType > DriveSequence;
 
   /**
    * @brief Element iterator type.
    */
-  typedef ShortcutSequence::iterator ShortcutIterator;
+  typedef DriveSequence::iterator DriveIterator;
 
   /**
    * @brief Element constant iterator type.
    */
-  typedef ShortcutSequence::const_iterator ShortcutConstIterator;
+  typedef DriveSequence::const_iterator DriveConstIterator;
 
   /**
    * @brief Element traits type.
    */
-  typedef ::xsd::cxx::tree::traits< ShortcutType, char > ShortcutTraits;
+  typedef ::xsd::cxx::tree::traits< DriveType, char > DriveTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the element
@@ -2486,16 +2315,16 @@ class Shortcuts: public ::xml_schema::Type
    *
    * @return A constant reference to the sequence container.
    */
-  const ShortcutSequence&
-  Shortcut () const;
+  const DriveSequence&
+  Drive () const;
 
   /**
    * @brief Return a read-write reference to the element sequence.
    *
    * @return A reference to the sequence container.
    */
-  ShortcutSequence&
-  Shortcut ();
+  DriveSequence&
+  Drive ();
 
   /**
    * @brief Copy elements from a given sequence.
@@ -2507,7 +2336,7 @@ class Shortcuts: public ::xml_schema::Type
    * sequence and all old elements will be lost.
    */
   void
-  Shortcut (const ShortcutSequence& s);
+  Drive (const DriveSequence& s);
 
   //@}
 
@@ -2580,7 +2409,7 @@ class Shortcuts: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::Boolean DisabledType;
+  typedef ::xml_schema::UnsignedByte DisabledType;
 
   /**
    * @brief Attribute optional container type.
@@ -2643,7 +2472,7 @@ class Shortcuts: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  Shortcuts (const ClsidType&);
+  Drives (const ClsidType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -2653,9 +2482,9 @@ class Shortcuts: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  Shortcuts (const ::xercesc::DOMElement& e,
-             ::xml_schema::Flags f = 0,
-             ::xml_schema::Container* c = 0);
+  Drives (const ::xercesc::DOMElement& e,
+          ::xml_schema::Flags f = 0,
+          ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -2666,9 +2495,9 @@ class Shortcuts: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Shortcuts (const Shortcuts& x,
-             ::xml_schema::Flags f = 0,
-             ::xml_schema::Container* c = 0);
+  Drives (const Drives& x,
+          ::xml_schema::Flags f = 0,
+          ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -2681,7 +2510,7 @@ class Shortcuts: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual Shortcuts*
+  virtual Drives*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -2693,8 +2522,8 @@ class Shortcuts: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Shortcuts&
-  operator= (const Shortcuts& x);
+  Drives&
+  operator= (const Drives& x);
 
   //@}
 
@@ -2702,7 +2531,7 @@ class Shortcuts: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~Shortcuts ();
+  ~Drives ();
 
   // Implementation.
   //
@@ -2715,7 +2544,7 @@ class Shortcuts: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  ShortcutSequence Shortcut_;
+  DriveSequence Drive_;
   ::xsd::cxx::tree::one< ClsidType > clsid_;
   DisabledOptional disabled_;
 
@@ -2728,10 +2557,10 @@ class Shortcuts: public ::xml_schema::Type
 operator<< (::std::ostream&, const Properties_t&);
 
 ::std::ostream&
-operator<< (::std::ostream&, const Shortcut_t&);
+operator<< (::std::ostream&, const Drive_t&);
 
 ::std::ostream&
-operator<< (::std::ostream&, const Shortcuts&);
+operator<< (::std::ostream&, const Drives&);
 
 #include <iosfwd>
 
@@ -2740,7 +2569,7 @@ operator<< (::std::ostream&, const Shortcuts&);
 #include <xercesc/dom/DOMErrorHandler.hpp>
 
 /**
- * @name Parsing functions for the %Shortcuts document root.
+ * @name Parsing functions for the %Drives document root.
  */
 //@{
 
@@ -2754,10 +2583,10 @@ operator<< (::std::ostream&, const Shortcuts&);
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::std::string& uri,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (const ::std::string& uri,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a URI or a local file with an error handler.
@@ -2770,11 +2599,11 @@ Shortcuts_ (const ::std::string& uri,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::std::string& uri,
-            ::xml_schema::ErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (const ::std::string& uri,
+         ::xml_schema::ErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a URI or a local file with a Xerces-C++ DOM error
@@ -2788,11 +2617,11 @@ Shortcuts_ (const ::std::string& uri,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::std::string& uri,
-            ::xercesc::DOMErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (const ::std::string& uri,
+         ::xercesc::DOMErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a standard input stream.
@@ -2804,10 +2633,10 @@ Shortcuts_ (const ::std::string& uri,
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a standard input stream with an error handler.
@@ -2820,11 +2649,11 @@ Shortcuts_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            ::xml_schema::ErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         ::xml_schema::ErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a standard input stream with a Xerces-C++ DOM error
@@ -2838,11 +2667,11 @@ Shortcuts_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            ::xercesc::DOMErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         ::xercesc::DOMErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a standard input stream with a resource id.
@@ -2858,11 +2687,11 @@ Shortcuts_ (::std::istream& is,
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            const ::std::string& id,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         const ::std::string& id,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a standard input stream with a resource id and an
@@ -2880,12 +2709,12 @@ Shortcuts_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            const ::std::string& id,
-            ::xml_schema::ErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         const ::std::string& id,
+         ::xml_schema::ErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a standard input stream with a resource id and a
@@ -2903,12 +2732,12 @@ Shortcuts_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            const ::std::string& id,
-            ::xercesc::DOMErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         const ::std::string& id,
+         ::xercesc::DOMErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a Xerces-C++ input source.
@@ -2920,10 +2749,10 @@ Shortcuts_ (::std::istream& is,
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xercesc::InputSource& is,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::xercesc::InputSource& is,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a Xerces-C++ input source with an error handler.
@@ -2936,11 +2765,11 @@ Shortcuts_ (::xercesc::InputSource& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xercesc::InputSource& is,
-            ::xml_schema::ErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::xercesc::InputSource& is,
+         ::xml_schema::ErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a Xerces-C++ input source with a Xerces-C++ DOM
@@ -2954,11 +2783,11 @@ Shortcuts_ (::xercesc::InputSource& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xercesc::InputSource& is,
-            ::xercesc::DOMErrorHandler& eh,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::xercesc::InputSource& is,
+         ::xercesc::DOMErrorHandler& eh,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a Xerces-C++ DOM document.
@@ -2968,10 +2797,10 @@ Shortcuts_ (::xercesc::InputSource& is,
  * @param p Parsing properties. 
  * @return A pointer to the root of the object model.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::xercesc::DOMDocument& d,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (const ::xercesc::DOMDocument& d,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 /**
  * @brief Parse a Xerces-C++ DOM document.
@@ -2985,10 +2814,10 @@ Shortcuts_ (const ::xercesc::DOMDocument& d,
  * own_dom parsing flags to assign ownership of the DOM document
  * to the object model.
  */
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
-            ::xml_schema::Flags f = 0,
-            const ::xml_schema::Properties& p = ::xml_schema::Properties ());
+::std::unique_ptr< ::Drives >
+Drives_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
+         ::xml_schema::Flags f = 0,
+         const ::xml_schema::Properties& p = ::xml_schema::Properties ());
 
 //@}
 

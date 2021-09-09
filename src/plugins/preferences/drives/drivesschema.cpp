@@ -38,64 +38,10 @@
 
 #include <xsd/cxx/pre.hxx>
 
-#include "shortcutsschema.h"
+#include "drivesschema.h"
 
 // Properties_t
 // 
-
-const Properties_t::PidlOptional& Properties_t::
-pidl () const
-{
-  return this->pidl_;
-}
-
-Properties_t::PidlOptional& Properties_t::
-pidl ()
-{
-  return this->pidl_;
-}
-
-void Properties_t::
-pidl (const PidlType& x)
-{
-  this->pidl_.set (x);
-}
-
-void Properties_t::
-pidl (const PidlOptional& x)
-{
-  this->pidl_ = x;
-}
-
-void Properties_t::
-pidl (::std::unique_ptr< PidlType > x)
-{
-  this->pidl_.set (std::move (x));
-}
-
-const Properties_t::TargetTypeType& Properties_t::
-targetType () const
-{
-  return this->targetType_.get ();
-}
-
-Properties_t::TargetTypeType& Properties_t::
-targetType ()
-{
-  return this->targetType_.get ();
-}
-
-void Properties_t::
-targetType (const TargetTypeType& x)
-{
-  this->targetType_.set (x);
-}
-
-void Properties_t::
-targetType (::std::unique_ptr< TargetTypeType > x)
-{
-  this->targetType_.set (std::move (x));
-}
 
 const Properties_t::ActionOptional& Properties_t::
 action () const
@@ -127,250 +73,238 @@ action (::std::unique_ptr< ActionType > x)
   this->action_.set (std::move (x));
 }
 
-const Properties_t::CommentOptional& Properties_t::
-comment () const
+const Properties_t::ThisDriveOptional& Properties_t::
+thisDrive () const
 {
-  return this->comment_;
+  return this->thisDrive_;
 }
 
-Properties_t::CommentOptional& Properties_t::
-comment ()
+Properties_t::ThisDriveOptional& Properties_t::
+thisDrive ()
 {
-  return this->comment_;
-}
-
-void Properties_t::
-comment (const CommentType& x)
-{
-  this->comment_.set (x);
+  return this->thisDrive_;
 }
 
 void Properties_t::
-comment (const CommentOptional& x)
+thisDrive (const ThisDriveType& x)
 {
-  this->comment_ = x;
+  this->thisDrive_.set (x);
 }
 
 void Properties_t::
-comment (::std::unique_ptr< CommentType > x)
+thisDrive (const ThisDriveOptional& x)
 {
-  this->comment_.set (std::move (x));
-}
-
-const Properties_t::ShortcutKeyOptional& Properties_t::
-shortcutKey () const
-{
-  return this->shortcutKey_;
-}
-
-Properties_t::ShortcutKeyOptional& Properties_t::
-shortcutKey ()
-{
-  return this->shortcutKey_;
+  this->thisDrive_ = x;
 }
 
 void Properties_t::
-shortcutKey (const ShortcutKeyType& x)
+thisDrive (::std::unique_ptr< ThisDriveType > x)
 {
-  this->shortcutKey_.set (x);
+  this->thisDrive_.set (std::move (x));
+}
+
+const Properties_t::AllDrivesOptional& Properties_t::
+allDrives () const
+{
+  return this->allDrives_;
+}
+
+Properties_t::AllDrivesOptional& Properties_t::
+allDrives ()
+{
+  return this->allDrives_;
 }
 
 void Properties_t::
-shortcutKey (const ShortcutKeyOptional& x)
+allDrives (const AllDrivesType& x)
 {
-  this->shortcutKey_ = x;
-}
-
-const Properties_t::StartInOptional& Properties_t::
-startIn () const
-{
-  return this->startIn_;
-}
-
-Properties_t::StartInOptional& Properties_t::
-startIn ()
-{
-  return this->startIn_;
+  this->allDrives_.set (x);
 }
 
 void Properties_t::
-startIn (const StartInType& x)
+allDrives (const AllDrivesOptional& x)
 {
-  this->startIn_.set (x);
+  this->allDrives_ = x;
 }
 
 void Properties_t::
-startIn (const StartInOptional& x)
+allDrives (::std::unique_ptr< AllDrivesType > x)
 {
-  this->startIn_ = x;
+  this->allDrives_.set (std::move (x));
+}
+
+const Properties_t::UserNameOptional& Properties_t::
+userName () const
+{
+  return this->userName_;
+}
+
+Properties_t::UserNameOptional& Properties_t::
+userName ()
+{
+  return this->userName_;
 }
 
 void Properties_t::
-startIn (::std::unique_ptr< StartInType > x)
+userName (const UserNameType& x)
 {
-  this->startIn_.set (std::move (x));
-}
-
-const Properties_t::ArgumentsOptional& Properties_t::
-arguments () const
-{
-  return this->arguments_;
-}
-
-Properties_t::ArgumentsOptional& Properties_t::
-arguments ()
-{
-  return this->arguments_;
+  this->userName_.set (x);
 }
 
 void Properties_t::
-arguments (const ArgumentsType& x)
+userName (const UserNameOptional& x)
 {
-  this->arguments_.set (x);
+  this->userName_ = x;
 }
 
 void Properties_t::
-arguments (const ArgumentsOptional& x)
+userName (::std::unique_ptr< UserNameType > x)
 {
-  this->arguments_ = x;
+  this->userName_.set (std::move (x));
+}
+
+const Properties_t::CpasswordOptional& Properties_t::
+cpassword () const
+{
+  return this->cpassword_;
+}
+
+Properties_t::CpasswordOptional& Properties_t::
+cpassword ()
+{
+  return this->cpassword_;
 }
 
 void Properties_t::
-arguments (::std::unique_ptr< ArgumentsType > x)
+cpassword (const CpasswordType& x)
 {
-  this->arguments_.set (std::move (x));
-}
-
-const Properties_t::IconIndexOptional& Properties_t::
-iconIndex () const
-{
-  return this->iconIndex_;
-}
-
-Properties_t::IconIndexOptional& Properties_t::
-iconIndex ()
-{
-  return this->iconIndex_;
+  this->cpassword_.set (x);
 }
 
 void Properties_t::
-iconIndex (const IconIndexType& x)
+cpassword (const CpasswordOptional& x)
 {
-  this->iconIndex_.set (x);
+  this->cpassword_ = x;
 }
 
 void Properties_t::
-iconIndex (const IconIndexOptional& x)
+cpassword (::std::unique_ptr< CpasswordType > x)
 {
-  this->iconIndex_ = x;
+  this->cpassword_.set (std::move (x));
 }
 
-const Properties_t::TargetPathType& Properties_t::
-targetPath () const
+const Properties_t::PathType& Properties_t::
+path () const
 {
-  return this->targetPath_.get ();
+  return this->path_.get ();
 }
 
-Properties_t::TargetPathType& Properties_t::
-targetPath ()
+Properties_t::PathType& Properties_t::
+path ()
 {
-  return this->targetPath_.get ();
-}
-
-void Properties_t::
-targetPath (const TargetPathType& x)
-{
-  this->targetPath_.set (x);
+  return this->path_.get ();
 }
 
 void Properties_t::
-targetPath (::std::unique_ptr< TargetPathType > x)
+path (const PathType& x)
 {
-  this->targetPath_.set (std::move (x));
-}
-
-const Properties_t::IconPathOptional& Properties_t::
-iconPath () const
-{
-  return this->iconPath_;
-}
-
-Properties_t::IconPathOptional& Properties_t::
-iconPath ()
-{
-  return this->iconPath_;
+  this->path_.set (x);
 }
 
 void Properties_t::
-iconPath (const IconPathType& x)
+path (::std::unique_ptr< PathType > x)
 {
-  this->iconPath_.set (x);
+  this->path_.set (std::move (x));
+}
+
+const Properties_t::LabelOptional& Properties_t::
+label () const
+{
+  return this->label_;
+}
+
+Properties_t::LabelOptional& Properties_t::
+label ()
+{
+  return this->label_;
 }
 
 void Properties_t::
-iconPath (const IconPathOptional& x)
+label (const LabelType& x)
 {
-  this->iconPath_ = x;
+  this->label_.set (x);
 }
 
 void Properties_t::
-iconPath (::std::unique_ptr< IconPathType > x)
+label (const LabelOptional& x)
 {
-  this->iconPath_.set (std::move (x));
-}
-
-const Properties_t::WindowOptional& Properties_t::
-window () const
-{
-  return this->window_;
-}
-
-Properties_t::WindowOptional& Properties_t::
-window ()
-{
-  return this->window_;
+  this->label_ = x;
 }
 
 void Properties_t::
-window (const WindowType& x)
+label (::std::unique_ptr< LabelType > x)
 {
-  this->window_.set (x);
+  this->label_.set (std::move (x));
+}
+
+const Properties_t::PersistentType& Properties_t::
+persistent () const
+{
+  return this->persistent_.get ();
+}
+
+Properties_t::PersistentType& Properties_t::
+persistent ()
+{
+  return this->persistent_.get ();
 }
 
 void Properties_t::
-window (const WindowOptional& x)
+persistent (const PersistentType& x)
 {
-  this->window_ = x;
+  this->persistent_.set (x);
+}
+
+const Properties_t::UseLetterType& Properties_t::
+useLetter () const
+{
+  return this->useLetter_.get ();
+}
+
+Properties_t::UseLetterType& Properties_t::
+useLetter ()
+{
+  return this->useLetter_.get ();
 }
 
 void Properties_t::
-window (::std::unique_ptr< WindowType > x)
+useLetter (const UseLetterType& x)
 {
-  this->window_.set (std::move (x));
+  this->useLetter_.set (x);
 }
 
-const Properties_t::ShortcutPathType& Properties_t::
-shortcutPath () const
+const Properties_t::LetterType& Properties_t::
+letter () const
 {
-  return this->shortcutPath_.get ();
+  return this->letter_.get ();
 }
 
-Properties_t::ShortcutPathType& Properties_t::
-shortcutPath ()
+Properties_t::LetterType& Properties_t::
+letter ()
 {
-  return this->shortcutPath_.get ();
-}
-
-void Properties_t::
-shortcutPath (const ShortcutPathType& x)
-{
-  this->shortcutPath_.set (x);
+  return this->letter_.get ();
 }
 
 void Properties_t::
-shortcutPath (::std::unique_ptr< ShortcutPathType > x)
+letter (const LetterType& x)
 {
-  this->shortcutPath_.set (std::move (x));
+  this->letter_.set (x);
+}
+
+void Properties_t::
+letter (::std::unique_ptr< LetterType > x)
+{
+  this->letter_.set (std::move (x));
 }
 
 const Properties_t::DisabledOptional& Properties_t::
@@ -398,350 +332,350 @@ disabled (const DisabledOptional& x)
 }
 
 
-// Shortcut_t
+// Drive_t
 // 
 
-const Shortcut_t::PropertiesSequence& Shortcut_t::
+const Drive_t::PropertiesSequence& Drive_t::
 Properties () const
 {
   return this->Properties_;
 }
 
-Shortcut_t::PropertiesSequence& Shortcut_t::
+Drive_t::PropertiesSequence& Drive_t::
 Properties ()
 {
   return this->Properties_;
 }
 
-void Shortcut_t::
+void Drive_t::
 Properties (const PropertiesSequence& s)
 {
   this->Properties_ = s;
 }
 
-const Shortcut_t::ClsidType& Shortcut_t::
+const Drive_t::ClsidType& Drive_t::
 clsid () const
 {
   return this->clsid_.get ();
 }
 
-Shortcut_t::ClsidType& Shortcut_t::
+Drive_t::ClsidType& Drive_t::
 clsid ()
 {
   return this->clsid_.get ();
 }
 
-void Shortcut_t::
+void Drive_t::
 clsid (const ClsidType& x)
 {
   this->clsid_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 clsid (::std::unique_ptr< ClsidType > x)
 {
   this->clsid_.set (std::move (x));
 }
 
-const Shortcut_t::NameType& Shortcut_t::
+const Drive_t::NameType& Drive_t::
 name () const
 {
   return this->name_.get ();
 }
 
-Shortcut_t::NameType& Shortcut_t::
+Drive_t::NameType& Drive_t::
 name ()
 {
   return this->name_.get ();
 }
 
-void Shortcut_t::
+void Drive_t::
 name (const NameType& x)
 {
   this->name_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 name (::std::unique_ptr< NameType > x)
 {
   this->name_.set (std::move (x));
 }
 
-const Shortcut_t::ImageOptional& Shortcut_t::
+const Drive_t::ImageOptional& Drive_t::
 image () const
 {
   return this->image_;
 }
 
-Shortcut_t::ImageOptional& Shortcut_t::
+Drive_t::ImageOptional& Drive_t::
 image ()
 {
   return this->image_;
 }
 
-void Shortcut_t::
+void Drive_t::
 image (const ImageType& x)
 {
   this->image_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 image (const ImageOptional& x)
 {
   this->image_ = x;
 }
 
-const Shortcut_t::ChangedOptional& Shortcut_t::
+const Drive_t::ChangedOptional& Drive_t::
 changed () const
 {
   return this->changed_;
 }
 
-Shortcut_t::ChangedOptional& Shortcut_t::
+Drive_t::ChangedOptional& Drive_t::
 changed ()
 {
   return this->changed_;
 }
 
-void Shortcut_t::
+void Drive_t::
 changed (const ChangedType& x)
 {
   this->changed_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 changed (const ChangedOptional& x)
 {
   this->changed_ = x;
 }
 
-void Shortcut_t::
+void Drive_t::
 changed (::std::unique_ptr< ChangedType > x)
 {
   this->changed_.set (std::move (x));
 }
 
-const Shortcut_t::UidType& Shortcut_t::
+const Drive_t::UidType& Drive_t::
 uid () const
 {
   return this->uid_.get ();
 }
 
-Shortcut_t::UidType& Shortcut_t::
+Drive_t::UidType& Drive_t::
 uid ()
 {
   return this->uid_.get ();
 }
 
-void Shortcut_t::
+void Drive_t::
 uid (const UidType& x)
 {
   this->uid_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 uid (::std::unique_ptr< UidType > x)
 {
   this->uid_.set (std::move (x));
 }
 
-const Shortcut_t::DescOptional& Shortcut_t::
+const Drive_t::DescOptional& Drive_t::
 desc () const
 {
   return this->desc_;
 }
 
-Shortcut_t::DescOptional& Shortcut_t::
+Drive_t::DescOptional& Drive_t::
 desc ()
 {
   return this->desc_;
 }
 
-void Shortcut_t::
+void Drive_t::
 desc (const DescType& x)
 {
   this->desc_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 desc (const DescOptional& x)
 {
   this->desc_ = x;
 }
 
-void Shortcut_t::
+void Drive_t::
 desc (::std::unique_ptr< DescType > x)
 {
   this->desc_.set (std::move (x));
 }
 
-const Shortcut_t::BypassErrorsOptional& Shortcut_t::
+const Drive_t::BypassErrorsOptional& Drive_t::
 bypassErrors () const
 {
   return this->bypassErrors_;
 }
 
-Shortcut_t::BypassErrorsOptional& Shortcut_t::
+Drive_t::BypassErrorsOptional& Drive_t::
 bypassErrors ()
 {
   return this->bypassErrors_;
 }
 
-void Shortcut_t::
+void Drive_t::
 bypassErrors (const BypassErrorsType& x)
 {
   this->bypassErrors_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 bypassErrors (const BypassErrorsOptional& x)
 {
   this->bypassErrors_ = x;
 }
 
-const Shortcut_t::UserContextOptional& Shortcut_t::
+const Drive_t::UserContextOptional& Drive_t::
 userContext () const
 {
   return this->userContext_;
 }
 
-Shortcut_t::UserContextOptional& Shortcut_t::
+Drive_t::UserContextOptional& Drive_t::
 userContext ()
 {
   return this->userContext_;
 }
 
-void Shortcut_t::
+void Drive_t::
 userContext (const UserContextType& x)
 {
   this->userContext_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 userContext (const UserContextOptional& x)
 {
   this->userContext_ = x;
 }
 
-const Shortcut_t::StatusOptional& Shortcut_t::
-status () const
-{
-  return this->status_;
-}
-
-Shortcut_t::StatusOptional& Shortcut_t::
-status ()
-{
-  return this->status_;
-}
-
-void Shortcut_t::
-status (const StatusType& x)
-{
-  this->status_.set (x);
-}
-
-void Shortcut_t::
-status (const StatusOptional& x)
-{
-  this->status_ = x;
-}
-
-void Shortcut_t::
-status (::std::unique_ptr< StatusType > x)
-{
-  this->status_.set (std::move (x));
-}
-
-const Shortcut_t::RemovePolicyOptional& Shortcut_t::
+const Drive_t::RemovePolicyOptional& Drive_t::
 removePolicy () const
 {
   return this->removePolicy_;
 }
 
-Shortcut_t::RemovePolicyOptional& Shortcut_t::
+Drive_t::RemovePolicyOptional& Drive_t::
 removePolicy ()
 {
   return this->removePolicy_;
 }
 
-void Shortcut_t::
+void Drive_t::
 removePolicy (const RemovePolicyType& x)
 {
   this->removePolicy_.set (x);
 }
 
-void Shortcut_t::
+void Drive_t::
 removePolicy (const RemovePolicyOptional& x)
 {
   this->removePolicy_ = x;
 }
 
+const Drive_t::StatusOptional& Drive_t::
+status () const
+{
+  return this->status_;
+}
 
-// Shortcuts
+Drive_t::StatusOptional& Drive_t::
+status ()
+{
+  return this->status_;
+}
+
+void Drive_t::
+status (const StatusType& x)
+{
+  this->status_.set (x);
+}
+
+void Drive_t::
+status (const StatusOptional& x)
+{
+  this->status_ = x;
+}
+
+void Drive_t::
+status (::std::unique_ptr< StatusType > x)
+{
+  this->status_.set (std::move (x));
+}
+
+
+// Drives
 // 
 
-const Shortcuts::ShortcutSequence& Shortcuts::
-Shortcut () const
+const Drives::DriveSequence& Drives::
+Drive () const
 {
-  return this->Shortcut_;
+  return this->Drive_;
 }
 
-Shortcuts::ShortcutSequence& Shortcuts::
-Shortcut ()
+Drives::DriveSequence& Drives::
+Drive ()
 {
-  return this->Shortcut_;
+  return this->Drive_;
 }
 
-void Shortcuts::
-Shortcut (const ShortcutSequence& s)
+void Drives::
+Drive (const DriveSequence& s)
 {
-  this->Shortcut_ = s;
+  this->Drive_ = s;
 }
 
-const Shortcuts::ClsidType& Shortcuts::
+const Drives::ClsidType& Drives::
 clsid () const
 {
   return this->clsid_.get ();
 }
 
-Shortcuts::ClsidType& Shortcuts::
+Drives::ClsidType& Drives::
 clsid ()
 {
   return this->clsid_.get ();
 }
 
-void Shortcuts::
+void Drives::
 clsid (const ClsidType& x)
 {
   this->clsid_.set (x);
 }
 
-void Shortcuts::
+void Drives::
 clsid (::std::unique_ptr< ClsidType > x)
 {
   this->clsid_.set (std::move (x));
 }
 
-const Shortcuts::DisabledOptional& Shortcuts::
+const Drives::DisabledOptional& Drives::
 disabled () const
 {
   return this->disabled_;
 }
 
-Shortcuts::DisabledOptional& Shortcuts::
+Drives::DisabledOptional& Drives::
 disabled ()
 {
   return this->disabled_;
 }
 
-void Shortcuts::
+void Drives::
 disabled (const DisabledType& x)
 {
   this->disabled_.set (x);
 }
 
-void Shortcuts::
+void Drives::
 disabled (const DisabledOptional& x)
 {
   this->disabled_ = x;
@@ -765,22 +699,21 @@ namespace _xsd
 //
 
 Properties_t::
-Properties_t (const TargetTypeType& targetType,
-              const TargetPathType& targetPath,
-              const ShortcutPathType& shortcutPath)
+Properties_t (const PathType& path,
+              const PersistentType& persistent,
+              const UseLetterType& useLetter,
+              const LetterType& letter)
 : ::xml_schema::Type (),
-  pidl_ (this),
-  targetType_ (targetType, this),
   action_ (this),
-  comment_ (this),
-  shortcutKey_ (this),
-  startIn_ (this),
-  arguments_ (this),
-  iconIndex_ (this),
-  targetPath_ (targetPath, this),
-  iconPath_ (this),
-  window_ (this),
-  shortcutPath_ (shortcutPath, this),
+  thisDrive_ (this),
+  allDrives_ (this),
+  userName_ (this),
+  cpassword_ (this),
+  path_ (path, this),
+  label_ (this),
+  persistent_ (persistent, this),
+  useLetter_ (useLetter, this),
+  letter_ (letter, this),
   disabled_ (this)
 {
 }
@@ -790,18 +723,16 @@ Properties_t (const Properties_t& x,
               ::xml_schema::Flags f,
               ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  pidl_ (x.pidl_, f, this),
-  targetType_ (x.targetType_, f, this),
   action_ (x.action_, f, this),
-  comment_ (x.comment_, f, this),
-  shortcutKey_ (x.shortcutKey_, f, this),
-  startIn_ (x.startIn_, f, this),
-  arguments_ (x.arguments_, f, this),
-  iconIndex_ (x.iconIndex_, f, this),
-  targetPath_ (x.targetPath_, f, this),
-  iconPath_ (x.iconPath_, f, this),
-  window_ (x.window_, f, this),
-  shortcutPath_ (x.shortcutPath_, f, this),
+  thisDrive_ (x.thisDrive_, f, this),
+  allDrives_ (x.allDrives_, f, this),
+  userName_ (x.userName_, f, this),
+  cpassword_ (x.cpassword_, f, this),
+  path_ (x.path_, f, this),
+  label_ (x.label_, f, this),
+  persistent_ (x.persistent_, f, this),
+  useLetter_ (x.useLetter_, f, this),
+  letter_ (x.letter_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
@@ -811,18 +742,16 @@ Properties_t (const ::xercesc::DOMElement& e,
               ::xml_schema::Flags f,
               ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  pidl_ (this),
-  targetType_ (this),
   action_ (this),
-  comment_ (this),
-  shortcutKey_ (this),
-  startIn_ (this),
-  arguments_ (this),
-  iconIndex_ (this),
-  targetPath_ (this),
-  iconPath_ (this),
-  window_ (this),
-  shortcutPath_ (this),
+  thisDrive_ (this),
+  allDrives_ (this),
+  userName_ (this),
+  cpassword_ (this),
+  path_ (this),
+  label_ (this),
+  persistent_ (this),
+  useLetter_ (this),
+  letter_ (this),
   disabled_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
@@ -842,75 +771,63 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    if (n.name () == "pidl" && n.namespace_ ().empty ())
-    {
-      this->pidl_.set (PidlTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "targetType" && n.namespace_ ().empty ())
-    {
-      this->targetType_.set (TargetTypeTraits::create (i, f, this));
-      continue;
-    }
-
     if (n.name () == "action" && n.namespace_ ().empty ())
     {
       this->action_.set (ActionTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "comment" && n.namespace_ ().empty ())
+    if (n.name () == "thisDrive" && n.namespace_ ().empty ())
     {
-      this->comment_.set (CommentTraits::create (i, f, this));
+      this->thisDrive_.set (ThisDriveTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "shortcutKey" && n.namespace_ ().empty ())
+    if (n.name () == "allDrives" && n.namespace_ ().empty ())
     {
-      this->shortcutKey_.set (ShortcutKeyTraits::create (i, f, this));
+      this->allDrives_.set (AllDrivesTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "startIn" && n.namespace_ ().empty ())
+    if (n.name () == "userName" && n.namespace_ ().empty ())
     {
-      this->startIn_.set (StartInTraits::create (i, f, this));
+      this->userName_.set (UserNameTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "arguments" && n.namespace_ ().empty ())
+    if (n.name () == "cpassword" && n.namespace_ ().empty ())
     {
-      this->arguments_.set (ArgumentsTraits::create (i, f, this));
+      this->cpassword_.set (CpasswordTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "iconIndex" && n.namespace_ ().empty ())
+    if (n.name () == "path" && n.namespace_ ().empty ())
     {
-      this->iconIndex_.set (IconIndexTraits::create (i, f, this));
+      this->path_.set (PathTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "targetPath" && n.namespace_ ().empty ())
+    if (n.name () == "label" && n.namespace_ ().empty ())
     {
-      this->targetPath_.set (TargetPathTraits::create (i, f, this));
+      this->label_.set (LabelTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "iconPath" && n.namespace_ ().empty ())
+    if (n.name () == "persistent" && n.namespace_ ().empty ())
     {
-      this->iconPath_.set (IconPathTraits::create (i, f, this));
+      this->persistent_.set (PersistentTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "window" && n.namespace_ ().empty ())
+    if (n.name () == "useLetter" && n.namespace_ ().empty ())
     {
-      this->window_.set (WindowTraits::create (i, f, this));
+      this->useLetter_.set (UseLetterTraits::create (i, f, this));
       continue;
     }
 
-    if (n.name () == "shortcutPath" && n.namespace_ ().empty ())
+    if (n.name () == "letter" && n.namespace_ ().empty ())
     {
-      this->shortcutPath_.set (ShortcutPathTraits::create (i, f, this));
+      this->letter_.set (LetterTraits::create (i, f, this));
       continue;
     }
 
@@ -921,24 +838,31 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     }
   }
 
-  if (!targetType_.present ())
+  if (!path_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "targetType",
+      "path",
       "");
   }
 
-  if (!targetPath_.present ())
+  if (!persistent_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "targetPath",
+      "persistent",
       "");
   }
 
-  if (!shortcutPath_.present ())
+  if (!useLetter_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "shortcutPath",
+      "useLetter",
+      "");
+  }
+
+  if (!letter_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "letter",
       "");
   }
 }
@@ -956,18 +880,16 @@ operator= (const Properties_t& x)
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->pidl_ = x.pidl_;
-    this->targetType_ = x.targetType_;
     this->action_ = x.action_;
-    this->comment_ = x.comment_;
-    this->shortcutKey_ = x.shortcutKey_;
-    this->startIn_ = x.startIn_;
-    this->arguments_ = x.arguments_;
-    this->iconIndex_ = x.iconIndex_;
-    this->targetPath_ = x.targetPath_;
-    this->iconPath_ = x.iconPath_;
-    this->window_ = x.window_;
-    this->shortcutPath_ = x.shortcutPath_;
+    this->thisDrive_ = x.thisDrive_;
+    this->allDrives_ = x.allDrives_;
+    this->userName_ = x.userName_;
+    this->cpassword_ = x.cpassword_;
+    this->path_ = x.path_;
+    this->label_ = x.label_;
+    this->persistent_ = x.persistent_;
+    this->useLetter_ = x.useLetter_;
+    this->letter_ = x.letter_;
     this->disabled_ = x.disabled_;
   }
 
@@ -985,13 +907,13 @@ _xsd_Properties_t_type_factory_init (
   "Properties_t",
   "");
 
-// Shortcut_t
+// Drive_t
 //
 
-Shortcut_t::
-Shortcut_t (const ClsidType& clsid,
-            const NameType& name,
-            const UidType& uid)
+Drive_t::
+Drive_t (const ClsidType& clsid,
+         const NameType& name,
+         const UidType& uid)
 : ::xml_schema::Type (),
   Properties_ (this),
   clsid_ (clsid, this),
@@ -1002,15 +924,15 @@ Shortcut_t (const ClsidType& clsid,
   desc_ (this),
   bypassErrors_ (this),
   userContext_ (this),
-  status_ (this),
-  removePolicy_ (this)
+  removePolicy_ (this),
+  status_ (this)
 {
 }
 
-Shortcut_t::
-Shortcut_t (const Shortcut_t& x,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Drive_t::
+Drive_t (const Drive_t& x,
+         ::xml_schema::Flags f,
+         ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
   Properties_ (x.Properties_, f, this),
   clsid_ (x.clsid_, f, this),
@@ -1021,15 +943,15 @@ Shortcut_t (const Shortcut_t& x,
   desc_ (x.desc_, f, this),
   bypassErrors_ (x.bypassErrors_, f, this),
   userContext_ (x.userContext_, f, this),
-  status_ (x.status_, f, this),
-  removePolicy_ (x.removePolicy_, f, this)
+  removePolicy_ (x.removePolicy_, f, this),
+  status_ (x.status_, f, this)
 {
 }
 
-Shortcut_t::
-Shortcut_t (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Drive_t::
+Drive_t (const ::xercesc::DOMElement& e,
+         ::xml_schema::Flags f,
+         ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
   Properties_ (this),
   clsid_ (this),
@@ -1040,8 +962,8 @@ Shortcut_t (const ::xercesc::DOMElement& e,
   desc_ (this),
   bypassErrors_ (this),
   userContext_ (this),
-  status_ (this),
-  removePolicy_ (this)
+  removePolicy_ (this),
+  status_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
@@ -1050,7 +972,7 @@ Shortcut_t (const ::xercesc::DOMElement& e,
   }
 }
 
-void Shortcut_t::
+void Drive_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
@@ -1142,15 +1064,15 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
       continue;
     }
 
-    if (n.name () == "status" && n.namespace_ ().empty ())
-    {
-      this->status_.set (StatusTraits::create (i, f, this));
-      continue;
-    }
-
     if (n.name () == "removePolicy" && n.namespace_ ().empty ())
     {
       this->removePolicy_.set (RemovePolicyTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "status" && n.namespace_ ().empty ())
+    {
+      this->status_.set (StatusTraits::create (i, f, this));
       continue;
     }
   }
@@ -1177,15 +1099,15 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
   }
 }
 
-Shortcut_t* Shortcut_t::
+Drive_t* Drive_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Shortcut_t (*this, f, c);
+  return new class Drive_t (*this, f, c);
 }
 
-Shortcut_t& Shortcut_t::
-operator= (const Shortcut_t& x)
+Drive_t& Drive_t::
+operator= (const Drive_t& x)
 {
   if (this != &x)
   {
@@ -1199,53 +1121,53 @@ operator= (const Shortcut_t& x)
     this->desc_ = x.desc_;
     this->bypassErrors_ = x.bypassErrors_;
     this->userContext_ = x.userContext_;
-    this->status_ = x.status_;
     this->removePolicy_ = x.removePolicy_;
+    this->status_ = x.status_;
   }
 
   return *this;
 }
 
-Shortcut_t::
-~Shortcut_t ()
+Drive_t::
+~Drive_t ()
 {
 }
 
 static
-const ::xsd::cxx::tree::type_factory_initializer< 0, char, Shortcut_t >
-_xsd_Shortcut_t_type_factory_init (
-  "Shortcut_t",
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Drive_t >
+_xsd_Drive_t_type_factory_init (
+  "Drive_t",
   "");
 
-// Shortcuts
+// Drives
 //
 
-Shortcuts::
-Shortcuts (const ClsidType& clsid)
+Drives::
+Drives (const ClsidType& clsid)
 : ::xml_schema::Type (),
-  Shortcut_ (this),
+  Drive_ (this),
   clsid_ (clsid, this),
   disabled_ (this)
 {
 }
 
-Shortcuts::
-Shortcuts (const Shortcuts& x,
-           ::xml_schema::Flags f,
-           ::xml_schema::Container* c)
+Drives::
+Drives (const Drives& x,
+        ::xml_schema::Flags f,
+        ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  Shortcut_ (x.Shortcut_, f, this),
+  Drive_ (x.Drive_, f, this),
   clsid_ (x.clsid_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
 
-Shortcuts::
-Shortcuts (const ::xercesc::DOMElement& e,
-           ::xml_schema::Flags f,
-           ::xml_schema::Container* c)
+Drives::
+Drives (const ::xercesc::DOMElement& e,
+        ::xml_schema::Flags f,
+        ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  Shortcut_ (this),
+  Drive_ (this),
   clsid_ (this),
   disabled_ (this)
 {
@@ -1256,7 +1178,7 @@ Shortcuts (const ::xercesc::DOMElement& e,
   }
 }
 
-void Shortcuts::
+void Drives::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
@@ -1266,27 +1188,27 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    // Shortcut
+    // Drive
     //
     {
       ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
         ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
-          "Shortcut",
+          "Drive",
           "",
-          &::xsd::cxx::tree::factory_impl< ShortcutType >,
+          &::xsd::cxx::tree::factory_impl< DriveType >,
           false, true, i, n, f, this));
 
       if (tmp.get () != 0)
       {
-        ::std::unique_ptr< ShortcutType > r (
-          dynamic_cast< ShortcutType* > (tmp.get ()));
+        ::std::unique_ptr< DriveType > r (
+          dynamic_cast< DriveType* > (tmp.get ()));
 
         if (r.get ())
           tmp.release ();
         else
           throw ::xsd::cxx::tree::not_derived< char > ();
 
-        this->Shortcut_.push_back (::std::move (r));
+        this->Drive_.push_back (::std::move (r));
         continue;
       }
     }
@@ -1321,20 +1243,20 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
   }
 }
 
-Shortcuts* Shortcuts::
+Drives* Drives::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Shortcuts (*this, f, c);
+  return new class Drives (*this, f, c);
 }
 
-Shortcuts& Shortcuts::
-operator= (const Shortcuts& x)
+Drives& Drives::
+operator= (const Drives& x)
 {
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->Shortcut_ = x.Shortcut_;
+    this->Drive_ = x.Drive_;
     this->clsid_ = x.clsid_;
     this->disabled_ = x.disabled_;
   }
@@ -1342,8 +1264,8 @@ operator= (const Shortcuts& x)
   return *this;
 }
 
-Shortcuts::
-~Shortcuts ()
+Drives::
+~Drives ()
 {
 }
 
@@ -1361,54 +1283,40 @@ namespace _xsd
 ::std::ostream&
 operator<< (::std::ostream& o, const Properties_t& i)
 {
-  if (i.pidl ())
-  {
-    o << ::std::endl << "pidl: " << *i.pidl ();
-  }
-
-  o << ::std::endl << "targetType: " << i.targetType ();
   if (i.action ())
   {
     o << ::std::endl << "action: " << *i.action ();
   }
 
-  if (i.comment ())
+  if (i.thisDrive ())
   {
-    o << ::std::endl << "comment: " << *i.comment ();
+    o << ::std::endl << "thisDrive: " << *i.thisDrive ();
   }
 
-  if (i.shortcutKey ())
+  if (i.allDrives ())
   {
-    o << ::std::endl << "shortcutKey: " << *i.shortcutKey ();
+    o << ::std::endl << "allDrives: " << *i.allDrives ();
   }
 
-  if (i.startIn ())
+  if (i.userName ())
   {
-    o << ::std::endl << "startIn: " << *i.startIn ();
+    o << ::std::endl << "userName: " << *i.userName ();
   }
 
-  if (i.arguments ())
+  if (i.cpassword ())
   {
-    o << ::std::endl << "arguments: " << *i.arguments ();
+    o << ::std::endl << "cpassword: " << *i.cpassword ();
   }
 
-  if (i.iconIndex ())
+  o << ::std::endl << "path: " << i.path ();
+  if (i.label ())
   {
-    o << ::std::endl << "iconIndex: " << *i.iconIndex ();
+    o << ::std::endl << "label: " << *i.label ();
   }
 
-  o << ::std::endl << "targetPath: " << i.targetPath ();
-  if (i.iconPath ())
-  {
-    o << ::std::endl << "iconPath: " << *i.iconPath ();
-  }
-
-  if (i.window ())
-  {
-    o << ::std::endl << "window: " << *i.window ();
-  }
-
-  o << ::std::endl << "shortcutPath: " << i.shortcutPath ();
+  o << ::std::endl << "persistent: " << i.persistent ();
+  o << ::std::endl << "useLetter: " << i.useLetter ();
+  o << ::std::endl << "letter: " << i.letter ();
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();
@@ -1422,13 +1330,13 @@ const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Properties_t >
 _xsd_Properties_t_std_ostream_init;
 
 ::std::ostream&
-operator<< (::std::ostream& o, const Shortcut_t& i)
+operator<< (::std::ostream& o, const Drive_t& i)
 {
   {
     ::xsd::cxx::tree::std_ostream_map< char >& om (
       ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
 
-    for (Shortcut_t::PropertiesConstIterator
+    for (Drive_t::PropertiesConstIterator
          b (i.Properties ().begin ()), e (i.Properties ().end ());
          b != e; ++b)
     {
@@ -1465,35 +1373,35 @@ operator<< (::std::ostream& o, const Shortcut_t& i)
     o << ::std::endl << "userContext: " << *i.userContext ();
   }
 
-  if (i.status ())
-  {
-    o << ::std::endl << "status: " << *i.status ();
-  }
-
   if (i.removePolicy ())
   {
     o << ::std::endl << "removePolicy: " << *i.removePolicy ();
+  }
+
+  if (i.status ())
+  {
+    o << ::std::endl << "status: " << *i.status ();
   }
 
   return o;
 }
 
 static
-const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Shortcut_t >
-_xsd_Shortcut_t_std_ostream_init;
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Drive_t >
+_xsd_Drive_t_std_ostream_init;
 
 ::std::ostream&
-operator<< (::std::ostream& o, const Shortcuts& i)
+operator<< (::std::ostream& o, const Drives& i)
 {
   {
     ::xsd::cxx::tree::std_ostream_map< char >& om (
       ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
 
-    for (Shortcuts::ShortcutConstIterator
-         b (i.Shortcut ().begin ()), e (i.Shortcut ().end ());
+    for (Drives::DriveConstIterator
+         b (i.Drive ().begin ()), e (i.Drive ().end ());
          b != e; ++b)
     {
-      o << ::std::endl << "Shortcut: ";
+      o << ::std::endl << "Drive: ";
       om.insert (o, *b);
     }
   }
@@ -1511,10 +1419,10 @@ operator<< (::std::ostream& o, const Shortcuts& i)
 #include <xsd/cxx/xml/sax/std-input-source.hxx>
 #include <xsd/cxx/tree/error-handler.hxx>
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::std::string& u,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (const ::std::string& u,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::auto_initializer i (
     (f & ::xml_schema::Flags::dont_initialize) == 0,
@@ -1528,16 +1436,16 @@ Shortcuts_ (const ::std::string& u,
 
   h.throw_if_failed< ::xsd::cxx::tree::parsing< char > > ();
 
-  return ::std::unique_ptr< ::Shortcuts > (
-    ::Shortcuts_ (
+  return ::std::unique_ptr< ::Drives > (
+    ::Drives_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::std::string& u,
-            ::xml_schema::ErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (const ::std::string& u,
+         ::xml_schema::ErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::auto_initializer i (
     (f & ::xml_schema::Flags::dont_initialize) == 0,
@@ -1550,16 +1458,16 @@ Shortcuts_ (const ::std::string& u,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::Shortcuts > (
-    ::Shortcuts_ (
+  return ::std::unique_ptr< ::Drives > (
+    ::Drives_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::std::string& u,
-            ::xercesc::DOMErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (const ::std::string& u,
+         ::xercesc::DOMErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
     ::xsd::cxx::xml::dom::parse< char > (
@@ -1568,92 +1476,92 @@ Shortcuts_ (const ::std::string& u,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::Shortcuts > (
-    ::Shortcuts_ (
+  return ::std::unique_ptr< ::Drives > (
+    ::Drives_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::auto_initializer i (
     (f & ::xml_schema::Flags::dont_initialize) == 0,
     (f & ::xml_schema::Flags::keep_dom) == 0);
 
   ::xsd::cxx::xml::sax::std_input_source isrc (is);
-  return ::Shortcuts_ (isrc, f, p);
+  return ::Drives_ (isrc, f, p);
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            ::xml_schema::ErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         ::xml_schema::ErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::auto_initializer i (
     (f & ::xml_schema::Flags::dont_initialize) == 0,
     (f & ::xml_schema::Flags::keep_dom) == 0);
 
   ::xsd::cxx::xml::sax::std_input_source isrc (is);
-  return ::Shortcuts_ (isrc, h, f, p);
+  return ::Drives_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            ::xercesc::DOMErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         ::xercesc::DOMErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::sax::std_input_source isrc (is);
-  return ::Shortcuts_ (isrc, h, f, p);
+  return ::Drives_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            const ::std::string& sid,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         const ::std::string& sid,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::auto_initializer i (
     (f & ::xml_schema::Flags::dont_initialize) == 0,
     (f & ::xml_schema::Flags::keep_dom) == 0);
 
   ::xsd::cxx::xml::sax::std_input_source isrc (is, sid);
-  return ::Shortcuts_ (isrc, f, p);
+  return ::Drives_ (isrc, f, p);
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            const ::std::string& sid,
-            ::xml_schema::ErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         const ::std::string& sid,
+         ::xml_schema::ErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::auto_initializer i (
     (f & ::xml_schema::Flags::dont_initialize) == 0,
     (f & ::xml_schema::Flags::keep_dom) == 0);
 
   ::xsd::cxx::xml::sax::std_input_source isrc (is, sid);
-  return ::Shortcuts_ (isrc, h, f, p);
+  return ::Drives_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::std::istream& is,
-            const ::std::string& sid,
-            ::xercesc::DOMErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::std::istream& is,
+         const ::std::string& sid,
+         ::xercesc::DOMErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::xml::sax::std_input_source isrc (is, sid);
-  return ::Shortcuts_ (isrc, h, f, p);
+  return ::Drives_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xercesc::InputSource& i,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::xercesc::InputSource& i,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xsd::cxx::tree::error_handler< char > h;
 
@@ -1663,16 +1571,16 @@ Shortcuts_ (::xercesc::InputSource& i,
 
   h.throw_if_failed< ::xsd::cxx::tree::parsing< char > > ();
 
-  return ::std::unique_ptr< ::Shortcuts > (
-    ::Shortcuts_ (
+  return ::std::unique_ptr< ::Drives > (
+    ::Drives_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xercesc::InputSource& i,
-            ::xml_schema::ErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::xercesc::InputSource& i,
+         ::xml_schema::ErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
     ::xsd::cxx::xml::dom::parse< char > (
@@ -1681,16 +1589,16 @@ Shortcuts_ (::xercesc::InputSource& i,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::Shortcuts > (
-    ::Shortcuts_ (
+  return ::std::unique_ptr< ::Drives > (
+    ::Drives_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xercesc::InputSource& i,
-            ::xercesc::DOMErrorHandler& h,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (::xercesc::InputSource& i,
+         ::xercesc::DOMErrorHandler& h,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
     ::xsd::cxx::xml::dom::parse< char > (
@@ -1699,23 +1607,23 @@ Shortcuts_ (::xercesc::InputSource& i,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::Shortcuts > (
-    ::Shortcuts_ (
+  return ::std::unique_ptr< ::Drives > (
+    ::Drives_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (const ::xercesc::DOMDocument& doc,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties& p)
+::std::unique_ptr< ::Drives >
+Drives_ (const ::xercesc::DOMDocument& doc,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties& p)
 {
   if (f & ::xml_schema::Flags::keep_dom)
   {
     ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       static_cast< ::xercesc::DOMDocument* > (doc.cloneNode (true)));
 
-    return ::std::unique_ptr< ::Shortcuts > (
-      ::Shortcuts_ (
+    return ::std::unique_ptr< ::Drives > (
+      ::Drives_ (
         std::move (d), f | ::xml_schema::Flags::own_dom, p));
   }
 
@@ -1723,11 +1631,11 @@ Shortcuts_ (const ::xercesc::DOMDocument& doc,
   const ::xsd::cxx::xml::qualified_name< char > n (
     ::xsd::cxx::xml::dom::name< char > (e));
 
-  if (n.name () == "Shortcuts" &&
+  if (n.name () == "Drives" &&
       n.namespace_ () == "")
   {
-    ::std::unique_ptr< ::Shortcuts > r (
-      ::xsd::cxx::tree::traits< ::Shortcuts, char >::create (
+    ::std::unique_ptr< ::Drives > r (
+      ::xsd::cxx::tree::traits< ::Drives, char >::create (
         e, f, 0));
     return r;
   }
@@ -1735,14 +1643,14 @@ Shortcuts_ (const ::xercesc::DOMDocument& doc,
   throw ::xsd::cxx::tree::unexpected_element < char > (
     n.name (),
     n.namespace_ (),
-    "Shortcuts",
+    "Drives",
     "");
 }
 
-::std::unique_ptr< ::Shortcuts >
-Shortcuts_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
-            ::xml_schema::Flags f,
-            const ::xml_schema::Properties&)
+::std::unique_ptr< ::Drives >
+Drives_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
+         ::xml_schema::Flags f,
+         const ::xml_schema::Properties&)
 {
   ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > c (
     ((f & ::xml_schema::Flags::keep_dom) &&
@@ -1761,11 +1669,11 @@ Shortcuts_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
                      (c.get () ? &c : &d),
                      0);
 
-  if (n.name () == "Shortcuts" &&
+  if (n.name () == "Drives" &&
       n.namespace_ () == "")
   {
-    ::std::unique_ptr< ::Shortcuts > r (
-      ::xsd::cxx::tree::traits< ::Shortcuts, char >::create (
+    ::std::unique_ptr< ::Drives > r (
+      ::xsd::cxx::tree::traits< ::Drives, char >::create (
         e, f, 0));
     return r;
   }
@@ -1773,7 +1681,7 @@ Shortcuts_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
   throw ::xsd::cxx::tree::unexpected_element < char > (
     n.name (),
     n.namespace_ (),
-    "Shortcuts",
+    "Drives",
     "");
 }
 

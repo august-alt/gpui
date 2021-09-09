@@ -5,12 +5,16 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(HEADERS
+set(HEADERS    
+    drivesschema.h
     driveswidget.h
+    modelbuilder.h
 )
 
 set(SOURCES
+    drivesschema.cpp
     driveswidget.cpp
+    modelbuilder.cpp
 )
 
 set(UI_FORMS

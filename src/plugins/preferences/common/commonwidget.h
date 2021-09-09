@@ -29,6 +29,8 @@ QT_END_NAMESPACE
 
 namespace gpui
 {
+    class CommonWidgetPrivate;
+
     class CommonWidget : public QWidget
     {
         Q_OBJECT
@@ -37,8 +39,12 @@ namespace gpui
         CommonWidget(QWidget *parent = 0);
         ~CommonWidget();
 
+        void setupModels(QStandardItemModel* model, QItemSelectionModel* selectionModel);
+
     private:
         Ui::CommonWidget *ui;
+
+        CommonWidgetPrivate *d;
     };
 }
 

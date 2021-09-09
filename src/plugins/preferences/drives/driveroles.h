@@ -18,30 +18,28 @@
 **
 ***********************************************************************************************************************/
 
-#include "preferencesdialog.h"
-#include "ui_preferencesdialog.h"
+#ifndef GPUI_DRIVE_ROLES_H
+#define GPUI_DRIVE_ROLES_H
+
+#include "../common/commonroles.h"
 
 namespace gpui
 {
+    enum DriveRoles
+    {
+        ACTION                  = CommonRoles::ALL_COMMON_ROLES + 1,
+        PATH                    = CommonRoles::ALL_COMMON_ROLES + 2,
+        PERSISTENT              = CommonRoles::ALL_COMMON_ROLES + 3,
+        LABEL                   = CommonRoles::ALL_COMMON_ROLES + 4,
+        LETTER                  = CommonRoles::ALL_COMMON_ROLES + 5,
+        USERNAME                = CommonRoles::ALL_COMMON_ROLES + 6,
+        ENCRYPTED_PASSWORD      = CommonRoles::ALL_COMMON_ROLES + 7,
+        USE_LETTER              = CommonRoles::ALL_COMMON_ROLES + 8,
+        THIS_DRIVE              = CommonRoles::ALL_COMMON_ROLES + 9,
+        ALL_DRIVES              = CommonRoles::ALL_COMMON_ROLES + 10,
 
-PreferencesDialog::PreferencesDialog(QWidget *generalWidget, QStandardItemModel& model,
-                                     QItemSelectionModel& selectionModel, QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::PreferencesDialog())
-{
-    ui->setupUi(this);
-
-    QGridLayout* generalTablayout = new QGridLayout();
-    generalTablayout->addWidget(generalWidget);
-
-    ui->getneralTab->setLayout(generalTablayout);
-
-    ui->commonTab->setupModels(&model, &selectionModel);
+        ALL_DRIVE_ROLES
+    };
 }
 
-PreferencesDialog::~PreferencesDialog()
-{
-    delete ui;
-}
-
-}
+#endif // GPUI_DRIVE_ROLES_H

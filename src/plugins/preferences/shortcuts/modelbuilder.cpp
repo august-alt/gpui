@@ -1,3 +1,22 @@
+/***********************************************************************************************************************
+**
+** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**
+***********************************************************************************************************************/
 
 #include "modelbuilder.h"
 #include "shortcutroles.h"
@@ -9,50 +28,6 @@
 
 namespace gpui {
 
-QStandardItem* itemCreator(const ::xsd::cxx::tree::string< char, ::xml_schema::SimpleType >& shortcutField)
-{
-    return new QStandardItem(QString::fromStdString(shortcutField));
-}
-
-QStandardItem* itemCreator(const unsigned char& shortcutField)
-{
-    return new QStandardItem(QString::number(shortcutField));
-}
-
-template <typename T>
-void createItemIfExist(const T& shortcutField, int index, int role, std::unique_ptr<QStandardItemModel>& model)
-{
-    if (shortcutField.present())
-    {
-        QStandardItem* categoryItem = itemCreator(shortcutField.get());
-        model->setItem(index, role, categoryItem);
-    }
-}
-
-template <typename T>
-void createItem(T& shortcutField, int index, int role, std::unique_ptr<QStandardItemModel>& model)
-{
-    QStandardItem* categoryItem = itemCreator(shortcutField);
-    model->setItem(index, role, categoryItem);
-}
-
-template <typename T>
-void createComboBoxValue(T& shortcutField, int index, int role, std::unique_ptr<QStandardItemModel>& model,
-                         QStringList possibleValue)
-{
-    unsigned char currentIndex = 0;
-
-    for (unsigned char i = 0; i < possibleValue.size(); ++i)
-    {
-        if (shortcutField.compare(possibleValue[i].toStdString()) == 0)
-        {
-            currentIndex = i + 1;
-        }
-    }
-
-    createItem(currentIndex, index, role, model);
-}
-
 std::unique_ptr<QStandardItemModel> ModelBuilder::schemaToModel(std::unique_ptr<Shortcuts> &shortcuts)
 {
     std::unique_ptr<QStandardItemModel> model = std::make_unique<QStandardItemModel>(0, ShortcutRoles::ALL_SHORTCUT_ROLES);
@@ -61,13 +36,13 @@ std::unique_ptr<QStandardItemModel> ModelBuilder::schemaToModel(std::unique_ptr<
     {
         auto shortcut = shortcuts->Shortcut()[index];
 
-        createItem(shortcut.name(), index, CommonRoles::NAME, model);
+        setStandardValues(shortcut, index, model);
 
         auto properties = shortcut.Properties().front();
 
         if (properties.action().present())
         {
-            createComboBoxValue(properties.action().get(), index, ShortcutRoles::ACTION, model, {"R", "U", "D"});
+            createComboBoxValue(properties.action().get(), index, ShortcutRoles::ACTION, model, { "R", "U", "D" });
         }
 
         createItemIfExist(properties.arguments(), index, ShortcutRoles::ARGUMENTS, model);
@@ -88,12 +63,21 @@ std::unique_ptr<QStandardItemModel> ModelBuilder::schemaToModel(std::unique_ptr<
 
         createItem(properties.targetPath(), index, ShortcutRoles::TARGET_PATH, model);
 
-        createComboBoxValue(properties.targetType(), index, ShortcutRoles::TARGET_TYPE, model, {"URL", "SHELL"});
+        createComboBoxValue(properties.targetType(), index, ShortcutRoles::TARGET_TYPE, model, { "URL", "SHELL" });
 
         createItemIfExist(properties.window(), index, ShortcutRoles::WINDOW, model);
     }
 
     return model;
+}
+
+std::unique_ptr<Shortcuts> ModelBuilder::modelToSchema(std::unique_ptr<QStandardItemModel> &model)
+{
+    Q_UNUSED(model);
+
+    // TODO: Implement.
+
+    return nullptr;
 }
 
 }

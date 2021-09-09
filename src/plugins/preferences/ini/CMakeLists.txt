@@ -6,11 +6,16 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(HEADERS
+    iniroles.h
     iniwidget.h
+    inischema.h
+    modelbuilder.h
 )
 
 set(SOURCES
     iniwidget.cpp
+    inischema.cpp
+    modelbuilder.cpp
 )
 
 set(UI_FORMS

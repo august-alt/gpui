@@ -34,7 +34,8 @@ namespace gpui
         Q_OBJECT
 
     public:
-        PreferencesDialog(QWidget* generalWidget, QWidget *parent = 0);
+        PreferencesDialog(QWidget *generalWidget, QStandardItemModel &model, QItemSelectionModel &selectionModel,
+                          QWidget *parent = 0);
         ~PreferencesDialog();
 
     private:

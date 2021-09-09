@@ -8,6 +8,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(HEADERS
     commonroles.h
     commonwidget.h
+    modelbuilderbase.h
+    modelbuilderbase.inl
     preferencesdialog.h
 )
 

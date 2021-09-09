@@ -5,11 +5,16 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(HEADERS
+set(HEADERS    
+    modelbuilder.h
+    shareroles.h
+    sharesschema.h
     shareswidget.h
 )
 
 set(SOURCES
+    modelbuilder.cpp
+    sharesschema.cpp
     shareswidget.cpp
 )
 

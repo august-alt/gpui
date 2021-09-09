@@ -25,19 +25,19 @@ namespace gpui
 {
     enum CommonRoles
     {
-        CLSID           = 0,
-        DISABLED        = 1,
-        NAME            = 2,
-        STATUS          = 3,
-        IMAGE           = 4,
-        CHANGED         = 5,
-        UID             = 6,
-        DESC            = 7,
-        BYPASS_ERRORS   = 8,
-        USER_CONTEXT    = 9,
-        REMOVE_POLICY   = 10,
+        BYPASS_ERRORS   = 0,
+        CHANGED         = 1,
+        CLSID           = 2,
+        DESC            = 3,
+        DISABLED        = 4,
+        IMAGE           = 5,
+        NAME            = 6,
+        REMOVE_POLICY   = 7,
+        STATUS          = 8,
+        UID             = 9,
+        USER_CONTEXT    = 10,
 
-        ALL_COMMON_ROLES = REMOVE_POLICY + 1
+        ALL_COMMON_ROLES
     };
 }
 

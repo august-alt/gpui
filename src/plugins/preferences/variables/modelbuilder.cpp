@@ -18,30 +18,27 @@
 **
 ***********************************************************************************************************************/
 
-#include "preferencesdialog.h"
-#include "ui_preferencesdialog.h"
+#include "modelbuilder.h"
 
 namespace gpui
 {
 
-PreferencesDialog::PreferencesDialog(QWidget *generalWidget, QStandardItemModel& model,
-                                     QItemSelectionModel& selectionModel, QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::PreferencesDialog())
+std::unique_ptr<QStandardItemModel> ModelBuilder::schemaToModel(std::unique_ptr<EnvironmentVariables> &variables)
 {
-    ui->setupUi(this);
+    Q_UNUSED(variables);
 
-    QGridLayout* generalTablayout = new QGridLayout();
-    generalTablayout->addWidget(generalWidget);
+    // TODO: Implement.
 
-    ui->getneralTab->setLayout(generalTablayout);
-
-    ui->commonTab->setupModels(&model, &selectionModel);
+    return nullptr;
 }
 
-PreferencesDialog::~PreferencesDialog()
+std::unique_ptr<EnvironmentVariables> ModelBuilder::modelToSchema(std::unique_ptr<QStandardItemModel> &model)
 {
-    delete ui;
+    Q_UNUSED(model);
+
+    // TODO: Implement.
+
+    return nullptr;
 }
 
 }

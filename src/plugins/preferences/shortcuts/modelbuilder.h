@@ -24,15 +24,19 @@
 #include "shortcutsschema.h"
 #include "shortcutroles.h"
 
+#include "../common/modelbuilderbase.h"
+
 class QStandardItemModel;
 class QStandardItem;
 
 namespace gpui
 {
-    class ModelBuilder
+    class ModelBuilder : public ModelBuilderBase
     {
     public:
         std::unique_ptr<QStandardItemModel> schemaToModel(std::unique_ptr<::Shortcuts>& shortcuts);
+
+        std::unique_ptr<::Shortcuts> modelToSchema(std::unique_ptr<QStandardItemModel>& model);
     };
 }
 

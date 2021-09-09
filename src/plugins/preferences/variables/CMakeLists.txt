@@ -6,11 +6,16 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(HEADERS
+    modelbuilder.h
+    variablesroles.h
+    variablesschema.h
     variableswidget.h
 )
 
 set(SOURCES
-    variableswidget.cpp
+    modelbuilder.cpp
+    variablesschema.cpp
+    variableswidget.cpp    
 )
 
 set(UI_FORMS

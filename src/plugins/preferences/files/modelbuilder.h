@@ -18,30 +18,27 @@
 **
 ***********************************************************************************************************************/
 
-#include "preferencesdialog.h"
-#include "ui_preferencesdialog.h"
+#ifndef GPUI_FILES_MODEL_BUILDER_H
+#define GPUI_FILES_MODEL_BUILDER_H
+
+#include "filesschema.h"
+#include "fileroles.h"
+
+#include "../common/modelbuilderbase.h"
+
+class QStandardItemModel;
+class QStandardItem;
 
 namespace gpui
 {
+    class ModelBuilder : public ModelBuilderBase
+    {
+    public:
+        std::unique_ptr<QStandardItemModel> schemaToModel(std::unique_ptr<::Files>& files);
 
-PreferencesDialog::PreferencesDialog(QWidget *generalWidget, QStandardItemModel& model,
-                                     QItemSelectionModel& selectionModel, QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::PreferencesDialog())
-{
-    ui->setupUi(this);
-
-    QGridLayout* generalTablayout = new QGridLayout();
-    generalTablayout->addWidget(generalWidget);
-
-    ui->getneralTab->setLayout(generalTablayout);
-
-    ui->commonTab->setupModels(&model, &selectionModel);
+        std::unique_ptr<::Files> modelToSchema(std::unique_ptr<QStandardItemModel>& model);
+    };
 }
 
-PreferencesDialog::~PreferencesDialog()
-{
-    delete ui;
-}
+#endif // GPUI_FILES_MODEL_BUILDER_H
 
-}

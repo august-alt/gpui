@@ -18,30 +18,17 @@
 **
 ***********************************************************************************************************************/
 
-#include "preferencesdialog.h"
-#include "ui_preferencesdialog.h"
+#ifndef GPUI_VARIABLES_ROLES_H
+#define GPUI_VARIABLES_ROLES_H
+
+#include "../common/commonroles.h"
 
 namespace gpui
 {
-
-PreferencesDialog::PreferencesDialog(QWidget *generalWidget, QStandardItemModel& model,
-                                     QItemSelectionModel& selectionModel, QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::PreferencesDialog())
-{
-    ui->setupUi(this);
-
-    QGridLayout* generalTablayout = new QGridLayout();
-    generalTablayout->addWidget(generalWidget);
-
-    ui->getneralTab->setLayout(generalTablayout);
-
-    ui->commonTab->setupModels(&model, &selectionModel);
+    enum VariablesRoles
+    {
+        ALL_VARIABLES_ROLES
+    };
 }
 
-PreferencesDialog::~PreferencesDialog()
-{
-    delete ui;
-}
-
-}
+#endif // GPUI_VARIABLES_ROLES_H

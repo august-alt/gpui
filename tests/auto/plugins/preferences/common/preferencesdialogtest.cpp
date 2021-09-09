@@ -47,11 +47,11 @@ void PreferencesDialogTest::show()
        auto selectionModel = std::make_unique<QItemSelectionModel>(model.get());
 
        auto widget = new gpui::ShortcutsWidget(*model, *selectionModel);
-       selectionModel->setCurrentIndex(model->item(0, 12)->index(),
-                                       QItemSelectionModel::Select | QItemSelectionModel::Rows);
-
-       auto preferencesDialog = std::make_unique<gpui::PreferencesDialog>(widget);
+       auto preferencesDialog = std::make_unique<gpui::PreferencesDialog>(widget, *model, *selectionModel);
        preferencesDialog->show();
+
+       selectionModel->setCurrentIndex(model->item(0, 0)->index(),
+                                       QItemSelectionModel::Select | QItemSelectionModel::Rows);
 
        QTest::qWait(10000);
     }

@@ -7,7 +7,9 @@
             changed="2020-05-13 15:37:47"
             uid="{EA9BCB22-CD0C-47B2-B550-D812414DEE6B}"
             userContext="0"
-            bypassErrors="1">
+            bypassErrors="1"
+			desc="Test description"
+			removePolicy="1">
     <Properties pidl=""
                 targetType="URL"
                 action="R"

@@ -43,7 +43,7 @@ class TemplateFilter;
  *
  * \ingroup gpui
  */
-class GPUI_MODEL_EXPORT TemplateFilterModel final : public QSortFilterProxyModel
+class GPUI_GUI_EXPORT TemplateFilterModel final : public QSortFilterProxyModel
 {
 public:
     TemplateFilterModel(QObject *parent);

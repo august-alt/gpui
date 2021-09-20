@@ -21,7 +21,7 @@
 #ifndef GPUI_TEMPLATEFILTER_H
 #define GPUI_TEMPLATEFILTER_H
 
-#include "../model/model.h"
+#include "gui.h"
 #include "../model/registry/policystatemanager.h"
 
 #include <QSet>
@@ -40,7 +40,7 @@ enum KeywordFilterType {
  *
  * \ingroup gpui
  */
-class GPUI_MODEL_EXPORT TemplateFilter final
+class GPUI_GUI_EXPORT TemplateFilter final
 {
 public:
     bool keywordEnabled;

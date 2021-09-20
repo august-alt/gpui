@@ -21,7 +21,7 @@
 #include "templatefilterdialog.h"
 #include "ui_templatefilterdialog.h"
 
-#include "../model/templatefilter.h"
+#include "templatefilter.h"
 
 using namespace model;
 using namespace model::registry;
@@ -71,8 +71,8 @@ TemplateFilterDialog::~TemplateFilterDialog()
     delete d;
 }
 
-model::TemplateFilter TemplateFilterDialog::getFilter() const {
-    model::TemplateFilter out;
+TemplateFilter TemplateFilterDialog::getFilter() const {
+    TemplateFilter out;
 
     out.keywordEnabled = d->ui->keywordGroupBox->isChecked();
     out.titleEnabled = d->ui->titleCheck->isChecked();
@@ -208,4 +208,4 @@ QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const {
 }
 
 Q_DECLARE_METATYPE(gpui::FilterComboValue)
-Q_DECLARE_METATYPE(model::KeywordFilterType)
+Q_DECLARE_METATYPE(gpui::KeywordFilterType)

@@ -25,13 +25,10 @@
 
 #include <QtWidgets>
 
-namespace model {
-    class TemplateFilter;
-}
-
 namespace gpui {
 
     class TemplateFilterDialogPrivate;
+    class TemplateFilter;
 
     class GPUI_GUI_EXPORT TemplateFilterDialog final : public QDialog {
         Q_OBJECT
@@ -40,7 +37,7 @@ namespace gpui {
         TemplateFilterDialog(QWidget *parent = 0);
         ~TemplateFilterDialog();
 
-        model::TemplateFilter getFilter() const;
+        TemplateFilter getFilter() const;
 
     public slots:
         void open() override;

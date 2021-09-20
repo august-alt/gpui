@@ -18,47 +18,41 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_TEMPLATEFILTERMODEL_H
-#define GPUI_TEMPLATEFILTERMODEL_H
+#ifndef GPUI_TEMPLATEFILTER_H
+#define GPUI_TEMPLATEFILTER_H
 
-#include "model.h"
-#include "registry/policystatemanager.h"
+#include "../model/model.h"
+#include "../model/registry/policystatemanager.h"
 
-#include <QSortFilterProxyModel>
+#include <QSet>
 
-namespace model {
-    namespace registry {
-        class AbstractRegistrySource;
-    }
-}
+namespace gpui {
 
-namespace model {
-
-class TemplateFilterModelPrivate;
-class TemplateFilter;
+enum KeywordFilterType {
+    KeywordFilterType_ANY,
+    KeywordFilterType_EXACT,
+    KeywordFilterType_ALL,
+};
 
 /*!
- * \class TemplateFilterModel
- * \brief The TemplateFilterModel class
+ * \class TemplateFilter
+ * \brief The TemplateFilter class
  *
- * \ingroup model
+ * \ingroup gpui
  */
-class GPUI_MODEL_EXPORT TemplateFilterModel final : public QSortFilterProxyModel
+class GPUI_MODEL_EXPORT TemplateFilter final
 {
 public:
-    TemplateFilterModel(QObject *parent);
-    ~TemplateFilterModel();
-
-    void setFilter(const TemplateFilter &filter, const bool enabled);
-
-    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-    void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);
-    void setMachineRegistrySource(model::registry::AbstractRegistrySource* registrySource);
-
-private:
-    TemplateFilterModelPrivate* d;
+    bool keywordEnabled;
+    bool titleEnabled;
+    bool helpEnabled;
+    bool commentEnabled;
+    KeywordFilterType keywordType;
+    QString keywordText;
+    
+    QSet<model::registry::PolicyStateManager::PolicyState> configured;
 };
 
 }
 
-#endif // GPUI_TEMPLATEFILTERMODEL_H
+#endif // GPUI_TEMPLATEFILTER_H

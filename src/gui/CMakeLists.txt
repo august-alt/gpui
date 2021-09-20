@@ -18,6 +18,8 @@ set(HEADERS
     presentationbuilder.h
     smbfilebrowser.h
     templatefilterdialog.h
+    templatefiltermodel.h
+    templatefilter.h
 )
 
 set(SOURCES
@@ -29,6 +31,7 @@ set(SOURCES
     smbfilebrowser.cpp
     smbfilebrowserslots.cpp
     templatefilterdialog.cpp
+    templatefiltermodel.cpp
 )
 
 set(UI_FORMS

@@ -20,10 +20,10 @@
 
 #include "templatefiltermodel.h"
 
-#include "bundle/policyroles.h"
-#include "registry/abstractregistrysource.h"
-#include "registry/policystatemanager.h"
-#include "admx/policy.h"
+#include "../model/bundle/policyroles.h"
+#include "../model/registry/abstractregistrysource.h"
+#include "../model/registry/policystatemanager.h"
+#include "../model/admx/policy.h"
 #include "templatefilter.h"
 
 #include <QDebug>
@@ -32,7 +32,7 @@ using namespace model::registry;
 using namespace model::admx;
 using namespace model::bundle;
 
-namespace model {
+namespace gpui {
 
 typedef std::shared_ptr<Policy> PolicyPtr;
 

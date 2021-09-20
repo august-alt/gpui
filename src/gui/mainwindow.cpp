@@ -25,8 +25,8 @@
 #include "templatefilterdialog.h"
 #include "contentwidget.h"
 
-#include "../model/templatefiltermodel.h"
-#include "../model/templatefilter.h"
+#include "templatefiltermodel.h"
+#include "templatefilter.h"
 
 #include "../model/bundle/policybundle.h"
 
@@ -58,7 +58,7 @@ public:
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource;
 
     std::unique_ptr<QSortFilterProxyModel> sortModel = nullptr;
-    std::unique_ptr<model::TemplateFilterModel> filterModel = nullptr;
+    std::unique_ptr<TemplateFilterModel> filterModel = nullptr;
 
     TemplateFilterDialog *filter_dialog;
 
@@ -157,7 +157,7 @@ void MainWindow::onDirectoryOpen()
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
     d->model = bundle->loadFolder(directory.toStdString(), "ru-ru");
 
-    d->filterModel = std::make_unique<model::TemplateFilterModel>(this);
+    d->filterModel = std::make_unique<TemplateFilterModel>(this);
     d->filterModel->setSourceModel(d->model.get());
     d->filterModel->setMachineRegistrySource(d->machineRegistrySource.get());
     d->filterModel->setUserRegistrySource(d->userRegistrySource.get());
@@ -260,7 +260,7 @@ void MainWindow::updateFilterModel()
 {
     if (d->filterModel != nullptr)
     {
-        const model::TemplateFilter filter = d->filter_dialog->getFilter();
+        const TemplateFilter filter = d->filter_dialog->getFilter();
         const bool filterEnabled = ui->actionEnableFilter->isChecked();
         d->filterModel->setFilter(filter, filterEnabled);
     }

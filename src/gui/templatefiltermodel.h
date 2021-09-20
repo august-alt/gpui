@@ -55,6 +55,8 @@ public:
     void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);
     void setMachineRegistrySource(model::registry::AbstractRegistrySource* registrySource);
 
+    bool filterAcceptsRow(const QModelIndex &index, const model::registry::PolicyStateManager::PolicyState state) const;
+
 private:
     TemplateFilterModelPrivate* d;
 };

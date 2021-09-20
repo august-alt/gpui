@@ -18,43 +18,20 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_TEMPLATEFILTER_H
-#define GPUI_TEMPLATEFILTER_H
+#ifndef GPUI_TEMPLATEFILTER_TEST_H
+#define GPUI_TEMPLATEFILTER_TEST_H
 
-#include "gui.h"
-#include "../model/registry/policystatemanager.h"
+#include <QtTest>
 
-#include <QSet>
+namespace tests {
+    class TemplateFilterTest : public QObject
+    {
+        Q_OBJECT
 
-namespace gpui {
-
-enum KeywordFilterType {
-    KeywordFilterType_ANY,
-    KeywordFilterType_EXACT,
-    KeywordFilterType_ALL,
-};
-
-/*!
- * \class TemplateFilter
- * \brief The TemplateFilter class
- *
- * \ingroup gpui
- */
-class GPUI_GUI_EXPORT TemplateFilter final
-{
-public:
-    bool keywordEnabled;
-    bool titleEnabled;
-    bool helpEnabled;
-    bool commentEnabled;
-    KeywordFilterType keywordType;
-    QString keywordText;
-    
-    QSet<model::registry::PolicyStateManager::PolicyState> configured;
-};
-
+        private slots:
+            void filterAcceptsRow_data();
+            void filterAcceptsRow();
+    };
 }
 
-Q_DECLARE_METATYPE(gpui::TemplateFilter)
-
-#endif // GPUI_TEMPLATEFILTER_H
+#endif // GPUI_TEMPLATEFILTER_TEST_H

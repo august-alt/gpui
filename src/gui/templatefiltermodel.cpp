@@ -79,13 +79,51 @@ void TemplateFilterModel::setFilter(const TemplateFilter &filter, const bool ena
     invalidateFilter();
 }
 
-bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+// NOTE: filterAcceptsRow() is split in 2 parts because the
+// code to get policy state is too hard to mock so we avoid
+// testing it.
+bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+    const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+
+    // TODO: this is very convoluted, also duplicating
+    // part of ContentWidget::onListItemClicked()
+    const PolicyStateManager::PolicyState state = [&]()
+    {
+        const QAbstractItemModel* model = index.model();
+        auto policy = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
+
+        if (policy == nullptr) {
+            return PolicyStateManager::STATE_NOT_CONFIGURED;
+        }
+
+        const auto source = [&]() {
+            if (policy->policyType == PolicyType::Machine)
+            {
+                return d->machineSource;
+            } else {
+                return d->userSource;
+            }
+        }();
+
+        if (source == nullptr) {
+            return PolicyStateManager::STATE_NOT_CONFIGURED;
+        }
+
+        const auto manager = std::make_unique<PolicyStateManager>(*source, *policy);
+
+        const PolicyStateManager::PolicyState state = manager->determinePolicyState();
+
+        return state;
+    }();
+
+    return filterAcceptsRow(index, state);
+}
+
+bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const PolicyStateManager::PolicyState state) const
 {
     if (!d->enabled) {
         return true;
     }
-
-    const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     // TODO: remove magic number "1"
     const bool itemIsTemplate = [&]()
@@ -172,37 +210,7 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
         }
     }();
 
-    // TODO: this is very convoluted, also duplicating
-    // part of ContentWidget::onListItemClicked()
-    const bool configuredMatch = [&]()
-    {
-        const QAbstractItemModel* model = index.model();
-        auto policy = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
-
-        if (policy == nullptr) {
-            return false;
-        }
-
-        const auto source = [&]() {
-            if (policy->policyType == PolicyType::Machine)
-            {
-                return d->machineSource;
-            } else {
-                return d->userSource;
-            }
-        }();
-
-        if (source == nullptr) {
-            return false;
-        }
-
-        const auto manager = std::make_unique<PolicyStateManager>(*source, *policy);
-
-        auto state = manager->determinePolicyState();
-        const bool out = (d->filter.configured.contains(state));
-
-        return out;
-    }();
+    const bool configuredMatch = d->filter.configured.contains(state);
 
     // Don't filter non-template types, so that the rest of
     // the tree appears fully

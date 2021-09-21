@@ -29,6 +29,7 @@ namespace tests {
         Q_OBJECT
 
         private slots:
+            void restoreDialogState();
             void getFilter_data();
             void getFilter();
             void filterAcceptsRow_data();

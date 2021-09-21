@@ -91,6 +91,31 @@ using namespace model::admx;
 using namespace model::registry;
 using namespace model::bundle;
 
+void TemplateFilterTest::restoreDialogState()
+{
+    auto filterDialog = new TemplateFilterDialog(nullptr);
+
+    filterDialog->open();
+
+    const TemplateFilter before = filterDialog->getFilter();
+
+    auto keywordGroupBox = filterDialog->findChild<QGroupBox *>("keywordGroupBox");
+    QVERIFY(keywordGroupBox != nullptr);
+
+    auto titleCheck = filterDialog->findChild<QCheckBox *>("titleCheck");
+    QVERIFY(titleCheck != nullptr);
+
+    keywordGroupBox->setChecked(true);
+    titleCheck->setChecked(true);
+
+    // Reject to reset state
+    filterDialog->reject();
+
+    const TemplateFilter afterReject = filterDialog->getFilter();
+
+    QCOMPARE(before, afterReject);
+}
+
 void TemplateFilterTest::getFilter_data()
 {
     QTest::addColumn<TemplateFilter>("expectedFilter");

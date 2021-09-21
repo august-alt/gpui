@@ -21,6 +21,11 @@
 #ifndef GPUI_TEMPLATEFILTER_TEST_H
 #define GPUI_TEMPLATEFILTER_TEST_H
 
+/**
+ * Tests for templatefilter functionality, which includes
+ * TemplateFilterDialog and TemplateFilterModel.
+ */
+
 #include <QtTest>
 
 namespace tests {

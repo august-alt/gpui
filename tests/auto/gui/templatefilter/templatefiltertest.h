@@ -29,6 +29,8 @@ namespace tests {
         Q_OBJECT
 
         private slots:
+            void getFilter_data();
+            void getFilter();
             void filterAcceptsRow_data();
             void filterAcceptsRow();
     };

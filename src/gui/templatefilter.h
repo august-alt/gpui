@@ -24,6 +24,7 @@
 #include "gui.h"
 #include "../model/registry/policystatemanager.h"
 
+#include <QMetaType>
 #include <QSet>
 
 namespace gpui {

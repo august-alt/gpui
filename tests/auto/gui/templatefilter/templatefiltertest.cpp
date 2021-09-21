@@ -23,11 +23,66 @@
 #include "../../../../src/gui/templatefilter.h"
 #include "../../../../src/model/bundle/policyroles.h"
 #include "../../../../src/gui/templatefiltermodel.h"
+#include "../../../../src/gui/templatefilterdialog.h"
 
 #include <QStandardItemModel>
 #include <QStandardItem>
 
+using namespace gpui;
+using namespace model::registry;
+
 // TODO: test comment text filtering (when it's implemented)
+
+bool operator==(const TemplateFilter &a, const TemplateFilter &b)
+{
+    return (a.keywordEnabled == b.keywordEnabled && a.titleEnabled == b.titleEnabled && a.helpEnabled == b.helpEnabled && a.commentEnabled == b.commentEnabled && a.keywordType == b.keywordType && a.keywordText == b.keywordText && a.configured == b.configured);
+}
+
+namespace QTest {
+template<>
+char *toString(const TemplateFilter &filter)
+{
+    const QString keywordTypeString = [&]()
+    {
+        switch (filter.keywordType) {
+            case KeywordFilterType_ANY: return "ANY";
+            case KeywordFilterType_EXACT: return "EXACT";
+            case KeywordFilterType_ALL: return "ALL";
+        }
+        return "";
+    }();
+    const QString configuredString = [&]()
+    {
+        QString out;
+
+        out += "{";
+
+        for (const PolicyStateManager::PolicyState &state : filter.configured) {
+            const QString stateString = [&]()
+            {
+                switch (state) {
+                    case PolicyStateManager::STATE_NOT_CONFIGURED: return "NOT CONFIGURED";
+                    case PolicyStateManager::STATE_ENABLED: return "ENABLED";
+                    case PolicyStateManager::STATE_DISABLED: return "DISABLED";
+                }
+                return "";
+            }();
+
+            out += stateString + " ";
+        }
+        
+        out += "}";
+
+        return out;
+    }();
+    
+    const QString string = QString("\nkeywordEnabled = %1\ntitleEnabled = %2\nhelpEnabled = %3\ncommentEnabled = %4\nkeywordType = %5\nkeywordText = %6\nconfigured = %7").arg(filter.keywordEnabled).arg(filter.titleEnabled).arg(filter.helpEnabled).arg(filter.commentEnabled).arg(keywordTypeString).arg(filter.keywordText).arg(configuredString);
+    char *dst = new char[string.size() + 1];
+    char *out = qstrcpy(dst, string.toLocal8Bit().data());
+
+    return out;
+}
+}
 
 namespace tests {
 
@@ -35,6 +90,104 @@ using namespace gpui;
 using namespace model::admx;
 using namespace model::registry;
 using namespace model::bundle;
+
+void TemplateFilterTest::getFilter_data()
+{
+    QTest::addColumn<TemplateFilter>("expectedFilter");
+    QTest::addColumn<int>("configuredComboIndex");
+    QTest::addColumn<bool>("keywordEnabled");
+    QTest::addColumn<bool>("titleEnabled");
+    QTest::addColumn<bool>("helpEnabled");
+    QTest::addColumn<bool>("commentEnabled");
+    QTest::addColumn<QString>("keywordText");
+    QTest::addColumn<int>("keywordComboIndex");
+
+    {
+        TemplateFilter filter = {0};
+        filter.configured = QSet<PolicyStateManager::PolicyState>({
+            PolicyStateManager::STATE_NOT_CONFIGURED,
+            PolicyStateManager::STATE_ENABLED,
+            PolicyStateManager::STATE_DISABLED,
+        });
+        QTest::newRow("configured any") << filter << 0;
+    }
+
+    {
+        TemplateFilter filter = {0};
+        filter.configured = QSet<PolicyStateManager::PolicyState>({
+            PolicyStateManager::STATE_ENABLED,
+            PolicyStateManager::STATE_DISABLED,
+        });
+        QTest::newRow("configured yes") << filter << 1;
+    }
+
+    {
+        TemplateFilter filter = {0};
+        filter.configured = QSet<PolicyStateManager::PolicyState>({
+            PolicyStateManager::STATE_NOT_CONFIGURED,
+        });
+        QTest::newRow("configured no") << filter << 2;
+    }
+
+    {
+        TemplateFilter filter = {0};
+        filter.keywordEnabled = true;
+        filter.titleEnabled = false;
+        filter.helpEnabled = true;
+        filter.commentEnabled = false;
+        filter.keywordText = "hello sailor";
+        filter.keywordType = KeywordFilterType_ANY;
+        filter.configured = QSet<PolicyStateManager::PolicyState>({
+            PolicyStateManager::STATE_NOT_CONFIGURED,
+            PolicyStateManager::STATE_ENABLED,
+            PolicyStateManager::STATE_DISABLED,
+        });
+        QTest::newRow("keyword values") << filter << 0;
+    }
+}
+
+void TemplateFilterTest::getFilter()
+{
+    QFETCH(TemplateFilter, expectedFilter);
+    QFETCH(int, configuredComboIndex);
+
+    auto filterDialog = new TemplateFilterDialog(nullptr);
+
+    auto configuredCombo = filterDialog->findChild<QComboBox *>("configuredCombo");
+    QVERIFY(configuredCombo != nullptr);
+
+    auto keywordGroupBox = filterDialog->findChild<QGroupBox *>("keywordGroupBox");
+    QVERIFY(keywordGroupBox != nullptr);
+
+    auto titleCheck = filterDialog->findChild<QCheckBox *>("titleCheck");
+    QVERIFY(titleCheck != nullptr);
+
+    auto helpCheck = filterDialog->findChild<QCheckBox *>("helpCheck");
+    QVERIFY(helpCheck != nullptr);
+
+    auto commentCheck = filterDialog->findChild<QCheckBox *>("commentCheck");
+    QVERIFY(commentCheck != nullptr);
+
+    auto keywordEdit = filterDialog->findChild<QLineEdit *>("keywordEdit");
+    QVERIFY(keywordEdit != nullptr);
+
+    auto keywordCombo = filterDialog->findChild<QComboBox *>("keywordCombo");
+    QVERIFY(keywordCombo != nullptr);
+
+    keywordGroupBox->setChecked(expectedFilter.keywordEnabled);
+    titleCheck->setChecked(expectedFilter.titleEnabled);
+    helpCheck->setChecked(expectedFilter.helpEnabled);
+    commentCheck->setChecked(expectedFilter.commentEnabled);
+    keywordEdit->setText(expectedFilter.keywordText);
+    keywordCombo->setCurrentIndex((int) expectedFilter.keywordType);
+    configuredCombo->setCurrentIndex(configuredComboIndex);
+
+    const TemplateFilter actualFilter = filterDialog->getFilter();
+
+    QCOMPARE(actualFilter, expectedFilter);
+
+    delete filterDialog;
+}
 
 void TemplateFilterTest::filterAcceptsRow_data()
 {

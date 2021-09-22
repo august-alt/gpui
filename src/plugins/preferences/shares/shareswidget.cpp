@@ -24,11 +24,14 @@
 namespace gpui
 {
 
-SharesWidget::SharesWidget(QWidget *parent)
+SharesWidget::SharesWidget(QStandardItemModel &model, QItemSelectionModel &selectionModel, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::SharesWidget())
 {
     ui->setupUi(this);
+
+    Q_UNUSED(model);
+    Q_UNUSED(selectionModel);
 }
 
 SharesWidget::~SharesWidget()

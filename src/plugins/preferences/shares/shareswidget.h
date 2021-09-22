@@ -34,7 +34,7 @@ namespace gpui
         Q_OBJECT
 
     public:
-        SharesWidget(QWidget *parent = 0);
+        SharesWidget(QStandardItemModel &model, QItemSelectionModel &selectionModel, QWidget *parent = 0);
         ~SharesWidget();
 
     private:

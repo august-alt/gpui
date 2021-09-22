@@ -28,6 +28,14 @@
 
 #include "../../../../src/gui/presentationbuilder.h"
 
+#include "../../../../src/model/admx/policy.h"
+#include "../../../../src/model/admx/policyelement.h"
+
+#include "../../../../src/model/commands/commandgroup.h"
+
+#include "../../../../src/model/registry/registry.h"
+#include "../../../../src/model/registry/polregistrysource.h"
+
 #include <fstream>
 
 #include <QVBoxLayout>
@@ -60,7 +68,12 @@ void AdmlTest::read()
             {
                 Presentation presentation = *policyResource->presentationTable.begin()->second;
 
-                auto layout = gui::PresentationBuilder::build(presentation);
+                auto policy = std::make_unique<model::admx::Policy>();
+                auto registry = std::make_shared<model::registry::Registry>();
+                auto polRegistrySource = std::make_unique<model::registry::PolRegistrySource>(registry);
+                auto group = std::make_unique<model::command::CommandGroup>();
+
+                auto layout = gui::PresentationBuilder::build(presentation, *policy, *polRegistrySource, *group);
                 auto widget = std::make_unique<QWidget>();
                 widget->setLayout(layout);
                 widget->show();

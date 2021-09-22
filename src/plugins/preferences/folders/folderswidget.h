@@ -34,7 +34,7 @@ namespace gpui
         Q_OBJECT
 
     public:
-        FoldersWidget(QWidget *parent = 0);
+        FoldersWidget(QStandardItemModel &model, QItemSelectionModel &selectionModel, QWidget *parent = 0);
         ~FoldersWidget();
 
     private:

@@ -24,11 +24,14 @@
 namespace gpui
 {
 
-FoldersWidget::FoldersWidget(QWidget *parent)
+FoldersWidget::FoldersWidget(QStandardItemModel &model, QItemSelectionModel &selectionModel, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::FoldersWidget())
 {
     ui->setupUi(this);
+
+    Q_UNUSED(model);
+    Q_UNUSED(selectionModel);
 }
 
 FoldersWidget::~FoldersWidget()

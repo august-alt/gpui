@@ -12,6 +12,8 @@ include_directories(
 
 set(HEADERS
     contentwidget.h
+    commandlineoptions.h
+    commandlineparser.h
     gui.h
     mainwindow.h
     mainwindowsettings.h
@@ -20,6 +22,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    commandlineparser.cpp
     contentwidget.cpp
     gui.cpp
     mainwindow.cpp

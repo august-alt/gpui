@@ -76,7 +76,6 @@
     <addaction name="separator"/>
     <addaction name="actionOpenUserRegistrySource"/>
     <addaction name="actionOpenMachineRegistrySource"/>
-    <addaction name="actionSaveRegistrySource"/>
     <addaction name="separator"/>
     <addaction name="actionOptions"/>
     <addaction name="separator"/>

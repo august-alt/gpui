@@ -240,6 +240,8 @@ void ContentWidget::onApplyClicked()
 {
     d->commandGroup.execute();
     d->commandGroup.clear();
+
+    savePolicyChanges();
 }
 
 void ContentWidget::onCancelClicked()

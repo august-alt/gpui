@@ -63,6 +63,7 @@ namespace gpui {
 
     signals:
         void modelItemSelected(const QModelIndex& index);
+        void savePolicyChanges();
 
     private:
         Ui::ContentWidget *ui;

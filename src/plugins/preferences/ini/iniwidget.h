@@ -34,7 +34,7 @@ namespace gpui
         Q_OBJECT
 
     public:
-        IniWidget(QWidget *parent = 0);
+        IniWidget(QStandardItemModel &model, QItemSelectionModel &selectionModel, QWidget *parent = 0);
         ~IniWidget();
 
     private:

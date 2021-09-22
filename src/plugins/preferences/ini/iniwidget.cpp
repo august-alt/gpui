@@ -24,11 +24,14 @@
 namespace gpui
 {
 
-IniWidget::IniWidget(QWidget *parent)
+IniWidget::IniWidget(QStandardItemModel &model, QItemSelectionModel &selectionModel, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::IniWidget())
 {
     ui->setupUi(this);
+
+    Q_UNUSED(model);
+    Q_UNUSED(selectionModel);
 }
 
 IniWidget::~IniWidget()

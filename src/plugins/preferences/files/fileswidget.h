@@ -34,7 +34,7 @@ namespace gpui
         Q_OBJECT
 
     public:
-        FilesWidget(QWidget *parent = 0);
+        FilesWidget(QStandardItemModel& model, QItemSelectionModel& selectionModel, QWidget *parent = 0);
         ~FilesWidget();
 
     private:

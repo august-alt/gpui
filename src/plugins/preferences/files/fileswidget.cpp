@@ -24,11 +24,14 @@
 namespace gpui
 {
 
-FilesWidget::FilesWidget(QWidget *parent)
+FilesWidget::FilesWidget(QStandardItemModel &model, QItemSelectionModel &selectionModel, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::FilesWidget())
 {
     ui->setupUi(this);
+
+    Q_UNUSED(model);
+    Q_UNUSED(selectionModel);
 }
 
 FilesWidget::~FilesWidget()

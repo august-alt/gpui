@@ -10,5 +10,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Download artifact
+        uses: august-alt/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: main.yml
+          branch: alt-linux
+          name: libfolderlistmodel
+          path: RPMS
+          repo: august-alt/filemanager-app
+
       - run: docker build . --file Dockerfile --tag build-environment
       - run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment

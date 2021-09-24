@@ -8,7 +8,7 @@ jobs:
     name: Build software using docker
     strategy:
       matrix:
-        alt-version: [ "alt:p9", "alt:p10", "alt:sisyphus" ]
+        alt-version: [ { dist: "alt:p9", artifact: "p9" }, { dist: "alt:p10", artifact: "p10" }, { dist: "alt:sisyphus", artifact: "sisyphus" } ]
 
     steps:
       - name: Checkout
@@ -20,9 +20,14 @@ jobs:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: main.yml
           branch: alt-linux
-          name: libfolderlistmodel
+          name: libfolderlistmodel-${{ matrix.alt-version.artifact }}
           path: RPMS
           repo: august-alt/filemanager-app
 
-      - run: docker build . --file Dockerfile --tag build-environment --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --build-arg DISTR=${{ matrix.alt-version  }}
+      - run: docker build . --file Dockerfile --tag build-environment --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --build-arg DISTR=${{ matrix.alt-version.dist }}
       - run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: gpui-${{ matrix.alt-version.artifact }}
+          path: RPMS/

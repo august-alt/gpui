@@ -17,6 +17,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: libsmbclient-devel libsmbclient
+BuildRequires: libnemofolderlistmodel-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen

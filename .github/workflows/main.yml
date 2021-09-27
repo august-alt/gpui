@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         alt-version: [ { dist: "alt:p9", artifact: "p9" }, { dist: "alt:p10", artifact: "p10" }, { dist: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ i386, amd64 ]
+        architecture: [ amd64 ]
 
     steps:
       - name: Checkout

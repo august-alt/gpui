@@ -51,9 +51,9 @@ namespace model
             std::unique_ptr<QStandardItemModel> loadFolder(const std::string& path, const std::string& language);
 
         private:
-            bool loadAdmxAndAdml(const QFileInfo &admxFileName, const std::string& language);
+            bool loadAdmxAndAdml(const QFileInfo &admxFileName);
 
-            QString constructFileName(const QFileInfo &fileName, const std::string &language);
+            QString constructFileName(const QFileInfo &fileName);
 
             PolicyBundlePrivate* d;
 

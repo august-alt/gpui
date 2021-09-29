@@ -69,6 +69,7 @@ public:
     QStandardItem* rootUserItem;
     std::vector<QStandardItem*> items;
     std::map<std::string, std::string> supportedOnMap;
+    QString languageDirectoryPath;
 };
 
 PolicyBundle::PolicyBundle()
@@ -95,10 +96,22 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
 
     const QDir dir(path.c_str());
     const QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    const QFileInfoList directories = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+
+    const QString qLanguage = QString::fromStdString(language).toLower();
+
+    for (const QFileInfo& subDir : directories)
+    {
+        if (subDir.fileName().toLower().endsWith(qLanguage))
+        {
+            d->languageDirectoryPath = subDir.absoluteFilePath();
+            break;
+        }
+    }
 
     for (const QFileInfo& file : files) {
         if (file.fileName().toLower().endsWith(".admx")) {
-            loadAdmxAndAdml(file, language);
+            loadAdmxAndAdml(file);
         }
     }
 
@@ -140,12 +153,19 @@ std::unique_ptr<TPolicies> loadPolicies(const QString& pluginName, const QFileIn
     return policies;
 }
 
-QString PolicyBundle::constructFileName(const QFileInfo& fileName, const std::string& language)
+QString PolicyBundle::constructFileName(const QFileInfo& fileName)
 {
     QString admlFileName = fileName.fileName();
     admlFileName.replace(admlFileName.length() - 4, 4, "adml");
-    admlFileName.prepend(QDir::separator() + QString::fromStdString(language) + QDir::separator());
-    admlFileName.prepend(fileName.absolutePath());
+    QDir admlDir(d->languageDirectoryPath);
+    for (const auto& file : admlDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot))
+    {
+         if (file.fileName().toLower().compare(admlFileName.toLower()) == 0)
+         {
+             return file.absoluteFilePath();
+         }
+    }
+
     return admlFileName;
 }
 
@@ -215,14 +235,14 @@ void handlePresentation(const std::shared_ptr<model::presentation::Presentation>
     }
 }
 
-bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName, const std::string& language)
+bool PolicyBundle::loadAdmxAndAdml(const QFileInfo& admxFileName)
 {
     auto policyDefinitions = loadPolicies<io::PolicyDefinitionsFile, io::PolicyFileFormat<io::PolicyDefinitionsFile>>("admx", admxFileName);
     if (!policyDefinitions.get())
     {
         return false;
     }
-    QString admlFileName = constructFileName(admxFileName, language);
+    QString admlFileName = constructFileName(admxFileName);
     auto policyResources = loadPolicies<io::PolicyResourcesFile, io::PolicyFileFormat<io::PolicyResourcesFile>>("adml", admlFileName);
     if (!policyResources.get())
     {

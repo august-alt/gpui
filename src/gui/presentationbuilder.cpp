@@ -87,8 +87,8 @@ namespace gui
     QHBoxLayout* createCaptions()
     {
         QHBoxLayout* horizontalLayout = new QHBoxLayout();
-        QLabel* descriptionLabel = new QLabel("Description:");
-        QLabel* optionLabel = new QLabel("Options:");
+        QLabel* descriptionLabel = new QLabel(QObject::tr("Description:"));
+        QLabel* optionLabel = new QLabel(QObject::tr("Options:"));
         horizontalLayout->addWidget(descriptionLabel);
         horizontalLayout->addWidget(optionLabel);
         return horizontalLayout;
@@ -200,9 +200,26 @@ namespace gui
 
         virtual void visit(ListBox &widget) const override
         {
-            QListWidget* listWidget = new QListWidget();
+            QListWidget* listBox = new QListWidget();
 
-            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(listWidget, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(listBox, QString::fromStdString(widget.label));
+
+            if (m_policy && m_source)
+            {
+                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                {
+                    QString items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    listBox->addItems(items.split('\0', QString::SplitBehavior::SkipEmptyParts));
+                }
+
+                listBox->connect(listBox, &QListWidget::itemChanged, [=](QListWidgetItem *item) {
+                    createCommand([=](){
+                       QString items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    });
+                });
+            }
 
             addToLayout(container);
         }

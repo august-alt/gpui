@@ -100,6 +100,7 @@
     <addaction name="actionSelectDC"/>
     <addaction name="separator"/>
     <addaction name="actionCustomize"/>
+    <addaction name="actionLanguage"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -309,6 +310,11 @@
   <action name="actionOpenMachineRegistrySource">
    <property name="text">
     <string>Open &amp;Machine Registry Source</string>
+   </property>
+  </action>
+  <action name="actionLanguage">
+   <property name="text">
+    <string>&amp;Language</string>
    </property>
   </action>
  </widget>

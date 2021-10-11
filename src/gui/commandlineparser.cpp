@@ -54,8 +54,8 @@ CommandLineParser::~CommandLineParser()
 
 CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(CommandLineOptions *options, QString *errorMessage)
 {
-    const QCommandLineOption pathOption("p", "The full path of policy to edit.", "path");
-    const QCommandLineOption bundleOption("b", "The full path of policy bundle to load.", "path");
+    const QCommandLineOption pathOption("p", QObject::tr("The full path of policy to edit."), QObject::tr("path"));
+    const QCommandLineOption bundleOption("b", QObject::tr("The full path of policy bundle to load."), QObject::tr("path"));
 
     d->parser->setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     d->parser->addOption(pathOption);

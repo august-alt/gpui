@@ -41,6 +41,11 @@
 
 #include <libnemofolderlistmodel/qsambaclient/smblocationitemfile.h>
 
+void registerResources()
+{
+    Q_INIT_RESOURCE(translations);
+}
+
 namespace gpui {
 
 class MainWindowPrivate {
@@ -58,6 +63,11 @@ public:
     QString machineRegistryPath;
 
     std::unique_ptr<QSortFilterProxyModel> sortModel = nullptr;
+
+    std::vector<std::unique_ptr<QTranslator>> translators;
+    QString localeName;
+
+    CommandLineOptions options;
 
     MainWindowPrivate()
         : userRegistry(new model::registry::Registry())
@@ -129,7 +139,20 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
 {
+    registerResources();
+
+    QLocale locale;
+    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+    qtTranslator->load(locale, "gui", "_", ":/");
+    QCoreApplication::installTranslator(qtTranslator.get());
+    d->translators.push_back(std::move(qtTranslator));
+    d->localeName = locale.name().replace("_", "-");
+
+    d->options = options;
+
     ui->setupUi(this);
+
+    createLanguageMenu();
 
     d->contentWidget = new ContentWidget(this);
     d->contentWidget->setMachineRegistrySource(d->machineRegistrySource.get());
@@ -146,15 +169,17 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 
-    if (!options.policyBundle.isEmpty())
+    if (d->options.policyBundle.isEmpty())
     {
-        loadPolicyBundleFolder(options.policyBundle);
+        d->options.policyBundle = "/usr/share/PolicyDefinitions";
     }
 
-    if (!options.path.isEmpty())
+    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
+
+    if (!d->options.path.isEmpty())
     {
-        d->userRegistryPath = options.path + "/User/Registry.pol";
-        d->machineRegistryPath = options.path + "/Machine/Registry.pol";
+        d->userRegistryPath = d->options.path + "/User/Registry.pol";
+        d->machineRegistryPath = d->options.path + "/Machine/Registry.pol";
 
         onPolFileOpen(d->userRegistryPath, d->userRegistry, d->userRegistrySource,
                       [&](model::registry::AbstractRegistrySource* source)
@@ -186,10 +211,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void gpui::MainWindow::loadPolicyBundleFolder(const QString& path)
+void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString &locale)
 {
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
-    d->model = bundle->loadFolder(path.toStdString(), "ru-ru");
+    d->model = bundle->loadFolder(path.toStdString(), locale.toStdString());
 
     d->sortModel = std::make_unique<QSortFilterProxyModel>();
     d->sortModel->setSourceModel(d->model.get());
@@ -205,13 +230,13 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path)
 
 void MainWindow::onDirectoryOpen()
 {
-    QString directory = QFileDialog::getExistingDirectory(
-                        this,
-                        tr("Open Directory"),
-                        QDir::homePath(),
-                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    d->options.policyBundle = QFileDialog::getExistingDirectory(
+                              this,
+                              tr("Open Directory"),
+                              QDir::homePath(),
+                              QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    loadPolicyBundleFolder(directory);
+    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
 }
 
 void MainWindow::onUserRegistrySourceOpen()
@@ -258,6 +283,34 @@ void MainWindow::onRegistrySourceSave()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::onLanguageChanged(QAction *action)
+{
+    for (const auto& translator : d->translators)
+    {
+        qApp->removeTranslator(translator.get());
+    }
+    d->translators.clear();
+
+    QString language = action->data().toString();
+
+    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+    bool loadResult = qtTranslator->load("gui_" + language + ".qm", ":/");
+    QCoreApplication::installTranslator(qtTranslator.get());
+    d->translators.push_back(std::move(qtTranslator));
+    qWarning() << "Load language " << language << loadResult;
+
+    QLocale locale(language);
+
+    d->localeName = locale.name().replace("_", "-");
+
+    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
+
+    d->contentWidget->onLanguageChaged();
+    ui->retranslateUi(this);
+
+    ui->treeView->selectionModel()->clearSelection();
 }
 
 void MainWindow::onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
@@ -322,6 +375,41 @@ void MainWindow::onPolFileOpen(const QString &path,
     catch (std::exception& e)
     {
         qWarning() << "Unable to read file: " << qPrintable(path) << " Error: " << e.what();
+    }
+}
+
+void MainWindow::createLanguageMenu()
+{
+    QActionGroup* langGroup = new QActionGroup(this);
+    langGroup->setExclusive(true);
+
+    connect(langGroup, &QActionGroup::triggered, this, &MainWindow::onLanguageChanged);
+
+    QString defaultLocale = QLocale::system().name().left(QLocale::system().name().lastIndexOf('_'));
+    QDir dir(":/");
+    QStringList fileNames = dir.entryList(QStringList("gui_*.qm"));
+
+    QMenu* menu = new QMenu(this);
+    ui->actionLanguage->setMenu(menu);
+
+    for (QString locale : fileNames)
+    {
+        locale.truncate(locale.lastIndexOf('.'));
+        locale.remove(0, locale.lastIndexOf('_') + 1);
+
+        QString language = QLocale::languageToString(QLocale(locale).language());
+
+        QAction *action = new QAction(language, this);
+        action->setCheckable(true);
+        action->setData(locale);
+
+        menu->addAction(action);
+        langGroup->addAction(action);
+
+        if (defaultLocale == locale)
+        {
+            action->setChecked(true);
+        }
     }
 }
 

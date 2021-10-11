@@ -88,8 +88,8 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
 
     QStandardItem* rootItem = d->treeModel->invisibleRootItem();
 
-    d->rootMachineItem = createItem("Machine", "folder", "Machine level policies");
-    d->rootUserItem = createItem("User", "folder", "User level policies");
+    d->rootMachineItem = createItem(QObject::tr("Machine"), "folder", QObject::tr("Machine level policies"));
+    d->rootUserItem = createItem(QObject::tr("User"), "folder", QObject::tr("User level policies"));
 
     rootItem->appendRow(d->rootMachineItem);
     rootItem->appendRow(d->rootUserItem);

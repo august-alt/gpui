@@ -144,6 +144,11 @@ void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
     }
 }
 
+void ContentWidget::onLanguageChaged()
+{
+    ui->retranslateUi(this);
+}
+
 void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
     d->currentIndex = index;
@@ -153,8 +158,8 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
     if (d->commandGroup.canExecute() && !d->cancelFlag)
     {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Save settings dialog",
-                                      "Policy settings were modified do you want to save them?",
+        reply = QMessageBox::question(this, QObject::tr("Save settings dialog"),
+                                      QObject::tr("Policy settings were modified do you want to save them?"),
                                       QMessageBox::Yes | QMessageBox::No);
         if (reply == QMessageBox::Yes)
         {

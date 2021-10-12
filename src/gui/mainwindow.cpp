@@ -226,6 +226,8 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     d->contentWidget->setModel(d->sortModel.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
+
+    d->contentWidget->modelItemSelected(d->sortModel->index(0, 0));
 }
 
 void MainWindow::onDirectoryOpen()

@@ -132,52 +132,27 @@ bool PolRegistrySource::isValuePresent(const std::string &key, const std::string
 
 void PolRegistrySource::markValueForDeletion(const std::string &key, const std::string &valueName)
 {
-    std::vector<std::unique_ptr<AbstractRegistryEntry>>::iterator entryToDelete = d->registry->registryEntries.end();
-    for (auto it = d->registry->registryEntries.begin(); it != d->registry->registryEntries.end(); ++it)
+    for (const auto& entry : d->registry->registryEntries)
     {
-        const auto& entry = *it;
         if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
         {
             std::string deleteValueName = "**del." + valueName;
-            switch (entry->type) {
-            case REG_SZ:
-                createValue(key, deleteValueName, entry->type, static_cast<RegistryEntry<QString>*>(entry.get())->data);
-                break;
-            case REG_BINARY:
-                createValue(key, deleteValueName, entry->type, static_cast<RegistryEntry<QString>*>(entry.get())->data);
-                break;
-            case REG_DWORD:
-                createValue(key, deleteValueName, entry->type, static_cast<RegistryEntry<uint32_t>*>(entry.get())->data);
-                break;
-            case REG_DWORD_BIG_ENDIAN:
-                createValue(key, deleteValueName, entry->type, static_cast<RegistryEntry<uint32_t>*>(entry.get())->data);
-                break;
-            case REG_EXPAND_SZ:
-                createValue(key, deleteValueName, entry->type, static_cast<RegistryEntry<QString>*>(entry.get())->data);
-                break;
-            case REG_MULTI_SZ:
-                createValue(key, deleteValueName, entry->type, static_cast<RegistryEntry<QString>*>(entry.get())->data);
-                break;
-            case REG_QWORD:
-                createValue(key, deleteValueName, entry->type, static_cast<RegistryEntry<uint64_t>*>(entry.get())->data);
-                break;
-            default:
-                break;
-            }
-            entryToDelete = it;
-            break;
+            entry->value = QString::fromStdString(deleteValueName);
         }
-    }
-    if (entryToDelete != d->registry->registryEntries.end())
-    {
-        d->registry->registryEntries.erase(entryToDelete);
     }
 }
 
 bool PolRegistrySource::undeleteValue(const std::string &key, const std::string &valueName)
 {
-    Q_UNUSED(key);
-    Q_UNUSED(valueName);
+    std::string deleteValueName = "**del." + valueName;
+
+    for (const auto& entry : d->registry->registryEntries)
+    {
+        if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(deleteValueName.c_str()) == 0)
+        {
+            entry->value = QString::fromStdString(valueName);
+        }
+    }
 
     return false;
 }

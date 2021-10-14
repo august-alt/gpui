@@ -48,6 +48,7 @@ public:
     model::command::CommandGroup commandGroup;
     bool cancelFlag = false;
     QModelIndex currentIndex;
+    ContentWidget::PolicyWidgetState state = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
 };
 
 ContentWidget::ContentWidget(QWidget *parent)
@@ -142,6 +143,8 @@ void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
         ui->contentScrollArea->setDisabled(true);
         break;
     }
+
+    d->state = state;
 }
 
 void ContentWidget::onLanguageChaged()
@@ -243,8 +246,11 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
 void ContentWidget::onApplyClicked()
 {
-    d->commandGroup.execute();
-    d->commandGroup.clear();
+    if (d->state == ContentWidget::STATE_ENABLED)
+    {
+        d->commandGroup.execute();
+        d->commandGroup.clear();
+    }
 
     savePolicyChanges();
 }

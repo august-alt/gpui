@@ -119,7 +119,8 @@ public:
 
         if (element.string().present())
         {
-            auto value = std::make_unique<model::admx::RegistryValue<std::string>>(element.string().get());
+            auto adaptedString = QString::fromStdString(element.string().get());
+            auto value = std::make_unique<model::admx::RegistryValue<QString>>(adaptedString);
             value->type = model::admx::RegistryValueType::STRING;
             return value;
         }

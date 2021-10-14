@@ -145,7 +145,27 @@ bool PolicyStateManager::determineIfPolicyDisabled() const
         }
     }
 
-    return disabledKeys > 0 && disabledKeys == d->policy.disabledList.size();
+    if (d->policy.disabledList.size() > 0 && disabledKeys != 0)
+    {
+        return disabledKeys > 0 && disabledKeys == d->policy.disabledList.size();
+    }
+
+    if (d->policy.elements.size() > 0)
+    {
+        for (const auto& element : d->policy.elements)
+        {
+            auto key = element->key.size() > 0
+                    ? element->key
+                    : d->policy.key;
+
+            if (d->source.isValueMarkedForDeletion(key, element->valueName))
+            {
+                disabledKeys++;
+            }
+        }
+    }
+
+    return disabledKeys > 0;
 }
 
 void PolicyStateManager::setPolicyStateEnabled()
@@ -189,6 +209,14 @@ void PolicyStateManager::setPolicyStateDisabled()
         {
             setValueState(d->policy.key, listEntry->valueName, listEntry->value.get());
         }
+    }
+
+    for (const auto& element : d->policy.elements)
+    {
+        auto key = element->key.size() > 0
+                ? element->key
+                : d->policy.key;
+        d->source.markValueForDeletion(key, element->valueName);
     }
 }
 

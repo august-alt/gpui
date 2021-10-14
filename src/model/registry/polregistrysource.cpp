@@ -132,14 +132,20 @@ bool PolRegistrySource::isValuePresent(const std::string &key, const std::string
 
 void PolRegistrySource::markValueForDeletion(const std::string &key, const std::string &valueName)
 {
+    std::string deleteValueName = "**del." + valueName;
+
     for (const auto& entry : d->registry->registryEntries)
     {
         if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
         {
-            std::string deleteValueName = "**del." + valueName;
             entry->value = QString::fromStdString(deleteValueName);
+            qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
+            return;
         }
     }
+
+    createValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString());
+    qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
 }
 
 bool PolRegistrySource::undeleteValue(const std::string &key, const std::string &valueName)

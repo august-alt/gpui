@@ -52,6 +52,8 @@
 #include <QTextEdit>
 #include <QSpinBox>
 #include <QPlainTextEdit>
+#include <QTableWidget>
+#include <QHeaderView>
 
 #include <QDebug>
 
@@ -200,7 +202,16 @@ namespace gui
 
         virtual void visit(ListBox &widget) const override
         {
-            QListWidget* listBox = new QListWidget();
+            QTableWidget* listBox = new QTableWidget();
+            listBox->setColumnCount(2);
+            listBox->setRowCount(1);
+            QStringList header { "#", "Name" };
+            listBox->setHorizontalHeaderLabels(header);
+            listBox->setSelectionBehavior(QAbstractItemView::SelectRows);
+            listBox->setSelectionMode(QAbstractItemView::SingleSelection);
+            listBox->setShowGrid(true);
+            listBox->horizontalHeader()->setStretchLastSection(true);
+            listBox->hideColumn(0);
 
             QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(listBox, QString::fromStdString(widget.label));
 
@@ -210,13 +221,31 @@ namespace gui
 
                 if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
                 {
-                    QString items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
-                    listBox->addItems(items.split('\0', QString::SplitBehavior::SkipEmptyParts));
+                    QStringList items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QStringList>();
+                    qWarning() << "Items debug: " << items;
+                    int index = 0;
+                    listBox->setRowCount(items.size());
+                    for (const auto& itemString : items)
+                    {
+                        listBox->setItem(index, 1, new QTableWidgetItem(itemString));
+                        index++;
+                    }
                 }
 
-                listBox->connect(listBox, &QListWidget::itemChanged, [=](QListWidgetItem *item) {
+                listBox->connect(listBox, &QTableWidget::itemChanged, [=]() {
+                    listBox->insertRow(listBox->rowCount());
+
                     createCommand([=](){
-                       QString items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                        QStringList items;
+                        for(int i = 0; i < listBox->rowCount(); ++i)
+                        {
+                            QTableWidgetItem* item = listBox->item(i, 1);
+                            if (item && item->data(Qt::DisplayRole).isValid())
+                            {
+                                items.push_back(item->text());
+                            }
+                        }
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, items);
                     });
                 });
             }
@@ -250,7 +279,8 @@ namespace gui
 
                 textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
                     createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(textEdit->toPlainText()));
+                        QStringList data(textEdit->toPlainText());
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, data);
                     });
                 });
             }

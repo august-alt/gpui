@@ -67,7 +67,7 @@ QVariant PolRegistrySource::getValue(const std::string &key, const std::string &
             case REG_EXPAND_SZ:
                 return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
             case REG_MULTI_SZ:
-                return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
+                return QVariant(static_cast<RegistryEntry<QStringList>*>(entry.get())->data);
             case REG_QWORD:
                 return QVariant::fromValue(static_cast<RegistryEntry<uint64_t>*>(entry.get())->data);
             default:
@@ -99,7 +99,7 @@ void PolRegistrySource::setValue(const std::string &key, const std::string &valu
             updateValue(key, valueName, data.value<QString>());
             break;
         case REG_MULTI_SZ:
-            updateValue(key, valueName, data.value<QString>());
+            updateValue(key, valueName, data.value<QStringList>());
             break;
         case REG_QWORD:
             updateValue(key, valueName, data.value<uint64_t>());

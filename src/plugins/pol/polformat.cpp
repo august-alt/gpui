@@ -66,6 +66,26 @@ private:
         return registryEntry;
     }
 
+    static std::unique_ptr<model::registry::AbstractRegistryEntry>adaptMultiLineEntry(const preg::PregEntry& entry,
+                                                                                model::registry::RegistryEntryType type)
+    {
+        auto registryEntry = std::make_unique<model::registry::RegistryEntry<QStringList> >();
+        registryEntry->key = entry.key.c_str();
+        registryEntry->type = type;
+        registryEntry->value = entry.value.c_str();
+        if (entry.data) {
+            size_t size = entry.size - 2 > 0 ? entry.size - 2 : entry.size;
+            QByteArray byteArray(entry.data, size);
+            QList<QByteArray> arrayList = byteArray.split('\0');
+            for (const auto& element : arrayList) {
+                registryEntry->data.push_back(QString::fromLocal8Bit(element));
+            }
+            delete[] entry.data;
+        }
+
+        return registryEntry;
+    }
+
 public:
     static std::unique_ptr<model::registry::AbstractRegistryEntry> create(const preg::PregEntry& entry)
     {
@@ -88,20 +108,17 @@ public:
 
         case preg::REG_EXPAND_SZ:
         {
-            // TODO: Implement.
-            return adaptCharEntry(entry, model::registry::REG_BINARY);
+            return adaptCharEntry(entry, model::registry::REG_EXPAND_SZ);
         } break;
 
         case preg::REG_LINK:
         {
-            // TODO: Implement.
             return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
         case preg::REG_MULTI_SZ:
         {
-            // TODO: Implement.
-            return adaptCharEntry(entry, model::registry::REG_BINARY);
+            return adaptMultiLineEntry(entry, model::registry::REG_MULTI_SZ);
         } break;
 
         case preg::REG_NONE:
@@ -121,7 +138,6 @@ public:
 
         case preg::REG_SZ:
         {
-            // TODO: Implement.
             return adaptCharEntry(entry, model::registry::REG_BINARY);
         } break;
 
@@ -148,13 +164,13 @@ public:
 
         switch (entry->type) {
         case REG_BINARY:
-        case REG_EXPAND_SZ:
-        case REG_MULTI_SZ:
+        case REG_EXPAND_SZ:        
         case REG_SZ:
         {
             auto binaryEntry = static_cast<RegistryEntry<QString>* >(entry.get());
             char* stringData = new char[binaryEntry->data.size() + 1];
             memcpy(stringData, &binaryEntry->data.toStdString().c_str()[0], binaryEntry->data.size() + 1);
+            stringData[binaryEntry->data.size()] = '\0';
             result.data = stringData;
             result.size = binaryEntry->data.size() + 1;
         } break;
@@ -170,6 +186,28 @@ public:
             auto unit64Entry = static_cast<RegistryEntry<uint64_t>* >(entry.get());
             result.size = 8;
             result.data = reinterpret_cast<char*>(&unit64Entry->data);
+        }break;
+        case REG_MULTI_SZ:
+        {
+            auto binaryEntry = static_cast<RegistryEntry<QStringList>* >(entry.get());
+            QByteArray byteArray;
+            for (const QString &str : binaryEntry->data)
+            {
+                byteArray.append(str);
+                byteArray.append('\0');
+            }
+            if (byteArray.size() == 0)
+            {
+                byteArray.append("\0\0");
+            }
+            else
+            {
+                byteArray.append('\0');
+            }
+            char* stringData = new char[byteArray.size()];
+            memcpy(stringData, byteArray, byteArray.size());
+            result.data = stringData;
+            result.size = byteArray.size();
         }break;
         default:
             break;

@@ -36,6 +36,7 @@ set(UI_FORMS
     contentwidget.ui
     mainwindow.ui
     smbfilebrowser.ui
+    listboxwidget.ui
 )
 
 set(MOC_HEADERS

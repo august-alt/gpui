@@ -15,6 +15,7 @@ set(HEADERS
     commandlineoptions.h
     commandlineparser.h
     gui.h
+    listboxwidget.h
     mainwindow.h
     mainwindowsettings.h
     presentationbuilder.h
@@ -25,6 +26,7 @@ set(SOURCES
     commandlineparser.cpp
     contentwidget.cpp
     gui.cpp
+    listboxwidget.cpp
     mainwindow.cpp
     mainwindowsettings.cpp
     presentationbuilder.cpp
@@ -41,6 +43,7 @@ set(UI_FORMS
 
 set(MOC_HEADERS
     contentwidget.h
+    listboxwidget.h
     mainwindow.h
     mainwindowsettings.h
     smbfilebrowser.h

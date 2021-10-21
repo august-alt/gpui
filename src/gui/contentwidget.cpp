@@ -164,11 +164,16 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
         reply = QMessageBox::question(this, QObject::tr("Save settings dialog"),
                                       QObject::tr("Policy settings were modified do you want to save them?"),
                                       QMessageBox::Yes | QMessageBox::No);
-        if (reply == QMessageBox::Yes)
+        switch (reply)
         {
+        case QMessageBox::Yes:
             onApplyClicked();
-        } else {
-            return;
+            break;
+        case QMessageBox::No:
+            onCancelClicked();
+            break;
+        default:
+            break;
         }
     }
 

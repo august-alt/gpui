@@ -42,8 +42,11 @@
 
 #include "../model/registry/abstractregistrysource.h"
 
+#include "listboxdialog.h"
+
 #include <QVBoxLayout>
 
+#include <QPushButton>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QLabel>
@@ -202,53 +205,36 @@ namespace gui
 
         virtual void visit(ListBox &widget) const override
         {
-            QTableWidget* listBox = new QTableWidget();
-            listBox->setColumnCount(2);
-            listBox->setRowCount(1);
-            QStringList header { "#", "Name" };
-            listBox->setHorizontalHeaderLabels(header);
-            listBox->setSelectionBehavior(QAbstractItemView::SelectRows);
-            listBox->setSelectionMode(QAbstractItemView::SingleSelection);
-            listBox->setShowGrid(true);
-            listBox->horizontalHeader()->setStretchLastSection(true);
-            listBox->hideColumn(0);
+            QPushButton* button = new QPushButton(QObject::tr("Edit"));
 
-            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(listBox, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(widget.label));
 
-            if (m_policy && m_source)
-            {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
-
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+            auto onClicked = [&]()
                 {
-                    QStringList items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QStringList>();
-                    qWarning() << "Items debug: " << items;
-                    int index = 0;
-                    listBox->setRowCount(items.size());
-                    for (const auto& itemString : items)
+                gpui::ListBoxDialog* listBox = new gpui::ListBoxDialog(QString::fromStdString(widget.label));
+                listBox->setAttribute(Qt::WA_DeleteOnClose);
+
+                if (m_policy && m_source)
+                {
+                    std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                    if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
                     {
-                        listBox->setItem(index, 1, new QTableWidgetItem(itemString));
-                        index++;
+                        QStringList items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QStringList>();
+                        qWarning() << "Items debug: " << items;
+                        listBox->setItems(items);
                     }
-                }
 
-                listBox->connect(listBox, &QTableWidget::itemChanged, [=]() {
-                    listBox->insertRow(listBox->rowCount());
-
-                    createCommand([=](){
-                        QStringList items;
-                        for(int i = 0; i < listBox->rowCount(); ++i)
-                        {
-                            QTableWidgetItem* item = listBox->item(i, 1);
-                            if (item && item->data(Qt::DisplayRole).isValid())
-                            {
-                                items.push_back(item->text());
-                            }
-                        }
+                    listBox->connect(listBox, &gpui::ListBoxDialog::itemsEditingFinished, [=](QStringList items) {
+                        qWarning() << "Items debug: " << items;
                         m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, items);
                     });
-                });
-            }
+                }
+
+                listBox->show();
+            };
+
+            QObject::connect(button, &QPushButton::clicked, onClicked);
 
             addToLayout(container);
         }

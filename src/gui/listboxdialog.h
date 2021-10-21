@@ -18,4 +18,42 @@
 **
 ***********************************************************************************************************************/
 
-#include "listboxwidget.h"
+#ifndef GPUI_LISTBOX_DIALOG_H
+#define GPUI_LISTBOX_DIALOG_H
+
+#include "gui.h"
+
+#include <QDialog>
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class ListBoxDialog; }
+QT_END_NAMESPACE
+
+namespace gpui {
+    class ListBoxDialog : public QDialog
+    {
+        Q_OBJECT
+    public:
+        // construction and destruction
+        ListBoxDialog(const QString& dialogTitle);
+        ~ListBoxDialog();
+
+        void setItems(const QStringList& items);
+        void clearItems();
+
+    signals:
+        void itemsEditingFinished(QStringList items);
+
+    private:
+        Ui::ListBoxDialog *ui;
+
+    private:
+        void setupListBoxWidget();
+
+    private slots:
+        void onNew();
+        void onDelete();
+    };
+}
+
+#endif//GPUI_LISTBOX_DIALOG_H

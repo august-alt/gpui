@@ -150,8 +150,6 @@ void PluginStorage::loadDefaultPlugins()
 {    
     loadPluginDirectory("/usr/lib/gpui/plugins/");
     loadPluginDirectory("/usr/lib64/gpui/plugins/");
-
-    loadPluginDirectory("/home/august/Develop/gpui/build/lib64/gpui/plugins/");
 }
 
 void PluginStorage::registerPluginClass(const QString& pluginName, const QString& className, std::function<void*()> constructor)

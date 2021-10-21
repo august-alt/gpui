@@ -18,8 +18,8 @@
 **
 ***********************************************************************************************************************/
 
+#include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
-
 #include "../model/pluginstorage.h"
 
 #include <QApplication>
@@ -31,13 +31,36 @@ int main(int argc, char ** argv) {
     // Create window.
     QApplication app(argc, argv);
 
+    gpui::CommandLineParser parser(app);
+    gpui::CommandLineOptions options;
+    QString errorMessage;
+
+    gpui::CommandLineParser::CommandLineParseResult parserResult = parser.parseCommandLine(&options, &errorMessage);
+
+    switch (parserResult)
+    {
+    case gpui::CommandLineParser::CommandLineError:
+        printf("%s \n", qPrintable(errorMessage));
+        parser.showHelp();
+        return 1;
+    case gpui::CommandLineParser::CommandLineHelpRequested:
+        parser.showHelp();
+        return 0;
+    case gpui::CommandLineParser::CommandLineVersionRequested:
+        parser.showVersion();
+        return 0;
+    case gpui::CommandLineParser::CommandLineOk:
+    default:
+        break;
+    }
+
     // NOTE: set app variables which will be used to
     // construct settings path
     app.setOrganizationName("BaseALT");
     app.setOrganizationDomain("basealt.ru");
     app.setApplicationName("GPUI");
     
-    gpui::MainWindow window;
+    gpui::MainWindow window(options);
     window.show();
 
     return app.exec();

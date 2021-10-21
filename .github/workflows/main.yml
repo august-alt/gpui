@@ -6,9 +6,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build software using docker
+    strategy:
+      matrix:
+        alt-version: [ { dist: "alt:p9", artifact: "p9" }, { dist: "alt:p10", artifact: "p10" }, { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        architecture: [ amd64 ]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - run: docker build . --file Dockerfile --tag build-environment
-      - run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment
+      - name: Download artifact
+        uses: august-alt/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: main.yml
+          branch: alt-linux
+          name: libfolderlistmodel-${{ matrix.alt-version.artifact }}-${{ matrix.architecture }}
+          path: RPMS
+          repo: august-alt/filemanager-app
+
+      - run: docker build . --file Dockerfile --tag build-environment --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --build-arg DISTR=${{ matrix.alt-version.dist }} --build-arg ARCH=${{ matrix.architecture  }}
+
+      - if: ${{ matrix.architecture == 'i386' }}
+        run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment --platform linux/i386
+
+      - if: ${{ matrix.architecture == 'amd64' }}
+        run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: gpui-${{ matrix.alt-version.artifact }}-${{ matrix.architecture }}
+          path: RPMS/

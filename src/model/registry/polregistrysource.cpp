@@ -67,7 +67,7 @@ QVariant PolRegistrySource::getValue(const std::string &key, const std::string &
             case REG_EXPAND_SZ:
                 return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
             case REG_MULTI_SZ:
-                return QVariant(static_cast<RegistryEntry<QString>*>(entry.get())->data);
+                return QVariant(static_cast<RegistryEntry<QStringList>*>(entry.get())->data);
             case REG_QWORD:
                 return QVariant::fromValue(static_cast<RegistryEntry<uint64_t>*>(entry.get())->data);
             default:
@@ -99,7 +99,7 @@ void PolRegistrySource::setValue(const std::string &key, const std::string &valu
             updateValue(key, valueName, data.value<QString>());
             break;
         case REG_MULTI_SZ:
-            updateValue(key, valueName, data.value<QString>());
+            updateValue(key, valueName, data.value<QStringList>());
             break;
         case REG_QWORD:
             updateValue(key, valueName, data.value<uint64_t>());
@@ -132,20 +132,61 @@ bool PolRegistrySource::isValuePresent(const std::string &key, const std::string
 
 void PolRegistrySource::markValueForDeletion(const std::string &key, const std::string &valueName)
 {
-    Q_UNUSED(key);
-    Q_UNUSED(valueName);
+    std::string deleteValueName = "**del." + valueName;
+
+    for (const auto& entry : d->registry->registryEntries)
+    {
+        if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
+        {
+            entry->value = QString::fromStdString(deleteValueName);
+            qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
+            return;
+        }
+    }
+
+    createValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString());
+    qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
 }
 
-void PolRegistrySource::undeleteValue(const std::string &key, const std::string &valueName)
+bool PolRegistrySource::undeleteValue(const std::string &key, const std::string &valueName)
 {
-    Q_UNUSED(key);
-    Q_UNUSED(valueName);
+    std::string deleteValueName = "**del." + valueName;
+
+    for (const auto& entry : d->registry->registryEntries)
+    {
+        if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(deleteValueName.c_str()) == 0)
+        {
+            entry->value = QString::fromStdString(valueName);
+        }
+    }
+
+    return false;
 }
 
 bool PolRegistrySource::isValueMarkedForDeletion(const std::string &key, const std::string &valueName) const
 {
-    Q_UNUSED(key);
-    Q_UNUSED(valueName);
+    if (isValuePresent(key, "**del." + valueName))
+    {
+        return true;
+    }
+
+    if (isValuePresent(key, "**delvals."))
+    {
+        return true;
+    }
+
+    if (isValuePresent(key, "**deletevalues"))
+    {
+        auto valueList = getValue(key, "**deletevalues").toString().split(';');
+        for (const auto& value : valueList)
+        {
+            if (value.compare(valueName.c_str()) == 0)
+            {
+                return true;
+            }
+        }
+    }
+
     return false;
 }
 
@@ -171,6 +212,19 @@ void PolRegistrySource::clearKey(const std::string &key)
     {
         markValueForDeletion(key, value);
     }
+}
+
+bool PolRegistrySource::ifValueStartsWith(const std::string &key, const std::string &valueStart) const
+{
+    for (const auto& entry : d->registry->registryEntries)
+    {
+        if (entry->key.compare(key.c_str()) == 0 && entry->value.startsWith(valueStart.c_str()) == 0)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 template<typename T>

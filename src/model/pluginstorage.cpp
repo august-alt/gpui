@@ -148,7 +148,8 @@ bool PluginStorage::unloadPlugin(Plugin* plugin)
 
 void PluginStorage::loadDefaultPlugins()
 {    
-    loadPluginDirectory("/lib64/gpui/plugins/");
+    loadPluginDirectory("/usr/lib/gpui/plugins/");
+    loadPluginDirectory("/usr/lib64/gpui/plugins/");
 }
 
 void PluginStorage::registerPluginClass(const QString& pluginName, const QString& className, std::function<void*()> constructor)

@@ -21,7 +21,14 @@ include_directories(${GPUI_INCLUDE_DIRS})
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-add_gpui_executable(main main.cpp)
+set(HEADERS
+)
+
+set(SOURCES
+    main.cpp
+)
+
+add_gpui_executable(main ${SOURCES})
 
 target_link_libraries(main ${GPUI_LIBRARIES})
 target_link_libraries(main Qt5::Widgets)

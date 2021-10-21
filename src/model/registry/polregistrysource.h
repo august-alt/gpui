@@ -48,7 +48,7 @@ namespace model {
             bool isValuePresent(const std::string& key, const std::string& valueName) const override final;
 
             void markValueForDeletion(const std::string& key, const std::string& valueName) override final;
-            void undeleteValue(const std::string& key, const std::string& valueName) override final;
+            bool undeleteValue(const std::string& key, const std::string& valueName) override final;
             bool isValueMarkedForDeletion(const std::string& key, const std::string& valueName) const override final;
 
             std::vector<std::string> getValueNames(const std::string& key) const override final;
@@ -61,6 +61,8 @@ namespace model {
             template<typename T>
             void createValue(const std::string& key, const std::string& valueName,
                              RegistryEntryType type, const T& data);
+
+            bool ifValueStartsWith(const std::string& key, const std::string& valueStart) const;
 
             PolRegistrySourcePrivate* d;
         };

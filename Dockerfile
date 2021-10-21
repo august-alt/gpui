@@ -1,5 +1,10 @@
+ARG DISTR
+
 # Container image that runs your code
-FROM alt:p9
+FROM $DISTR
+
+ARG USER_ID
+ARG GROUP_ID
 
 RUN apt-get update \
     && apt-get install -y git \
@@ -18,7 +23,8 @@ RUN apt-get update \
     apt-repo-tools \
     sudo \
     && export CURRENT_PWD=`pwd` \
-    && useradd -ms /bin/bash builder2 \
+    && groupadd --gid $GROUP_ID builder2 \
+    && useradd --uid $USER_ID --gid $GROUP_ID -ms /bin/bash builder2 \
     && groupadd sudo \
     && usermod -aG rpm builder2 \
     && usermod -aG sudo root \
@@ -31,6 +37,13 @@ RUN apt-get update \
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY script/build.sh /build.sh
+
+ARG ARCH 
+
+RUN if [ "$ARCH" = "i386" ]; then \
+       sed -i 's/gear-hsh/i586 gear-hsh/g' /build.sh; \
+       sed -i 's/x86_64/i686/g' /build.sh; \
+    fi
 
 USER builder2
 WORKDIR /home/builder2

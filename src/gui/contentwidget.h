@@ -61,8 +61,11 @@ namespace gpui {
 
         void setPolicyWidgetState(PolicyWidgetState state);
 
+        void onLanguageChaged();
+
     signals:
         void modelItemSelected(const QModelIndex& index);
+        void savePolicyChanges();
 
     private:
         Ui::ContentWidget *ui;

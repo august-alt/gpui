@@ -38,6 +38,7 @@ namespace model {
 
 namespace gpui {
 
+    class CommandLineOptions;
     class MainWindowPrivate;
 
     class GPUI_GUI_EXPORT MainWindow : public QMainWindow {
@@ -45,7 +46,7 @@ namespace gpui {
 
     public:
         // construction and destruction
-        MainWindow(QWidget *parent = 0);
+        MainWindow(CommandLineOptions& options, QWidget *parent = 0);
         ~MainWindow();
 
     protected:
@@ -63,10 +64,24 @@ namespace gpui {
         void onUserRegistrySourceOpen();
         void onRegistrySourceSave();
 
+        void on_actionExit_triggered();
+
+        void onLanguageChanged(QAction *action);
+
     private:
         void onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
                                   std::unique_ptr<model::registry::AbstractRegistrySource>& source,
                                   std::function<void(model::registry::AbstractRegistrySource* source)> callback);
+
+        void onPolFileOpen(const QString& path,
+                           std::shared_ptr<model::registry::Registry>& registry,
+                           std::unique_ptr<model::registry::AbstractRegistrySource>& source,
+                           std::function<void(model::registry::AbstractRegistrySource* source)> callback);
+
+        void loadPolicyBundleFolder(const QString& path, const QString& locale);
+
+        void createLanguageMenu();
+
         void updateFilterModel();
     };
 }

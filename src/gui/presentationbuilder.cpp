@@ -42,8 +42,11 @@
 
 #include "../model/registry/abstractregistrysource.h"
 
+#include "listboxdialog.h"
+
 #include <QVBoxLayout>
 
+#include <QPushButton>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QLabel>
@@ -52,6 +55,8 @@
 #include <QTextEdit>
 #include <QSpinBox>
 #include <QPlainTextEdit>
+#include <QTableWidget>
+#include <QHeaderView>
 
 #include <QDebug>
 
@@ -87,8 +92,8 @@ namespace gui
     QHBoxLayout* createCaptions()
     {
         QHBoxLayout* horizontalLayout = new QHBoxLayout();
-        QLabel* descriptionLabel = new QLabel("Description:");
-        QLabel* optionLabel = new QLabel("Options:");
+        QLabel* descriptionLabel = new QLabel(QObject::tr("Description:"));
+        QLabel* optionLabel = new QLabel(QObject::tr("Options:"));
         horizontalLayout->addWidget(descriptionLabel);
         horizontalLayout->addWidget(optionLabel);
         return horizontalLayout;
@@ -200,9 +205,36 @@ namespace gui
 
         virtual void visit(ListBox &widget) const override
         {
-            QListWidget* listWidget = new QListWidget();
+            QPushButton* button = new QPushButton(QObject::tr("Edit"));
 
-            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(listWidget, QString::fromStdString(widget.label));
+            QLayoutItem* container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(widget.label));
+
+            auto onClicked = [&]()
+                {
+                gpui::ListBoxDialog* listBox = new gpui::ListBoxDialog(QString::fromStdString(widget.label));
+                listBox->setAttribute(Qt::WA_DeleteOnClose);
+
+                if (m_policy && m_source)
+                {
+                    std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+
+                    if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                    {
+                        QStringList items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QStringList>();
+                        qWarning() << "Items debug: " << items;
+                        listBox->setItems(items);
+                    }
+
+                    listBox->connect(listBox, &gpui::ListBoxDialog::itemsEditingFinished, [=](QStringList items) {
+                        qWarning() << "Items debug: " << items;
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, items);
+                    });
+                }
+
+                listBox->show();
+            };
+
+            QObject::connect(button, &QPushButton::clicked, onClicked);
 
             addToLayout(container);
         }
@@ -233,7 +265,8 @@ namespace gui
 
                 textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
                     createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, QVariant::fromValue(textEdit->toPlainText()));
+                        QStringList data(textEdit->toPlainText());
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, data);
                     });
                 });
             }

@@ -48,6 +48,7 @@ public:
     model::command::CommandGroup commandGroup;
     bool cancelFlag = false;
     QModelIndex currentIndex;
+    ContentWidget::PolicyWidgetState state = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
 };
 
 ContentWidget::ContentWidget(QWidget *parent)
@@ -142,6 +143,13 @@ void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
         ui->contentScrollArea->setDisabled(true);
         break;
     }
+
+    d->state = state;
+}
+
+void ContentWidget::onLanguageChaged()
+{
+    ui->retranslateUi(this);
 }
 
 void ContentWidget::onListItemClicked(const QModelIndex &index)
@@ -153,8 +161,8 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
     if (d->commandGroup.canExecute() && !d->cancelFlag)
     {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Save settings dialog",
-                                      "Policy settings were modified do you want to save them?",
+        reply = QMessageBox::question(this, QObject::tr("Save settings dialog"),
+                                      QObject::tr("Policy settings were modified do you want to save them?"),
                                       QMessageBox::Yes | QMessageBox::No);
         if (reply == QMessageBox::Yes)
         {
@@ -238,8 +246,13 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
 void ContentWidget::onApplyClicked()
 {
-    d->commandGroup.execute();
-    d->commandGroup.clear();
+    if (d->state == ContentWidget::STATE_ENABLED)
+    {
+        d->commandGroup.execute();
+        d->commandGroup.clear();
+    }
+
+    savePolicyChanges();
 }
 
 void ContentWidget::onCancelClicked()

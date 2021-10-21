@@ -34,6 +34,14 @@
 
 #include "../../../../src/gui/presentationbuilder.h"
 
+#include "../../../../src/model/admx/policy.h"
+#include "../../../../src/model/admx/policyelement.h"
+
+#include "../../../../src/model/commands/commandgroup.h"
+
+#include "../../../../src/model/registry/registry.h"
+#include "../../../../src/model/registry/polregistrysource.h"
+
 #include <memory>
 
 #include <QVBoxLayout>
@@ -95,7 +103,12 @@ void PresentationBuilderTest::build()
     presentation.widgets["text"] = (std::move(text));
     presentation.widgets["textBox"] = (std::move(textBox));
 
-    auto layout = PresentationBuilder::build(presentation);
+    auto policy = std::make_unique<model::admx::Policy>();
+    auto registry = std::make_shared<model::registry::Registry>();
+    auto polRegistrySource = std::make_unique<model::registry::PolRegistrySource>(registry);
+    auto group = std::make_unique<model::command::CommandGroup>();
+
+    auto layout = PresentationBuilder::build(presentation, *policy, *polRegistrySource, *group);
     auto widget = std::make_unique<QWidget>();
     widget->setLayout(layout);
     widget->show();

@@ -201,9 +201,8 @@ std::unique_ptr<PregEntry> PregParser::readEntry(KeyEntry kentry) {
 
     if (results.size() >= 5 && results.at(4).size() > 0)
     {
-        char* dataDouble = new char[results.at(4).length() + 1];
-        strcpy(dataDouble, results.at(4).c_str());
-        dataDouble[results.at(4).length()] = '\0';
+        char* dataDouble = new char[appentry->size];
+        memcpy(dataDouble, &results.at(4)[0], appentry->size);
         appentry->data = dataDouble;
     } else {
         appentry->data = nullptr;

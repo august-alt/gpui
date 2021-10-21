@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Widgets Qml REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Qml LinguistTools REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -12,7 +12,10 @@ include_directories(
 
 set(HEADERS
     contentwidget.h
+    commandlineoptions.h
+    commandlineparser.h
     gui.h
+    listboxdialog.h
     mainwindow.h
     mainwindowsettings.h
     presentationbuilder.h
@@ -23,8 +26,10 @@ set(HEADERS
 )
 
 set(SOURCES
+    commandlineparser.cpp
     contentwidget.cpp
     gui.cpp
+    listboxdialog.cpp
     mainwindow.cpp
     mainwindowsettings.cpp
     presentationbuilder.cpp
@@ -36,6 +41,7 @@ set(SOURCES
 
 set(UI_FORMS
     contentwidget.ui
+    listboxdialog.ui
     mainwindow.ui
     smbfilebrowser.ui
     templatefilterdialog.ui
@@ -43,11 +49,21 @@ set(UI_FORMS
 
 set(MOC_HEADERS
     contentwidget.h
+    listboxdialog.h
     mainwindow.h
     mainwindowsettings.h
     smbfilebrowser.h
     templatefilterdialog.h
 )
+
+set(TS_FILES
+    i18n/gui_en.ts
+    i18n/gui_ru.ts
+)
+
+set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR})
+
+qt5_add_translation(QM_FILES ${TS_FILES})
 
 qt5_wrap_ui(UI_SOURCES ${UI_FORMS})
 qt5_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -56,7 +72,11 @@ add_definitions(
     -DGPUI_GUI_LIBRARY
 )
 
-add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES})
+add_translation_resource(RESOURCES_SRC ${QM_FILES})
+
+qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
+
+add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES} ${LIB_RESOURCES})
 target_link_libraries(gpui-gui Qt5::Widgets Qt5::Qml)
 target_link_libraries(gpui-gui gpui-model gpui-io)
 

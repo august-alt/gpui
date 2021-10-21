@@ -14,7 +14,10 @@ BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
+BuildRequires: libsmbclient-devel libsmbclient
+BuildRequires: libnemofolderlistmodel-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
@@ -50,6 +53,14 @@ Group policy editor
 %_libdir/gpui/plugins/libreg-plugin.so
 %_libdir/gpui/plugins/libspol-plugin.so
 %_libdir/gpui/plugins/libpol-plugin.so
+
+%_libdir/gpui/plugins/libdrives-plugin.so
+%_libdir/gpui/plugins/libfiles-plugin.so
+%_libdir/gpui/plugins/libfolders-plugin.so
+%_libdir/gpui/plugins/libini-plugin.so
+%_libdir/gpui/plugins/libshares-plugin.so
+%_libdir/gpui/plugins/libshortcuts-plugin.so
+%_libdir/gpui/plugins/libvariables-plugin.so
 
 %changelog
 * Tue Jun 08 2021 Vladimir Rubanov <august@altlinux.org> 0.1.0-alt1

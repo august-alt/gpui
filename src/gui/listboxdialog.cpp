@@ -80,7 +80,7 @@ void ListBoxDialog::setupListBoxWidget()
 {
     ui->tableWidget->setColumnCount(2);
     ui->tableWidget->setRowCount(1);
-    QStringList header { "#", "Name" };
+    QStringList header { "#", tr("Name") };
     ui->tableWidget->setHorizontalHeaderLabels(header);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);

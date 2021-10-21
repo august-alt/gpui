@@ -45,6 +45,29 @@
     </message>
 </context>
 <context>
+    <name>ListBoxDialog</name>
+    <message>
+        <location filename="../listboxdialog.ui" line="+14"/>
+        <source>Dialog</source>
+        <translation>Диалог</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Default</source>
+        <translation>По умолчанию</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>New</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
@@ -287,7 +310,7 @@
         <translation>Полный путь к набору ADMX файлов.</translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+161"/>
+        <location filename="../contentwidget.cpp" line="+164"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -297,7 +320,7 @@
         <translation>Настройки политки были изменены, хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+90"/>
+        <location filename="../presentationbuilder.cpp" line="+95"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -305,6 +328,11 @@
         <location line="+1"/>
         <source>Options:</source>
         <translation>Опции:</translation>
+    </message>
+    <message>
+        <location line="+112"/>
+        <source>Edit</source>
+        <translation>Редактировать</translation>
     </message>
     <message>
         <location filename="../../model/bundle/policybundle.cpp" line="+91"/>
@@ -346,9 +374,22 @@
     </message>
 </context>
 <context>
+    <name>gpui::ListBoxDialog</name>
+    <message>
+        <location filename="../listboxdialog.cpp" line="+36"/>
+        <source>List Dialog</source>
+        <translation>Диалог редактирования списка</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+</context>
+<context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+235"/>
+        <location filename="../mainwindow.cpp" line="+237"/>
         <source>Open Directory</source>
         <translation>Открыть папку</translation>
     </message>

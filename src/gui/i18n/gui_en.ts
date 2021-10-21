@@ -45,6 +45,29 @@
     </message>
 </context>
 <context>
+    <name>ListBoxDialog</name>
+    <message>
+        <location filename="../listboxdialog.ui" line="+14"/>
+        <source>Dialog</source>
+        <translation>Dialog</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Default</source>
+        <translation>Default</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>New</source>
+        <translation>New</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Delete</source>
+        <translation>Delete</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
@@ -287,7 +310,7 @@
         <translation>The full path of policy bundle to load.</translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+161"/>
+        <location filename="../contentwidget.cpp" line="+164"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -297,7 +320,7 @@
         <translation>Policy settings were modified do you want to save them?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+90"/>
+        <location filename="../presentationbuilder.cpp" line="+95"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
@@ -305,6 +328,11 @@
         <location line="+1"/>
         <source>Options:</source>
         <translation>Options:</translation>
+    </message>
+    <message>
+        <location line="+112"/>
+        <source>Edit</source>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../../model/bundle/policybundle.cpp" line="+91"/>
@@ -346,9 +374,22 @@
     </message>
 </context>
 <context>
+    <name>gpui::ListBoxDialog</name>
+    <message>
+        <location filename="../listboxdialog.cpp" line="+36"/>
+        <source>List Dialog</source>
+        <translation>List Dialog</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+</context>
+<context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+235"/>
+        <location filename="../mainwindow.cpp" line="+237"/>
         <source>Open Directory</source>
         <translation>Open Directory</translation>
     </message>

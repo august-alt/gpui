@@ -53,15 +53,6 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 {
     d->ui = new Ui::TemplateFilterDialog();
     d->ui->setupUi(this);
-
-    setWindowTitle(tr("Filter Options"));
-
-    connect(
-        d->ui->buttonBox, &QDialogButtonBox::accepted,
-        this, &TemplateFilterDialog::accept);
-    connect(
-        d->ui->buttonBox, &QDialogButtonBox::rejected,
-        this, &TemplateFilterDialog::reject);
 }
 
 TemplateFilterDialog::~TemplateFilterDialog()

@@ -70,7 +70,6 @@ void DrivesWidget::setupModelMapper()
     d->mapper->addMapping(ui->reconnectCheckBox, DriveRoles::PERSISTENT);
     d->mapper->addMapping(ui->labelLineEdit, DriveRoles::LABEL);
     d->mapper->addMapping(ui->driveLetterGroupBox, DriveRoles::LETTER);
-    d->mapper->addMapping(ui->userNameLineEdit, DriveRoles::USERNAME);
 
     d->mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 }

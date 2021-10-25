@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Drives clsid="{8FDDCC1A-0C3C-43cd-A6B4-71A6DF20DA8C}">
+  <Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}"
+         name="E:"
+         status="E:"
+         image="1"
+         changed="2020-05-15 11:39:20"
+         uid="{71C58BEB-0013-4653-8D2F-4628A08DFA18}">
+    <Properties action="R"
+                thisDrive="SHOW"
+                allDrives="SHOW"
+                userName=""
+                path="Network Share"
+                label=""
+                persistent="0"
+                useLetter="1"
+                letter="E"/>
+  </Drive>
+</Drives>

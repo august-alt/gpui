@@ -46,7 +46,7 @@ void DrivesWidgetTest::show()
        auto widget = std::make_unique<gpui::DrivesWidget>(*model, *selectionModel);
        widget->show();
 
-       selectionModel->setCurrentIndex(model->item(0, 0)->index(),
+       selectionModel->setCurrentIndex(model->item(0, 1)->index(),
                                        QItemSelectionModel::Select | QItemSelectionModel::Rows);
 
        QTest::qWait(10000);

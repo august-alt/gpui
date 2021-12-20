@@ -40,618 +40,606 @@
 
 #include "sharesschema.h"
 
-// NetworkShareSettings
+// Properties_t
 // 
 
-const NetworkShareSettings::NetShareType& NetworkShareSettings::
-NetShare () const
+const Properties_t::ActionOptional& Properties_t::
+action () const
 {
-  return this->NetShare_.get ();
+  return this->action_;
 }
 
-NetworkShareSettings::NetShareType& NetworkShareSettings::
-NetShare ()
+Properties_t::ActionOptional& Properties_t::
+action ()
 {
-  return this->NetShare_.get ();
+  return this->action_;
 }
 
-void NetworkShareSettings::
-NetShare (const NetShareType& x)
+void Properties_t::
+action (const ActionType& x)
 {
-  this->NetShare_.set (x);
+  this->action_.set (x);
 }
 
-void NetworkShareSettings::
-NetShare (::std::unique_ptr< NetShareType > x)
+void Properties_t::
+action (const ActionOptional& x)
 {
-  this->NetShare_.set (std::move (x));
+  this->action_ = x;
 }
 
-const NetworkShareSettings::ClsidType& NetworkShareSettings::
-clsid () const
+void Properties_t::
+action (::std::unique_ptr< ActionType > x)
 {
-  return this->clsid_.get ();
+  this->action_.set (std::move (x));
 }
 
-NetworkShareSettings::ClsidType& NetworkShareSettings::
-clsid ()
+const Properties_t::NameType& Properties_t::
+name () const
 {
-  return this->clsid_.get ();
+  return this->name_.get ();
 }
 
-void NetworkShareSettings::
-clsid (const ClsidType& x)
+Properties_t::NameType& Properties_t::
+name ()
 {
-  this->clsid_.set (x);
+  return this->name_.get ();
 }
 
-void NetworkShareSettings::
-clsid (::std::unique_ptr< ClsidType > x)
+void Properties_t::
+name (const NameType& x)
 {
-  this->clsid_.set (std::move (x));
+  this->name_.set (x);
 }
 
-const NetworkShareSettings::DisabledOptional& NetworkShareSettings::
+void Properties_t::
+name (::std::unique_ptr< NameType > x)
+{
+  this->name_.set (std::move (x));
+}
+
+const Properties_t::PathType& Properties_t::
+path () const
+{
+  return this->path_.get ();
+}
+
+Properties_t::PathType& Properties_t::
+path ()
+{
+  return this->path_.get ();
+}
+
+void Properties_t::
+path (const PathType& x)
+{
+  this->path_.set (x);
+}
+
+void Properties_t::
+path (::std::unique_ptr< PathType > x)
+{
+  this->path_.set (std::move (x));
+}
+
+const Properties_t::CommentType& Properties_t::
+comment () const
+{
+  return this->comment_.get ();
+}
+
+Properties_t::CommentType& Properties_t::
+comment ()
+{
+  return this->comment_.get ();
+}
+
+void Properties_t::
+comment (const CommentType& x)
+{
+  this->comment_.set (x);
+}
+
+void Properties_t::
+comment (::std::unique_ptr< CommentType > x)
+{
+  this->comment_.set (std::move (x));
+}
+
+const Properties_t::AllRegularOptional& Properties_t::
+allRegular () const
+{
+  return this->allRegular_;
+}
+
+Properties_t::AllRegularOptional& Properties_t::
+allRegular ()
+{
+  return this->allRegular_;
+}
+
+void Properties_t::
+allRegular (const AllRegularType& x)
+{
+  this->allRegular_.set (x);
+}
+
+void Properties_t::
+allRegular (const AllRegularOptional& x)
+{
+  this->allRegular_ = x;
+}
+
+const Properties_t::AllHiddenOptional& Properties_t::
+allHidden () const
+{
+  return this->allHidden_;
+}
+
+Properties_t::AllHiddenOptional& Properties_t::
+allHidden ()
+{
+  return this->allHidden_;
+}
+
+void Properties_t::
+allHidden (const AllHiddenType& x)
+{
+  this->allHidden_.set (x);
+}
+
+void Properties_t::
+allHidden (const AllHiddenOptional& x)
+{
+  this->allHidden_ = x;
+}
+
+const Properties_t::AllAdminDriveOptional& Properties_t::
+allAdminDrive () const
+{
+  return this->allAdminDrive_;
+}
+
+Properties_t::AllAdminDriveOptional& Properties_t::
+allAdminDrive ()
+{
+  return this->allAdminDrive_;
+}
+
+void Properties_t::
+allAdminDrive (const AllAdminDriveType& x)
+{
+  this->allAdminDrive_.set (x);
+}
+
+void Properties_t::
+allAdminDrive (const AllAdminDriveOptional& x)
+{
+  this->allAdminDrive_ = x;
+}
+
+const Properties_t::LimitUsersOptional& Properties_t::
+limitUsers () const
+{
+  return this->limitUsers_;
+}
+
+Properties_t::LimitUsersOptional& Properties_t::
+limitUsers ()
+{
+  return this->limitUsers_;
+}
+
+void Properties_t::
+limitUsers (const LimitUsersType& x)
+{
+  this->limitUsers_.set (x);
+}
+
+void Properties_t::
+limitUsers (const LimitUsersOptional& x)
+{
+  this->limitUsers_ = x;
+}
+
+void Properties_t::
+limitUsers (::std::unique_ptr< LimitUsersType > x)
+{
+  this->limitUsers_.set (std::move (x));
+}
+
+const Properties_t::AbeOptional& Properties_t::
+abe () const
+{
+  return this->abe_;
+}
+
+Properties_t::AbeOptional& Properties_t::
+abe ()
+{
+  return this->abe_;
+}
+
+void Properties_t::
+abe (const AbeType& x)
+{
+  this->abe_.set (x);
+}
+
+void Properties_t::
+abe (const AbeOptional& x)
+{
+  this->abe_ = x;
+}
+
+void Properties_t::
+abe (::std::unique_ptr< AbeType > x)
+{
+  this->abe_.set (std::move (x));
+}
+
+const Properties_t::UserLimitOptional& Properties_t::
+userLimit () const
+{
+  return this->userLimit_;
+}
+
+Properties_t::UserLimitOptional& Properties_t::
+userLimit ()
+{
+  return this->userLimit_;
+}
+
+void Properties_t::
+userLimit (const UserLimitType& x)
+{
+  this->userLimit_.set (x);
+}
+
+void Properties_t::
+userLimit (const UserLimitOptional& x)
+{
+  this->userLimit_ = x;
+}
+
+const Properties_t::DisabledOptional& Properties_t::
 disabled () const
 {
   return this->disabled_;
 }
 
-NetworkShareSettings::DisabledOptional& NetworkShareSettings::
+Properties_t::DisabledOptional& Properties_t::
 disabled ()
 {
   return this->disabled_;
 }
 
-void NetworkShareSettings::
+void Properties_t::
 disabled (const DisabledType& x)
 {
   this->disabled_.set (x);
 }
 
-void NetworkShareSettings::
+void Properties_t::
 disabled (const DisabledOptional& x)
 {
   this->disabled_ = x;
 }
 
 
-// NetShare
+// NetShare_t
 // 
 
-const NetShare::PropertiesType& NetShare::
+const NetShare_t::PropertiesSequence& NetShare_t::
 Properties () const
 {
-  return this->Properties_.get ();
+  return this->Properties_;
 }
 
-NetShare::PropertiesType& NetShare::
+NetShare_t::PropertiesSequence& NetShare_t::
 Properties ()
 {
-  return this->Properties_.get ();
+  return this->Properties_;
 }
 
-void NetShare::
-Properties (const PropertiesType& x)
+void NetShare_t::
+Properties (const PropertiesSequence& s)
 {
-  this->Properties_.set (x);
+  this->Properties_ = s;
 }
 
-void NetShare::
-Properties (::std::unique_ptr< PropertiesType > x)
-{
-  this->Properties_.set (std::move (x));
-}
-
-const NetShare::ClsidType& NetShare::
+const NetShare_t::ClsidType& NetShare_t::
 clsid () const
 {
   return this->clsid_.get ();
 }
 
-NetShare::ClsidType& NetShare::
+NetShare_t::ClsidType& NetShare_t::
 clsid ()
 {
   return this->clsid_.get ();
 }
 
-void NetShare::
+void NetShare_t::
 clsid (const ClsidType& x)
 {
   this->clsid_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 clsid (::std::unique_ptr< ClsidType > x)
 {
   this->clsid_.set (std::move (x));
 }
 
-const NetShare::ImageOptional& NetShare::
+const NetShare_t::ImageOptional& NetShare_t::
 image () const
 {
   return this->image_;
 }
 
-NetShare::ImageOptional& NetShare::
+NetShare_t::ImageOptional& NetShare_t::
 image ()
 {
   return this->image_;
 }
 
-void NetShare::
+void NetShare_t::
 image (const ImageType& x)
 {
   this->image_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 image (const ImageOptional& x)
 {
   this->image_ = x;
 }
 
-const NetShare::NameType& NetShare::
+const NetShare_t::NameType& NetShare_t::
 name () const
 {
   return this->name_.get ();
 }
 
-NetShare::NameType& NetShare::
+NetShare_t::NameType& NetShare_t::
 name ()
 {
   return this->name_.get ();
 }
 
-void NetShare::
+void NetShare_t::
 name (const NameType& x)
 {
   this->name_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 name (::std::unique_ptr< NameType > x)
 {
   this->name_.set (std::move (x));
 }
 
-const NetShare::ChangedOptional& NetShare::
+const NetShare_t::ChangedOptional& NetShare_t::
 changed () const
 {
   return this->changed_;
 }
 
-NetShare::ChangedOptional& NetShare::
+NetShare_t::ChangedOptional& NetShare_t::
 changed ()
 {
   return this->changed_;
 }
 
-void NetShare::
+void NetShare_t::
 changed (const ChangedType& x)
 {
   this->changed_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 changed (const ChangedOptional& x)
 {
   this->changed_ = x;
 }
 
-void NetShare::
+void NetShare_t::
 changed (::std::unique_ptr< ChangedType > x)
 {
   this->changed_.set (std::move (x));
 }
 
-const NetShare::UidType& NetShare::
+const NetShare_t::UidType& NetShare_t::
 uid () const
 {
   return this->uid_.get ();
 }
 
-NetShare::UidType& NetShare::
+NetShare_t::UidType& NetShare_t::
 uid ()
 {
   return this->uid_.get ();
 }
 
-void NetShare::
+void NetShare_t::
 uid (const UidType& x)
 {
   this->uid_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 uid (::std::unique_ptr< UidType > x)
 {
   this->uid_.set (std::move (x));
 }
 
-const NetShare::DescOptional& NetShare::
+const NetShare_t::DescOptional& NetShare_t::
 desc () const
 {
   return this->desc_;
 }
 
-NetShare::DescOptional& NetShare::
+NetShare_t::DescOptional& NetShare_t::
 desc ()
 {
   return this->desc_;
 }
 
-void NetShare::
+void NetShare_t::
 desc (const DescType& x)
 {
   this->desc_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 desc (const DescOptional& x)
 {
   this->desc_ = x;
 }
 
-void NetShare::
+void NetShare_t::
 desc (::std::unique_ptr< DescType > x)
 {
   this->desc_.set (std::move (x));
 }
 
-const NetShare::BypassErrorsOptional& NetShare::
+const NetShare_t::BypassErrorsOptional& NetShare_t::
 bypassErrors () const
 {
   return this->bypassErrors_;
 }
 
-NetShare::BypassErrorsOptional& NetShare::
+NetShare_t::BypassErrorsOptional& NetShare_t::
 bypassErrors ()
 {
   return this->bypassErrors_;
 }
 
-void NetShare::
+void NetShare_t::
 bypassErrors (const BypassErrorsType& x)
 {
   this->bypassErrors_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 bypassErrors (const BypassErrorsOptional& x)
 {
   this->bypassErrors_ = x;
 }
 
-const NetShare::UserContextOptional& NetShare::
+const NetShare_t::UserContextOptional& NetShare_t::
 userContext () const
 {
   return this->userContext_;
 }
 
-NetShare::UserContextOptional& NetShare::
+NetShare_t::UserContextOptional& NetShare_t::
 userContext ()
 {
   return this->userContext_;
 }
 
-void NetShare::
+void NetShare_t::
 userContext (const UserContextType& x)
 {
   this->userContext_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 userContext (const UserContextOptional& x)
 {
   this->userContext_ = x;
 }
 
-const NetShare::RemovePolicyOptional& NetShare::
+const NetShare_t::RemovePolicyOptional& NetShare_t::
 removePolicy () const
 {
   return this->removePolicy_;
 }
 
-NetShare::RemovePolicyOptional& NetShare::
+NetShare_t::RemovePolicyOptional& NetShare_t::
 removePolicy ()
 {
   return this->removePolicy_;
 }
 
-void NetShare::
+void NetShare_t::
 removePolicy (const RemovePolicyType& x)
 {
   this->removePolicy_.set (x);
 }
 
-void NetShare::
+void NetShare_t::
 removePolicy (const RemovePolicyOptional& x)
 {
   this->removePolicy_ = x;
 }
 
 
-// Properties
+// NetworkShareSettings
 // 
 
-const Properties::ActionOptional& Properties::
-action () const
+const NetworkShares::NetShareSequence& NetworkShares::
+NetShare () const
 {
-  return this->action_;
+  return this->NetShare_;
 }
 
-Properties::ActionOptional& Properties::
-action ()
+NetworkShares::NetShareSequence& NetworkShares::
+NetShare ()
 {
-  return this->action_;
+  return this->NetShare_;
 }
 
-void Properties::
-action (const ActionType& x)
+void NetworkShares::
+NetShare (const NetShareSequence& s)
 {
-  this->action_.set (x);
+  this->NetShare_ = s;
 }
 
-void Properties::
-action (const ActionOptional& x)
+const NetworkShares::ClsidType& NetworkShares::
+clsid () const
 {
-  this->action_ = x;
+  return this->clsid_.get ();
 }
 
-void Properties::
-action (::std::unique_ptr< ActionType > x)
+NetworkShares::ClsidType& NetworkShares::
+clsid ()
 {
-  this->action_.set (std::move (x));
+  return this->clsid_.get ();
 }
 
-const Properties::NameType& Properties::
-name () const
+void NetworkShares::
+clsid (const ClsidType& x)
 {
-  return this->name_.get ();
+  this->clsid_.set (x);
 }
 
-Properties::NameType& Properties::
-name ()
+void NetworkShares::
+clsid (::std::unique_ptr< ClsidType > x)
 {
-  return this->name_.get ();
+  this->clsid_.set (std::move (x));
 }
 
-void Properties::
-name (const NameType& x)
-{
-  this->name_.set (x);
-}
-
-void Properties::
-name (::std::unique_ptr< NameType > x)
-{
-  this->name_.set (std::move (x));
-}
-
-const Properties::PathType& Properties::
-path () const
-{
-  return this->path_.get ();
-}
-
-Properties::PathType& Properties::
-path ()
-{
-  return this->path_.get ();
-}
-
-void Properties::
-path (const PathType& x)
-{
-  this->path_.set (x);
-}
-
-void Properties::
-path (::std::unique_ptr< PathType > x)
-{
-  this->path_.set (std::move (x));
-}
-
-const Properties::CommentType& Properties::
-comment () const
-{
-  return this->comment_.get ();
-}
-
-Properties::CommentType& Properties::
-comment ()
-{
-  return this->comment_.get ();
-}
-
-void Properties::
-comment (const CommentType& x)
-{
-  this->comment_.set (x);
-}
-
-void Properties::
-comment (::std::unique_ptr< CommentType > x)
-{
-  this->comment_.set (std::move (x));
-}
-
-const Properties::AllRegularOptional& Properties::
-allRegular () const
-{
-  return this->allRegular_;
-}
-
-Properties::AllRegularOptional& Properties::
-allRegular ()
-{
-  return this->allRegular_;
-}
-
-void Properties::
-allRegular (const AllRegularType& x)
-{
-  this->allRegular_.set (x);
-}
-
-void Properties::
-allRegular (const AllRegularOptional& x)
-{
-  this->allRegular_ = x;
-}
-
-const Properties::AllHiddenOptional& Properties::
-allHidden () const
-{
-  return this->allHidden_;
-}
-
-Properties::AllHiddenOptional& Properties::
-allHidden ()
-{
-  return this->allHidden_;
-}
-
-void Properties::
-allHidden (const AllHiddenType& x)
-{
-  this->allHidden_.set (x);
-}
-
-void Properties::
-allHidden (const AllHiddenOptional& x)
-{
-  this->allHidden_ = x;
-}
-
-const Properties::AllAdminDriveOptional& Properties::
-allAdminDrive () const
-{
-  return this->allAdminDrive_;
-}
-
-Properties::AllAdminDriveOptional& Properties::
-allAdminDrive ()
-{
-  return this->allAdminDrive_;
-}
-
-void Properties::
-allAdminDrive (const AllAdminDriveType& x)
-{
-  this->allAdminDrive_.set (x);
-}
-
-void Properties::
-allAdminDrive (const AllAdminDriveOptional& x)
-{
-  this->allAdminDrive_ = x;
-}
-
-const Properties::LimitUsersOptional& Properties::
-limitUsers () const
-{
-  return this->limitUsers_;
-}
-
-Properties::LimitUsersOptional& Properties::
-limitUsers ()
-{
-  return this->limitUsers_;
-}
-
-void Properties::
-limitUsers (const LimitUsersType& x)
-{
-  this->limitUsers_.set (x);
-}
-
-void Properties::
-limitUsers (const LimitUsersOptional& x)
-{
-  this->limitUsers_ = x;
-}
-
-void Properties::
-limitUsers (::std::unique_ptr< LimitUsersType > x)
-{
-  this->limitUsers_.set (std::move (x));
-}
-
-const Properties::AbeOptional& Properties::
-abe () const
-{
-  return this->abe_;
-}
-
-Properties::AbeOptional& Properties::
-abe ()
-{
-  return this->abe_;
-}
-
-void Properties::
-abe (const AbeType& x)
-{
-  this->abe_.set (x);
-}
-
-void Properties::
-abe (const AbeOptional& x)
-{
-  this->abe_ = x;
-}
-
-void Properties::
-abe (::std::unique_ptr< AbeType > x)
-{
-  this->abe_.set (std::move (x));
-}
-
-const Properties::UserLimitOptional& Properties::
-userLimit () const
-{
-  return this->userLimit_;
-}
-
-Properties::UserLimitOptional& Properties::
-userLimit ()
-{
-  return this->userLimit_;
-}
-
-void Properties::
-userLimit (const UserLimitType& x)
-{
-  this->userLimit_.set (x);
-}
-
-void Properties::
-userLimit (const UserLimitOptional& x)
-{
-  this->userLimit_ = x;
-}
-
-const Properties::DisabledOptional& Properties::
+const NetworkShares::DisabledOptional& NetworkShares::
 disabled () const
 {
   return this->disabled_;
 }
 
-Properties::DisabledOptional& Properties::
+NetworkShares::DisabledOptional& NetworkShares::
 disabled ()
 {
   return this->disabled_;
 }
 
-void Properties::
+void NetworkShares::
 disabled (const DisabledType& x)
 {
   this->disabled_.set (x);
 }
 
-void Properties::
+void NetworkShares::
 disabled (const DisabledOptional& x)
 {
   this->disabled_ = x;
@@ -671,382 +659,13 @@ namespace _xsd
   type_factory_plate_init;
 }
 
-// NetworkShareSettings
+// Properties_t
 //
 
-NetworkShareSettings::
-NetworkShareSettings (const NetShareType& NetShare,
-                      const ClsidType& clsid)
-: ::xml_schema::Type (),
-  NetShare_ (NetShare, this),
-  clsid_ (clsid, this),
-  disabled_ (this)
-{
-}
-
-NetworkShareSettings::
-NetworkShareSettings (::std::unique_ptr< NetShareType > NetShare,
-                      const ClsidType& clsid)
-: ::xml_schema::Type (),
-  NetShare_ (std::move (NetShare), this),
-  clsid_ (clsid, this),
-  disabled_ (this)
-{
-}
-
-NetworkShareSettings::
-NetworkShareSettings (const NetworkShareSettings& x,
-                      ::xml_schema::Flags f,
-                      ::xml_schema::Container* c)
-: ::xml_schema::Type (x, f, c),
-  NetShare_ (x.NetShare_, f, this),
-  clsid_ (x.clsid_, f, this),
-  disabled_ (x.disabled_, f, this)
-{
-}
-
-NetworkShareSettings::
-NetworkShareSettings (const ::xercesc::DOMElement& e,
-                      ::xml_schema::Flags f,
-                      ::xml_schema::Container* c)
-: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  NetShare_ (this),
-  clsid_ (this),
-  disabled_ (this)
-{
-  if ((f & ::xml_schema::Flags::base) == 0)
-  {
-    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
-    this->parse (p, f);
-  }
-}
-
-void NetworkShareSettings::
-parse (::xsd::cxx::xml::dom::parser< char >& p,
-       ::xml_schema::Flags f)
-{
-  for (; p.more_content (); p.next_content (false))
-  {
-    const ::xercesc::DOMElement& i (p.cur_element ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    // NetShare
-    //
-    if (n.name () == "NetShare" && n.namespace_ ().empty ())
-    {
-      ::std::unique_ptr< NetShareType > r (
-        NetShareTraits::create (i, f, this));
-
-      if (!NetShare_.present ())
-      {
-        this->NetShare_.set (::std::move (r));
-        continue;
-      }
-    }
-
-    break;
-  }
-
-  if (!NetShare_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "NetShare",
-      "");
-  }
-
-  while (p.more_attributes ())
-  {
-    const ::xercesc::DOMAttr& i (p.next_attribute ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    if (n.name () == "clsid" && n.namespace_ ().empty ())
-    {
-      this->clsid_.set (ClsidTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "disabled" && n.namespace_ ().empty ())
-    {
-      this->disabled_.set (DisabledTraits::create (i, f, this));
-      continue;
-    }
-  }
-
-  if (!clsid_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "clsid",
-      "");
-  }
-}
-
-NetworkShareSettings* NetworkShareSettings::
-_clone (::xml_schema::Flags f,
-        ::xml_schema::Container* c) const
-{
-  return new class NetworkShareSettings (*this, f, c);
-}
-
-NetworkShareSettings& NetworkShareSettings::
-operator= (const NetworkShareSettings& x)
-{
-  if (this != &x)
-  {
-    static_cast< ::xml_schema::Type& > (*this) = x;
-    this->NetShare_ = x.NetShare_;
-    this->clsid_ = x.clsid_;
-    this->disabled_ = x.disabled_;
-  }
-
-  return *this;
-}
-
-NetworkShareSettings::
-~NetworkShareSettings ()
-{
-}
-
-// NetShare
-//
-
-NetShare::
-NetShare (const PropertiesType& Properties,
-          const ClsidType& clsid,
-          const NameType& name,
-          const UidType& uid)
-: ::xml_schema::Type (),
-  Properties_ (Properties, this),
-  clsid_ (clsid, this),
-  image_ (this),
-  name_ (name, this),
-  changed_ (this),
-  uid_ (uid, this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-}
-
-NetShare::
-NetShare (::std::unique_ptr< PropertiesType > Properties,
-          const ClsidType& clsid,
-          const NameType& name,
-          const UidType& uid)
-: ::xml_schema::Type (),
-  Properties_ (std::move (Properties), this),
-  clsid_ (clsid, this),
-  image_ (this),
-  name_ (name, this),
-  changed_ (this),
-  uid_ (uid, this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-}
-
-NetShare::
-NetShare (const NetShare& x,
-          ::xml_schema::Flags f,
-          ::xml_schema::Container* c)
-: ::xml_schema::Type (x, f, c),
-  Properties_ (x.Properties_, f, this),
-  clsid_ (x.clsid_, f, this),
-  image_ (x.image_, f, this),
-  name_ (x.name_, f, this),
-  changed_ (x.changed_, f, this),
-  uid_ (x.uid_, f, this),
-  desc_ (x.desc_, f, this),
-  bypassErrors_ (x.bypassErrors_, f, this),
-  userContext_ (x.userContext_, f, this),
-  removePolicy_ (x.removePolicy_, f, this)
-{
-}
-
-NetShare::
-NetShare (const ::xercesc::DOMElement& e,
-          ::xml_schema::Flags f,
-          ::xml_schema::Container* c)
-: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  Properties_ (this),
-  clsid_ (this),
-  image_ (this),
-  name_ (this),
-  changed_ (this),
-  uid_ (this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-  if ((f & ::xml_schema::Flags::base) == 0)
-  {
-    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
-    this->parse (p, f);
-  }
-}
-
-void NetShare::
-parse (::xsd::cxx::xml::dom::parser< char >& p,
-       ::xml_schema::Flags f)
-{
-  for (; p.more_content (); p.next_content (false))
-  {
-    const ::xercesc::DOMElement& i (p.cur_element ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    // Properties
-    //
-    if (n.name () == "Properties" && n.namespace_ ().empty ())
-    {
-      ::std::unique_ptr< PropertiesType > r (
-        PropertiesTraits::create (i, f, this));
-
-      if (!Properties_.present ())
-      {
-        this->Properties_.set (::std::move (r));
-        continue;
-      }
-    }
-
-    break;
-  }
-
-  if (!Properties_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "Properties",
-      "");
-  }
-
-  while (p.more_attributes ())
-  {
-    const ::xercesc::DOMAttr& i (p.next_attribute ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    if (n.name () == "clsid" && n.namespace_ ().empty ())
-    {
-      this->clsid_.set (ClsidTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "image" && n.namespace_ ().empty ())
-    {
-      this->image_.set (ImageTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "name" && n.namespace_ ().empty ())
-    {
-      this->name_.set (NameTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "changed" && n.namespace_ ().empty ())
-    {
-      this->changed_.set (ChangedTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "uid" && n.namespace_ ().empty ())
-    {
-      this->uid_.set (UidTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "desc" && n.namespace_ ().empty ())
-    {
-      this->desc_.set (DescTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "bypassErrors" && n.namespace_ ().empty ())
-    {
-      this->bypassErrors_.set (BypassErrorsTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "userContext" && n.namespace_ ().empty ())
-    {
-      this->userContext_.set (UserContextTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "removePolicy" && n.namespace_ ().empty ())
-    {
-      this->removePolicy_.set (RemovePolicyTraits::create (i, f, this));
-      continue;
-    }
-  }
-
-  if (!clsid_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "clsid",
-      "");
-  }
-
-  if (!name_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "name",
-      "");
-  }
-
-  if (!uid_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "uid",
-      "");
-  }
-}
-
-NetShare* NetShare::
-_clone (::xml_schema::Flags f,
-        ::xml_schema::Container* c) const
-{
-  return new class NetShare (*this, f, c);
-}
-
-NetShare& NetShare::
-operator= (const NetShare& x)
-{
-  if (this != &x)
-  {
-    static_cast< ::xml_schema::Type& > (*this) = x;
-    this->Properties_ = x.Properties_;
-    this->clsid_ = x.clsid_;
-    this->image_ = x.image_;
-    this->name_ = x.name_;
-    this->changed_ = x.changed_;
-    this->uid_ = x.uid_;
-    this->desc_ = x.desc_;
-    this->bypassErrors_ = x.bypassErrors_;
-    this->userContext_ = x.userContext_;
-    this->removePolicy_ = x.removePolicy_;
-  }
-
-  return *this;
-}
-
-NetShare::
-~NetShare ()
-{
-}
-
-// Properties
-//
-
-Properties::
-Properties (const NameType& name,
-            const PathType& path,
-            const CommentType& comment)
+Properties_t::
+Properties_t (const NameType& name,
+              const PathType& path,
+              const CommentType& comment)
 : ::xml_schema::Type (),
   action_ (this),
   name_ (name, this),
@@ -1062,10 +681,10 @@ Properties (const NameType& name,
 {
 }
 
-Properties::
-Properties (const Properties& x,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const Properties_t& x,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
   action_ (x.action_, f, this),
   name_ (x.name_, f, this),
@@ -1081,10 +700,10 @@ Properties (const Properties& x,
 {
 }
 
-Properties::
-Properties (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const ::xercesc::DOMElement& e,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
   action_ (this),
   name_ (this),
@@ -1105,7 +724,7 @@ Properties (const ::xercesc::DOMElement& e,
   }
 }
 
-void Properties::
+void Properties_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
@@ -1204,15 +823,15 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
   }
 }
 
-Properties* Properties::
+Properties_t* Properties_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Properties (*this, f, c);
+  return new class Properties_t (*this, f, c);
 }
 
-Properties& Properties::
-operator= (const Properties& x)
+Properties_t& Properties_t::
+operator= (const Properties_t& x)
 {
   if (this != &x)
   {
@@ -1233,8 +852,366 @@ operator= (const Properties& x)
   return *this;
 }
 
-Properties::
-~Properties ()
+Properties_t::
+~Properties_t ()
+{
+}
+
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Properties_t >
+_xsd_Properties_t_type_factory_init (
+  "Properties_t",
+  "");
+
+// NetShare_t
+//
+
+NetShare_t::
+NetShare_t (const ClsidType& clsid,
+            const NameType& name,
+            const UidType& uid)
+: ::xml_schema::Type (),
+  Properties_ (this),
+  clsid_ (clsid, this),
+  image_ (this),
+  name_ (name, this),
+  changed_ (this),
+  uid_ (uid, this),
+  desc_ (this),
+  bypassErrors_ (this),
+  userContext_ (this),
+  removePolicy_ (this)
+{
+}
+
+NetShare_t::
+NetShare_t (const NetShare_t& x,
+            ::xml_schema::Flags f,
+            ::xml_schema::Container* c)
+: ::xml_schema::Type (x, f, c),
+  Properties_ (x.Properties_, f, this),
+  clsid_ (x.clsid_, f, this),
+  image_ (x.image_, f, this),
+  name_ (x.name_, f, this),
+  changed_ (x.changed_, f, this),
+  uid_ (x.uid_, f, this),
+  desc_ (x.desc_, f, this),
+  bypassErrors_ (x.bypassErrors_, f, this),
+  userContext_ (x.userContext_, f, this),
+  removePolicy_ (x.removePolicy_, f, this)
+{
+}
+
+NetShare_t::
+NetShare_t (const ::xercesc::DOMElement& e,
+            ::xml_schema::Flags f,
+            ::xml_schema::Container* c)
+: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
+  Properties_ (this),
+  clsid_ (this),
+  image_ (this),
+  name_ (this),
+  changed_ (this),
+  uid_ (this),
+  desc_ (this),
+  bypassErrors_ (this),
+  userContext_ (this),
+  removePolicy_ (this)
+{
+  if ((f & ::xml_schema::Flags::base) == 0)
+  {
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+    this->parse (p, f);
+  }
+}
+
+void NetShare_t::
+parse (::xsd::cxx::xml::dom::parser< char >& p,
+       ::xml_schema::Flags f)
+{
+  for (; p.more_content (); p.next_content (false))
+  {
+    const ::xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // Properties
+    //
+    {
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "Properties",
+          "",
+          &::xsd::cxx::tree::factory_impl< PropertiesType >,
+          false, true, i, n, f, this));
+
+      if (tmp.get () != 0)
+      {
+        ::std::unique_ptr< PropertiesType > r (
+          dynamic_cast< PropertiesType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->Properties_.push_back (::std::move (r));
+        continue;
+      }
+    }
+
+    break;
+  }
+
+  while (p.more_attributes ())
+  {
+    const ::xercesc::DOMAttr& i (p.next_attribute ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    if (n.name () == "clsid" && n.namespace_ ().empty ())
+    {
+      this->clsid_.set (ClsidTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "image" && n.namespace_ ().empty ())
+    {
+      this->image_.set (ImageTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "name" && n.namespace_ ().empty ())
+    {
+      this->name_.set (NameTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "changed" && n.namespace_ ().empty ())
+    {
+      this->changed_.set (ChangedTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "uid" && n.namespace_ ().empty ())
+    {
+      this->uid_.set (UidTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "desc" && n.namespace_ ().empty ())
+    {
+      this->desc_.set (DescTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "bypassErrors" && n.namespace_ ().empty ())
+    {
+      this->bypassErrors_.set (BypassErrorsTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "userContext" && n.namespace_ ().empty ())
+    {
+      this->userContext_.set (UserContextTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "removePolicy" && n.namespace_ ().empty ())
+    {
+      this->removePolicy_.set (RemovePolicyTraits::create (i, f, this));
+      continue;
+    }
+  }
+
+  if (!clsid_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "clsid",
+      "");
+  }
+
+  if (!name_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "name",
+      "");
+  }
+
+  if (!uid_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "uid",
+      "");
+  }
+}
+
+NetShare_t* NetShare_t::
+_clone (::xml_schema::Flags f,
+        ::xml_schema::Container* c) const
+{
+  return new class NetShare_t (*this, f, c);
+}
+
+NetShare_t& NetShare_t::
+operator= (const NetShare_t& x)
+{
+  if (this != &x)
+  {
+    static_cast< ::xml_schema::Type& > (*this) = x;
+    this->Properties_ = x.Properties_;
+    this->clsid_ = x.clsid_;
+    this->image_ = x.image_;
+    this->name_ = x.name_;
+    this->changed_ = x.changed_;
+    this->uid_ = x.uid_;
+    this->desc_ = x.desc_;
+    this->bypassErrors_ = x.bypassErrors_;
+    this->userContext_ = x.userContext_;
+    this->removePolicy_ = x.removePolicy_;
+  }
+
+  return *this;
+}
+
+NetShare_t::
+~NetShare_t ()
+{
+}
+
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, NetShare_t >
+_xsd_NetShare_t_type_factory_init (
+  "NetShare_t",
+  "");
+
+// NetworkShareSettings
+//
+
+NetworkShares::
+NetworkShares (const ClsidType& clsid)
+: ::xml_schema::Type (),
+  NetShare_ (this),
+  clsid_ (clsid, this),
+  disabled_ (this)
+{
+}
+
+NetworkShares::
+NetworkShares (const NetworkShares& x,
+                      ::xml_schema::Flags f,
+                      ::xml_schema::Container* c)
+: ::xml_schema::Type (x, f, c),
+  NetShare_ (x.NetShare_, f, this),
+  clsid_ (x.clsid_, f, this),
+  disabled_ (x.disabled_, f, this)
+{
+}
+
+NetworkShares::
+NetworkShares (const ::xercesc::DOMElement& e,
+                      ::xml_schema::Flags f,
+                      ::xml_schema::Container* c)
+: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
+  NetShare_ (this),
+  clsid_ (this),
+  disabled_ (this)
+{
+  if ((f & ::xml_schema::Flags::base) == 0)
+  {
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+    this->parse (p, f);
+  }
+}
+
+void NetworkShares::
+parse (::xsd::cxx::xml::dom::parser< char >& p,
+       ::xml_schema::Flags f)
+{
+  for (; p.more_content (); p.next_content (false))
+  {
+    const ::xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // NetShare
+    //
+    {
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "NetShare",
+          "",
+          &::xsd::cxx::tree::factory_impl< NetShareType >,
+          false, true, i, n, f, this));
+
+      if (tmp.get () != 0)
+      {
+        ::std::unique_ptr< NetShareType > r (
+          dynamic_cast< NetShareType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->NetShare_.push_back (::std::move (r));
+        continue;
+      }
+    }
+
+    break;
+  }
+
+  while (p.more_attributes ())
+  {
+    const ::xercesc::DOMAttr& i (p.next_attribute ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    if (n.name () == "clsid" && n.namespace_ ().empty ())
+    {
+      this->clsid_.set (ClsidTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "disabled" && n.namespace_ ().empty ())
+    {
+      this->disabled_.set (DisabledTraits::create (i, f, this));
+      continue;
+    }
+  }
+
+  if (!clsid_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "clsid",
+      "");
+  }
+}
+
+NetworkShares* NetworkShares::
+_clone (::xml_schema::Flags f,
+        ::xml_schema::Container* c) const
+{
+  return new class NetworkShares (*this, f, c);
+}
+
+NetworkShares& NetworkShares::
+operator= (const NetworkShares& x)
+{
+  if (this != &x)
+  {
+    static_cast< ::xml_schema::Type& > (*this) = x;
+    this->NetShare_ = x.NetShare_;
+    this->clsid_ = x.clsid_;
+    this->disabled_ = x.disabled_;
+  }
+
+  return *this;
+}
+
+NetworkShares::
+~NetworkShares ()
 {
 }
 
@@ -1250,60 +1227,7 @@ namespace _xsd
 }
 
 ::std::ostream&
-operator<< (::std::ostream& o, const NetworkShareSettings& i)
-{
-  o << ::std::endl << "NetShare: " << i.NetShare ();
-  o << ::std::endl << "clsid: " << i.clsid ();
-  if (i.disabled ())
-  {
-    o << ::std::endl << "disabled: " << *i.disabled ();
-  }
-
-  return o;
-}
-
-::std::ostream&
-operator<< (::std::ostream& o, const NetShare& i)
-{
-  o << ::std::endl << "Properties: " << i.Properties ();
-  o << ::std::endl << "clsid: " << i.clsid ();
-  if (i.image ())
-  {
-    o << ::std::endl << "image: " << *i.image ();
-  }
-
-  o << ::std::endl << "name: " << i.name ();
-  if (i.changed ())
-  {
-    o << ::std::endl << "changed: " << *i.changed ();
-  }
-
-  o << ::std::endl << "uid: " << i.uid ();
-  if (i.desc ())
-  {
-    o << ::std::endl << "desc: " << *i.desc ();
-  }
-
-  if (i.bypassErrors ())
-  {
-    o << ::std::endl << "bypassErrors: " << *i.bypassErrors ();
-  }
-
-  if (i.userContext ())
-  {
-    o << ::std::endl << "userContext: " << *i.userContext ();
-  }
-
-  if (i.removePolicy ())
-  {
-    o << ::std::endl << "removePolicy: " << *i.removePolicy ();
-  }
-
-  return o;
-}
-
-::std::ostream&
-operator<< (::std::ostream& o, const Properties& i)
+operator<< (::std::ostream& o, const Properties_t& i)
 {
   if (i.action ())
   {
@@ -1351,11 +1275,96 @@ operator<< (::std::ostream& o, const Properties& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Properties_t >
+_xsd_Properties_t_std_ostream_init;
+
+::std::ostream&
+operator<< (::std::ostream& o, const NetShare_t& i)
+{
+  {
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (NetShare_t::PropertiesConstIterator
+         b (i.Properties ().begin ()), e (i.Properties ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Properties: ";
+      om.insert (o, *b);
+    }
+  }
+
+  o << ::std::endl << "clsid: " << i.clsid ();
+  if (i.image ())
+  {
+    o << ::std::endl << "image: " << *i.image ();
+  }
+
+  o << ::std::endl << "name: " << i.name ();
+  if (i.changed ())
+  {
+    o << ::std::endl << "changed: " << *i.changed ();
+  }
+
+  o << ::std::endl << "uid: " << i.uid ();
+  if (i.desc ())
+  {
+    o << ::std::endl << "desc: " << *i.desc ();
+  }
+
+  if (i.bypassErrors ())
+  {
+    o << ::std::endl << "bypassErrors: " << *i.bypassErrors ();
+  }
+
+  if (i.userContext ())
+  {
+    o << ::std::endl << "userContext: " << *i.userContext ();
+  }
+
+  if (i.removePolicy ())
+  {
+    o << ::std::endl << "removePolicy: " << *i.removePolicy ();
+  }
+
+  return o;
+}
+
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, NetShare_t >
+_xsd_NetShare_t_std_ostream_init;
+
+::std::ostream&
+operator<< (::std::ostream& o, const NetworkShares& i)
+{
+  {
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (NetworkShares::NetShareConstIterator
+         b (i.NetShare ().begin ()), e (i.NetShare ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "NetShare: ";
+      om.insert (o, *b);
+    }
+  }
+
+  o << ::std::endl << "clsid: " << i.clsid ();
+  if (i.disabled ())
+  {
+    o << ::std::endl << "disabled: " << *i.disabled ();
+  }
+
+  return o;
+}
+
 #include <istream>
 #include <xsd/cxx/xml/sax/std-input-source.hxx>
 #include <xsd/cxx/tree/error-handler.hxx>
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::std::string& u,
                        ::xml_schema::Flags f,
                        const ::xml_schema::Properties& p)
@@ -1372,12 +1381,12 @@ NetworkShareSettings_ (const ::std::string& u,
 
   h.throw_if_failed< ::xsd::cxx::tree::parsing< char > > ();
 
-  return ::std::unique_ptr< ::NetworkShareSettings > (
+  return ::std::unique_ptr< ::NetworkShares > (
     ::NetworkShareSettings_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::std::string& u,
                        ::xml_schema::ErrorHandler& h,
                        ::xml_schema::Flags f,
@@ -1394,12 +1403,12 @@ NetworkShareSettings_ (const ::std::string& u,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::NetworkShareSettings > (
+  return ::std::unique_ptr< ::NetworkShares > (
     ::NetworkShareSettings_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::std::string& u,
                        ::xercesc::DOMErrorHandler& h,
                        ::xml_schema::Flags f,
@@ -1412,12 +1421,12 @@ NetworkShareSettings_ (const ::std::string& u,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::NetworkShareSettings > (
+  return ::std::unique_ptr< ::NetworkShares > (
     ::NetworkShareSettings_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        ::xml_schema::Flags f,
                        const ::xml_schema::Properties& p)
@@ -1430,7 +1439,7 @@ NetworkShareSettings_ (::std::istream& is,
   return ::NetworkShareSettings_ (isrc, f, p);
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        ::xml_schema::ErrorHandler& h,
                        ::xml_schema::Flags f,
@@ -1444,7 +1453,7 @@ NetworkShareSettings_ (::std::istream& is,
   return ::NetworkShareSettings_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        ::xercesc::DOMErrorHandler& h,
                        ::xml_schema::Flags f,
@@ -1454,7 +1463,7 @@ NetworkShareSettings_ (::std::istream& is,
   return ::NetworkShareSettings_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        const ::std::string& sid,
                        ::xml_schema::Flags f,
@@ -1468,7 +1477,7 @@ NetworkShareSettings_ (::std::istream& is,
   return ::NetworkShareSettings_ (isrc, f, p);
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        const ::std::string& sid,
                        ::xml_schema::ErrorHandler& h,
@@ -1483,7 +1492,7 @@ NetworkShareSettings_ (::std::istream& is,
   return ::NetworkShareSettings_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        const ::std::string& sid,
                        ::xercesc::DOMErrorHandler& h,
@@ -1494,7 +1503,7 @@ NetworkShareSettings_ (::std::istream& is,
   return ::NetworkShareSettings_ (isrc, h, f, p);
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xercesc::InputSource& i,
                        ::xml_schema::Flags f,
                        const ::xml_schema::Properties& p)
@@ -1507,12 +1516,12 @@ NetworkShareSettings_ (::xercesc::InputSource& i,
 
   h.throw_if_failed< ::xsd::cxx::tree::parsing< char > > ();
 
-  return ::std::unique_ptr< ::NetworkShareSettings > (
+  return ::std::unique_ptr< ::NetworkShares > (
     ::NetworkShareSettings_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xercesc::InputSource& i,
                        ::xml_schema::ErrorHandler& h,
                        ::xml_schema::Flags f,
@@ -1525,12 +1534,12 @@ NetworkShareSettings_ (::xercesc::InputSource& i,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::NetworkShareSettings > (
+  return ::std::unique_ptr< ::NetworkShares > (
     ::NetworkShareSettings_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xercesc::InputSource& i,
                        ::xercesc::DOMErrorHandler& h,
                        ::xml_schema::Flags f,
@@ -1543,12 +1552,12 @@ NetworkShareSettings_ (::xercesc::InputSource& i,
   if (!d.get ())
     throw ::xsd::cxx::tree::parsing< char > ();
 
-  return ::std::unique_ptr< ::NetworkShareSettings > (
+  return ::std::unique_ptr< ::NetworkShares > (
     ::NetworkShareSettings_ (
       std::move (d), f | ::xml_schema::Flags::own_dom, p));
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::xercesc::DOMDocument& doc,
                        ::xml_schema::Flags f,
                        const ::xml_schema::Properties& p)
@@ -1558,7 +1567,7 @@ NetworkShareSettings_ (const ::xercesc::DOMDocument& doc,
     ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       static_cast< ::xercesc::DOMDocument* > (doc.cloneNode (true)));
 
-    return ::std::unique_ptr< ::NetworkShareSettings > (
+    return ::std::unique_ptr< ::NetworkShares > (
       ::NetworkShareSettings_ (
         std::move (d), f | ::xml_schema::Flags::own_dom, p));
   }
@@ -1570,8 +1579,8 @@ NetworkShareSettings_ (const ::xercesc::DOMDocument& doc,
   if (n.name () == "NetworkShareSettings" &&
       n.namespace_ () == "")
   {
-    ::std::unique_ptr< ::NetworkShareSettings > r (
-      ::xsd::cxx::tree::traits< ::NetworkShareSettings, char >::create (
+    ::std::unique_ptr< ::NetworkShares > r (
+      ::xsd::cxx::tree::traits< ::NetworkShares, char >::create (
         e, f, 0));
     return r;
   }
@@ -1583,7 +1592,7 @@ NetworkShareSettings_ (const ::xercesc::DOMDocument& doc,
     "");
 }
 
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
                        ::xml_schema::Flags f,
                        const ::xml_schema::Properties&)
@@ -1608,8 +1617,8 @@ NetworkShareSettings_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d
   if (n.name () == "NetworkShareSettings" &&
       n.namespace_ () == "")
   {
-    ::std::unique_ptr< ::NetworkShareSettings > r (
-      ::xsd::cxx::tree::traits< ::NetworkShareSettings, char >::create (
+    ::std::unique_ptr< ::NetworkShares > r (
+      ::xsd::cxx::tree::traits< ::NetworkShares, char >::create (
         e, f, 0));
     return r;
   }

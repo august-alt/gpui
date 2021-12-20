@@ -577,9 +577,9 @@ namespace xml_schema
 
 // Forward declarations.
 //
-class NetworkShareSettings;
-class NetShare;
-class Properties;
+class Properties_t;
+class NetShare_t;
+class NetworkShares;
 
 #include <memory>    // ::std::unique_ptr
 #include <limits>    // std::numeric_limits
@@ -599,1063 +599,11 @@ class Properties;
 #include <xsd/cxx/tree/containers-wildcard.hxx>
 
 /**
- * @brief Class corresponding to the %NetworkShareSettings schema type.
+ * @brief Class corresponding to the %Properties_t schema type.
  *
  * @nosubgrouping
  */
-class NetworkShareSettings: public ::xml_schema::Type
-{
-  public:
-  /**
-   * @name NetShare
-   *
-   * @brief Accessor and modifier functions for the %NetShare
-   * required element.
-   */
-  //@{
-
-  /**
-   * @brief Element type.
-   */
-  typedef ::NetShare NetShareType;
-
-  /**
-   * @brief Element traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< NetShareType, char > NetShareTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the element.
-   *
-   * @return A constant reference to the element.
-   */
-  const NetShareType&
-  NetShare () const;
-
-  /**
-   * @brief Return a read-write reference to the element.
-   *
-   * @return A reference to the element.
-   */
-  NetShareType&
-  NetShare ();
-
-  /**
-   * @brief Set the element value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the element.
-   */
-  void
-  NetShare (const NetShareType& x);
-
-  /**
-   * @brief Set the element value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  NetShare (::std::unique_ptr< NetShareType > p);
-
-  //@}
-
-  /**
-   * @name clsid
-   *
-   * @brief Accessor and modifier functions for the %clsid
-   * required attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String ClsidType;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute.
-   *
-   * @return A constant reference to the attribute.
-   */
-  const ClsidType&
-  clsid () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute.
-   *
-   * @return A reference to the attribute.
-   */
-  ClsidType&
-  clsid ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  clsid (const ClsidType& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  clsid (::std::unique_ptr< ClsidType > p);
-
-  //@}
-
-  /**
-   * @name disabled
-   *
-   * @brief Accessor and modifier functions for the %disabled
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::Boolean DisabledType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< DisabledType > DisabledOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< DisabledType, char > DisabledTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const DisabledOptional&
-  disabled () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  DisabledOptional&
-  disabled ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  disabled (const DisabledType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  disabled (const DisabledOptional& x);
-
-  //@}
-
-  /**
-   * @name Constructors
-   */
-  //@{
-
-  /**
-   * @brief Create an instance from the ultimate base and
-   * initializers for required elements and attributes.
-   */
-  NetworkShareSettings (const NetShareType&,
-                        const ClsidType&);
-
-  /**
-   * @brief Create an instance from the ultimate base and
-   * initializers for required elements and attributes
-   * (::std::unique_ptr version).
-   *
-   * This constructor will try to use the passed values directly
-   * instead of making copies.
-   */
-  NetworkShareSettings (::std::unique_ptr< NetShareType >,
-                        const ClsidType&);
-
-  /**
-   * @brief Create an instance from a DOM element.
-   *
-   * @param e A DOM element to extract the data from.
-   * @param f Flags to create the new instance with.
-   * @param c A pointer to the object that will contain the new
-   * instance.
-   */
-  NetworkShareSettings (const ::xercesc::DOMElement& e,
-                        ::xml_schema::Flags f = 0,
-                        ::xml_schema::Container* c = 0);
-
-  /**
-   * @brief Copy constructor.
-   *
-   * @param x An instance to make a copy of.
-   * @param f Flags to create the copy with.
-   * @param c A pointer to the object that will contain the copy.
-   *
-   * For polymorphic object models use the @c _clone function instead.
-   */
-  NetworkShareSettings (const NetworkShareSettings& x,
-                        ::xml_schema::Flags f = 0,
-                        ::xml_schema::Container* c = 0);
-
-  /**
-   * @brief Copy the instance polymorphically.
-   *
-   * @param f Flags to create the copy with.
-   * @param c A pointer to the object that will contain the copy.
-   * @return A pointer to the dynamically allocated copy.
-   *
-   * This function ensures that the dynamic type of the instance is
-   * used for copying and should be used for polymorphic object
-   * models instead of the copy constructor.
-   */
-  virtual NetworkShareSettings*
-  _clone (::xml_schema::Flags f = 0,
-          ::xml_schema::Container* c = 0) const;
-
-  /**
-   * @brief Copy assignment operator.
-   *
-   * @param x An instance to make a copy of.
-   * @return A reference to itself.
-   *
-   * For polymorphic object models use the @c _clone function instead.
-   */
-  NetworkShareSettings&
-  operator= (const NetworkShareSettings& x);
-
-  //@}
-
-  /**
-   * @brief Destructor.
-   */
-  virtual 
-  ~NetworkShareSettings ();
-
-  // Implementation.
-  //
-
-  //@cond
-
-  protected:
-  void
-  parse (::xsd::cxx::xml::dom::parser< char >&,
-         ::xml_schema::Flags);
-
-  protected:
-  ::xsd::cxx::tree::one< NetShareType > NetShare_;
-  ::xsd::cxx::tree::one< ClsidType > clsid_;
-  DisabledOptional disabled_;
-
-  //@endcond
-};
-
-/**
- * @brief Class corresponding to the %NetShare schema type.
- *
- * @nosubgrouping
- */
-class NetShare: public ::xml_schema::Type
-{
-  public:
-  /**
-   * @name Properties
-   *
-   * @brief Accessor and modifier functions for the %Properties
-   * required element.
-   */
-  //@{
-
-  /**
-   * @brief Element type.
-   */
-  typedef ::Properties PropertiesType;
-
-  /**
-   * @brief Element traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< PropertiesType, char > PropertiesTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the element.
-   *
-   * @return A constant reference to the element.
-   */
-  const PropertiesType&
-  Properties () const;
-
-  /**
-   * @brief Return a read-write reference to the element.
-   *
-   * @return A reference to the element.
-   */
-  PropertiesType&
-  Properties ();
-
-  /**
-   * @brief Set the element value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the element.
-   */
-  void
-  Properties (const PropertiesType& x);
-
-  /**
-   * @brief Set the element value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  Properties (::std::unique_ptr< PropertiesType > p);
-
-  //@}
-
-  /**
-   * @name clsid
-   *
-   * @brief Accessor and modifier functions for the %clsid
-   * required attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String ClsidType;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute.
-   *
-   * @return A constant reference to the attribute.
-   */
-  const ClsidType&
-  clsid () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute.
-   *
-   * @return A reference to the attribute.
-   */
-  ClsidType&
-  clsid ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  clsid (const ClsidType& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  clsid (::std::unique_ptr< ClsidType > p);
-
-  //@}
-
-  /**
-   * @name image
-   *
-   * @brief Accessor and modifier functions for the %image
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::UnsignedByte ImageType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< ImageType > ImageOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< ImageType, char > ImageTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const ImageOptional&
-  image () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  ImageOptional&
-  image ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  image (const ImageType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  image (const ImageOptional& x);
-
-  //@}
-
-  /**
-   * @name name
-   *
-   * @brief Accessor and modifier functions for the %name
-   * required attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String NameType;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< NameType, char > NameTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute.
-   *
-   * @return A constant reference to the attribute.
-   */
-  const NameType&
-  name () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute.
-   *
-   * @return A reference to the attribute.
-   */
-  NameType&
-  name ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  name (const NameType& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  name (::std::unique_ptr< NameType > p);
-
-  //@}
-
-  /**
-   * @name changed
-   *
-   * @brief Accessor and modifier functions for the %changed
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String ChangedType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< ChangedType > ChangedOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< ChangedType, char > ChangedTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const ChangedOptional&
-  changed () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  ChangedOptional&
-  changed ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  changed (const ChangedType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  changed (const ChangedOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  changed (::std::unique_ptr< ChangedType > p);
-
-  //@}
-
-  /**
-   * @name uid
-   *
-   * @brief Accessor and modifier functions for the %uid
-   * required attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String UidType;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< UidType, char > UidTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute.
-   *
-   * @return A constant reference to the attribute.
-   */
-  const UidType&
-  uid () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute.
-   *
-   * @return A reference to the attribute.
-   */
-  UidType&
-  uid ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  uid (const UidType& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  uid (::std::unique_ptr< UidType > p);
-
-  //@}
-
-  /**
-   * @name desc
-   *
-   * @brief Accessor and modifier functions for the %desc
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String DescType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< DescType > DescOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< DescType, char > DescTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const DescOptional&
-  desc () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  DescOptional&
-  desc ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  desc (const DescType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  desc (const DescOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  desc (::std::unique_ptr< DescType > p);
-
-  //@}
-
-  /**
-   * @name bypassErrors
-   *
-   * @brief Accessor and modifier functions for the %bypassErrors
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::Boolean BypassErrorsType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< BypassErrorsType > BypassErrorsOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< BypassErrorsType, char > BypassErrorsTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const BypassErrorsOptional&
-  bypassErrors () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  BypassErrorsOptional&
-  bypassErrors ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  bypassErrors (const BypassErrorsType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  bypassErrors (const BypassErrorsOptional& x);
-
-  //@}
-
-  /**
-   * @name userContext
-   *
-   * @brief Accessor and modifier functions for the %userContext
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::Boolean UserContextType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< UserContextType > UserContextOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< UserContextType, char > UserContextTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const UserContextOptional&
-  userContext () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  UserContextOptional&
-  userContext ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  userContext (const UserContextType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  userContext (const UserContextOptional& x);
-
-  //@}
-
-  /**
-   * @name removePolicy
-   *
-   * @brief Accessor and modifier functions for the %removePolicy
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::Boolean RemovePolicyType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< RemovePolicyType > RemovePolicyOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< RemovePolicyType, char > RemovePolicyTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const RemovePolicyOptional&
-  removePolicy () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  RemovePolicyOptional&
-  removePolicy ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  removePolicy (const RemovePolicyType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  removePolicy (const RemovePolicyOptional& x);
-
-  //@}
-
-  /**
-   * @name Constructors
-   */
-  //@{
-
-  /**
-   * @brief Create an instance from the ultimate base and
-   * initializers for required elements and attributes.
-   */
-  NetShare (const PropertiesType&,
-            const ClsidType&,
-            const NameType&,
-            const UidType&);
-
-  /**
-   * @brief Create an instance from the ultimate base and
-   * initializers for required elements and attributes
-   * (::std::unique_ptr version).
-   *
-   * This constructor will try to use the passed values directly
-   * instead of making copies.
-   */
-  NetShare (::std::unique_ptr< PropertiesType >,
-            const ClsidType&,
-            const NameType&,
-            const UidType&);
-
-  /**
-   * @brief Create an instance from a DOM element.
-   *
-   * @param e A DOM element to extract the data from.
-   * @param f Flags to create the new instance with.
-   * @param c A pointer to the object that will contain the new
-   * instance.
-   */
-  NetShare (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f = 0,
-            ::xml_schema::Container* c = 0);
-
-  /**
-   * @brief Copy constructor.
-   *
-   * @param x An instance to make a copy of.
-   * @param f Flags to create the copy with.
-   * @param c A pointer to the object that will contain the copy.
-   *
-   * For polymorphic object models use the @c _clone function instead.
-   */
-  NetShare (const NetShare& x,
-            ::xml_schema::Flags f = 0,
-            ::xml_schema::Container* c = 0);
-
-  /**
-   * @brief Copy the instance polymorphically.
-   *
-   * @param f Flags to create the copy with.
-   * @param c A pointer to the object that will contain the copy.
-   * @return A pointer to the dynamically allocated copy.
-   *
-   * This function ensures that the dynamic type of the instance is
-   * used for copying and should be used for polymorphic object
-   * models instead of the copy constructor.
-   */
-  virtual NetShare*
-  _clone (::xml_schema::Flags f = 0,
-          ::xml_schema::Container* c = 0) const;
-
-  /**
-   * @brief Copy assignment operator.
-   *
-   * @param x An instance to make a copy of.
-   * @return A reference to itself.
-   *
-   * For polymorphic object models use the @c _clone function instead.
-   */
-  NetShare&
-  operator= (const NetShare& x);
-
-  //@}
-
-  /**
-   * @brief Destructor.
-   */
-  virtual 
-  ~NetShare ();
-
-  // Implementation.
-  //
-
-  //@cond
-
-  protected:
-  void
-  parse (::xsd::cxx::xml::dom::parser< char >&,
-         ::xml_schema::Flags);
-
-  protected:
-  ::xsd::cxx::tree::one< PropertiesType > Properties_;
-  ::xsd::cxx::tree::one< ClsidType > clsid_;
-  ImageOptional image_;
-  ::xsd::cxx::tree::one< NameType > name_;
-  ChangedOptional changed_;
-  ::xsd::cxx::tree::one< UidType > uid_;
-  DescOptional desc_;
-  BypassErrorsOptional bypassErrors_;
-  UserContextOptional userContext_;
-  RemovePolicyOptional removePolicy_;
-
-  //@endcond
-};
-
-/**
- * @brief Class corresponding to the %Properties schema type.
- *
- * @nosubgrouping
- */
-class Properties: public ::xml_schema::Type
+class Properties_t: public ::xml_schema::Type
 {
   public:
   /**
@@ -2394,9 +1342,9 @@ class Properties: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  Properties (const NameType&,
-              const PathType&,
-              const CommentType&);
+  Properties_t (const NameType&,
+                const PathType&,
+                const CommentType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -2406,9 +1354,9 @@ class Properties: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  Properties (const ::xercesc::DOMElement& e,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  Properties_t (const ::xercesc::DOMElement& e,
+                ::xml_schema::Flags f = 0,
+                ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -2419,9 +1367,9 @@ class Properties: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Properties (const Properties& x,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  Properties_t (const Properties_t& x,
+                ::xml_schema::Flags f = 0,
+                ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -2434,7 +1382,7 @@ class Properties: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual Properties*
+  virtual Properties_t*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -2446,8 +1394,8 @@ class Properties: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Properties&
-  operator= (const Properties& x);
+  Properties_t&
+  operator= (const Properties_t& x);
 
   //@}
 
@@ -2455,7 +1403,7 @@ class Properties: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~Properties ();
+  ~Properties_t ();
 
   // Implementation.
   //
@@ -2483,16 +1431,1054 @@ class Properties: public ::xml_schema::Type
   //@endcond
 };
 
+/**
+ * @brief Class corresponding to the %NetShare_t schema type.
+ *
+ * @nosubgrouping
+ */
+class NetShare_t: public ::xml_schema::Type
+{
+  public:
+  /**
+   * @name Properties
+   *
+   * @brief Accessor and modifier functions for the %Properties
+   * sequence element.
+   */
+  //@{
+
+  /**
+   * @brief Element type.
+   */
+  typedef ::Properties_t PropertiesType;
+
+  /**
+   * @brief Element sequence container type.
+   */
+  typedef ::xsd::cxx::tree::sequence< PropertiesType > PropertiesSequence;
+
+  /**
+   * @brief Element iterator type.
+   */
+  typedef PropertiesSequence::iterator PropertiesIterator;
+
+  /**
+   * @brief Element constant iterator type.
+   */
+  typedef PropertiesSequence::const_iterator PropertiesConstIterator;
+
+  /**
+   * @brief Element traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< PropertiesType, char > PropertiesTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the element
+   * sequence.
+   *
+   * @return A constant reference to the sequence container.
+   */
+  const PropertiesSequence&
+  Properties () const;
+
+  /**
+   * @brief Return a read-write reference to the element sequence.
+   *
+   * @return A reference to the sequence container.
+   */
+  PropertiesSequence&
+  Properties ();
+
+  /**
+   * @brief Copy elements from a given sequence.
+   *
+   * @param s A sequence to copy elements from.
+   *
+   * For each element in @a s this function makes a copy and adds it 
+   * to the sequence. Note that this operation completely changes the 
+   * sequence and all old elements will be lost.
+   */
+  void
+  Properties (const PropertiesSequence& s);
+
+  //@}
+
+  /**
+   * @name clsid
+   *
+   * @brief Accessor and modifier functions for the %clsid
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String ClsidType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const ClsidType&
+  clsid () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  ClsidType&
+  clsid ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  clsid (const ClsidType& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly
+   * instead of making a copy.
+   */
+  void
+  clsid (::std::unique_ptr< ClsidType > p);
+
+  //@}
+
+  /**
+   * @name image
+   *
+   * @brief Accessor and modifier functions for the %image
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::UnsignedByte ImageType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< ImageType > ImageOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< ImageType, char > ImageTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const ImageOptional&
+  image () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  ImageOptional&
+  image ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  image (const ImageType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  image (const ImageOptional& x);
+
+  //@}
+
+  /**
+   * @name name
+   *
+   * @brief Accessor and modifier functions for the %name
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String NameType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< NameType, char > NameTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const NameType&
+  name () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  NameType&
+  name ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  name (const NameType& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly
+   * instead of making a copy.
+   */
+  void
+  name (::std::unique_ptr< NameType > p);
+
+  //@}
+
+  /**
+   * @name changed
+   *
+   * @brief Accessor and modifier functions for the %changed
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String ChangedType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< ChangedType > ChangedOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< ChangedType, char > ChangedTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const ChangedOptional&
+  changed () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  ChangedOptional&
+  changed ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  changed (const ChangedType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  changed (const ChangedOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  changed (::std::unique_ptr< ChangedType > p);
+
+  //@}
+
+  /**
+   * @name uid
+   *
+   * @brief Accessor and modifier functions for the %uid
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String UidType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< UidType, char > UidTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const UidType&
+  uid () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  UidType&
+  uid ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  uid (const UidType& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly
+   * instead of making a copy.
+   */
+  void
+  uid (::std::unique_ptr< UidType > p);
+
+  //@}
+
+  /**
+   * @name desc
+   *
+   * @brief Accessor and modifier functions for the %desc
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String DescType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< DescType > DescOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< DescType, char > DescTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const DescOptional&
+  desc () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  DescOptional&
+  desc ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  desc (const DescType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  desc (const DescOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  desc (::std::unique_ptr< DescType > p);
+
+  //@}
+
+  /**
+   * @name bypassErrors
+   *
+   * @brief Accessor and modifier functions for the %bypassErrors
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::Boolean BypassErrorsType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< BypassErrorsType > BypassErrorsOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< BypassErrorsType, char > BypassErrorsTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const BypassErrorsOptional&
+  bypassErrors () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  BypassErrorsOptional&
+  bypassErrors ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  bypassErrors (const BypassErrorsType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  bypassErrors (const BypassErrorsOptional& x);
+
+  //@}
+
+  /**
+   * @name userContext
+   *
+   * @brief Accessor and modifier functions for the %userContext
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::Boolean UserContextType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< UserContextType > UserContextOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< UserContextType, char > UserContextTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const UserContextOptional&
+  userContext () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  UserContextOptional&
+  userContext ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  userContext (const UserContextType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  userContext (const UserContextOptional& x);
+
+  //@}
+
+  /**
+   * @name removePolicy
+   *
+   * @brief Accessor and modifier functions for the %removePolicy
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::Boolean RemovePolicyType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< RemovePolicyType > RemovePolicyOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< RemovePolicyType, char > RemovePolicyTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const RemovePolicyOptional&
+  removePolicy () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  RemovePolicyOptional&
+  removePolicy ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  removePolicy (const RemovePolicyType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  removePolicy (const RemovePolicyOptional& x);
+
+  //@}
+
+  /**
+   * @name Constructors
+   */
+  //@{
+
+  /**
+   * @brief Create an instance from the ultimate base and
+   * initializers for required elements and attributes.
+   */
+  NetShare_t (const ClsidType&,
+              const NameType&,
+              const UidType&);
+
+  /**
+   * @brief Create an instance from a DOM element.
+   *
+   * @param e A DOM element to extract the data from.
+   * @param f Flags to create the new instance with.
+   * @param c A pointer to the object that will contain the new
+   * instance.
+   */
+  NetShare_t (const ::xercesc::DOMElement& e,
+              ::xml_schema::Flags f = 0,
+              ::xml_schema::Container* c = 0);
+
+  /**
+   * @brief Copy constructor.
+   *
+   * @param x An instance to make a copy of.
+   * @param f Flags to create the copy with.
+   * @param c A pointer to the object that will contain the copy.
+   *
+   * For polymorphic object models use the @c _clone function instead.
+   */
+  NetShare_t (const NetShare_t& x,
+              ::xml_schema::Flags f = 0,
+              ::xml_schema::Container* c = 0);
+
+  /**
+   * @brief Copy the instance polymorphically.
+   *
+   * @param f Flags to create the copy with.
+   * @param c A pointer to the object that will contain the copy.
+   * @return A pointer to the dynamically allocated copy.
+   *
+   * This function ensures that the dynamic type of the instance is
+   * used for copying and should be used for polymorphic object
+   * models instead of the copy constructor.
+   */
+  virtual NetShare_t*
+  _clone (::xml_schema::Flags f = 0,
+          ::xml_schema::Container* c = 0) const;
+
+  /**
+   * @brief Copy assignment operator.
+   *
+   * @param x An instance to make a copy of.
+   * @return A reference to itself.
+   *
+   * For polymorphic object models use the @c _clone function instead.
+   */
+  NetShare_t&
+  operator= (const NetShare_t& x);
+
+  //@}
+
+  /**
+   * @brief Destructor.
+   */
+  virtual 
+  ~NetShare_t ();
+
+  // Implementation.
+  //
+
+  //@cond
+
+  protected:
+  void
+  parse (::xsd::cxx::xml::dom::parser< char >&,
+         ::xml_schema::Flags);
+
+  protected:
+  PropertiesSequence Properties_;
+  ::xsd::cxx::tree::one< ClsidType > clsid_;
+  ImageOptional image_;
+  ::xsd::cxx::tree::one< NameType > name_;
+  ChangedOptional changed_;
+  ::xsd::cxx::tree::one< UidType > uid_;
+  DescOptional desc_;
+  BypassErrorsOptional bypassErrors_;
+  UserContextOptional userContext_;
+  RemovePolicyOptional removePolicy_;
+
+  //@endcond
+};
+
+/**
+ * @brief Class corresponding to the %NetworkShares schema type.
+ *
+ * @nosubgrouping
+ */
+class NetworkShares: public ::xml_schema::Type
+{
+  public:
+  /**
+   * @name NetShare
+   *
+   * @brief Accessor and modifier functions for the %NetShare
+   * sequence element.
+   */
+  //@{
+
+  /**
+   * @brief Element type.
+   */
+  typedef ::NetShare_t NetShareType;
+
+  /**
+   * @brief Element sequence container type.
+   */
+  typedef ::xsd::cxx::tree::sequence< NetShareType > NetShareSequence;
+
+  /**
+   * @brief Element iterator type.
+   */
+  typedef NetShareSequence::iterator NetShareIterator;
+
+  /**
+   * @brief Element constant iterator type.
+   */
+  typedef NetShareSequence::const_iterator NetShareConstIterator;
+
+  /**
+   * @brief Element traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< NetShareType, char > NetShareTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the element
+   * sequence.
+   *
+   * @return A constant reference to the sequence container.
+   */
+  const NetShareSequence&
+  NetShare () const;
+
+  /**
+   * @brief Return a read-write reference to the element sequence.
+   *
+   * @return A reference to the sequence container.
+   */
+  NetShareSequence&
+  NetShare ();
+
+  /**
+   * @brief Copy elements from a given sequence.
+   *
+   * @param s A sequence to copy elements from.
+   *
+   * For each element in @a s this function makes a copy and adds it 
+   * to the sequence. Note that this operation completely changes the 
+   * sequence and all old elements will be lost.
+   */
+  void
+  NetShare (const NetShareSequence& s);
+
+  //@}
+
+  /**
+   * @name clsid
+   *
+   * @brief Accessor and modifier functions for the %clsid
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String ClsidType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const ClsidType&
+  clsid () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  ClsidType&
+  clsid ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  clsid (const ClsidType& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly
+   * instead of making a copy.
+   */
+  void
+  clsid (::std::unique_ptr< ClsidType > p);
+
+  //@}
+
+  /**
+   * @name disabled
+   *
+   * @brief Accessor and modifier functions for the %disabled
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::Boolean DisabledType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< DisabledType > DisabledOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< DisabledType, char > DisabledTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const DisabledOptional&
+  disabled () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  DisabledOptional&
+  disabled ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  disabled (const DisabledType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  disabled (const DisabledOptional& x);
+
+  //@}
+
+  /**
+   * @name Constructors
+   */
+  //@{
+
+  /**
+   * @brief Create an instance from the ultimate base and
+   * initializers for required elements and attributes.
+   */
+  NetworkShares (const ClsidType&);
+
+  /**
+   * @brief Create an instance from a DOM element.
+   *
+   * @param e A DOM element to extract the data from.
+   * @param f Flags to create the new instance with.
+   * @param c A pointer to the object that will contain the new
+   * instance.
+   */
+  NetworkShares (const ::xercesc::DOMElement& e,
+                        ::xml_schema::Flags f = 0,
+                        ::xml_schema::Container* c = 0);
+
+  /**
+   * @brief Copy constructor.
+   *
+   * @param x An instance to make a copy of.
+   * @param f Flags to create the copy with.
+   * @param c A pointer to the object that will contain the copy.
+   *
+   * For polymorphic object models use the @c _clone function instead.
+   */
+  NetworkShares (const NetworkShares& x,
+                        ::xml_schema::Flags f = 0,
+                        ::xml_schema::Container* c = 0);
+
+  /**
+   * @brief Copy the instance polymorphically.
+   *
+   * @param f Flags to create the copy with.
+   * @param c A pointer to the object that will contain the copy.
+   * @return A pointer to the dynamically allocated copy.
+   *
+   * This function ensures that the dynamic type of the instance is
+   * used for copying and should be used for polymorphic object
+   * models instead of the copy constructor.
+   */
+  virtual NetworkShares*
+  _clone (::xml_schema::Flags f = 0,
+          ::xml_schema::Container* c = 0) const;
+
+  /**
+   * @brief Copy assignment operator.
+   *
+   * @param x An instance to make a copy of.
+   * @return A reference to itself.
+   *
+   * For polymorphic object models use the @c _clone function instead.
+   */
+  NetworkShares&
+  operator= (const NetworkShares& x);
+
+  //@}
+
+  /**
+   * @brief Destructor.
+   */
+  virtual 
+  ~NetworkShares ();
+
+  // Implementation.
+  //
+
+  //@cond
+
+  protected:
+  void
+  parse (::xsd::cxx::xml::dom::parser< char >&,
+         ::xml_schema::Flags);
+
+  protected:
+  NetShareSequence NetShare_;
+  ::xsd::cxx::tree::one< ClsidType > clsid_;
+  DisabledOptional disabled_;
+
+  //@endcond
+};
+
 #include <iosfwd>
 
 ::std::ostream&
-operator<< (::std::ostream&, const NetworkShareSettings&);
+operator<< (::std::ostream&, const Properties_t&);
 
 ::std::ostream&
-operator<< (::std::ostream&, const NetShare&);
+operator<< (::std::ostream&, const NetShare_t&);
 
 ::std::ostream&
-operator<< (::std::ostream&, const Properties&);
+operator<< (::std::ostream&, const NetworkShares&);
 
 #include <iosfwd>
 
@@ -2515,7 +2501,7 @@ operator<< (::std::ostream&, const Properties&);
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::std::string& uri,
                        ::xml_schema::Flags f = 0,
                        const ::xml_schema::Properties& p = ::xml_schema::Properties ());
@@ -2531,7 +2517,7 @@ NetworkShareSettings_ (const ::std::string& uri,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::std::string& uri,
                        ::xml_schema::ErrorHandler& eh,
                        ::xml_schema::Flags f = 0,
@@ -2549,7 +2535,7 @@ NetworkShareSettings_ (const ::std::string& uri,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::std::string& uri,
                        ::xercesc::DOMErrorHandler& eh,
                        ::xml_schema::Flags f = 0,
@@ -2565,7 +2551,7 @@ NetworkShareSettings_ (const ::std::string& uri,
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        ::xml_schema::Flags f = 0,
                        const ::xml_schema::Properties& p = ::xml_schema::Properties ());
@@ -2581,7 +2567,7 @@ NetworkShareSettings_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        ::xml_schema::ErrorHandler& eh,
                        ::xml_schema::Flags f = 0,
@@ -2599,7 +2585,7 @@ NetworkShareSettings_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        ::xercesc::DOMErrorHandler& eh,
                        ::xml_schema::Flags f = 0,
@@ -2619,7 +2605,7 @@ NetworkShareSettings_ (::std::istream& is,
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        const ::std::string& id,
                        ::xml_schema::Flags f = 0,
@@ -2641,7 +2627,7 @@ NetworkShareSettings_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        const ::std::string& id,
                        ::xml_schema::ErrorHandler& eh,
@@ -2664,7 +2650,7 @@ NetworkShareSettings_ (::std::istream& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::std::istream& is,
                        const ::std::string& id,
                        ::xercesc::DOMErrorHandler& eh,
@@ -2681,7 +2667,7 @@ NetworkShareSettings_ (::std::istream& is,
  *
  * This function uses exceptions to report parsing errors.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xercesc::InputSource& is,
                        ::xml_schema::Flags f = 0,
                        const ::xml_schema::Properties& p = ::xml_schema::Properties ());
@@ -2697,7 +2683,7 @@ NetworkShareSettings_ (::xercesc::InputSource& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xercesc::InputSource& is,
                        ::xml_schema::ErrorHandler& eh,
                        ::xml_schema::Flags f = 0,
@@ -2715,7 +2701,7 @@ NetworkShareSettings_ (::xercesc::InputSource& is,
  *
  * This function reports parsing errors by calling the error handler.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xercesc::InputSource& is,
                        ::xercesc::DOMErrorHandler& eh,
                        ::xml_schema::Flags f = 0,
@@ -2729,7 +2715,7 @@ NetworkShareSettings_ (::xercesc::InputSource& is,
  * @param p Parsing properties. 
  * @return A pointer to the root of the object model.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (const ::xercesc::DOMDocument& d,
                        ::xml_schema::Flags f = 0,
                        const ::xml_schema::Properties& p = ::xml_schema::Properties ());
@@ -2746,7 +2732,7 @@ NetworkShareSettings_ (const ::xercesc::DOMDocument& d,
  * own_dom parsing flags to assign ownership of the DOM document
  * to the object model.
  */
-::std::unique_ptr< ::NetworkShareSettings >
+::std::unique_ptr< ::NetworkShares >
 NetworkShareSettings_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
                        ::xml_schema::Flags f = 0,
                        const ::xml_schema::Properties& p = ::xml_schema::Properties ());

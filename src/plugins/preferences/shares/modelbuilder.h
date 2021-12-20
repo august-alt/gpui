@@ -34,9 +34,9 @@ namespace gpui
     class ModelBuilder : public ModelBuilderBase
     {
     public:
-        std::unique_ptr<QStandardItemModel> schemaToModel(std::unique_ptr<::NetShare>& shares);
+        std::unique_ptr<QStandardItemModel> schemaToModel(std::unique_ptr<::NetworkShares>& shares);
 
-        std::unique_ptr<::NetShare> modelToSchema(std::unique_ptr<QStandardItemModel>& model);
+        std::unique_ptr<NetworkShares> modelToSchema(std::unique_ptr<QStandardItemModel>& model);
     };
 }
 

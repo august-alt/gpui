@@ -23,7 +23,7 @@
 namespace gpui
 {
 
-std::unique_ptr<QStandardItemModel> ModelBuilder::schemaToModel(std::unique_ptr<::NetShare>& shares)
+std::unique_ptr<QStandardItemModel> ModelBuilder::schemaToModel(std::unique_ptr<NetworkShares> &shares)
 {
     Q_UNUSED(shares);
 
@@ -32,7 +32,7 @@ std::unique_ptr<QStandardItemModel> ModelBuilder::schemaToModel(std::unique_ptr<
     return nullptr;
 }
 
-std::unique_ptr<NetShare> ModelBuilder::modelToSchema(std::unique_ptr<QStandardItemModel> &model)
+std::unique_ptr<NetworkShares> ModelBuilder::modelToSchema(std::unique_ptr<QStandardItemModel> &model)
 {
     Q_UNUSED(model);
 

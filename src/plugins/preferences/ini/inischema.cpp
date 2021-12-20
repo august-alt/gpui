@@ -40,31 +40,477 @@
 
 #include "inischema.h"
 
+// Properties_t
+// 
+
+const Properties_t::PathType& Properties_t::
+path () const
+{
+  return this->path_.get ();
+}
+
+Properties_t::PathType& Properties_t::
+path ()
+{
+  return this->path_.get ();
+}
+
+void Properties_t::
+path (const PathType& x)
+{
+  this->path_.set (x);
+}
+
+void Properties_t::
+path (::std::unique_ptr< PathType > x)
+{
+  this->path_.set (std::move (x));
+}
+
+const Properties_t::SectionOptional& Properties_t::
+section () const
+{
+  return this->section_;
+}
+
+Properties_t::SectionOptional& Properties_t::
+section ()
+{
+  return this->section_;
+}
+
+void Properties_t::
+section (const SectionType& x)
+{
+  this->section_.set (x);
+}
+
+void Properties_t::
+section (const SectionOptional& x)
+{
+  this->section_ = x;
+}
+
+void Properties_t::
+section (::std::unique_ptr< SectionType > x)
+{
+  this->section_.set (std::move (x));
+}
+
+const Properties_t::ValueOptional& Properties_t::
+value () const
+{
+  return this->value_;
+}
+
+Properties_t::ValueOptional& Properties_t::
+value ()
+{
+  return this->value_;
+}
+
+void Properties_t::
+value (const ValueType& x)
+{
+  this->value_.set (x);
+}
+
+void Properties_t::
+value (const ValueOptional& x)
+{
+  this->value_ = x;
+}
+
+void Properties_t::
+value (::std::unique_ptr< ValueType > x)
+{
+  this->value_.set (std::move (x));
+}
+
+const Properties_t::PropertyOptional& Properties_t::
+property () const
+{
+  return this->property_;
+}
+
+Properties_t::PropertyOptional& Properties_t::
+property ()
+{
+  return this->property_;
+}
+
+void Properties_t::
+property (const PropertyType& x)
+{
+  this->property_.set (x);
+}
+
+void Properties_t::
+property (const PropertyOptional& x)
+{
+  this->property_ = x;
+}
+
+void Properties_t::
+property (::std::unique_ptr< PropertyType > x)
+{
+  this->property_.set (std::move (x));
+}
+
+const Properties_t::ActionOptional& Properties_t::
+action () const
+{
+  return this->action_;
+}
+
+Properties_t::ActionOptional& Properties_t::
+action ()
+{
+  return this->action_;
+}
+
+void Properties_t::
+action (const ActionType& x)
+{
+  this->action_.set (x);
+}
+
+void Properties_t::
+action (const ActionOptional& x)
+{
+  this->action_ = x;
+}
+
+void Properties_t::
+action (::std::unique_ptr< ActionType > x)
+{
+  this->action_.set (std::move (x));
+}
+
+const Properties_t::DisabledOptional& Properties_t::
+disabled () const
+{
+  return this->disabled_;
+}
+
+Properties_t::DisabledOptional& Properties_t::
+disabled ()
+{
+  return this->disabled_;
+}
+
+void Properties_t::
+disabled (const DisabledType& x)
+{
+  this->disabled_.set (x);
+}
+
+void Properties_t::
+disabled (const DisabledOptional& x)
+{
+  this->disabled_ = x;
+}
+
+
+// Ini_t
+// 
+
+const Ini_t::PropertiesSequence& Ini_t::
+Properties () const
+{
+  return this->Properties_;
+}
+
+Ini_t::PropertiesSequence& Ini_t::
+Properties ()
+{
+  return this->Properties_;
+}
+
+void Ini_t::
+Properties (const PropertiesSequence& s)
+{
+  this->Properties_ = s;
+}
+
+const Ini_t::ClsidType& Ini_t::
+clsid () const
+{
+  return this->clsid_.get ();
+}
+
+Ini_t::ClsidType& Ini_t::
+clsid ()
+{
+  return this->clsid_.get ();
+}
+
+void Ini_t::
+clsid (const ClsidType& x)
+{
+  this->clsid_.set (x);
+}
+
+void Ini_t::
+clsid (::std::unique_ptr< ClsidType > x)
+{
+  this->clsid_.set (std::move (x));
+}
+
+const Ini_t::NameType& Ini_t::
+name () const
+{
+  return this->name_.get ();
+}
+
+Ini_t::NameType& Ini_t::
+name ()
+{
+  return this->name_.get ();
+}
+
+void Ini_t::
+name (const NameType& x)
+{
+  this->name_.set (x);
+}
+
+void Ini_t::
+name (::std::unique_ptr< NameType > x)
+{
+  this->name_.set (std::move (x));
+}
+
+const Ini_t::StatusOptional& Ini_t::
+status () const
+{
+  return this->status_;
+}
+
+Ini_t::StatusOptional& Ini_t::
+status ()
+{
+  return this->status_;
+}
+
+void Ini_t::
+status (const StatusType& x)
+{
+  this->status_.set (x);
+}
+
+void Ini_t::
+status (const StatusOptional& x)
+{
+  this->status_ = x;
+}
+
+void Ini_t::
+status (::std::unique_ptr< StatusType > x)
+{
+  this->status_.set (std::move (x));
+}
+
+const Ini_t::ImageOptional& Ini_t::
+image () const
+{
+  return this->image_;
+}
+
+Ini_t::ImageOptional& Ini_t::
+image ()
+{
+  return this->image_;
+}
+
+void Ini_t::
+image (const ImageType& x)
+{
+  this->image_.set (x);
+}
+
+void Ini_t::
+image (const ImageOptional& x)
+{
+  this->image_ = x;
+}
+
+const Ini_t::ChangedOptional& Ini_t::
+changed () const
+{
+  return this->changed_;
+}
+
+Ini_t::ChangedOptional& Ini_t::
+changed ()
+{
+  return this->changed_;
+}
+
+void Ini_t::
+changed (const ChangedType& x)
+{
+  this->changed_.set (x);
+}
+
+void Ini_t::
+changed (const ChangedOptional& x)
+{
+  this->changed_ = x;
+}
+
+void Ini_t::
+changed (::std::unique_ptr< ChangedType > x)
+{
+  this->changed_.set (std::move (x));
+}
+
+const Ini_t::UidType& Ini_t::
+uid () const
+{
+  return this->uid_.get ();
+}
+
+Ini_t::UidType& Ini_t::
+uid ()
+{
+  return this->uid_.get ();
+}
+
+void Ini_t::
+uid (const UidType& x)
+{
+  this->uid_.set (x);
+}
+
+void Ini_t::
+uid (::std::unique_ptr< UidType > x)
+{
+  this->uid_.set (std::move (x));
+}
+
+const Ini_t::DescOptional& Ini_t::
+desc () const
+{
+  return this->desc_;
+}
+
+Ini_t::DescOptional& Ini_t::
+desc ()
+{
+  return this->desc_;
+}
+
+void Ini_t::
+desc (const DescType& x)
+{
+  this->desc_.set (x);
+}
+
+void Ini_t::
+desc (const DescOptional& x)
+{
+  this->desc_ = x;
+}
+
+void Ini_t::
+desc (::std::unique_ptr< DescType > x)
+{
+  this->desc_.set (std::move (x));
+}
+
+const Ini_t::BypassErrorsOptional& Ini_t::
+bypassErrors () const
+{
+  return this->bypassErrors_;
+}
+
+Ini_t::BypassErrorsOptional& Ini_t::
+bypassErrors ()
+{
+  return this->bypassErrors_;
+}
+
+void Ini_t::
+bypassErrors (const BypassErrorsType& x)
+{
+  this->bypassErrors_.set (x);
+}
+
+void Ini_t::
+bypassErrors (const BypassErrorsOptional& x)
+{
+  this->bypassErrors_ = x;
+}
+
+const Ini_t::UserContextOptional& Ini_t::
+userContext () const
+{
+  return this->userContext_;
+}
+
+Ini_t::UserContextOptional& Ini_t::
+userContext ()
+{
+  return this->userContext_;
+}
+
+void Ini_t::
+userContext (const UserContextType& x)
+{
+  this->userContext_.set (x);
+}
+
+void Ini_t::
+userContext (const UserContextOptional& x)
+{
+  this->userContext_ = x;
+}
+
+const Ini_t::RemovePolicyOptional& Ini_t::
+removePolicy () const
+{
+  return this->removePolicy_;
+}
+
+Ini_t::RemovePolicyOptional& Ini_t::
+removePolicy ()
+{
+  return this->removePolicy_;
+}
+
+void Ini_t::
+removePolicy (const RemovePolicyType& x)
+{
+  this->removePolicy_.set (x);
+}
+
+void Ini_t::
+removePolicy (const RemovePolicyOptional& x)
+{
+  this->removePolicy_ = x;
+}
+
+
 // IniFiles
 // 
 
-const IniFiles::IniType& IniFiles::
+const IniFiles::IniSequence& IniFiles::
 Ini () const
 {
-  return this->Ini_.get ();
+  return this->Ini_;
 }
 
-IniFiles::IniType& IniFiles::
+IniFiles::IniSequence& IniFiles::
 Ini ()
 {
-  return this->Ini_.get ();
+  return this->Ini_;
 }
 
 void IniFiles::
-Ini (const IniType& x)
+Ini (const IniSequence& s)
 {
-  this->Ini_.set (x);
-}
-
-void IniFiles::
-Ini (::std::unique_ptr< IniType > x)
-{
-  this->Ini_.set (std::move (x));
+  this->Ini_ = s;
 }
 
 const IniFiles::ClsidType& IniFiles::
@@ -116,464 +562,6 @@ disabled (const DisabledOptional& x)
 }
 
 
-// Ini
-// 
-
-const Ini::PropertiesType& Ini::
-Properties () const
-{
-  return this->Properties_.get ();
-}
-
-Ini::PropertiesType& Ini::
-Properties ()
-{
-  return this->Properties_.get ();
-}
-
-void Ini::
-Properties (const PropertiesType& x)
-{
-  this->Properties_.set (x);
-}
-
-void Ini::
-Properties (::std::unique_ptr< PropertiesType > x)
-{
-  this->Properties_.set (std::move (x));
-}
-
-const Ini::ClsidType& Ini::
-clsid () const
-{
-  return this->clsid_.get ();
-}
-
-Ini::ClsidType& Ini::
-clsid ()
-{
-  return this->clsid_.get ();
-}
-
-void Ini::
-clsid (const ClsidType& x)
-{
-  this->clsid_.set (x);
-}
-
-void Ini::
-clsid (::std::unique_ptr< ClsidType > x)
-{
-  this->clsid_.set (std::move (x));
-}
-
-const Ini::NameType& Ini::
-name () const
-{
-  return this->name_.get ();
-}
-
-Ini::NameType& Ini::
-name ()
-{
-  return this->name_.get ();
-}
-
-void Ini::
-name (const NameType& x)
-{
-  this->name_.set (x);
-}
-
-void Ini::
-name (::std::unique_ptr< NameType > x)
-{
-  this->name_.set (std::move (x));
-}
-
-const Ini::StatusOptional& Ini::
-status () const
-{
-  return this->status_;
-}
-
-Ini::StatusOptional& Ini::
-status ()
-{
-  return this->status_;
-}
-
-void Ini::
-status (const StatusType& x)
-{
-  this->status_.set (x);
-}
-
-void Ini::
-status (const StatusOptional& x)
-{
-  this->status_ = x;
-}
-
-void Ini::
-status (::std::unique_ptr< StatusType > x)
-{
-  this->status_.set (std::move (x));
-}
-
-const Ini::ImageOptional& Ini::
-image () const
-{
-  return this->image_;
-}
-
-Ini::ImageOptional& Ini::
-image ()
-{
-  return this->image_;
-}
-
-void Ini::
-image (const ImageType& x)
-{
-  this->image_.set (x);
-}
-
-void Ini::
-image (const ImageOptional& x)
-{
-  this->image_ = x;
-}
-
-const Ini::ChangedOptional& Ini::
-changed () const
-{
-  return this->changed_;
-}
-
-Ini::ChangedOptional& Ini::
-changed ()
-{
-  return this->changed_;
-}
-
-void Ini::
-changed (const ChangedType& x)
-{
-  this->changed_.set (x);
-}
-
-void Ini::
-changed (const ChangedOptional& x)
-{
-  this->changed_ = x;
-}
-
-void Ini::
-changed (::std::unique_ptr< ChangedType > x)
-{
-  this->changed_.set (std::move (x));
-}
-
-const Ini::UidType& Ini::
-uid () const
-{
-  return this->uid_.get ();
-}
-
-Ini::UidType& Ini::
-uid ()
-{
-  return this->uid_.get ();
-}
-
-void Ini::
-uid (const UidType& x)
-{
-  this->uid_.set (x);
-}
-
-void Ini::
-uid (::std::unique_ptr< UidType > x)
-{
-  this->uid_.set (std::move (x));
-}
-
-const Ini::DescOptional& Ini::
-desc () const
-{
-  return this->desc_;
-}
-
-Ini::DescOptional& Ini::
-desc ()
-{
-  return this->desc_;
-}
-
-void Ini::
-desc (const DescType& x)
-{
-  this->desc_.set (x);
-}
-
-void Ini::
-desc (const DescOptional& x)
-{
-  this->desc_ = x;
-}
-
-void Ini::
-desc (::std::unique_ptr< DescType > x)
-{
-  this->desc_.set (std::move (x));
-}
-
-const Ini::BypassErrorsOptional& Ini::
-bypassErrors () const
-{
-  return this->bypassErrors_;
-}
-
-Ini::BypassErrorsOptional& Ini::
-bypassErrors ()
-{
-  return this->bypassErrors_;
-}
-
-void Ini::
-bypassErrors (const BypassErrorsType& x)
-{
-  this->bypassErrors_.set (x);
-}
-
-void Ini::
-bypassErrors (const BypassErrorsOptional& x)
-{
-  this->bypassErrors_ = x;
-}
-
-const Ini::UserContextOptional& Ini::
-userContext () const
-{
-  return this->userContext_;
-}
-
-Ini::UserContextOptional& Ini::
-userContext ()
-{
-  return this->userContext_;
-}
-
-void Ini::
-userContext (const UserContextType& x)
-{
-  this->userContext_.set (x);
-}
-
-void Ini::
-userContext (const UserContextOptional& x)
-{
-  this->userContext_ = x;
-}
-
-const Ini::RemovePolicyOptional& Ini::
-removePolicy () const
-{
-  return this->removePolicy_;
-}
-
-Ini::RemovePolicyOptional& Ini::
-removePolicy ()
-{
-  return this->removePolicy_;
-}
-
-void Ini::
-removePolicy (const RemovePolicyType& x)
-{
-  this->removePolicy_.set (x);
-}
-
-void Ini::
-removePolicy (const RemovePolicyOptional& x)
-{
-  this->removePolicy_ = x;
-}
-
-
-// Properties
-// 
-
-const Properties::PathType& Properties::
-path () const
-{
-  return this->path_.get ();
-}
-
-Properties::PathType& Properties::
-path ()
-{
-  return this->path_.get ();
-}
-
-void Properties::
-path (const PathType& x)
-{
-  this->path_.set (x);
-}
-
-void Properties::
-path (::std::unique_ptr< PathType > x)
-{
-  this->path_.set (std::move (x));
-}
-
-const Properties::SectionOptional& Properties::
-section () const
-{
-  return this->section_;
-}
-
-Properties::SectionOptional& Properties::
-section ()
-{
-  return this->section_;
-}
-
-void Properties::
-section (const SectionType& x)
-{
-  this->section_.set (x);
-}
-
-void Properties::
-section (const SectionOptional& x)
-{
-  this->section_ = x;
-}
-
-void Properties::
-section (::std::unique_ptr< SectionType > x)
-{
-  this->section_.set (std::move (x));
-}
-
-const Properties::ValueOptional& Properties::
-value () const
-{
-  return this->value_;
-}
-
-Properties::ValueOptional& Properties::
-value ()
-{
-  return this->value_;
-}
-
-void Properties::
-value (const ValueType& x)
-{
-  this->value_.set (x);
-}
-
-void Properties::
-value (const ValueOptional& x)
-{
-  this->value_ = x;
-}
-
-void Properties::
-value (::std::unique_ptr< ValueType > x)
-{
-  this->value_.set (std::move (x));
-}
-
-const Properties::PropertyOptional& Properties::
-property () const
-{
-  return this->property_;
-}
-
-Properties::PropertyOptional& Properties::
-property ()
-{
-  return this->property_;
-}
-
-void Properties::
-property (const PropertyType& x)
-{
-  this->property_.set (x);
-}
-
-void Properties::
-property (const PropertyOptional& x)
-{
-  this->property_ = x;
-}
-
-void Properties::
-property (::std::unique_ptr< PropertyType > x)
-{
-  this->property_.set (std::move (x));
-}
-
-const Properties::ActionOptional& Properties::
-action () const
-{
-  return this->action_;
-}
-
-Properties::ActionOptional& Properties::
-action ()
-{
-  return this->action_;
-}
-
-void Properties::
-action (const ActionType& x)
-{
-  this->action_.set (x);
-}
-
-void Properties::
-action (const ActionOptional& x)
-{
-  this->action_ = x;
-}
-
-void Properties::
-action (::std::unique_ptr< ActionType > x)
-{
-  this->action_.set (std::move (x));
-}
-
-const Properties::DisabledOptional& Properties::
-disabled () const
-{
-  return this->disabled_;
-}
-
-Properties::DisabledOptional& Properties::
-disabled ()
-{
-  return this->disabled_;
-}
-
-void Properties::
-disabled (const DisabledType& x)
-{
-  this->disabled_.set (x);
-}
-
-void Properties::
-disabled (const DisabledOptional& x)
-{
-  this->disabled_ = x;
-}
-
-
 #include <xsd/cxx/xml/dom/wildcard-source.hxx>
 
 #include <xsd/cxx/xml/dom/parsing-source.hxx>
@@ -587,99 +575,91 @@ namespace _xsd
   type_factory_plate_init;
 }
 
-// IniFiles
+// Properties_t
 //
 
-IniFiles::
-IniFiles (const IniType& Ini,
-          const ClsidType& clsid)
+Properties_t::
+Properties_t (const PathType& path)
 : ::xml_schema::Type (),
-  Ini_ (Ini, this),
-  clsid_ (clsid, this),
+  path_ (path, this),
+  section_ (this),
+  value_ (this),
+  property_ (this),
+  action_ (this),
   disabled_ (this)
 {
 }
 
-IniFiles::
-IniFiles (::std::unique_ptr< IniType > Ini,
-          const ClsidType& clsid)
-: ::xml_schema::Type (),
-  Ini_ (std::move (Ini), this),
-  clsid_ (clsid, this),
-  disabled_ (this)
-{
-}
-
-IniFiles::
-IniFiles (const IniFiles& x,
-          ::xml_schema::Flags f,
-          ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const Properties_t& x,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  Ini_ (x.Ini_, f, this),
-  clsid_ (x.clsid_, f, this),
+  path_ (x.path_, f, this),
+  section_ (x.section_, f, this),
+  value_ (x.value_, f, this),
+  property_ (x.property_, f, this),
+  action_ (x.action_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
 
-IniFiles::
-IniFiles (const ::xercesc::DOMElement& e,
-          ::xml_schema::Flags f,
-          ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const ::xercesc::DOMElement& e,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  Ini_ (this),
-  clsid_ (this),
+  path_ (this),
+  section_ (this),
+  value_ (this),
+  property_ (this),
+  action_ (this),
   disabled_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
-    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+    ::xsd::cxx::xml::dom::parser< char > p (e, false, false, true);
     this->parse (p, f);
   }
 }
 
-void IniFiles::
+void Properties_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
-  for (; p.more_content (); p.next_content (false))
-  {
-    const ::xercesc::DOMElement& i (p.cur_element ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    // Ini
-    //
-    if (n.name () == "Ini" && n.namespace_ ().empty ())
-    {
-      ::std::unique_ptr< IniType > r (
-        IniTraits::create (i, f, this));
-
-      if (!Ini_.present ())
-      {
-        this->Ini_.set (::std::move (r));
-        continue;
-      }
-    }
-
-    break;
-  }
-
-  if (!Ini_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "Ini",
-      "");
-  }
-
   while (p.more_attributes ())
   {
     const ::xercesc::DOMAttr& i (p.next_attribute ());
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    if (n.name () == "clsid" && n.namespace_ ().empty ())
+    if (n.name () == "path" && n.namespace_ ().empty ())
     {
-      this->clsid_.set (ClsidTraits::create (i, f, this));
+      this->path_.set (PathTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "section" && n.namespace_ ().empty ())
+    {
+      this->section_.set (SectionTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "value" && n.namespace_ ().empty ())
+    {
+      this->value_.set (ValueTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "property" && n.namespace_ ().empty ())
+    {
+      this->property_.set (PropertyTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "action" && n.namespace_ ().empty ())
+    {
+      this->action_.set (ActionTraits::create (i, f, this));
       continue;
     }
 
@@ -690,50 +670,58 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     }
   }
 
-  if (!clsid_.present ())
+  if (!path_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "clsid",
+      "path",
       "");
   }
 }
 
-IniFiles* IniFiles::
+Properties_t* Properties_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class IniFiles (*this, f, c);
+  return new class Properties_t (*this, f, c);
 }
 
-IniFiles& IniFiles::
-operator= (const IniFiles& x)
+Properties_t& Properties_t::
+operator= (const Properties_t& x)
 {
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->Ini_ = x.Ini_;
-    this->clsid_ = x.clsid_;
+    this->path_ = x.path_;
+    this->section_ = x.section_;
+    this->value_ = x.value_;
+    this->property_ = x.property_;
+    this->action_ = x.action_;
     this->disabled_ = x.disabled_;
   }
 
   return *this;
 }
 
-IniFiles::
-~IniFiles ()
+Properties_t::
+~Properties_t ()
 {
 }
 
-// Ini
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Properties_t >
+_xsd_Properties_t_type_factory_init (
+  "Properties_t",
+  "");
+
+// Ini_t
 //
 
-Ini::
-Ini (const PropertiesType& Properties,
-     const ClsidType& clsid,
-     const NameType& name,
-     const UidType& uid)
+Ini_t::
+Ini_t (const ClsidType& clsid,
+       const NameType& name,
+       const UidType& uid)
 : ::xml_schema::Type (),
-  Properties_ (Properties, this),
+  Properties_ (this),
   clsid_ (clsid, this),
   name_ (name, this),
   status_ (this),
@@ -747,30 +735,10 @@ Ini (const PropertiesType& Properties,
 {
 }
 
-Ini::
-Ini (::std::unique_ptr< PropertiesType > Properties,
-     const ClsidType& clsid,
-     const NameType& name,
-     const UidType& uid)
-: ::xml_schema::Type (),
-  Properties_ (std::move (Properties), this),
-  clsid_ (clsid, this),
-  name_ (name, this),
-  status_ (this),
-  image_ (this),
-  changed_ (this),
-  uid_ (uid, this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-}
-
-Ini::
-Ini (const Ini& x,
-     ::xml_schema::Flags f,
-     ::xml_schema::Container* c)
+Ini_t::
+Ini_t (const Ini_t& x,
+       ::xml_schema::Flags f,
+       ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
   Properties_ (x.Properties_, f, this),
   clsid_ (x.clsid_, f, this),
@@ -786,10 +754,10 @@ Ini (const Ini& x,
 {
 }
 
-Ini::
-Ini (const ::xercesc::DOMElement& e,
-     ::xml_schema::Flags f,
-     ::xml_schema::Container* c)
+Ini_t::
+Ini_t (const ::xercesc::DOMElement& e,
+       ::xml_schema::Flags f,
+       ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
   Properties_ (this),
   clsid_ (this),
@@ -810,7 +778,7 @@ Ini (const ::xercesc::DOMElement& e,
   }
 }
 
-void Ini::
+void Ini_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
@@ -822,26 +790,30 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
 
     // Properties
     //
-    if (n.name () == "Properties" && n.namespace_ ().empty ())
     {
-      ::std::unique_ptr< PropertiesType > r (
-        PropertiesTraits::create (i, f, this));
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "Properties",
+          "",
+          &::xsd::cxx::tree::factory_impl< PropertiesType >,
+          false, true, i, n, f, this));
 
-      if (!Properties_.present ())
+      if (tmp.get () != 0)
       {
-        this->Properties_.set (::std::move (r));
+        ::std::unique_ptr< PropertiesType > r (
+          dynamic_cast< PropertiesType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->Properties_.push_back (::std::move (r));
         continue;
       }
     }
 
     break;
-  }
-
-  if (!Properties_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "Properties",
-      "");
   }
 
   while (p.more_attributes ())
@@ -933,15 +905,15 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
   }
 }
 
-Ini* Ini::
+Ini_t* Ini_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Ini (*this, f, c);
+  return new class Ini_t (*this, f, c);
 }
 
-Ini& Ini::
-operator= (const Ini& x)
+Ini_t& Ini_t::
+operator= (const Ini_t& x)
 {
   if (this != &x)
   {
@@ -962,96 +934,103 @@ operator= (const Ini& x)
   return *this;
 }
 
-Ini::
-~Ini ()
+Ini_t::
+~Ini_t ()
 {
 }
 
-// Properties
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Ini_t >
+_xsd_Ini_t_type_factory_init (
+  "Ini_t",
+  "");
+
+// IniFiles
 //
 
-Properties::
-Properties (const PathType& path)
+IniFiles::
+IniFiles (const ClsidType& clsid)
 : ::xml_schema::Type (),
-  path_ (path, this),
-  section_ (this),
-  value_ (this),
-  property_ (this),
-  action_ (this),
+  Ini_ (this),
+  clsid_ (clsid, this),
   disabled_ (this)
 {
 }
 
-Properties::
-Properties (const Properties& x,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+IniFiles::
+IniFiles (const IniFiles& x,
+          ::xml_schema::Flags f,
+          ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  path_ (x.path_, f, this),
-  section_ (x.section_, f, this),
-  value_ (x.value_, f, this),
-  property_ (x.property_, f, this),
-  action_ (x.action_, f, this),
+  Ini_ (x.Ini_, f, this),
+  clsid_ (x.clsid_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
 
-Properties::
-Properties (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+IniFiles::
+IniFiles (const ::xercesc::DOMElement& e,
+          ::xml_schema::Flags f,
+          ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  path_ (this),
-  section_ (this),
-  value_ (this),
-  property_ (this),
-  action_ (this),
+  Ini_ (this),
+  clsid_ (this),
   disabled_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
-    ::xsd::cxx::xml::dom::parser< char > p (e, false, false, true);
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
     this->parse (p, f);
   }
 }
 
-void Properties::
+void IniFiles::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
+  for (; p.more_content (); p.next_content (false))
+  {
+    const ::xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // Ini
+    //
+    {
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "Ini",
+          "",
+          &::xsd::cxx::tree::factory_impl< IniType >,
+          false, true, i, n, f, this));
+
+      if (tmp.get () != 0)
+      {
+        ::std::unique_ptr< IniType > r (
+          dynamic_cast< IniType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->Ini_.push_back (::std::move (r));
+        continue;
+      }
+    }
+
+    break;
+  }
+
   while (p.more_attributes ())
   {
     const ::xercesc::DOMAttr& i (p.next_attribute ());
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    if (n.name () == "path" && n.namespace_ ().empty ())
+    if (n.name () == "clsid" && n.namespace_ ().empty ())
     {
-      this->path_.set (PathTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "section" && n.namespace_ ().empty ())
-    {
-      this->section_.set (SectionTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "value" && n.namespace_ ().empty ())
-    {
-      this->value_.set (ValueTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "property" && n.namespace_ ().empty ())
-    {
-      this->property_.set (PropertyTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "action" && n.namespace_ ().empty ())
-    {
-      this->action_.set (ActionTraits::create (i, f, this));
+      this->clsid_.set (ClsidTraits::create (i, f, this));
       continue;
     }
 
@@ -1062,40 +1041,37 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     }
   }
 
-  if (!path_.present ())
+  if (!clsid_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "path",
+      "clsid",
       "");
   }
 }
 
-Properties* Properties::
+IniFiles* IniFiles::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Properties (*this, f, c);
+  return new class IniFiles (*this, f, c);
 }
 
-Properties& Properties::
-operator= (const Properties& x)
+IniFiles& IniFiles::
+operator= (const IniFiles& x)
 {
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->path_ = x.path_;
-    this->section_ = x.section_;
-    this->value_ = x.value_;
-    this->property_ = x.property_;
-    this->action_ = x.action_;
+    this->Ini_ = x.Ini_;
+    this->clsid_ = x.clsid_;
     this->disabled_ = x.disabled_;
   }
 
   return *this;
 }
 
-Properties::
-~Properties ()
+IniFiles::
+~IniFiles ()
 {
 }
 
@@ -1111,10 +1087,29 @@ namespace _xsd
 }
 
 ::std::ostream&
-operator<< (::std::ostream& o, const IniFiles& i)
+operator<< (::std::ostream& o, const Properties_t& i)
 {
-  o << ::std::endl << "Ini: " << i.Ini ();
-  o << ::std::endl << "clsid: " << i.clsid ();
+  o << ::std::endl << "path: " << i.path ();
+  if (i.section ())
+  {
+    o << ::std::endl << "section: " << *i.section ();
+  }
+
+  if (i.value ())
+  {
+    o << ::std::endl << "value: " << *i.value ();
+  }
+
+  if (i.property ())
+  {
+    o << ::std::endl << "property: " << *i.property ();
+  }
+
+  if (i.action ())
+  {
+    o << ::std::endl << "action: " << *i.action ();
+  }
+
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();
@@ -1123,10 +1118,26 @@ operator<< (::std::ostream& o, const IniFiles& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Properties_t >
+_xsd_Properties_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const Ini& i)
+operator<< (::std::ostream& o, const Ini_t& i)
 {
-  o << ::std::endl << "Properties: " << i.Properties ();
+  {
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (Ini_t::PropertiesConstIterator
+         b (i.Properties ().begin ()), e (i.Properties ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Properties: ";
+      om.insert (o, *b);
+    }
+  }
+
   o << ::std::endl << "clsid: " << i.clsid ();
   o << ::std::endl << "name: " << i.name ();
   if (i.status ())
@@ -1168,30 +1179,27 @@ operator<< (::std::ostream& o, const Ini& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Ini_t >
+_xsd_Ini_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const Properties& i)
+operator<< (::std::ostream& o, const IniFiles& i)
 {
-  o << ::std::endl << "path: " << i.path ();
-  if (i.section ())
   {
-    o << ::std::endl << "section: " << *i.section ();
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (IniFiles::IniConstIterator
+         b (i.Ini ().begin ()), e (i.Ini ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Ini: ";
+      om.insert (o, *b);
+    }
   }
 
-  if (i.value ())
-  {
-    o << ::std::endl << "value: " << *i.value ();
-  }
-
-  if (i.property ())
-  {
-    o << ::std::endl << "property: " << *i.property ();
-  }
-
-  if (i.action ())
-  {
-    o << ::std::endl << "action: " << *i.action ();
-  }
-
+  o << ::std::endl << "clsid: " << i.clsid ();
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();

@@ -577,9 +577,9 @@ namespace xml_schema
 
 // Forward declarations.
 //
+class Properties_t;
+class Ini_t;
 class IniFiles;
-class Ini;
-class Properties;
 
 #include <memory>    // ::std::unique_ptr
 #include <limits>    // std::numeric_limits
@@ -599,75 +599,17 @@ class Properties;
 #include <xsd/cxx/tree/containers-wildcard.hxx>
 
 /**
- * @brief Class corresponding to the %IniFiles schema type.
+ * @brief Class corresponding to the %Properties_t schema type.
  *
  * @nosubgrouping
  */
-class IniFiles: public ::xml_schema::Type
+class Properties_t: public ::xml_schema::Type
 {
   public:
   /**
-   * @name Ini
+   * @name path
    *
-   * @brief Accessor and modifier functions for the %Ini
-   * required element.
-   */
-  //@{
-
-  /**
-   * @brief Element type.
-   */
-  typedef ::Ini IniType;
-
-  /**
-   * @brief Element traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< IniType, char > IniTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the element.
-   *
-   * @return A constant reference to the element.
-   */
-  const IniType&
-  Ini () const;
-
-  /**
-   * @brief Return a read-write reference to the element.
-   *
-   * @return A reference to the element.
-   */
-  IniType&
-  Ini ();
-
-  /**
-   * @brief Set the element value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the element.
-   */
-  void
-  Ini (const IniType& x);
-
-  /**
-   * @brief Set the element value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  Ini (::std::unique_ptr< IniType > p);
-
-  //@}
-
-  /**
-   * @name clsid
-   *
-   * @brief Accessor and modifier functions for the %clsid
+   * @brief Accessor and modifier functions for the %path
    * required attribute.
    */
   //@{
@@ -675,28 +617,28 @@ class IniFiles: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String ClsidType;
+  typedef ::xml_schema::String PathType;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
+  typedef ::xsd::cxx::tree::traits< PathType, char > PathTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute.
    *
    * @return A constant reference to the attribute.
    */
-  const ClsidType&
-  clsid () const;
+  const PathType&
+  path () const;
 
   /**
    * @brief Return a read-write reference to the attribute.
    *
    * @return A reference to the attribute.
    */
-  ClsidType&
-  clsid ();
+  PathType&
+  path ();
 
   /**
    * @brief Set the attribute value.
@@ -707,7 +649,7 @@ class IniFiles: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  clsid (const ClsidType& x);
+  path (const PathType& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -718,7 +660,311 @@ class IniFiles: public ::xml_schema::Type
    * instead of making a copy.
    */
   void
-  clsid (::std::unique_ptr< ClsidType > p);
+  path (::std::unique_ptr< PathType > p);
+
+  //@}
+
+  /**
+   * @name section
+   *
+   * @brief Accessor and modifier functions for the %section
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String SectionType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< SectionType > SectionOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< SectionType, char > SectionTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const SectionOptional&
+  section () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  SectionOptional&
+  section ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  section (const SectionType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  section (const SectionOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  section (::std::unique_ptr< SectionType > p);
+
+  //@}
+
+  /**
+   * @name value
+   *
+   * @brief Accessor and modifier functions for the %value
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String ValueType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< ValueType > ValueOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< ValueType, char > ValueTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const ValueOptional&
+  value () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  ValueOptional&
+  value ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  value (const ValueType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  value (const ValueOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  value (::std::unique_ptr< ValueType > p);
+
+  //@}
+
+  /**
+   * @name property
+   *
+   * @brief Accessor and modifier functions for the %property
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String PropertyType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< PropertyType > PropertyOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< PropertyType, char > PropertyTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const PropertyOptional&
+  property () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  PropertyOptional&
+  property ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  property (const PropertyType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  property (const PropertyOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  property (::std::unique_ptr< PropertyType > p);
+
+  //@}
+
+  /**
+   * @name action
+   *
+   * @brief Accessor and modifier functions for the %action
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String ActionType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< ActionType > ActionOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< ActionType, char > ActionTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const ActionOptional&
+  action () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  ActionOptional&
+  action ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  action (const ActionType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  action (const ActionOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  action (::std::unique_ptr< ActionType > p);
 
   //@}
 
@@ -796,19 +1042,7 @@ class IniFiles: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  IniFiles (const IniType&,
-            const ClsidType&);
-
-  /**
-   * @brief Create an instance from the ultimate base and
-   * initializers for required elements and attributes
-   * (::std::unique_ptr version).
-   *
-   * This constructor will try to use the passed values directly
-   * instead of making copies.
-   */
-  IniFiles (::std::unique_ptr< IniType >,
-            const ClsidType&);
+  Properties_t (const PathType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -818,9 +1052,9 @@ class IniFiles: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  IniFiles (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f = 0,
-            ::xml_schema::Container* c = 0);
+  Properties_t (const ::xercesc::DOMElement& e,
+                ::xml_schema::Flags f = 0,
+                ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -831,9 +1065,9 @@ class IniFiles: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  IniFiles (const IniFiles& x,
-            ::xml_schema::Flags f = 0,
-            ::xml_schema::Container* c = 0);
+  Properties_t (const Properties_t& x,
+                ::xml_schema::Flags f = 0,
+                ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -846,7 +1080,7 @@ class IniFiles: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual IniFiles*
+  virtual Properties_t*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -858,8 +1092,8 @@ class IniFiles: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  IniFiles&
-  operator= (const IniFiles& x);
+  Properties_t&
+  operator= (const Properties_t& x);
 
   //@}
 
@@ -867,7 +1101,7 @@ class IniFiles: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~IniFiles ();
+  ~Properties_t ();
 
   // Implementation.
   //
@@ -880,33 +1114,51 @@ class IniFiles: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  ::xsd::cxx::tree::one< IniType > Ini_;
-  ::xsd::cxx::tree::one< ClsidType > clsid_;
+  ::xsd::cxx::tree::one< PathType > path_;
+  SectionOptional section_;
+  ValueOptional value_;
+  PropertyOptional property_;
+  ActionOptional action_;
   DisabledOptional disabled_;
 
   //@endcond
 };
 
 /**
- * @brief Class corresponding to the %Ini schema type.
+ * @brief Class corresponding to the %Ini_t schema type.
  *
  * @nosubgrouping
  */
-class Ini: public ::xml_schema::Type
+class Ini_t: public ::xml_schema::Type
 {
   public:
   /**
    * @name Properties
    *
    * @brief Accessor and modifier functions for the %Properties
-   * required element.
+   * sequence element.
    */
   //@{
 
   /**
    * @brief Element type.
    */
-  typedef ::Properties PropertiesType;
+  typedef ::Properties_t PropertiesType;
+
+  /**
+   * @brief Element sequence container type.
+   */
+  typedef ::xsd::cxx::tree::sequence< PropertiesType > PropertiesSequence;
+
+  /**
+   * @brief Element iterator type.
+   */
+  typedef PropertiesSequence::iterator PropertiesIterator;
+
+  /**
+   * @brief Element constant iterator type.
+   */
+  typedef PropertiesSequence::const_iterator PropertiesConstIterator;
 
   /**
    * @brief Element traits type.
@@ -914,42 +1166,33 @@ class Ini: public ::xml_schema::Type
   typedef ::xsd::cxx::tree::traits< PropertiesType, char > PropertiesTraits;
 
   /**
-   * @brief Return a read-only (constant) reference to the element.
+   * @brief Return a read-only (constant) reference to the element
+   * sequence.
    *
-   * @return A constant reference to the element.
+   * @return A constant reference to the sequence container.
    */
-  const PropertiesType&
+  const PropertiesSequence&
   Properties () const;
 
   /**
-   * @brief Return a read-write reference to the element.
+   * @brief Return a read-write reference to the element sequence.
    *
-   * @return A reference to the element.
+   * @return A reference to the sequence container.
    */
-  PropertiesType&
+  PropertiesSequence&
   Properties ();
 
   /**
-   * @brief Set the element value.
+   * @brief Copy elements from a given sequence.
    *
-   * @param x A new value to set.
+   * @param s A sequence to copy elements from.
    *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the element.
+   * For each element in @a s this function makes a copy and adds it 
+   * to the sequence. Note that this operation completely changes the 
+   * sequence and all old elements will be lost.
    */
   void
-  Properties (const PropertiesType& x);
-
-  /**
-   * @brief Set the element value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  Properties (::std::unique_ptr< PropertiesType > p);
+  Properties (const PropertiesSequence& s);
 
   //@}
 
@@ -1624,23 +1867,9 @@ class Ini: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  Ini (const PropertiesType&,
-       const ClsidType&,
-       const NameType&,
-       const UidType&);
-
-  /**
-   * @brief Create an instance from the ultimate base and
-   * initializers for required elements and attributes
-   * (::std::unique_ptr version).
-   *
-   * This constructor will try to use the passed values directly
-   * instead of making copies.
-   */
-  Ini (::std::unique_ptr< PropertiesType >,
-       const ClsidType&,
-       const NameType&,
-       const UidType&);
+  Ini_t (const ClsidType&,
+         const NameType&,
+         const UidType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -1650,9 +1879,9 @@ class Ini: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  Ini (const ::xercesc::DOMElement& e,
-       ::xml_schema::Flags f = 0,
-       ::xml_schema::Container* c = 0);
+  Ini_t (const ::xercesc::DOMElement& e,
+         ::xml_schema::Flags f = 0,
+         ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -1663,9 +1892,9 @@ class Ini: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Ini (const Ini& x,
-       ::xml_schema::Flags f = 0,
-       ::xml_schema::Container* c = 0);
+  Ini_t (const Ini_t& x,
+         ::xml_schema::Flags f = 0,
+         ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -1678,7 +1907,7 @@ class Ini: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual Ini*
+  virtual Ini_t*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -1690,8 +1919,8 @@ class Ini: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Ini&
-  operator= (const Ini& x);
+  Ini_t&
+  operator= (const Ini_t& x);
 
   //@}
 
@@ -1699,7 +1928,7 @@ class Ini: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~Ini ();
+  ~Ini_t ();
 
   // Implementation.
   //
@@ -1712,7 +1941,7 @@ class Ini: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  ::xsd::cxx::tree::one< PropertiesType > Properties_;
+  PropertiesSequence Properties_;
   ::xsd::cxx::tree::one< ClsidType > clsid_;
   ::xsd::cxx::tree::one< NameType > name_;
   StatusOptional status_;
@@ -1728,17 +1957,81 @@ class Ini: public ::xml_schema::Type
 };
 
 /**
- * @brief Class corresponding to the %Properties schema type.
+ * @brief Class corresponding to the %IniFiles schema type.
  *
  * @nosubgrouping
  */
-class Properties: public ::xml_schema::Type
+class IniFiles: public ::xml_schema::Type
 {
   public:
   /**
-   * @name path
+   * @name Ini
    *
-   * @brief Accessor and modifier functions for the %path
+   * @brief Accessor and modifier functions for the %Ini
+   * sequence element.
+   */
+  //@{
+
+  /**
+   * @brief Element type.
+   */
+  typedef ::Ini_t IniType;
+
+  /**
+   * @brief Element sequence container type.
+   */
+  typedef ::xsd::cxx::tree::sequence< IniType > IniSequence;
+
+  /**
+   * @brief Element iterator type.
+   */
+  typedef IniSequence::iterator IniIterator;
+
+  /**
+   * @brief Element constant iterator type.
+   */
+  typedef IniSequence::const_iterator IniConstIterator;
+
+  /**
+   * @brief Element traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< IniType, char > IniTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the element
+   * sequence.
+   *
+   * @return A constant reference to the sequence container.
+   */
+  const IniSequence&
+  Ini () const;
+
+  /**
+   * @brief Return a read-write reference to the element sequence.
+   *
+   * @return A reference to the sequence container.
+   */
+  IniSequence&
+  Ini ();
+
+  /**
+   * @brief Copy elements from a given sequence.
+   *
+   * @param s A sequence to copy elements from.
+   *
+   * For each element in @a s this function makes a copy and adds it 
+   * to the sequence. Note that this operation completely changes the 
+   * sequence and all old elements will be lost.
+   */
+  void
+  Ini (const IniSequence& s);
+
+  //@}
+
+  /**
+   * @name clsid
+   *
+   * @brief Accessor and modifier functions for the %clsid
    * required attribute.
    */
   //@{
@@ -1746,28 +2039,28 @@ class Properties: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String PathType;
+  typedef ::xml_schema::String ClsidType;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< PathType, char > PathTraits;
+  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute.
    *
    * @return A constant reference to the attribute.
    */
-  const PathType&
-  path () const;
+  const ClsidType&
+  clsid () const;
 
   /**
    * @brief Return a read-write reference to the attribute.
    *
    * @return A reference to the attribute.
    */
-  PathType&
-  path ();
+  ClsidType&
+  clsid ();
 
   /**
    * @brief Set the attribute value.
@@ -1778,7 +2071,7 @@ class Properties: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  path (const PathType& x);
+  clsid (const ClsidType& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -1789,311 +2082,7 @@ class Properties: public ::xml_schema::Type
    * instead of making a copy.
    */
   void
-  path (::std::unique_ptr< PathType > p);
-
-  //@}
-
-  /**
-   * @name section
-   *
-   * @brief Accessor and modifier functions for the %section
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String SectionType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< SectionType > SectionOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< SectionType, char > SectionTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const SectionOptional&
-  section () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  SectionOptional&
-  section ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  section (const SectionType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  section (const SectionOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  section (::std::unique_ptr< SectionType > p);
-
-  //@}
-
-  /**
-   * @name value
-   *
-   * @brief Accessor and modifier functions for the %value
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String ValueType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< ValueType > ValueOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< ValueType, char > ValueTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const ValueOptional&
-  value () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  ValueOptional&
-  value ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  value (const ValueType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  value (const ValueOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  value (::std::unique_ptr< ValueType > p);
-
-  //@}
-
-  /**
-   * @name property
-   *
-   * @brief Accessor and modifier functions for the %property
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String PropertyType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< PropertyType > PropertyOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< PropertyType, char > PropertyTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const PropertyOptional&
-  property () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  PropertyOptional&
-  property ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  property (const PropertyType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  property (const PropertyOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  property (::std::unique_ptr< PropertyType > p);
-
-  //@}
-
-  /**
-   * @name action
-   *
-   * @brief Accessor and modifier functions for the %action
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String ActionType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< ActionType > ActionOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< ActionType, char > ActionTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const ActionOptional&
-  action () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  ActionOptional&
-  action ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  action (const ActionType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  action (const ActionOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  action (::std::unique_ptr< ActionType > p);
+  clsid (::std::unique_ptr< ClsidType > p);
 
   //@}
 
@@ -2171,7 +2160,7 @@ class Properties: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  Properties (const PathType&);
+  IniFiles (const ClsidType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -2181,9 +2170,9 @@ class Properties: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  Properties (const ::xercesc::DOMElement& e,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  IniFiles (const ::xercesc::DOMElement& e,
+            ::xml_schema::Flags f = 0,
+            ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -2194,9 +2183,9 @@ class Properties: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Properties (const Properties& x,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  IniFiles (const IniFiles& x,
+            ::xml_schema::Flags f = 0,
+            ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -2209,7 +2198,7 @@ class Properties: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual Properties*
+  virtual IniFiles*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -2221,8 +2210,8 @@ class Properties: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Properties&
-  operator= (const Properties& x);
+  IniFiles&
+  operator= (const IniFiles& x);
 
   //@}
 
@@ -2230,7 +2219,7 @@ class Properties: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~Properties ();
+  ~IniFiles ();
 
   // Implementation.
   //
@@ -2243,11 +2232,8 @@ class Properties: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  ::xsd::cxx::tree::one< PathType > path_;
-  SectionOptional section_;
-  ValueOptional value_;
-  PropertyOptional property_;
-  ActionOptional action_;
+  IniSequence Ini_;
+  ::xsd::cxx::tree::one< ClsidType > clsid_;
   DisabledOptional disabled_;
 
   //@endcond
@@ -2256,13 +2242,13 @@ class Properties: public ::xml_schema::Type
 #include <iosfwd>
 
 ::std::ostream&
+operator<< (::std::ostream&, const Properties_t&);
+
+::std::ostream&
+operator<< (::std::ostream&, const Ini_t&);
+
+::std::ostream&
 operator<< (::std::ostream&, const IniFiles&);
-
-::std::ostream&
-operator<< (::std::ostream&, const Ini&);
-
-::std::ostream&
-operator<< (::std::ostream&, const Properties&);
 
 #include <iosfwd>
 

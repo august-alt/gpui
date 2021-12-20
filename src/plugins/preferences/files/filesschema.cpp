@@ -40,31 +40,477 @@
 
 #include "filesschema.h"
 
+// Properties_t
+// 
+
+const Properties_t::ActionOptional& Properties_t::
+action () const
+{
+  return this->action_;
+}
+
+Properties_t::ActionOptional& Properties_t::
+action ()
+{
+  return this->action_;
+}
+
+void Properties_t::
+action (const ActionType& x)
+{
+  this->action_.set (x);
+}
+
+void Properties_t::
+action (const ActionOptional& x)
+{
+  this->action_ = x;
+}
+
+void Properties_t::
+action (::std::unique_ptr< ActionType > x)
+{
+  this->action_.set (std::move (x));
+}
+
+const Properties_t::FromPathType& Properties_t::
+fromPath () const
+{
+  return this->fromPath_.get ();
+}
+
+Properties_t::FromPathType& Properties_t::
+fromPath ()
+{
+  return this->fromPath_.get ();
+}
+
+void Properties_t::
+fromPath (const FromPathType& x)
+{
+  this->fromPath_.set (x);
+}
+
+void Properties_t::
+fromPath (::std::unique_ptr< FromPathType > x)
+{
+  this->fromPath_.set (std::move (x));
+}
+
+const Properties_t::TargetPathType& Properties_t::
+targetPath () const
+{
+  return this->targetPath_.get ();
+}
+
+Properties_t::TargetPathType& Properties_t::
+targetPath ()
+{
+  return this->targetPath_.get ();
+}
+
+void Properties_t::
+targetPath (const TargetPathType& x)
+{
+  this->targetPath_.set (x);
+}
+
+void Properties_t::
+targetPath (::std::unique_ptr< TargetPathType > x)
+{
+  this->targetPath_.set (std::move (x));
+}
+
+const Properties_t::ReadOnlyOptional& Properties_t::
+readOnly () const
+{
+  return this->readOnly_;
+}
+
+Properties_t::ReadOnlyOptional& Properties_t::
+readOnly ()
+{
+  return this->readOnly_;
+}
+
+void Properties_t::
+readOnly (const ReadOnlyType& x)
+{
+  this->readOnly_.set (x);
+}
+
+void Properties_t::
+readOnly (const ReadOnlyOptional& x)
+{
+  this->readOnly_ = x;
+}
+
+const Properties_t::ArchiveOptional& Properties_t::
+archive () const
+{
+  return this->archive_;
+}
+
+Properties_t::ArchiveOptional& Properties_t::
+archive ()
+{
+  return this->archive_;
+}
+
+void Properties_t::
+archive (const ArchiveType& x)
+{
+  this->archive_.set (x);
+}
+
+void Properties_t::
+archive (const ArchiveOptional& x)
+{
+  this->archive_ = x;
+}
+
+const Properties_t::HiddenOptional& Properties_t::
+hidden () const
+{
+  return this->hidden_;
+}
+
+Properties_t::HiddenOptional& Properties_t::
+hidden ()
+{
+  return this->hidden_;
+}
+
+void Properties_t::
+hidden (const HiddenType& x)
+{
+  this->hidden_.set (x);
+}
+
+void Properties_t::
+hidden (const HiddenOptional& x)
+{
+  this->hidden_ = x;
+}
+
+const Properties_t::SuppressOptional& Properties_t::
+suppress () const
+{
+  return this->suppress_;
+}
+
+Properties_t::SuppressOptional& Properties_t::
+suppress ()
+{
+  return this->suppress_;
+}
+
+void Properties_t::
+suppress (const SuppressType& x)
+{
+  this->suppress_.set (x);
+}
+
+void Properties_t::
+suppress (const SuppressOptional& x)
+{
+  this->suppress_ = x;
+}
+
+const Properties_t::DisabledOptional& Properties_t::
+disabled () const
+{
+  return this->disabled_;
+}
+
+Properties_t::DisabledOptional& Properties_t::
+disabled ()
+{
+  return this->disabled_;
+}
+
+void Properties_t::
+disabled (const DisabledType& x)
+{
+  this->disabled_.set (x);
+}
+
+void Properties_t::
+disabled (const DisabledOptional& x)
+{
+  this->disabled_ = x;
+}
+
+
+// File_t
+// 
+
+const File_t::PropertiesSequence& File_t::
+Properties () const
+{
+  return this->Properties_;
+}
+
+File_t::PropertiesSequence& File_t::
+Properties ()
+{
+  return this->Properties_;
+}
+
+void File_t::
+Properties (const PropertiesSequence& s)
+{
+  this->Properties_ = s;
+}
+
+const File_t::ClsidType& File_t::
+clsid () const
+{
+  return this->clsid_.get ();
+}
+
+File_t::ClsidType& File_t::
+clsid ()
+{
+  return this->clsid_.get ();
+}
+
+void File_t::
+clsid (const ClsidType& x)
+{
+  this->clsid_.set (x);
+}
+
+void File_t::
+clsid (::std::unique_ptr< ClsidType > x)
+{
+  this->clsid_.set (std::move (x));
+}
+
+const File_t::NameType& File_t::
+name () const
+{
+  return this->name_.get ();
+}
+
+File_t::NameType& File_t::
+name ()
+{
+  return this->name_.get ();
+}
+
+void File_t::
+name (const NameType& x)
+{
+  this->name_.set (x);
+}
+
+void File_t::
+name (::std::unique_ptr< NameType > x)
+{
+  this->name_.set (std::move (x));
+}
+
+const File_t::ImageOptional& File_t::
+image () const
+{
+  return this->image_;
+}
+
+File_t::ImageOptional& File_t::
+image ()
+{
+  return this->image_;
+}
+
+void File_t::
+image (const ImageType& x)
+{
+  this->image_.set (x);
+}
+
+void File_t::
+image (const ImageOptional& x)
+{
+  this->image_ = x;
+}
+
+const File_t::ChangedOptional& File_t::
+changed () const
+{
+  return this->changed_;
+}
+
+File_t::ChangedOptional& File_t::
+changed ()
+{
+  return this->changed_;
+}
+
+void File_t::
+changed (const ChangedType& x)
+{
+  this->changed_.set (x);
+}
+
+void File_t::
+changed (const ChangedOptional& x)
+{
+  this->changed_ = x;
+}
+
+void File_t::
+changed (::std::unique_ptr< ChangedType > x)
+{
+  this->changed_.set (std::move (x));
+}
+
+const File_t::UidType& File_t::
+uid () const
+{
+  return this->uid_.get ();
+}
+
+File_t::UidType& File_t::
+uid ()
+{
+  return this->uid_.get ();
+}
+
+void File_t::
+uid (const UidType& x)
+{
+  this->uid_.set (x);
+}
+
+void File_t::
+uid (::std::unique_ptr< UidType > x)
+{
+  this->uid_.set (std::move (x));
+}
+
+const File_t::DescOptional& File_t::
+desc () const
+{
+  return this->desc_;
+}
+
+File_t::DescOptional& File_t::
+desc ()
+{
+  return this->desc_;
+}
+
+void File_t::
+desc (const DescType& x)
+{
+  this->desc_.set (x);
+}
+
+void File_t::
+desc (const DescOptional& x)
+{
+  this->desc_ = x;
+}
+
+void File_t::
+desc (::std::unique_ptr< DescType > x)
+{
+  this->desc_.set (std::move (x));
+}
+
+const File_t::BypassErrorsOptional& File_t::
+bypassErrors () const
+{
+  return this->bypassErrors_;
+}
+
+File_t::BypassErrorsOptional& File_t::
+bypassErrors ()
+{
+  return this->bypassErrors_;
+}
+
+void File_t::
+bypassErrors (const BypassErrorsType& x)
+{
+  this->bypassErrors_.set (x);
+}
+
+void File_t::
+bypassErrors (const BypassErrorsOptional& x)
+{
+  this->bypassErrors_ = x;
+}
+
+const File_t::UserContextOptional& File_t::
+userContext () const
+{
+  return this->userContext_;
+}
+
+File_t::UserContextOptional& File_t::
+userContext ()
+{
+  return this->userContext_;
+}
+
+void File_t::
+userContext (const UserContextType& x)
+{
+  this->userContext_.set (x);
+}
+
+void File_t::
+userContext (const UserContextOptional& x)
+{
+  this->userContext_ = x;
+}
+
+const File_t::RemovePolicyOptional& File_t::
+removePolicy () const
+{
+  return this->removePolicy_;
+}
+
+File_t::RemovePolicyOptional& File_t::
+removePolicy ()
+{
+  return this->removePolicy_;
+}
+
+void File_t::
+removePolicy (const RemovePolicyType& x)
+{
+  this->removePolicy_.set (x);
+}
+
+void File_t::
+removePolicy (const RemovePolicyOptional& x)
+{
+  this->removePolicy_ = x;
+}
+
+
 // Files
 // 
 
-const Files::FileType& Files::
+const Files::FileSequence& Files::
 File () const
 {
-  return this->File_.get ();
+  return this->File_;
 }
 
-Files::FileType& Files::
+Files::FileSequence& Files::
 File ()
 {
-  return this->File_.get ();
+  return this->File_;
 }
 
 void Files::
-File (const FileType& x)
+File (const FileSequence& s)
 {
-  this->File_.set (x);
-}
-
-void Files::
-File (::std::unique_ptr< FileType > x)
-{
-  this->File_.set (std::move (x));
+  this->File_ = s;
 }
 
 const Files::ClsidType& Files::
@@ -116,464 +562,6 @@ disabled (const DisabledOptional& x)
 }
 
 
-// File
-// 
-
-const File::PropertiesType& File::
-Properties () const
-{
-  return this->Properties_.get ();
-}
-
-File::PropertiesType& File::
-Properties ()
-{
-  return this->Properties_.get ();
-}
-
-void File::
-Properties (const PropertiesType& x)
-{
-  this->Properties_.set (x);
-}
-
-void File::
-Properties (::std::unique_ptr< PropertiesType > x)
-{
-  this->Properties_.set (std::move (x));
-}
-
-const File::ClsidType& File::
-clsid () const
-{
-  return this->clsid_.get ();
-}
-
-File::ClsidType& File::
-clsid ()
-{
-  return this->clsid_.get ();
-}
-
-void File::
-clsid (const ClsidType& x)
-{
-  this->clsid_.set (x);
-}
-
-void File::
-clsid (::std::unique_ptr< ClsidType > x)
-{
-  this->clsid_.set (std::move (x));
-}
-
-const File::NameType& File::
-name () const
-{
-  return this->name_.get ();
-}
-
-File::NameType& File::
-name ()
-{
-  return this->name_.get ();
-}
-
-void File::
-name (const NameType& x)
-{
-  this->name_.set (x);
-}
-
-void File::
-name (::std::unique_ptr< NameType > x)
-{
-  this->name_.set (std::move (x));
-}
-
-const File::ImageOptional& File::
-image () const
-{
-  return this->image_;
-}
-
-File::ImageOptional& File::
-image ()
-{
-  return this->image_;
-}
-
-void File::
-image (const ImageType& x)
-{
-  this->image_.set (x);
-}
-
-void File::
-image (const ImageOptional& x)
-{
-  this->image_ = x;
-}
-
-const File::ChangedOptional& File::
-changed () const
-{
-  return this->changed_;
-}
-
-File::ChangedOptional& File::
-changed ()
-{
-  return this->changed_;
-}
-
-void File::
-changed (const ChangedType& x)
-{
-  this->changed_.set (x);
-}
-
-void File::
-changed (const ChangedOptional& x)
-{
-  this->changed_ = x;
-}
-
-void File::
-changed (::std::unique_ptr< ChangedType > x)
-{
-  this->changed_.set (std::move (x));
-}
-
-const File::UidType& File::
-uid () const
-{
-  return this->uid_.get ();
-}
-
-File::UidType& File::
-uid ()
-{
-  return this->uid_.get ();
-}
-
-void File::
-uid (const UidType& x)
-{
-  this->uid_.set (x);
-}
-
-void File::
-uid (::std::unique_ptr< UidType > x)
-{
-  this->uid_.set (std::move (x));
-}
-
-const File::DescOptional& File::
-desc () const
-{
-  return this->desc_;
-}
-
-File::DescOptional& File::
-desc ()
-{
-  return this->desc_;
-}
-
-void File::
-desc (const DescType& x)
-{
-  this->desc_.set (x);
-}
-
-void File::
-desc (const DescOptional& x)
-{
-  this->desc_ = x;
-}
-
-void File::
-desc (::std::unique_ptr< DescType > x)
-{
-  this->desc_.set (std::move (x));
-}
-
-const File::BypassErrorsOptional& File::
-bypassErrors () const
-{
-  return this->bypassErrors_;
-}
-
-File::BypassErrorsOptional& File::
-bypassErrors ()
-{
-  return this->bypassErrors_;
-}
-
-void File::
-bypassErrors (const BypassErrorsType& x)
-{
-  this->bypassErrors_.set (x);
-}
-
-void File::
-bypassErrors (const BypassErrorsOptional& x)
-{
-  this->bypassErrors_ = x;
-}
-
-const File::UserContextOptional& File::
-userContext () const
-{
-  return this->userContext_;
-}
-
-File::UserContextOptional& File::
-userContext ()
-{
-  return this->userContext_;
-}
-
-void File::
-userContext (const UserContextType& x)
-{
-  this->userContext_.set (x);
-}
-
-void File::
-userContext (const UserContextOptional& x)
-{
-  this->userContext_ = x;
-}
-
-const File::RemovePolicyOptional& File::
-removePolicy () const
-{
-  return this->removePolicy_;
-}
-
-File::RemovePolicyOptional& File::
-removePolicy ()
-{
-  return this->removePolicy_;
-}
-
-void File::
-removePolicy (const RemovePolicyType& x)
-{
-  this->removePolicy_.set (x);
-}
-
-void File::
-removePolicy (const RemovePolicyOptional& x)
-{
-  this->removePolicy_ = x;
-}
-
-
-// Properties
-// 
-
-const Properties::ActionOptional& Properties::
-action () const
-{
-  return this->action_;
-}
-
-Properties::ActionOptional& Properties::
-action ()
-{
-  return this->action_;
-}
-
-void Properties::
-action (const ActionType& x)
-{
-  this->action_.set (x);
-}
-
-void Properties::
-action (const ActionOptional& x)
-{
-  this->action_ = x;
-}
-
-void Properties::
-action (::std::unique_ptr< ActionType > x)
-{
-  this->action_.set (std::move (x));
-}
-
-const Properties::FromPathType& Properties::
-fromPath () const
-{
-  return this->fromPath_.get ();
-}
-
-Properties::FromPathType& Properties::
-fromPath ()
-{
-  return this->fromPath_.get ();
-}
-
-void Properties::
-fromPath (const FromPathType& x)
-{
-  this->fromPath_.set (x);
-}
-
-void Properties::
-fromPath (::std::unique_ptr< FromPathType > x)
-{
-  this->fromPath_.set (std::move (x));
-}
-
-const Properties::TargetPathType& Properties::
-targetPath () const
-{
-  return this->targetPath_.get ();
-}
-
-Properties::TargetPathType& Properties::
-targetPath ()
-{
-  return this->targetPath_.get ();
-}
-
-void Properties::
-targetPath (const TargetPathType& x)
-{
-  this->targetPath_.set (x);
-}
-
-void Properties::
-targetPath (::std::unique_ptr< TargetPathType > x)
-{
-  this->targetPath_.set (std::move (x));
-}
-
-const Properties::ReadOnlyOptional& Properties::
-readOnly () const
-{
-  return this->readOnly_;
-}
-
-Properties::ReadOnlyOptional& Properties::
-readOnly ()
-{
-  return this->readOnly_;
-}
-
-void Properties::
-readOnly (const ReadOnlyType& x)
-{
-  this->readOnly_.set (x);
-}
-
-void Properties::
-readOnly (const ReadOnlyOptional& x)
-{
-  this->readOnly_ = x;
-}
-
-const Properties::ArchiveOptional& Properties::
-archive () const
-{
-  return this->archive_;
-}
-
-Properties::ArchiveOptional& Properties::
-archive ()
-{
-  return this->archive_;
-}
-
-void Properties::
-archive (const ArchiveType& x)
-{
-  this->archive_.set (x);
-}
-
-void Properties::
-archive (const ArchiveOptional& x)
-{
-  this->archive_ = x;
-}
-
-const Properties::HiddenOptional& Properties::
-hidden () const
-{
-  return this->hidden_;
-}
-
-Properties::HiddenOptional& Properties::
-hidden ()
-{
-  return this->hidden_;
-}
-
-void Properties::
-hidden (const HiddenType& x)
-{
-  this->hidden_.set (x);
-}
-
-void Properties::
-hidden (const HiddenOptional& x)
-{
-  this->hidden_ = x;
-}
-
-const Properties::SuppressOptional& Properties::
-suppress () const
-{
-  return this->suppress_;
-}
-
-Properties::SuppressOptional& Properties::
-suppress ()
-{
-  return this->suppress_;
-}
-
-void Properties::
-suppress (const SuppressType& x)
-{
-  this->suppress_.set (x);
-}
-
-void Properties::
-suppress (const SuppressOptional& x)
-{
-  this->suppress_ = x;
-}
-
-const Properties::DisabledOptional& Properties::
-disabled () const
-{
-  return this->disabled_;
-}
-
-Properties::DisabledOptional& Properties::
-disabled ()
-{
-  return this->disabled_;
-}
-
-void Properties::
-disabled (const DisabledType& x)
-{
-  this->disabled_.set (x);
-}
-
-void Properties::
-disabled (const DisabledOptional& x)
-{
-  this->disabled_ = x;
-}
-
-
 #include <xsd/cxx/xml/dom/wildcard-source.hxx>
 
 #include <xsd/cxx/xml/dom/parsing-source.hxx>
@@ -587,99 +575,110 @@ namespace _xsd
   type_factory_plate_init;
 }
 
-// Files
+// Properties_t
 //
 
-Files::
-Files (const FileType& File,
-       const ClsidType& clsid)
+Properties_t::
+Properties_t (const FromPathType& fromPath,
+              const TargetPathType& targetPath)
 : ::xml_schema::Type (),
-  File_ (File, this),
-  clsid_ (clsid, this),
+  action_ (this),
+  fromPath_ (fromPath, this),
+  targetPath_ (targetPath, this),
+  readOnly_ (this),
+  archive_ (this),
+  hidden_ (this),
+  suppress_ (this),
   disabled_ (this)
 {
 }
 
-Files::
-Files (::std::unique_ptr< FileType > File,
-       const ClsidType& clsid)
-: ::xml_schema::Type (),
-  File_ (std::move (File), this),
-  clsid_ (clsid, this),
-  disabled_ (this)
-{
-}
-
-Files::
-Files (const Files& x,
-       ::xml_schema::Flags f,
-       ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const Properties_t& x,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  File_ (x.File_, f, this),
-  clsid_ (x.clsid_, f, this),
+  action_ (x.action_, f, this),
+  fromPath_ (x.fromPath_, f, this),
+  targetPath_ (x.targetPath_, f, this),
+  readOnly_ (x.readOnly_, f, this),
+  archive_ (x.archive_, f, this),
+  hidden_ (x.hidden_, f, this),
+  suppress_ (x.suppress_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
 
-Files::
-Files (const ::xercesc::DOMElement& e,
-       ::xml_schema::Flags f,
-       ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const ::xercesc::DOMElement& e,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  File_ (this),
-  clsid_ (this),
+  action_ (this),
+  fromPath_ (this),
+  targetPath_ (this),
+  readOnly_ (this),
+  archive_ (this),
+  hidden_ (this),
+  suppress_ (this),
   disabled_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
-    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+    ::xsd::cxx::xml::dom::parser< char > p (e, false, false, true);
     this->parse (p, f);
   }
 }
 
-void Files::
+void Properties_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
-  for (; p.more_content (); p.next_content (false))
-  {
-    const ::xercesc::DOMElement& i (p.cur_element ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    // File
-    //
-    if (n.name () == "File" && n.namespace_ ().empty ())
-    {
-      ::std::unique_ptr< FileType > r (
-        FileTraits::create (i, f, this));
-
-      if (!File_.present ())
-      {
-        this->File_.set (::std::move (r));
-        continue;
-      }
-    }
-
-    break;
-  }
-
-  if (!File_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "File",
-      "");
-  }
-
   while (p.more_attributes ())
   {
     const ::xercesc::DOMAttr& i (p.next_attribute ());
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    if (n.name () == "clsid" && n.namespace_ ().empty ())
+    if (n.name () == "action" && n.namespace_ ().empty ())
     {
-      this->clsid_.set (ClsidTraits::create (i, f, this));
+      this->action_.set (ActionTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "fromPath" && n.namespace_ ().empty ())
+    {
+      this->fromPath_.set (FromPathTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "targetPath" && n.namespace_ ().empty ())
+    {
+      this->targetPath_.set (TargetPathTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "readOnly" && n.namespace_ ().empty ())
+    {
+      this->readOnly_.set (ReadOnlyTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "archive" && n.namespace_ ().empty ())
+    {
+      this->archive_.set (ArchiveTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "hidden" && n.namespace_ ().empty ())
+    {
+      this->hidden_.set (HiddenTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "suppress" && n.namespace_ ().empty ())
+    {
+      this->suppress_.set (SuppressTraits::create (i, f, this));
       continue;
     }
 
@@ -690,50 +689,67 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     }
   }
 
-  if (!clsid_.present ())
+  if (!fromPath_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "clsid",
+      "fromPath",
+      "");
+  }
+
+  if (!targetPath_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "targetPath",
       "");
   }
 }
 
-Files* Files::
+Properties_t* Properties_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Files (*this, f, c);
+  return new class Properties_t (*this, f, c);
 }
 
-Files& Files::
-operator= (const Files& x)
+Properties_t& Properties_t::
+operator= (const Properties_t& x)
 {
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->File_ = x.File_;
-    this->clsid_ = x.clsid_;
+    this->action_ = x.action_;
+    this->fromPath_ = x.fromPath_;
+    this->targetPath_ = x.targetPath_;
+    this->readOnly_ = x.readOnly_;
+    this->archive_ = x.archive_;
+    this->hidden_ = x.hidden_;
+    this->suppress_ = x.suppress_;
     this->disabled_ = x.disabled_;
   }
 
   return *this;
 }
 
-Files::
-~Files ()
+Properties_t::
+~Properties_t ()
 {
 }
 
-// File
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Properties_t >
+_xsd_Properties_t_type_factory_init (
+  "Properties_t",
+  "");
+
+// File_t
 //
 
-File::
-File (const PropertiesType& Properties,
-      const ClsidType& clsid,
-      const NameType& name,
-      const UidType& uid)
+File_t::
+File_t (const ClsidType& clsid,
+        const NameType& name,
+        const UidType& uid)
 : ::xml_schema::Type (),
-  Properties_ (Properties, this),
+  Properties_ (this),
   clsid_ (clsid, this),
   name_ (name, this),
   image_ (this),
@@ -746,29 +762,10 @@ File (const PropertiesType& Properties,
 {
 }
 
-File::
-File (::std::unique_ptr< PropertiesType > Properties,
-      const ClsidType& clsid,
-      const NameType& name,
-      const UidType& uid)
-: ::xml_schema::Type (),
-  Properties_ (std::move (Properties), this),
-  clsid_ (clsid, this),
-  name_ (name, this),
-  image_ (this),
-  changed_ (this),
-  uid_ (uid, this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-}
-
-File::
-File (const File& x,
-      ::xml_schema::Flags f,
-      ::xml_schema::Container* c)
+File_t::
+File_t (const File_t& x,
+        ::xml_schema::Flags f,
+        ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
   Properties_ (x.Properties_, f, this),
   clsid_ (x.clsid_, f, this),
@@ -783,10 +780,10 @@ File (const File& x,
 {
 }
 
-File::
-File (const ::xercesc::DOMElement& e,
-      ::xml_schema::Flags f,
-      ::xml_schema::Container* c)
+File_t::
+File_t (const ::xercesc::DOMElement& e,
+        ::xml_schema::Flags f,
+        ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
   Properties_ (this),
   clsid_ (this),
@@ -806,7 +803,7 @@ File (const ::xercesc::DOMElement& e,
   }
 }
 
-void File::
+void File_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
@@ -818,26 +815,30 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
 
     // Properties
     //
-    if (n.name () == "Properties" && n.namespace_ ().empty ())
     {
-      ::std::unique_ptr< PropertiesType > r (
-        PropertiesTraits::create (i, f, this));
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "Properties",
+          "",
+          &::xsd::cxx::tree::factory_impl< PropertiesType >,
+          false, true, i, n, f, this));
 
-      if (!Properties_.present ())
+      if (tmp.get () != 0)
       {
-        this->Properties_.set (::std::move (r));
+        ::std::unique_ptr< PropertiesType > r (
+          dynamic_cast< PropertiesType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->Properties_.push_back (::std::move (r));
         continue;
       }
     }
 
     break;
-  }
-
-  if (!Properties_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "Properties",
-      "");
   }
 
   while (p.more_attributes ())
@@ -923,15 +924,15 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
   }
 }
 
-File* File::
+File_t* File_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class File (*this, f, c);
+  return new class File_t (*this, f, c);
 }
 
-File& File::
-operator= (const File& x)
+File_t& File_t::
+operator= (const File_t& x)
 {
   if (this != &x)
   {
@@ -951,115 +952,103 @@ operator= (const File& x)
   return *this;
 }
 
-File::
-~File ()
+File_t::
+~File_t ()
 {
 }
 
-// Properties
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, File_t >
+_xsd_File_t_type_factory_init (
+  "File_t",
+  "");
+
+// Files
 //
 
-Properties::
-Properties (const FromPathType& fromPath,
-            const TargetPathType& targetPath)
+Files::
+Files (const ClsidType& clsid)
 : ::xml_schema::Type (),
-  action_ (this),
-  fromPath_ (fromPath, this),
-  targetPath_ (targetPath, this),
-  readOnly_ (this),
-  archive_ (this),
-  hidden_ (this),
-  suppress_ (this),
+  File_ (this),
+  clsid_ (clsid, this),
   disabled_ (this)
 {
 }
 
-Properties::
-Properties (const Properties& x,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Files::
+Files (const Files& x,
+       ::xml_schema::Flags f,
+       ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  action_ (x.action_, f, this),
-  fromPath_ (x.fromPath_, f, this),
-  targetPath_ (x.targetPath_, f, this),
-  readOnly_ (x.readOnly_, f, this),
-  archive_ (x.archive_, f, this),
-  hidden_ (x.hidden_, f, this),
-  suppress_ (x.suppress_, f, this),
+  File_ (x.File_, f, this),
+  clsid_ (x.clsid_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
 
-Properties::
-Properties (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Files::
+Files (const ::xercesc::DOMElement& e,
+       ::xml_schema::Flags f,
+       ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  action_ (this),
-  fromPath_ (this),
-  targetPath_ (this),
-  readOnly_ (this),
-  archive_ (this),
-  hidden_ (this),
-  suppress_ (this),
+  File_ (this),
+  clsid_ (this),
   disabled_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
-    ::xsd::cxx::xml::dom::parser< char > p (e, false, false, true);
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
     this->parse (p, f);
   }
 }
 
-void Properties::
+void Files::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
+  for (; p.more_content (); p.next_content (false))
+  {
+    const ::xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // File
+    //
+    {
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "File",
+          "",
+          &::xsd::cxx::tree::factory_impl< FileType >,
+          false, true, i, n, f, this));
+
+      if (tmp.get () != 0)
+      {
+        ::std::unique_ptr< FileType > r (
+          dynamic_cast< FileType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->File_.push_back (::std::move (r));
+        continue;
+      }
+    }
+
+    break;
+  }
+
   while (p.more_attributes ())
   {
     const ::xercesc::DOMAttr& i (p.next_attribute ());
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    if (n.name () == "action" && n.namespace_ ().empty ())
+    if (n.name () == "clsid" && n.namespace_ ().empty ())
     {
-      this->action_.set (ActionTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "fromPath" && n.namespace_ ().empty ())
-    {
-      this->fromPath_.set (FromPathTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "targetPath" && n.namespace_ ().empty ())
-    {
-      this->targetPath_.set (TargetPathTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "readOnly" && n.namespace_ ().empty ())
-    {
-      this->readOnly_.set (ReadOnlyTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "archive" && n.namespace_ ().empty ())
-    {
-      this->archive_.set (ArchiveTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "hidden" && n.namespace_ ().empty ())
-    {
-      this->hidden_.set (HiddenTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "suppress" && n.namespace_ ().empty ())
-    {
-      this->suppress_.set (SuppressTraits::create (i, f, this));
+      this->clsid_.set (ClsidTraits::create (i, f, this));
       continue;
     }
 
@@ -1070,49 +1059,37 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     }
   }
 
-  if (!fromPath_.present ())
+  if (!clsid_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "fromPath",
-      "");
-  }
-
-  if (!targetPath_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "targetPath",
+      "clsid",
       "");
   }
 }
 
-Properties* Properties::
+Files* Files::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Properties (*this, f, c);
+  return new class Files (*this, f, c);
 }
 
-Properties& Properties::
-operator= (const Properties& x)
+Files& Files::
+operator= (const Files& x)
 {
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->action_ = x.action_;
-    this->fromPath_ = x.fromPath_;
-    this->targetPath_ = x.targetPath_;
-    this->readOnly_ = x.readOnly_;
-    this->archive_ = x.archive_;
-    this->hidden_ = x.hidden_;
-    this->suppress_ = x.suppress_;
+    this->File_ = x.File_;
+    this->clsid_ = x.clsid_;
     this->disabled_ = x.disabled_;
   }
 
   return *this;
 }
 
-Properties::
-~Properties ()
+Files::
+~Files ()
 {
 }
 
@@ -1128,10 +1105,35 @@ namespace _xsd
 }
 
 ::std::ostream&
-operator<< (::std::ostream& o, const Files& i)
+operator<< (::std::ostream& o, const Properties_t& i)
 {
-  o << ::std::endl << "File: " << i.File ();
-  o << ::std::endl << "clsid: " << i.clsid ();
+  if (i.action ())
+  {
+    o << ::std::endl << "action: " << *i.action ();
+  }
+
+  o << ::std::endl << "fromPath: " << i.fromPath ();
+  o << ::std::endl << "targetPath: " << i.targetPath ();
+  if (i.readOnly ())
+  {
+    o << ::std::endl << "readOnly: " << *i.readOnly ();
+  }
+
+  if (i.archive ())
+  {
+    o << ::std::endl << "archive: " << *i.archive ();
+  }
+
+  if (i.hidden ())
+  {
+    o << ::std::endl << "hidden: " << *i.hidden ();
+  }
+
+  if (i.suppress ())
+  {
+    o << ::std::endl << "suppress: " << *i.suppress ();
+  }
+
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();
@@ -1140,10 +1142,26 @@ operator<< (::std::ostream& o, const Files& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Properties_t >
+_xsd_Properties_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const File& i)
+operator<< (::std::ostream& o, const File_t& i)
 {
-  o << ::std::endl << "Properties: " << i.Properties ();
+  {
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (File_t::PropertiesConstIterator
+         b (i.Properties ().begin ()), e (i.Properties ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Properties: ";
+      om.insert (o, *b);
+    }
+  }
+
   o << ::std::endl << "clsid: " << i.clsid ();
   o << ::std::endl << "name: " << i.name ();
   if (i.image ())
@@ -1180,36 +1198,27 @@ operator<< (::std::ostream& o, const File& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, File_t >
+_xsd_File_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const Properties& i)
+operator<< (::std::ostream& o, const Files& i)
 {
-  if (i.action ())
   {
-    o << ::std::endl << "action: " << *i.action ();
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (Files::FileConstIterator
+         b (i.File ().begin ()), e (i.File ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "File: ";
+      om.insert (o, *b);
+    }
   }
 
-  o << ::std::endl << "fromPath: " << i.fromPath ();
-  o << ::std::endl << "targetPath: " << i.targetPath ();
-  if (i.readOnly ())
-  {
-    o << ::std::endl << "readOnly: " << *i.readOnly ();
-  }
-
-  if (i.archive ())
-  {
-    o << ::std::endl << "archive: " << *i.archive ();
-  }
-
-  if (i.hidden ())
-  {
-    o << ::std::endl << "hidden: " << *i.hidden ();
-  }
-
-  if (i.suppress ())
-  {
-    o << ::std::endl << "suppress: " << *i.suppress ();
-  }
-
+  o << ::std::endl << "clsid: " << i.clsid ();
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();

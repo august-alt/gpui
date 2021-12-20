@@ -40,31 +40,561 @@
 
 #include "foldersschema.h"
 
+// Properties_t
+// 
+
+const Properties_t::ActionOptional& Properties_t::
+action () const
+{
+  return this->action_;
+}
+
+Properties_t::ActionOptional& Properties_t::
+action ()
+{
+  return this->action_;
+}
+
+void Properties_t::
+action (const ActionType& x)
+{
+  this->action_.set (x);
+}
+
+void Properties_t::
+action (const ActionOptional& x)
+{
+  this->action_ = x;
+}
+
+void Properties_t::
+action (::std::unique_ptr< ActionType > x)
+{
+  this->action_.set (std::move (x));
+}
+
+const Properties_t::PathType& Properties_t::
+path () const
+{
+  return this->path_.get ();
+}
+
+Properties_t::PathType& Properties_t::
+path ()
+{
+  return this->path_.get ();
+}
+
+void Properties_t::
+path (const PathType& x)
+{
+  this->path_.set (x);
+}
+
+void Properties_t::
+path (::std::unique_ptr< PathType > x)
+{
+  this->path_.set (std::move (x));
+}
+
+const Properties_t::ReadOnlyType& Properties_t::
+readOnly () const
+{
+  return this->readOnly_.get ();
+}
+
+Properties_t::ReadOnlyType& Properties_t::
+readOnly ()
+{
+  return this->readOnly_.get ();
+}
+
+void Properties_t::
+readOnly (const ReadOnlyType& x)
+{
+  this->readOnly_.set (x);
+}
+
+const Properties_t::ArchiveType& Properties_t::
+archive () const
+{
+  return this->archive_.get ();
+}
+
+Properties_t::ArchiveType& Properties_t::
+archive ()
+{
+  return this->archive_.get ();
+}
+
+void Properties_t::
+archive (const ArchiveType& x)
+{
+  this->archive_.set (x);
+}
+
+const Properties_t::HiddenType& Properties_t::
+hidden () const
+{
+  return this->hidden_.get ();
+}
+
+Properties_t::HiddenType& Properties_t::
+hidden ()
+{
+  return this->hidden_.get ();
+}
+
+void Properties_t::
+hidden (const HiddenType& x)
+{
+  this->hidden_.set (x);
+}
+
+const Properties_t::DeleteSubFoldersOptional& Properties_t::
+deleteSubFolders () const
+{
+  return this->deleteSubFolders_;
+}
+
+Properties_t::DeleteSubFoldersOptional& Properties_t::
+deleteSubFolders ()
+{
+  return this->deleteSubFolders_;
+}
+
+void Properties_t::
+deleteSubFolders (const DeleteSubFoldersType& x)
+{
+  this->deleteSubFolders_.set (x);
+}
+
+void Properties_t::
+deleteSubFolders (const DeleteSubFoldersOptional& x)
+{
+  this->deleteSubFolders_ = x;
+}
+
+const Properties_t::DeleteFilesOptional& Properties_t::
+deleteFiles () const
+{
+  return this->deleteFiles_;
+}
+
+Properties_t::DeleteFilesOptional& Properties_t::
+deleteFiles ()
+{
+  return this->deleteFiles_;
+}
+
+void Properties_t::
+deleteFiles (const DeleteFilesType& x)
+{
+  this->deleteFiles_.set (x);
+}
+
+void Properties_t::
+deleteFiles (const DeleteFilesOptional& x)
+{
+  this->deleteFiles_ = x;
+}
+
+const Properties_t::DeleteFolderOptional& Properties_t::
+deleteFolder () const
+{
+  return this->deleteFolder_;
+}
+
+Properties_t::DeleteFolderOptional& Properties_t::
+deleteFolder ()
+{
+  return this->deleteFolder_;
+}
+
+void Properties_t::
+deleteFolder (const DeleteFolderType& x)
+{
+  this->deleteFolder_.set (x);
+}
+
+void Properties_t::
+deleteFolder (const DeleteFolderOptional& x)
+{
+  this->deleteFolder_ = x;
+}
+
+const Properties_t::DeleteReadOnlyOptional& Properties_t::
+deleteReadOnly () const
+{
+  return this->deleteReadOnly_;
+}
+
+Properties_t::DeleteReadOnlyOptional& Properties_t::
+deleteReadOnly ()
+{
+  return this->deleteReadOnly_;
+}
+
+void Properties_t::
+deleteReadOnly (const DeleteReadOnlyType& x)
+{
+  this->deleteReadOnly_.set (x);
+}
+
+void Properties_t::
+deleteReadOnly (const DeleteReadOnlyOptional& x)
+{
+  this->deleteReadOnly_ = x;
+}
+
+const Properties_t::DeleteIgnoreErrorsOptional& Properties_t::
+deleteIgnoreErrors () const
+{
+  return this->deleteIgnoreErrors_;
+}
+
+Properties_t::DeleteIgnoreErrorsOptional& Properties_t::
+deleteIgnoreErrors ()
+{
+  return this->deleteIgnoreErrors_;
+}
+
+void Properties_t::
+deleteIgnoreErrors (const DeleteIgnoreErrorsType& x)
+{
+  this->deleteIgnoreErrors_.set (x);
+}
+
+void Properties_t::
+deleteIgnoreErrors (const DeleteIgnoreErrorsOptional& x)
+{
+  this->deleteIgnoreErrors_ = x;
+}
+
+const Properties_t::DisabledOptional& Properties_t::
+disabled () const
+{
+  return this->disabled_;
+}
+
+Properties_t::DisabledOptional& Properties_t::
+disabled ()
+{
+  return this->disabled_;
+}
+
+void Properties_t::
+disabled (const DisabledType& x)
+{
+  this->disabled_.set (x);
+}
+
+void Properties_t::
+disabled (const DisabledOptional& x)
+{
+  this->disabled_ = x;
+}
+
+
+// Folder_t
+// 
+
+const Folder_t::PropertiesSequence& Folder_t::
+Properties () const
+{
+  return this->Properties_;
+}
+
+Folder_t::PropertiesSequence& Folder_t::
+Properties ()
+{
+  return this->Properties_;
+}
+
+void Folder_t::
+Properties (const PropertiesSequence& s)
+{
+  this->Properties_ = s;
+}
+
+const Folder_t::ClsidType& Folder_t::
+clsid () const
+{
+  return this->clsid_.get ();
+}
+
+Folder_t::ClsidType& Folder_t::
+clsid ()
+{
+  return this->clsid_.get ();
+}
+
+void Folder_t::
+clsid (const ClsidType& x)
+{
+  this->clsid_.set (x);
+}
+
+void Folder_t::
+clsid (::std::unique_ptr< ClsidType > x)
+{
+  this->clsid_.set (std::move (x));
+}
+
+const Folder_t::NameType& Folder_t::
+name () const
+{
+  return this->name_.get ();
+}
+
+Folder_t::NameType& Folder_t::
+name ()
+{
+  return this->name_.get ();
+}
+
+void Folder_t::
+name (const NameType& x)
+{
+  this->name_.set (x);
+}
+
+void Folder_t::
+name (::std::unique_ptr< NameType > x)
+{
+  this->name_.set (std::move (x));
+}
+
+const Folder_t::StatusOptional& Folder_t::
+status () const
+{
+  return this->status_;
+}
+
+Folder_t::StatusOptional& Folder_t::
+status ()
+{
+  return this->status_;
+}
+
+void Folder_t::
+status (const StatusType& x)
+{
+  this->status_.set (x);
+}
+
+void Folder_t::
+status (const StatusOptional& x)
+{
+  this->status_ = x;
+}
+
+void Folder_t::
+status (::std::unique_ptr< StatusType > x)
+{
+  this->status_.set (std::move (x));
+}
+
+const Folder_t::ImageOptional& Folder_t::
+image () const
+{
+  return this->image_;
+}
+
+Folder_t::ImageOptional& Folder_t::
+image ()
+{
+  return this->image_;
+}
+
+void Folder_t::
+image (const ImageType& x)
+{
+  this->image_.set (x);
+}
+
+void Folder_t::
+image (const ImageOptional& x)
+{
+  this->image_ = x;
+}
+
+const Folder_t::ChangedOptional& Folder_t::
+changed () const
+{
+  return this->changed_;
+}
+
+Folder_t::ChangedOptional& Folder_t::
+changed ()
+{
+  return this->changed_;
+}
+
+void Folder_t::
+changed (const ChangedType& x)
+{
+  this->changed_.set (x);
+}
+
+void Folder_t::
+changed (const ChangedOptional& x)
+{
+  this->changed_ = x;
+}
+
+void Folder_t::
+changed (::std::unique_ptr< ChangedType > x)
+{
+  this->changed_.set (std::move (x));
+}
+
+const Folder_t::UidType& Folder_t::
+uid () const
+{
+  return this->uid_.get ();
+}
+
+Folder_t::UidType& Folder_t::
+uid ()
+{
+  return this->uid_.get ();
+}
+
+void Folder_t::
+uid (const UidType& x)
+{
+  this->uid_.set (x);
+}
+
+void Folder_t::
+uid (::std::unique_ptr< UidType > x)
+{
+  this->uid_.set (std::move (x));
+}
+
+const Folder_t::DescOptional& Folder_t::
+desc () const
+{
+  return this->desc_;
+}
+
+Folder_t::DescOptional& Folder_t::
+desc ()
+{
+  return this->desc_;
+}
+
+void Folder_t::
+desc (const DescType& x)
+{
+  this->desc_.set (x);
+}
+
+void Folder_t::
+desc (const DescOptional& x)
+{
+  this->desc_ = x;
+}
+
+void Folder_t::
+desc (::std::unique_ptr< DescType > x)
+{
+  this->desc_.set (std::move (x));
+}
+
+const Folder_t::BypassErrorsOptional& Folder_t::
+bypassErrors () const
+{
+  return this->bypassErrors_;
+}
+
+Folder_t::BypassErrorsOptional& Folder_t::
+bypassErrors ()
+{
+  return this->bypassErrors_;
+}
+
+void Folder_t::
+bypassErrors (const BypassErrorsType& x)
+{
+  this->bypassErrors_.set (x);
+}
+
+void Folder_t::
+bypassErrors (const BypassErrorsOptional& x)
+{
+  this->bypassErrors_ = x;
+}
+
+const Folder_t::UserContextOptional& Folder_t::
+userContext () const
+{
+  return this->userContext_;
+}
+
+Folder_t::UserContextOptional& Folder_t::
+userContext ()
+{
+  return this->userContext_;
+}
+
+void Folder_t::
+userContext (const UserContextType& x)
+{
+  this->userContext_.set (x);
+}
+
+void Folder_t::
+userContext (const UserContextOptional& x)
+{
+  this->userContext_ = x;
+}
+
+const Folder_t::RemovePolicyOptional& Folder_t::
+removePolicy () const
+{
+  return this->removePolicy_;
+}
+
+Folder_t::RemovePolicyOptional& Folder_t::
+removePolicy ()
+{
+  return this->removePolicy_;
+}
+
+void Folder_t::
+removePolicy (const RemovePolicyType& x)
+{
+  this->removePolicy_.set (x);
+}
+
+void Folder_t::
+removePolicy (const RemovePolicyOptional& x)
+{
+  this->removePolicy_ = x;
+}
+
+
 // Folders
 // 
 
-const Folders::FolderType& Folders::
+const Folders::FolderSequence& Folders::
 Folder () const
 {
-  return this->Folder_.get ();
+  return this->Folder_;
 }
 
-Folders::FolderType& Folders::
+Folders::FolderSequence& Folders::
 Folder ()
 {
-  return this->Folder_.get ();
+  return this->Folder_;
 }
 
 void Folders::
-Folder (const FolderType& x)
+Folder (const FolderSequence& s)
 {
-  this->Folder_.set (x);
-}
-
-void Folders::
-Folder (::std::unique_ptr< FolderType > x)
-{
-  this->Folder_.set (std::move (x));
+  this->Folder_ = s;
 }
 
 const Folders::ClsidType& Folders::
@@ -116,548 +646,6 @@ disabled (const DisabledOptional& x)
 }
 
 
-// Folder
-// 
-
-const Folder::PropertiesType& Folder::
-Properties () const
-{
-  return this->Properties_.get ();
-}
-
-Folder::PropertiesType& Folder::
-Properties ()
-{
-  return this->Properties_.get ();
-}
-
-void Folder::
-Properties (const PropertiesType& x)
-{
-  this->Properties_.set (x);
-}
-
-void Folder::
-Properties (::std::unique_ptr< PropertiesType > x)
-{
-  this->Properties_.set (std::move (x));
-}
-
-const Folder::ClsidType& Folder::
-clsid () const
-{
-  return this->clsid_.get ();
-}
-
-Folder::ClsidType& Folder::
-clsid ()
-{
-  return this->clsid_.get ();
-}
-
-void Folder::
-clsid (const ClsidType& x)
-{
-  this->clsid_.set (x);
-}
-
-void Folder::
-clsid (::std::unique_ptr< ClsidType > x)
-{
-  this->clsid_.set (std::move (x));
-}
-
-const Folder::NameType& Folder::
-name () const
-{
-  return this->name_.get ();
-}
-
-Folder::NameType& Folder::
-name ()
-{
-  return this->name_.get ();
-}
-
-void Folder::
-name (const NameType& x)
-{
-  this->name_.set (x);
-}
-
-void Folder::
-name (::std::unique_ptr< NameType > x)
-{
-  this->name_.set (std::move (x));
-}
-
-const Folder::StatusOptional& Folder::
-status () const
-{
-  return this->status_;
-}
-
-Folder::StatusOptional& Folder::
-status ()
-{
-  return this->status_;
-}
-
-void Folder::
-status (const StatusType& x)
-{
-  this->status_.set (x);
-}
-
-void Folder::
-status (const StatusOptional& x)
-{
-  this->status_ = x;
-}
-
-void Folder::
-status (::std::unique_ptr< StatusType > x)
-{
-  this->status_.set (std::move (x));
-}
-
-const Folder::ImageOptional& Folder::
-image () const
-{
-  return this->image_;
-}
-
-Folder::ImageOptional& Folder::
-image ()
-{
-  return this->image_;
-}
-
-void Folder::
-image (const ImageType& x)
-{
-  this->image_.set (x);
-}
-
-void Folder::
-image (const ImageOptional& x)
-{
-  this->image_ = x;
-}
-
-const Folder::ChangedOptional& Folder::
-changed () const
-{
-  return this->changed_;
-}
-
-Folder::ChangedOptional& Folder::
-changed ()
-{
-  return this->changed_;
-}
-
-void Folder::
-changed (const ChangedType& x)
-{
-  this->changed_.set (x);
-}
-
-void Folder::
-changed (const ChangedOptional& x)
-{
-  this->changed_ = x;
-}
-
-void Folder::
-changed (::std::unique_ptr< ChangedType > x)
-{
-  this->changed_.set (std::move (x));
-}
-
-const Folder::UidType& Folder::
-uid () const
-{
-  return this->uid_.get ();
-}
-
-Folder::UidType& Folder::
-uid ()
-{
-  return this->uid_.get ();
-}
-
-void Folder::
-uid (const UidType& x)
-{
-  this->uid_.set (x);
-}
-
-void Folder::
-uid (::std::unique_ptr< UidType > x)
-{
-  this->uid_.set (std::move (x));
-}
-
-const Folder::DescOptional& Folder::
-desc () const
-{
-  return this->desc_;
-}
-
-Folder::DescOptional& Folder::
-desc ()
-{
-  return this->desc_;
-}
-
-void Folder::
-desc (const DescType& x)
-{
-  this->desc_.set (x);
-}
-
-void Folder::
-desc (const DescOptional& x)
-{
-  this->desc_ = x;
-}
-
-void Folder::
-desc (::std::unique_ptr< DescType > x)
-{
-  this->desc_.set (std::move (x));
-}
-
-const Folder::BypassErrorsOptional& Folder::
-bypassErrors () const
-{
-  return this->bypassErrors_;
-}
-
-Folder::BypassErrorsOptional& Folder::
-bypassErrors ()
-{
-  return this->bypassErrors_;
-}
-
-void Folder::
-bypassErrors (const BypassErrorsType& x)
-{
-  this->bypassErrors_.set (x);
-}
-
-void Folder::
-bypassErrors (const BypassErrorsOptional& x)
-{
-  this->bypassErrors_ = x;
-}
-
-const Folder::UserContextOptional& Folder::
-userContext () const
-{
-  return this->userContext_;
-}
-
-Folder::UserContextOptional& Folder::
-userContext ()
-{
-  return this->userContext_;
-}
-
-void Folder::
-userContext (const UserContextType& x)
-{
-  this->userContext_.set (x);
-}
-
-void Folder::
-userContext (const UserContextOptional& x)
-{
-  this->userContext_ = x;
-}
-
-const Folder::RemovePolicyOptional& Folder::
-removePolicy () const
-{
-  return this->removePolicy_;
-}
-
-Folder::RemovePolicyOptional& Folder::
-removePolicy ()
-{
-  return this->removePolicy_;
-}
-
-void Folder::
-removePolicy (const RemovePolicyType& x)
-{
-  this->removePolicy_.set (x);
-}
-
-void Folder::
-removePolicy (const RemovePolicyOptional& x)
-{
-  this->removePolicy_ = x;
-}
-
-
-// Properties
-// 
-
-const Properties::ActionOptional& Properties::
-action () const
-{
-  return this->action_;
-}
-
-Properties::ActionOptional& Properties::
-action ()
-{
-  return this->action_;
-}
-
-void Properties::
-action (const ActionType& x)
-{
-  this->action_.set (x);
-}
-
-void Properties::
-action (const ActionOptional& x)
-{
-  this->action_ = x;
-}
-
-void Properties::
-action (::std::unique_ptr< ActionType > x)
-{
-  this->action_.set (std::move (x));
-}
-
-const Properties::PathType& Properties::
-path () const
-{
-  return this->path_.get ();
-}
-
-Properties::PathType& Properties::
-path ()
-{
-  return this->path_.get ();
-}
-
-void Properties::
-path (const PathType& x)
-{
-  this->path_.set (x);
-}
-
-void Properties::
-path (::std::unique_ptr< PathType > x)
-{
-  this->path_.set (std::move (x));
-}
-
-const Properties::ReadOnlyType& Properties::
-readOnly () const
-{
-  return this->readOnly_.get ();
-}
-
-Properties::ReadOnlyType& Properties::
-readOnly ()
-{
-  return this->readOnly_.get ();
-}
-
-void Properties::
-readOnly (const ReadOnlyType& x)
-{
-  this->readOnly_.set (x);
-}
-
-const Properties::ArchiveType& Properties::
-archive () const
-{
-  return this->archive_.get ();
-}
-
-Properties::ArchiveType& Properties::
-archive ()
-{
-  return this->archive_.get ();
-}
-
-void Properties::
-archive (const ArchiveType& x)
-{
-  this->archive_.set (x);
-}
-
-const Properties::HiddenType& Properties::
-hidden () const
-{
-  return this->hidden_.get ();
-}
-
-Properties::HiddenType& Properties::
-hidden ()
-{
-  return this->hidden_.get ();
-}
-
-void Properties::
-hidden (const HiddenType& x)
-{
-  this->hidden_.set (x);
-}
-
-const Properties::DeleteSubFoldersOptional& Properties::
-deleteSubFolders () const
-{
-  return this->deleteSubFolders_;
-}
-
-Properties::DeleteSubFoldersOptional& Properties::
-deleteSubFolders ()
-{
-  return this->deleteSubFolders_;
-}
-
-void Properties::
-deleteSubFolders (const DeleteSubFoldersType& x)
-{
-  this->deleteSubFolders_.set (x);
-}
-
-void Properties::
-deleteSubFolders (const DeleteSubFoldersOptional& x)
-{
-  this->deleteSubFolders_ = x;
-}
-
-const Properties::DeleteFilesOptional& Properties::
-deleteFiles () const
-{
-  return this->deleteFiles_;
-}
-
-Properties::DeleteFilesOptional& Properties::
-deleteFiles ()
-{
-  return this->deleteFiles_;
-}
-
-void Properties::
-deleteFiles (const DeleteFilesType& x)
-{
-  this->deleteFiles_.set (x);
-}
-
-void Properties::
-deleteFiles (const DeleteFilesOptional& x)
-{
-  this->deleteFiles_ = x;
-}
-
-const Properties::DeleteFolderOptional& Properties::
-deleteFolder () const
-{
-  return this->deleteFolder_;
-}
-
-Properties::DeleteFolderOptional& Properties::
-deleteFolder ()
-{
-  return this->deleteFolder_;
-}
-
-void Properties::
-deleteFolder (const DeleteFolderType& x)
-{
-  this->deleteFolder_.set (x);
-}
-
-void Properties::
-deleteFolder (const DeleteFolderOptional& x)
-{
-  this->deleteFolder_ = x;
-}
-
-const Properties::DeleteReadOnlyOptional& Properties::
-deleteReadOnly () const
-{
-  return this->deleteReadOnly_;
-}
-
-Properties::DeleteReadOnlyOptional& Properties::
-deleteReadOnly ()
-{
-  return this->deleteReadOnly_;
-}
-
-void Properties::
-deleteReadOnly (const DeleteReadOnlyType& x)
-{
-  this->deleteReadOnly_.set (x);
-}
-
-void Properties::
-deleteReadOnly (const DeleteReadOnlyOptional& x)
-{
-  this->deleteReadOnly_ = x;
-}
-
-const Properties::DeleteIgnoreErrorsOptional& Properties::
-deleteIgnoreErrors () const
-{
-  return this->deleteIgnoreErrors_;
-}
-
-Properties::DeleteIgnoreErrorsOptional& Properties::
-deleteIgnoreErrors ()
-{
-  return this->deleteIgnoreErrors_;
-}
-
-void Properties::
-deleteIgnoreErrors (const DeleteIgnoreErrorsType& x)
-{
-  this->deleteIgnoreErrors_.set (x);
-}
-
-void Properties::
-deleteIgnoreErrors (const DeleteIgnoreErrorsOptional& x)
-{
-  this->deleteIgnoreErrors_ = x;
-}
-
-const Properties::DisabledOptional& Properties::
-disabled () const
-{
-  return this->disabled_;
-}
-
-Properties::DisabledOptional& Properties::
-disabled ()
-{
-  return this->disabled_;
-}
-
-void Properties::
-disabled (const DisabledType& x)
-{
-  this->disabled_.set (x);
-}
-
-void Properties::
-disabled (const DisabledOptional& x)
-{
-  this->disabled_ = x;
-}
-
-
 #include <xsd/cxx/xml/dom/wildcard-source.hxx>
 
 #include <xsd/cxx/xml/dom/parsing-source.hxx>
@@ -671,394 +659,14 @@ namespace _xsd
   type_factory_plate_init;
 }
 
-// Folders
+// Properties_t
 //
 
-Folders::
-Folders (const FolderType& Folder,
-         const ClsidType& clsid)
-: ::xml_schema::Type (),
-  Folder_ (Folder, this),
-  clsid_ (clsid, this),
-  disabled_ (this)
-{
-}
-
-Folders::
-Folders (::std::unique_ptr< FolderType > Folder,
-         const ClsidType& clsid)
-: ::xml_schema::Type (),
-  Folder_ (std::move (Folder), this),
-  clsid_ (clsid, this),
-  disabled_ (this)
-{
-}
-
-Folders::
-Folders (const Folders& x,
-         ::xml_schema::Flags f,
-         ::xml_schema::Container* c)
-: ::xml_schema::Type (x, f, c),
-  Folder_ (x.Folder_, f, this),
-  clsid_ (x.clsid_, f, this),
-  disabled_ (x.disabled_, f, this)
-{
-}
-
-Folders::
-Folders (const ::xercesc::DOMElement& e,
-         ::xml_schema::Flags f,
-         ::xml_schema::Container* c)
-: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  Folder_ (this),
-  clsid_ (this),
-  disabled_ (this)
-{
-  if ((f & ::xml_schema::Flags::base) == 0)
-  {
-    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
-    this->parse (p, f);
-  }
-}
-
-void Folders::
-parse (::xsd::cxx::xml::dom::parser< char >& p,
-       ::xml_schema::Flags f)
-{
-  for (; p.more_content (); p.next_content (false))
-  {
-    const ::xercesc::DOMElement& i (p.cur_element ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    // Folder
-    //
-    if (n.name () == "Folder" && n.namespace_ ().empty ())
-    {
-      ::std::unique_ptr< FolderType > r (
-        FolderTraits::create (i, f, this));
-
-      if (!Folder_.present ())
-      {
-        this->Folder_.set (::std::move (r));
-        continue;
-      }
-    }
-
-    break;
-  }
-
-  if (!Folder_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "Folder",
-      "");
-  }
-
-  while (p.more_attributes ())
-  {
-    const ::xercesc::DOMAttr& i (p.next_attribute ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    if (n.name () == "clsid" && n.namespace_ ().empty ())
-    {
-      this->clsid_.set (ClsidTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "disabled" && n.namespace_ ().empty ())
-    {
-      this->disabled_.set (DisabledTraits::create (i, f, this));
-      continue;
-    }
-  }
-
-  if (!clsid_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "clsid",
-      "");
-  }
-}
-
-Folders* Folders::
-_clone (::xml_schema::Flags f,
-        ::xml_schema::Container* c) const
-{
-  return new class Folders (*this, f, c);
-}
-
-Folders& Folders::
-operator= (const Folders& x)
-{
-  if (this != &x)
-  {
-    static_cast< ::xml_schema::Type& > (*this) = x;
-    this->Folder_ = x.Folder_;
-    this->clsid_ = x.clsid_;
-    this->disabled_ = x.disabled_;
-  }
-
-  return *this;
-}
-
-Folders::
-~Folders ()
-{
-}
-
-// Folder
-//
-
-Folder::
-Folder (const PropertiesType& Properties,
-        const ClsidType& clsid,
-        const NameType& name,
-        const UidType& uid)
-: ::xml_schema::Type (),
-  Properties_ (Properties, this),
-  clsid_ (clsid, this),
-  name_ (name, this),
-  status_ (this),
-  image_ (this),
-  changed_ (this),
-  uid_ (uid, this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-}
-
-Folder::
-Folder (::std::unique_ptr< PropertiesType > Properties,
-        const ClsidType& clsid,
-        const NameType& name,
-        const UidType& uid)
-: ::xml_schema::Type (),
-  Properties_ (std::move (Properties), this),
-  clsid_ (clsid, this),
-  name_ (name, this),
-  status_ (this),
-  image_ (this),
-  changed_ (this),
-  uid_ (uid, this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-}
-
-Folder::
-Folder (const Folder& x,
-        ::xml_schema::Flags f,
-        ::xml_schema::Container* c)
-: ::xml_schema::Type (x, f, c),
-  Properties_ (x.Properties_, f, this),
-  clsid_ (x.clsid_, f, this),
-  name_ (x.name_, f, this),
-  status_ (x.status_, f, this),
-  image_ (x.image_, f, this),
-  changed_ (x.changed_, f, this),
-  uid_ (x.uid_, f, this),
-  desc_ (x.desc_, f, this),
-  bypassErrors_ (x.bypassErrors_, f, this),
-  userContext_ (x.userContext_, f, this),
-  removePolicy_ (x.removePolicy_, f, this)
-{
-}
-
-Folder::
-Folder (const ::xercesc::DOMElement& e,
-        ::xml_schema::Flags f,
-        ::xml_schema::Container* c)
-: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  Properties_ (this),
-  clsid_ (this),
-  name_ (this),
-  status_ (this),
-  image_ (this),
-  changed_ (this),
-  uid_ (this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-  if ((f & ::xml_schema::Flags::base) == 0)
-  {
-    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
-    this->parse (p, f);
-  }
-}
-
-void Folder::
-parse (::xsd::cxx::xml::dom::parser< char >& p,
-       ::xml_schema::Flags f)
-{
-  for (; p.more_content (); p.next_content (false))
-  {
-    const ::xercesc::DOMElement& i (p.cur_element ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    // Properties
-    //
-    if (n.name () == "Properties" && n.namespace_ ().empty ())
-    {
-      ::std::unique_ptr< PropertiesType > r (
-        PropertiesTraits::create (i, f, this));
-
-      if (!Properties_.present ())
-      {
-        this->Properties_.set (::std::move (r));
-        continue;
-      }
-    }
-
-    break;
-  }
-
-  if (!Properties_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "Properties",
-      "");
-  }
-
-  while (p.more_attributes ())
-  {
-    const ::xercesc::DOMAttr& i (p.next_attribute ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    if (n.name () == "clsid" && n.namespace_ ().empty ())
-    {
-      this->clsid_.set (ClsidTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "name" && n.namespace_ ().empty ())
-    {
-      this->name_.set (NameTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "status" && n.namespace_ ().empty ())
-    {
-      this->status_.set (StatusTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "image" && n.namespace_ ().empty ())
-    {
-      this->image_.set (ImageTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "changed" && n.namespace_ ().empty ())
-    {
-      this->changed_.set (ChangedTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "uid" && n.namespace_ ().empty ())
-    {
-      this->uid_.set (UidTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "desc" && n.namespace_ ().empty ())
-    {
-      this->desc_.set (DescTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "bypassErrors" && n.namespace_ ().empty ())
-    {
-      this->bypassErrors_.set (BypassErrorsTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "userContext" && n.namespace_ ().empty ())
-    {
-      this->userContext_.set (UserContextTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "removePolicy" && n.namespace_ ().empty ())
-    {
-      this->removePolicy_.set (RemovePolicyTraits::create (i, f, this));
-      continue;
-    }
-  }
-
-  if (!clsid_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "clsid",
-      "");
-  }
-
-  if (!name_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "name",
-      "");
-  }
-
-  if (!uid_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "uid",
-      "");
-  }
-}
-
-Folder* Folder::
-_clone (::xml_schema::Flags f,
-        ::xml_schema::Container* c) const
-{
-  return new class Folder (*this, f, c);
-}
-
-Folder& Folder::
-operator= (const Folder& x)
-{
-  if (this != &x)
-  {
-    static_cast< ::xml_schema::Type& > (*this) = x;
-    this->Properties_ = x.Properties_;
-    this->clsid_ = x.clsid_;
-    this->name_ = x.name_;
-    this->status_ = x.status_;
-    this->image_ = x.image_;
-    this->changed_ = x.changed_;
-    this->uid_ = x.uid_;
-    this->desc_ = x.desc_;
-    this->bypassErrors_ = x.bypassErrors_;
-    this->userContext_ = x.userContext_;
-    this->removePolicy_ = x.removePolicy_;
-  }
-
-  return *this;
-}
-
-Folder::
-~Folder ()
-{
-}
-
-// Properties
-//
-
-Properties::
-Properties (const PathType& path,
-            const ReadOnlyType& readOnly,
-            const ArchiveType& archive,
-            const HiddenType& hidden)
+Properties_t::
+Properties_t (const PathType& path,
+              const ReadOnlyType& readOnly,
+              const ArchiveType& archive,
+              const HiddenType& hidden)
 : ::xml_schema::Type (),
   action_ (this),
   path_ (path, this),
@@ -1074,10 +682,10 @@ Properties (const PathType& path,
 {
 }
 
-Properties::
-Properties (const Properties& x,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const Properties_t& x,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
   action_ (x.action_, f, this),
   path_ (x.path_, f, this),
@@ -1093,10 +701,10 @@ Properties (const Properties& x,
 {
 }
 
-Properties::
-Properties (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const ::xercesc::DOMElement& e,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
   action_ (this),
   path_ (this),
@@ -1117,7 +725,7 @@ Properties (const ::xercesc::DOMElement& e,
   }
 }
 
-void Properties::
+void Properties_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
@@ -1223,15 +831,15 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
   }
 }
 
-Properties* Properties::
+Properties_t* Properties_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Properties (*this, f, c);
+  return new class Properties_t (*this, f, c);
 }
 
-Properties& Properties::
-operator= (const Properties& x)
+Properties_t& Properties_t::
+operator= (const Properties_t& x)
 {
   if (this != &x)
   {
@@ -1252,8 +860,376 @@ operator= (const Properties& x)
   return *this;
 }
 
-Properties::
-~Properties ()
+Properties_t::
+~Properties_t ()
+{
+}
+
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Properties_t >
+_xsd_Properties_t_type_factory_init (
+  "Properties_t",
+  "");
+
+// Folder_t
+//
+
+Folder_t::
+Folder_t (const ClsidType& clsid,
+          const NameType& name,
+          const UidType& uid)
+: ::xml_schema::Type (),
+  Properties_ (this),
+  clsid_ (clsid, this),
+  name_ (name, this),
+  status_ (this),
+  image_ (this),
+  changed_ (this),
+  uid_ (uid, this),
+  desc_ (this),
+  bypassErrors_ (this),
+  userContext_ (this),
+  removePolicy_ (this)
+{
+}
+
+Folder_t::
+Folder_t (const Folder_t& x,
+          ::xml_schema::Flags f,
+          ::xml_schema::Container* c)
+: ::xml_schema::Type (x, f, c),
+  Properties_ (x.Properties_, f, this),
+  clsid_ (x.clsid_, f, this),
+  name_ (x.name_, f, this),
+  status_ (x.status_, f, this),
+  image_ (x.image_, f, this),
+  changed_ (x.changed_, f, this),
+  uid_ (x.uid_, f, this),
+  desc_ (x.desc_, f, this),
+  bypassErrors_ (x.bypassErrors_, f, this),
+  userContext_ (x.userContext_, f, this),
+  removePolicy_ (x.removePolicy_, f, this)
+{
+}
+
+Folder_t::
+Folder_t (const ::xercesc::DOMElement& e,
+          ::xml_schema::Flags f,
+          ::xml_schema::Container* c)
+: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
+  Properties_ (this),
+  clsid_ (this),
+  name_ (this),
+  status_ (this),
+  image_ (this),
+  changed_ (this),
+  uid_ (this),
+  desc_ (this),
+  bypassErrors_ (this),
+  userContext_ (this),
+  removePolicy_ (this)
+{
+  if ((f & ::xml_schema::Flags::base) == 0)
+  {
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+    this->parse (p, f);
+  }
+}
+
+void Folder_t::
+parse (::xsd::cxx::xml::dom::parser< char >& p,
+       ::xml_schema::Flags f)
+{
+  for (; p.more_content (); p.next_content (false))
+  {
+    const ::xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // Properties
+    //
+    {
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "Properties",
+          "",
+          &::xsd::cxx::tree::factory_impl< PropertiesType >,
+          false, true, i, n, f, this));
+
+      if (tmp.get () != 0)
+      {
+        ::std::unique_ptr< PropertiesType > r (
+          dynamic_cast< PropertiesType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->Properties_.push_back (::std::move (r));
+        continue;
+      }
+    }
+
+    break;
+  }
+
+  while (p.more_attributes ())
+  {
+    const ::xercesc::DOMAttr& i (p.next_attribute ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    if (n.name () == "clsid" && n.namespace_ ().empty ())
+    {
+      this->clsid_.set (ClsidTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "name" && n.namespace_ ().empty ())
+    {
+      this->name_.set (NameTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "status" && n.namespace_ ().empty ())
+    {
+      this->status_.set (StatusTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "image" && n.namespace_ ().empty ())
+    {
+      this->image_.set (ImageTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "changed" && n.namespace_ ().empty ())
+    {
+      this->changed_.set (ChangedTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "uid" && n.namespace_ ().empty ())
+    {
+      this->uid_.set (UidTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "desc" && n.namespace_ ().empty ())
+    {
+      this->desc_.set (DescTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "bypassErrors" && n.namespace_ ().empty ())
+    {
+      this->bypassErrors_.set (BypassErrorsTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "userContext" && n.namespace_ ().empty ())
+    {
+      this->userContext_.set (UserContextTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "removePolicy" && n.namespace_ ().empty ())
+    {
+      this->removePolicy_.set (RemovePolicyTraits::create (i, f, this));
+      continue;
+    }
+  }
+
+  if (!clsid_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "clsid",
+      "");
+  }
+
+  if (!name_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "name",
+      "");
+  }
+
+  if (!uid_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "uid",
+      "");
+  }
+}
+
+Folder_t* Folder_t::
+_clone (::xml_schema::Flags f,
+        ::xml_schema::Container* c) const
+{
+  return new class Folder_t (*this, f, c);
+}
+
+Folder_t& Folder_t::
+operator= (const Folder_t& x)
+{
+  if (this != &x)
+  {
+    static_cast< ::xml_schema::Type& > (*this) = x;
+    this->Properties_ = x.Properties_;
+    this->clsid_ = x.clsid_;
+    this->name_ = x.name_;
+    this->status_ = x.status_;
+    this->image_ = x.image_;
+    this->changed_ = x.changed_;
+    this->uid_ = x.uid_;
+    this->desc_ = x.desc_;
+    this->bypassErrors_ = x.bypassErrors_;
+    this->userContext_ = x.userContext_;
+    this->removePolicy_ = x.removePolicy_;
+  }
+
+  return *this;
+}
+
+Folder_t::
+~Folder_t ()
+{
+}
+
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Folder_t >
+_xsd_Folder_t_type_factory_init (
+  "Folder_t",
+  "");
+
+// Folders
+//
+
+Folders::
+Folders (const ClsidType& clsid)
+: ::xml_schema::Type (),
+  Folder_ (this),
+  clsid_ (clsid, this),
+  disabled_ (this)
+{
+}
+
+Folders::
+Folders (const Folders& x,
+         ::xml_schema::Flags f,
+         ::xml_schema::Container* c)
+: ::xml_schema::Type (x, f, c),
+  Folder_ (x.Folder_, f, this),
+  clsid_ (x.clsid_, f, this),
+  disabled_ (x.disabled_, f, this)
+{
+}
+
+Folders::
+Folders (const ::xercesc::DOMElement& e,
+         ::xml_schema::Flags f,
+         ::xml_schema::Container* c)
+: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
+  Folder_ (this),
+  clsid_ (this),
+  disabled_ (this)
+{
+  if ((f & ::xml_schema::Flags::base) == 0)
+  {
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+    this->parse (p, f);
+  }
+}
+
+void Folders::
+parse (::xsd::cxx::xml::dom::parser< char >& p,
+       ::xml_schema::Flags f)
+{
+  for (; p.more_content (); p.next_content (false))
+  {
+    const ::xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // Folder
+    //
+    {
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "Folder",
+          "",
+          &::xsd::cxx::tree::factory_impl< FolderType >,
+          false, true, i, n, f, this));
+
+      if (tmp.get () != 0)
+      {
+        ::std::unique_ptr< FolderType > r (
+          dynamic_cast< FolderType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->Folder_.push_back (::std::move (r));
+        continue;
+      }
+    }
+
+    break;
+  }
+
+  while (p.more_attributes ())
+  {
+    const ::xercesc::DOMAttr& i (p.next_attribute ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    if (n.name () == "clsid" && n.namespace_ ().empty ())
+    {
+      this->clsid_.set (ClsidTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "disabled" && n.namespace_ ().empty ())
+    {
+      this->disabled_.set (DisabledTraits::create (i, f, this));
+      continue;
+    }
+  }
+
+  if (!clsid_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "clsid",
+      "");
+  }
+}
+
+Folders* Folders::
+_clone (::xml_schema::Flags f,
+        ::xml_schema::Container* c) const
+{
+  return new class Folders (*this, f, c);
+}
+
+Folders& Folders::
+operator= (const Folders& x)
+{
+  if (this != &x)
+  {
+    static_cast< ::xml_schema::Type& > (*this) = x;
+    this->Folder_ = x.Folder_;
+    this->clsid_ = x.clsid_;
+    this->disabled_ = x.disabled_;
+  }
+
+  return *this;
+}
+
+Folders::
+~Folders ()
 {
 }
 
@@ -1269,10 +1245,42 @@ namespace _xsd
 }
 
 ::std::ostream&
-operator<< (::std::ostream& o, const Folders& i)
+operator<< (::std::ostream& o, const Properties_t& i)
 {
-  o << ::std::endl << "Folder: " << i.Folder ();
-  o << ::std::endl << "clsid: " << i.clsid ();
+  if (i.action ())
+  {
+    o << ::std::endl << "action: " << *i.action ();
+  }
+
+  o << ::std::endl << "path: " << i.path ();
+  o << ::std::endl << "readOnly: " << i.readOnly ();
+  o << ::std::endl << "archive: " << i.archive ();
+  o << ::std::endl << "hidden: " << i.hidden ();
+  if (i.deleteSubFolders ())
+  {
+    o << ::std::endl << "deleteSubFolders: " << *i.deleteSubFolders ();
+  }
+
+  if (i.deleteFiles ())
+  {
+    o << ::std::endl << "deleteFiles: " << *i.deleteFiles ();
+  }
+
+  if (i.deleteFolder ())
+  {
+    o << ::std::endl << "deleteFolder: " << *i.deleteFolder ();
+  }
+
+  if (i.deleteReadOnly ())
+  {
+    o << ::std::endl << "deleteReadOnly: " << *i.deleteReadOnly ();
+  }
+
+  if (i.deleteIgnoreErrors ())
+  {
+    o << ::std::endl << "deleteIgnoreErrors: " << *i.deleteIgnoreErrors ();
+  }
+
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();
@@ -1281,10 +1289,26 @@ operator<< (::std::ostream& o, const Folders& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Properties_t >
+_xsd_Properties_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const Folder& i)
+operator<< (::std::ostream& o, const Folder_t& i)
 {
-  o << ::std::endl << "Properties: " << i.Properties ();
+  {
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (Folder_t::PropertiesConstIterator
+         b (i.Properties ().begin ()), e (i.Properties ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Properties: ";
+      om.insert (o, *b);
+    }
+  }
+
   o << ::std::endl << "clsid: " << i.clsid ();
   o << ::std::endl << "name: " << i.name ();
   if (i.status ())
@@ -1326,43 +1350,27 @@ operator<< (::std::ostream& o, const Folder& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Folder_t >
+_xsd_Folder_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const Properties& i)
+operator<< (::std::ostream& o, const Folders& i)
 {
-  if (i.action ())
   {
-    o << ::std::endl << "action: " << *i.action ();
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (Folders::FolderConstIterator
+         b (i.Folder ().begin ()), e (i.Folder ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Folder: ";
+      om.insert (o, *b);
+    }
   }
 
-  o << ::std::endl << "path: " << i.path ();
-  o << ::std::endl << "readOnly: " << i.readOnly ();
-  o << ::std::endl << "archive: " << i.archive ();
-  o << ::std::endl << "hidden: " << i.hidden ();
-  if (i.deleteSubFolders ())
-  {
-    o << ::std::endl << "deleteSubFolders: " << *i.deleteSubFolders ();
-  }
-
-  if (i.deleteFiles ())
-  {
-    o << ::std::endl << "deleteFiles: " << *i.deleteFiles ();
-  }
-
-  if (i.deleteFolder ())
-  {
-    o << ::std::endl << "deleteFolder: " << *i.deleteFolder ();
-  }
-
-  if (i.deleteReadOnly ())
-  {
-    o << ::std::endl << "deleteReadOnly: " << *i.deleteReadOnly ();
-  }
-
-  if (i.deleteIgnoreErrors ())
-  {
-    o << ::std::endl << "deleteIgnoreErrors: " << *i.deleteIgnoreErrors ();
-  }
-
+  o << ::std::endl << "clsid: " << i.clsid ();
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();

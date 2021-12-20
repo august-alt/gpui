@@ -577,9 +577,9 @@ namespace xml_schema
 
 // Forward declarations.
 //
+class Properties_t;
+class EnvironmentVariable_t;
 class EnvironmentVariables;
-class EnvironmentVariable;
-class Properties;
 
 #include <memory>    // ::std::unique_ptr
 #include <limits>    // std::numeric_limits
@@ -599,110 +599,52 @@ class Properties;
 #include <xsd/cxx/tree/containers-wildcard.hxx>
 
 /**
- * @brief Class corresponding to the %EnvironmentVariables schema type.
+ * @brief Class corresponding to the %Properties_t schema type.
  *
  * @nosubgrouping
  */
-class EnvironmentVariables: public ::xml_schema::Type
+class Properties_t: public ::xml_schema::Type
 {
   public:
   /**
-   * @name EnvironmentVariable
+   * @name action
    *
-   * @brief Accessor and modifier functions for the %EnvironmentVariable
-   * sequence element.
-   */
-  //@{
-
-  /**
-   * @brief Element type.
-   */
-  typedef ::EnvironmentVariable EnvironmentVariableType;
-
-  /**
-   * @brief Element sequence container type.
-   */
-  typedef ::xsd::cxx::tree::sequence< EnvironmentVariableType > EnvironmentVariableSequence;
-
-  /**
-   * @brief Element iterator type.
-   */
-  typedef EnvironmentVariableSequence::iterator EnvironmentVariableIterator;
-
-  /**
-   * @brief Element constant iterator type.
-   */
-  typedef EnvironmentVariableSequence::const_iterator EnvironmentVariableConstIterator;
-
-  /**
-   * @brief Element traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< EnvironmentVariableType, char > EnvironmentVariableTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the element
-   * sequence.
-   *
-   * @return A constant reference to the sequence container.
-   */
-  const EnvironmentVariableSequence&
-  EnvironmentVariable () const;
-
-  /**
-   * @brief Return a read-write reference to the element sequence.
-   *
-   * @return A reference to the sequence container.
-   */
-  EnvironmentVariableSequence&
-  EnvironmentVariable ();
-
-  /**
-   * @brief Copy elements from a given sequence.
-   *
-   * @param s A sequence to copy elements from.
-   *
-   * For each element in @a s this function makes a copy and adds it 
-   * to the sequence. Note that this operation completely changes the 
-   * sequence and all old elements will be lost.
-   */
-  void
-  EnvironmentVariable (const EnvironmentVariableSequence& s);
-
-  //@}
-
-  /**
-   * @name clsid
-   *
-   * @brief Accessor and modifier functions for the %clsid
-   * required attribute.
+   * @brief Accessor and modifier functions for the %action
+   * optional attribute.
    */
   //@{
 
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String ClsidType;
+  typedef ::xml_schema::String ActionType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< ActionType > ActionOptional;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
+  typedef ::xsd::cxx::tree::traits< ActionType, char > ActionTraits;
 
   /**
-   * @brief Return a read-only (constant) reference to the attribute.
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
    *
-   * @return A constant reference to the attribute.
+   * @return A constant reference to the optional container.
    */
-  const ClsidType&
-  clsid () const;
+  const ActionOptional&
+  action () const;
 
   /**
-   * @brief Return a read-write reference to the attribute.
+   * @brief Return a read-write reference to the attribute container.
    *
-   * @return A reference to the attribute.
+   * @return A reference to the optional container.
    */
-  ClsidType&
-  clsid ();
+  ActionOptional&
+  action ();
 
   /**
    * @brief Set the attribute value.
@@ -713,7 +655,77 @@ class EnvironmentVariables: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  clsid (const ClsidType& x);
+  action (const ActionType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  action (const ActionOptional& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  action (::std::unique_ptr< ActionType > p);
+
+  //@}
+
+  /**
+   * @name name
+   *
+   * @brief Accessor and modifier functions for the %name
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String NameType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< NameType, char > NameTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const NameType&
+  name () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  NameType&
+  name ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  name (const NameType& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -724,7 +736,195 @@ class EnvironmentVariables: public ::xml_schema::Type
    * instead of making a copy.
    */
   void
-  clsid (::std::unique_ptr< ClsidType > p);
+  name (::std::unique_ptr< NameType > p);
+
+  //@}
+
+  /**
+   * @name value
+   *
+   * @brief Accessor and modifier functions for the %value
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String ValueType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< ValueType, char > ValueTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const ValueType&
+  value () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  ValueType&
+  value ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  value (const ValueType& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly
+   * instead of making a copy.
+   */
+  void
+  value (::std::unique_ptr< ValueType > p);
+
+  //@}
+
+  /**
+   * @name user
+   *
+   * @brief Accessor and modifier functions for the %user
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::Boolean UserType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< UserType > UserOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< UserType, char > UserTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const UserOptional&
+  user () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  UserOptional&
+  user ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  user (const UserType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  user (const UserOptional& x);
+
+  //@}
+
+  /**
+   * @name partial
+   *
+   * @brief Accessor and modifier functions for the %partial
+   * optional attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::Boolean PartialType;
+
+  /**
+   * @brief Attribute optional container type.
+   */
+  typedef ::xsd::cxx::tree::optional< PartialType > PartialOptional;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< PartialType, char > PartialTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute
+   * container.
+   *
+   * @return A constant reference to the optional container.
+   */
+  const PartialOptional&
+  partial () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute container.
+   *
+   * @return A reference to the optional container.
+   */
+  PartialOptional&
+  partial ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  partial (const PartialType& x);
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x An optional container with the new value to set.
+   *
+   * If the value is present in @a x then this function makes a copy 
+   * of this value and sets it as the new value of the attribute.
+   * Otherwise the attribute container is set the 'not present' state.
+   */
+  void
+  partial (const PartialOptional& x);
 
   //@}
 
@@ -802,7 +1002,8 @@ class EnvironmentVariables: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  EnvironmentVariables (const ClsidType&);
+  Properties_t (const NameType&,
+                const ValueType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -812,9 +1013,9 @@ class EnvironmentVariables: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  EnvironmentVariables (const ::xercesc::DOMElement& e,
-                        ::xml_schema::Flags f = 0,
-                        ::xml_schema::Container* c = 0);
+  Properties_t (const ::xercesc::DOMElement& e,
+                ::xml_schema::Flags f = 0,
+                ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -825,9 +1026,9 @@ class EnvironmentVariables: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  EnvironmentVariables (const EnvironmentVariables& x,
-                        ::xml_schema::Flags f = 0,
-                        ::xml_schema::Container* c = 0);
+  Properties_t (const Properties_t& x,
+                ::xml_schema::Flags f = 0,
+                ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -840,7 +1041,7 @@ class EnvironmentVariables: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual EnvironmentVariables*
+  virtual Properties_t*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -852,8 +1053,8 @@ class EnvironmentVariables: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  EnvironmentVariables&
-  operator= (const EnvironmentVariables& x);
+  Properties_t&
+  operator= (const Properties_t& x);
 
   //@}
 
@@ -861,7 +1062,7 @@ class EnvironmentVariables: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~EnvironmentVariables ();
+  ~Properties_t ();
 
   // Implementation.
   //
@@ -874,33 +1075,51 @@ class EnvironmentVariables: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  EnvironmentVariableSequence EnvironmentVariable_;
-  ::xsd::cxx::tree::one< ClsidType > clsid_;
+  ActionOptional action_;
+  ::xsd::cxx::tree::one< NameType > name_;
+  ::xsd::cxx::tree::one< ValueType > value_;
+  UserOptional user_;
+  PartialOptional partial_;
   DisabledOptional disabled_;
 
   //@endcond
 };
 
 /**
- * @brief Class corresponding to the %EnvironmentVariable schema type.
+ * @brief Class corresponding to the %EnvironmentVariable_t schema type.
  *
  * @nosubgrouping
  */
-class EnvironmentVariable: public ::xml_schema::Type
+class EnvironmentVariable_t: public ::xml_schema::Type
 {
   public:
   /**
    * @name Properties
    *
    * @brief Accessor and modifier functions for the %Properties
-   * required element.
+   * sequence element.
    */
   //@{
 
   /**
    * @brief Element type.
    */
-  typedef ::Properties PropertiesType;
+  typedef ::Properties_t PropertiesType;
+
+  /**
+   * @brief Element sequence container type.
+   */
+  typedef ::xsd::cxx::tree::sequence< PropertiesType > PropertiesSequence;
+
+  /**
+   * @brief Element iterator type.
+   */
+  typedef PropertiesSequence::iterator PropertiesIterator;
+
+  /**
+   * @brief Element constant iterator type.
+   */
+  typedef PropertiesSequence::const_iterator PropertiesConstIterator;
 
   /**
    * @brief Element traits type.
@@ -908,42 +1127,33 @@ class EnvironmentVariable: public ::xml_schema::Type
   typedef ::xsd::cxx::tree::traits< PropertiesType, char > PropertiesTraits;
 
   /**
-   * @brief Return a read-only (constant) reference to the element.
+   * @brief Return a read-only (constant) reference to the element
+   * sequence.
    *
-   * @return A constant reference to the element.
+   * @return A constant reference to the sequence container.
    */
-  const PropertiesType&
+  const PropertiesSequence&
   Properties () const;
 
   /**
-   * @brief Return a read-write reference to the element.
+   * @brief Return a read-write reference to the element sequence.
    *
-   * @return A reference to the element.
+   * @return A reference to the sequence container.
    */
-  PropertiesType&
+  PropertiesSequence&
   Properties ();
 
   /**
-   * @brief Set the element value.
+   * @brief Copy elements from a given sequence.
    *
-   * @param x A new value to set.
+   * @param s A sequence to copy elements from.
    *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the element.
+   * For each element in @a s this function makes a copy and adds it 
+   * to the sequence. Note that this operation completely changes the 
+   * sequence and all old elements will be lost.
    */
   void
-  Properties (const PropertiesType& x);
-
-  /**
-   * @brief Set the element value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  Properties (::std::unique_ptr< PropertiesType > p);
+  Properties (const PropertiesSequence& s);
 
   //@}
 
@@ -1542,23 +1752,9 @@ class EnvironmentVariable: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  EnvironmentVariable (const PropertiesType&,
-                       const ClsidType&,
-                       const NameType&,
-                       const UidType&);
-
-  /**
-   * @brief Create an instance from the ultimate base and
-   * initializers for required elements and attributes
-   * (::std::unique_ptr version).
-   *
-   * This constructor will try to use the passed values directly
-   * instead of making copies.
-   */
-  EnvironmentVariable (::std::unique_ptr< PropertiesType >,
-                       const ClsidType&,
-                       const NameType&,
-                       const UidType&);
+  EnvironmentVariable_t (const ClsidType&,
+                         const NameType&,
+                         const UidType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -1568,9 +1764,9 @@ class EnvironmentVariable: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  EnvironmentVariable (const ::xercesc::DOMElement& e,
-                       ::xml_schema::Flags f = 0,
-                       ::xml_schema::Container* c = 0);
+  EnvironmentVariable_t (const ::xercesc::DOMElement& e,
+                         ::xml_schema::Flags f = 0,
+                         ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -1581,9 +1777,9 @@ class EnvironmentVariable: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  EnvironmentVariable (const EnvironmentVariable& x,
-                       ::xml_schema::Flags f = 0,
-                       ::xml_schema::Container* c = 0);
+  EnvironmentVariable_t (const EnvironmentVariable_t& x,
+                         ::xml_schema::Flags f = 0,
+                         ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -1596,7 +1792,7 @@ class EnvironmentVariable: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual EnvironmentVariable*
+  virtual EnvironmentVariable_t*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -1608,8 +1804,8 @@ class EnvironmentVariable: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  EnvironmentVariable&
-  operator= (const EnvironmentVariable& x);
+  EnvironmentVariable_t&
+  operator= (const EnvironmentVariable_t& x);
 
   //@}
 
@@ -1617,7 +1813,7 @@ class EnvironmentVariable: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~EnvironmentVariable ();
+  ~EnvironmentVariable_t ();
 
   // Implementation.
   //
@@ -1630,7 +1826,7 @@ class EnvironmentVariable: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  ::xsd::cxx::tree::one< PropertiesType > Properties_;
+  PropertiesSequence Properties_;
   ::xsd::cxx::tree::one< ClsidType > clsid_;
   ::xsd::cxx::tree::one< NameType > name_;
   ImageOptional image_;
@@ -1645,93 +1841,81 @@ class EnvironmentVariable: public ::xml_schema::Type
 };
 
 /**
- * @brief Class corresponding to the %Properties schema type.
+ * @brief Class corresponding to the %EnvironmentVariables schema type.
  *
  * @nosubgrouping
  */
-class Properties: public ::xml_schema::Type
+class EnvironmentVariables: public ::xml_schema::Type
 {
   public:
   /**
-   * @name action
+   * @name EnvironmentVariable
    *
-   * @brief Accessor and modifier functions for the %action
-   * optional attribute.
+   * @brief Accessor and modifier functions for the %EnvironmentVariable
+   * sequence element.
    */
   //@{
 
   /**
-   * @brief Attribute type.
+   * @brief Element type.
    */
-  typedef ::xml_schema::String ActionType;
+  typedef ::EnvironmentVariable_t EnvironmentVariableType;
 
   /**
-   * @brief Attribute optional container type.
+   * @brief Element sequence container type.
    */
-  typedef ::xsd::cxx::tree::optional< ActionType > ActionOptional;
+  typedef ::xsd::cxx::tree::sequence< EnvironmentVariableType > EnvironmentVariableSequence;
 
   /**
-   * @brief Attribute traits type.
+   * @brief Element iterator type.
    */
-  typedef ::xsd::cxx::tree::traits< ActionType, char > ActionTraits;
+  typedef EnvironmentVariableSequence::iterator EnvironmentVariableIterator;
 
   /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
+   * @brief Element constant iterator type.
+   */
+  typedef EnvironmentVariableSequence::const_iterator EnvironmentVariableConstIterator;
+
+  /**
+   * @brief Element traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< EnvironmentVariableType, char > EnvironmentVariableTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the element
+   * sequence.
    *
-   * @return A constant reference to the optional container.
+   * @return A constant reference to the sequence container.
    */
-  const ActionOptional&
-  action () const;
+  const EnvironmentVariableSequence&
+  EnvironmentVariable () const;
 
   /**
-   * @brief Return a read-write reference to the attribute container.
+   * @brief Return a read-write reference to the element sequence.
    *
-   * @return A reference to the optional container.
+   * @return A reference to the sequence container.
    */
-  ActionOptional&
-  action ();
+  EnvironmentVariableSequence&
+  EnvironmentVariable ();
 
   /**
-   * @brief Set the attribute value.
+   * @brief Copy elements from a given sequence.
    *
-   * @param x A new value to set.
+   * @param s A sequence to copy elements from.
    *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
+   * For each element in @a s this function makes a copy and adds it 
+   * to the sequence. Note that this operation completely changes the 
+   * sequence and all old elements will be lost.
    */
   void
-  action (const ActionType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  action (const ActionOptional& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly instead
-   * of making a copy.
-   */
-  void
-  action (::std::unique_ptr< ActionType > p);
+  EnvironmentVariable (const EnvironmentVariableSequence& s);
 
   //@}
 
   /**
-   * @name name
+   * @name clsid
    *
-   * @brief Accessor and modifier functions for the %name
+   * @brief Accessor and modifier functions for the %clsid
    * required attribute.
    */
   //@{
@@ -1739,28 +1923,28 @@ class Properties: public ::xml_schema::Type
   /**
    * @brief Attribute type.
    */
-  typedef ::xml_schema::String NameType;
+  typedef ::xml_schema::String ClsidType;
 
   /**
    * @brief Attribute traits type.
    */
-  typedef ::xsd::cxx::tree::traits< NameType, char > NameTraits;
+  typedef ::xsd::cxx::tree::traits< ClsidType, char > ClsidTraits;
 
   /**
    * @brief Return a read-only (constant) reference to the attribute.
    *
    * @return A constant reference to the attribute.
    */
-  const NameType&
-  name () const;
+  const ClsidType&
+  clsid () const;
 
   /**
    * @brief Return a read-write reference to the attribute.
    *
    * @return A reference to the attribute.
    */
-  NameType&
-  name ();
+  ClsidType&
+  clsid ();
 
   /**
    * @brief Set the attribute value.
@@ -1771,7 +1955,7 @@ class Properties: public ::xml_schema::Type
    * the new value of the attribute.
    */
   void
-  name (const NameType& x);
+  clsid (const ClsidType& x);
 
   /**
    * @brief Set the attribute value without copying.
@@ -1782,195 +1966,7 @@ class Properties: public ::xml_schema::Type
    * instead of making a copy.
    */
   void
-  name (::std::unique_ptr< NameType > p);
-
-  //@}
-
-  /**
-   * @name value
-   *
-   * @brief Accessor and modifier functions for the %value
-   * required attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::String ValueType;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< ValueType, char > ValueTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute.
-   *
-   * @return A constant reference to the attribute.
-   */
-  const ValueType&
-  value () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute.
-   *
-   * @return A reference to the attribute.
-   */
-  ValueType&
-  value ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  value (const ValueType& x);
-
-  /**
-   * @brief Set the attribute value without copying.
-   *
-   * @param p A new value to use.
-   *
-   * This function will try to use the passed value directly
-   * instead of making a copy.
-   */
-  void
-  value (::std::unique_ptr< ValueType > p);
-
-  //@}
-
-  /**
-   * @name user
-   *
-   * @brief Accessor and modifier functions for the %user
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::Boolean UserType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< UserType > UserOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< UserType, char > UserTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const UserOptional&
-  user () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  UserOptional&
-  user ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  user (const UserType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  user (const UserOptional& x);
-
-  //@}
-
-  /**
-   * @name partial
-   *
-   * @brief Accessor and modifier functions for the %partial
-   * optional attribute.
-   */
-  //@{
-
-  /**
-   * @brief Attribute type.
-   */
-  typedef ::xml_schema::Boolean PartialType;
-
-  /**
-   * @brief Attribute optional container type.
-   */
-  typedef ::xsd::cxx::tree::optional< PartialType > PartialOptional;
-
-  /**
-   * @brief Attribute traits type.
-   */
-  typedef ::xsd::cxx::tree::traits< PartialType, char > PartialTraits;
-
-  /**
-   * @brief Return a read-only (constant) reference to the attribute
-   * container.
-   *
-   * @return A constant reference to the optional container.
-   */
-  const PartialOptional&
-  partial () const;
-
-  /**
-   * @brief Return a read-write reference to the attribute container.
-   *
-   * @return A reference to the optional container.
-   */
-  PartialOptional&
-  partial ();
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x A new value to set.
-   *
-   * This function makes a copy of its argument and sets it as
-   * the new value of the attribute.
-   */
-  void
-  partial (const PartialType& x);
-
-  /**
-   * @brief Set the attribute value.
-   *
-   * @param x An optional container with the new value to set.
-   *
-   * If the value is present in @a x then this function makes a copy 
-   * of this value and sets it as the new value of the attribute.
-   * Otherwise the attribute container is set the 'not present' state.
-   */
-  void
-  partial (const PartialOptional& x);
+  clsid (::std::unique_ptr< ClsidType > p);
 
   //@}
 
@@ -2048,8 +2044,7 @@ class Properties: public ::xml_schema::Type
    * @brief Create an instance from the ultimate base and
    * initializers for required elements and attributes.
    */
-  Properties (const NameType&,
-              const ValueType&);
+  EnvironmentVariables (const ClsidType&);
 
   /**
    * @brief Create an instance from a DOM element.
@@ -2059,9 +2054,9 @@ class Properties: public ::xml_schema::Type
    * @param c A pointer to the object that will contain the new
    * instance.
    */
-  Properties (const ::xercesc::DOMElement& e,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  EnvironmentVariables (const ::xercesc::DOMElement& e,
+                        ::xml_schema::Flags f = 0,
+                        ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy constructor.
@@ -2072,9 +2067,9 @@ class Properties: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Properties (const Properties& x,
-              ::xml_schema::Flags f = 0,
-              ::xml_schema::Container* c = 0);
+  EnvironmentVariables (const EnvironmentVariables& x,
+                        ::xml_schema::Flags f = 0,
+                        ::xml_schema::Container* c = 0);
 
   /**
    * @brief Copy the instance polymorphically.
@@ -2087,7 +2082,7 @@ class Properties: public ::xml_schema::Type
    * used for copying and should be used for polymorphic object
    * models instead of the copy constructor.
    */
-  virtual Properties*
+  virtual EnvironmentVariables*
   _clone (::xml_schema::Flags f = 0,
           ::xml_schema::Container* c = 0) const;
 
@@ -2099,8 +2094,8 @@ class Properties: public ::xml_schema::Type
    *
    * For polymorphic object models use the @c _clone function instead.
    */
-  Properties&
-  operator= (const Properties& x);
+  EnvironmentVariables&
+  operator= (const EnvironmentVariables& x);
 
   //@}
 
@@ -2108,7 +2103,7 @@ class Properties: public ::xml_schema::Type
    * @brief Destructor.
    */
   virtual 
-  ~Properties ();
+  ~EnvironmentVariables ();
 
   // Implementation.
   //
@@ -2121,11 +2116,8 @@ class Properties: public ::xml_schema::Type
          ::xml_schema::Flags);
 
   protected:
-  ActionOptional action_;
-  ::xsd::cxx::tree::one< NameType > name_;
-  ::xsd::cxx::tree::one< ValueType > value_;
-  UserOptional user_;
-  PartialOptional partial_;
+  EnvironmentVariableSequence EnvironmentVariable_;
+  ::xsd::cxx::tree::one< ClsidType > clsid_;
   DisabledOptional disabled_;
 
   //@endcond
@@ -2134,13 +2126,13 @@ class Properties: public ::xml_schema::Type
 #include <iosfwd>
 
 ::std::ostream&
+operator<< (::std::ostream&, const Properties_t&);
+
+::std::ostream&
+operator<< (::std::ostream&, const EnvironmentVariable_t&);
+
+::std::ostream&
 operator<< (::std::ostream&, const EnvironmentVariables&);
-
-::std::ostream&
-operator<< (::std::ostream&, const EnvironmentVariable&);
-
-::std::ostream&
-operator<< (::std::ostream&, const Properties&);
 
 #include <iosfwd>
 

@@ -40,6 +40,410 @@
 
 #include "variablesschema.h"
 
+// Properties_t
+// 
+
+const Properties_t::ActionOptional& Properties_t::
+action () const
+{
+  return this->action_;
+}
+
+Properties_t::ActionOptional& Properties_t::
+action ()
+{
+  return this->action_;
+}
+
+void Properties_t::
+action (const ActionType& x)
+{
+  this->action_.set (x);
+}
+
+void Properties_t::
+action (const ActionOptional& x)
+{
+  this->action_ = x;
+}
+
+void Properties_t::
+action (::std::unique_ptr< ActionType > x)
+{
+  this->action_.set (std::move (x));
+}
+
+const Properties_t::NameType& Properties_t::
+name () const
+{
+  return this->name_.get ();
+}
+
+Properties_t::NameType& Properties_t::
+name ()
+{
+  return this->name_.get ();
+}
+
+void Properties_t::
+name (const NameType& x)
+{
+  this->name_.set (x);
+}
+
+void Properties_t::
+name (::std::unique_ptr< NameType > x)
+{
+  this->name_.set (std::move (x));
+}
+
+const Properties_t::ValueType& Properties_t::
+value () const
+{
+  return this->value_.get ();
+}
+
+Properties_t::ValueType& Properties_t::
+value ()
+{
+  return this->value_.get ();
+}
+
+void Properties_t::
+value (const ValueType& x)
+{
+  this->value_.set (x);
+}
+
+void Properties_t::
+value (::std::unique_ptr< ValueType > x)
+{
+  this->value_.set (std::move (x));
+}
+
+const Properties_t::UserOptional& Properties_t::
+user () const
+{
+  return this->user_;
+}
+
+Properties_t::UserOptional& Properties_t::
+user ()
+{
+  return this->user_;
+}
+
+void Properties_t::
+user (const UserType& x)
+{
+  this->user_.set (x);
+}
+
+void Properties_t::
+user (const UserOptional& x)
+{
+  this->user_ = x;
+}
+
+const Properties_t::PartialOptional& Properties_t::
+partial () const
+{
+  return this->partial_;
+}
+
+Properties_t::PartialOptional& Properties_t::
+partial ()
+{
+  return this->partial_;
+}
+
+void Properties_t::
+partial (const PartialType& x)
+{
+  this->partial_.set (x);
+}
+
+void Properties_t::
+partial (const PartialOptional& x)
+{
+  this->partial_ = x;
+}
+
+const Properties_t::DisabledOptional& Properties_t::
+disabled () const
+{
+  return this->disabled_;
+}
+
+Properties_t::DisabledOptional& Properties_t::
+disabled ()
+{
+  return this->disabled_;
+}
+
+void Properties_t::
+disabled (const DisabledType& x)
+{
+  this->disabled_.set (x);
+}
+
+void Properties_t::
+disabled (const DisabledOptional& x)
+{
+  this->disabled_ = x;
+}
+
+
+// EnvironmentVariable_t
+// 
+
+const EnvironmentVariable_t::PropertiesSequence& EnvironmentVariable_t::
+Properties () const
+{
+  return this->Properties_;
+}
+
+EnvironmentVariable_t::PropertiesSequence& EnvironmentVariable_t::
+Properties ()
+{
+  return this->Properties_;
+}
+
+void EnvironmentVariable_t::
+Properties (const PropertiesSequence& s)
+{
+  this->Properties_ = s;
+}
+
+const EnvironmentVariable_t::ClsidType& EnvironmentVariable_t::
+clsid () const
+{
+  return this->clsid_.get ();
+}
+
+EnvironmentVariable_t::ClsidType& EnvironmentVariable_t::
+clsid ()
+{
+  return this->clsid_.get ();
+}
+
+void EnvironmentVariable_t::
+clsid (const ClsidType& x)
+{
+  this->clsid_.set (x);
+}
+
+void EnvironmentVariable_t::
+clsid (::std::unique_ptr< ClsidType > x)
+{
+  this->clsid_.set (std::move (x));
+}
+
+const EnvironmentVariable_t::NameType& EnvironmentVariable_t::
+name () const
+{
+  return this->name_.get ();
+}
+
+EnvironmentVariable_t::NameType& EnvironmentVariable_t::
+name ()
+{
+  return this->name_.get ();
+}
+
+void EnvironmentVariable_t::
+name (const NameType& x)
+{
+  this->name_.set (x);
+}
+
+void EnvironmentVariable_t::
+name (::std::unique_ptr< NameType > x)
+{
+  this->name_.set (std::move (x));
+}
+
+const EnvironmentVariable_t::ImageOptional& EnvironmentVariable_t::
+image () const
+{
+  return this->image_;
+}
+
+EnvironmentVariable_t::ImageOptional& EnvironmentVariable_t::
+image ()
+{
+  return this->image_;
+}
+
+void EnvironmentVariable_t::
+image (const ImageType& x)
+{
+  this->image_.set (x);
+}
+
+void EnvironmentVariable_t::
+image (const ImageOptional& x)
+{
+  this->image_ = x;
+}
+
+const EnvironmentVariable_t::ChangedOptional& EnvironmentVariable_t::
+changed () const
+{
+  return this->changed_;
+}
+
+EnvironmentVariable_t::ChangedOptional& EnvironmentVariable_t::
+changed ()
+{
+  return this->changed_;
+}
+
+void EnvironmentVariable_t::
+changed (const ChangedType& x)
+{
+  this->changed_.set (x);
+}
+
+void EnvironmentVariable_t::
+changed (const ChangedOptional& x)
+{
+  this->changed_ = x;
+}
+
+void EnvironmentVariable_t::
+changed (::std::unique_ptr< ChangedType > x)
+{
+  this->changed_.set (std::move (x));
+}
+
+const EnvironmentVariable_t::UidType& EnvironmentVariable_t::
+uid () const
+{
+  return this->uid_.get ();
+}
+
+EnvironmentVariable_t::UidType& EnvironmentVariable_t::
+uid ()
+{
+  return this->uid_.get ();
+}
+
+void EnvironmentVariable_t::
+uid (const UidType& x)
+{
+  this->uid_.set (x);
+}
+
+void EnvironmentVariable_t::
+uid (::std::unique_ptr< UidType > x)
+{
+  this->uid_.set (std::move (x));
+}
+
+const EnvironmentVariable_t::DescOptional& EnvironmentVariable_t::
+desc () const
+{
+  return this->desc_;
+}
+
+EnvironmentVariable_t::DescOptional& EnvironmentVariable_t::
+desc ()
+{
+  return this->desc_;
+}
+
+void EnvironmentVariable_t::
+desc (const DescType& x)
+{
+  this->desc_.set (x);
+}
+
+void EnvironmentVariable_t::
+desc (const DescOptional& x)
+{
+  this->desc_ = x;
+}
+
+void EnvironmentVariable_t::
+desc (::std::unique_ptr< DescType > x)
+{
+  this->desc_.set (std::move (x));
+}
+
+const EnvironmentVariable_t::BypassErrorsOptional& EnvironmentVariable_t::
+bypassErrors () const
+{
+  return this->bypassErrors_;
+}
+
+EnvironmentVariable_t::BypassErrorsOptional& EnvironmentVariable_t::
+bypassErrors ()
+{
+  return this->bypassErrors_;
+}
+
+void EnvironmentVariable_t::
+bypassErrors (const BypassErrorsType& x)
+{
+  this->bypassErrors_.set (x);
+}
+
+void EnvironmentVariable_t::
+bypassErrors (const BypassErrorsOptional& x)
+{
+  this->bypassErrors_ = x;
+}
+
+const EnvironmentVariable_t::UserContextOptional& EnvironmentVariable_t::
+userContext () const
+{
+  return this->userContext_;
+}
+
+EnvironmentVariable_t::UserContextOptional& EnvironmentVariable_t::
+userContext ()
+{
+  return this->userContext_;
+}
+
+void EnvironmentVariable_t::
+userContext (const UserContextType& x)
+{
+  this->userContext_.set (x);
+}
+
+void EnvironmentVariable_t::
+userContext (const UserContextOptional& x)
+{
+  this->userContext_ = x;
+}
+
+const EnvironmentVariable_t::RemovePolicyOptional& EnvironmentVariable_t::
+removePolicy () const
+{
+  return this->removePolicy_;
+}
+
+EnvironmentVariable_t::RemovePolicyOptional& EnvironmentVariable_t::
+removePolicy ()
+{
+  return this->removePolicy_;
+}
+
+void EnvironmentVariable_t::
+removePolicy (const RemovePolicyType& x)
+{
+  this->removePolicy_.set (x);
+}
+
+void EnvironmentVariable_t::
+removePolicy (const RemovePolicyOptional& x)
+{
+  this->removePolicy_ = x;
+}
+
+
 // EnvironmentVariables
 // 
 
@@ -110,416 +514,6 @@ disabled (const DisabledOptional& x)
 }
 
 
-// EnvironmentVariable
-// 
-
-const EnvironmentVariable::PropertiesType& EnvironmentVariable::
-Properties () const
-{
-  return this->Properties_.get ();
-}
-
-EnvironmentVariable::PropertiesType& EnvironmentVariable::
-Properties ()
-{
-  return this->Properties_.get ();
-}
-
-void EnvironmentVariable::
-Properties (const PropertiesType& x)
-{
-  this->Properties_.set (x);
-}
-
-void EnvironmentVariable::
-Properties (::std::unique_ptr< PropertiesType > x)
-{
-  this->Properties_.set (std::move (x));
-}
-
-const EnvironmentVariable::ClsidType& EnvironmentVariable::
-clsid () const
-{
-  return this->clsid_.get ();
-}
-
-EnvironmentVariable::ClsidType& EnvironmentVariable::
-clsid ()
-{
-  return this->clsid_.get ();
-}
-
-void EnvironmentVariable::
-clsid (const ClsidType& x)
-{
-  this->clsid_.set (x);
-}
-
-void EnvironmentVariable::
-clsid (::std::unique_ptr< ClsidType > x)
-{
-  this->clsid_.set (std::move (x));
-}
-
-const EnvironmentVariable::NameType& EnvironmentVariable::
-name () const
-{
-  return this->name_.get ();
-}
-
-EnvironmentVariable::NameType& EnvironmentVariable::
-name ()
-{
-  return this->name_.get ();
-}
-
-void EnvironmentVariable::
-name (const NameType& x)
-{
-  this->name_.set (x);
-}
-
-void EnvironmentVariable::
-name (::std::unique_ptr< NameType > x)
-{
-  this->name_.set (std::move (x));
-}
-
-const EnvironmentVariable::ImageOptional& EnvironmentVariable::
-image () const
-{
-  return this->image_;
-}
-
-EnvironmentVariable::ImageOptional& EnvironmentVariable::
-image ()
-{
-  return this->image_;
-}
-
-void EnvironmentVariable::
-image (const ImageType& x)
-{
-  this->image_.set (x);
-}
-
-void EnvironmentVariable::
-image (const ImageOptional& x)
-{
-  this->image_ = x;
-}
-
-const EnvironmentVariable::ChangedOptional& EnvironmentVariable::
-changed () const
-{
-  return this->changed_;
-}
-
-EnvironmentVariable::ChangedOptional& EnvironmentVariable::
-changed ()
-{
-  return this->changed_;
-}
-
-void EnvironmentVariable::
-changed (const ChangedType& x)
-{
-  this->changed_.set (x);
-}
-
-void EnvironmentVariable::
-changed (const ChangedOptional& x)
-{
-  this->changed_ = x;
-}
-
-void EnvironmentVariable::
-changed (::std::unique_ptr< ChangedType > x)
-{
-  this->changed_.set (std::move (x));
-}
-
-const EnvironmentVariable::UidType& EnvironmentVariable::
-uid () const
-{
-  return this->uid_.get ();
-}
-
-EnvironmentVariable::UidType& EnvironmentVariable::
-uid ()
-{
-  return this->uid_.get ();
-}
-
-void EnvironmentVariable::
-uid (const UidType& x)
-{
-  this->uid_.set (x);
-}
-
-void EnvironmentVariable::
-uid (::std::unique_ptr< UidType > x)
-{
-  this->uid_.set (std::move (x));
-}
-
-const EnvironmentVariable::DescOptional& EnvironmentVariable::
-desc () const
-{
-  return this->desc_;
-}
-
-EnvironmentVariable::DescOptional& EnvironmentVariable::
-desc ()
-{
-  return this->desc_;
-}
-
-void EnvironmentVariable::
-desc (const DescType& x)
-{
-  this->desc_.set (x);
-}
-
-void EnvironmentVariable::
-desc (const DescOptional& x)
-{
-  this->desc_ = x;
-}
-
-void EnvironmentVariable::
-desc (::std::unique_ptr< DescType > x)
-{
-  this->desc_.set (std::move (x));
-}
-
-const EnvironmentVariable::BypassErrorsOptional& EnvironmentVariable::
-bypassErrors () const
-{
-  return this->bypassErrors_;
-}
-
-EnvironmentVariable::BypassErrorsOptional& EnvironmentVariable::
-bypassErrors ()
-{
-  return this->bypassErrors_;
-}
-
-void EnvironmentVariable::
-bypassErrors (const BypassErrorsType& x)
-{
-  this->bypassErrors_.set (x);
-}
-
-void EnvironmentVariable::
-bypassErrors (const BypassErrorsOptional& x)
-{
-  this->bypassErrors_ = x;
-}
-
-const EnvironmentVariable::UserContextOptional& EnvironmentVariable::
-userContext () const
-{
-  return this->userContext_;
-}
-
-EnvironmentVariable::UserContextOptional& EnvironmentVariable::
-userContext ()
-{
-  return this->userContext_;
-}
-
-void EnvironmentVariable::
-userContext (const UserContextType& x)
-{
-  this->userContext_.set (x);
-}
-
-void EnvironmentVariable::
-userContext (const UserContextOptional& x)
-{
-  this->userContext_ = x;
-}
-
-const EnvironmentVariable::RemovePolicyOptional& EnvironmentVariable::
-removePolicy () const
-{
-  return this->removePolicy_;
-}
-
-EnvironmentVariable::RemovePolicyOptional& EnvironmentVariable::
-removePolicy ()
-{
-  return this->removePolicy_;
-}
-
-void EnvironmentVariable::
-removePolicy (const RemovePolicyType& x)
-{
-  this->removePolicy_.set (x);
-}
-
-void EnvironmentVariable::
-removePolicy (const RemovePolicyOptional& x)
-{
-  this->removePolicy_ = x;
-}
-
-
-// Properties
-// 
-
-const Properties::ActionOptional& Properties::
-action () const
-{
-  return this->action_;
-}
-
-Properties::ActionOptional& Properties::
-action ()
-{
-  return this->action_;
-}
-
-void Properties::
-action (const ActionType& x)
-{
-  this->action_.set (x);
-}
-
-void Properties::
-action (const ActionOptional& x)
-{
-  this->action_ = x;
-}
-
-void Properties::
-action (::std::unique_ptr< ActionType > x)
-{
-  this->action_.set (std::move (x));
-}
-
-const Properties::NameType& Properties::
-name () const
-{
-  return this->name_.get ();
-}
-
-Properties::NameType& Properties::
-name ()
-{
-  return this->name_.get ();
-}
-
-void Properties::
-name (const NameType& x)
-{
-  this->name_.set (x);
-}
-
-void Properties::
-name (::std::unique_ptr< NameType > x)
-{
-  this->name_.set (std::move (x));
-}
-
-const Properties::ValueType& Properties::
-value () const
-{
-  return this->value_.get ();
-}
-
-Properties::ValueType& Properties::
-value ()
-{
-  return this->value_.get ();
-}
-
-void Properties::
-value (const ValueType& x)
-{
-  this->value_.set (x);
-}
-
-void Properties::
-value (::std::unique_ptr< ValueType > x)
-{
-  this->value_.set (std::move (x));
-}
-
-const Properties::UserOptional& Properties::
-user () const
-{
-  return this->user_;
-}
-
-Properties::UserOptional& Properties::
-user ()
-{
-  return this->user_;
-}
-
-void Properties::
-user (const UserType& x)
-{
-  this->user_.set (x);
-}
-
-void Properties::
-user (const UserOptional& x)
-{
-  this->user_ = x;
-}
-
-const Properties::PartialOptional& Properties::
-partial () const
-{
-  return this->partial_;
-}
-
-Properties::PartialOptional& Properties::
-partial ()
-{
-  return this->partial_;
-}
-
-void Properties::
-partial (const PartialType& x)
-{
-  this->partial_.set (x);
-}
-
-void Properties::
-partial (const PartialOptional& x)
-{
-  this->partial_ = x;
-}
-
-const Properties::DisabledOptional& Properties::
-disabled () const
-{
-  return this->disabled_;
-}
-
-Properties::DisabledOptional& Properties::
-disabled ()
-{
-  return this->disabled_;
-}
-
-void Properties::
-disabled (const DisabledType& x)
-{
-  this->disabled_.set (x);
-}
-
-void Properties::
-disabled (const DisabledOptional& x)
-{
-  this->disabled_ = x;
-}
-
-
 #include <xsd/cxx/xml/dom/wildcard-source.hxx>
 
 #include <xsd/cxx/xml/dom/parsing-source.hxx>
@@ -533,78 +527,92 @@ namespace _xsd
   type_factory_plate_init;
 }
 
-// EnvironmentVariables
+// Properties_t
 //
 
-EnvironmentVariables::
-EnvironmentVariables (const ClsidType& clsid)
+Properties_t::
+Properties_t (const NameType& name,
+              const ValueType& value)
 : ::xml_schema::Type (),
-  EnvironmentVariable_ (this),
-  clsid_ (clsid, this),
+  action_ (this),
+  name_ (name, this),
+  value_ (value, this),
+  user_ (this),
+  partial_ (this),
   disabled_ (this)
 {
 }
 
-EnvironmentVariables::
-EnvironmentVariables (const EnvironmentVariables& x,
-                      ::xml_schema::Flags f,
-                      ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const Properties_t& x,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  EnvironmentVariable_ (x.EnvironmentVariable_, f, this),
-  clsid_ (x.clsid_, f, this),
+  action_ (x.action_, f, this),
+  name_ (x.name_, f, this),
+  value_ (x.value_, f, this),
+  user_ (x.user_, f, this),
+  partial_ (x.partial_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
 
-EnvironmentVariables::
-EnvironmentVariables (const ::xercesc::DOMElement& e,
-                      ::xml_schema::Flags f,
-                      ::xml_schema::Container* c)
+Properties_t::
+Properties_t (const ::xercesc::DOMElement& e,
+              ::xml_schema::Flags f,
+              ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  EnvironmentVariable_ (this),
-  clsid_ (this),
+  action_ (this),
+  name_ (this),
+  value_ (this),
+  user_ (this),
+  partial_ (this),
   disabled_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
-    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+    ::xsd::cxx::xml::dom::parser< char > p (e, false, false, true);
     this->parse (p, f);
   }
 }
 
-void EnvironmentVariables::
+void Properties_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
-  for (; p.more_content (); p.next_content (false))
-  {
-    const ::xercesc::DOMElement& i (p.cur_element ());
-    const ::xsd::cxx::xml::qualified_name< char > n (
-      ::xsd::cxx::xml::dom::name< char > (i));
-
-    // EnvironmentVariable
-    //
-    if (n.name () == "EnvironmentVariable" && n.namespace_ ().empty ())
-    {
-      ::std::unique_ptr< EnvironmentVariableType > r (
-        EnvironmentVariableTraits::create (i, f, this));
-
-      this->EnvironmentVariable_.push_back (::std::move (r));
-      continue;
-    }
-
-    break;
-  }
-
   while (p.more_attributes ())
   {
     const ::xercesc::DOMAttr& i (p.next_attribute ());
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    if (n.name () == "clsid" && n.namespace_ ().empty ())
+    if (n.name () == "action" && n.namespace_ ().empty ())
     {
-      this->clsid_.set (ClsidTraits::create (i, f, this));
+      this->action_.set (ActionTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "name" && n.namespace_ ().empty ())
+    {
+      this->name_.set (NameTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "value" && n.namespace_ ().empty ())
+    {
+      this->value_.set (ValueTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "user" && n.namespace_ ().empty ())
+    {
+      this->user_.set (UserTraits::create (i, f, this));
+      continue;
+    }
+
+    if (n.name () == "partial" && n.namespace_ ().empty ())
+    {
+      this->partial_.set (PartialTraits::create (i, f, this));
       continue;
     }
 
@@ -615,50 +623,65 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     }
   }
 
-  if (!clsid_.present ())
+  if (!name_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "clsid",
+      "name",
+      "");
+  }
+
+  if (!value_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "value",
       "");
   }
 }
 
-EnvironmentVariables* EnvironmentVariables::
+Properties_t* Properties_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class EnvironmentVariables (*this, f, c);
+  return new class Properties_t (*this, f, c);
 }
 
-EnvironmentVariables& EnvironmentVariables::
-operator= (const EnvironmentVariables& x)
+Properties_t& Properties_t::
+operator= (const Properties_t& x)
 {
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->EnvironmentVariable_ = x.EnvironmentVariable_;
-    this->clsid_ = x.clsid_;
+    this->action_ = x.action_;
+    this->name_ = x.name_;
+    this->value_ = x.value_;
+    this->user_ = x.user_;
+    this->partial_ = x.partial_;
     this->disabled_ = x.disabled_;
   }
 
   return *this;
 }
 
-EnvironmentVariables::
-~EnvironmentVariables ()
+Properties_t::
+~Properties_t ()
 {
 }
 
-// EnvironmentVariable
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, Properties_t >
+_xsd_Properties_t_type_factory_init (
+  "Properties_t",
+  "");
+
+// EnvironmentVariable_t
 //
 
-EnvironmentVariable::
-EnvironmentVariable (const PropertiesType& Properties,
-                     const ClsidType& clsid,
-                     const NameType& name,
-                     const UidType& uid)
+EnvironmentVariable_t::
+EnvironmentVariable_t (const ClsidType& clsid,
+                       const NameType& name,
+                       const UidType& uid)
 : ::xml_schema::Type (),
-  Properties_ (Properties, this),
+  Properties_ (this),
   clsid_ (clsid, this),
   name_ (name, this),
   image_ (this),
@@ -671,29 +694,10 @@ EnvironmentVariable (const PropertiesType& Properties,
 {
 }
 
-EnvironmentVariable::
-EnvironmentVariable (::std::unique_ptr< PropertiesType > Properties,
-                     const ClsidType& clsid,
-                     const NameType& name,
-                     const UidType& uid)
-: ::xml_schema::Type (),
-  Properties_ (std::move (Properties), this),
-  clsid_ (clsid, this),
-  name_ (name, this),
-  image_ (this),
-  changed_ (this),
-  uid_ (uid, this),
-  desc_ (this),
-  bypassErrors_ (this),
-  userContext_ (this),
-  removePolicy_ (this)
-{
-}
-
-EnvironmentVariable::
-EnvironmentVariable (const EnvironmentVariable& x,
-                     ::xml_schema::Flags f,
-                     ::xml_schema::Container* c)
+EnvironmentVariable_t::
+EnvironmentVariable_t (const EnvironmentVariable_t& x,
+                       ::xml_schema::Flags f,
+                       ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
   Properties_ (x.Properties_, f, this),
   clsid_ (x.clsid_, f, this),
@@ -708,10 +712,10 @@ EnvironmentVariable (const EnvironmentVariable& x,
 {
 }
 
-EnvironmentVariable::
-EnvironmentVariable (const ::xercesc::DOMElement& e,
-                     ::xml_schema::Flags f,
-                     ::xml_schema::Container* c)
+EnvironmentVariable_t::
+EnvironmentVariable_t (const ::xercesc::DOMElement& e,
+                       ::xml_schema::Flags f,
+                       ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
   Properties_ (this),
   clsid_ (this),
@@ -731,7 +735,7 @@ EnvironmentVariable (const ::xercesc::DOMElement& e,
   }
 }
 
-void EnvironmentVariable::
+void EnvironmentVariable_t::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
@@ -743,26 +747,30 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
 
     // Properties
     //
-    if (n.name () == "Properties" && n.namespace_ ().empty ())
     {
-      ::std::unique_ptr< PropertiesType > r (
-        PropertiesTraits::create (i, f, this));
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "Properties",
+          "",
+          &::xsd::cxx::tree::factory_impl< PropertiesType >,
+          false, true, i, n, f, this));
 
-      if (!Properties_.present ())
+      if (tmp.get () != 0)
       {
-        this->Properties_.set (::std::move (r));
+        ::std::unique_ptr< PropertiesType > r (
+          dynamic_cast< PropertiesType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->Properties_.push_back (::std::move (r));
         continue;
       }
     }
 
     break;
-  }
-
-  if (!Properties_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_element< char > (
-      "Properties",
-      "");
   }
 
   while (p.more_attributes ())
@@ -848,15 +856,15 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
   }
 }
 
-EnvironmentVariable* EnvironmentVariable::
+EnvironmentVariable_t* EnvironmentVariable_t::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class EnvironmentVariable (*this, f, c);
+  return new class EnvironmentVariable_t (*this, f, c);
 }
 
-EnvironmentVariable& EnvironmentVariable::
-operator= (const EnvironmentVariable& x)
+EnvironmentVariable_t& EnvironmentVariable_t::
+operator= (const EnvironmentVariable_t& x)
 {
   if (this != &x)
   {
@@ -876,97 +884,103 @@ operator= (const EnvironmentVariable& x)
   return *this;
 }
 
-EnvironmentVariable::
-~EnvironmentVariable ()
+EnvironmentVariable_t::
+~EnvironmentVariable_t ()
 {
 }
 
-// Properties
+static
+const ::xsd::cxx::tree::type_factory_initializer< 0, char, EnvironmentVariable_t >
+_xsd_EnvironmentVariable_t_type_factory_init (
+  "EnvironmentVariable_t",
+  "");
+
+// EnvironmentVariables
 //
 
-Properties::
-Properties (const NameType& name,
-            const ValueType& value)
+EnvironmentVariables::
+EnvironmentVariables (const ClsidType& clsid)
 : ::xml_schema::Type (),
-  action_ (this),
-  name_ (name, this),
-  value_ (value, this),
-  user_ (this),
-  partial_ (this),
+  EnvironmentVariable_ (this),
+  clsid_ (clsid, this),
   disabled_ (this)
 {
 }
 
-Properties::
-Properties (const Properties& x,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+EnvironmentVariables::
+EnvironmentVariables (const EnvironmentVariables& x,
+                      ::xml_schema::Flags f,
+                      ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  action_ (x.action_, f, this),
-  name_ (x.name_, f, this),
-  value_ (x.value_, f, this),
-  user_ (x.user_, f, this),
-  partial_ (x.partial_, f, this),
+  EnvironmentVariable_ (x.EnvironmentVariable_, f, this),
+  clsid_ (x.clsid_, f, this),
   disabled_ (x.disabled_, f, this)
 {
 }
 
-Properties::
-Properties (const ::xercesc::DOMElement& e,
-            ::xml_schema::Flags f,
-            ::xml_schema::Container* c)
+EnvironmentVariables::
+EnvironmentVariables (const ::xercesc::DOMElement& e,
+                      ::xml_schema::Flags f,
+                      ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  action_ (this),
-  name_ (this),
-  value_ (this),
-  user_ (this),
-  partial_ (this),
+  EnvironmentVariable_ (this),
+  clsid_ (this),
   disabled_ (this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
-    ::xsd::cxx::xml::dom::parser< char > p (e, false, false, true);
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
     this->parse (p, f);
   }
 }
 
-void Properties::
+void EnvironmentVariables::
 parse (::xsd::cxx::xml::dom::parser< char >& p,
        ::xml_schema::Flags f)
 {
+  for (; p.more_content (); p.next_content (false))
+  {
+    const ::xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // EnvironmentVariable
+    //
+    {
+      ::std::unique_ptr< ::xsd::cxx::tree::type > tmp (
+        ::xsd::cxx::tree::type_factory_map_instance< 0, char > ().create (
+          "EnvironmentVariable",
+          "",
+          &::xsd::cxx::tree::factory_impl< EnvironmentVariableType >,
+          false, true, i, n, f, this));
+
+      if (tmp.get () != 0)
+      {
+        ::std::unique_ptr< EnvironmentVariableType > r (
+          dynamic_cast< EnvironmentVariableType* > (tmp.get ()));
+
+        if (r.get ())
+          tmp.release ();
+        else
+          throw ::xsd::cxx::tree::not_derived< char > ();
+
+        this->EnvironmentVariable_.push_back (::std::move (r));
+        continue;
+      }
+    }
+
+    break;
+  }
+
   while (p.more_attributes ())
   {
     const ::xercesc::DOMAttr& i (p.next_attribute ());
     const ::xsd::cxx::xml::qualified_name< char > n (
       ::xsd::cxx::xml::dom::name< char > (i));
 
-    if (n.name () == "action" && n.namespace_ ().empty ())
+    if (n.name () == "clsid" && n.namespace_ ().empty ())
     {
-      this->action_.set (ActionTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "name" && n.namespace_ ().empty ())
-    {
-      this->name_.set (NameTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "value" && n.namespace_ ().empty ())
-    {
-      this->value_.set (ValueTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "user" && n.namespace_ ().empty ())
-    {
-      this->user_.set (UserTraits::create (i, f, this));
-      continue;
-    }
-
-    if (n.name () == "partial" && n.namespace_ ().empty ())
-    {
-      this->partial_.set (PartialTraits::create (i, f, this));
+      this->clsid_.set (ClsidTraits::create (i, f, this));
       continue;
     }
 
@@ -977,47 +991,37 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
     }
   }
 
-  if (!name_.present ())
+  if (!clsid_.present ())
   {
     throw ::xsd::cxx::tree::expected_attribute< char > (
-      "name",
-      "");
-  }
-
-  if (!value_.present ())
-  {
-    throw ::xsd::cxx::tree::expected_attribute< char > (
-      "value",
+      "clsid",
       "");
   }
 }
 
-Properties* Properties::
+EnvironmentVariables* EnvironmentVariables::
 _clone (::xml_schema::Flags f,
         ::xml_schema::Container* c) const
 {
-  return new class Properties (*this, f, c);
+  return new class EnvironmentVariables (*this, f, c);
 }
 
-Properties& Properties::
-operator= (const Properties& x)
+EnvironmentVariables& EnvironmentVariables::
+operator= (const EnvironmentVariables& x)
 {
   if (this != &x)
   {
     static_cast< ::xml_schema::Type& > (*this) = x;
-    this->action_ = x.action_;
-    this->name_ = x.name_;
-    this->value_ = x.value_;
-    this->user_ = x.user_;
-    this->partial_ = x.partial_;
+    this->EnvironmentVariable_ = x.EnvironmentVariable_;
+    this->clsid_ = x.clsid_;
     this->disabled_ = x.disabled_;
   }
 
   return *this;
 }
 
-Properties::
-~Properties ()
+EnvironmentVariables::
+~EnvironmentVariables ()
 {
 }
 
@@ -1033,16 +1037,25 @@ namespace _xsd
 }
 
 ::std::ostream&
-operator<< (::std::ostream& o, const EnvironmentVariables& i)
+operator<< (::std::ostream& o, const Properties_t& i)
 {
-  for (EnvironmentVariables::EnvironmentVariableConstIterator
-       b (i.EnvironmentVariable ().begin ()), e (i.EnvironmentVariable ().end ());
-       b != e; ++b)
+  if (i.action ())
   {
-    o << ::std::endl << "EnvironmentVariable: " << *b;
+    o << ::std::endl << "action: " << *i.action ();
   }
 
-  o << ::std::endl << "clsid: " << i.clsid ();
+  o << ::std::endl << "name: " << i.name ();
+  o << ::std::endl << "value: " << i.value ();
+  if (i.user ())
+  {
+    o << ::std::endl << "user: " << *i.user ();
+  }
+
+  if (i.partial ())
+  {
+    o << ::std::endl << "partial: " << *i.partial ();
+  }
+
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();
@@ -1051,10 +1064,26 @@ operator<< (::std::ostream& o, const EnvironmentVariables& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, Properties_t >
+_xsd_Properties_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const EnvironmentVariable& i)
+operator<< (::std::ostream& o, const EnvironmentVariable_t& i)
 {
-  o << ::std::endl << "Properties: " << i.Properties ();
+  {
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (EnvironmentVariable_t::PropertiesConstIterator
+         b (i.Properties ().begin ()), e (i.Properties ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Properties: ";
+      om.insert (o, *b);
+    }
+  }
+
   o << ::std::endl << "clsid: " << i.clsid ();
   o << ::std::endl << "name: " << i.name ();
   if (i.image ())
@@ -1091,26 +1120,27 @@ operator<< (::std::ostream& o, const EnvironmentVariable& i)
   return o;
 }
 
+static
+const ::xsd::cxx::tree::std_ostream_initializer< 0, char, EnvironmentVariable_t >
+_xsd_EnvironmentVariable_t_std_ostream_init;
+
 ::std::ostream&
-operator<< (::std::ostream& o, const Properties& i)
+operator<< (::std::ostream& o, const EnvironmentVariables& i)
 {
-  if (i.action ())
   {
-    o << ::std::endl << "action: " << *i.action ();
+    ::xsd::cxx::tree::std_ostream_map< char >& om (
+      ::xsd::cxx::tree::std_ostream_map_instance< 0, char > ());
+
+    for (EnvironmentVariables::EnvironmentVariableConstIterator
+         b (i.EnvironmentVariable ().begin ()), e (i.EnvironmentVariable ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "EnvironmentVariable: ";
+      om.insert (o, *b);
+    }
   }
 
-  o << ::std::endl << "name: " << i.name ();
-  o << ::std::endl << "value: " << i.value ();
-  if (i.user ())
-  {
-    o << ::std::endl << "user: " << *i.user ();
-  }
-
-  if (i.partial ())
-  {
-    o << ::std::endl << "partial: " << *i.partial ();
-  }
-
+  o << ::std::endl << "clsid: " << i.clsid ();
   if (i.disabled ())
   {
     o << ::std::endl << "disabled: " << *i.disabled ();

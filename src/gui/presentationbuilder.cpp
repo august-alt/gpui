@@ -101,6 +101,14 @@ namespace gui
 
     class PresentationBuilderPrivate : public PresentationWidgetVisitor {
     public:
+        struct ElementInfo
+        {
+            std::string key;
+            std::string value;
+            RegistryEntryType type;
+        };
+
+    public:
         virtual void visit(CheckBox &widget) const override
         {
             QCheckBox* checkBox = new QCheckBox();
@@ -110,16 +118,16 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
+                    checkBox->setChecked(m_source->getValue(elementInfo.key, elementInfo.value).value<bool>());
                 }
 
                 checkBox->connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
                     createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, checked);
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD, checked);
                     });
                 });
             }
@@ -138,16 +146,17 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                    comboBox->setCurrentIndex(m_source->getValue(elementInfo.key, elementInfo.value).value<uint32_t>());
                 }
 
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                        Q_UNUSED(index);
+                        setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox);
                     });
                 });
             }
@@ -186,16 +195,17 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                    comboBox->setCurrentIndex(m_source->getValue(elementInfo.key, elementInfo.value).value<uint32_t>());
                 }
 
                 comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
+                        Q_UNUSED(index);
+                        setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox);
                     });
                 });
             }
@@ -216,18 +226,18 @@ namespace gui
 
                 if (m_policy && m_source)
                 {
-                    std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                    const ElementInfo elementInfo = findElementInfo();
 
-                    if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                    if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                     {
-                        QStringList items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QStringList>();
+                        QStringList items = m_source->getValue(elementInfo.key, elementInfo.value).value<QStringList>();
                         qWarning() << "Items debug: " << items;
                         listBox->setItems(items);
                     }
 
                     listBox->connect(listBox, &gpui::ListBoxDialog::itemsEditingFinished, [=](QStringList items) {
                         qWarning() << "Items debug: " << items;
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, items);
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, items);
                     });
                 }
 
@@ -255,18 +265,18 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    auto value = m_source->getValue(elementInfo.key, elementInfo.value).value<QString>();
                     textEdit->setPlainText(value);
                 }
 
                 textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
                     createCommand([=](){
                         QStringList data(textEdit->toPlainText());
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, data);
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, data);
                     });
                 });
             }
@@ -290,17 +300,17 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    auto value = m_source->getValue(elementInfo.key, elementInfo.value).value<QString>();
                     lineEdit->setText(value);
                 }
 
                 lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=](const QString& text){
                     createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(text));
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_SZ, QVariant::fromValue(text));
                     });
                 });
             }
@@ -367,16 +377,16 @@ namespace gui
 
                 if (m_policy && m_source)
                 {
-                    std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                    const ElementInfo elementInfo = findElementInfo();
 
-                    if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                    if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                     {
-                        spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
+                        spinBox->setValue(m_source->getValue(elementInfo.key, elementInfo.value).value<Number>());
                     }
 
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=](int value) {
                         createCommand([=](){
-                            m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value);
+                            m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD, value);
                         });
                     });
                 }
@@ -390,16 +400,16 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
+                    edit->setText(QString(m_source->getValue(elementInfo.key, elementInfo.value).value<Number>()));
                 }
 
                 edit->connect(edit, &QLineEdit::textChanged, [=](const QString & value) {
                     createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value.toUInt());
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD, value.toUInt());
                     });
                 });
             }
@@ -407,7 +417,7 @@ namespace gui
             return edit;
         }
 
-        std::pair<std::string, std::string> findKeyAndValueName() const
+        ElementInfo findElementInfo() const
         {
             if (m_policy && m_source)
             {
@@ -417,9 +427,9 @@ namespace gui
                     {
                         if (element->key.size() > 0)
                         {
-                            return std::make_pair(element->key, element->valueName);
+                            return { element->key, element->valueName, element->getRegistryEntryType() };
                         } else {
-                            return std::make_pair(m_policy->key, element->valueName);
+                            return { m_policy->key, element->valueName, element->getRegistryEntryType() };
                         }
                     }
                 }
@@ -427,13 +437,38 @@ namespace gui
 
             qWarning() << "Key and value not found!" << m_elementName.c_str();
 
-            return std::make_pair("", "");
+            return { "", "", static_cast<RegistryEntryType>(0) };
         }
 
         void createCommand(std::function<void()> function) const
         {
             auto command = std::make_unique<LambdaCommand>(function);
             m_commandGroup->addSubCommand(std::move(command));
+        }
+
+        void setComboData(const std::string& key, const std::string& valueName, RegistryEntryType type, QComboBox const* comboBox) const
+        {
+            switch (type) {
+            case REG_SZ:
+            case REG_BINARY:
+            case REG_EXPAND_SZ:
+                m_source->setValue(key, valueName, type, comboBox->currentText());
+                break;
+            case REG_DWORD:
+            case REG_QWORD:
+            case REG_DWORD_BIG_ENDIAN:
+                m_source->setValue(key, valueName, type, comboBox->currentIndex());
+                break;
+            case REG_MULTI_SZ:
+                m_source->setValue(key, valueName, type, QStringList(comboBox->currentText()));
+                break;
+            default:
+                qWarning() << "Unable to detect value type for element with key: "
+                           << key.c_str()
+                           << " value: "
+                           << valueName.c_str();
+                break;
+            }
         }
     };
 

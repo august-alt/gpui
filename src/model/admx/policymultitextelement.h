@@ -34,6 +34,11 @@ namespace model
         class GPUI_MODEL_EXPORT PolicyMultiTextElement : public PolicyElement
         {
         public:
+
+            registry::RegistryEntryType getRegistryEntryType() const override
+            {
+                return registry::REG_MULTI_SZ;
+            }
         };
     }
 }

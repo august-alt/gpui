@@ -36,6 +36,7 @@
 
 #include "../model/admx/policy.h"
 #include "../model/admx/policyelement.h"
+#include "../model/admx/policyenumelement.h"
 
 #include "../model/commands/command.h"
 #include "../model/commands/commandgroup.h"
@@ -106,6 +107,7 @@ namespace gui
             std::string key;
             std::string value;
             RegistryEntryType type;
+            PolicyElement* element;
         };
 
     public:
@@ -156,7 +158,7 @@ namespace gui
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     createCommand([=](){
                         Q_UNUSED(index);
-                        setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox);
+                        setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
                     });
                 });
             }
@@ -205,7 +207,7 @@ namespace gui
                 comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
                     createCommand([=](){
                         Q_UNUSED(index);
-                        setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox);
+                        setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
                     });
                 });
             }
@@ -427,9 +429,9 @@ namespace gui
                     {
                         if (element->key.size() > 0)
                         {
-                            return { element->key, element->valueName, element->getRegistryEntryType() };
+                            return { element->key, element->valueName, element->getRegistryEntryType(), element.get() };
                         } else {
-                            return { m_policy->key, element->valueName, element->getRegistryEntryType() };
+                            return { m_policy->key, element->valueName, element->getRegistryEntryType(), element.get() };
                         }
                     }
                 }
@@ -437,7 +439,7 @@ namespace gui
 
             qWarning() << "Key and value not found!" << m_elementName.c_str();
 
-            return { "", "", static_cast<RegistryEntryType>(0) };
+            return { "", "", static_cast<RegistryEntryType>(0), nullptr };
         }
 
         void createCommand(std::function<void()> function) const
@@ -446,22 +448,58 @@ namespace gui
             m_commandGroup->addSubCommand(std::move(command));
         }
 
-        void setComboData(const std::string& key, const std::string& valueName, RegistryEntryType type, QComboBox const* comboBox) const
+        void setComboData(const std::string& key, const std::string& valueName, RegistryEntryType type,
+                          QComboBox const* comboBox, PolicyElement* element) const
         {
+            std::string stringValue;
+            uint32_t dwordValue = 0;
+            uint64_t qwordValue = 0;
+            PolicyEnumElement* enumElement = dynamic_cast<PolicyEnumElement*>(element);
+            if (enumElement)
+            {
+                auto begin = enumElement->items.begin();
+                auto it = std::next(begin, comboBox->currentIndex());
+                if (it != enumElement->items.end())
+                {
+                    auto sv = dynamic_cast<StringValue*>(it->second.get());
+                    if (sv)
+                    {
+                        stringValue = sv->value;
+                    }
+                    auto dv = dynamic_cast<DecimalValue*>(it->second.get());
+                    if (dv)
+                    {
+                        dwordValue = dv->value;
+                    }
+                    auto qv = dynamic_cast<LongDecimalValue*>(it->second.get());
+                    if (qv)
+                    {
+                        qwordValue = qv->value;
+                    }
+                    qWarning() << "Element: "
+                               << it->first.c_str()
+                               << " : " << stringValue.c_str()
+                               << " : " << dwordValue << " : " << qwordValue;
+                }
+            }
+
             switch (type) {
             case REG_SZ:
             case REG_BINARY:
             case REG_EXPAND_SZ:
-                m_source->setValue(key, valueName, type, comboBox->currentText());
+                m_source->setValue(key, valueName, type, QString::fromStdString(stringValue));
                 break;
             case REG_DWORD:
-            case REG_QWORD:
             case REG_DWORD_BIG_ENDIAN:
-                m_source->setValue(key, valueName, type, comboBox->currentIndex());
+                m_source->setValue(key, valueName, type, dwordValue);
+                break;
+            case REG_QWORD:
+                m_source->setValue(key, valueName, type, QVariant::fromValue(qwordValue));
                 break;
             case REG_MULTI_SZ:
-                m_source->setValue(key, valueName, type, QStringList(comboBox->currentText()));
-                break;
+            {
+                m_source->setValue(key, valueName, type, QStringList(QString::fromStdString(stringValue)));
+            }   break;
             default:
                 qWarning() << "Unable to detect value type for element with key: "
                            << key.c_str()

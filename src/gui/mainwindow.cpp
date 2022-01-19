@@ -37,9 +37,7 @@
 #include "../io/registryfile.h"
 #include "../io/registryfileformat.h"
 
-#include "smbfilebrowser.h"
-
-#include <libnemofolderlistmodel/qsambaclient/smblocationitemfile.h>
+#include "../plugins/storage/smb/smbfile.h"
 
 void registerResources()
 {
@@ -108,13 +106,13 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
 
     if (QString::fromStdString(fileName).startsWith("smb://"))
     {
-        SmbLocationItemFile smbLocationItemFile(QString::fromStdString(fileName));
-        smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
-        if (!smbLocationItemFile.isOpen())
+        gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
+        bool isOpen = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+        if (!isOpen)
         {
-            smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            isOpen = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
         }
-        if (smbLocationItemFile.isOpen() && oss->str().size() > 0)
+        if (isOpen && oss->str().size() > 0)
         {
             smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
         }
@@ -123,13 +121,18 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
     else
     {
         QFile registryFile(QString::fromStdString(fileName));
-        registryFile.open(QFile::ReadWrite);
+        registryFile.open(QFile::WriteOnly | QFile::Truncate);
+        if (!registryFile.isOpen())
+        {
+            registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+        }
         if (registryFile.isOpen() && registryFile.isWritable() && oss->str().size() > 0)
         {
             registryFile.write(&oss->str().at(0), oss->str().size());
         }
         registryFile.close();
     }
+
 
     delete format;
 }
@@ -164,8 +167,6 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     d->settings->restoreSettings();
 
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
-    connect(ui->actionOpenUserRegistrySource, &QAction::triggered, this, &MainWindow::onUserRegistrySourceOpen);
-    connect(ui->actionOpenMachineRegistrySource, &QAction::triggered, this, &MainWindow::onMachineRegistrySourceOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 
@@ -241,24 +242,6 @@ void MainWindow::onDirectoryOpen()
     loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
 }
 
-void MainWindow::onUserRegistrySourceOpen()
-{
-    onRegistrySourceOpen(d->userRegistry, d->userRegistrySource,
-                         [&](model::registry::AbstractRegistrySource* source)
-    {
-        d->contentWidget->setUserRegistrySource(source);
-    });
-}
-
-void MainWindow::onMachineRegistrySourceOpen()
-{
-    onRegistrySourceOpen(d->machineRegistry, d->machineRegistrySource,
-                         [&](model::registry::AbstractRegistrySource* source)
-    {
-        d->contentWidget->setMachineRegistrySource(source);
-    });
-}
-
 void MainWindow::onRegistrySourceSave()
 {
     if (!d->machineRegistryPath.isEmpty())
@@ -315,20 +298,6 @@ void MainWindow::onLanguageChanged(QAction *action)
     ui->treeView->selectionModel()->clearSelection();
 }
 
-void MainWindow::onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
-                                      std::unique_ptr<model::registry::AbstractRegistrySource>& source,
-                                      std::function<void(model::registry::AbstractRegistrySource* source)> callback)
-{
-    SmbFileBrowser browser(this);
-
-    connect(&browser, &SmbFileBrowser::onPolOpen, this, [&](const QString& path)
-    {
-        onPolFileOpen(path, registry, source, callback);
-    });
-
-    browser.exec();
-}
-
 void MainWindow::onPolFileOpen(const QString &path,
                                std::shared_ptr<model::registry::Registry> &registry,
                                std::unique_ptr<model::registry::AbstractRegistrySource> &source,
@@ -342,7 +311,7 @@ void MainWindow::onPolFileOpen(const QString &path,
 
     if (path.startsWith("smb://"))
     {
-        SmbLocationItemFile smbLocationItemFile(path);
+        gpui::smb::SmbFile smbLocationItemFile(path);
         smbLocationItemFile.open(QFile::ReadWrite);
         stringvalues->resize(smbLocationItemFile.size(), 0);
         smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());

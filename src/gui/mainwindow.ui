@@ -74,7 +74,6 @@
     </property>
     <addaction name="actionOpenPolicyDirectory"/>
     <addaction name="separator"/>
-    <addaction name="actionOptions"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>

@@ -60,8 +60,6 @@ namespace gpui {
 
     private slots:
         void onDirectoryOpen();
-        void onMachineRegistrySourceOpen();
-        void onUserRegistrySourceOpen();
         void onRegistrySourceSave();
 
         void on_actionExit_triggered();
@@ -69,10 +67,6 @@ namespace gpui {
         void onLanguageChanged(QAction *action);
 
     private:
-        void onRegistrySourceOpen(std::shared_ptr<model::registry::Registry>& registry,
-                                  std::unique_ptr<model::registry::AbstractRegistrySource>& source,
-                                  std::function<void(model::registry::AbstractRegistrySource* source)> callback);
-
         void onPolFileOpen(const QString& path,
                            std::shared_ptr<model::registry::Registry>& registry,
                            std::unique_ptr<model::registry::AbstractRegistrySource>& source,

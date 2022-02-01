@@ -63,6 +63,7 @@ namespace gpui {
         void onRegistrySourceSave();
 
         void on_actionExit_triggered();
+        void on_actionAbout_triggered();
 
         void onLanguageChanged(QAction *action);
 

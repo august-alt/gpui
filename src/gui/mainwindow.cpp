@@ -22,6 +22,8 @@
 #include "ui_mainwindow.h"
 #include "mainwindowsettings.h"
 
+#include "aboutdialog.h"
+
 #include "commandlineoptions.h"
 
 #include "contentwidget.h"
@@ -268,6 +270,12 @@ void MainWindow::onRegistrySourceSave()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    auto about = new AboutDialog(this);
+    about->show();
 }
 
 void MainWindow::onLanguageChanged(QAction *action)

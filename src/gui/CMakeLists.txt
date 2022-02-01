@@ -3,6 +3,7 @@ find_package(Qt5 COMPONENTS Widgets Qml LinguistTools REQUIRED)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(HEADERS
+    aboutdialog.h
     contentwidget.h
     commandlineoptions.h
     commandlineparser.h
@@ -14,6 +15,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    aboutdialog.cpp
     commandlineparser.cpp
     contentwidget.cpp
     gui.cpp
@@ -24,12 +26,14 @@ set(SOURCES
 )
 
 set(UI_FORMS
+    aboutdialog.ui
     contentwidget.ui
     listboxdialog.ui
     mainwindow.ui
 )
 
 set(MOC_HEADERS
+    aboutdialog.h
     contentwidget.h
     listboxdialog.h
     mainwindow.h

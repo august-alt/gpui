@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Group policy editor
 License: GPLv2+
@@ -64,5 +64,8 @@ Group policy editor
 %_libdir/gpui/plugins/libsmb-storage-plugin.so
 
 %changelog
+* Tue Feb 01 2022 Vladimir Rubanov <august@altlinux.org> 0.1.0-alt2
+- A first implementation of smb routines.
+
 * Mon Jul 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0-alt1
 - Initial build

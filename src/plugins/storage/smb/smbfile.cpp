@@ -84,7 +84,7 @@ bool SmbFile::copy(const QString &newName)
 bool SmbFile::open(QFile::OpenMode flags)
 {
     bool result = false;
-    if (d->fileName.isEmpty())
+    if (!d->fileName.isEmpty())
     {
         int openFlags = createOpenFlags(flags);
         int creationMode = 0;

@@ -20,14 +20,43 @@
 
 #include "smbsharecreator.h"
 
+#include <QFileInfo>
+#include <QProcess>
+
 namespace tests
 {
 
-bool SmbShareCreator::createShare(const QString &path)
+bool SmbShareCreator::createShare(const QString &path, const QString &name, bool allowGuests)
 {
-    Q_UNUSED(path);
+    QFileInfo dir(path);
 
-    return false;
+    if (!dir.exists() || !dir.isDir())
+    {
+        return false;
+    }
+
+    if (name.isEmpty())
+    {
+        return false;
+    }
+
+    QString command("net usershare add");
+
+    command += name + ' ' + path + ' ';
+
+    command += QString("guest_ok=%1").arg(allowGuests ? "y" : "n");
+
+    return QProcess::execute(command) == 0;
+}
+
+bool SmbShareCreator::removeShare(const QString &name)
+{
+    if (name.isEmpty())
+    {
+        return false;
+    }
+
+    return QProcess::execute(QString("net usershare delete %1").arg(name)) == 0;
 }
 
 }

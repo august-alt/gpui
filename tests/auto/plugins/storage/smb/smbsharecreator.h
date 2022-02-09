@@ -29,7 +29,9 @@ namespace tests
 class SmbShareCreator
 {
 public:
-    bool createShare(const QString& path);
+    bool createShare(const QString& path, const QString& name, bool allowGuests);
+
+    bool removeShare(const QString& name);
 };
 
 }

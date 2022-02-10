@@ -69,7 +69,7 @@ public:
     QStandardItem* rootUserItem;
     std::vector<QStandardItem*> items;
     std::map<std::string, std::string> supportedOnMap;
-    QString languageDirectoryPath;
+    QStringList languageDirectoryPaths;
 };
 
 PolicyBundle::PolicyBundle()
@@ -100,12 +100,13 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
 
     const QString qLanguage = QString::fromStdString(language).toLower();
 
+    d->languageDirectoryPaths.clear();
+
     for (const QFileInfo& subDir : directories)
     {
         if (subDir.fileName().toLower().endsWith(qLanguage))
         {
-            d->languageDirectoryPath = subDir.absoluteFilePath();
-            break;
+            d->languageDirectoryPaths.append(subDir.absoluteFilePath());
         }
     }
 
@@ -157,13 +158,21 @@ QString PolicyBundle::constructFileName(const QFileInfo& fileName)
 {
     QString admlFileName = fileName.fileName();
     admlFileName.replace(admlFileName.length() - 4, 4, "adml");
-    QDir admlDir(d->languageDirectoryPath);
-    for (const auto& file : admlDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot))
+    for (const auto& path : d->languageDirectoryPaths)
     {
-         if (file.fileName().toLower().compare(admlFileName.toLower()) == 0)
-         {
-             return file.absoluteFilePath();
-         }
+        QDir admlDir(path);
+        if (admlDir.isEmpty())
+        {
+            continue;
+        }
+
+        for (const auto& file : admlDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot))
+        {
+             if (file.fileName().toLower().compare(admlFileName.toLower()) == 0)
+             {
+                 return file.absoluteFilePath();
+             }
+        }
     }
 
     return admlFileName;

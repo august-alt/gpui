@@ -1,6 +1,6 @@
 # set compiler options
 if (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -pedantic -Wall -Wextra -Wno-long-long")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-undef -fvisibility=hidden -fvisibility-inlines-hidden -pedantic -Wall -Wextra -Wno-long-long")
 endif()
 
 macro(add_gpui_library name)

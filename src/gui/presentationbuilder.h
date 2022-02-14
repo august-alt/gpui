@@ -45,7 +45,7 @@ namespace model {
 
 namespace gui
 {
-    struct GPUI_GUI_EXPORT PresentationBuilderParams
+    struct GPUI_GUI_EXPORT PresentationBuilderParams final
     {
         const model::presentation::Presentation& presentation;
         const model::admx::Policy& policy;

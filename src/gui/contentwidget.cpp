@@ -45,7 +45,7 @@ public:
     model::registry::AbstractRegistrySource* machineSource = nullptr;
 
     std::unique_ptr<model::registry::PolicyStateManager> manager;
-    bool cancelFlag = false;
+    bool dataChanged = false;
     QModelIndex currentIndex;
     ContentWidget::PolicyWidgetState state = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
 };
@@ -162,7 +162,27 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     const QAbstractItemModel* model = index.model();
 
-    d->cancelFlag = false;
+    if (d->dataChanged)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, QObject::tr("Save settings dialog"),
+                                      QObject::tr("Policy settings were modified do you want to save them?"),
+                                      QMessageBox::Yes | QMessageBox::No);
+        switch (reply)
+        {
+        case QMessageBox::Yes:
+            emit ui->policyStateButtonBox->accepted();
+            onApplyClicked();
+            break;
+        case QMessageBox::No:
+            onCancelClicked();
+            break;
+        default:
+            break;
+        }
+    }
+
+    d->dataChanged = false;
 
     if (ui->contentScrollArea->widget()->layout())
     {
@@ -221,7 +241,10 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             if (presentation && policy)
             {
                 ui->policyStateButtonBox->disconnect();
-                auto layout = ::gui::PresentationBuilder::build(*presentation, *policy, *source, *ui->policyStateButtonBox);
+                auto layout = ::gui::PresentationBuilder::build({
+                                                                *presentation, *policy, *source,
+                                                                *ui->policyStateButtonBox, d->dataChanged
+                                                                });
                 connectDialogBoxSignals();
 
                 ui->contentScrollArea->widget()->setLayout(layout);                
@@ -243,7 +266,7 @@ void ContentWidget::onApplyClicked()
 
 void ContentWidget::onCancelClicked()
 {
-    d->cancelFlag = true;
+    d->dataChanged = true;
     onListItemClicked(d->currentIndex);
 }
 

@@ -45,6 +45,15 @@ namespace model {
 
 namespace gui
 {
+    struct GPUI_GUI_EXPORT PresentationBuilderParams
+    {
+        const model::presentation::Presentation& presentation;
+        const model::admx::Policy& policy;
+        model::registry::AbstractRegistrySource& source;
+        QDialogButtonBox& saveButton;
+        bool& dataChanged;
+    };
+
     class PresentationBuilderPrivate;
 
     /*!
@@ -61,10 +70,7 @@ namespace gui
          * @param presentation Defines a reference to policy representation.
          * @return nullptr if build failed, and widget associated with policy otherwise.
          */
-        static QVBoxLayout *build(const model::presentation::Presentation& presentation,
-                                  const model::admx::Policy& policy,
-                                  model::registry::AbstractRegistrySource& source,
-                                  QDialogButtonBox& saveButton);
+        static QVBoxLayout *build(const PresentationBuilderParams& params);
 
     private:
         static PresentationBuilderPrivate* d;

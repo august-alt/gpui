@@ -99,6 +99,8 @@ namespace gui
         return horizontalLayout;
     }
 
+    bool* m_dataChanged = nullptr;
+
     class PresentationBuilderPrivate : public PresentationWidgetVisitor {
     public:
         virtual void visit(CheckBox &widget) const override
@@ -116,6 +118,11 @@ namespace gui
                 {
                     checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
                 }
+
+                checkBox->connect(checkBox, &QCheckBox::toggled, []()
+                {
+                    *m_dataChanged = true;
+                });
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, checkBox, this ]() {
@@ -145,6 +152,11 @@ namespace gui
                 {
                     comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
                 }
+
+                comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=]()
+                {
+                    *m_dataChanged = true;
+                });
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, comboBox, this]() {
@@ -195,6 +207,11 @@ namespace gui
                     comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
                 }
 
+                comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=]()
+                {
+                    *m_dataChanged = true;
+                });
+
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, comboBox, this]() {
                     qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
@@ -231,6 +248,7 @@ namespace gui
                     listBox->connect(listBox, &gpui::ListBoxDialog::itemsEditingFinished, [=](QStringList items) {
                         qWarning() << "Items debug: " << items;
                         m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, items);
+                        *m_dataChanged = true;
                     });
                 }
 
@@ -265,6 +283,11 @@ namespace gui
                     auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
                     textEdit->setPlainText(value);
                 }
+
+                textEdit->connect(textEdit, &QTextEdit::textChanged, [=]()
+                {
+                    *m_dataChanged = true;
+                });
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, textEdit, this]() {
@@ -302,6 +325,11 @@ namespace gui
                     lineEdit->setText(value);
                 }
 
+                lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=]()
+                {
+                    *m_dataChanged = true;
+                });
+
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, lineEdit, this]() {
                     qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
@@ -338,6 +366,11 @@ namespace gui
         void setSaveDialog(QDialogButtonBox& saveButton)
         {
             m_saveDialog = &saveButton;
+        }
+
+        void setDataChanged(bool& dataChanged)
+        {
+            m_dataChanged = &dataChanged;
         }
 
     private:
@@ -380,6 +413,11 @@ namespace gui
                         spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
                     }
 
+                    spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=]()
+                    {
+                        *m_dataChanged = true;
+                    });
+
                     // TODO: Implement correct type on save.
                     m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, spinBox, this]() {
                         qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
@@ -403,6 +441,11 @@ namespace gui
                 {
                     edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
                 }
+
+                edit->connect(edit, &QLineEdit::textChanged, [=]()
+                {
+                    *m_dataChanged = true;
+                });
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, edit, this]() {
@@ -441,21 +484,19 @@ namespace gui
 
     PresentationBuilderPrivate* PresentationBuilder::d = new PresentationBuilderPrivate();
 
-    QVBoxLayout* PresentationBuilder::build(const Presentation& presentation,
-                                            const model::admx::Policy &policy,
-                                            model::registry::AbstractRegistrySource &source,
-                                            QDialogButtonBox& saveButton)
+    QVBoxLayout* PresentationBuilder::build(const PresentationBuilderParams& params)
     {
         QVBoxLayout* layout = new QVBoxLayout();
         d->setLayout(layout);
-        d->setPolicy(policy);
-        d->setRegistrySource(source);
-        d->setSaveDialog(saveButton);
+        d->setPolicy(params.policy);
+        d->setRegistrySource(params.source);
+        d->setSaveDialog(params.saveButton);
+        d->setDataChanged(params.dataChanged);
 
         QHBoxLayout* captions = createCaptions();
         layout->addLayout(captions);
 
-        for (const auto& widget : presentation.widgets) {
+        for (const auto& widget : params.presentation.widgets) {
             QWidget* policyWidget = nullptr;
             d->setCurrentElementName(widget.first);
             widget.second->accept(*d);

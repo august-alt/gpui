@@ -24,6 +24,7 @@
 #include "gui.h"
 
 #include <QWidget>
+#include <QDialogButtonBox>
 
 class QVBoxLayout;
 
@@ -63,7 +64,7 @@ namespace gui
         static QVBoxLayout *build(const model::presentation::Presentation& presentation,
                                   const model::admx::Policy& policy,
                                   model::registry::AbstractRegistrySource& source,
-                                  model::command::CommandGroup& commandGroup);
+                                  QDialogButtonBox& saveButton);
 
     private:
         static PresentationBuilderPrivate* d;

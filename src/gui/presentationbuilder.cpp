@@ -117,10 +117,11 @@ namespace gui
                     checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
                 }
 
-                checkBox->connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
-                    createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, checked);
-                    });
+                // TODO: Implement correct type on save.
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, checkBox, this ]() {
+                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
+                                       (checkBox->checkState() == Qt::Checked ? 1 : 0));
                 });
             }
 
@@ -145,10 +146,11 @@ namespace gui
                     comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
                 }
 
-                comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
-                    createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
-                    });
+                // TODO: Implement correct type on save.
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, comboBox, this]() {
+                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
+                                       comboBox->currentIndex());
                 });
             }
 
@@ -193,10 +195,11 @@ namespace gui
                     comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
                 }
 
-                comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
-                    createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, index);
-                    });
+                // TODO: Implement correct type on save.
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, comboBox, this]() {
+                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
+                                       comboBox->currentIndex());
                 });
             }
 
@@ -263,11 +266,12 @@ namespace gui
                     textEdit->setPlainText(value);
                 }
 
-                textEdit->connect(textEdit, &QTextEdit::textChanged, [=](){
-                    createCommand([=](){
-                        QStringList data(textEdit->toPlainText());
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, data);
-                    });
+                // TODO: Implement correct type on save.
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, textEdit, this]() {
+                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                    QStringList data(textEdit->toPlainText());
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ,
+                                       data);
                 });
             }
 
@@ -298,10 +302,12 @@ namespace gui
                     lineEdit->setText(value);
                 }
 
-                lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=](const QString& text){
-                    createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ, QVariant::fromValue(text));
-                    });
+                // TODO: Implement correct type on save.
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, lineEdit, this]() {
+                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                    QString data(lineEdit->text());
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ,
+                                       QVariant::fromValue(data));
                 });
             }
 
@@ -329,16 +335,16 @@ namespace gui
             m_elementName = elementName;
         }
 
-        void setCommandGroup(CommandGroup& commandGroup)
+        void setSaveDialog(QDialogButtonBox& saveButton)
         {
-            m_commandGroup = &commandGroup;
+            m_saveDialog = &saveButton;
         }
 
     private:
         QLayout* m_layout = nullptr;
         const Policy* m_policy = nullptr;
         AbstractRegistrySource* m_source = nullptr;
-        CommandGroup* m_commandGroup = nullptr;
+        QDialogButtonBox* m_saveDialog = nullptr;
         std::string m_elementName = "";
 
         void addToLayout(QWidget* widget) const {
@@ -374,10 +380,11 @@ namespace gui
                         spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
                     }
 
-                    spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=](int value) {
-                        createCommand([=](){
-                            m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value);
-                        });
+                    // TODO: Implement correct type on save.
+                    m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, spinBox, this]() {
+                        qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
+                                           spinBox->value());
                     });
                 }
 
@@ -397,10 +404,11 @@ namespace gui
                     edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
                 }
 
-                edit->connect(edit, &QLineEdit::textChanged, [=](const QString & value) {
-                    createCommand([=](){
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD, value.toUInt());
-                    });
+                // TODO: Implement correct type on save.
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, edit, this]() {
+                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
+                                       edit->text().toUInt());
                 });
             }
 
@@ -429,12 +437,6 @@ namespace gui
 
             return std::make_pair("", "");
         }
-
-        void createCommand(std::function<void()> function) const
-        {
-            auto command = std::make_unique<LambdaCommand>(function);
-            m_commandGroup->addSubCommand(std::move(command));
-        }
     };
 
     PresentationBuilderPrivate* PresentationBuilder::d = new PresentationBuilderPrivate();
@@ -442,13 +444,13 @@ namespace gui
     QVBoxLayout* PresentationBuilder::build(const Presentation& presentation,
                                             const model::admx::Policy &policy,
                                             model::registry::AbstractRegistrySource &source,
-                                            model::command::CommandGroup &commandGroup)
+                                            QDialogButtonBox& saveButton)
     {
         QVBoxLayout* layout = new QVBoxLayout();
         d->setLayout(layout);
         d->setPolicy(policy);
         d->setRegistrySource(source);
-        d->setCommandGroup(commandGroup);
+        d->setSaveDialog(saveButton);
 
         QHBoxLayout* captions = createCaptions();
         layout->addLayout(captions);

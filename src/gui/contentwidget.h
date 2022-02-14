@@ -79,6 +79,7 @@ namespace gpui {
 
     private:
         void setPolicyWidgetsVisible(bool visible);
+        void connectDialogBoxSignals();
     };
 }
 

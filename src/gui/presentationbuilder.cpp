@@ -161,7 +161,8 @@ namespace gui
 
                 if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    comboBox->setCurrentIndex(m_source->getValue(elementInfo.key, elementInfo.value).value<uint32_t>());
+                    int index = getComboData(m_source->getValue(elementInfo.key, elementInfo.value), elementInfo.element);
+                    comboBox->setCurrentIndex(index);
                 }
 
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=]()
@@ -216,7 +217,8 @@ namespace gui
 
                 if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    comboBox->setCurrentIndex(m_source->getValue(elementInfo.key, elementInfo.value).value<uint32_t>());
+                    int index = getComboData(m_source->getValue(elementInfo.key, elementInfo.value), elementInfo.element);
+                    comboBox->setCurrentIndex(index);
                 }
 
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=]()
@@ -494,6 +496,44 @@ namespace gui
             qWarning() << "Key and value not found!" << m_elementName.c_str();
 
             return { "", "", static_cast<RegistryEntryType>(0), nullptr };
+        }
+
+        int getComboData(QVariant value, PolicyElement* element) const
+        {
+            PolicyEnumElement* enumElement = dynamic_cast<PolicyEnumElement*>(element);
+            if (enumElement)
+            {
+                int index = 0;
+                for (const auto& it : enumElement->items)
+                {
+                    auto sv = dynamic_cast<StringValue*>(it.second.get());
+                    if (sv)
+                    {
+                        if (sv->value.compare(value.toString().toStdString()) == 0)
+                        {
+                            return index;
+                        }
+                    }
+                    auto dv = dynamic_cast<DecimalValue*>(it.second.get());
+                    if (dv)
+                    {
+                        if (dv->value == value.toUInt())
+                        {
+                            return index;
+                        }
+                    }
+                    auto qv = dynamic_cast<LongDecimalValue*>(it.second.get());
+                    if (qv)
+                    {
+                        if (qv->value == value.toULongLong())
+                        {
+                            return index;
+                        }
+                    }
+                    index++;
+                }
+            }
+            return 0;
         }
 
         void setComboData(const std::string& key, const std::string& valueName, RegistryEntryType type,

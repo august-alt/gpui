@@ -75,10 +75,22 @@ private:
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
             size_t size = entry.size - 2 > 0 ? entry.size - 2 : entry.size;
-            QByteArray byteArray(entry.data, size);
-            QList<QByteArray> arrayList = byteArray.split('\0');
-            for (const auto& element : arrayList) {
-                registryEntry->data.push_back(QString::fromLocal8Bit(element));
+            const char16_t* data = reinterpret_cast<const char16_t*>(entry.data);
+            std::vector<std::vector<char16_t>> list;
+            std::vector<char16_t> current;
+            qWarning() << "Data: " << QString::fromUtf16(reinterpret_cast<char16_t*>(entry.data), size / 2) << " size: " << size;
+            for (size_t i = 0; i < size / 2; ++i)
+            {
+                current.push_back(data[i]);
+                if (data[i] == 0)
+                {
+                    qWarning() << current << " split at: " << i;
+                    list.emplace_back(current);
+                    current.clear();
+                }
+            }
+            for (const auto& element : list) {
+                registryEntry->data.push_back(QString::fromUtf16(element.data()));
             }
             delete[] entry.data;
         }
@@ -195,16 +207,18 @@ public:
             QByteArray byteArray;
             for (const QString &str : binaryEntry->data)
             {
-                byteArray.append(str);
-                byteArray.append('\0');
+                auto sixteenBitString = str.toStdU16String();
+                size_t size = sixteenBitString.size() * sizeof(char16_t);
+                byteArray.append(reinterpret_cast<const char*>(sixteenBitString.c_str()), size);
+                byteArray.append(2, '\0');
             }
             if (byteArray.size() == 0)
             {
-                byteArray.append("\0\0");
+                byteArray.append(4, '\0');
             }
             else
             {
-                byteArray.append('\0');
+                byteArray.append(2, '\0');
             }
             char* stringData = new char[byteArray.size()];
             memcpy(stringData, byteArray, byteArray.size());

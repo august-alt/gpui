@@ -261,12 +261,13 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
 void ContentWidget::onApplyClicked()
 {
+    d->dataChanged = false;
     savePolicyChanges();
 }
 
 void ContentWidget::onCancelClicked()
 {
-    d->dataChanged = true;
+    d->dataChanged = false;
     onListItemClicked(d->currentIndex);
 }
 

@@ -209,7 +209,7 @@ int SmbFile::createOpenFlags(QIODevice::OpenMode flags)
     {
         result |= O_APPEND;
     }
-    else
+    if (flags & QIODevice::Truncate)
     {
         result |= O_TRUNC;
     }

@@ -82,6 +82,28 @@ namespace model
              * \brief items List of enum items.
              */
             std::map<std::string, std::unique_ptr<EnumValue> > items;
+
+            registry::RegistryEntryType getRegistryEntryType() const override
+            {
+                if (items.size() > 0)
+                {
+                    const size_t hash_code = typeid(items.begin()->second).hash_code();
+                    if (hash_code == typeid(DecimalValue).hash_code())
+                    {
+                        return registry::REG_DWORD;
+                    }
+                    else if (hash_code == typeid(LongDecimalValue).hash_code())
+                    {
+                        return registry::REG_QWORD;
+                    }
+                    else if (hash_code == typeid(StringValue).hash_code())
+                    {
+                        return registry::REG_SZ;
+                    }
+                }
+
+                return registry::REG_SZ;
+            }
         };
     }
 }

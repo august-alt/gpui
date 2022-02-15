@@ -23,6 +23,8 @@
 
 #include "../model.h"
 
+#include "../registry/registryentrytype.h"
+
 #include <string>
 
 #include <QUuid>
@@ -58,6 +60,12 @@ namespace model
             std::string valueName;
 
             virtual ~PolicyElement() = default;
+
+            /*!
+             * \brief getRegistryEntryType Returns type of registry entry associated with current policy element.
+             * \return Type of registry entry associated with current policy element.
+             */
+            virtual registry::RegistryEntryType getRegistryEntryType() const = 0;
         };
     }
 }

@@ -36,6 +36,10 @@ namespace model
         class GPUI_MODEL_EXPORT PolicyBoolElement : public PolicyElement
         {
         public:
+            registry::RegistryEntryType getRegistryEntryType() const override
+            {
+                return registry::REG_DWORD;
+            }
         };
     }
 }

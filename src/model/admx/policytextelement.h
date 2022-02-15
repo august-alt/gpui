@@ -56,6 +56,11 @@ namespace model
              * \brief soft This attribute flags whether to overwrite an existing subkey.
              */
             bool soft = false;
+
+            registry::RegistryEntryType getRegistryEntryType() const override
+            {
+                return expandable ? registry::REG_SZ : registry::REG_EXPAND_SZ;
+            }
         };
     }
 }

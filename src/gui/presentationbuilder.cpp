@@ -36,6 +36,7 @@
 
 #include "../model/admx/policy.h"
 #include "../model/admx/policyelement.h"
+#include "../model/admx/policyenumelement.h"
 
 #include "../model/commands/command.h"
 #include "../model/commands/commandgroup.h"
@@ -103,6 +104,15 @@ namespace gui
 
     class PresentationBuilderPrivate : public PresentationWidgetVisitor {
     public:
+        struct ElementInfo
+        {
+            std::string key;
+            std::string value;
+            RegistryEntryType type;
+            PolicyElement* element;
+        };
+
+    public:
         virtual void visit(CheckBox &widget) const override
         {
             QCheckBox* checkBox = new QCheckBox();
@@ -112,11 +122,11 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    checkBox->setChecked(m_source->getValue(keyValuePair.first, keyValuePair.second).value<bool>());
+                    checkBox->setChecked(m_source->getValue(elementInfo.key, elementInfo.value).value<bool>());
                 }
 
                 checkBox->connect(checkBox, &QCheckBox::toggled, []()
@@ -125,10 +135,11 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, checkBox, this ]() {
-                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
-                                       (checkBox->checkState() == Qt::Checked ? 1 : 0));
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, checkBox, this ]() {
+                    qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                               << " " << elementInfo.value.c_str();
+                    int checked = checkBox->checkState() == Qt::Checked ? 1 : 0;
+                    m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD, checked);
                 });
             }
 
@@ -146,11 +157,11 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                    comboBox->setCurrentIndex(m_source->getValue(elementInfo.key, elementInfo.value).value<uint32_t>());
                 }
 
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=]()
@@ -159,10 +170,11 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, comboBox, this]() {
-                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
-                                       comboBox->currentIndex());
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, comboBox, this]()
+                {
+                    qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                               << " " << elementInfo.value.c_str();
+                    setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
                 });
             }
 
@@ -200,11 +212,11 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    comboBox->setCurrentIndex(m_source->getValue(keyValuePair.first, keyValuePair.second).value<uint32_t>());
+                    comboBox->setCurrentIndex(m_source->getValue(elementInfo.key, elementInfo.value).value<uint32_t>());
                 }
 
                 comboBox->connect(comboBox,  QOverload<int>::of(&QComboBox::currentIndexChanged), [=]()
@@ -213,10 +225,10 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, comboBox, this]() {
-                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
-                                       comboBox->currentIndex());
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, comboBox, this]() {
+                    qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                               << " " << elementInfo.value.c_str();
+                    setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
                 });
             }
 
@@ -236,18 +248,18 @@ namespace gui
 
                 if (m_policy && m_source)
                 {
-                    std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                    const ElementInfo elementInfo = findElementInfo();
 
-                    if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                    if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                     {
-                        QStringList items = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QStringList>();
+                        QStringList items = m_source->getValue(elementInfo.key, elementInfo.value).value<QStringList>();
                         qWarning() << "Items debug: " << items;
                         listBox->setItems(items);
                     }
 
                     listBox->connect(listBox, &gpui::ListBoxDialog::itemsEditingFinished, [=](QStringList items) {
                         qWarning() << "Items debug: " << items;
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ, items);
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, items);
                         *m_dataChanged = true;
                     });
                 }
@@ -276,11 +288,11 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    auto value = m_source->getValue(elementInfo.key, elementInfo.value).value<QString>();
                     textEdit->setPlainText(value);
                 }
 
@@ -290,11 +302,11 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, textEdit, this]() {
-                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, textEdit, this]() {
+                    qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                               << " " << elementInfo.value.c_str();
                     QStringList data(textEdit->toPlainText());
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_MULTI_SZ,
-                                       data);
+                    m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, data);
                 });
             }
 
@@ -317,11 +329,11 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    auto value = m_source->getValue(keyValuePair.first, keyValuePair.second).value<QString>();
+                    auto value = m_source->getValue(elementInfo.key, elementInfo.value).value<QString>();
                     lineEdit->setText(value);
                 }
 
@@ -331,10 +343,11 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, lineEdit, this]() {
-                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, lineEdit, this]() {
+                    qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                               << " " << elementInfo.value.c_str();
                     QString data(lineEdit->text());
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_SZ,
+                    m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_SZ,
                                        QVariant::fromValue(data));
                 });
             }
@@ -406,11 +419,11 @@ namespace gui
 
                 if (m_policy && m_source)
                 {
-                    std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                    const ElementInfo elementInfo = findElementInfo();
 
-                    if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                    if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                     {
-                        spinBox->setValue(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>());
+                        spinBox->setValue(m_source->getValue(elementInfo.key, elementInfo.value).value<Number>());
                     }
 
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=]()
@@ -419,9 +432,10 @@ namespace gui
                     });
 
                     // TODO: Implement correct type on save.
-                    m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, spinBox, this]() {
-                        qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
-                        m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
+                    m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, spinBox, this]() {
+                        qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD,
                                            spinBox->value());
                     });
                 }
@@ -435,11 +449,11 @@ namespace gui
 
             if (m_policy && m_source)
             {
-                std::pair<std::string, std::string> keyValuePair = findKeyAndValueName();
+                const ElementInfo elementInfo = findElementInfo();
 
-                if (m_source->isValuePresent(keyValuePair.first, keyValuePair.second))
+                if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {
-                    edit->setText(QString(m_source->getValue(keyValuePair.first, keyValuePair.second).value<Number>()));
+                    edit->setText(QString(m_source->getValue(elementInfo.key, elementInfo.value).value<Number>()));
                 }
 
                 edit->connect(edit, &QLineEdit::textChanged, [=]()
@@ -448,9 +462,10 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [keyValuePair, edit, this]() {
-                    qWarning() << "Presentation builder::save: " << keyValuePair.first.c_str() << " " << keyValuePair.second.c_str();
-                    m_source->setValue(keyValuePair.first, keyValuePair.second, RegistryEntryType::REG_DWORD,
+                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, edit, this]() {
+                    qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                               << " " << elementInfo.value.c_str();
+                    m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD,
                                        edit->text().toUInt());
                 });
             }
@@ -458,7 +473,7 @@ namespace gui
             return edit;
         }
 
-        std::pair<std::string, std::string> findKeyAndValueName() const
+        ElementInfo findElementInfo() const
         {
             if (m_policy && m_source)
             {
@@ -468,9 +483,9 @@ namespace gui
                     {
                         if (element->key.size() > 0)
                         {
-                            return std::make_pair(element->key, element->valueName);
+                            return { element->key, element->valueName, element->getRegistryEntryType(), element.get() };
                         } else {
-                            return std::make_pair(m_policy->key, element->valueName);
+                            return { m_policy->key, element->valueName, element->getRegistryEntryType(), element.get() };
                         }
                     }
                 }
@@ -478,7 +493,68 @@ namespace gui
 
             qWarning() << "Key and value not found!" << m_elementName.c_str();
 
-            return std::make_pair("", "");
+            return { "", "", static_cast<RegistryEntryType>(0), nullptr };
+        }
+
+        void setComboData(const std::string& key, const std::string& valueName, RegistryEntryType type,
+                          QComboBox const* comboBox, PolicyElement* element) const
+        {
+            std::string stringValue;
+            uint32_t dwordValue = 0;
+            uint64_t qwordValue = 0;
+            PolicyEnumElement* enumElement = dynamic_cast<PolicyEnumElement*>(element);
+            if (enumElement)
+            {
+                auto begin = enumElement->items.begin();
+                auto it = std::next(begin, comboBox->currentIndex());
+                if (it != enumElement->items.end())
+                {
+                    auto sv = dynamic_cast<StringValue*>(it->second.get());
+                    if (sv)
+                    {
+                        stringValue = sv->value;
+                    }
+                    auto dv = dynamic_cast<DecimalValue*>(it->second.get());
+                    if (dv)
+                    {
+                        dwordValue = dv->value;
+                    }
+                    auto qv = dynamic_cast<LongDecimalValue*>(it->second.get());
+                    if (qv)
+                    {
+                        qwordValue = qv->value;
+                    }
+                    qWarning() << "Element: "
+                               << it->first.c_str()
+                               << " : " << stringValue.c_str()
+                               << " : " << dwordValue << " : " << qwordValue;
+                }
+            }
+
+            switch (type) {
+            case REG_SZ:
+            case REG_BINARY:
+            case REG_EXPAND_SZ:
+                m_source->setValue(key, valueName, type, QString::fromStdString(stringValue));
+                break;
+            case REG_DWORD:
+            case REG_DWORD_BIG_ENDIAN:
+                m_source->setValue(key, valueName, type, dwordValue);
+                break;
+            case REG_QWORD:
+                m_source->setValue(key, valueName, type, QVariant::fromValue(qwordValue));
+                break;
+            case REG_MULTI_SZ:
+            {
+                m_source->setValue(key, valueName, type, QStringList(QString::fromStdString(stringValue)));
+            }   break;
+            default:
+                qWarning() << "Unable to detect value type for element with key: "
+                           << key.c_str()
+                           << " value: "
+                           << valueName.c_str();
+                break;
+            }
         }
     };
 

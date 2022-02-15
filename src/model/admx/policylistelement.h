@@ -58,6 +58,11 @@ namespace model
              * and the registry subkey name. The list box shows two columns, one for the name and one for the data.
              */
             bool explicitValue = false;
+
+            registry::RegistryEntryType getRegistryEntryType() const override
+            {
+                return expandable ? registry::REG_SZ : registry::REG_EXPAND_SZ;
+            }
         };
     }
 }

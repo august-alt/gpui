@@ -43,7 +43,7 @@ private:
         registryEntry->type = type;
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
-            registryEntry->data = QString::fromLocal8Bit(entry.data, entry.size);
+            registryEntry->data = QString::fromUtf16(reinterpret_cast<unsigned short*>(entry.data));
             delete[] entry.data;
         }
 
@@ -168,11 +168,13 @@ public:
         case REG_SZ:
         {
             auto binaryEntry = static_cast<RegistryEntry<QString>* >(entry.get());
-            char* stringData = new char[binaryEntry->data.size() + 1];
-            memcpy(stringData, &binaryEntry->data.toStdString().c_str()[0], binaryEntry->data.size() + 1);
-            stringData[binaryEntry->data.size()] = '\0';
+            auto sixteenBitString = binaryEntry->data.toStdU16String();
+            size_t bufferSize = sixteenBitString.size() * sizeof(char16_t);
+            char* stringData = new char[bufferSize + 1];
+            memcpy(stringData, &sixteenBitString.c_str()[0], bufferSize + 1);
+            stringData[bufferSize] = '\0';
             result.data = stringData;
-            result.size = binaryEntry->data.size() + 1;
+            result.size = bufferSize + 1;
         } break;
         case REG_DWORD:
         case REG_DWORD_BIG_ENDIAN:

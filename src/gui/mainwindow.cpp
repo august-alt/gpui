@@ -320,7 +320,7 @@ void MainWindow::onPolFileOpen(const QString &path,
     if (path.startsWith("smb://"))
     {
         gpui::smb::SmbFile smbLocationItemFile(path);
-        smbLocationItemFile.open(QFile::ReadWrite);
+        smbLocationItemFile.open(QFile::ReadOnly);
         stringvalues->resize(smbLocationItemFile.size(), 0);
         smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
         smbLocationItemFile.close();

@@ -116,13 +116,38 @@ qint64 SmbFile::size() const
 
     memset(&st, 0, sizeof(st));
 
-    int result = d->client.stat(d->handle, st);
-    if (result < 0)
+    bool ok = d->handle != 0 ? d->client.stat(d->handle, st) == 0 : false;
+    if (!ok && d->handle == 0)
+    {
+        ok = d->client.stat(d->fileName, st) == 0;
+
+        qWarning() << "FileName: " << d->fileName << " ok: " << ok;
+    }
+    if (!ok)
     {
         qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
     }
 
-    return st.st_size;
+    if (ok)
+    {
+        qWarning() << "File: " << d->fileName << "\n"
+                   << "st.st_atim"    << st.st_atim.tv_sec  << "\n"
+                   << "st.st_blksize" << st.st_blksize      << "\n"
+                   << "st.st_blocks"  << st.st_blocks       << "\n"
+                   << "st.st_ctim"    << st.st_ctim.tv_sec  << "\n"
+                   << "st.st_dev"     << st.st_dev          << "\n"
+                   << "st.st_gid"     << st.st_gid          << "\n"
+                   << "st.st_ino"     << st.st_ino          << "\n"
+                   << "st.st_mode"    << st.st_mode         << "\n"
+                   << "st.st_mtim"    << st.st_mtim.tv_sec  << "\n"
+                   << "st.st_nlink"   << st.st_nlink        << "\n"
+                   << "st.st_rdev"    << st.st_rdev         << "\n"
+                   << "st.st_size"    << st.st_size         << "\n"
+                   << "st.st_uid"     << st.st_uid          << "\n";
+        return static_cast<qint64>(st.st_size);
+    }
+
+    return 0;
 }
 
 bool SmbFile::resize(qint64 sz)

@@ -453,7 +453,7 @@ context (user policy option).</source>
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
         <source>MainWindow</source>
-        <translation>MainWindow</translation>
+        <translation>GPUI</translation>
     </message>
     <message>
         <location line="+59"/>

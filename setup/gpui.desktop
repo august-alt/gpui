@@ -31,6 +31,7 @@ Name[zh_TW]=GPUI
 GenericName=GPUI
 X-GNOME-FullName=GPUI
 Comment=Group Policy Editor
+Comment[ru]=Редактор групповых политик
 Exec=gpui-main
 Terminal=false
 Type=Application

@@ -150,7 +150,7 @@ public:
 
         case preg::REG_SZ:
         {
-            return adaptCharEntry(entry, model::registry::REG_BINARY);
+            return adaptCharEntry(entry, model::registry::REG_SZ);
         } break;
 
         default:
@@ -182,11 +182,12 @@ public:
             auto binaryEntry = static_cast<RegistryEntry<QString>* >(entry.get());
             auto sixteenBitString = binaryEntry->data.toStdU16String();
             size_t bufferSize = sixteenBitString.size() * sizeof(char16_t);
-            char* stringData = new char[bufferSize + 1];
-            memcpy(stringData, &sixteenBitString.c_str()[0], bufferSize + 1);
+            char* stringData = new char[bufferSize + 2];
+            memcpy(stringData, sixteenBitString.c_str(), bufferSize);
             stringData[bufferSize] = '\0';
+            stringData[bufferSize + 1] = '\0';
             result.data = stringData;
-            result.size = bufferSize + 1;
+            result.size = bufferSize + 2;
         } break;
         case REG_DWORD:
         case REG_DWORD_BIG_ENDIAN:

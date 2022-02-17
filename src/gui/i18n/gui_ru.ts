@@ -11,7 +11,12 @@
     <message>
         <location line="+36"/>
         <source>Copyright (C) 2022 BaseALT Ltd.</source>
-        <translation>Копирайт (С) 2022 ООО &quot;Базальт&quot;.</translation>
+        <translation>Авторские права: ООО «Базальт СПО», 2022.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Version 0.2.0</source>
+        <translation>Версия 0.2.0</translation>
     </message>
 </context>
 <context>
@@ -712,7 +717,7 @@ context (user policy option).</source>
         <translation>Полный путь к набору ADMX файлов.</translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+164"/>
+        <location filename="../contentwidget.cpp" line="+168"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -722,7 +727,7 @@ context (user policy option).</source>
         <translation>Настройки политки были изменены, хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+95"/>
+        <location filename="../presentationbuilder.cpp" line="+96"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -732,7 +737,7 @@ context (user policy option).</source>
         <translation>Опции:</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+145"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
@@ -838,7 +843,7 @@ drive-letter shares</source>
         <location line="+25"/>
         <location line="+87"/>
         <source>No change</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Без изменений</translation>
     </message>
     <message>
         <location line="-73"/>

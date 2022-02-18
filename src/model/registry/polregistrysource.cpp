@@ -144,7 +144,7 @@ void PolRegistrySource::markValueForDeletion(const std::string &key, const std::
         }
     }
 
-    createValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString());
+    createValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString(' '));
     qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
 }
 

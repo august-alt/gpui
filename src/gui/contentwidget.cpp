@@ -46,6 +46,7 @@ public:
 
     std::unique_ptr<model::registry::PolicyStateManager> manager;
     bool dataChanged = false;
+    bool stateEnabled = false;
     QModelIndex currentIndex;
     ContentWidget::PolicyWidgetState state = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
 };
@@ -139,11 +140,13 @@ void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
     switch (state) {
     case STATE_ENABLED:
     {
+        d->stateEnabled = true;
         ui->contentScrollArea->setDisabled(false);
     }break;
     case STATE_DISABLED:
     case STATE_NOT_CONFIGURED:
     default:
+        d->stateEnabled = false;
         ui->contentScrollArea->setDisabled(true);
         break;
     }
@@ -243,7 +246,8 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
                 ui->policyStateButtonBox->disconnect();
                 auto layout = ::gui::PresentationBuilder::build({
                                                                 *presentation, *policy, *source,
-                                                                *ui->policyStateButtonBox, d->dataChanged
+                                                                *ui->policyStateButtonBox, d->dataChanged,
+                                                                d->stateEnabled
                                                                 });
                 connectDialogBoxSignals();
 

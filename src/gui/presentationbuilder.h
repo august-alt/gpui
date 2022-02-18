@@ -52,6 +52,7 @@ namespace gui
         model::registry::AbstractRegistrySource& source;
         QDialogButtonBox& saveButton;
         bool& dataChanged;
+        bool& stateEnabled;
     };
 
     class PresentationBuilderPrivate;

@@ -101,6 +101,7 @@ namespace gui
     }
 
     bool* m_dataChanged = nullptr;
+    bool* m_stateEnabled = nullptr;
 
     class PresentationBuilderPrivate : public PresentationWidgetVisitor {
     public:
@@ -136,6 +137,10 @@ namespace gui
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, checkBox, this ]() {
+                    if (!(*m_stateEnabled))
+                    {
+                        return;
+                    }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
                     int checked = checkBox->checkState() == Qt::Checked ? 1 : 0;
@@ -173,6 +178,10 @@ namespace gui
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, comboBox, this]()
                 {
+                    if (!(*m_stateEnabled))
+                    {
+                        return;
+                    }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
                     setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
@@ -228,6 +237,10 @@ namespace gui
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, comboBox, this]() {
+                    if (!(*m_stateEnabled))
+                    {
+                        return;
+                    }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
                     setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
@@ -260,6 +273,10 @@ namespace gui
                     }
 
                     listBox->connect(listBox, &gpui::ListBoxDialog::itemsEditingFinished, [=](QStringList items) {
+                        if (!(*m_stateEnabled))
+                        {
+                            return;
+                        }
                         qWarning() << "Items debug: " << items;
                         m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, items);
                         *m_dataChanged = true;
@@ -305,6 +322,10 @@ namespace gui
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, textEdit, this]() {
+                    if (!(*m_stateEnabled))
+                    {
+                        return;
+                    }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
                     QStringList data(textEdit->toPlainText());
@@ -346,6 +367,10 @@ namespace gui
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, lineEdit, this]() {
+                    if (!(*m_stateEnabled))
+                    {
+                        return;
+                    }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
                     QString data(lineEdit->text());
@@ -387,6 +412,12 @@ namespace gui
         {
             m_dataChanged = &dataChanged;
         }
+
+        void setStateEnabled(bool& stateEnabled)
+        {
+            m_stateEnabled = &stateEnabled;
+        }
+
 
     private:
         QLayout* m_layout = nullptr;
@@ -435,6 +466,10 @@ namespace gui
 
                     // TODO: Implement correct type on save.
                     m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, spinBox, this]() {
+                        if (!(*m_stateEnabled))
+                        {
+                            return;
+                        }
                         qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                    << " " << elementInfo.value.c_str();
                         m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD,
@@ -465,6 +500,10 @@ namespace gui
 
                 // TODO: Implement correct type on save.
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, edit, this]() {
+                    if (!(*m_stateEnabled))
+                    {
+                        return;
+                    }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
                     m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD,
@@ -608,6 +647,7 @@ namespace gui
         d->setRegistrySource(params.source);
         d->setSaveDialog(params.saveButton);
         d->setDataChanged(params.dataChanged);
+        d->setStateEnabled(params.stateEnabled);
 
         QHBoxLayout* captions = createCaptions();
         layout->addLayout(captions);

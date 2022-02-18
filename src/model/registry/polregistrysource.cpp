@@ -139,12 +139,13 @@ void PolRegistrySource::markValueForDeletion(const std::string &key, const std::
         if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
         {
             entry->value = QString::fromStdString(deleteValueName);
+            setValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString(' '));
             qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
             return;
         }
     }
 
-    createValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString(' '));
+    setValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString(' '));
     qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
 }
 

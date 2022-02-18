@@ -61,6 +61,7 @@ namespace model {
 
             void setPolicyStateEnabled();
             void setPolicyStateDisabled();
+            void setPolicyStateNotConfigured();
 
             bool checkValueState(const std::string &key, const std::string &valueName,
                                  model::admx::AbstractRegistryValue* registryValue) const;

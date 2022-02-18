@@ -78,6 +78,9 @@ void PolicyStateManager::setupPolicyState(PolicyStateManager::PolicyState state)
     case STATE_DISABLED:
         setPolicyStateDisabled();
         break;
+    case STATE_NOT_CONFIGURED:
+        setPolicyStateNotConfigured();
+        break;
     default:
         break;
     }
@@ -217,6 +220,43 @@ void PolicyStateManager::setPolicyStateDisabled()
                 ? element->key
                 : d->policy.key;
         d->source.markValueForDeletion(key, element->valueName);
+    }
+}
+
+void PolicyStateManager::setPolicyStateNotConfigured()
+{
+    if (d->policy.disabledValue)
+    {
+       d->source.clearValue(d->policy.key, d->policy.valueName);
+    }
+
+    if (d->policy.disabledList.size() > 0)
+    {
+        for (const auto& listEntry : d->policy.disabledList)
+        {
+            d->source.clearValue(d->policy.key, listEntry->valueName);
+        }
+    }
+
+    if (d->policy.enabledValue)
+    {
+        d->source.clearValue(d->policy.key, d->policy.valueName);
+    }
+
+    if (d->policy.enabledList.size() > 0)
+    {
+        for (const auto& listEntry : d->policy.enabledList)
+        {
+            d->source.clearValue(d->policy.key, listEntry->valueName);
+        }
+    }
+
+    for (const auto& element : d->policy.elements)
+    {
+        auto key = element->key.size() > 0
+                ? element->key
+                : d->policy.key;
+        d->source.clearValue(key, element->valueName);
     }
 }
 

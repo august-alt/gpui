@@ -139,6 +139,9 @@ namespace gui
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, checkBox, this ]() {
                     if (!(*m_stateEnabled))
                     {
+                        qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+                        m_source->clearValue(elementInfo.key, elementInfo.value);
                         return;
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
@@ -180,6 +183,9 @@ namespace gui
                 {
                     if (!(*m_stateEnabled))
                     {
+                        qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+                        m_source->clearValue(elementInfo.key, elementInfo.value);
                         return;
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
@@ -239,6 +245,9 @@ namespace gui
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, comboBox, this]() {
                     if (!(*m_stateEnabled))
                     {
+                        qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+                        m_source->clearValue(elementInfo.key, elementInfo.value);
                         return;
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
@@ -275,6 +284,9 @@ namespace gui
                     listBox->connect(listBox, &gpui::ListBoxDialog::itemsEditingFinished, [=](QStringList items) {
                         if (!(*m_stateEnabled))
                         {
+                            qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                       << " " << elementInfo.value.c_str();
+                            m_source->clearValue(elementInfo.key, elementInfo.value);
                             return;
                         }
                         qWarning() << "Items debug: " << items;
@@ -324,6 +336,9 @@ namespace gui
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, textEdit, this]() {
                     if (!(*m_stateEnabled))
                     {
+                        qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+                        m_source->clearValue(elementInfo.key, elementInfo.value);
                         return;
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
@@ -369,6 +384,9 @@ namespace gui
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, lineEdit, this]() {
                     if (!(*m_stateEnabled))
                     {
+                        qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+                        m_source->clearValue(elementInfo.key, elementInfo.value);
                         return;
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
@@ -468,6 +486,9 @@ namespace gui
                     m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, spinBox, this]() {
                         if (!(*m_stateEnabled))
                         {
+                            qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                       << " " << elementInfo.value.c_str();
+                            m_source->clearValue(elementInfo.key, elementInfo.value);
                             return;
                         }
                         qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
@@ -502,6 +523,9 @@ namespace gui
                 m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, edit, this]() {
                     if (!(*m_stateEnabled))
                     {
+                        qWarning() << "Presentation builder::delete: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+                        m_source->clearValue(elementInfo.key, elementInfo.value);
                         return;
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()

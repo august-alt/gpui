@@ -53,6 +53,7 @@ namespace model {
 
             std::vector<std::string> getValueNames(const std::string& key) const override final;
             void clearKey(const std::string& key) override final;
+            void clearValue(const std::string& key, const std::string& valueName) override final;
 
         private:
             template<typename T>

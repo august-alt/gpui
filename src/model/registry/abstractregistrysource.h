@@ -48,6 +48,7 @@ namespace model {
 
             virtual std::vector<std::string> getValueNames(const std::string& key) const = 0;
             virtual void clearKey(const std::string& key) = 0;
+            virtual void clearValue(const std::string& key, const std::string& valueName) = 0;
 
             RegistrySourceType getType() const;
 

@@ -214,6 +214,18 @@ void PolRegistrySource::clearKey(const std::string &key)
     }
 }
 
+void PolRegistrySource::clearValue(const std::string &key, const std::string &valueName)
+{
+    auto& entries = d->registry->registryEntries;
+
+    auto entryMatch = [&key, &valueName](const auto& entry)
+    {
+        return entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0;
+    };
+
+    entries.erase(std::remove_if(entries.begin(), entries.end(), entryMatch), entries.end());
+}
+
 bool PolRegistrySource::ifValueStartsWith(const std::string &key, const std::string &valueStart) const
 {
     for (const auto& entry : d->registry->registryEntries)

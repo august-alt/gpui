@@ -24,6 +24,8 @@
 
 #include <QUuid>
 #include <QCommandLineParser>
+#include <QTranslator>
+#include <QLibraryInfo>
 
 namespace gpui
 {
@@ -44,7 +46,6 @@ public:
 CommandLineParser::CommandLineParser(QApplication &application)
     : d(new CommandLineParserPrivate(application))
 {
-
 }
 
 CommandLineParser::~CommandLineParser()
@@ -54,6 +55,15 @@ CommandLineParser::~CommandLineParser()
 
 CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(CommandLineOptions *options, QString *errorMessage)
 {
+    QLocale locale;
+    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+    qtTranslator->load(locale, "gui", "_", ":/");
+    std::unique_ptr<QTranslator> qtTranslator2 = std::make_unique<QTranslator>();
+    qtTranslator2->load(QString("qt_").append(QLocale::system().name()),
+                        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    QCoreApplication::installTranslator(qtTranslator.get());
+    QCoreApplication::installTranslator(qtTranslator2.get());
+
     const QCommandLineOption pathOption("p", QObject::tr("The full path of policy to edit."), QObject::tr("path"));
     const QCommandLineOption bundleOption("b", QObject::tr("The full path of policy bundle to load."), QObject::tr("path"));
 
@@ -64,7 +74,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
     const QCommandLineOption helpOption = d->parser->addHelpOption();
     const QCommandLineOption versionOption = d->parser->addVersionOption();
 
-    if (!d->parser->parse(QCoreApplication::arguments()))
+    if (!d->parser->parse(d->application.arguments()))
     {
         *errorMessage = d->parser->errorText();
         return CommandLineError;
@@ -87,7 +97,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 
         if (options->path.isNull() || options->path.isEmpty())
         {
-            *errorMessage = "Bad policy path: " + path;
+            *errorMessage = QObject::tr("Bad policy path: ") + path;
             return CommandLineError;
         }
     }
@@ -99,7 +109,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 
         if (options->policyBundle.isNull() || options->policyBundle.isEmpty())
         {
-            *errorMessage = "Bad policy path: " + path;
+            *errorMessage = QObject::tr("Bad policy path: ") + path;
             return CommandLineError;
         }
     }

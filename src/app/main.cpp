@@ -37,6 +37,15 @@ int main(int argc, char ** argv) {
 
     gpui::CommandLineParser::CommandLineParseResult parserResult = parser.parseCommandLine(&options, &errorMessage);
 
+    QLocale locale;
+    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+    qtTranslator->load(locale, "gui", "_", ":/");
+    std::unique_ptr<QTranslator> qtTranslator2 = std::make_unique<QTranslator>();
+    qtTranslator2->load(QString("qt_").append(QLocale::system().name()),
+                        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    QCoreApplication::installTranslator(qtTranslator.get());
+    QCoreApplication::installTranslator(qtTranslator2.get());
+
     switch (parserResult)
     {
     case gpui::CommandLineParser::CommandLineError:
@@ -56,7 +65,7 @@ int main(int argc, char ** argv) {
 
     // NOTE: set app variables which will be used to
     // construct settings path
-    app.setOrganizationName("BaseALT");
+    app.setOrganizationName(QCoreApplication::translate("main", "BaseALT Ltd."));
     app.setOrganizationDomain("basealt.ru");
     app.setApplicationName("GPUI");
     

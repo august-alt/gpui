@@ -701,7 +701,7 @@ context (user policy option).</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+57"/>
+        <location filename="../commandlineparser.cpp" line="+68"/>
         <source>The full path of policy to edit.</source>
         <translation>Полный путь для редактируемой политики.</translation>
     </message>
@@ -715,6 +715,12 @@ context (user policy option).</source>
         <location line="+0"/>
         <source>The full path of policy bundle to load.</source>
         <translation>Полный путь к набору ADMX файлов.</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <location line="+12"/>
+        <source>Bad policy path: </source>
+        <translation>Неверный путь к политике: </translation>
     </message>
     <message>
         <location filename="../contentwidget.cpp" line="+171"/>
@@ -1217,6 +1223,30 @@ Enumeration:</source>
         <location line="+5"/>
         <source>Open Directory</source>
         <translation>Открыть папку</translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <source>The full path of policy to edit.</source>
+        <translation type="vanished">Полный путь для редактируемой политики.</translation>
+    </message>
+    <message>
+        <source>path</source>
+        <translation type="vanished">путь</translation>
+    </message>
+    <message>
+        <source>The full path of policy bundle to load.</source>
+        <translation type="vanished">Полный путь к набору ADMX файлов.</translation>
+    </message>
+    <message>
+        <source>Bad policy path: </source>
+        <translation type="vanished">Неверный путь к политике: </translation>
+    </message>
+    <message>
+        <location filename="../../app/main.cpp" line="+59"/>
+        <source>BaseALT Ltd.</source>
+        <translation>ООО «Базальт СПО».</translation>
     </message>
 </context>
 </TS>

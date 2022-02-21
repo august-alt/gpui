@@ -172,6 +172,8 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 
+    QGuiApplication::setWindowIcon(QIcon(":gpui.png"));
+
     if (d->options.policyBundle.isEmpty())
     {
         d->options.policyBundle = "/usr/share/PolicyDefinitions";

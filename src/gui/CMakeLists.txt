@@ -45,6 +45,10 @@ set(TS_FILES
     i18n/gui_ru.ts
 )
 
+set(ICON_RESOURCES
+    icon.qrc
+)
+
 set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR})
 
 qt5_add_translation(QM_FILES ${TS_FILES})
@@ -58,7 +62,7 @@ add_definitions(
 
 add_translation_resource(RESOURCES_SRC ${QM_FILES})
 
-qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
+qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 
 add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES} ${LIB_RESOURCES})
 target_link_libraries(gpui-gui Qt5::Widgets Qt5::Qml)

@@ -484,7 +484,7 @@ context (user policy option).</source>
         <translation type="vanished">панель инструментов</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+16"/>
         <source>Go &amp;Back</source>
         <translation>&amp;Назад</translation>
     </message>
@@ -679,6 +679,11 @@ context (user policy option).</source>
         <source>&amp;About</source>
         <translation>&amp;О Программе</translation>
     </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Manual</source>
+        <translation>&amp;Руководство</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -701,7 +706,7 @@ context (user policy option).</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+68"/>
+        <location filename="../commandlineparser.cpp" line="+67"/>
         <source>The full path of policy to edit.</source>
         <translation>Полный путь для редактируемой политики.</translation>
     </message>
@@ -768,7 +773,7 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+249"/>
+        <location filename="../mainwindow.cpp" line="+251"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -1244,7 +1249,7 @@ Enumeration:</source>
         <translation type="vanished">Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="+59"/>
+        <location filename="../../app/main.cpp" line="+68"/>
         <source>BaseALT Ltd.</source>
         <translation>ООО «Базальт СПО».</translation>
     </message>

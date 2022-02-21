@@ -288,6 +288,12 @@ void MainWindow::on_actionExit_triggered()
     QApplication::quit();
 }
 
+void MainWindow::on_actionManual_triggered()
+{
+    const QUrl manual_url = QUrl("https://www.altlinux.org/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
+    QDesktopServices::openUrl(manual_url);
+}
+
 void MainWindow::on_actionAbout_triggered()
 {
     auto about = new AboutDialog(this);

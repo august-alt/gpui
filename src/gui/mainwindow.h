@@ -52,6 +52,9 @@ namespace gpui {
     protected:
         void closeEvent(QCloseEvent *event) override;
 
+    private slots:
+        void on_actionManual_triggered();
+
     private:
 
         MainWindowPrivate* const d;

@@ -87,6 +87,7 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="actionManual"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menu_File"/>
@@ -274,6 +275,11 @@
   <action name="actionAbout">
    <property name="text">
     <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionManual">
+   <property name="text">
+    <string>&amp;Manual</string>
    </property>
   </action>
  </widget>

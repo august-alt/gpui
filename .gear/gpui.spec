@@ -93,6 +93,7 @@ done
   + #73747 Fix translation of command line options.
   + #73625 Fix add application icon.
   + #73788 Fix add admx-basealt to spec.
+  + #73738 Fix add manual.
 
 * Fri Feb 18 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt3
 - Fixes:

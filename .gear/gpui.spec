@@ -47,6 +47,12 @@ desktop-file-install --dir=%buildroot%_desktopdir \
                      --set-key Exec --set-value %_bindir/gpui-main \
                      ../setup/gpui.desktop
 
+for size in 48 64 128 256 512; do
+    mkdir -p %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/
+    convert ../setup/logo_1024_1024.png -resize ''${size}x''${size} \
+    %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/gpui.png
+done
+
 %files
 %doc README.md
 %doc INSTALL.md
@@ -71,6 +77,12 @@ desktop-file-install --dir=%buildroot%_desktopdir \
 %_libdir/gpui/plugins/libvariables-plugin.so
 
 %_libdir/gpui/plugins/libsmb-storage-plugin.so
+
+%_datadir/icons/hicolor/48x48/apps/gpui.png
+%_datadir/icons/hicolor/64x64/apps/gpui.png
+%_datadir/icons/hicolor/128x128/apps/gpui.png
+%_datadir/icons/hicolor/256x256/apps/gpui.png
+%_datadir/icons/hicolor/512x512/apps/gpui.png
 
 %_desktopdir/gpui.desktop
 

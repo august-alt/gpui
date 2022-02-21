@@ -36,3 +36,4 @@ Exec=gpui-main
 Terminal=false
 Type=Application
 Categories=System;
+Icon=gpui

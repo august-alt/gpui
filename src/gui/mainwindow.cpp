@@ -234,12 +234,26 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
 }
 
 void MainWindow::onDirectoryOpen()
-{
-    d->options.policyBundle = QFileDialog::getExistingDirectory(
-                              this,
-                              tr("Open Directory"),
-                              QDir::homePath(),
-                              QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+{    
+
+    std::unique_ptr<QFileDialog> fileDialog = std::make_unique<QFileDialog>(this);
+
+    fileDialog->setDirectory(QDir::homePath());
+    fileDialog->setFileMode(QFileDialog::Directory);
+
+    fileDialog->setLabelText(QFileDialog::Accept, tr("Open"));
+    fileDialog->setLabelText(QFileDialog::FileName, tr("File name"));
+    fileDialog->setLabelText(QFileDialog::LookIn, tr("Look in"));
+    fileDialog->setLabelText(QFileDialog::Reject, tr("Cancel"));
+
+    fileDialog->setNameFilter(QObject::tr("All files (*.*)"));
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    fileDialog->setWindowTitle(tr("Open Directory"));
+
+    if (fileDialog->exec() == QDialog::Accepted)
+    {
+        d->options.policyBundle = fileDialog->selectedUrls().value(0).toLocalFile();
+    }
 
     loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
 }

@@ -717,7 +717,7 @@ context (user policy option).</source>
         <translation>Полный путь к набору ADMX файлов.</translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+168"/>
+        <location filename="../contentwidget.cpp" line="+171"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -737,7 +737,7 @@ context (user policy option).</source>
         <translation>Опции:</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+167"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
@@ -760,6 +760,11 @@ context (user policy option).</source>
         <location line="+0"/>
         <source>User level policies</source>
         <translation>Политики настройки пользователей</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="+249"/>
+        <source>All files (*.*)</source>
+        <translation>Все файлы (*.*)</translation>
     </message>
 </context>
 <context>
@@ -1189,7 +1194,27 @@ Enumeration:</source>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+240"/>
+        <location filename="../mainwindow.cpp" line="-5"/>
+        <source>Open</source>
+        <translation>Открыть</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>File name</source>
+        <translation>Имя файла</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Look in</source>
+        <translation>Искать в</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Open Directory</source>
         <translation>Открыть папку</translation>
     </message>

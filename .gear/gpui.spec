@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt3
+Release: alt4
 
 Summary: Group policy editor
 License: GPLv2+
@@ -23,7 +23,7 @@ BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
 BuildRequires: xsd
 
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils ImageMagick-tools
 
 Requires: admx-basealt
 
@@ -87,6 +87,13 @@ done
 %_desktopdir/gpui.desktop
 
 %changelog
+* Mon Feb 21 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt4
+- Fixes:
+  + #73754 Fix translations in open admx dialog.
+  + #73747 Fix translation of command line options.
+  + #73625 Fix add application icon.
+  + #73788 Fix add admx-basealt to spec.
+
 * Fri Feb 18 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt3
 - Fixes:
   + #73617 Fix difference of about window from that of ADMC.

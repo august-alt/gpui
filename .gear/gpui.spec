@@ -25,6 +25,8 @@ BuildRequires: xsd
 
 BuildRequires: desktop-file-utils
 
+Requires: admx-basealt
+
 Source0: %name-%version.tar
 
 %description

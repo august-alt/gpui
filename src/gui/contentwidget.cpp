@@ -103,9 +103,6 @@ ContentWidget::ContentWidget(QWidget *parent)
         }
     });
 
-    QPushButton* applyButton = ui->policyStateButtonBox->button(QDialogButtonBox::Apply);
-    connect(applyButton, &QPushButton::clicked, ui->policyStateButtonBox, &QDialogButtonBox::accepted);
-
     connectDialogBoxSignals();
 }
 

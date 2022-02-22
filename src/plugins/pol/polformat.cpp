@@ -28,6 +28,8 @@
 #include "../../../src/model/registry/registryentry.h"
 #include "../../../src/model/registry/registryentrytype.h"
 
+#include <byteswap.h>
+
 using namespace model::registry;
 
 namespace gpui {
@@ -50,16 +52,52 @@ private:
         return registryEntry;
     }
 
-    template<typename TData>
-    static std::unique_ptr<model::registry::AbstractRegistryEntry>adaptIntEntry(const preg::PregEntry& entry,
-                                                                             model::registry::RegistryEntryType type)
+    static std::unique_ptr<model::registry::AbstractRegistryEntry>adaptUInt32Entry(const preg::PregEntry& entry,
+                                                                                   model::registry::RegistryEntryType type,
+                                                                                   bool bigEndian = false)
     {
-        auto registryEntry = std::make_unique<model::registry::RegistryEntry<TData> >();
+        auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint32_t> >();
         registryEntry->key = entry.key.c_str();
         registryEntry->type = type;
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
-            registryEntry->data = static_cast<TData>(*entry.data);
+            uint32_t data = (uint32_t)entry.data[0]       |
+                            (uint32_t)entry.data[1] << 8  |
+                            (uint32_t)entry.data[2] << 16 |
+                            (uint32_t)entry.data[3] << 24;
+            if (bigEndian)
+            {
+                data = bswap_32(data);
+            }
+            registryEntry->data = data;
+            delete[] entry.data;
+        }
+
+        return registryEntry;
+    }
+
+    static std::unique_ptr<model::registry::AbstractRegistryEntry>adaptUInt64Entry(const preg::PregEntry& entry,
+                                                                                   model::registry::RegistryEntryType type,
+                                                                                   bool bigEndian = false)
+    {
+        auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint64_t> >();
+        registryEntry->key = entry.key.c_str();
+        registryEntry->type = type;
+        registryEntry->value = entry.value.c_str();
+        if (entry.data) {
+            uint64_t data = (uint64_t)entry.data[0]       |
+                            (uint64_t)entry.data[1] << 8  |
+                            (uint64_t)entry.data[2] << 16 |
+                            (uint64_t)entry.data[3] << 24 |
+                            (uint64_t)entry.data[4] << 32 |
+                            (uint64_t)entry.data[5] << 40 |
+                            (uint64_t)entry.data[6] << 48 |
+                            (uint64_t)entry.data[7] << 56 ;
+            if (bigEndian)
+            {
+                data = bswap_64(data);
+            }
+            registryEntry->data = data;
             delete[] entry.data;
         }
 
@@ -110,12 +148,12 @@ public:
 
         case preg::REG_DWORD_LITTLE_ENDIAN:
         {
-            return adaptIntEntry<uint32_t>(entry, model::registry::REG_DWORD);
+            return adaptUInt32Entry(entry, model::registry::REG_DWORD);
         } break;
 
         case preg::REG_DWORD_BIG_ENDIAN:
         {
-            return adaptIntEntry<uint32_t>(entry, model::registry::REG_DWORD_BIG_ENDIAN);
+            return adaptUInt32Entry(entry, model::registry::REG_DWORD_BIG_ENDIAN, true);
         } break;
 
         case preg::REG_EXPAND_SZ:
@@ -140,12 +178,12 @@ public:
 
         case preg::REG_QWORD:
         {
-            return adaptIntEntry<uint64_t>(entry, model::registry::REG_QWORD);
+            return adaptUInt64Entry(entry, model::registry::REG_QWORD, true);
         } break;
 
         case preg::REG_QWORD_LITTLE_ENDIAN:
         {
-            return adaptIntEntry<uint64_t>(entry, model::registry::REG_QWORD);
+            return adaptUInt64Entry(entry, model::registry::REG_QWORD);
         } break;
 
         case preg::REG_SZ:
@@ -194,13 +232,19 @@ public:
         {
             auto unit32Entry = static_cast<RegistryEntry<uint32_t>* >(entry.get());
             result.size = 4;
-            result.data = reinterpret_cast<char*>(&unit32Entry->data);
+            size_t bufferSize = sizeof (uint32_t);
+            char* stringData = new char[bufferSize];
+            memcpy(stringData, &unit32Entry->data, bufferSize);
+            result.data = stringData;
         } break;
         case REG_QWORD:
         {
             auto unit64Entry = static_cast<RegistryEntry<uint64_t>* >(entry.get());
             result.size = 8;
-            result.data = reinterpret_cast<char*>(&unit64Entry->data);
+            size_t bufferSize = sizeof (uint64_t);
+            char* stringData = new char[bufferSize];
+            memcpy(stringData, &unit64Entry->data, bufferSize);
+            result.data = stringData;
         }break;
         case REG_MULTI_SZ:
         {
@@ -276,6 +320,9 @@ bool PolFormat::write(std::ostream &output, io::RegistryFile* file)
             writer->addEntry(pregEntry);
 
             switch (pregEntry.type) {
+            case REG_DWORD:
+            case REG_DWORD_BIG_ENDIAN:
+            case REG_QWORD:
             case REG_BINARY:
             case REG_EXPAND_SZ:
             case REG_MULTI_SZ:

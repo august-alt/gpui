@@ -6,7 +6,7 @@
     <message>
         <location filename="../aboutdialog.ui" line="+14"/>
         <source>About GPUI</source>
-        <translation>О программе GPUI</translation>
+        <translation>О приложении GPUI</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -677,7 +677,7 @@ context (user policy option).</source>
     <message>
         <location line="+5"/>
         <source>&amp;About</source>
-        <translation>&amp;О Программе</translation>
+        <translation>&amp;О приложении</translation>
     </message>
     <message>
         <location line="+5"/>

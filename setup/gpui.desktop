@@ -29,6 +29,7 @@ Name[uk]=GPUI
 Name[zh_CN]=GPUI
 Name[zh_TW]=GPUI
 GenericName=GPUI
+GenericName[ru]=Редактор групповых политик
 X-GNOME-FullName=GPUI
 Comment=Group Policy Editor
 Comment[ru]=Редактор групповых политик

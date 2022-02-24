@@ -67,6 +67,8 @@ public:
     std::vector<std::unique_ptr<QTranslator>> translators;
     QString localeName;
 
+    QIcon windowIcon;
+
     CommandLineOptions options;
 
     MainWindowPrivate()
@@ -172,7 +174,9 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 
-    QGuiApplication::setWindowIcon(QIcon(":gpui.png"));
+    d->windowIcon = QIcon(":gpui.png");
+
+    QGuiApplication::setWindowIcon(d->windowIcon);
 
     if (d->options.policyBundle.isEmpty())
     {
@@ -242,6 +246,7 @@ void MainWindow::onDirectoryOpen()
 
     fileDialog->setDirectory(QDir::homePath());
     fileDialog->setFileMode(QFileDialog::Directory);
+    fileDialog->setSupportedSchemes(QStringList(QStringLiteral("file")));
 
     fileDialog->setLabelText(QFileDialog::Accept, tr("Open"));
     fileDialog->setLabelText(QFileDialog::FileName, tr("File name"));
@@ -249,15 +254,18 @@ void MainWindow::onDirectoryOpen()
     fileDialog->setLabelText(QFileDialog::Reject, tr("Cancel"));
 
     fileDialog->setNameFilter(QObject::tr("All files (*.*)"));
-    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly
+                           | QFileDialog::DontResolveSymlinks
+                           | QFileDialog::DontUseNativeDialog);
+
+    fileDialog->setWindowIcon(d->windowIcon);
     fileDialog->setWindowTitle(tr("Open Directory"));
 
     if (fileDialog->exec() == QDialog::Accepted)
     {
         d->options.policyBundle = fileDialog->selectedUrls().value(0).toLocalFile();
+        loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
     }
-
-    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
 }
 
 void MainWindow::onRegistrySourceSave()

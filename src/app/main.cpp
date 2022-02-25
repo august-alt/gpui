@@ -31,6 +31,13 @@ int main(int argc, char ** argv) {
     // Create window.
     QApplication app(argc, argv);
 
+    // NOTE: set app variables which will be used to
+    // construct settings path
+    app.setOrganizationName(QCoreApplication::translate("main", "BaseALT Ltd."));
+    app.setOrganizationDomain("basealt.ru");
+    app.setApplicationName("GPUI");
+    app.setApplicationVersion("0.2.0");
+
     gpui::CommandLineParser parser(app);
     gpui::CommandLineOptions options;
     QString errorMessage;
@@ -62,12 +69,6 @@ int main(int argc, char ** argv) {
     default:
         break;
     }
-
-    // NOTE: set app variables which will be used to
-    // construct settings path
-    app.setOrganizationName(QCoreApplication::translate("main", "BaseALT Ltd."));
-    app.setOrganizationDomain("basealt.ru");
-    app.setApplicationName("GPUI");
     
     gpui::MainWindow window(options);
     window.show();

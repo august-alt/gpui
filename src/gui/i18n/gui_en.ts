@@ -6,12 +6,17 @@
     <message>
         <location filename="../aboutdialog.ui" line="+14"/>
         <source>About GPUI</source>
-        <translation type="unfinished"></translation>
+        <translation>About GPUI</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Copyright (C) 2022 BaseALT Ltd.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2022 BaseALT Ltd.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Version 0.2.0</source>
+        <translation>Version 0.2.0</translation>
     </message>
 </context>
 <context>
@@ -19,49 +24,51 @@
     <message>
         <location filename="../../plugins/preferences/common/commonwidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Options:</source>
-        <translation type="unfinished">Options:</translation>
+        <translation>Options:</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Stop processing items in this extension if an
 error occurs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop processing items in this extension if an
+error occurs.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Run in logged-on user&apos;s security
 context (user policy option).</source>
-        <translation type="unfinished"></translation>
+        <translation>Run in logged-on user&apos;s security
+context (user policy option).</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Remove this item when it is no longer applied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove this item when it is no longer applied.</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Apply once and do not reapply.</source>
-        <translation type="unfinished"></translation>
+        <translation>Apply once and do not reapply.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Item-level targeting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Item-level targeting.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Targetting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Targetting...</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Description:</source>
-        <translation type="unfinished">Description:</translation>
+        <translation>Description:</translation>
     </message>
 </context>
 <context>
@@ -111,99 +118,99 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/drives/driveswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Hide/Show this drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide/Show this drive</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+30"/>
         <source>No change</source>
-        <translation type="unfinished"></translation>
+        <translation>No change</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>Hide this drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide this drive</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Show this drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Show this drive</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Hide/Show all drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide/Show all drive</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Hide all drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Hide all drive</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Show all drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Show all drive</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action:</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Create</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Reconnect:</source>
-        <translation type="unfinished"></translation>
+        <translation>Reconnect:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Location:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Label as:</source>
-        <translation type="unfinished"></translation>
+        <translation>Label as:</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>DriveLetter</source>
-        <translation type="unfinished"></translation>
+        <translation>DriveLetter</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Existing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Existing:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Use first available, starting at:</source>
-        <translation type="unfinished"></translation>
+        <translation>Use first available, starting at:</translation>
     </message>
 </context>
 <context>
@@ -211,75 +218,75 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/files/fileswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action:</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Create</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source file(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Source file(s):</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+26"/>
         <source>Placeholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Placeholder</translation>
     </message>
     <message>
         <location line="-19"/>
         <location line="+26"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="-14"/>
         <source>Destination:</source>
-        <translation type="unfinished"></translation>
+        <translation>Destination:</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Supress errors on individual file actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Supress errors on individual file actions</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Attributes</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Read-only</source>
-        <translation type="unfinished"></translation>
+        <translation>Read-only</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Hidden</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Archive</translation>
     </message>
 </context>
 <context>
@@ -287,88 +294,88 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/folders/folderswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action:</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Create</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Path:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Placeholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Placeholder</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Attributes</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Read-only</source>
-        <translation type="unfinished"></translation>
+        <translation>Read-only</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Hidden</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Archive</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Delete this folder (if emptied)</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete this folder (if emptied)</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Recrusively delete subfolders (if emptied)</source>
-        <translation type="unfinished"></translation>
+        <translation>Recrusively delete subfolders (if emptied)</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Delete all files in the filder(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete all files in the filder(s)</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Allow deletion of read-only files/folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Allow deletion of read-only files/folders</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Ignore errors for files/folders cannot be deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignore errors for files/folders cannot be deleted</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -376,53 +383,53 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/ini/iniwidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action:</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Create</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>File path</source>
-        <translation type="unfinished"></translation>
+        <translation>File path</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Section Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Section Name</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Property Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Property Name</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Property Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Property Value</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -479,7 +486,7 @@ context (user policy option).</source>
         <translation type="vanished">toolBar</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+16"/>
         <source>Go &amp;Back</source>
         <translation>Go &amp;Back</translation>
     </message>
@@ -672,7 +679,12 @@ context (user policy option).</source>
     <message>
         <location line="+5"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;About</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Manual</source>
+        <translation>&amp;Manual</translation>
     </message>
 </context>
 <context>
@@ -680,23 +692,23 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/common/preferencesdialog.ui" line="+14"/>
         <source>Preferences dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferences dialog</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>General</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>Common</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+57"/>
+        <location filename="../commandlineparser.cpp" line="+67"/>
         <source>The full path of policy to edit.</source>
         <translation>The full path of policy to edit.</translation>
     </message>
@@ -712,7 +724,13 @@ context (user policy option).</source>
         <translation>The full path of policy bundle to load.</translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+164"/>
+        <location line="+32"/>
+        <location line="+12"/>
+        <source>Bad policy path: </source>
+        <translation>Bad policy path: </translation>
+    </message>
+    <message>
+        <location filename="../contentwidget.cpp" line="+168"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -722,7 +740,7 @@ context (user policy option).</source>
         <translation>Policy settings were modified do you want to save them?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+95"/>
+        <location filename="../presentationbuilder.cpp" line="+96"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
@@ -732,7 +750,7 @@ context (user policy option).</source>
         <translation>Options:</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+158"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
@@ -756,115 +774,124 @@ context (user policy option).</source>
         <source>User level policies</source>
         <translation>User level policies</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="+256"/>
+        <source>All files (*.*)</source>
+        <translation>All files (*.*)</translation>
+    </message>
 </context>
 <context>
     <name>SharesWidget</name>
     <message>
         <location filename="../../plugins/preferences/shares/shareswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action:</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Create</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Share name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Share name:</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Folder path:</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Comment:</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+7"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Action
 Modifiers:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action
+Modifiers:</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Update all regular shares</source>
-        <translation type="unfinished"></translation>
+        <translation>Update all regular shares</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Update all hidden non-administrative
 shares</source>
-        <translation type="unfinished"></translation>
+        <translation>Update all hidden non-administrative
+shares</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Update all administrative
 drive-letter shares</source>
-        <translation type="unfinished"></translation>
+        <translation>Update all administrative
+drive-letter shares</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>User limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>User limit:</translation>
     </message>
     <message>
         <location line="+25"/>
         <location line="+87"/>
         <source>No change</source>
-        <translation type="unfinished"></translation>
+        <translation>No change</translation>
     </message>
     <message>
         <location line="-73"/>
         <source>Maximum allowed</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum allowed</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Alow this number of users:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alow this number of users:</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Access-based
 Enumeration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Access-based
+Enumeration:</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Enable</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Disable</translation>
     </message>
 </context>
 <context>
@@ -872,33 +899,33 @@ Enumeration:</source>
     <message>
         <location filename="../../plugins/preferences/shortcuts/shortcutswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action:</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Create</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Replace</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -906,172 +933,172 @@ Enumeration:</source>
         <location line="+79"/>
         <location line="+79"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="-350"/>
         <source>Target type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Target type:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>FILESYSTEM</source>
-        <translation type="unfinished"></translation>
+        <translation>FILESYSTEM</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>SHELL</source>
-        <translation type="unfinished"></translation>
+        <translation>SHELL</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Location:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&lt;Specify full path&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Specify full path&gt;</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Desktop</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Start Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Start Menu</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Programs</source>
-        <translation type="unfinished"></translation>
+        <translation>Programs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>StartUp</source>
-        <translation type="unfinished"></translation>
+        <translation>StartUp</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Explorer Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorer Favorites</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Explorer Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorer Links</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Send To</source>
-        <translation type="unfinished"></translation>
+        <translation>Send To</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Recent</source>
-        <translation type="unfinished"></translation>
+        <translation>Recent</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Quick Launch ToolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Quick Launch ToolBar</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>My Network Places</source>
-        <translation type="unfinished"></translation>
+        <translation>My Network Places</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>All Users Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>All Users Desktop</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>All Users Start Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>All Users Start Menu</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>All Users Programs</source>
-        <translation type="unfinished"></translation>
+        <translation>All Users Programs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>All Users StartUp</source>
-        <translation type="unfinished"></translation>
+        <translation>All Users StartUp</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>All Users Explorer Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>All Users Explorer Favorites</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name:</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Target path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Target path:</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arguments:</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>Icon file path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Icon file path:</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Icon index:</source>
-        <translation type="unfinished"></translation>
+        <translation>Icon index:</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>Start in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Start in:</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Shortcut key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Shortcut key:</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Run:</source>
-        <translation type="unfinished"></translation>
+        <translation>Run:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Normal Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal Window</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Minimized</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimized</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximized</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Comment:</translation>
     </message>
 </context>
 <context>
@@ -1094,78 +1121,78 @@ Enumeration:</source>
     <message>
         <location filename="../../plugins/preferences/variables/variableswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Details</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Placeholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Placeholder</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Value:</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name:</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>or</source>
-        <translation type="unfinished"></translation>
+        <translation>or</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>PATH</source>
-        <translation type="unfinished"></translation>
+        <translation>PATH</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Partial</source>
-        <translation type="unfinished"></translation>
+        <translation>Partial</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action:</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Create</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Variable Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable Type</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>User Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>User Variable</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>System Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>System Variable</translation>
     </message>
 </context>
 <context>
@@ -1184,9 +1211,37 @@ Enumeration:</source>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+240"/>
+        <location filename="../mainwindow.cpp" line="-5"/>
+        <source>Open</source>
+        <translation>Open</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File name</source>
+        <translation>File name</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Look in</source>
+        <translation>Look in</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cancel</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Open Directory</source>
         <translation>Open Directory</translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <location filename="../../app/main.cpp" line="+36"/>
+        <source>BaseALT Ltd.</source>
+        <translation>BaseALT Ltd.</translation>
     </message>
 </context>
 </TS>

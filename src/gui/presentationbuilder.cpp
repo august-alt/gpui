@@ -278,7 +278,16 @@ namespace gui
                             return;
                         }
                         qWarning() << "Items debug: " << items;
-                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, items);
+                        QStringList itemsToAdd;
+                        for (const auto& item : items)
+                        {
+                            if (!item.trimmed().isEmpty())
+                            {
+                                itemsToAdd.push_back(item);
+                            }
+                        }
+
+                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, itemsToAdd);
                         *m_dataChanged = true;
                     });
                 }

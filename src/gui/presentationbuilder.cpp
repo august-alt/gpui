@@ -446,7 +446,7 @@ namespace gui
             {
                 QSpinBox* spinBox = new QSpinBox();
                 spinBox->setMinimum(0);
-                spinBox->setMaximum(9999);
+                spinBox->setMaximum(std::numeric_limits<int>::max());
                 spinBox->setSingleStep(step);
                 spinBox->setValue(value);
 
@@ -482,7 +482,7 @@ namespace gui
 
             QLineEdit* edit = new QLineEdit();
             edit->setText(QString::number(value));
-            edit->setValidator(new QIntValidator(0, 9999));
+            edit->setValidator(new QIntValidator(0, std::numeric_limits<int>::max()));
 
             if (m_policy && m_source)
             {

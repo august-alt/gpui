@@ -49,6 +49,12 @@ namespace gpui {
         MainWindow(CommandLineOptions& options, QWidget *parent = 0);
         ~MainWindow();
 
+        void setLanguage(const QString& language);
+        QString getLanguage() const;
+
+        void setAdmxPath(const QString& admxPath);
+        QString getAdmxPath() const;
+
     protected:
         void closeEvent(QCloseEvent *event) override;
 

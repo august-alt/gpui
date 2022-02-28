@@ -148,16 +148,12 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
 {
     registerResources();
 
-    QLocale locale;
-    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    qtTranslator->load(locale, "gui", "_", ":/");
-    QCoreApplication::installTranslator(qtTranslator.get());
-    d->translators.push_back(std::move(qtTranslator));
-    d->localeName = locale.name().replace("_", "-");
-
     d->options = options;
 
     ui->setupUi(this);
+
+    d->settings = std::make_unique<MainWindowSettings>(this, ui);
+    d->settings->restoreSettings();
 
     createLanguageMenu();
 
@@ -167,12 +163,18 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
 
     ui->splitter->addWidget(d->contentWidget);
 
-    d->settings = std::make_unique<MainWindowSettings>(this, ui);
-    d->settings->restoreSettings();
-
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
+
+    QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-","_") : "");
+    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+    qtTranslator->load(locale, "gui", "_", ":/");
+    QCoreApplication::installTranslator(qtTranslator.get());
+    d->translators.push_back(std::move(qtTranslator));
+    d->localeName = locale.name().replace("_","-");
+    d->contentWidget->onLanguageChaged();
+    ui->retranslateUi(this);
 
     d->windowIcon = QIcon(":gpui.png");
 
@@ -211,6 +213,26 @@ MainWindow::~MainWindow()
     delete d;
 
     delete ui;
+}
+
+void MainWindow::setLanguage(const QString &language)
+{
+    d->localeName = language;
+}
+
+QString MainWindow::getLanguage() const
+{
+    return d->localeName;
+}
+
+void MainWindow::setAdmxPath(const QString &admxPath)
+{
+    d->options.policyBundle = admxPath;
+}
+
+QString MainWindow::getAdmxPath() const
+{
+    return d->options.policyBundle;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -394,7 +416,7 @@ void MainWindow::createLanguageMenu()
 
     connect(langGroup, &QActionGroup::triggered, this, &MainWindow::onLanguageChanged);
 
-    QString defaultLocale = QLocale::system().name().left(QLocale::system().name().lastIndexOf('_'));
+    QString defaultLocale = d->localeName.left(QLocale::system().name().lastIndexOf('_'));
     QDir dir(":/");
     QStringList fileNames = dir.entryList(QStringList("gui_*.qm"));
 

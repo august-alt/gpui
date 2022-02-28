@@ -31,6 +31,9 @@ const QString MAIN_WINDOW_GEOMETRY = "mainwindow/geometry";
 const QString MAIN_WINDOW_STATE = "mainwindow/state";
 const QString MAIN_WINDOW_SPLITTER_STATE = "mainwindow/splitterState";
 
+const QString MAIN_WINDOW_LANGUAGE_STATE = "mainwindow/language";
+const QString MAIN_WINDOW_ADMX_PATH = "mainwindow/admxPath";
+
 class MainWindowSettingsPrivate
 {
 public:
@@ -61,6 +64,12 @@ void MainWindowSettings::saveSettings()
 
     const QByteArray splitterState = d->ui->splitter->saveState();
     d->settings.setValue(MAIN_WINDOW_SPLITTER_STATE, splitterState);
+
+    const QString& languageState = d->window->getLanguage();
+    d->settings.setValue(MAIN_WINDOW_LANGUAGE_STATE, languageState);
+
+    const QString& admxPath = d->window->getAdmxPath();
+    d->settings.setValue(MAIN_WINDOW_ADMX_PATH, admxPath);
 }
 
 void MainWindowSettings::restoreSettings()
@@ -73,6 +82,12 @@ void MainWindowSettings::restoreSettings()
 
     const QByteArray splitterState = d->settings.value(MAIN_WINDOW_SPLITTER_STATE).toByteArray();
     d->ui->splitter->restoreState(splitterState);
+
+    const QString languageState = d->settings.value(MAIN_WINDOW_LANGUAGE_STATE).toString();
+    d->window->setLanguage(languageState);
+
+    const QString admxPath = d->settings.value(MAIN_WINDOW_ADMX_PATH).toString();
+    d->window->setAdmxPath(admxPath);
 }
 
 }

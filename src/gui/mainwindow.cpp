@@ -167,7 +167,9 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
 
-    QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-","_") : "");
+    QLocale locale(!d->localeName.trimmed().isEmpty()
+                   ? d->localeName.replace("-","_")
+                   : QLocale::system().name().replace("-","_"));
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
     qtTranslator->load(locale, "gui", "_", ":/");
     QCoreApplication::installTranslator(qtTranslator.get());

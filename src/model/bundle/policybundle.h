@@ -31,6 +31,8 @@ class QFileInfo;
 class QString;
 class QStandardItem;
 class QStandardItemModel;
+class QAbstractItemModel;
+class QModelIndex;
 
 namespace model
 {
@@ -64,6 +66,10 @@ namespace model
                                       const uint itemType = 0);
 
             void assignSupportedOn();
+
+            void removeEmptyItems();
+
+            void iterateModelAndRemoveEmptyFolders(QAbstractItemModel* model, const QModelIndex &parent);
         };
     }
 }

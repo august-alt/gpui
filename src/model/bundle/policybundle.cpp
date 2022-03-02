@@ -119,6 +119,8 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
     rearrangeTreeItems();
     assignSupportedOn();
 
+    removeEmptyItems();
+
     return std::move(d->treeModel);
 }
 
@@ -420,6 +422,40 @@ void PolicyBundle::assignSupportedOn()
             }
         }
     }
+}
+
+void PolicyBundle::iterateModelAndRemoveEmptyFolders(QAbstractItemModel* model, const QModelIndex& parent)
+{
+    for(int r = 0; r < model->rowCount(parent); ++r)
+    {
+        QModelIndex index = model->index(r, 0, parent);
+        QVariant data = model->data(index, PolicyRoles::ITEM_TYPE);
+
+        qDebug() << "Folder " << model->data(index) << " has children: " << model->hasChildren(index)
+                 << " type: " << data;
+
+        if(model->hasChildren(index))
+        {
+            iterateModelAndRemoveEmptyFolders(model, index);
+        }
+        else
+        {
+            if (data == 0)
+            {
+                qDebug() << "Deleted folder " <<  model->data(index);
+
+                model->removeRow(index.row(), index.parent());
+
+                iterateModelAndRemoveEmptyFolders(model, index.parent());
+            }
+        }
+    }
+}
+
+void PolicyBundle::removeEmptyItems()
+{
+    iterateModelAndRemoveEmptyFolders(d->treeModel.get(), d->rootMachineItem->index());
+    iterateModelAndRemoveEmptyFolders(d->treeModel.get(), d->rootUserItem->index());
 }
 
 }

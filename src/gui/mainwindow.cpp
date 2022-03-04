@@ -41,6 +41,8 @@
 
 #include "../plugins/storage/smb/smbfile.h"
 
+#include "../model/bundle/policyroles.h"
+
 void registerResources()
 {
     Q_INIT_RESOURCE(translations);
@@ -62,7 +64,8 @@ public:
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource;
     QString machineRegistryPath;
 
-    std::unique_ptr<QSortFilterProxyModel> sortModel = nullptr;
+    std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
+    std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
 
     std::vector<std::unique_ptr<QTranslator>> translators;
     QString localeName;
@@ -252,18 +255,23 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
     d->model = bundle->loadFolder(path.toStdString(), locale.toStdString());
 
-    d->sortModel = std::make_unique<QSortFilterProxyModel>();
-    d->sortModel->setSourceModel(d->model.get());
-    d->sortModel->setSortLocaleAware(true);
-    d->sortModel->setSortRole(Qt::DisplayRole);
-    d->sortModel->sort(0);
+    d->itemNameSortModel = std::make_unique<QSortFilterProxyModel>();
+    d->itemNameSortModel->setSourceModel(d->model.get());
+    d->itemNameSortModel->setSortLocaleAware(true);
+    d->itemNameSortModel->setSortRole(Qt::DisplayRole);
+    d->itemNameSortModel->sort(0);
 
-    ui->treeView->setModel(d->sortModel.get());
-    d->contentWidget->setModel(d->sortModel.get());
+    d->itemRoleSortModel = std::make_unique<QSortFilterProxyModel>();
+    d->itemRoleSortModel->setSourceModel(d->itemNameSortModel.get());
+    d->itemRoleSortModel->setSortRole(model::bundle::PolicyRoles::ITEM_TYPE);
+    d->itemRoleSortModel->sort(0);
+
+    ui->treeView->setModel(d->itemRoleSortModel.get());
+    d->contentWidget->setModel(d->itemRoleSortModel.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
 
-    d->contentWidget->modelItemSelected(d->sortModel->index(0, 0));
+    d->contentWidget->modelItemSelected(d->itemRoleSortModel->index(0, 0));
 }
 
 void MainWindow::onDirectoryOpen()

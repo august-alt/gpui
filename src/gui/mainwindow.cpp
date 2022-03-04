@@ -67,6 +67,8 @@ public:
     std::vector<std::unique_ptr<QTranslator>> translators;
     QString localeName;
 
+    QString itemName;
+
     QIcon windowIcon;
 
     CommandLineOptions options;
@@ -166,6 +168,7 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
+    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex& index) { d->itemName = index.data().toString(); });
 
     QLocale locale(!d->localeName.trimmed().isEmpty()
                    ? d->localeName.replace("-","_")
@@ -313,6 +316,8 @@ void MainWindow::onRegistrySourceSave()
     {
         qWarning() << "Unable to save user registry path is empty!";
     }
+
+    ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);
 }
 
 void MainWindow::on_actionExit_triggered()

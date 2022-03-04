@@ -775,7 +775,7 @@ context (user policy option).</translation>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+256"/>
+        <location filename="../mainwindow.cpp" line="+283"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -1234,6 +1234,11 @@ Enumeration:</translation>
         <location line="+8"/>
         <source>Open Directory</source>
         <translation>Open Directory</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Applied changes for policy: </source>
+        <translation>Applied changes for policy: </translation>
     </message>
 </context>
 <context>

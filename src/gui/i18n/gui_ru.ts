@@ -728,7 +728,7 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+171"/>
+        <location filename="../contentwidget.cpp" line="+168"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -748,7 +748,7 @@ context (user policy option).</source>
         <translation>Опции:</translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+158"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
@@ -773,7 +773,7 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+251"/>
+        <location filename="../mainwindow.cpp" line="+283"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -1225,9 +1225,14 @@ Enumeration:</source>
         <translation>Искать в</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>Open Directory</source>
         <translation>Открыть папку</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Applied changes for policy: </source>
+        <translation>Применены изменения для политики: </translation>
     </message>
 </context>
 <context>
@@ -1249,7 +1254,7 @@ Enumeration:</source>
         <translation type="vanished">Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="+68"/>
+        <location filename="../../app/main.cpp" line="+36"/>
         <source>BaseALT Ltd.</source>
         <translation>ООО «Базальт СПО».</translation>
     </message>

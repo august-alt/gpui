@@ -53,6 +53,8 @@ namespace gpui {
         ContentWidget(QWidget *parent = 0);
         ~ContentWidget();
 
+        void setEventFilter(QObject* eventFilter);
+
         void setModel(QAbstractItemModel *model);
         void setSelectionModel(QItemSelectionModel* selectionModel);
 

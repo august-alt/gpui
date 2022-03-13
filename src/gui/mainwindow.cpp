@@ -28,6 +28,8 @@
 
 #include "contentwidget.h"
 
+#include "treevieweventfilter.h"
+
 #include "../model/bundle/policybundle.h"
 
 #include "../model/registry/registry.h"
@@ -76,13 +78,15 @@ public:
 
     CommandLineOptions options;
 
+    std::unique_ptr<TreeViewEventFilter> eventFilter;
+
     MainWindowPrivate()
         : userRegistry(new model::registry::Registry())
         , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
         , machineRegistry(new model::registry::Registry())
         , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
+        , eventFilter(new TreeViewEventFilter())
     {}
-
 };
 
 void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
@@ -157,6 +161,8 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
 
     ui->setupUi(this);
 
+    ui->treeView->installEventFilter(d->eventFilter.get());
+
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
     d->settings->restoreSettings();
 
@@ -165,8 +171,14 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     d->contentWidget = new ContentWidget(this);
     d->contentWidget->setMachineRegistrySource(d->machineRegistrySource.get());
     d->contentWidget->setUserRegistrySource(d->userRegistrySource.get());
+    d->contentWidget->setEventFilter(d->eventFilter.get());
 
     ui->splitter->addWidget(d->contentWidget);
+
+    connect(d->eventFilter.get(), &TreeViewEventFilter::onEnter, this, [&]()
+    {
+        ui->treeView->clicked(ui->treeView->currentIndex());
+    });
 
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);

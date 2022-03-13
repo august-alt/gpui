@@ -112,6 +112,11 @@ ContentWidget::~ContentWidget()
     delete d;
 }
 
+void ContentWidget::setEventFilter(QObject *eventFilter)
+{
+    ui->contentListView->installEventFilter(eventFilter);
+}
+
 void ContentWidget::setModel(QAbstractItemModel* model)
 {
     ui->contentListView->setModel(model);

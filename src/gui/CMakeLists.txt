@@ -12,6 +12,7 @@ set(HEADERS
     mainwindow.h
     mainwindowsettings.h
     presentationbuilder.h
+    treevieweventfilter.h
 )
 
 set(SOURCES
@@ -23,6 +24,7 @@ set(SOURCES
     mainwindow.cpp
     mainwindowsettings.cpp
     presentationbuilder.cpp
+    treevieweventfilter.cpp
 )
 
 set(UI_FORMS
@@ -38,6 +40,7 @@ set(MOC_HEADERS
     listboxdialog.h
     mainwindow.h
     mainwindowsettings.h
+    treevieweventfilter.h
 )
 
 set(TS_FILES

@@ -64,6 +64,9 @@ ContentWidget::ContentWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->helpSplitter->setStretchFactor(0, 4);
+    ui->helpSplitter->setStretchFactor(1, 1);
+
     setPolicyWidgetsVisible(false);
 
     connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);

@@ -66,12 +66,18 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 
     const QCommandLineOption pathOption("p", QObject::tr("The full path of policy to edit."), QObject::tr("path"));
     const QCommandLineOption bundleOption("b", QObject::tr("The full path of policy bundle to load."), QObject::tr("path"));
+    const QCommandLineOption helpOption(QStringList()
+    #ifdef Q_OS_WIN
+                   << QStringLiteral("?")
+    #endif
+                   << QStringLiteral("h")
+                   << QStringLiteral("help"), QObject::tr("Displays help on commandline options."));
 
     d->parser->setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     d->parser->addOption(pathOption);
     d->parser->addOption(bundleOption);
+    d->parser->addOption(helpOption);
 
-    const QCommandLineOption helpOption = d->parser->addHelpOption();
     const QCommandLineOption versionOption = d->parser->addVersionOption();
 
     if (!d->parser->parse(d->application.arguments()))

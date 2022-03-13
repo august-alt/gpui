@@ -142,33 +142,33 @@ context (user policy option).</source>
     <message>
         <location line="+10"/>
         <source>Hide/Show all drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрыть/Показать все диски</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Hide all drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрыть все диски</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Show all drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать все диски</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие:</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -178,37 +178,37 @@ context (user policy option).</source>
     <message>
         <location line="+18"/>
         <source>Reconnect:</source>
-        <translation type="unfinished"></translation>
+        <translation>Переподключится:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Label as:</source>
-        <translation type="unfinished"></translation>
+        <translation>Название:</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>DriveLetter</source>
-        <translation type="unfinished"></translation>
+        <translation>Буква диска</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Existing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Cуществующий:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Use first available, starting at:</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать первый свободный:</translation>
     </message>
 </context>
 <context>
@@ -216,75 +216,75 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/files/fileswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие:</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source file(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходные файлы:</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+26"/>
         <source>Placeholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Заглушка</translation>
     </message>
     <message>
         <location line="-19"/>
         <location line="+26"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="-14"/>
         <source>Destination:</source>
-        <translation type="unfinished"></translation>
+        <translation>Назначение:</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Supress errors on individual file actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Игнорировать ошибки</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрибуты</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Read-only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только для чтения</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрытый</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Архивный</translation>
     </message>
 </context>
 <context>
@@ -292,88 +292,88 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/folders/folderswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие:</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Placeholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Заглушка</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрибуты</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Read-only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только для чтения</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрытый</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Архивный</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Delete this folder (if emptied)</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить эту папку (если она пустая)</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Recrusively delete subfolders (if emptied)</source>
-        <translation type="unfinished"></translation>
+        <translation>Рекрсивно удалить подпапки (если они пустые)</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Delete all files in the filder(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все файлы в папках</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Allow deletion of read-only files/folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешить удаление папок только для чтения</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Ignore errors for files/folders cannot be deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Игнорировать ошибки удаления файлов и папок</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -381,53 +381,53 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/ini/iniwidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие:</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>File path</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к файлу</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Section Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название секции</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Property Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название свойства</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Property Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение свойства</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -722,6 +722,11 @@ context (user policy option).</source>
         <translation>Полный путь к набору ADMX файлов.</translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Displays help on commandline options.</source>
+        <translation>Показать описание опций коммандной строки.</translation>
+    </message>
+    <message>
         <location line="+32"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
@@ -773,7 +778,7 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+283"/>
+        <location filename="../mainwindow.cpp" line="+291"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -783,109 +788,114 @@ context (user policy option).</source>
     <message>
         <location filename="../../plugins/preferences/shares/shareswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие:</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Share name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Название общей папки:</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к папке:</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Коментарий:</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+7"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Action
 Modifiers:</source>
-        <translation type="unfinished"></translation>
+        <translation>Модификаторы 
+действий:</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Update all regular shares</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить все обычные общие
+папки</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Update all hidden non-administrative
 shares</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить все скрытые не административные
+общие папки</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Update all administrative
 drive-letter shares</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить все
+административные буквы дисков</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>User limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользовательский лимит:</translation>
     </message>
     <message>
         <location line="+25"/>
         <location line="+87"/>
         <source>No change</source>
-        <translation type="unfinished">Без изменений</translation>
+        <translation>Без изменений</translation>
     </message>
     <message>
         <location line="-73"/>
         <source>Maximum allowed</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимально возможный</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Alow this number of users:</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимум пользователей:</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Access-based
 Enumeration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Перечисление на
+основе прав доступа:</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключить</translation>
     </message>
 </context>
 <context>
@@ -893,33 +903,33 @@ Enumeration:</source>
     <message>
         <location filename="../../plugins/preferences/shortcuts/shortcutswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие:</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -927,7 +937,7 @@ Enumeration:</source>
         <location line="+79"/>
         <location line="+79"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location line="-350"/>
@@ -952,7 +962,7 @@ Enumeration:</source>
     <message>
         <location line="+20"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение:</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1092,7 +1102,7 @@ Enumeration:</source>
     <message>
         <location line="+20"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Комментарий:</translation>
     </message>
 </context>
 <context>
@@ -1115,78 +1125,78 @@ Enumeration:</source>
     <message>
         <location filename="../../plugins/preferences/variables/variableswidget.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Подробности</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Placeholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Заглушка</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение:</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя:</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>or</source>
-        <translation type="unfinished"></translation>
+        <translation>или</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>PATH</source>
-        <translation type="unfinished"></translation>
+        <translation>ПУТЬ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Partial</source>
-        <translation type="unfinished"></translation>
+        <translation>Частичный</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие:</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+4"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Variable Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип переменной</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>User Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользовательская ппеременная</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>System Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Системная переменная</translation>
     </message>
 </context>
 <context>

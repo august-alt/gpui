@@ -200,7 +200,7 @@ context (user policy option).</translation>
     <message>
         <location line="+34"/>
         <source>DriveLetter</source>
-        <translation>DriveLetter</translation>
+        <translation>Drive letter</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -724,6 +724,11 @@ context (user policy option).</translation>
         <translation>The full path of policy bundle to load.</translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Displays help on commandline options.</source>
+        <translation>Displays help on commandline options.</translation>
+    </message>
+    <message>
         <location line="+32"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
@@ -775,7 +780,7 @@ context (user policy option).</translation>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+283"/>
+        <location filename="../mainwindow.cpp" line="+291"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>

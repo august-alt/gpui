@@ -61,10 +61,11 @@ private:
         registryEntry->type = type;
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
-            uint32_t data = (uint32_t)entry.data[0]       |
-                            (uint32_t)entry.data[1] << 8  |
-                            (uint32_t)entry.data[2] << 16 |
-                            (uint32_t)entry.data[3] << 24;
+            uint32_t data = (uint32_t)((uint8_t)entry.data[0])       |
+                            (uint32_t)((uint8_t)entry.data[1]) << 8  |
+                            (uint32_t)((uint8_t)entry.data[2]) << 16 |
+                            (uint32_t)((uint8_t)entry.data[3]) << 24;
+
             if (bigEndian)
             {
                 data = bswap_32(data);
@@ -85,14 +86,14 @@ private:
         registryEntry->type = type;
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
-            uint64_t data = (uint64_t)entry.data[0]       |
-                            (uint64_t)entry.data[1] << 8  |
-                            (uint64_t)entry.data[2] << 16 |
-                            (uint64_t)entry.data[3] << 24 |
-                            (uint64_t)entry.data[4] << 32 |
-                            (uint64_t)entry.data[5] << 40 |
-                            (uint64_t)entry.data[6] << 48 |
-                            (uint64_t)entry.data[7] << 56 ;
+            uint64_t data = (uint64_t)((uint8_t)entry.data[0])       |
+                            (uint64_t)((uint8_t)entry.data[1]) << 8  |
+                            (uint64_t)((uint8_t)entry.data[2]) << 16 |
+                            (uint64_t)((uint8_t)entry.data[3]) << 24 |
+                            (uint64_t)((uint8_t)entry.data[4]) << 32 |
+                            (uint64_t)((uint8_t)entry.data[5]) << 40 |
+                            (uint64_t)((uint8_t)entry.data[6]) << 48 |
+                            (uint64_t)((uint8_t)entry.data[7]) << 56 ;
             if (bigEndian)
             {
                 data = bswap_64(data);
@@ -230,20 +231,31 @@ public:
         case REG_DWORD:
         case REG_DWORD_BIG_ENDIAN:
         {
-            auto unit32Entry = static_cast<RegistryEntry<uint32_t>* >(entry.get());
+            auto uint32Entry = static_cast<RegistryEntry<uint32_t>* >(entry.get());
             result.size = 4;
             size_t bufferSize = sizeof (uint32_t);
             char* stringData = new char[bufferSize];
-            memcpy(stringData, &unit32Entry->data, bufferSize);
+            stringData[0] = (uint8_t)((uint8_t*)(&uint32Entry->data))[0];
+            stringData[1] = (uint8_t)((uint8_t*)(&uint32Entry->data))[1];
+            stringData[2] = (uint8_t)((uint8_t*)(&uint32Entry->data))[2];
+            stringData[3] = (uint8_t)((uint8_t*)(&uint32Entry->data))[3];
+
             result.data = stringData;
         } break;
         case REG_QWORD:
         {
-            auto unit64Entry = static_cast<RegistryEntry<uint64_t>* >(entry.get());
+            auto uint64Entry = static_cast<RegistryEntry<uint64_t>* >(entry.get());
             result.size = 8;
             size_t bufferSize = sizeof (uint64_t);
             char* stringData = new char[bufferSize];
-            memcpy(stringData, &unit64Entry->data, bufferSize);
+            stringData[0] = (uint8_t)((uint8_t*)(&uint64Entry->data))[0];
+            stringData[1] = (uint8_t)((uint8_t*)(&uint64Entry->data))[1];
+            stringData[2] = (uint8_t)((uint8_t*)(&uint64Entry->data))[2];
+            stringData[3] = (uint8_t)((uint8_t*)(&uint64Entry->data))[3];
+            stringData[4] = (uint8_t)((uint8_t*)(&uint64Entry->data))[4];
+            stringData[5] = (uint8_t)((uint8_t*)(&uint64Entry->data))[5];
+            stringData[6] = (uint8_t)((uint8_t*)(&uint64Entry->data))[6];
+            stringData[7] = (uint8_t)((uint8_t*)(&uint64Entry->data))[7];
             result.data = stringData;
         }break;
         case REG_MULTI_SZ:

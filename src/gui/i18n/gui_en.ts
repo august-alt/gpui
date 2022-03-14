@@ -74,7 +74,7 @@ context (user policy option).</translation>
 <context>
     <name>ContentWidget</name>
     <message>
-        <location filename="../contentwidget.ui" line="+14"/>
+        <location filename="../contentwidget.ui" line="+20"/>
         <source>Form</source>
         <translation>Form</translation>
     </message>
@@ -83,7 +83,7 @@ context (user policy option).</translation>
         <translation type="vanished">Local Policies</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+97"/>
         <source>Policy State</source>
         <translation>Policy State</translation>
     </message>
@@ -103,12 +103,12 @@ context (user policy option).</translation>
         <translation>Disabled</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Help:</source>
         <translation>Help:</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="-29"/>
         <source>Supported on:</source>
         <translation>Supported on:</translation>
     </message>
@@ -463,7 +463,7 @@ context (user policy option).</translation>
         <translation>GPUI</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+62"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
@@ -735,7 +735,7 @@ context (user policy option).</translation>
         <translation>Bad policy path: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+168"/>
+        <location filename="../contentwidget.cpp" line="+173"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -780,7 +780,7 @@ context (user policy option).</translation>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+291"/>
+        <location filename="../mainwindow.cpp" line="+303"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -1198,6 +1198,14 @@ Enumeration:</translation>
         <location line="+7"/>
         <source>System Variable</source>
         <translation>System Variable</translation>
+    </message>
+</context>
+<context>
+    <name>gpui::ContentWidget</name>
+    <message>
+        <location filename="../contentwidget.cpp" line="+27"/>
+        <source>Policy: </source>
+        <translation>Policy: </translation>
     </message>
 </context>
 <context>

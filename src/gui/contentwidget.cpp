@@ -198,6 +198,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
+        ui->policyNameLabel->setText(tr("Policy: ") + model->data(index, Qt::DisplayRole).value<QString>());
         ui->descriptionTextEdit->setText(model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
 
         d->manager = nullptr;
@@ -289,6 +290,8 @@ void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
     ui->contentListView->setVisible(!visible);
     ui->policyStateButtonBox->setVisible(visible);
     ui->contentWidget->setVisible(visible);
+
+    ui->policyNameFrame->setVisible(visible);
 }
 
 }

@@ -72,7 +72,7 @@ context (user policy option).</source>
 <context>
     <name>ContentWidget</name>
     <message>
-        <location filename="../contentwidget.ui" line="+14"/>
+        <location filename="../contentwidget.ui" line="+20"/>
         <source>Form</source>
         <translation>Форма</translation>
     </message>
@@ -81,7 +81,7 @@ context (user policy option).</source>
         <translation type="vanished">Локальные политики</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+97"/>
         <source>Policy State</source>
         <translation>Состояние политики</translation>
     </message>
@@ -101,12 +101,12 @@ context (user policy option).</source>
         <translation>Выключено</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Help:</source>
         <translation>Помощь:</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="-29"/>
         <source>Supported on:</source>
         <translation>Поддерживается на:</translation>
     </message>
@@ -461,7 +461,7 @@ context (user policy option).</source>
         <translation>GPUI</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+62"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
@@ -733,7 +733,7 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+168"/>
+        <location filename="../contentwidget.cpp" line="+173"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -778,7 +778,7 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+291"/>
+        <location filename="../mainwindow.cpp" line="+303"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -1047,7 +1047,7 @@ Enumeration:</source>
     <message>
         <location line="+20"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя:</translation>
     </message>
     <message>
         <location line="+35"/>
@@ -1197,6 +1197,14 @@ Enumeration:</source>
         <location line="+7"/>
         <source>System Variable</source>
         <translation>Системная переменная</translation>
+    </message>
+</context>
+<context>
+    <name>gpui::ContentWidget</name>
+    <message>
+        <location filename="../contentwidget.cpp" line="+27"/>
+        <source>Policy: </source>
+        <translation>Политика: </translation>
     </message>
 </context>
 <context>

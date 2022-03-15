@@ -38,6 +38,12 @@ namespace gpui
         ~VariablesWidget();
 
     private:
+        VariablesWidget(const VariablesWidget&)            = delete;   // copy ctor
+        VariablesWidget(VariablesWidget&&)                 = delete;   // move ctor
+        VariablesWidget& operator=(const VariablesWidget&) = delete;   // copy assignment
+        VariablesWidget& operator=(VariablesWidget&&)      = delete;   // move assignment
+
+    private:
         Ui::VariablesWidget *ui;
     };
 }

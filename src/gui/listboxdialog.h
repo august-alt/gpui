@@ -53,6 +53,12 @@ namespace gpui {
     private slots:
         void onNew();
         void onDelete();
+
+    private:
+        ListBoxDialog(const ListBoxDialog&)            = delete;   // copy ctor
+        ListBoxDialog(ListBoxDialog&&)                 = delete;   // move ctor
+        ListBoxDialog& operator=(const ListBoxDialog&) = delete;   // copy assignment
+        ListBoxDialog& operator=(ListBoxDialog&&)      = delete;   // move assignment
     };
 }
 

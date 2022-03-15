@@ -38,6 +38,12 @@ namespace gpui
         ~IniWidget();
 
     private:
+        IniWidget(const IniWidget&)            = delete;   // copy ctor
+        IniWidget(IniWidget&&)                 = delete;   // move ctor
+        IniWidget& operator=(const IniWidget&) = delete;   // copy assignment
+        IniWidget& operator=(IniWidget&&)      = delete;   // move assignment
+
+    private:
         Ui::IniWidget *ui;
     };
 }

@@ -55,30 +55,30 @@ namespace gpui {
 class MainWindowPrivate {
 public:
     std::unique_ptr<QStandardItemModel> model = nullptr;
-    ContentWidget* contentWidget;
+    ContentWidget* contentWidget = nullptr;
     std::unique_ptr<MainWindowSettings> settings = nullptr;
 
-    std::shared_ptr<model::registry::Registry> userRegistry;
-    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource;
-    QString userRegistryPath;
+    std::shared_ptr<model::registry::Registry> userRegistry = {};
+    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource = {};
+    QString userRegistryPath {};
 
-    std::shared_ptr<model::registry::Registry> machineRegistry;
-    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource;
-    QString machineRegistryPath;
+    std::shared_ptr<model::registry::Registry> machineRegistry = nullptr;
+    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource = nullptr;
+    QString machineRegistryPath {};
 
     std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
 
-    std::vector<std::unique_ptr<QTranslator>> translators;
-    QString localeName;
+    std::vector<std::unique_ptr<QTranslator>> translators {};
+    QString localeName {};
 
-    QString itemName;
+    QString itemName {};
 
-    QIcon windowIcon;
+    QIcon windowIcon {};
 
-    CommandLineOptions options;
+    CommandLineOptions options {};
 
-    std::unique_ptr<TreeViewEventFilter> eventFilter;
+    std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
     MainWindowPrivate()
         : userRegistry(new model::registry::Registry())
@@ -87,6 +87,12 @@ public:
         , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
         , eventFilter(new TreeViewEventFilter())
     {}
+
+private:
+    MainWindowPrivate(const MainWindowPrivate&)            = delete;   // copy ctor
+    MainWindowPrivate(MainWindowPrivate&&)                 = delete;   // move ctor
+    MainWindowPrivate& operator=(const MainWindowPrivate&) = delete;   // copy assignment
+    MainWindowPrivate& operator=(MainWindowPrivate&&)      = delete;   // move assignment
 };
 
 void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)

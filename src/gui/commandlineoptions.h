@@ -28,8 +28,8 @@ namespace gpui {
     class CommandLineOptions
     {
     public:
-        QString policyBundle;
-        QString path;
+        QString policyBundle {};
+        QString path {};
     };
 }
 

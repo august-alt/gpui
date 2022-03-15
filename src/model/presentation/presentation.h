@@ -41,8 +41,8 @@ namespace model
         class GPUI_MODEL_EXPORT Presentation
         {
         public:
-            std::map<std::string, std::shared_ptr<PresentationWidget>> widgets;
-            std::vector<std::shared_ptr<PresentationWidget>> widgetsVector;
+            std::map<std::string, std::shared_ptr<PresentationWidget>> widgets {};
+            std::vector<std::shared_ptr<PresentationWidget>> widgetsVector {};
         };
     }
 }

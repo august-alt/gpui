@@ -55,6 +55,12 @@ namespace io {
         std::shared_ptr<model::admx::PolicyDefinitions> getPolicyDefinitions(const size_t index);
 
     private:
+        PolicyDefinitionsFile(const PolicyDefinitionsFile&)            = delete;   // copy ctor
+        PolicyDefinitionsFile(PolicyDefinitionsFile&&)                 = delete;   // move ctor
+        PolicyDefinitionsFile& operator=(const PolicyDefinitionsFile&) = delete;   // copy assignment
+        PolicyDefinitionsFile& operator=(PolicyDefinitionsFile&&)      = delete;   // move assignment
+
+    private:
         PolicyDefinitionsFilePrivate* const d;
     };
 }

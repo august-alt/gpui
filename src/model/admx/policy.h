@@ -45,85 +45,87 @@ namespace model
             /*!
              * \brief name Specifies a logical name to use for a specific supported application and revision.
              */
-            std::string name;
+            std::string name {};
 
             /*!
              * \brief displayName The reference to the policy setting title text string located in the string
              * table of the .adml file.
              */
-            std::string displayName;
+            std::string displayName {};
 
             /*!
              * \brief explainText Explain or Help text associated with a specific policy setting.
              */
-            std::string explainText;
+            std::string explainText {};
 
             /*!
              * \brief presentation A reference to a policy presentation in the localized presentation section/table.
              */
-            std::unique_ptr<std::string> presentation;
+            std::unique_ptr<std::string> presentation {};
 
             /*!
              * \brief key The registry key location under which the registry value will be created.
              */
-            std::string key;
+            std::string key {};
 
             /*!
              * \brief valueName The registry value that will be configured for this specific policy element.
              */
-            std::string valueName;
+            std::string valueName {};
 
             /*!
              * \brief policyType Identifies whether the policy will be located under a single node
              * (computer or user) or both nodes.
              */
-            PolicyType policyType;
+            PolicyType policyType = PolicyType::Machine;
 
             /*!
              * \brief parentCategory Reference to parent of the current category.
              */
-            std::string parentCategory;
+            std::string parentCategory {};
 
             /*!
              * \brief seeAlso The seeAlso element is a descriptive phrase that can be used to reference related
              * categories or policy settings.
              */
-            std::vector<std::string> seeAlso;
+            std::vector<std::string> seeAlso {};
 
             /*!
              * \brief supportedOn A reference to a supported product definition, either a single version
              * or a complex definition.
              */
-            std::string supportedOn;
+            std::string supportedOn {};
 
             /*!
              * \brief elements One of five parameters types that can be set in a policy setting.
              */
-            std::vector<std::unique_ptr<PolicyElement>> elements;
+            std::vector<std::unique_ptr<PolicyElement>> elements {};
 
             /*!
              * \brief enabledList A set of decimal or string values and registry keys
              * representing the enabled state of the policy element.
              */
-            std::vector<std::unique_ptr<PolicyItem>> enabledList;
+            std::vector<std::unique_ptr<PolicyItem>> enabledList {};
 
             /*!
              * \brief disabledList A set of decimal or string values and registry keys
              * representing the disabled state of the policy element.
              */
-            std::vector<std::unique_ptr<PolicyItem>> disabledList;
+            std::vector<std::unique_ptr<PolicyItem>> disabledList {};
 
             /*!
              * \brief enabledValue A decimal or string value representing the enabled
              * value of the registry valueName element.
              */
-            std::unique_ptr<AbstractRegistryValue> enabledValue;
+            std::unique_ptr<AbstractRegistryValue> enabledValue = nullptr;
 
             /*!
              * \brief disabledValue A decimal or string value representing the disabled
              * value of the registry valueName element.
              */
-            std::unique_ptr<AbstractRegistryValue> disabledValue;
+            std::unique_ptr<AbstractRegistryValue> disabledValue = nullptr;
+
+            Policy() = default;
 
             virtual ~Policy() = default;
         };

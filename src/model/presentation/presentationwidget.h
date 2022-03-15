@@ -38,7 +38,15 @@ namespace model
         public:
             explicit PresentationWidget(Presentation* parent);
 
+            virtual ~PresentationWidget() = default;
+
             virtual void accept(const PresentationWidgetVisitor& visitor) = 0;
+
+        private:
+            PresentationWidget(const PresentationWidget&)            = delete;   // copy ctor
+            PresentationWidget(PresentationWidget&&)                 = delete;   // move ctor
+            PresentationWidget& operator=(const PresentationWidget&) = delete;   // copy assignment
+            PresentationWidget& operator=(PresentationWidget&&)      = delete;   // move assignment
 
         protected:
             Presentation* parent;            

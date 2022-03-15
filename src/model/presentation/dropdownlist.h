@@ -56,17 +56,17 @@ namespace model
             /*!
              * \brief label Text associated with the drop-down list.
              */
-            std::string label;
+            std::string label {};
 
             /*!
              * \brief values Values of the drop-down list.
              */
-            std::vector<std::string> values;
+            std::vector<std::string> values {};
 
             /*!
              * \brief refId A mapping to the element.
              */
-            std::string refId;
+            std::string refId {};
 
             DropdownList(Presentation* presentation)
                 : PresentationWidget(presentation)

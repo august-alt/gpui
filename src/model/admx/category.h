@@ -37,32 +37,32 @@ namespace model {
             /*!
              * \brief name Specifies a logical name to use for a specific supported application and revision.
              */
-            std::string name;
+            std::string name {};
 
             /*!
              * \brief displayName The reference to the category text string located in the string table of the .adml file.
              */
-            std::string displayName;
+            std::string displayName {};
 
             /*!
              * \brief explainText Explain or Help text associated with a specific category.
              */
-            std::string explainText;
+            std::string explainText {};
 
             /*!
              * \brief keywords Contains index words that could be used to search for elements.
              */
-            std::vector<std::string> keywords;
+            std::vector<std::string> keywords {};
 
             /*!
              * \brief parentCategory Reference to parent of the current category.
              */
-            std::string parentCategory;
+            std::string parentCategory {};
 
             /*!
              * \brief seeAlso Reference to another element that may be related.
              */
-            std::vector<std::string> seeAlso;
+            std::vector<std::string> seeAlso {};
 
             virtual ~Category() = default;
         };

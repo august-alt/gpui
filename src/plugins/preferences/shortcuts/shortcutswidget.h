@@ -44,6 +44,12 @@ namespace gpui
         ShortcutsWidgetPrivate* d;
 
     private:
+        ShortcutsWidget(const ShortcutsWidget&)            = delete;   // copy ctor
+        ShortcutsWidget(ShortcutsWidget&&)                 = delete;   // move ctor
+        ShortcutsWidget& operator=(const ShortcutsWidget&) = delete;   // copy assignment
+        ShortcutsWidget& operator=(ShortcutsWidget&&)      = delete;   // move assignment
+
+    private:
         void setupModelMapper();
     };
 }

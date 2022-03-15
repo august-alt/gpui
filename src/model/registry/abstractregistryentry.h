@@ -38,7 +38,7 @@ namespace model {
             /*!
              * brief
              */
-            RegistryEntryType type;
+            RegistryEntryType type = REG_SZ;
 
             /*!
              * \brief key An identifier of a record used to distinguish the record and efficiently search for it.
@@ -46,12 +46,12 @@ namespace model {
              *  If registry.pol file is under the computer-scoped path, the root of the key MUST be HKLM;
              *  if the file is under the user-scoped path, the root of the key MUST be HKCU.
              */
-            QString key;
+            QString key {};
 
             /*!
              * \brief value The name of the column in a conceptual database record.
              */
-            QString value;
+            QString value {};
 
             virtual ~AbstractRegistryEntry() = default;
         };

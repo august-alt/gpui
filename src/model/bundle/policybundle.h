@@ -53,6 +53,12 @@ namespace model
             std::unique_ptr<QStandardItemModel> loadFolder(const std::string& path, const std::string& language);
 
         private:
+            PolicyBundle(const PolicyBundle&)            = delete;   // copy ctor
+            PolicyBundle(PolicyBundle&&)                 = delete;   // move ctor
+            PolicyBundle& operator=(const PolicyBundle&) = delete;   // copy assignment
+            PolicyBundle& operator=(PolicyBundle&&)      = delete;   // move assignment
+
+        private:
             bool loadAdmxAndAdml(const QFileInfo &admxFileName);
 
             QString constructFileName(const QFileInfo &fileName);

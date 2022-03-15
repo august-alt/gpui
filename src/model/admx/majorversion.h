@@ -37,7 +37,7 @@ namespace model {
             /*!
              * \brief minorVersion A minor version of a product.
              */
-            std::vector<MinorVersion> minorVersion;
+            std::vector<MinorVersion> minorVersion {};
         };
     }
 }

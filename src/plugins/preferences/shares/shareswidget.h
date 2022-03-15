@@ -38,6 +38,12 @@ namespace gpui
         ~SharesWidget();
 
     private:
+        SharesWidget(const SharesWidget&)            = delete;   // copy ctor
+        SharesWidget(SharesWidget&&)                 = delete;   // move ctor
+        SharesWidget& operator=(const SharesWidget&) = delete;   // copy assignment
+        SharesWidget& operator=(SharesWidget&&)      = delete;   // move assignment
+
+    private:
         Ui::SharesWidget *ui;
     };
 }

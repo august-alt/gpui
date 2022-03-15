@@ -40,6 +40,12 @@ namespace gpui
 
     private:
         Ui::PreferencesDialog *ui;
+
+    private:
+        PreferencesDialog(const PreferencesDialog&)            = delete;   // copy ctor
+        PreferencesDialog(PreferencesDialog&&)                 = delete;   // move ctor
+        PreferencesDialog& operator=(const PreferencesDialog&) = delete;   // copy assignment
+        PreferencesDialog& operator=(PreferencesDialog&&)      = delete;   // move assignment
     };
 }
 

@@ -65,6 +65,7 @@ namespace model
 
             LongDecimalTextBox(Presentation* presentation)
                 : PresentationWidget(presentation)
+                , label()
             {
 
             }

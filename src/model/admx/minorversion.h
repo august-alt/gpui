@@ -36,17 +36,17 @@ namespace model {
             /*!
              * \brief displayName
              */
-            std::string displayName;
+            std::string displayName {};
 
             /*!
              * \brief name
              */
-            std::string name;
+            std::string name {};
 
             /*!
              * \brief versionIndex
              */
-            unsigned int versionIndex;
+            unsigned int versionIndex = 0;
         };
     }
 }

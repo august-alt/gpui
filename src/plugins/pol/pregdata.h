@@ -60,12 +60,13 @@ const uint32_t REG_RESOURCE_REQUIREMENTS_LIST = 10;
 const uint32_t REG_QWORD = 11;
 const uint32_t REG_QWORD_LITTLE_ENDIAN = 12;
 
-struct PregEntry {
-    std::string key;
-    std::string value;
-    uint32_t type;
-    uint32_t size;
-    char *data;
+struct PregEntry
+{
+    std::string key {};
+    std::string value {};
+    uint32_t type = REG_NONE;
+    uint32_t size = 0;
+    char *data = nullptr;
 };
 
 class InvalidMagic : public std::exception {

@@ -37,9 +37,9 @@ class IconvWrapper {
     IconvWrapper(IconvWrapper const &) = delete;
     IconvWrapper &operator=(IconvWrapper const &) = delete;
 
-    iconv_t conv;
-    std::string fromEncoding;
-    std::string toEncoding;
+    iconv_t conv = nullptr;
+    std::string fromEncoding {};
+    std::string toEncoding {};
 
 public:
     IconvWrapper(std::string from_encoding, std::string to_encoding);

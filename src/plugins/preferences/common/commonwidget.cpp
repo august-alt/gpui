@@ -29,7 +29,7 @@ namespace gpui
 class CommonWidgetPrivate
 {
 public:
-    std::unique_ptr<QDataWidgetMapper> mapper;
+    std::unique_ptr<QDataWidgetMapper> mapper = nullptr;
 };
 
 CommonWidget::CommonWidget(QWidget *parent)

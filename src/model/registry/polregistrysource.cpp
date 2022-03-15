@@ -33,8 +33,8 @@ namespace registry {
 class PolRegistrySourcePrivate
 {
 public:
-    std::string fileName;
-    std::shared_ptr<Registry> registry;
+    std::string fileName {};
+    std::shared_ptr<Registry> registry = nullptr;
 };
 
 PolRegistrySource::PolRegistrySource(std::shared_ptr<Registry> registry)

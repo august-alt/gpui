@@ -48,6 +48,7 @@ namespace model
 
             ListBox(Presentation* presentation)
                 : PresentationWidget(presentation)
+                , label()
             {
 
             }

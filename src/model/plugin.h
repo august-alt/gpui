@@ -55,6 +55,12 @@ namespace gpui {
         void registerPluginClass(const QString& name, std::function<void*()> constructor);
 
     private:
+        Plugin(const Plugin&)            = delete;   // copy ctor
+        Plugin(Plugin&&)                 = delete;   // move ctor
+        Plugin& operator=(const Plugin&) = delete;   // copy assignment
+        Plugin& operator=(Plugin&&)      = delete;   // move assignment
+
+    private:
         PluginPrivate* d;
     };
 }

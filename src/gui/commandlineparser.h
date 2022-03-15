@@ -52,6 +52,12 @@ namespace gpui {
         void showVersion() const;
 
     private:
+        CommandLineParser(const CommandLineParser&)            = delete;   // copy ctor
+        CommandLineParser(CommandLineParser&&)                 = delete;   // move ctor
+        CommandLineParser& operator=(const CommandLineParser&) = delete;   // copy assignment
+        CommandLineParser& operator=(CommandLineParser&&)      = delete;   // move assignment
+
+    private:
         CommandLineParserPrivate* d;
     };
 }

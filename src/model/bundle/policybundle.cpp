@@ -47,29 +47,29 @@ namespace bundle {
 
 struct CategoryStorage
 {
-    QStandardItem* machineItem;
-    QStandardItem* userItem;
-    model::admx::Category category;
+    QStandardItem* machineItem = nullptr;
+    QStandardItem* userItem = nullptr;
+    model::admx::Category category = {};
 };
 
 struct PolicyStorage
 {
-    model::admx::PolicyType type;
-    std::string category;
-    QStandardItem* item;
+    model::admx::PolicyType type = model::admx::PolicyType::Machine;
+    std::string category = {};
+    QStandardItem* item = nullptr;
 };
 
 class PolicyBundlePrivate
 {
 public:
-    std::unique_ptr<QStandardItemModel> treeModel;
-    std::map<std::string, CategoryStorage> categoryItemMap;
-    std::vector<PolicyStorage> unassignedItems;
-    QStandardItem* rootMachineItem;
-    QStandardItem* rootUserItem;
-    std::vector<QStandardItem*> items;
-    std::map<std::string, std::string> supportedOnMap;
-    QStringList languageDirectoryPaths;
+    std::unique_ptr<QStandardItemModel> treeModel = nullptr;
+    std::map<std::string, CategoryStorage> categoryItemMap = {};
+    std::vector<PolicyStorage> unassignedItems = {};
+    QStandardItem* rootMachineItem = nullptr;
+    QStandardItem* rootUserItem = nullptr;
+    std::vector<QStandardItem*> items = {};
+    std::map<std::string, std::string> supportedOnMap = {};
+    QStringList languageDirectoryPaths = {};
 };
 
 PolicyBundle::PolicyBundle()

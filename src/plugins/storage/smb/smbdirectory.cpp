@@ -35,6 +35,11 @@ class SmbDirectoryPrivate
 public:
     SmbClient client;
     QString path;
+
+    SmbDirectoryPrivate()
+        : client()
+        , path("")
+    {}
 };
 
 SmbDirectory::SmbDirectory(const QString& dir)

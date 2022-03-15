@@ -34,11 +34,18 @@ public:
     QItemSelectionModel* selectionModel;
 
     ShortcutsWidgetPrivate(QStandardItemModel* model, QItemSelectionModel* selectionModel)
-        : model(model)
+        : mapper(nullptr)
+        , model(model)
         , selectionModel(selectionModel)
     {
 
     }
+
+private:
+    ShortcutsWidgetPrivate(const ShortcutsWidgetPrivate&)            = delete;   // copy ctor
+    ShortcutsWidgetPrivate(ShortcutsWidgetPrivate&&)                 = delete;   // move ctor
+    ShortcutsWidgetPrivate& operator=(const ShortcutsWidgetPrivate&) = delete;   // copy assignment
+    ShortcutsWidgetPrivate& operator=(ShortcutsWidgetPrivate&&)      = delete;   // move assignment
 };
 
 ShortcutsWidget::ShortcutsWidget(QStandardItemModel& model, QItemSelectionModel& selectionModel, QWidget *parent)

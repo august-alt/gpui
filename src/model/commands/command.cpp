@@ -30,12 +30,22 @@ class LambdaCommandPrivate
 {
 public:
     std::function<void ()> function;
+
+    LambdaCommandPrivate(std::function<void ()> function)
+        : function(function)
+    {}
+
+private:
+    LambdaCommandPrivate(const LambdaCommandPrivate&)            = delete;   // copy ctor
+    LambdaCommandPrivate(LambdaCommandPrivate&&)                 = delete;   // move ctor
+    LambdaCommandPrivate& operator=(const LambdaCommandPrivate&) = delete;   // copy assignment
+    LambdaCommandPrivate& operator=(LambdaCommandPrivate&&)      = delete;   // move assignment
+
 };
 
 LambdaCommand::LambdaCommand(std::function<void ()> function)
-    : d(new LambdaCommandPrivate())
+    : d(new LambdaCommandPrivate(function))
 {
-    d->function = function;
 }
 
 LambdaCommand::~LambdaCommand()

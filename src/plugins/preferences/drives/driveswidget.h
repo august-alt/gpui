@@ -44,6 +44,12 @@ namespace gpui
         DrivesWidgetPrivate* d;
 
     private:
+        DrivesWidget(const DrivesWidget&)            = delete;   // copy ctor
+        DrivesWidget(DrivesWidget&&)                 = delete;   // move ctor
+        DrivesWidget& operator=(const DrivesWidget&) = delete;   // copy assignment
+        DrivesWidget& operator=(DrivesWidget&&)      = delete;   // move assignment
+
+    private:
         void setupModelMapper();
     };
 }

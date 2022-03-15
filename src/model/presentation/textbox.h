@@ -58,6 +58,9 @@ namespace model
 
             TextBox(Presentation* presentation)
                 : PresentationWidget(presentation)
+                , refId()
+                , label()
+                , defaultValue()
             {
 
             }

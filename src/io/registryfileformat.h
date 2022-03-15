@@ -54,6 +54,12 @@ namespace io {
         RegistryFileFormat(const std::string& name);
 
     private:
+        RegistryFileFormat(const RegistryFileFormat&)            = delete;   // copy ctor
+        RegistryFileFormat(RegistryFileFormat&&)                 = delete;   // move ctor
+        RegistryFileFormat& operator=(const RegistryFileFormat&) = delete;   // copy assignment
+        RegistryFileFormat& operator=(RegistryFileFormat&&)      = delete;   // move assignment
+
+    private:
         RegistryFileFormatPrivate* const d;
     };
 }

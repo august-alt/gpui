@@ -42,7 +42,7 @@ namespace model
 
         struct DecimalValue : EnumValue
         {
-            unsigned int value;
+            unsigned int value = 0;
 
             DecimalValue(unsigned int value)
                 : value(value)
@@ -51,7 +51,7 @@ namespace model
 
         struct LongDecimalValue : EnumValue
         {
-            unsigned long long value;
+            unsigned long long value = 0;
 
             LongDecimalValue(unsigned long long value)
                 : value(value)
@@ -60,7 +60,7 @@ namespace model
 
         struct StringValue : EnumValue
         {
-            std::string value;
+            std::string value {};
 
             StringValue(const std::string& value)
                 : value(value)
@@ -81,7 +81,7 @@ namespace model
             /*!
              * \brief items List of enum items.
              */
-            std::map<std::string, std::unique_ptr<EnumValue> > items;
+            std::map<std::string, std::unique_ptr<EnumValue> > items {};
 
             registry::RegistryEntryType getRegistryEntryType() const override
             {

@@ -47,15 +47,15 @@ namespace preg {
 
     class PregParser {
     private:
-        std::istream* polfile;
+        std::istream* polfile = nullptr;
 
-        std::string filePath;
+        std::string filePath = "";
 
         size_t rawFileSize = 0;
 
-        char header[4];
+        char header[4] { 'P', 'R', 'e', 'g' };
 
-        char version[4];
+        char version[4] { '\x01', '\x00', '\x00', '\x00' };
 
         size_t nextEntryStartOffset = 8;
 
@@ -83,6 +83,12 @@ namespace preg {
 
         std::unique_ptr<PregEntry> readEntry(KeyEntry kentry);
         std::vector<std::string> splitEntry(KeyEntry kentry);
+
+    private:
+        PregParser(const PregParser&)            = delete;   // copy ctor
+        PregParser(PregParser&&)                 = delete;   // move ctor
+        PregParser& operator=(const PregParser&) = delete;   // copy assignment
+        PregParser& operator=(PregParser&&)      = delete;   // move assignment
     };
 
 }

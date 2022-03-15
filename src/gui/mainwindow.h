@@ -84,6 +84,12 @@ namespace gpui {
         void loadPolicyBundleFolder(const QString& path, const QString& locale);
 
         void createLanguageMenu();
+
+    private:
+        MainWindow(const MainWindow&)            = delete;   // copy ctor
+        MainWindow(MainWindow&&)                 = delete;   // move ctor
+        MainWindow& operator=(const MainWindow&) = delete;   // copy assignment
+        MainWindow& operator=(MainWindow&&)      = delete;   // move assignment
     };
 }
 

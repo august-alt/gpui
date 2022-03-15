@@ -42,12 +42,12 @@ namespace model
             /*!
              * \brief products The products element is a table of product elements for the supportedOn text.
              */
-            std::vector<std::shared_ptr<SupportedProduct> > products;
+            std::vector<std::shared_ptr<SupportedProduct> > products {};
 
             /*!
              * \brief definitions The definitions element is a table of definition elements for the supportedOn text.
              */
-            std::vector<std::shared_ptr<SupportedDefinition> > definitions;
+            std::vector<std::shared_ptr<SupportedDefinition> > definitions {};
         };
     }
 }

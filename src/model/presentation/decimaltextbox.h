@@ -57,7 +57,7 @@ namespace model
             /*!
              * \brief label Text associated with the text box.
              */
-            std::string label;
+            std::string label {};
 
             DecimalTextBox(Presentation* presentation)
                 : PresentationWidget(presentation)

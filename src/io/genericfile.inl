@@ -33,6 +33,9 @@ namespace io {
 template <class File, class Format>
 inline GenericFile<File, Format>::GenericFile()
     : m_format(nullptr)
+    , m_fileName()
+    , m_errorString()
+    , m_data{}
 {
 
 }

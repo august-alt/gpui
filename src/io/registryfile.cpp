@@ -31,7 +31,7 @@ namespace io {
 class RegistryFilePrivate
 {
 public:
-    std::shared_ptr<Registry> registry;
+    std::shared_ptr<Registry> registry = nullptr;
 };
 
 RegistryFile::RegistryFile()

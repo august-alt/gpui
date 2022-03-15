@@ -40,6 +40,12 @@ namespace gpui
         ~AboutDialog();
 
     private:
+        AboutDialog(const AboutDialog&)            = delete;   // copy ctor
+        AboutDialog(AboutDialog&&)                 = delete;   // move ctor
+        AboutDialog& operator=(const AboutDialog&) = delete;   // copy assignment
+        AboutDialog& operator=(AboutDialog&&)      = delete;   // move assignment
+
+    private:
         Ui::AboutDialog *ui;
     };
 

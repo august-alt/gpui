@@ -45,6 +45,12 @@ namespace gpui
         Ui::CommonWidget *ui;
 
         CommonWidgetPrivate *d;
+
+    private:
+        CommonWidget(const CommonWidget&)            = delete;   // copy ctor
+        CommonWidget(CommonWidget&&)                 = delete;   // move ctor
+        CommonWidget& operator=(const CommonWidget&) = delete;   // copy assignment
+        CommonWidget& operator=(CommonWidget&&)      = delete;   // move assignment
     };
 }
 

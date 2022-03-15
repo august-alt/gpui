@@ -39,7 +39,7 @@ namespace model
             /*!
              * \brief A prefix for value.
              */
-            std::string valuePrefix;
+            std::string valuePrefix {};
 
             /*!
              * \brief additive If this option is specified true, existing subkeys are not deleted,

@@ -42,22 +42,22 @@ namespace model
             /*!
              * \brief Identifies the element.
              */
-            std::string id;
+            std::string id {};
 
             /*!
              * \brief The GUID of the extension.
              */
-            QUuid clientExtension;
+            QUuid clientExtension {};
 
             /*!
              * \brief A valid registry key path (without reference to local system or user hive).
              */
-            std::string key;
+            std::string key {};
 
             /*!
              * \brief A valid registry value name.
              */
-            std::string valueName;
+            std::string valueName {};
 
             virtual ~PolicyElement() = default;
 
@@ -65,7 +65,10 @@ namespace model
              * \brief getRegistryEntryType Returns type of registry entry associated with current policy element.
              * \return Type of registry entry associated with current policy element.
              */
-            virtual registry::RegistryEntryType getRegistryEntryType() const = 0;
+            virtual registry::RegistryEntryType getRegistryEntryType() const
+            {
+                return registry::RegistryEntryType::REG_NONE;
+            };
         };
     }
 }

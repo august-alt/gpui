@@ -21,6 +21,7 @@
 #include "policydefinitionsfile.h"
 
 #include "../model/admx/policydefinitions.h"
+#include "../model/admx/policyelement.h"
 
 #include <algorithm>
 
@@ -31,7 +32,7 @@ namespace io {
 class PolicyDefinitionsFilePrivate
 {
 public:
-    std::vector<std::shared_ptr<PolicyDefinitions>> policyDefinitions;
+    std::vector<std::shared_ptr<PolicyDefinitions>> policyDefinitions = {};
 };
 
 /*!

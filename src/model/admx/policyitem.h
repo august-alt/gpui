@@ -34,11 +34,11 @@ namespace model
         class GPUI_MODEL_EXPORT PolicyItem
         {
         public:
-            std::string key;
+            std::string key {};
 
-            std::string valueName;
+            std::string valueName {};
 
-            std::unique_ptr<AbstractRegistryValue> value;
+            std::unique_ptr<AbstractRegistryValue> value = nullptr;
 
             virtual ~PolicyItem() = default;
         };

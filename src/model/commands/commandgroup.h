@@ -49,6 +49,12 @@ namespace model {
             void clear();
 
         private:
+            CommandGroup(const CommandGroup&)            = delete;   // copy ctor
+            CommandGroup(CommandGroup&&)                 = delete;   // move ctor
+            CommandGroup& operator=(const CommandGroup&) = delete;   // copy assignment
+            CommandGroup& operator=(CommandGroup&&)      = delete;   // move assignment
+
+        private:
             CommandGroupPrivate* d;
         };
     }

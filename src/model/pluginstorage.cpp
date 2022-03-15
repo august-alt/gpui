@@ -32,8 +32,8 @@ namespace gpui {
 class PluginStoragePrivate
 {
 public:    
-    std::map<QString, std::unique_ptr<Plugin> > pluginMap;
-    std::map<QString, std::map<QString, std::function<void*()> > > classMap;
+    std::map<QString, std::unique_ptr<Plugin> > pluginMap = {};
+    std::map<QString, std::map<QString, std::function<void*()> > > classMap = {};
 };
 
 PluginStorage::PluginStorage()

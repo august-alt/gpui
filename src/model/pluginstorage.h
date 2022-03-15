@@ -104,6 +104,12 @@ private:
     ~PluginStorage();
 
 private:
+    PluginStorage(const PluginStorage&)            = delete;   // copy ctor
+    PluginStorage(PluginStorage&&)                 = delete;   // move ctor
+    PluginStorage& operator=(const PluginStorage&) = delete;   // copy assignment
+    PluginStorage& operator=(PluginStorage&&)      = delete;   // move assignment
+
+private:
     PluginStoragePrivate* d;
 };
 

@@ -51,6 +51,12 @@ namespace io {
         std::shared_ptr<model::registry::Registry> getRegistry();
 
     private:
+        RegistryFile(const RegistryFile&)            = delete;   // copy ctor
+        RegistryFile(RegistryFile&&)                 = delete;   // move ctor
+        RegistryFile& operator=(const RegistryFile&) = delete;   // copy assignment
+        RegistryFile& operator=(RegistryFile&&)      = delete;   // move assignment
+
+    private:
         RegistryFilePrivate* const d;
     };
 }

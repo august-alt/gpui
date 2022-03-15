@@ -69,6 +69,12 @@ namespace model {
                                model::admx::AbstractRegistryValue* registryValue);
 
         private:
+            PolicyStateManager(const PolicyStateManager&)            = delete;   // copy ctor
+            PolicyStateManager(PolicyStateManager&&)                 = delete;   // move ctor
+            PolicyStateManager& operator=(const PolicyStateManager&) = delete;   // copy assignment
+            PolicyStateManager& operator=(PolicyStateManager&&)      = delete;   // move assignment
+
+        private:
             PolicyStateManagerPrivate* d;
         };
     }

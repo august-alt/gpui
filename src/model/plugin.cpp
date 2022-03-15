@@ -28,9 +28,9 @@ namespace gpui {
     class PluginPrivate
     {
     public:
-        QString name;
-        std::unique_ptr<QLibrary> library;
-        std::map<QString, std::function<void*()> > pluginClasses;
+        QString name = {};
+        std::unique_ptr<QLibrary> library = nullptr;
+        std::map<QString, std::function<void*()> > pluginClasses = {};
     };
 
     Plugin::~Plugin()

@@ -54,6 +54,12 @@ namespace io {
         PolicyFileFormat(const std::string& name);
 
     private:
+        PolicyFileFormat(const PolicyFileFormat&)            = delete;   // copy ctor
+        PolicyFileFormat(PolicyFileFormat&&)                 = delete;   // move ctor
+        PolicyFileFormat& operator=(const PolicyFileFormat&) = delete;   // copy assignment
+        PolicyFileFormat& operator=(PolicyFileFormat&&)      = delete;   // move assignment
+
+    private:
         PolicyFileFormatPrivate* const d;
     };
 }

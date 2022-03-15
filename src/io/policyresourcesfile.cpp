@@ -31,7 +31,7 @@ namespace io {
 class PolicyResourcesFilePrivate
 {
 public:
-    std::vector<std::shared_ptr<PolicyResources>> policyDefinitions;
+    std::vector<std::shared_ptr<PolicyResources>> policyDefinitions = {};
 };
 
 /*!

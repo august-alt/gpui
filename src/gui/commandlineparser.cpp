@@ -38,9 +38,15 @@ public:
 
     CommandLineParserPrivate(QApplication &application)
         : application(application)
+        , parser(std::make_unique<QCommandLineParser>())
     {
-        parser = std::make_unique<QCommandLineParser>();
     }
+
+private:
+    CommandLineParserPrivate(const CommandLineParserPrivate&)            = delete;   // copy ctor
+    CommandLineParserPrivate(CommandLineParserPrivate&&)                 = delete;   // move ctor
+    CommandLineParserPrivate& operator=(const CommandLineParserPrivate&) = delete;   // copy assignment
+    CommandLineParserPrivate& operator=(CommandLineParserPrivate&&)      = delete;   // move assignment
 };
 
 CommandLineParser::CommandLineParser(QApplication &application)

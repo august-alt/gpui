@@ -45,6 +45,12 @@ public slots:
     void saveSettings();
 
 private:
+    MainWindowSettings(const MainWindowSettings&)            = delete;   // copy ctor
+    MainWindowSettings(MainWindowSettings&&)                 = delete;   // move ctor
+    MainWindowSettings& operator=(const MainWindowSettings&) = delete;   // copy assignment
+    MainWindowSettings& operator=(MainWindowSettings&&)      = delete;   // move assignment
+
+private:
     MainWindowSettingsPrivate* d;
 };
 

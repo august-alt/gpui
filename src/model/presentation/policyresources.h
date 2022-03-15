@@ -49,29 +49,29 @@ namespace model
              * \brief displayName The localized friendly name of the policy settings file.
              * Unsupported by current Group Policy tools.
              */
-            std::string displayName;
+            std::string displayName {};
 
             /*!
              * \brief description The localized description of policy settings contained in an .adml file.
              * Unsupported by current Group Policy tools.
              */
-            std::string description;
+            std::string description {};
 
             /*!
              * \brief annotation A comment string for .adml files.
              * Strings added to this tag will not be processed by Group Policy tools.
              */
-            std::vector<std::string> annotation;
+            std::vector<std::string> annotation {};
 
             /*!
              * \brief stringTable A table of localized strings.
              */
-            std::map<std::string, std::string> stringTable;
+            std::map<std::string, std::string> stringTable {};
 
             /*!
              * \brief presentationTable A table of presentation elements representing policy setting parameters.
              */
-            std::map<std::string, std::shared_ptr<Presentation>> presentationTable;
+            std::map<std::string, std::shared_ptr<Presentation>> presentationTable {};
         };
     }
 }

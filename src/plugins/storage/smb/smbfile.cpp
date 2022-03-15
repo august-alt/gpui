@@ -33,7 +33,7 @@ namespace smb
 class SmbFilePrivate
 {
 public:
-    SmbClient client;
+    SmbClient client = { };
     FileHandle handle { nullptr };
     QString fileName { "" };
 };

@@ -25,8 +25,8 @@ namespace io {
 class PolicyFileFormatPrivate
 {
 public:
-    std::string name;
-    std::string error;
+    std::string name {};
+    std::string error {};
 };
 
 template <typename TPolicyFile>

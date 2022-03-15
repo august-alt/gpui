@@ -37,9 +37,9 @@ const QString MAIN_WINDOW_ADMX_PATH = "mainwindow/admxPath";
 class MainWindowSettingsPrivate
 {
 public:
-    Ui::MainWindow* ui;
-    QSettings settings;
-    gpui::MainWindow* window;
+    Ui::MainWindow* ui = nullptr;
+    QSettings settings {};
+    gpui::MainWindow* window = nullptr;
 };
 
 MainWindowSettings::MainWindowSettings(gpui::MainWindow* window, Ui::MainWindow* ui)

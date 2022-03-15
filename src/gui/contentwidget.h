@@ -82,6 +82,12 @@ namespace gpui {
     private:
         void setPolicyWidgetsVisible(bool visible);
         void connectDialogBoxSignals();
+
+    private:
+        ContentWidget(const ContentWidget&)            = delete;   // copy ctor
+        ContentWidget(ContentWidget&&)                 = delete;   // move ctor
+        ContentWidget& operator=(const ContentWidget&) = delete;   // copy assignment
+        ContentWidget& operator=(ContentWidget&&)      = delete;   // move assignment
     };
 }
 

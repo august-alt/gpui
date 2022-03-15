@@ -36,7 +36,7 @@ namespace model {
             /*!
              * \brief registryEntries Entries of the registry.
              */
-            std::vector<std::unique_ptr<AbstractRegistryEntry> > registryEntries;
+            std::vector<std::unique_ptr<AbstractRegistryEntry> > registryEntries = {};
         };
     }
 }

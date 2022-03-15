@@ -50,6 +50,12 @@ namespace model {
             void execute() override final;
 
         private:
+            LambdaCommand(const LambdaCommand&)            = delete;   // copy ctor
+            LambdaCommand(LambdaCommand&&)                 = delete;   // move ctor
+            LambdaCommand& operator=(const LambdaCommand&) = delete;   // copy assignment
+            LambdaCommand& operator=(LambdaCommand&&)      = delete;   // move assignment
+
+        private:
             LambdaCommandPrivate* d;
         };
     }

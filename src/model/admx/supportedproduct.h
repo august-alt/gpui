@@ -40,18 +40,18 @@ namespace model
             /*!
              * \brief name Specifies a logical name to use for a specific supported application and revision.
              */
-            std::string name;
+            std::string name {};
 
             /*!
              * \brief displayName The reference to the supported information string located in the
              * string table of the .adml file.
              */
-            std::string displayName;
+            std::string displayName {};
 
             /*!
              * \brief majorVersion A product version.
              */
-            std::vector<MajorVersion> majorVersion;
+            std::vector<MajorVersion> majorVersion {};
 
             virtual ~SupportedProduct() = default;
         };

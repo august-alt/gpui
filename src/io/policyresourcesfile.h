@@ -55,6 +55,12 @@ namespace io {
         std::shared_ptr<model::presentation::PolicyResources> get(const size_t index);
 
     private:
+        PolicyResourcesFile(const PolicyResourcesFile&)            = delete;   // copy ctor
+        PolicyResourcesFile(PolicyResourcesFile&&)                 = delete;   // move ctor
+        PolicyResourcesFile& operator=(const PolicyResourcesFile&) = delete;   // copy assignment
+        PolicyResourcesFile& operator=(PolicyResourcesFile&&)      = delete;   // move assignment
+
+    private:
         PolicyResourcesFilePrivate* const d;
     };
 }

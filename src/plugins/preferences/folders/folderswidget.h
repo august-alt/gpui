@@ -38,6 +38,13 @@ namespace gpui
         ~FoldersWidget();
 
     private:
+        FoldersWidget(const FoldersWidget&)            = delete;   // copy ctor
+        FoldersWidget(FoldersWidget&&)                 = delete;   // move ctor
+        FoldersWidget& operator=(const FoldersWidget&) = delete;   // copy assignment
+        FoldersWidget& operator=(FoldersWidget&&)      = delete;   // move assignment
+
+
+    private:
         Ui::FoldersWidget *ui;
     };
 }

@@ -45,23 +45,23 @@ namespace model
             /*!
              * \brief refId A reference Id.
              */
-            std::string refId;
+            std::string refId {};
 
             /*!
              * \brief label Text associated with the input box to provide prompt text.
              */
-            std::string label;
+            std::string label {};
 
             /*!
              * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
              */
-            std::string defaultValue;
+            std::string defaultValue {};
 
             /*!
              * \brief suggestions A suggested value to be placed in the drop-down list.
              * Multiple suggestion elements result in multiple suggestions.
              */
-            std::vector<std::string> suggestions;
+            std::vector<std::string> suggestions {};
 
             ComboBox(Presentation* presentation)
                 : PresentationWidget(presentation)

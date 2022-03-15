@@ -66,6 +66,12 @@ namespace model {
             bool ifValueStartsWith(const std::string& key, const std::string& valueStart) const;
 
             PolRegistrySourcePrivate* d;
+
+        private:
+            PolRegistrySource(const PolRegistrySource&)            = delete;   // copy ctor
+            PolRegistrySource(PolRegistrySource&&)                 = delete;   // move ctor
+            PolRegistrySource& operator=(const PolRegistrySource&) = delete;   // copy assignment
+            PolRegistrySource& operator=(PolRegistrySource&&)      = delete;   // move assignment
         };
     }
 }

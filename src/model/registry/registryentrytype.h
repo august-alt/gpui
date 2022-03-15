@@ -27,6 +27,7 @@ namespace model {
     namespace registry {
         enum GPUI_MODEL_EXPORT RegistryEntryType
         {
+            REG_NONE                = 0x00, // For initialization, you should never found this as a type.
             REG_SZ                  = 0x01, // Data is a null-terminated Unicode string.
             REG_EXPAND_SZ           = 0x02, // Data is a null-terminated Unicode string that contains operating system
                                             // environment variables denoted using an operating system-specific syntax.

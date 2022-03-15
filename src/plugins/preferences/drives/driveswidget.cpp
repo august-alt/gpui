@@ -34,11 +34,18 @@ public:
     QItemSelectionModel* selectionModel;
 
     DrivesWidgetPrivate(QStandardItemModel* model, QItemSelectionModel* selectionModel)
-        : model(model)
+        : mapper(nullptr)
+        , model(model)
         , selectionModel(selectionModel)
     {
 
     }
+
+private:
+    DrivesWidgetPrivate(const DrivesWidgetPrivate&)            = delete;   // copy ctor
+    DrivesWidgetPrivate(DrivesWidgetPrivate&&)                 = delete;   // move ctor
+    DrivesWidgetPrivate& operator=(const DrivesWidgetPrivate&) = delete;   // copy assignment
+    DrivesWidgetPrivate& operator=(DrivesWidgetPrivate&&)      = delete;   // move assignment
 };
 
 DrivesWidget::DrivesWidget(QStandardItemModel& model, QItemSelectionModel& selectionModel, QWidget *parent)

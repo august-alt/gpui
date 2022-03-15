@@ -36,13 +36,13 @@ namespace model {
             /*!
              * \brief minRequiredRevision A minimum revision level of the matching .adml file.
              */
-            std::string minRequiredRevision;
+            std::string minRequiredRevision {};
 
             /*!
              * \brief fallbackCulture Default language to use when the .adml file does not exist on the machine or ADMX
              * central store for the required language.
              */
-            std::string fallbackCulture;
+            std::string fallbackCulture {};
         };
     }
 }

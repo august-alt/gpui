@@ -44,45 +44,45 @@ namespace model {
             /*!
              * \brief revision Version of the .admx file for tracking purposes.
              */
-            std::string revision;
+            std::string revision {};
 
             /*!
              * \brief schemaVersion Schema version used by the Group Policy tools.
              * For Windows Vista and Windows Server 2008 schemaVersion must be set as follows; schemaVersion="1.0"
              */
-            std::string schemaVersion;
+            std::string schemaVersion {};
 
             /*!
              * \brief policyNamespaces Contains mappings of .admx files to unique namespaces.
              */
-            int policyNamespaces;
+            int policyNamespaces = 0;
 
             /*!
              * \brief supersededAdm Reference to the file name for an .adm file.
              * Editor will not read any .adm file designated as superseded.
              */
-            std::vector<std::string> supersededAdm;
+            std::vector<std::string> supersededAdm {};
 
             /*!
              * \brief resources Contains the required minimum revision of the .adml file.
              */
-            Resources resources;
+            Resources resources {};
 
             /*!
              * \brief supportedOn Mapping of products and definitions.
              */
-            std::shared_ptr<SupportedOn> supportedOn;
+            std::shared_ptr<SupportedOn> supportedOn = nullptr;
 
             /*!
              * \brief categories Contains a list of categories under which Group Policy
              * settings will be displayed in the Editor.
              */
-            std::vector<std::shared_ptr<Category>> categories;
+            std::vector<std::shared_ptr<Category>> categories {};
 
             /*!
              * \brief policies Contains a list of policy setting definitions.
              */
-            std::vector<std::shared_ptr<Policy>> policies;
+            std::vector<std::shared_ptr<Policy>> policies {};
 
             virtual ~PolicyDefinitions() = default;
         };

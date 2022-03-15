@@ -46,6 +46,7 @@ namespace model
 
             Text(Presentation* presentation)
                 : PresentationWidget(presentation)
+                , content()
             {
 
             }

@@ -29,7 +29,7 @@ namespace command {
 class CommandGroupPrivate
 {
 public:
-    std::vector<std::unique_ptr<AbstractCommand>> subCommands;
+    std::vector<std::unique_ptr<AbstractCommand>> subCommands {};
 };
 
 CommandGroup::CommandGroup()

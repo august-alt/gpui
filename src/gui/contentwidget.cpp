@@ -27,6 +27,7 @@
 #include "../model/registry/abstractregistrysource.h"
 #include "../model/registry/policystatemanager.h"
 #include "../model/admx/policy.h"
+#include "../model/admx/policyelement.h"
 
 #include "../model/bundle/policyroles.h"
 #include "../model/commands/commandgroup.h"
@@ -44,10 +45,10 @@ public:
     model::registry::AbstractRegistrySource* userSource = nullptr;
     model::registry::AbstractRegistrySource* machineSource = nullptr;
 
-    std::unique_ptr<model::registry::PolicyStateManager> manager;
+    std::unique_ptr<model::registry::PolicyStateManager> manager = nullptr;
     bool dataChanged = false;
     bool stateEnabled = false;
-    QModelIndex currentIndex;
+    QModelIndex currentIndex {};
     ContentWidget::PolicyWidgetState state = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
 };
 

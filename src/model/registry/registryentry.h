@@ -37,7 +37,7 @@ namespace model {
             /*!
              * \brief data Indicates the data associated with the value.
              */
-            TData data;
+            TData data {};
         };
     }
 }

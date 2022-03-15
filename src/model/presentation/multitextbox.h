@@ -63,6 +63,8 @@ namespace model
 
             MultiTextBox(Presentation* presentation)
                 : PresentationWidget(presentation)
+                , refId()
+                , label()
             {
 
             }

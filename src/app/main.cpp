@@ -39,8 +39,8 @@ int main(int argc, char ** argv) {
     app.setApplicationVersion("0.2.0");
 
     gpui::CommandLineParser parser(app);
-    gpui::CommandLineOptions options;
-    QString errorMessage;
+    gpui::CommandLineOptions options {};
+    QString errorMessage {};
 
     gpui::CommandLineParser::CommandLineParseResult parserResult = parser.parseCommandLine(&options, &errorMessage);
 

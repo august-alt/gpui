@@ -38,6 +38,12 @@ namespace gpui
         ~FilesWidget();
 
     private:
+        FilesWidget(const FilesWidget&)            = delete;   // copy ctor
+        FilesWidget(FilesWidget&&)                 = delete;   // move ctor
+        FilesWidget& operator=(const FilesWidget&) = delete;   // copy assignment
+        FilesWidget& operator=(FilesWidget&&)      = delete;   // move assignment
+
+    private:
         Ui::FilesWidget *ui;
     };
 }

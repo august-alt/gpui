@@ -36,5 +36,5 @@ Comment[ru]=Редактор групповых политик
 Exec=gpui-main
 Terminal=false
 Type=Application
-Categories=System;
+Categories=System;FileTools;
 Icon=gpui

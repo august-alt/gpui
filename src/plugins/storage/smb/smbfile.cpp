@@ -303,7 +303,7 @@ mode_t SmbFile::createMode(const QFileDevice::Permissions &permissionSpec)
 
 QFileDevice::Permissions SmbFile::createPermissions(mode_t mode) const
 {
-    QFileDevice::Permissions currentPermissions = 0;
+    QFileDevice::Permissions currentPermissions {};
 
     if (mode & S_IRUSR)
     {

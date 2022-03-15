@@ -44,8 +44,8 @@ namespace model
         {
             unsigned int value = 0;
 
-            DecimalValue(unsigned int value)
-                : value(value)
+            DecimalValue(unsigned int newValue)
+                : value(newValue)
             {}
         };
 
@@ -53,8 +53,8 @@ namespace model
         {
             unsigned long long value = 0;
 
-            LongDecimalValue(unsigned long long value)
-                : value(value)
+            LongDecimalValue(unsigned long long newValue)
+                : value(newValue)
             {}
         };
 
@@ -62,8 +62,8 @@ namespace model
         {
             std::string value {};
 
-            StringValue(const std::string& value)
-                : value(value)
+            StringValue(const std::string& newValue)
+                : value(newValue)
             {}
         };
 

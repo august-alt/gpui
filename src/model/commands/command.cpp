@@ -31,8 +31,8 @@ class LambdaCommandPrivate
 public:
     std::function<void ()> function;
 
-    LambdaCommandPrivate(std::function<void ()> function)
-        : function(function)
+    LambdaCommandPrivate(std::function<void ()> newFunction)
+        : function(newFunction)
     {}
 
 private:

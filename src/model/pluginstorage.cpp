@@ -79,7 +79,7 @@ bool PluginStorage::loadPlugin(const QFileInfo& fileName)
     }
 
     typedef gpui::Plugin* (*gpui_plugin_init)();
-    gpui_plugin_init initFunction = (gpui_plugin_init)pluginLibrary->resolve("gpui_plugin_init");
+    gpui_plugin_init initFunction = reinterpret_cast<gpui_plugin_init>(pluginLibrary->resolve("gpui_plugin_init"));
 
     if (!initFunction)
     {

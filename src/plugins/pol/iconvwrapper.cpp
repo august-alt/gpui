@@ -94,7 +94,8 @@ std::string IconvWrapper::convert(std::string from) {
         size_t dst_size = buf.size();
         size_t res =
             ::iconv(this->conv, &src_ptr, &src_size, &dst_ptr, &dst_size);
-        if (res == (size_t) -1) {
+        if (res == static_cast<size_t>(-1))
+        {
             if (errno == E2BIG) {
                 // ignore this error
             } else if (ignore_error_) {

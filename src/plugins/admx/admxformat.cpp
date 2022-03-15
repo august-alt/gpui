@@ -174,8 +174,8 @@ public:
 
         assign_if_exists(this->valueName, definition.valueName());
 
-        for (const auto& seeAlso : definition.seeAlso()) {
-            this->seeAlso.emplace_back(seeAlso);
+        for (const auto& seeAlsoDefinition : definition.seeAlso()) {
+            this->seeAlso.emplace_back(seeAlsoDefinition);
         }
 
         switch (definition.class_()) {

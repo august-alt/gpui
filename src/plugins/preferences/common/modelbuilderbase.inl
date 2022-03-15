@@ -8,7 +8,7 @@ inline QStandardItem* ModelBuilderBase::itemCreator(const std::string& field)
 
 inline QStandardItem* ModelBuilderBase::itemCreator(const unsigned char& field)
 {
-    return new QStandardItem(QString::number(field));
+    return new QStandardItem(QString::number(static_cast<unsigned int>(field)));
 }
 
 template <typename T>
@@ -57,7 +57,7 @@ inline void ModelBuilderBase::createBooleanValue(T& field, int index, int role,
     {
         bool state = invert ? !field.get() : field.get();
 
-        QStandardItem* categoryItem = new QStandardItem(QString::number(state));
+        QStandardItem* categoryItem = new QStandardItem(QString::number(static_cast<unsigned int>(state)));
         model->setItem(index, role, categoryItem);
     }
 }

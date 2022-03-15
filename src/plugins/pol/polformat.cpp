@@ -30,6 +30,9 @@
 
 #include <byteswap.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+
 using namespace model::registry;
 
 namespace gpui {
@@ -355,3 +358,5 @@ bool PolFormat::write(std::ostream &output, io::RegistryFile* file)
 }
 
 }
+
+#pragma GCC diagnostic pop

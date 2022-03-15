@@ -23,8 +23,8 @@
 
 namespace preg {
 
-PregWriter::PregWriter(std::ostream *preg_file) {
-    this->preg_file = preg_file;
+PregWriter::PregWriter(std::ostream *initial_preg_file) {
+    this->preg_file = initial_preg_file;
     this->preg_file->write(this->preg_magic, 4);
     this->preg_file->write(this->preg_version, 4);
 }

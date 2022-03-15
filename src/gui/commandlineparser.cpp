@@ -36,8 +36,8 @@ public:
     QApplication& application;
     std::unique_ptr<QCommandLineParser> parser;
 
-    CommandLineParserPrivate(QApplication &application)
-        : application(application)
+    CommandLineParserPrivate(QApplication &currentApplication)
+        : application(currentApplication)
         , parser(std::make_unique<QCommandLineParser>())
     {
     }

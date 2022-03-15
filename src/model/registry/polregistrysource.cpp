@@ -79,13 +79,14 @@ QVariant PolRegistrySource::getValue(const std::string &key, const std::string &
     return QVariant();
 }
 
-void PolRegistrySource::setValue(const std::string &key, const std::string &valueName, RegistryEntryType type, const QVariant &data)
+void PolRegistrySource::setValue(const std::string &key, const std::string &valueName,
+                                 RegistryEntryType registryEntryType, const QVariant &data)
 {
     qWarning() << "Set value" << key.c_str() << valueName.c_str() << data;
 
     if (isValuePresent(key, valueName))
     {
-        switch (type) {
+        switch (registryEntryType) {
         case REG_BINARY:
             updateValue(key, valueName, data.value<QString>());
             break;
@@ -114,7 +115,7 @@ void PolRegistrySource::setValue(const std::string &key, const std::string &valu
         return;
     }
 
-    createValue(key, valueName, type, data);
+    createValue(key, valueName, registryEntryType, data);
 }
 
 bool PolRegistrySource::isValuePresent(const std::string &key, const std::string &valueName) const
@@ -252,12 +253,12 @@ void PolRegistrySource::updateValue(const std::string &key, const std::string &v
 
 template<typename T>
 void PolRegistrySource::createValue(const std::string &key, const std::string &valueName,
-                                    RegistryEntryType type, const T &data)
+                                    RegistryEntryType registryEntryType, const T &data)
 {
     auto entry = std::make_unique<RegistryEntry<T>>();
     entry->key = key.c_str();
     entry->value = valueName.c_str();
-    entry->type = type;
+    entry->type = registryEntryType;
     entry->data = data;
 
     d->registry->registryEntries.push_back(std::move(entry));

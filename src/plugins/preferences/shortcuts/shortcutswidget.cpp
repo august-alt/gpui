@@ -33,10 +33,10 @@ public:
     QStandardItemModel* model;
     QItemSelectionModel* selectionModel;
 
-    ShortcutsWidgetPrivate(QStandardItemModel* model, QItemSelectionModel* selectionModel)
+    ShortcutsWidgetPrivate(QStandardItemModel* newModel, QItemSelectionModel* newSelectionModel)
         : mapper(nullptr)
-        , model(model)
-        , selectionModel(selectionModel)
+        , model(newModel)
+        , selectionModel(newSelectionModel)
     {
 
     }

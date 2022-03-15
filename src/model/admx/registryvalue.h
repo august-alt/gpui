@@ -52,8 +52,8 @@ namespace model
              */
             TValueType value;
 
-            RegistryValue(const TValueType& value)
-                : value(value)
+            RegistryValue(const TValueType& newValue)
+                : value(newValue)
             {
 
             }

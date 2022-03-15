@@ -38,14 +38,14 @@ public:
     AbstractRegistrySource &source;
     const admx::Policy &policy;
 
-    PolicyStateManagerPrivate(AbstractRegistrySource &source, const admx::Policy &policy)
-        : source(source)
-        , policy(policy)
+    PolicyStateManagerPrivate(AbstractRegistrySource &abstractRegistrySource, const admx::Policy &sourcePolicy)
+        : source(abstractRegistrySource)
+        , policy(sourcePolicy)
     {}
 };
 
-PolicyStateManager::PolicyStateManager(AbstractRegistrySource &source, const admx::Policy &policy)
-    : d(new PolicyStateManagerPrivate(source, policy))
+PolicyStateManager::PolicyStateManager(AbstractRegistrySource &abstractRegistrySource, const admx::Policy &sourcePolicy)
+    : d(new PolicyStateManagerPrivate(abstractRegistrySource, sourcePolicy))
 {
 }
 

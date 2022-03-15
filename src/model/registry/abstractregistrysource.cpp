@@ -24,8 +24,8 @@ namespace model {
 
 namespace registry {
 
-AbstractRegistrySource::AbstractRegistrySource(RegistrySourceType type)
-    : type(type)
+AbstractRegistrySource::AbstractRegistrySource(RegistrySourceType registrySourceType)
+    : type(registrySourceType)
 {
 }
 

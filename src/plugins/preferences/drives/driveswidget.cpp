@@ -33,10 +33,10 @@ public:
     QStandardItemModel* model;
     QItemSelectionModel* selectionModel;
 
-    DrivesWidgetPrivate(QStandardItemModel* model, QItemSelectionModel* selectionModel)
+    DrivesWidgetPrivate(QStandardItemModel* newModel, QItemSelectionModel* newSelectionModel)
         : mapper(nullptr)
-        , model(model)
-        , selectionModel(selectionModel)
+        , model(newModel)
+        , selectionModel(newSelectionModel)
     {
 
     }

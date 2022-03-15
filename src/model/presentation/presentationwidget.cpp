@@ -26,8 +26,8 @@ namespace model
 {
     namespace presentation
     {
-        PresentationWidget::PresentationWidget(Presentation* parent)
-            : parent(parent)
+        PresentationWidget::PresentationWidget(Presentation* newParent)
+            : parent(newParent)
         {
 
         }

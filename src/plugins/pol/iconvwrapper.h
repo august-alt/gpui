@@ -32,7 +32,7 @@ namespace gpui {
  * and a convenient way to operate on std::string buffers.
  */
 class IconvWrapper {
-    const iconv_t invalidOpen = (iconv_t) -1;
+    const iconv_t invalidOpen = reinterpret_cast<iconv_t>(-1);
 
     IconvWrapper(IconvWrapper const &) = delete;
     IconvWrapper &operator=(IconvWrapper const &) = delete;

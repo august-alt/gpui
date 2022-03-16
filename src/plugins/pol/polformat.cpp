@@ -48,7 +48,10 @@ private:
         registryEntry->type = type;
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
-            registryEntry->data = QString::fromUtf16(reinterpret_cast<unsigned short*>(entry.data));
+            void* pt = entry.data;
+            size_t requiredSize = entry.size;
+            registryEntry->data = QString::fromUtf16(reinterpret_cast<char16_t*>(std::align(alignof(char16_t), sizeof(char),
+                                                                                            pt, requiredSize)));
             delete[] entry.data;
         }
 
@@ -117,10 +120,16 @@ private:
         registryEntry->value = entry.value.c_str();
         if (entry.data) {
             size_t size = entry.size - 2 > 0 ? entry.size - 2 : entry.size;
-            const char16_t* data = reinterpret_cast<const char16_t*>(entry.data);
+            void* pt = entry.data;
+            size_t requiredSize = entry.size;
+            const char16_t* data = reinterpret_cast<const char16_t*>(std::align(alignof(char16_t), sizeof(char),
+                                                                                pt, requiredSize));
             std::vector<std::vector<char16_t>> list;
             std::vector<char16_t> current;
-            qWarning() << "Data: " << QString::fromUtf16(reinterpret_cast<char16_t*>(entry.data), size / 2) << " size: " << size;
+            qWarning() << "Data: "
+                       << QString::fromUtf16(reinterpret_cast<char16_t*>(std::align(alignof(char16_t),
+                                                                                    sizeof(char), pt, requiredSize)),
+                                             size / 2) << " size: " << size;
             for (size_t i = 0; i < size / 2; ++i)
             {
                 current.push_back(data[i]);

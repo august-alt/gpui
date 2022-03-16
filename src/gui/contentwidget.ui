@@ -109,6 +109,9 @@
             <property name="text">
              <string/>
             </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -328,7 +331,8 @@
              <string>&amp;Cancel</string>
             </property>
             <property name="icon">
-             <iconset theme="cancel"/>
+             <iconset theme="cancel">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -338,7 +342,8 @@
              <string>&amp;OK</string>
             </property>
             <property name="icon">
-             <iconset theme="ok"/>
+             <iconset theme="ok">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>

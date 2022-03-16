@@ -199,7 +199,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
-        ui->policyNameLabel->setText(tr("Policy: ") + model->data(index, Qt::DisplayRole).value<QString>());
+        ui->policyNameLabel->setText((tr("Policy: ") + model->data(index, Qt::DisplayRole).value<QString>()).trimmed());
         ui->descriptionTextEdit->setText(model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
 
         d->manager = nullptr;

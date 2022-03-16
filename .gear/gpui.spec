@@ -89,8 +89,8 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 
 %_desktopdir/gpui.desktop
 
-%_man1dir/gpui.1
-%_mandir/ru/man1/gpui.1
+%_man1dir/gpui.*
+%_mandir/ru/man1/gpui.*
 
 %changelog
 * Mon Mar 14 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt7

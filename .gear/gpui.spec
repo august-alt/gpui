@@ -53,6 +53,9 @@ for size in 48 64 128 256 512; do
     %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/gpui.png
 done
 
+install -pm 644 -D ../setup/man/en/gpui.1 %buildroot%_man1dir/gpui.1
+install -pm 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
+
 %files
 %doc README.md
 %doc INSTALL.md
@@ -85,6 +88,9 @@ done
 %_datadir/icons/hicolor/512x512/apps/gpui.png
 
 %_desktopdir/gpui.desktop
+
+%_man1dir/gpui.1
+%_mandir/ru/man1/gpui.1
 
 %changelog
 * Mon Mar 14 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt7

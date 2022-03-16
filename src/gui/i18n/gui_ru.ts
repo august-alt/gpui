@@ -81,7 +81,7 @@ context (user policy option).</source>
         <translation type="vanished">Локальные политики</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+131"/>
         <source>Policy State</source>
         <translation>Состояние политики</translation>
     </message>
@@ -106,7 +106,17 @@ context (user policy option).</source>
         <translation>Помощь:</translation>
     </message>
     <message>
-        <location line="-29"/>
+        <location line="+70"/>
+        <source>&amp;Cancel</source>
+        <translation>От&amp;мена</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location line="-109"/>
         <source>Supported on:</source>
         <translation>Поддерживается на:</translation>
     </message>
@@ -451,6 +461,16 @@ context (user policy option).</source>
         <location line="+7"/>
         <source>Delete</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>&amp;Cancel</source>
+        <translation>От&amp;мена</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -1215,7 +1235,7 @@ Enumeration:</source>
         <translation>Диалог редактирования списка</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+48"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>

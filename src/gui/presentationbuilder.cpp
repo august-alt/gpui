@@ -136,7 +136,7 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, checkBox, this ]() {
+                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, checkBox, this ]() {
                     if (!(*m_stateEnabled))
                     {
                         return;
@@ -176,7 +176,7 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, comboBox, this]()
+                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, comboBox, this]()
                 {
                     if (!(*m_stateEnabled))
                     {
@@ -236,7 +236,7 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, comboBox, this]() {
+                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, comboBox, this]() {
                     if (!(*m_stateEnabled))
                     {
                         return;
@@ -330,7 +330,7 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, textEdit, this]() {
+                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, textEdit, this]() {
                     if (!(*m_stateEnabled))
                     {
                         return;
@@ -375,7 +375,7 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, lineEdit, this]() {
+                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, lineEdit, this]() {
                     if (!(*m_stateEnabled))
                     {
                         return;
@@ -412,9 +412,9 @@ namespace gui
             m_elementName = elementName;
         }
 
-        void setSaveDialog(QDialogButtonBox& saveButton)
+        void setSaveButton(QPushButton& saveButton)
         {
-            m_saveDialog = &saveButton;
+            m_saveButton = &saveButton;
         }
 
         void setDataChanged(bool& dataChanged)
@@ -432,7 +432,7 @@ namespace gui
         QLayout* m_layout = nullptr;
         const Policy* m_policy = nullptr;
         AbstractRegistrySource* m_source = nullptr;
-        QDialogButtonBox* m_saveDialog = nullptr;
+        QPushButton* m_saveButton = nullptr;
         std::string m_elementName = "";
 
         void addToLayout(QWidget* widget) const {
@@ -474,7 +474,7 @@ namespace gui
                     });
 
                     // TODO: Implement correct type on save.
-                    m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, spinBox, this]() {
+                    m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, spinBox, this]() {
                         if (!(*m_stateEnabled))
                         {
                             return;
@@ -508,7 +508,7 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveDialog->connect(m_saveDialog, &QDialogButtonBox::accepted, [elementInfo, edit, this]() {
+                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, edit, this]() {
                     if (!(*m_stateEnabled))
                     {
                         return;
@@ -654,7 +654,7 @@ namespace gui
         d->setLayout(layout);
         d->setPolicy(params.policy);
         d->setRegistrySource(params.source);
-        d->setSaveDialog(params.saveButton);
+        d->setSaveButton(params.saveButton);
         d->setDataChanged(params.dataChanged);
         d->setStateEnabled(params.stateEnabled);
 

@@ -40,7 +40,7 @@ ListBoxDialog::ListBoxDialog(const QString &dialogTitle)
     connect(ui->newButton, &QPushButton::clicked, this, &ListBoxDialog::onNew);
     connect(ui->deleteButton, &QPushButton::clicked, this, &ListBoxDialog::onDelete);
 
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this,
+    connect(ui->okPushButton, &QPushButton::clicked, this,
             [&](){
                 QStringList items;
                 for(int i = 0; i < ui->tableWidget->rowCount(); ++i)
@@ -53,6 +53,7 @@ ListBoxDialog::ListBoxDialog(const QString &dialogTitle)
                 }
                 itemsEditingFinished(items);
             });
+    connect(ui->cancelPushButton, &QPushButton::clicked, this, &ListBoxDialog::close);
 }
 
 ListBoxDialog::~ListBoxDialog()

@@ -54,8 +54,8 @@ public:
 
 void gpui::ContentWidget::connectDialogBoxSignals()
 {
-    connect(ui->policyStateButtonBox, &QDialogButtonBox::accepted, this, &ContentWidget::onApplyClicked);
-    connect(ui->policyStateButtonBox, &QDialogButtonBox::rejected, this, &ContentWidget::onCancelClicked);
+    connect(ui->okPushButton, &QPushButton::clicked, this, &ContentWidget::onApplyClicked);
+    connect(ui->cancelPushButton, &QPushButton::clicked, this, &ContentWidget::onCancelClicked);
 }
 
 ContentWidget::ContentWidget(QWidget *parent)
@@ -177,7 +177,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
         switch (reply)
         {
         case QMessageBox::Yes:
-            emit ui->policyStateButtonBox->accepted();
+            emit ui->okPushButton->clicked();
             onApplyClicked();
             break;
         case QMessageBox::No:
@@ -247,10 +247,11 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
             if (presentation && policy)
             {
-                ui->policyStateButtonBox->disconnect();
+                ui->okPushButton->disconnect();
+                ui->cancelPushButton->disconnect();
                 auto layout = ::gui::PresentationBuilder::build({
                                                                 *presentation, *policy, *source,
-                                                                *ui->policyStateButtonBox, d->dataChanged,
+                                                                *ui->okPushButton, d->dataChanged,
                                                                 d->stateEnabled
                                                                 });
                 connectDialogBoxSignals();
@@ -289,7 +290,7 @@ void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
 
     ui->contentScrollArea->setVisible(visible);
     ui->contentListView->setVisible(!visible);
-    ui->policyStateButtonBox->setVisible(visible);
+    ui->policyStateContainerWidget->setVisible(visible);
     ui->contentWidget->setVisible(visible);
 
     ui->policyNameFrame->setVisible(visible);

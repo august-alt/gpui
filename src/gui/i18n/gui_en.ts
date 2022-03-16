@@ -83,7 +83,7 @@ context (user policy option).</translation>
         <translation type="vanished">Local Policies</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+131"/>
         <source>Policy State</source>
         <translation>Policy State</translation>
     </message>
@@ -108,7 +108,17 @@ context (user policy option).</translation>
         <translation>Help:</translation>
     </message>
     <message>
-        <location line="-29"/>
+        <location line="+70"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancel</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location line="-109"/>
         <source>Supported on:</source>
         <translation>Supported on:</translation>
     </message>
@@ -453,6 +463,16 @@ context (user policy option).</translation>
         <location line="+7"/>
         <source>Delete</source>
         <translation>Delete</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancel</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -1216,7 +1236,7 @@ Enumeration:</translation>
         <translation>List Dialog</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+48"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>

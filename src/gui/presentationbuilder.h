@@ -50,7 +50,7 @@ namespace gui
         const model::presentation::Presentation& presentation;
         const model::admx::Policy& policy;
         model::registry::AbstractRegistrySource& source;
-        QDialogButtonBox& saveButton;
+        QPushButton& saveButton;
         bool& dataChanged;
         bool& stateEnabled;
     };

@@ -53,8 +53,8 @@ for size in 48 64 128 256 512; do
     %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/gpui.png
 done
 
-install -pm 644 -D ../setup/man/en/gpui.1 %buildroot%_man1dir/gpui.1
-install -pm 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
+install -v -p -m 644 -D ../setup/man/en/gpui.1 %buildroot%_man1dir/gpui.1
+install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 
 %files
 %doc README.md

@@ -83,7 +83,7 @@ context (user policy option).</translation>
         <translation type="vanished">Local Policies</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+104"/>
         <source>Policy State</source>
         <translation>Policy State</translation>
     </message>
@@ -440,7 +440,7 @@ context (user policy option).</translation>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Default</source>
         <translation>Default</translation>
     </message>
@@ -708,7 +708,7 @@ context (user policy option).</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+67"/>
+        <location filename="../commandlineparser.cpp" line="+73"/>
         <source>The full path of policy to edit.</source>
         <translation>The full path of policy to edit.</translation>
     </message>
@@ -735,7 +735,7 @@ context (user policy option).</translation>
         <translation>Bad policy path: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+173"/>
+        <location filename="../contentwidget.cpp" line="+174"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -780,7 +780,7 @@ context (user policy option).</translation>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+303"/>
+        <location filename="../mainwindow.cpp" line="+310"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -1224,7 +1224,7 @@ Enumeration:</translation>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="-5"/>
+        <location filename="../mainwindow.cpp" line="-6"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
@@ -1242,6 +1242,11 @@ Enumeration:</translation>
         <location line="+1"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File type</source>
+        <translation>File type</translation>
     </message>
     <message>
         <location line="+8"/>

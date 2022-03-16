@@ -305,6 +305,7 @@ void MainWindow::onDirectoryOpen()
     fileDialog->setLabelText(QFileDialog::FileName, tr("File name"));
     fileDialog->setLabelText(QFileDialog::LookIn, tr("Look in"));
     fileDialog->setLabelText(QFileDialog::Reject, tr("Cancel"));
+    fileDialog->setLabelText(QFileDialog::FileType, tr("File type"));
 
     fileDialog->setNameFilter(QObject::tr("All files (*.*)"));
     fileDialog->setOptions(QFileDialog::ShowDirsOnly

@@ -81,7 +81,7 @@ context (user policy option).</source>
         <translation type="vanished">Локальные политики</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+104"/>
         <source>Policy State</source>
         <translation>Состояние политики</translation>
     </message>
@@ -438,7 +438,7 @@ context (user policy option).</source>
         <translation>Диалог</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
@@ -706,7 +706,7 @@ context (user policy option).</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+67"/>
+        <location filename="../commandlineparser.cpp" line="+73"/>
         <source>The full path of policy to edit.</source>
         <translation>Полный путь для редактируемой политики.</translation>
     </message>
@@ -733,7 +733,7 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+173"/>
+        <location filename="../contentwidget.cpp" line="+174"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -778,7 +778,7 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+303"/>
+        <location filename="../mainwindow.cpp" line="+310"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -1223,7 +1223,7 @@ Enumeration:</source>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="-5"/>
+        <location filename="../mainwindow.cpp" line="-6"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
@@ -1243,7 +1243,12 @@ Enumeration:</source>
         <translation>Искать в</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+2"/>
+        <source>File type</source>
+        <translation>Типы файлов</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Open Directory</source>
         <translation>Открыть папку</translation>
     </message>

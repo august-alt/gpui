@@ -81,7 +81,7 @@ context (user policy option).</source>
         <translation type="vanished">Локальные политики</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+134"/>
         <source>Policy State</source>
         <translation>Состояние политики</translation>
     </message>
@@ -111,12 +111,12 @@ context (user policy option).</source>
         <translation>От&amp;мена</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="-110"/>
         <source>Supported on:</source>
         <translation>Поддерживается на:</translation>
     </message>
@@ -1222,7 +1222,17 @@ Enumeration:</source>
 <context>
     <name>gpui::ContentWidget</name>
     <message>
-        <location filename="../contentwidget.cpp" line="+27"/>
+        <location filename="../contentwidget.cpp" line="+3"/>
+        <source>Yes</source>
+        <translation>Да</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Policy: </source>
         <translation>Политика: </translation>
     </message>

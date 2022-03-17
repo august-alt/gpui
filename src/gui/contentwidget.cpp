@@ -170,10 +170,15 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (d->dataChanged)
     {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, QObject::tr("Save settings dialog"),
-                                      QObject::tr("Policy settings were modified do you want to save them?"),
-                                      QMessageBox::Yes | QMessageBox::No);
+        QMessageBox messageBox(QMessageBox::Question,
+                    QObject::tr("Save settings dialog"),
+                    QObject::tr("Policy settings were modified do you want to save them?"),
+                    QMessageBox::Yes | QMessageBox::No,
+                    this);
+        messageBox.setButtonText(QMessageBox::Yes, tr("Yes"));
+        messageBox.setButtonText(QMessageBox::No, tr("No"));
+        int reply = messageBox.exec();
+
         switch (reply)
         {
         case QMessageBox::Yes:

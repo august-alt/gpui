@@ -164,6 +164,11 @@ void ContentWidget::onLanguageChaged()
 
 void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
+    // Perform mandatory cleanup.
+    ui->okPushButton->disconnect();
+    ui->cancelPushButton->disconnect();
+    connectDialogBoxSignals();
+
     d->currentIndex = index;
 
     const QAbstractItemModel* model = index.model();
@@ -254,6 +259,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             {
                 ui->okPushButton->disconnect();
                 ui->cancelPushButton->disconnect();
+
                 auto layout = ::gui::PresentationBuilder::build({
                                                                 *presentation, *policy, *source,
                                                                 *ui->okPushButton, d->dataChanged,

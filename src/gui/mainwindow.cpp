@@ -68,6 +68,7 @@ public:
 
     std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
+    std::unique_ptr<QSortFilterProxyModel> searchModel = nullptr;
 
     std::vector<std::unique_ptr<QTranslator>> translators {};
     QString localeName {};
@@ -232,6 +233,10 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     }
 
     connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
+
+    connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString& text) {
+        d->searchModel->setFilterFixedString(text);
+    });
 }
 
 MainWindow::~MainWindow()
@@ -303,13 +308,19 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     d->itemRoleSortModel->setSortRole(model::bundle::PolicyRoles::ITEM_TYPE);
     d->itemRoleSortModel->sort(0);
 
-    ui->treeView->setModel(d->itemRoleSortModel.get());
+    d->searchModel = std::make_unique<QSortFilterProxyModel>();
+    d->searchModel->setSourceModel(d->itemRoleSortModel.get());
+    d->searchModel->setFilterRole(Qt::DisplayRole);
+    d->searchModel->setFilterFixedString("");
+    d->searchModel->setRecursiveFilteringEnabled(true);
 
-    ui->treeView->expand(d->itemRoleSortModel->index(0, 0));
+    ui->treeView->setModel(d->searchModel.get());
 
-    d->contentWidget->setModel(d->itemRoleSortModel.get());
+    d->contentWidget->setModel(d->searchModel.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
+
+    ui->treeView->expand(d->searchModel->index(0, 0));
 
     d->contentWidget->modelItemSelected(d->itemRoleSortModel->index(0, 0));
 }

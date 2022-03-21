@@ -22,6 +22,8 @@
 #define GPUI_POLICYBUNDLE_H
 
 #include "../model.h"
+#include "../admx/policytype.h"
+
 #include "policytreemodel.h"
 
 #include <memory>
@@ -69,7 +71,7 @@ namespace model
             void assignParentCategory(const std::string& rawCategory, QStandardItem *machineItem, QStandardItem* userItem);
 
             QStandardItem *createItem(const QString& displayName, const QString &iconName, const QString &explainText,
-                                      const uint itemType = 0);
+                                      const uint itemType, const model::admx::PolicyType policyType);
 
             void assignSupportedOn();
 

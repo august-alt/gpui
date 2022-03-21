@@ -29,6 +29,7 @@
 #include "../model/admx/policy.h"
 #include "../model/admx/policyelement.h"
 
+#include "../model/bundle/itemtype.h"
 #include "../model/bundle/policyroles.h"
 #include "../model/commands/commandgroup.h"
 
@@ -214,7 +215,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
         d->manager = nullptr;
 
-        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == 1)
+        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
         {
             setPolicyWidgetsVisible(true);
             setPolicyWidgetState(STATE_NOT_CONFIGURED);
@@ -228,10 +229,18 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
             if (policy && d->machineSource)
             {
-                if (policy->policyType == model::admx::PolicyType::Machine)
+                if (static_cast<model::admx::PolicyType>(model->data(index, PolicyRoles::POLICY_TYPE).toUInt())
+                    == model::admx::PolicyType::Machine)
                 {
                     source = d->machineSource;
                 }
+
+                auto policyType = static_cast<model::admx::PolicyType>(model->data(index, PolicyRoles::POLICY_TYPE).toUInt());
+
+                qDebug() << policy->displayName.c_str() << " type: "
+                         << (policyType == model::admx::PolicyType::Machine ? "Machine" :
+                            (policyType == model::admx::PolicyType::User ? "User" :
+                            (policyType == model::admx::PolicyType::Both ? "Both" : "Error ")));
             }
 
             if (source && policy)

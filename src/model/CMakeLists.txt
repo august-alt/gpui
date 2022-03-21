@@ -26,6 +26,7 @@ set(HEADERS
     admx/supporteddefinition.h
     admx/supportedon.h
     admx/supportedproduct.h
+    bundle/itemtype.h
     bundle/policybundle.h
     bundle/policyroles.h
     bundle/policytreemodel.h

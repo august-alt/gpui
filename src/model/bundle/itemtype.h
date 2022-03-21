@@ -18,23 +18,17 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_POLICY_ROLES_H
-#define GPUI_POLICY_ROLES_H
-
-#include <QAbstractItemModel>
+#ifndef GPUI_ITEM_TYPE_H
+#define GPUI_ITEM_TYPE_H
 
 namespace model {
     namespace bundle {
-        enum PolicyRoles
+        enum ItemType
         {
-            ITEM_TYPE = Qt::UserRole + 1,
-            EXPLAIN_TEXT = Qt::UserRole + 2,
-            SUPPORTED_ON = Qt::UserRole + 4,
-            PRESENTATION = Qt::UserRole + 5,
-            POLICY = Qt::UserRole + 6,
-            POLICY_TYPE = Qt::UserRole + 7,
+            ITEM_TYPE_CATEGORY = 0,
+            ITEM_TYPE_POLICY   = 1,
         };
     }
 }
 
-#endif // GPUI_POLICY_ROLES_H
+#endif // GPUI_ITEM_TYPE_H

@@ -87,12 +87,16 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string& 
     d->treeModel = std::make_unique<QStandardItemModel>();
 
     QStandardItem* rootItem = d->treeModel->invisibleRootItem();
+    QStandardItem* visibleRootItem = createItem(QObject::tr("[Local Group Policy]"), "text-x-generic-template",
+                                                QObject::tr("Local group policies"));
+
+    rootItem->appendRow(visibleRootItem);
 
     d->rootMachineItem = createItem(QObject::tr("Machine"), "computer", QObject::tr("Machine level policies"));
     d->rootUserItem = createItem(QObject::tr("User"), "user-home", QObject::tr("User level policies"));
 
-    rootItem->appendRow(d->rootMachineItem);
-    rootItem->appendRow(d->rootUserItem);
+    visibleRootItem->appendRow(d->rootMachineItem);
+    visibleRootItem->appendRow(d->rootUserItem);
 
     const QDir dir(path.c_str());
     const QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);

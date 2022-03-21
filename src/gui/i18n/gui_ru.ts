@@ -753,7 +753,7 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+174"/>
+        <location filename="../contentwidget.cpp" line="+179"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -779,6 +779,11 @@ context (user policy option).</source>
     </message>
     <message>
         <location filename="../../model/bundle/policybundle.cpp" line="+91"/>
+        <source>Local group policies</source>
+        <translation>Шаблон локальных групповых политик</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Machine</source>
         <translation>Компьютер</translation>
     </message>
@@ -798,7 +803,18 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+310"/>
+        <location filename="../mainwindow.cpp" line="+287"/>
+        <source>[Domain Group Policy]</source>
+        <translation>[Доменная групповая политика]</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../../model/bundle/policybundle.cpp" line="-6"/>
+        <source>[Local Group Policy]</source>
+        <translation>[Локальная групповая политика]</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>

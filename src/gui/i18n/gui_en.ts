@@ -755,7 +755,7 @@ context (user policy option).</translation>
         <translation>Bad policy path: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+174"/>
+        <location filename="../contentwidget.cpp" line="+179"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -781,6 +781,11 @@ context (user policy option).</translation>
     </message>
     <message>
         <location filename="../../model/bundle/policybundle.cpp" line="+91"/>
+        <source>Local group policies</source>
+        <translation>Local group policies templates</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Machine</source>
         <translation>Machine</translation>
     </message>
@@ -800,7 +805,18 @@ context (user policy option).</translation>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+310"/>
+        <location filename="../mainwindow.cpp" line="+287"/>
+        <source>[Domain Group Policy]</source>
+        <translation>[Domain Group Policy]</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../../model/bundle/policybundle.cpp" line="-6"/>
+        <source>[Local Group Policy]</source>
+        <translation>[Local Group Policy]</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>

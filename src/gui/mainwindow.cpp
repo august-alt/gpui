@@ -273,6 +273,25 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
     d->model = bundle->loadFolder(path.toStdString(), locale.toStdString());
 
+    QStandardItem* header = d->model->invisibleRootItem()->child(0);
+
+    if (d->options.path.startsWith("smb://"))
+    {
+        QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
+        if (domainRegexp.indexIn(d->options.path) != -1)
+        {
+            header->setData('[' + domainRegexp.cap() + ']', Qt::DisplayRole);
+        }
+        else
+        {
+            header->setData(QObject::tr("[Domain Group Policy]"));
+        }
+    }
+    else
+    {
+        header->setData(QObject::tr("[Local Group Policy]"));
+    }
+
     d->itemNameSortModel = std::make_unique<QSortFilterProxyModel>();
     d->itemNameSortModel->setSourceModel(d->model.get());
     d->itemNameSortModel->setSortLocaleAware(true);
@@ -285,6 +304,9 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     d->itemRoleSortModel->sort(0);
 
     ui->treeView->setModel(d->itemRoleSortModel.get());
+
+    ui->treeView->expand(d->itemRoleSortModel->index(0, 0));
+
     d->contentWidget->setModel(d->itemRoleSortModel.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());

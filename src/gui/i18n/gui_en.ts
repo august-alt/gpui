@@ -483,7 +483,12 @@ context (user policy option).</translation>
         <translation>GPUI</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+47"/>
+        <source>Search...</source>
+        <translation>Search...</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
@@ -755,7 +760,7 @@ context (user policy option).</translation>
         <translation>Bad policy path: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+179"/>
+        <location filename="../contentwidget.cpp" line="+180"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -780,12 +785,12 @@ context (user policy option).</translation>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../../model/bundle/policybundle.cpp" line="+91"/>
+        <location filename="../../model/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Local group policies templates</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Machine</source>
         <translation>Machine</translation>
     </message>
@@ -795,7 +800,7 @@ context (user policy option).</translation>
         <translation>Machine level policies</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>User</source>
         <translation>User</translation>
     </message>
@@ -805,18 +810,18 @@ context (user policy option).</translation>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+287"/>
+        <location filename="../mainwindow.cpp" line="+292"/>
         <source>[Domain Group Policy]</source>
         <translation>[Domain Group Policy]</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../../model/bundle/policybundle.cpp" line="-6"/>
+        <location filename="../../model/bundle/policybundle.cpp" line="-8"/>
         <source>[Local Group Policy]</source>
         <translation>[Local Group Policy]</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+46"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>

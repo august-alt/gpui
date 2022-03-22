@@ -481,7 +481,12 @@ context (user policy option).</source>
         <translation>GPUI</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+47"/>
+        <source>Search...</source>
+        <translation>Поиск...</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
@@ -753,7 +758,7 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+179"/>
+        <location filename="../contentwidget.cpp" line="+180"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -778,12 +783,12 @@ context (user policy option).</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../../model/bundle/policybundle.cpp" line="+91"/>
+        <location filename="../../model/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Шаблон локальных групповых политик</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Machine</source>
         <translation>Компьютер</translation>
     </message>
@@ -793,7 +798,7 @@ context (user policy option).</source>
         <translation>Политики настройки компьютера</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>User</source>
         <translation>Пользователь</translation>
     </message>
@@ -803,18 +808,18 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+287"/>
+        <location filename="../mainwindow.cpp" line="+292"/>
         <source>[Domain Group Policy]</source>
         <translation>[Доменная групповая политика]</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../../model/bundle/policybundle.cpp" line="-6"/>
+        <location filename="../../model/bundle/policybundle.cpp" line="-8"/>
         <source>[Local Group Policy]</source>
         <translation>[Локальная групповая политика]</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+46"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>

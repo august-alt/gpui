@@ -61,18 +61,12 @@
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
-       <property name="icon">
-        <iconset theme="cancel"/>
-       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="okPushButton">
        <property name="text">
         <string>&amp;OK</string>
-       </property>
-       <property name="icon">
-        <iconset theme="ok"/>
        </property>
       </widget>
      </item>

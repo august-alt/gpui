@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>770</width>
-    <height>517</height>
+    <height>528</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -204,7 +204,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>223</width>
-                <height>295</height>
+                <height>306</height>
                </rect>
               </property>
              </widget>
@@ -342,20 +342,12 @@
             <property name="text">
              <string>&amp;Cancel</string>
             </property>
-            <property name="icon">
-             <iconset theme="cancel">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="okPushButton">
             <property name="text">
              <string>&amp;OK</string>
-            </property>
-            <property name="icon">
-             <iconset theme="ok">
-              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>

@@ -235,6 +235,8 @@ void handlePresentation(const std::shared_ptr<model::presentation::Presentation>
         auto dropdownList = dynamic_cast<model::presentation::DropdownList*>(widget.get());
         if (dropdownList)
         {
+            dropdownList->values.clear();
+
             for (auto& item : policy->elements)
             {
                 if (item->id.compare(dropdownList->refId) == 0)

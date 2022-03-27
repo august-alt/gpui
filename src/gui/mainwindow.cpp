@@ -258,7 +258,10 @@ QString MainWindow::getLanguage() const
 
 void MainWindow::setAdmxPath(const QString &admxPath)
 {
-    d->options.policyBundle = admxPath;
+    if (d->options.policyBundle.trimmed().isEmpty())
+    {
+        d->options.policyBundle = admxPath;
+    }
 }
 
 QString MainWindow::getAdmxPath() const

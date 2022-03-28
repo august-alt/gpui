@@ -325,7 +325,7 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
 
     ui->treeView->expand(d->searchModel->index(0, 0));
 
-    d->contentWidget->modelItemSelected(d->itemRoleSortModel->index(0, 0));
+    d->contentWidget->modelItemSelected(d->searchModel->index(0, 0));
 }
 
 void MainWindow::onDirectoryOpen()

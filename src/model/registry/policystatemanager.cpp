@@ -26,6 +26,8 @@
 #include "../admx/policyelement.h"
 #include "../admx/registryvalue.h"
 
+#include "../admx/policylistelement.h"
+
 #include <algorithm>
 
 namespace model {
@@ -107,6 +109,15 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
             if (d->source.isValuePresent(key, element->valueName))
             {
                 return true;
+            }
+
+            if (auto listElement = dynamic_cast<model::admx::PolicyListElement*>(element.get()))
+            {
+                // TODO: Implement correct detection of list state.
+                if (d->source.getValueNames(element->key).size() > 0)
+                {
+                    return true;
+                }
             }
         }
     }

@@ -24,6 +24,9 @@
 #include "gui.h"
 
 #include <QDialog>
+#include <QMap>
+
+#include <string>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ListBoxDialog; }
@@ -39,10 +42,11 @@ namespace gpui {
         ~ListBoxDialog();
 
         void setItems(const QStringList& items);
+        void setItems(const QMap<std::string, QString>& items);
         void clearItems();
 
     signals:
-        void itemsEditingFinished(QStringList items);
+        void itemsEditingFinished(QMap<std::string, QString> items);
 
     private:
         Ui::ListBoxDialog *ui;

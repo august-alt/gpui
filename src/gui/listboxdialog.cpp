@@ -42,13 +42,21 @@ ListBoxDialog::ListBoxDialog(const QString &dialogTitle)
 
     connect(ui->okPushButton, &QPushButton::clicked, this,
             [&](){
-                QStringList items;
+                QMap<std::string, QString> items;
                 for(int i = 0; i < ui->tableWidget->rowCount(); ++i)
                 {
-                    QTableWidgetItem* item = ui->tableWidget->item(i, 1);
-                    if (item && item->data(Qt::DisplayRole).isValid())
+                    QTableWidgetItem* key = ui->tableWidget->item(i, 0);
+                    QTableWidgetItem* value = ui->tableWidget->item(i, 1);
+                    if (value && value->data(Qt::DisplayRole).isValid())
                     {
-                        items.push_back(item->text());
+                        if (key && key->data(Qt::DisplayRole).isValid())
+                        {
+                                items[key->text().toStdString()] = (value->text());
+                        }
+                        else
+                        {
+                            items[std::to_string(i)] = (value->text());
+                        }
                     }
                 }
                 itemsEditingFinished(items);
@@ -64,10 +72,29 @@ ListBoxDialog::~ListBoxDialog()
 void ListBoxDialog::setItems(const QStringList &items)
 {
     int index = 0;
+    ui->tableWidget->hideColumn(0);
     ui->tableWidget->setRowCount(items.size());
     for (const auto& itemString : items)
     {
         ui->tableWidget->setItem(index, 1, new QTableWidgetItem(itemString));
+        index++;
+    }
+}
+
+void ListBoxDialog::setItems(const QMap<std::string, QString> &items)
+{
+    int index = 0;
+    ui->tableWidget->showColumn(0);
+    ui->tableWidget->setRowCount(items.size());
+    for (const auto& key : items.keys())
+    {
+        ui->tableWidget->setItem(index, 0, new QTableWidgetItem(QString::fromStdString(key)));
+        index++;
+    }
+
+    for (const auto& value : items.values())
+    {
+        ui->tableWidget->setItem(index, 1, new QTableWidgetItem(value));
         index++;
     }
 }

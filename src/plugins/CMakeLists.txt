@@ -17,6 +17,8 @@ endmacro(add_gpui_plugin)
 
 add_subdirectory(adml)
 add_subdirectory(admx)
+add_subdirectory(cmtl)
+add_subdirectory(cmtx)
 add_subdirectory(common)
 add_subdirectory(pol)
 add_subdirectory(preferences)

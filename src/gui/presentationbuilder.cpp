@@ -44,6 +44,8 @@
 #include "../model/registry/abstractregistrysource.h"
 
 #include "../model/admx/policylistelement.h"
+#include "../model/admx/policydecimalelement.h"
+#include "../model/admx/policylongdecimalelement.h"
 
 #include "listboxdialog.h"
 
@@ -585,6 +587,18 @@ namespace gui
                         spinBox->setValue(m_source->getValue(elementInfo.key, elementInfo.value).value<Number>());
                     }
 
+                    if (auto decimal = dynamic_cast<PolicyDecimalElement*>(elementInfo.element))
+                    {
+                        spinBox->setMinimum(decimal->minValue);
+                        spinBox->setMaximum(decimal->maxValue);
+                    }
+
+                    if (auto longDecimal = dynamic_cast<PolicyLongDecimalElement*>(elementInfo.element))
+                    {
+                        spinBox->setMinimum(longDecimal->minValue);
+                        spinBox->setMaximum(longDecimal->maxValue);
+                    }
+
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=]()
                     {
                         *m_dataChanged = true;
@@ -613,6 +627,16 @@ namespace gui
             if (m_policy && m_source)
             {
                 const ElementInfo elementInfo = findElementInfo();
+
+                if (auto decimal = dynamic_cast<PolicyDecimalElement*>(elementInfo.element))
+                {
+                    edit->setValidator(new QIntValidator(decimal->minValue, decimal->maxValue));
+                }
+
+                if (auto longDecimal = dynamic_cast<PolicyLongDecimalElement*>(elementInfo.element))
+                {
+                    edit->setValidator(new QIntValidator(longDecimal->minValue, longDecimal->maxValue));
+                }
 
                 if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
                 {

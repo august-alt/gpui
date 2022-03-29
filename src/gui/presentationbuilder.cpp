@@ -301,6 +301,13 @@ namespace gui
                                     return;
                                 }
                                 qWarning() << "Items debug: " << currentItems.values();
+                                // clean-up registry values.
+                                auto valueNames = m_source->getValueNames(listElement->key);
+                                for (const auto& valueName : valueNames)
+                                {
+                                    m_source->clearValue(listElement->key, valueName);
+                                }
+                                // set-up current values.
                                 for (const auto& valueName : currentItems.keys())
                                 {
                                     auto value = currentItems.value(valueName);
@@ -339,6 +346,14 @@ namespace gui
                                     }
                                     qWarning() << "Items debug: " << currentItems.values();
                                     size_t index = 1;
+                                    // clean-up registry values.
+                                    auto registryValueName = listElement->valuePrefix + std::to_string(index);
+                                    while (m_source->isValuePresent(listElement->key, registryValueName))
+                                    {
+                                        m_source->clearValue(listElement->key, registryValueName);
+                                        registryValueName = listElement->valuePrefix + std::to_string(++index);
+                                    }
+                                    // set-up current values.
                                     for (const auto& item : currentItems.values())
                                     {
                                         if (!item.trimmed().isEmpty())
@@ -365,6 +380,13 @@ namespace gui
                                         return;
                                     }
                                     qWarning() << "Items debug: " << currentItems.values();
+                                    // clean-up registry values.
+                                    auto registryValueNames = m_source->getValueNames(listElement->key);
+                                    for (const auto& valueName : registryValueNames)
+                                    {
+                                        m_source->clearValue(listElement->key, valueName);
+                                    }
+                                    // set-up current values.
                                     for (const auto& item : currentItems.values())
                                     {
                                         if (!item.trimmed().isEmpty())

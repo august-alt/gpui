@@ -158,7 +158,7 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
     {
         QMessageBox messageBox(QMessageBox::Critical,
                     QObject::tr("Error"),
-                    QObject::tr("Error reading file:") + "\n" + qPrintable(fileName.c_str()),
+                    QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
                     QMessageBox::Ok);
         messageBox.exec();
     }

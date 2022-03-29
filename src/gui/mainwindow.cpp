@@ -124,35 +124,44 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
 
     qWarning() << "Current string values." << oss->str().c_str();
 
-    if (QString::fromStdString(fileName).startsWith("smb://"))
-    {
-        gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
-        bool isOpen = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
-        if (!isOpen)
+    try {
+        if (QString::fromStdString(fileName).startsWith("smb://"))
         {
-            isOpen = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
+            bool isOpen = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!isOpen)
+            {
+                isOpen = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (isOpen && oss->str().size() > 0)
+            {
+                smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
+            }
+            smbLocationItemFile.close();
         }
-        if (isOpen && oss->str().size() > 0)
+        else
         {
-            smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
+            QFile registryFile(QString::fromStdString(fileName));
+            registryFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!registryFile.isOpen())
+            {
+                registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (registryFile.isOpen() && registryFile.isWritable() && oss->str().size() > 0)
+            {
+                registryFile.write(&oss->str().at(0), oss->str().size());
+            }
+            registryFile.close();
         }
-        smbLocationItemFile.close();
     }
-    else
+    catch (std::exception& e)
     {
-        QFile registryFile(QString::fromStdString(fileName));
-        registryFile.open(QFile::WriteOnly | QFile::Truncate);
-        if (!registryFile.isOpen())
-        {
-            registryFile.open(QFile::NewOnly | QFile::WriteOnly);
-        }
-        if (registryFile.isOpen() && registryFile.isWritable() && oss->str().size() > 0)
-        {
-            registryFile.write(&oss->str().at(0), oss->str().size());
-        }
-        registryFile.close();
+        QMessageBox messageBox(QMessageBox::Critical,
+                    QObject::tr("Error"),
+                    QObject::tr("Error reading file:") + "\n" + qPrintable(fileName.c_str()),
+                    QMessageBox::Ok);
+        messageBox.exec();
     }
-
 
     delete format;
 }
@@ -475,7 +484,12 @@ void MainWindow::onPolFileOpen(const QString &path,
     }
     catch (std::exception& e)
     {
-        qWarning() << "Unable to read file: " << qPrintable(path) << " Error: " << e.what();
+        QMessageBox messageBox(QMessageBox::Critical,
+                    QObject::tr("Error"),
+                    QObject::tr("Error reading file:") + "\n" + qPrintable(path),
+                    QMessageBox::Ok,
+                    this);
+        messageBox.exec();
     }
 }
 

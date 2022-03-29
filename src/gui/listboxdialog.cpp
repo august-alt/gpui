@@ -62,6 +62,7 @@ ListBoxDialog::ListBoxDialog(const QString &dialogTitle)
                 itemsEditingFinished(items);
             });
     connect(ui->cancelPushButton, &QPushButton::clicked, this, &ListBoxDialog::close);
+    connect(ui->okPushButton, &QPushButton::clicked, this, &ListBoxDialog::close);
 }
 
 ListBoxDialog::~ListBoxDialog()

@@ -749,6 +749,16 @@ context (user policy option).</translation>
         <translation>The full path of policy bundle to load.</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>The name of a policy to display.</source>
+        <translation>The name of a policy to display.</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>name</source>
+        <translation>name</translation>
+    </message>
+    <message>
         <location line="+6"/>
         <source>Displays help on commandline options.</source>
         <translation>Displays help on commandline options.</translation>
@@ -760,7 +770,12 @@ context (user policy option).</translation>
         <translation>Bad policy path: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+209"/>
+        <location line="+12"/>
+        <source>Bad policy name: </source>
+        <translation>Bad policy name: </translation>
+    </message>
+    <message>
+        <location filename="../contentwidget.cpp" line="+216"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -811,18 +826,18 @@ context (user policy option).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+165"/>
-        <location line="+330"/>
+        <location line="+335"/>
         <location line="+62"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location line="-391"/>
+        <location line="-396"/>
         <source>Error writing file:</source>
         <translation>Error writing file:</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+150"/>
         <source>[Domain Group Policy]</source>
         <translation>[Domain Group Policy]</translation>
     </message>

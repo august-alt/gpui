@@ -72,6 +72,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 
     const QCommandLineOption pathOption("p", QObject::tr("The full path of policy to edit."), QObject::tr("path"));
     const QCommandLineOption bundleOption("b", QObject::tr("The full path of policy bundle to load."), QObject::tr("path"));
+    const QCommandLineOption nameOption("n", QObject::tr("The name of a policy to display."), QObject::tr("name"));
     const QCommandLineOption helpOption(QStringList()
     #ifdef Q_OS_WIN
                    << QStringLiteral("?")
@@ -125,6 +126,19 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
             return CommandLineError;
         }
     }
+
+    if (d->parser->isSet(nameOption))
+    {
+        const QString name = d->parser->value(nameOption);
+        options->policyName = name;
+
+        if (options->policyName.isNull() || options->policyName.isEmpty())
+        {
+            *errorMessage = QObject::tr("Bad policy name: ") + name;
+            return CommandLineError;
+        }
+    }
+
 
     return CommandLineOk;
 }

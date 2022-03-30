@@ -747,6 +747,16 @@ context (user policy option).</source>
         <translation>Полный путь к набору ADMX файлов.</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>The name of a policy to display.</source>
+        <translation>Имя политики для отображения.</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>name</source>
+        <translation>имя</translation>
+    </message>
+    <message>
         <location line="+6"/>
         <source>Displays help on commandline options.</source>
         <translation>Показать описание опций коммандной строки.</translation>
@@ -758,7 +768,12 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+209"/>
+        <location line="+12"/>
+        <source>Bad policy name: </source>
+        <translation>Ошибочное название политики: </translation>
+    </message>
+    <message>
+        <location filename="../contentwidget.cpp" line="+216"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -809,18 +824,18 @@ context (user policy option).</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+165"/>
-        <location line="+330"/>
+        <location line="+335"/>
         <location line="+62"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location line="-391"/>
+        <location line="-396"/>
         <source>Error writing file:</source>
         <translation>Ошибка записи файла:</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+150"/>
         <source>[Domain Group Policy]</source>
         <translation>[Доменная групповая политика]</translation>
     </message>

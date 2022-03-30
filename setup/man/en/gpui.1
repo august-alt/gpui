@@ -4,7 +4,7 @@
 .SH NAME
 gpui-main \- manage group policy templates
 .SH SYNOPSIS
-gpui-main [-p policy path] [-b admx path] [-h | --help] [-v | --version]
+gpui-main [-p policy path] [-b admx path] [-n name of a policy] [-h | --help] [-v | --version]
 .SH DESCRIPTION
 gpui-main is a program for managing group policy templates.
 .SH OPTIONS
@@ -14,6 +14,10 @@ Provide the full path of the policy to edit.
 .TP 
 .if  !'po4a'hide' .BR \-b 
 Provide the path of admx files to load.
+.TP
+.if  !'po4a'hide' .BR \-n
+The parameter to be used in conjunction with ADMC, allows ADMC to pass the name of the GPO which will be used in
+a window title.
 .TP 
 .if  !'po4a'hide' .BR \-h ", " \-\-help
 Show help message and exit program.

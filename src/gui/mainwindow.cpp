@@ -248,6 +248,11 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
         onIniFileOpen(d->options.path + "/gpt.ini");
     }
 
+    if (!d->options.policyName.isEmpty())
+    {
+        setWindowTitle("GPUI - " + d->options.policyName);
+    }
+
     connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
 
     connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString& text) {

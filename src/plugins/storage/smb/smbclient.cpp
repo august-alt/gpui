@@ -32,14 +32,14 @@ const int SMB_DEBUG_LEVEL = 5;
 namespace
 {
 
-QByteArray userName("guest");
-QByteArray password("");
-QByteArray workGroup("WORKGROUP");
+QByteArray defaultUserName("guest");
+QByteArray defaultPassword("");
+QByteArray defaultWorkGroup("WORKGROUP");
 
 }
 
 SmbClient::SmbClient()
-    : SmbClient(userName, password)
+    : SmbClient(defaultUserName, defaultPassword)
 {
 }
 
@@ -83,8 +83,8 @@ ContextPtr SmbClient::createContext(AuthenticationFunction function)
 ContextPtr SmbClient::createContext(const QString &currentUserName, const QString &currentPassword,
                                     AuthenticationFunction function)
 {
-    userName = currentUserName.toLocal8Bit();
-    password = currentPassword.toLocal8Bit();
+    defaultUserName = currentUserName.toLocal8Bit();
+    defaultPassword = currentPassword.toLocal8Bit();
 
     return createContext(function);
 }
@@ -92,7 +92,7 @@ ContextPtr SmbClient::createContext(const QString &currentUserName, const QStrin
 ContextPtr SmbClient::createContext(const QString &currentUserName, const QString &currentPassword,
                                     const QString& currentWorkGroup, AuthenticationFunction function)
 {
-    workGroup = currentWorkGroup.toLocal8Bit();
+    defaultWorkGroup = currentWorkGroup.toLocal8Bit();
 
     return createContext(currentUserName, currentPassword, function);
 }
@@ -180,9 +180,9 @@ void SmbClient::authenticationCallBack(const char *server, const char *share, ch
     Q_UNUSED(server);
     Q_UNUSED(share);
 
-    strncpy(currentWorkGroup, workGroup.constData(), workGroupLength - 1);
-    strncpy(currentUser, userName.constData(), userLength - 1);
-    strncpy(currentPassword, password.constData(), passwordLength - 1);
+    strncpy(currentWorkGroup, defaultWorkGroup.constData(), workGroupLength - 1);
+    strncpy(currentUser, defaultUserName.constData(), userLength - 1);
+    strncpy(currentPassword, defaultPassword.constData(), passwordLength - 1);
 }
 
 void SmbClient::closeFile(FileHandle handle)

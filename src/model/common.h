@@ -25,7 +25,13 @@
 #define GPUI_SYMBOL_EXPORT __attribute__((__dllexport__))
 #define GPUI_SYMBOL_IMPORT __attribute__((__dllimport__))
 #else
+
+#if defined (__LCC__)
+#define GPUI_SYMBOL_EXPORT
+#else
 #define GPUI_SYMBOL_EXPORT __attribute__((__visibility__("default")))
+#endif
+
 #define GPUI_SYMBOL_IMPORT
 #endif
 

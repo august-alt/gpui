@@ -60,24 +60,24 @@ ContextPtr SmbClient::createContext(AuthenticationFunction function)
         function = &authenticationCallBack;
     }
 
-    ContextPtr ctx = smbc_new_context();
+    ContextPtr newContext = smbc_new_context();
 
-    if (ctx)
+    if (newContext)
     {
-        smbc_setDebug(ctx, SMB_DEBUG_LEVEL);
-        smbc_setOptionUseKerberos(ctx, true);
-        smbc_setOptionFallbackAfterKerberos(ctx, true);
-        smbc_setFunctionAuthData(ctx, function);
-        smbc_setOptionCaseSensitive(ctx, false);
+        smbc_setDebug(newContext, SMB_DEBUG_LEVEL);
+        smbc_setOptionUseKerberos(newContext, true);
+        smbc_setOptionFallbackAfterKerberos(newContext, true);
+        smbc_setFunctionAuthData(newContext, function);
+        smbc_setOptionCaseSensitive(newContext, false);
 
-        if (smbc_init_context(ctx) == nullptr)
+        if (smbc_init_context(newContext) == nullptr)
         {
-            smbc_free_context(ctx, SMB_FREE_EVEN_IF_BUSY);
-            ctx = nullptr;
+            smbc_free_context(newContext, SMB_FREE_EVEN_IF_BUSY);
+            newContext = nullptr;
         }
     }
 
-    return ctx;
+    return newContext;
 }
 
 ContextPtr SmbClient::createContext(const QString &currentUserName, const QString &currentPassword,

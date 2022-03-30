@@ -5,6 +5,7 @@ set(HEADERS
     genericfile.inl
     genericreader.h
     genericreader.inl
+    inifile.h
     io.h
     policydefinitionsfile.h
     policyresourcesfile.h
@@ -16,6 +17,7 @@ set(HEADERS
 )
 
 set(SOURCES    
+    inifile.cpp
     io.cpp
     policydefinitionsfile.cpp
     policyresourcesfile.cpp

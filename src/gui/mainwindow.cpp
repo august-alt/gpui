@@ -41,6 +41,11 @@
 #include "../io/registryfile.h"
 #include "../io/registryfileformat.h"
 
+#include "../io/policydefinitionsfile.h"
+#include "../io/policyfileformat.h"
+
+#include "../io/inifile.h"
+
 #include "../plugins/storage/smb/smbfile.h"
 
 #include "../model/bundle/policyroles.h"
@@ -239,6 +244,8 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
         {
             d->contentWidget->setMachineRegistrySource(source);
         });
+
+        onIniFileOpen(d->options.path + "/gpt.ini");
     }
 
     connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
@@ -481,6 +488,68 @@ void MainWindow::onPolFileOpen(const QString &path,
     source = std::make_unique<model::registry::PolRegistrySource>(registry);
 
     callback(source.get());
+    }
+    catch (std::exception& e)
+    {
+        QMessageBox messageBox(QMessageBox::Critical,
+                    QObject::tr("Error"),
+                    QObject::tr("Error reading file:") + "\n" + qPrintable(path),
+                    QMessageBox::Ok,
+                    this);
+        messageBox.exec();
+    }
+}
+
+void MainWindow::onIniFileOpen(const QString &path)
+{
+    qWarning() << "Path recieved: " << path;
+
+    auto stringvalues = std::make_unique<std::string>();
+
+    try {
+        if (path.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(path);
+            smbLocationItemFile.open(QFile::ReadOnly);
+            stringvalues->resize(smbLocationItemFile.size(), 0);
+            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(path);
+            registryFile.open(QFile::ReadWrite);
+            stringvalues->resize(registryFile.size(), 0);
+            registryFile.read(&stringvalues->at(0), registryFile.size());
+            registryFile.close();
+        }
+
+        auto iss = std::make_unique<std::istringstream>(*stringvalues);
+        std::string pluginName("ini");
+
+        auto reader = std::make_unique<io::GenericReader>();
+        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile> >(*iss, pluginName);
+        if (!iniFile)
+        {
+            qWarning() << "Unable to load registry file contents.";
+            return;
+        }
+
+        auto sections = iniFile->getAllSections();
+
+        if (sections->find("General") != sections->end())
+        {
+            auto& generalValues = (*sections)["General"];
+
+            auto displayName = generalValues.find("displayName");
+
+            if (displayName != generalValues.end())
+            {
+                qWarning() << "display name " << displayName.value().c_str();
+
+                setWindowTitle(QString::fromStdString("GPUI - " + displayName.value()));
+            }
+        }
     }
     catch (std::exception& e)
     {

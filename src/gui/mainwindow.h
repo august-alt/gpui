@@ -81,6 +81,8 @@ namespace gpui {
                            std::unique_ptr<model::registry::AbstractRegistrySource>& source,
                            std::function<void(model::registry::AbstractRegistrySource* source)> callback);
 
+        void onIniFileOpen(const QString& path);
+
         void loadPolicyBundleFolder(const QString& path, const QString& locale);
 
         void createLanguageMenu();

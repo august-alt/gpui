@@ -133,6 +133,11 @@ bool PolRegistrySource::isValuePresent(const std::string &key, const std::string
 
 void PolRegistrySource::markValueForDeletion(const std::string &key, const std::string &valueName)
 {
+    if (valueName.compare(0, 6, "**del.") == 0)
+    {
+        return;
+    }
+
     std::string deleteValueName = "**del." + valueName;
 
     clearValue(key, valueName);

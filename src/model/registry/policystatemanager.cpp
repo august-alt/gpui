@@ -114,9 +114,13 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
             if (auto listElement = dynamic_cast<model::admx::PolicyListElement*>(element.get()))
             {
                 // TODO: Implement correct detection of list state.
-                if (d->source.getValueNames(element->key).size() > 0)
+                auto valueNames = d->source.getValueNames(element->key);
+                for (const auto& valueName : valueNames)
                 {
-                    return true;
+                    if (valueName.compare(0, 6, "**del.") != 0)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -176,6 +180,18 @@ bool PolicyStateManager::determineIfPolicyDisabled() const
             {
                 disabledKeys++;
             }
+
+            if (auto listElement = dynamic_cast<model::admx::PolicyListElement*>(element.get()))
+            {
+                auto valueNames = d->source.getValueNames(key);
+                for (const auto& valueName : valueNames)
+                {
+                    if (valueName.compare(0, 6, "**del.") == 0)
+                    {
+                        disabledKeys++;
+                    }
+                }
+            }
         }
     }
 
@@ -230,7 +246,19 @@ void PolicyStateManager::setPolicyStateDisabled()
         auto key = element->key.size() > 0
                 ? element->key
                 : d->policy.key;
-        d->source.markValueForDeletion(key, element->valueName);
+
+        if (auto listElement = dynamic_cast<model::admx::PolicyListElement*>(element.get()))
+        {
+            auto valueNames = d->source.getValueNames(key);
+            for (const auto& valueName : valueNames)
+            {
+                d->source.markValueForDeletion(key, valueName);
+            }
+        }
+        else
+        {
+            d->source.markValueForDeletion(key, element->valueName);
+        }
     }
 }
 
@@ -267,7 +295,19 @@ void PolicyStateManager::setPolicyStateNotConfigured()
         auto key = element->key.size() > 0
                 ? element->key
                 : d->policy.key;
-        d->source.clearValue(key, element->valueName);
+
+        if (auto listElement = dynamic_cast<model::admx::PolicyListElement*>(element.get()))
+        {
+            auto valueNames = d->source.getValueNames(key);
+            for (const auto& valueName : valueNames)
+            {
+                d->source.clearValue(key, valueName);
+            }
+        }
+        else
+        {
+            d->source.clearValue(key, element->valueName);
+        }
     }
 }
 

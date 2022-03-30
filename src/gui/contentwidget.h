@@ -78,6 +78,7 @@ namespace gpui {
 
         void onApplyClicked();
         void onCancelClicked();
+        void onDataChanged();
 
     private:
         void setPolicyWidgetsVisible(bool visible);
@@ -87,7 +88,7 @@ namespace gpui {
         ContentWidget(const ContentWidget&)            = delete;   // copy ctor
         ContentWidget(ContentWidget&&)                 = delete;   // move ctor
         ContentWidget& operator=(const ContentWidget&) = delete;   // copy assignment
-        ContentWidget& operator=(ContentWidget&&)      = delete;   // move assignment
+        ContentWidget& operator=(ContentWidget&&)      = delete;   // move assignment        
     };
 }
 

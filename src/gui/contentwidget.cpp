@@ -68,7 +68,7 @@ ContentWidget::ContentWidget(QWidget *parent)
 
     setPolicyWidgetsVisible(false);
 
-    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
+    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);    
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
 
     connect(ui->notConfiguredRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
@@ -85,6 +85,10 @@ ContentWidget::ContentWidget(QWidget *parent)
     connect(ui->enabledRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
         if (checked)
         {
+            if (d->state != STATE_ENABLED)
+            {
+                d->dataChanged = true;
+            }
             setPolicyWidgetState(STATE_ENABLED);
             qWarning() << "Setting state enabled" << d->manager.get();
             if (d->manager)
@@ -126,7 +130,43 @@ void ContentWidget::setModel(QAbstractItemModel* model)
 
 void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 {
+    if (ui->contentListView->selectionModel())
+    {
+        disconnect(ui->contentListView->selectionModel());
+    }
+
     ui->contentListView->setSelectionModel(selectionModel);
+    connect(ui->contentListView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
+            [&](const QItemSelection &selected, const QItemSelection &deselected)
+            {
+                Q_UNUSED(deselected);
+                if (selected.isEmpty() || selected.first().indexes().isEmpty())
+                {
+                    return;
+                }
+
+                auto modelIndex = selected.first().indexes().first();
+
+                if (!ui->contentWidget->isVisible())
+                {
+                    ui->descriptionTextEdit->setText(modelIndex.data(PolicyRoles::EXPLAIN_TEXT).toString());
+                    if (modelIndex.data(PolicyRoles::ITEM_TYPE).value<uint>() != ItemType::ITEM_TYPE_POLICY)
+                    {
+                        ui->contentListView->setRootIndex(modelIndex);
+                    }
+                }
+                else
+                {
+                    if (!d->dataChanged)
+                    {
+                        modelItemSelected(modelIndex);
+                    }
+                    else
+                    {
+                        onDataChanged();
+                    }
+                }
+            });
 }
 
 void ContentWidget::setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource)
@@ -163,6 +203,31 @@ void ContentWidget::onLanguageChaged()
     ui->retranslateUi(this);
 }
 
+void gpui::ContentWidget::onDataChanged()
+{
+    QMessageBox messageBox(QMessageBox::Question,
+                QObject::tr("Save settings dialog"),
+                QObject::tr("Policy settings were modified do you want to save them?"),
+                QMessageBox::Yes | QMessageBox::No,
+                this);
+    messageBox.setButtonText(QMessageBox::Yes, tr("Yes"));
+    messageBox.setButtonText(QMessageBox::No, tr("No"));
+    int reply = messageBox.exec();
+
+    switch (reply)
+    {
+    case QMessageBox::Yes:
+        emit ui->okPushButton->clicked();
+        onApplyClicked();
+        break;
+    case QMessageBox::No:
+        onCancelClicked();
+        break;
+    default:
+        break;
+    }
+}
+
 void ContentWidget::onListItemClicked(const QModelIndex &index)
 {
     // Perform mandatory cleanup.
@@ -176,27 +241,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (d->dataChanged)
     {
-        QMessageBox messageBox(QMessageBox::Question,
-                    QObject::tr("Save settings dialog"),
-                    QObject::tr("Policy settings were modified do you want to save them?"),
-                    QMessageBox::Yes | QMessageBox::No,
-                    this);
-        messageBox.setButtonText(QMessageBox::Yes, tr("Yes"));
-        messageBox.setButtonText(QMessageBox::No, tr("No"));
-        int reply = messageBox.exec();
-
-        switch (reply)
-        {
-        case QMessageBox::Yes:
-            emit ui->okPushButton->clicked();
-            onApplyClicked();
-            break;
-        case QMessageBox::No:
-            onCancelClicked();
-            break;
-        default:
-            break;
-        }
+        onDataChanged();
     }
 
     d->dataChanged = false;
@@ -247,19 +292,22 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             {
                 d->manager = std::make_unique<model::registry::PolicyStateManager>(*source, *policy);
 
-                auto state = d->manager->determinePolicyState();
+                auto state = d->manager->determinePolicyState();                
                 if (state == model::registry::PolicyStateManager::STATE_ENABLED)
                 {
+                    d->state = STATE_ENABLED;
                     ui->enabledRadioButton->setChecked(true);
                 }
 
                 if (state == model::registry::PolicyStateManager::STATE_DISABLED)
                 {
+                    d->state = STATE_DISABLED;
                     ui->disabledRadioButton->setChecked(true);
                 }
 
                 if (state == model::registry::PolicyStateManager::STATE_NOT_CONFIGURED)
                 {
+                    d->state = STATE_NOT_CONFIGURED;
                     ui->notConfiguredRadioButton->setChecked(true);
                 }
             }

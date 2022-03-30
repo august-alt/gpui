@@ -83,7 +83,7 @@ context (user policy option).</translation>
         <translation type="vanished">Local Policies</translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+146"/>
         <source>Policy State</source>
         <translation>Policy State</translation>
     </message>
@@ -113,12 +113,12 @@ context (user policy option).</translation>
         <translation>&amp;Cancel</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+7"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-106"/>
         <source>Supported on:</source>
         <translation>Supported on:</translation>
     </message>
@@ -470,7 +470,7 @@ context (user policy option).</translation>
         <translation>&amp;Cancel</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+7"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -760,7 +760,7 @@ context (user policy option).</translation>
         <translation>Bad policy path: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+180"/>
+        <location filename="../contentwidget.cpp" line="+209"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -770,7 +770,7 @@ context (user policy option).</translation>
         <translation>Policy settings were modified do you want to save them?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+96"/>
+        <location filename="../presentationbuilder.cpp" line="+100"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
@@ -810,7 +810,19 @@ context (user policy option).</translation>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+292"/>
+        <location filename="../mainwindow.cpp" line="+165"/>
+        <location line="+330"/>
+        <location line="+62"/>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location line="-391"/>
+        <source>Error writing file:</source>
+        <translation>Error writing file:</translation>
+    </message>
+    <message>
+        <location line="+145"/>
         <source>[Domain Group Policy]</source>
         <translation>[Domain Group Policy]</translation>
     </message>
@@ -824,6 +836,12 @@ context (user policy option).</translation>
         <location line="+46"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
+    </message>
+    <message>
+        <location line="+134"/>
+        <location line="+62"/>
+        <source>Error reading file:</source>
+        <translation>Error reading file:</translation>
     </message>
 </context>
 <context>
@@ -1254,7 +1272,7 @@ Enumeration:</translation>
         <translation>No</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+44"/>
         <source>Policy: </source>
         <translation>Policy: </translation>
     </message>
@@ -1267,7 +1285,7 @@ Enumeration:</translation>
         <translation>List Dialog</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+76"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -1275,7 +1293,7 @@ Enumeration:</translation>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="-6"/>
+        <location filename="../mainwindow.cpp" line="-202"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>

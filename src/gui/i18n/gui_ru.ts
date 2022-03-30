@@ -81,7 +81,7 @@ context (user policy option).</source>
         <translation type="vanished">Локальные политики</translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+146"/>
         <source>Policy State</source>
         <translation>Состояние политики</translation>
     </message>
@@ -111,12 +111,12 @@ context (user policy option).</source>
         <translation>От&amp;мена</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+7"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-106"/>
         <source>Supported on:</source>
         <translation>Поддерживается на:</translation>
     </message>
@@ -468,7 +468,7 @@ context (user policy option).</source>
         <translation>От&amp;мена</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+7"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -758,7 +758,7 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+180"/>
+        <location filename="../contentwidget.cpp" line="+209"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -768,7 +768,7 @@ context (user policy option).</source>
         <translation>Настройки политки были изменены, хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+96"/>
+        <location filename="../presentationbuilder.cpp" line="+100"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -808,7 +808,19 @@ context (user policy option).</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+292"/>
+        <location filename="../mainwindow.cpp" line="+165"/>
+        <location line="+330"/>
+        <location line="+62"/>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <location line="-391"/>
+        <source>Error writing file:</source>
+        <translation>Ошибка записи файла:</translation>
+    </message>
+    <message>
+        <location line="+145"/>
         <source>[Domain Group Policy]</source>
         <translation>[Доменная групповая политика]</translation>
     </message>
@@ -822,6 +834,12 @@ context (user policy option).</source>
         <location line="+46"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
+    </message>
+    <message>
+        <location line="+134"/>
+        <location line="+62"/>
+        <source>Error reading file:</source>
+        <translation>Ошибка чтения файла:</translation>
     </message>
 </context>
 <context>
@@ -1253,7 +1271,7 @@ Enumeration:</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+44"/>
         <source>Policy: </source>
         <translation>Политика: </translation>
     </message>
@@ -1266,7 +1284,7 @@ Enumeration:</source>
         <translation>Диалог редактирования списка</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+76"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
@@ -1274,7 +1292,7 @@ Enumeration:</source>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="-6"/>
+        <location filename="../mainwindow.cpp" line="-202"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>

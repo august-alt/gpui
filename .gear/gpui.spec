@@ -22,6 +22,7 @@ BuildRequires: qt5-base-common
 BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
 BuildRequires: xsd
+BuildRequires: boost-devel-headers
 
 BuildRequires: desktop-file-utils ImageMagick-tools
 

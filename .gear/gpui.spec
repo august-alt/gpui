@@ -70,6 +70,7 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_libdir/gpui/plugins/libadmx-plugin.so
 %_libdir/gpui/plugins/libcmtl-plugin.so
 %_libdir/gpui/plugins/libcmtx-plugin.so
+%_libdir/gpui/plugins/libinifile-plugin.so
 %_libdir/gpui/plugins/libreg-plugin.so
 %_libdir/gpui/plugins/libspol-plugin.so
 %_libdir/gpui/plugins/libpol-plugin.so

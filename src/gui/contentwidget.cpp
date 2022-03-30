@@ -154,6 +154,13 @@ void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
                     {
                         ui->contentListView->setRootIndex(modelIndex);
                     }
+                    else
+                    {
+                        if (modelIndex.parent().isValid())
+                        {
+                            ui->contentListView->setRootIndex(modelIndex.parent());
+                        }
+                    }
                 }
                 else
                 {

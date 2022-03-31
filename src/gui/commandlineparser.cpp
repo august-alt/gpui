@@ -84,6 +84,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
     d->parser->addOption(pathOption);
     d->parser->addOption(bundleOption);
     d->parser->addOption(helpOption);
+    d->parser->addOption(nameOption);
 
     const QCommandLineOption versionOption = d->parser->addVersionOption();
 

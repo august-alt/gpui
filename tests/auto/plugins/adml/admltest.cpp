@@ -72,13 +72,6 @@ void AdmlTest::read()
                 auto registry = std::make_shared<model::registry::Registry>();
                 auto polRegistrySource = std::make_unique<model::registry::PolRegistrySource>(registry);
                 auto group = std::make_unique<model::command::CommandGroup>();
-
-                auto layout = gui::PresentationBuilder::build(presentation, *policy, *polRegistrySource, *group);
-                auto widget = std::make_unique<QWidget>();
-                widget->setLayout(layout);
-                widget->show();
-
-                QTest::qWait(10000);
             }
         }
     }

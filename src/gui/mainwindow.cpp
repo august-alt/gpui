@@ -129,9 +129,9 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
 
     qWarning() << "Current string values." << oss->str().c_str();
 
-    bool isOpen = false;
+    bool ifShowError = false;
 
-    auto showMessageBox = [&fileName]()
+    auto showMessageFunction = [&fileName]()
     {
         QMessageBox messageBox(QMessageBox::Critical,
                     QObject::tr("Error"),
@@ -144,12 +144,12 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
         if (QString::fromStdString(fileName).startsWith("smb://"))
         {
             gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
-            isOpen = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
-            if (!isOpen)
+            ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
             {
-                isOpen = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
             }
-            if (isOpen && oss->str().size() > 0)
+            if (ifShowError && oss->str().size() > 0)
             {
                 smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
             }
@@ -158,12 +158,12 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
         else
         {
             QFile registryFile(QString::fromStdString(fileName));
-            isOpen = registryFile.open(QFile::WriteOnly | QFile::Truncate);
-            if (!isOpen)
+            ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
             {
-                isOpen = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
             }
-            if (isOpen && registryFile.isWritable() && oss->str().size() > 0)
+            if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
             {
                 registryFile.write(&oss->str().at(0), oss->str().size());
             }
@@ -172,12 +172,13 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
     }
     catch (std::exception& e)
     {
-        showMessageBox();
+        ifShowError = true;
+        showMessageFunction();
     }
 
-    if (!isOpen)
+    if (!ifShowError)
     {
-        showMessageBox();
+        showMessageFunction();
     }
 
     delete format;

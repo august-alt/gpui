@@ -129,11 +129,22 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
 
     qWarning() << "Current string values." << oss->str().c_str();
 
+    bool isOpen = false;
+
+    auto showMessageBox = [&fileName]()
+    {
+        QMessageBox messageBox(QMessageBox::Critical,
+                    QObject::tr("Error"),
+                    QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
+                    QMessageBox::Ok);
+        messageBox.exec();
+    };
+
     try {
         if (QString::fromStdString(fileName).startsWith("smb://"))
         {
             gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
-            bool isOpen = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            isOpen = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
             if (!isOpen)
             {
                 isOpen = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
@@ -147,12 +158,12 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
         else
         {
             QFile registryFile(QString::fromStdString(fileName));
-            registryFile.open(QFile::WriteOnly | QFile::Truncate);
-            if (!registryFile.isOpen())
+            isOpen = registryFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!isOpen)
             {
-                registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+                isOpen = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
             }
-            if (registryFile.isOpen() && registryFile.isWritable() && oss->str().size() > 0)
+            if (isOpen && registryFile.isWritable() && oss->str().size() > 0)
             {
                 registryFile.write(&oss->str().at(0), oss->str().size());
             }
@@ -161,11 +172,12 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
     }
     catch (std::exception& e)
     {
-        QMessageBox messageBox(QMessageBox::Critical,
-                    QObject::tr("Error"),
-                    QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
-                    QMessageBox::Ok);
-        messageBox.exec();
+        showMessageBox();
+    }
+
+    if (!isOpen)
+    {
+        showMessageBox();
     }
 
     delete format;
@@ -496,12 +508,7 @@ void MainWindow::onPolFileOpen(const QString &path,
     }
     catch (std::exception& e)
     {
-        QMessageBox messageBox(QMessageBox::Critical,
-                    QObject::tr("Error"),
-                    QObject::tr("Error reading file:") + "\n" + qPrintable(path),
-                    QMessageBox::Ok,
-                    this);
-        messageBox.exec();
+        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
     }
 }
 
@@ -558,12 +565,7 @@ void MainWindow::onIniFileOpen(const QString &path)
     }
     catch (std::exception& e)
     {
-        QMessageBox messageBox(QMessageBox::Critical,
-                    QObject::tr("Error"),
-                    QObject::tr("Error reading file:") + "\n" + qPrintable(path),
-                    QMessageBox::Ok,
-                    this);
-        messageBox.exec();
+        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
     }
 }
 

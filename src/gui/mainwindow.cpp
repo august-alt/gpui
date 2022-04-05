@@ -550,7 +550,7 @@ void MainWindow::onIniFileOpen(const QString &path)
 
         auto sections = iniFile->getAllSections();
 
-        if (sections->find("General") != sections->end())
+        if (d->options.policyName.isEmpty() && sections->find("General") != sections->end())
         {
             auto& generalValues = (*sections)["General"];
 

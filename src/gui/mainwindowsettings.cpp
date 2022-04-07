@@ -40,6 +40,18 @@ public:
     Ui::MainWindow* ui = nullptr;
     QSettings settings {};
     gpui::MainWindow* window = nullptr;
+
+    MainWindowSettingsPrivate()
+        : ui(nullptr)
+        , settings("BaseALT", "GPUI")
+        , window(nullptr)
+    {}
+
+private:
+    MainWindowSettingsPrivate(const MainWindowSettingsPrivate&)            = delete;   // copy ctor
+    MainWindowSettingsPrivate(MainWindowSettingsPrivate&&)                 = delete;   // move ctor
+    MainWindowSettingsPrivate& operator=(const MainWindowSettingsPrivate&) = delete;   // copy assignment
+    MainWindowSettingsPrivate& operator=(MainWindowSettingsPrivate&&)      = delete;   // move assignment
 };
 
 MainWindowSettings::MainWindowSettings(gpui::MainWindow* window, Ui::MainWindow* ui)

@@ -4,10 +4,12 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(HEADERS
     aboutdialog.h
+    altspinbox.h
     contentwidget.h
     commandlineoptions.h
     commandlineparser.h
     gui.h
+    infint.h
     listboxdialog.h
     mainwindow.h
     mainwindowsettings.h
@@ -17,6 +19,7 @@ set(HEADERS
 
 set(SOURCES
     aboutdialog.cpp
+    altspinbox.cpp
     commandlineparser.cpp
     contentwidget.cpp
     gui.cpp
@@ -36,6 +39,7 @@ set(UI_FORMS
 
 set(MOC_HEADERS
     aboutdialog.h
+    altspinbox.h
     contentwidget.h
     listboxdialog.h
     mainwindow.h

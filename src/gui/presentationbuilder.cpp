@@ -47,6 +47,7 @@
 #include "../model/admx/policydecimalelement.h"
 #include "../model/admx/policylongdecimalelement.h"
 
+#include "altspinbox.h"
 #include "listboxdialog.h"
 
 #include <QVBoxLayout>
@@ -574,7 +575,9 @@ namespace gui
 
             auto clampAndDisplayMessage = [](Number current, Number min, Number max)
             {
-                if (current < min)
+                qWarning() << current << " " << min << " " << max;
+
+                if (min < current)
                 {
                     current = min;
 
@@ -609,7 +612,7 @@ namespace gui
 
             if (spin)
             {
-                QSpinBox* spinBox = new QSpinBox();
+                AltSpinBox* spinBox = new AltSpinBox();
                 spinBox->setSingleStep(step);
                 spinBox->setRange(0, std::numeric_limits<int>::max());
                 spinBox->setValue(value);
@@ -627,12 +630,14 @@ namespace gui
                     {
                         minimum = decimal->minValue;
                         maximum = decimal->maxValue;
+                        spinBox->setRange(minimum, maximum);
                     }
 
                     if (auto longDecimal = dynamic_cast<PolicyLongDecimalElement*>(elementInfo.element))
                     {
                         minimum = longDecimal->minValue;
                         maximum = longDecimal->maxValue;
+                        spinBox->setRange(minimum, maximum);
                     }
 
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=]()
@@ -642,14 +647,14 @@ namespace gui
 
                     // TODO: Implement correct type on save.
                     m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, spinBox, this,
-                                          &clampAndDisplayMessage, &minimum, &maximum]()
+                                          &clampAndDisplayMessage, minimum, maximum]()
                     {
                         if (!(*m_stateEnabled))
                         {
                             return;
                         }
                         qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
-                                   << " " << elementInfo.value.c_str();
+                                   << " " << elementInfo.value.c_str() << spinBox->value();
                         auto clampedValue = clampAndDisplayMessage(spinBox->value(), minimum, maximum);
                         m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type,
                                            clampedValue);
@@ -691,7 +696,7 @@ namespace gui
 
                 // TODO: Implement correct type on save.
                 m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, edit, this,
-                                      &clampAndDisplayMessage, &minimum, &maximum]()
+                                      &clampAndDisplayMessage, minimum, maximum]()
                 {
                     if (!(*m_stateEnabled))
                     {

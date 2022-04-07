@@ -61,6 +61,7 @@
 #include <QSpinBox>
 #include <QPlainTextEdit>
 #include <QTableWidget>
+#include <QMessageBox>
 #include <QHeaderView>
 
 #include <QDebug>
@@ -570,12 +571,47 @@ namespace gui
 
         template<typename Number>
         QWidget* createAnyDecimalTextBox(bool spin, Number value, Number step) const {
+
+            auto clampAndDisplayMessage = [](Number current, Number min, Number max)
+            {
+                if (current < min)
+                {
+                    current = min;
+
+                    QMessageBox messageBox(QMessageBox::Question,
+                                QObject::tr("Information message"),
+                                QObject::tr("Value: ") + QString::number(current)
+                                + QObject::tr(" is less than minimum allowed value of: ")
+                                + QString::number(min) + QObject::tr(". Minimum allowed value has been set."),
+                                QMessageBox::Ok);
+                    messageBox.exec();
+                }
+
+                if (current > max)
+                {
+                    current = max;
+
+                    QMessageBox messageBox(QMessageBox::Question,
+                                QObject::tr("Information message"),
+                                QObject::tr("Value: ") + QString::number(current)
+                                + QObject::tr(" is greater than maximum allowed value of: ")
+                                + QString::number(max) + QObject::tr(". Maximum allowed value has been set."),
+                                QMessageBox::Ok);
+                    messageBox.exec();
+                }
+
+                return current;
+            };
+
+
+            Number minimum = 0;
+            Number maximum = std::numeric_limits<Number>::max();
+
             if (spin)
             {
                 QSpinBox* spinBox = new QSpinBox();
-                spinBox->setMinimum(0);
-                spinBox->setMaximum(std::numeric_limits<int>::max());
                 spinBox->setSingleStep(step);
+                spinBox->setRange(0, std::numeric_limits<int>::max());
                 spinBox->setValue(value);
 
                 if (m_policy && m_source)
@@ -589,14 +625,14 @@ namespace gui
 
                     if (auto decimal = dynamic_cast<PolicyDecimalElement*>(elementInfo.element))
                     {
-                        spinBox->setMinimum(decimal->minValue);
-                        spinBox->setMaximum(decimal->maxValue);
+                        minimum = decimal->minValue;
+                        maximum = decimal->maxValue;
                     }
 
                     if (auto longDecimal = dynamic_cast<PolicyLongDecimalElement*>(elementInfo.element))
                     {
-                        spinBox->setMinimum(longDecimal->minValue);
-                        spinBox->setMaximum(longDecimal->maxValue);
+                        minimum = longDecimal->minValue;
+                        maximum = longDecimal->maxValue;
                     }
 
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=]()
@@ -605,15 +641,19 @@ namespace gui
                     });
 
                     // TODO: Implement correct type on save.
-                    m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, spinBox, this]() {
+                    m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, spinBox, this,
+                                          &clampAndDisplayMessage, &minimum, &maximum]()
+                    {
                         if (!(*m_stateEnabled))
                         {
                             return;
                         }
                         qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                    << " " << elementInfo.value.c_str();
+                        auto clampedValue = clampAndDisplayMessage(spinBox->value(), minimum, maximum);
                         m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type,
-                                           spinBox->value());
+                                           clampedValue);
+                        spinBox->setValue(clampedValue);
                     });
                 }
 
@@ -622,7 +662,6 @@ namespace gui
 
             QLineEdit* edit = new QLineEdit();
             edit->setText(QString::number(value));
-            edit->setValidator(new QIntValidator(0, std::numeric_limits<int>::max()));
 
             if (m_policy && m_source)
             {
@@ -630,12 +669,14 @@ namespace gui
 
                 if (auto decimal = dynamic_cast<PolicyDecimalElement*>(elementInfo.element))
                 {
-                    edit->setValidator(new QIntValidator(decimal->minValue, decimal->maxValue));
+                    minimum = decimal->minValue;
+                    maximum = decimal->maxValue;
                 }
 
                 if (auto longDecimal = dynamic_cast<PolicyLongDecimalElement*>(elementInfo.element))
                 {
-                    edit->setValidator(new QIntValidator(longDecimal->minValue, longDecimal->maxValue));
+                    minimum = longDecimal->minValue;
+                    maximum = longDecimal->maxValue;
                 }
 
                 if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
@@ -649,15 +690,19 @@ namespace gui
                 });
 
                 // TODO: Implement correct type on save.
-                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, edit, this]() {
+                m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, edit, this,
+                                      &clampAndDisplayMessage, &minimum, &maximum]()
+                {
                     if (!(*m_stateEnabled))
                     {
                         return;
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
+                    auto clampedValue = clampAndDisplayMessage(edit->text().toUInt(), minimum, maximum);
                     m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type,
-                                       edit->text().toUInt());
+                                       clampedValue);
+                    edit->setText(QString::number(clampedValue));
                 });
             }
 

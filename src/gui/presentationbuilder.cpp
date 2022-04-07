@@ -612,7 +612,7 @@ namespace gui
                         }
                         qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                    << " " << elementInfo.value.c_str();
-                        m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD,
+                        m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type,
                                            spinBox->value());
                     });
                 }
@@ -656,7 +656,7 @@ namespace gui
                     }
                     qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                << " " << elementInfo.value.c_str();
-                    m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD,
+                    m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type,
                                        edit->text().toUInt());
                 });
             }

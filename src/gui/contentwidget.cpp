@@ -164,14 +164,12 @@ void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
                 }
                 else
                 {
-                    if (!d->dataChanged)
-                    {
-                        modelItemSelected(modelIndex);
-                    }
-                    else
+                    if (d->dataChanged)
                     {
                         onDataChanged();
                     }
+
+                    modelItemSelected(modelIndex);
                 }
             });
 }

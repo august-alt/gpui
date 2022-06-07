@@ -460,6 +460,8 @@ void MainWindow::onLanguageChanged(QAction *action)
     ui->retranslateUi(this);
 
     ui->treeView->selectionModel()->clearSelection();
+
+    ui->searchLineEdit->clear();
 }
 
 void MainWindow::onPolFileOpen(const QString &path,

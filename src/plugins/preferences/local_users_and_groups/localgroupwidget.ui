@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LocalGroupWidget</class>
+ <widget class="QWidget" name="LocalGroupWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>436</width>
+    <height>456</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="3" column="0" colspan="3">
+    <widget class="QFrame" name="parametersFrame">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="renameLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>92</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Rename to:</string>
+        </property>
+        <property name="buddy">
+         <cstring>renameLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="renameLineEdit">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="descriptionLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>92</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Description:</string>
+        </property>
+        <property name="buddy">
+         <cstring>descriptionLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="descriptionLineEdit"/>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="addUserRadioButton">
+          <property name="text">
+           <string>Add the current user</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="removeUserRadioButton">
+          <property name="text">
+           <string>Remove the current user</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="doNotUserradioButton">
+          <property name="text">
+           <string>Do not configure for the current user</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QCheckBox" name="deleteGroupCheckBox">
+          <property name="text">
+           <string>Delete all member groups</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QCheckBox" name="deleteUsersCheckBox">
+          <property name="text">
+           <string>Delete all member users</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="preferences::GroupMembersWidget" name="membersWidget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>364</width>
+          <height>152</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+     <zorder>membersWidget</zorder>
+     <zorder>renameLabel</zorder>
+     <zorder>descriptionLineEdit</zorder>
+     <zorder>renameLineEdit</zorder>
+     <zorder>descriptionLabel</zorder>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QToolButton" name="sourceToolButton">
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QSplitter" name="splitter_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QLabel" name="actionLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Action:</string>
+      </property>
+      <property name="buddy">
+       <cstring>actionComboBox</cstring>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="actionComboBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="currentText">
+       <string>Create</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Create</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Replace</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </item>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="groupComboBox">
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="maxVisibleItems">
+      <number>30</number>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Diaup (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Network (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Batch (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Interactive (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Service (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Anonimous (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Authenticated Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Terminal Server Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Administrators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Guests (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Power Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Account operators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sever operators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Print operators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Backup operators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Replicators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pre-Windows 2000 Compatible Access (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Remote Desctop Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Network Configuration Operators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Incoming Foresr Trust Builders (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Perfomance Monitor Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Perfomance Log Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Windows Authorization Access Droup (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Terminal Server License Servers (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Distributed COM Users (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Cryptographic Operators (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Event Log Readers (built-in)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Certificate Service DCOM Access (built-in)</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="groupNameLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>92</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Group Name:</string>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <property name="buddy">
+      <cstring>groupComboBox</cstring>
+     </property>
+    </widget>
+   </item>
+  </layout>
+  <zorder>groupNameLabel</zorder>
+  <zorder>sourceToolButton</zorder>
+  <zorder>parametersFrame</zorder>
+  <zorder>line</zorder>
+  <zorder>splitter_2</zorder>
+  <zorder>groupComboBox</zorder>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>preferences::GroupMembersWidget</class>
+   <extends>QWidget</extends>
+   <header>local_users_and_groups/groupmemberswidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>actionComboBox</tabstop>
+  <tabstop>groupComboBox</tabstop>
+  <tabstop>sourceToolButton</tabstop>
+  <tabstop>renameLineEdit</tabstop>
+  <tabstop>descriptionLineEdit</tabstop>
+  <tabstop>addUserRadioButton</tabstop>
+  <tabstop>removeUserRadioButton</tabstop>
+  <tabstop>doNotUserradioButton</tabstop>
+  <tabstop>deleteGroupCheckBox</tabstop>
+  <tabstop>deleteUsersCheckBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

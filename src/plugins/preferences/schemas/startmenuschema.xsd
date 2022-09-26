@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:include schemaLocation="targetingschema.xsd"/>
+
+<xs:complexType name="StartMenuProperties_t">
+   <xs:attribute name="largeMFUIcons"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="minMFU"
+     type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="autoCascade"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="notifyNewApps"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showControlPanel"
+     type="xs:string" use="optional" />
+   <xs:attribute name="enableDragDrop"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="startMenuFavorites"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showHelp"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showMyComputer"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showMyDocs"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showMyMusic"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showNetPlaces"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showMyPics"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showNetConn"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showPrinters"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showRun"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="scrollPrograms"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showSearch"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showRecentDocs"
+     type="xs:string" use="optional" />
+   <xs:attribute name="clearStartDocsList"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cShowLogoff"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cShowRun"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cEnableDragDrop"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeControlPanel"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeMyDocuments"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeMyPictures"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeNetworkConnections"
+    type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadePrinters"
+    type="xs:boolean" use="optional" />
+   <xs:attribute name="cScrollPrograms"
+    type="xs:boolean" use="optional" />
+   <xs:attribute name="cPersonalized"
+    type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="StartMenu_t">
+   <xs:sequence>
+      <xs:element name="Filters" type="Filters_t">
+      </xs:element>
+      <xs:element name="Properties" type="StartMenuProperties_t" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="FilterOs_t">
+   <xs:attribute name="hidden"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="not"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="bool"
+     type="xs:string" use="required" />
+   <xs:attribute name="class"
+     type="xs:string" use="required" />
+   <xs:attribute name="version"
+     type="xs:string" use="required" />
+   <xs:attribute name="type"
+     type="xs:string" use="required" />
+   <xs:attribute name="edition"
+     type="xs:string" use="required" />
+   <xs:attribute name="sp"
+     type="xs:string" use="required" />
+</xs:complexType>
+
+<xs:complexType name="Filters2_t">
+   <xs:sequence>
+      <xs:element name="FilterOs" type="FilterOs_t" />
+   </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="StartMenuVistaProperties_t">
+   <xs:attribute name="minMFU"
+     type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="showMyComputer"
+     type="xs:string" use="optional" />
+   <xs:attribute name="connectTo"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showControlPanel"
+     type="xs:string" use="optional" />
+   <xs:attribute name="defaultPrograms"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showMyDocs"
+     type="xs:string" use="optional" />
+   <xs:attribute name="enableContextMenu"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showFavorites"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showGames"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showHelp"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="highlightNew"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showMyMusic"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showNetPlaces"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="openSubMenus"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="personalFolders"
+     type="xs:string" use="optional" />
+   <xs:attribute name="showMyPics"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showPrinters"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="runCommand"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showSearch"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="searchCommunications"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="searchFavorites"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="searchFiles"
+     type="xs:string" use="optional" />
+   <xs:attribute name="searchPrograms"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="trackProgs"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="sortAllPrograms"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="systemAdmin"
+     type="xs:string" use="optional" />
+   <xs:attribute name="useLargeIcons"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="showRecentDocs"
+     type="xs:string" use="optional" />
+   <xs:attribute name="clearStartDocsList"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cShowAdminTools"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cShowFavorites"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cShowLogoff"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cShowRun"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cEnableDragDrop"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeControlPanel"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeMyDocuments"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeNetworkConnections"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadeMyPictures"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cCascadePrinters"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cScrollPrograms"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cSmallIcons"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="cPersonalized"
+     type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="StartMenuVista_t">
+   <xs:sequence>
+      <xs:element name="Filters" type="Filters2_t" />
+      <xs:element name="Properties" type="StartMenuVistaProperties_t" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:element name="StartMenuTaskbar">
+  <xs:complexType>
+     <xs:sequence>
+        <xs:element name="StartMenu" type="StartMenu_t" />
+        <xs:element name="StartMenuVista" type="StartMenuVista_t" />
+     </xs:sequence>
+     <xs:attribute name="clsid" type="xs:string" use="required" />
+     <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

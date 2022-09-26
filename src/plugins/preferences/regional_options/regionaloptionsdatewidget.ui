@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>regionaloptionsdatewidget</class>
+ <widget class="QWidget" name="regionaloptionsdatewidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>426</width>
+    <height>478</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="ShortDateGroupBox">
+     <property name="title">
+      <string>Short date</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="1">
+       <widget class="QComboBox" name="dateSeparatorComboBox"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="dateSeparatorLabel">
+        <property name="text">
+         <string>Date separator:</string>
+        </property>
+        <property name="buddy">
+         <cstring>dateSeparatorComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="dateShortFormatLabel">
+        <property name="text">
+         <string>Short date format:</string>
+        </property>
+        <property name="buddy">
+         <cstring>dateShortFormatComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="shortDateSampleLineEdit"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="dateShortFormatComboBox"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="shortDateSampleLabel">
+        <property name="text">
+         <string>Short date sample:</string>
+        </property>
+        <property name="buddy">
+         <cstring>shortDateSampleLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="LongDateGroupBox">
+     <property name="title">
+      <string>Long date</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="longDateSampleLabel">
+        <property name="text">
+         <string>Long date sample:</string>
+        </property>
+        <property name="buddy">
+         <cstring>longDateSampleLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="longDateSampleLineEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="dateLongFormatLabel">
+        <property name="text">
+         <string>Long date format:</string>
+        </property>
+        <property name="buddy">
+         <cstring>dateLongFormatComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="dateLongFormatComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="CalendarGroupBox">
+     <property name="title">
+      <string>Calendar</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QLabel" name="CalendarLabel">
+        <property name="text">
+         <string>When two digit year entered, interpret it as a year between:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="dateInterpretYearMinLineEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>1930</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="andLabel">
+          <property name="text">
+           <string>and</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="dateInterpretYearMaxSpinBox"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <spacer name="RegionalOptionsDateVerticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>dateInterpretYearMinLineEdit</tabstop>
+  <tabstop>dateInterpretYearMaxSpinBox</tabstop>
+  <tabstop>shortDateSampleLineEdit</tabstop>
+  <tabstop>dateShortFormatComboBox</tabstop>
+  <tabstop>dateSeparatorComboBox</tabstop>
+  <tabstop>longDateSampleLineEdit</tabstop>
+  <tabstop>dateLongFormatComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

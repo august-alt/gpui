@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:complexType name="PowerSchemeProperties_t">
+   <xs:attribute name="action" type="xs:string" use="optional" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="default" type="xs:boolean" use="optional" />
+   <xs:attribute name="monitorAc" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="monitorDc" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="hardDiskAc" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="hardDiskDc" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="standbyAc" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="standbyDc" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="hibernateAc" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="hibernateDc" type="xs:unsignedByte" use="optional" />
+ <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="PowerScheme_t">
+   <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Properties" type="PowerSchemeProperties_t" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="GlobalPowerOptionsProperties_t">
+   <xs:attribute name="showIcon" type="xs:boolean" use="optional" />
+   <xs:attribute name="promptPassword" type="xs:boolean" use="optional" />
+   <xs:attribute name="enableHibernation" type="xs:boolean" use="optional" />
+   <xs:attribute name="closeLid" type="xs:string" use="optional" />
+   <xs:attribute name="pressPowerBtn" type="xs:string" use="optional" />
+   <xs:attribute name="pressSleepBtn" type="xs:string" use="optional" />
+  <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="GlobalPowerOptions_t">
+   <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Properties" type="GlobalPowerOptionsProperties_t" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="GlobalPowerOptionsV2Properties_t">
+  <xs:attribute name="action" type="xs:string" use="optional" />
+  <xs:attribute name="nameGuid" type="xs:string" use="optional" />
+  <xs:attribute name="default" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="requireWakePwdAC" type="xs:string" use="optional" />
+  <xs:attribute name="requireWakePwdDC" type="xs:string" use="optional" />
+  <xs:attribute name="turnOffHDAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="turnOffHDDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="sleepAfterAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="sleepAfterDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="allowHybridSleepAC" type="xs:string" use="optional" />
+  <xs:attribute name="allowHybridSleepDC" type="xs:string" use="optional" />
+  <xs:attribute name="hibernateAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="hibernateDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="lidCloseAC" type="xs:string" use="optional" />
+  <xs:attribute name="lidCloseDC" type="xs:string" use="optional" />
+  <xs:attribute name="pbActionAC" type="xs:string" use="optional" />
+  <xs:attribute name="pbActionDC" type="xs:string" use="optional" />
+  <xs:attribute name="strtMenuActionAC" type="xs:string" use="optional" />
+  <xs:attribute name="strtMenuActionDC" type="xs:string" use="optional" />
+  <xs:attribute name="linkPwrMgmtAC" type="xs:string" use="optional" />
+  <xs:attribute name="linkPwrMgmtDC" type="xs:string" use="optional" />
+  <xs:attribute name="procStateMinAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="procStateMinDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="procStateMaxAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="procStateMaxDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="displayOffAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="displayOffDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="adaptiveAC" type="xs:string" use="optional" />
+  <xs:attribute name="adaptiveDC" type="xs:string" use="optional" />
+  <xs:attribute name="critBatActionAC" type="xs:string" use="optional" />
+  <xs:attribute name="critBatActionDC" type="xs:string" use="optional" />
+  <xs:attribute name="lowBatteryLvlAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="lowBatteryLvlDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="critBatteryLvlAC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="critBatteryLvlDC" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="lowBatteryNotAC" type="xs:string" use="optional" />
+  <xs:attribute name="lowBatteryNotDC" type="xs:string" use="optional" />
+  <xs:attribute name="lowBatteryActionAC" type="xs:string" use="optional" />
+  <xs:attribute name="lowBatteryActionDC" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="GlobalPowerOptionsV2_t">
+  <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="unbounded" name="Properties" type="GlobalPowerOptionsV2Properties_t" />
+  </xs:sequence>
+  <xs:attribute name="clsid" type="xs:string" use="required" />
+  <xs:attribute name="name" type="xs:string" use="required" />
+  <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="changed" type="xs:string" use="optional" />
+  <xs:attribute name="uid" type="xs:string" use="required" />
+  <xs:attribute name="desc" type="xs:string" use="optional" />
+  <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+  <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+  <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+  <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:element name="PowerOptions">
+  <xs:complexType>
+     <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="GlobalPowerOptions" type="GlobalPowerOptions_t" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="PowerScheme" type="PowerScheme_t" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="GlobalPowerOptionsV2" type="GlobalPowerOptionsV2_t" />
+     </xs:sequence>
+     <xs:attribute name="clsid" type="xs:string" use="required" />
+     <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+  </xs:complexType>
+</xs:element>
+</xs:schema>

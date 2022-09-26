@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ScheduleSettingsWin7Widget</class>
+ <widget class="QWidget" name="ScheduleSettingsWin7Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>445</width>
+    <height>443</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>445</width>
+    <height>443</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>486</width>
+    <height>443</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="5" column="2" colspan="2">
+    <widget class="QComboBox" name="stopLonderComboBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>6</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>1 hour</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>2 hours</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>4 hours</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>8 hours</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>12 hours</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1 day</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>3 days</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="4">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>428</width>
+       <height>41</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QCheckBox" name="restartEveryCheckBox">
+     <property name="text">
+      <string>If the task fails, restart every:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="4">
+    <widget class="QCheckBox" name="forceStopCheckBox">
+     <property name="text">
+      <string>If the running task does not end when requesred, forse it to stop</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="2">
+    <widget class="QCheckBox" name="deleteAfterCheckBox">
+     <property name="text">
+      <string>If the task is not scheduled to run again, delete it after:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QCheckBox" name="allowCheckBox">
+     <property name="text">
+      <string>Allow task to be run on demand</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLineEdit" name="restartUpLineEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>41</horstretch>
+       <verstretch>25</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>41</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>41</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QCheckBox" name="runSoonCheckBox">
+     <property name="text">
+      <string>Run task as soon as possible after a scheduled start is misswd</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="2">
+    <widget class="QComboBox" name="restartEveryComboBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>1 minute</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>5 minute</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>5 minutes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>10 minutes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>15 minutes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>30 minutes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1 hour</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>2 hours</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="2">
+    <widget class="QComboBox" name="runRolesComboBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>360</width>
+       <height>25</height>
+      </size>
+     </property>
+     <item>
+      <property name="text">
+       <string>Do not srart a new instanse</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Run a new instanse in parallel</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Queue a new instanse</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Stop the existing instanse</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <widget class="QLabel" name="settingsLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>92</horstretch>
+       <verstretch>35</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>92</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Special condition settings that affect the behavior of the task.</string>
+     </property>
+     <property name="buddy">
+      <cstring>allowCheckBox</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QLabel" name="restartUptimeLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>times</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="4">
+    <widget class="QLabel" name="runrolesLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>If the task is running, then the following role applies:</string>
+     </property>
+     <property name="buddy">
+      <cstring>runRolesComboBox</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QCheckBox" name="stopLongerCheckBox">
+     <property name="text">
+      <string>Stop the task if it runs longer than:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2" colspan="2">
+    <widget class="QComboBox" name="deleteAfterComboBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Immediately</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>30 days</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>90 days</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>180 days</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>365 days</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLabel" name="restartUpLabel">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>170</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>300</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Attempt to restart up to:</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>allowCheckBox</tabstop>
+  <tabstop>runSoonCheckBox</tabstop>
+  <tabstop>restartEveryCheckBox</tabstop>
+  <tabstop>restartEveryComboBox</tabstop>
+  <tabstop>restartUpLineEdit</tabstop>
+  <tabstop>stopLongerCheckBox</tabstop>
+  <tabstop>stopLonderComboBox</tabstop>
+  <tabstop>forceStopCheckBox</tabstop>
+  <tabstop>deleteAfterCheckBox</tabstop>
+  <tabstop>deleteAfterComboBox</tabstop>
+  <tabstop>runRolesComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>restartEveryCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>restartEveryComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>120</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>restartEveryCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>restartUpLabel</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>202</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>restartEveryCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>restartUpLineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>378</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stopLongerCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>stopLonderComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteAfterCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>deleteAfterComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

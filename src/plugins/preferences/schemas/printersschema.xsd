@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:complexType name="SharedPrinterProperties_t">
+   <xs:attribute name="action" type="xs:string" use="optional" />
+   <xs:attribute name="comment" type="xs:string" use="optional" />
+   <xs:attribute name="path" type="xs:string" use="required" />
+   <xs:attribute name="location" type="xs:string" use="optional" />
+   <xs:attribute name="default" type="xs:boolean" use="optional" />
+   <xs:attribute name="skipLocal" type="xs:boolean" use="optional" />
+   <xs:attribute name="deleteAll" type="xs:boolean" use="optional" />
+   <xs:attribute name="persistent" type="xs:boolean" use="optional" />
+   <xs:attribute name="deleteMaps" type="xs:boolean" use="optional" />
+   <xs:attribute name="port" type="xs:string" use="required" />
+   <xs:attribute name="username" type="xs:string" use="optional" />
+   <xs:attribute name="cpassword" type="xs:string" use="optional" />
+   <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="SharedPrinter_t">
+   <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Properties" type="SharedPrinterProperties_t" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="PortPrinterProperties_t">
+   <xs:attribute name="ipAddress" type="xs:string" use="required" />
+   <xs:attribute name="action" type="xs:string" use="optional" />
+   <xs:attribute name="location" type="xs:string" use="optional" />
+   <xs:attribute name="localName" type="xs:string" use="optional" />
+   <xs:attribute name="comment" type="xs:string" use="optional" />
+   <xs:attribute name="default" type="xs:boolean" use="optional" />
+   <xs:attribute name="skipLocal" type="xs:boolean" use="optional" />
+   <xs:attribute name="useDNS" type="xs:boolean" use="optional" />
+   <xs:attribute name="path" type="xs:string" use="required" />
+   <xs:attribute name="deleteAll" type="xs:boolean" use="optional" />
+   <xs:attribute name="lprQueue" type="xs:string" use="optional" />
+   <xs:attribute name="snmpCommunity" type="xs:string" use="optional" />
+   <xs:attribute name="protocol" type="xs:string" use="optional" />
+   <xs:attribute name="portNumber" type="xs:unsignedShort" use="optional" />
+   <xs:attribute name="doubleSpool" type="xs:boolean" use="optional" />
+   <xs:attribute name="snmpEnabled" type="xs:boolean" use="optional" />
+   <xs:attribute name="snmpDevIndex" type="xs:unsignedByte" use="optional" />
+  <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="PortPrinter_t">
+   <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Properties" type="PortPrinterProperties_t" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="LocalPrinterProperties_t">
+   <xs:attribute name="action" type="xs:string" use="optional" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="port" type="xs:string" use="required" />
+   <xs:attribute name="path" type="xs:string" use="required" />
+   <xs:attribute name="default" type="xs:boolean" use="optional" />
+   <xs:attribute name="deleteAll" type="xs:boolean" use="optional" />
+   <xs:attribute name="location" type="xs:string" use="optional" />
+   <xs:attribute name="comment" type="xs:string" use="optional" />
+  <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="LocalPrinter_t">
+   <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Properties" type="LocalPrinterProperties_t" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:element name="Printers">
+  <xs:complexType>
+     <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="SharedPrinter" type="SharedPrinter_t" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="PortPrinter" type="PortPrinter_t" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="LocalPrinter" type="LocalPrinter_t" />
+     </xs:sequence>
+     <xs:attribute name="clsid" type="xs:string" use="required" />
+     <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

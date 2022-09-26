@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>regionaloptionscurrencieswidget</class>
+ <widget class="QWidget" name="regionaloptionscurrencieswidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>443</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="3" column="0">
+    <widget class="QFrame" name="DigitGroupingFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="QLabel" name="currGrpSymbolLabel">
+        <property name="text">
+         <string>Digit grouping symbol:</string>
+        </property>
+        <property name="buddy">
+         <cstring>currGrpSymbolComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="currDigitGrpFmtLabel">
+        <property name="text">
+         <string>Digit grouping:</string>
+        </property>
+        <property name="buddy">
+         <cstring>currDigitGrpFmtComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="currGrpSymbolComboBox"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="currDigitGrpFmtComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="SampleGroupBox">
+     <property name="title">
+      <string>Sample</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="2">
+       <widget class="QLabel" name="NegativeSampleLabel">
+        <property name="text">
+         <string>Negative</string>
+        </property>
+        <property name="buddy">
+         <cstring>NegativeSampleLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="NegativeSampleLineEdit"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="PositiveSampleLabel">
+        <property name="text">
+         <string>Positive</string>
+        </property>
+        <property name="buddy">
+         <cstring>PositiveSampleLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="PositiveSampleLineEdit"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QFrame" name="DecimalFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="QLabel" name="currDeciSymbolLabel">
+        <property name="text">
+         <string>Decimal symbol:</string>
+        </property>
+        <property name="buddy">
+         <cstring>currDeciSymbolComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="currNumDecimalsLabel">
+        <property name="text">
+         <string>No. of digits after decimal:</string>
+        </property>
+        <property name="buddy">
+         <cstring>currNumDecimalsComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="currDeciSymbolComboBox"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="currNumDecimalsComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QFrame" name="CurrencyFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QLabel" name="currSymbolLabel">
+        <property name="text">
+         <string>Currency symbol:</string>
+        </property>
+        <property name="buddy">
+         <cstring>currSymbolCcomboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="currPosFormatLabel">
+        <property name="text">
+         <string>Positive currency format:</string>
+        </property>
+        <property name="buddy">
+         <cstring>currPosFormatComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="currNegFormatLabel">
+        <property name="text">
+         <string>Negative currency format:</string>
+        </property>
+        <property name="buddy">
+         <cstring>currNegFormatComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="currSymbolCcomboBox"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="currPosFormatComboBox"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="currNegFormatComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>PositiveSampleLineEdit</tabstop>
+  <tabstop>NegativeSampleLineEdit</tabstop>
+  <tabstop>currSymbolCcomboBox</tabstop>
+  <tabstop>currPosFormatComboBox</tabstop>
+  <tabstop>currNegFormatComboBox</tabstop>
+  <tabstop>currDeciSymbolComboBox</tabstop>
+  <tabstop>currNumDecimalsComboBox</tabstop>
+  <tabstop>currGrpSymbolComboBox</tabstop>
+  <tabstop>currDigitGrpFmtComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

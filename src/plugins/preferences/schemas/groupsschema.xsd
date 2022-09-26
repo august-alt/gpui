@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:complexType name="UserProperties_t">
+   <xs:attribute name="action" type="xs:string" use="optional" />
+   <xs:attribute name="newName"
+     type="xs:string" use="required" />
+   <xs:attribute name="fullName"
+     type="xs:string" use="required" />
+   <xs:attribute name="description"
+     type="xs:string" use="optional" />
+   <xs:attribute name="cpassword"
+     type="xs:string" use="optional" />
+   <xs:attribute name="changeLogon"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="noChange"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="neverExpires"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="acctDisabled"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="userName"
+     type="xs:string" use="required" />
+   <xs:attribute name="expires"
+     type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="User_t">
+   <xs:sequence>
+      <xs:element name="Properties" type="UserProperties_t" maxOccurs="unbounded" />
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="Member_t">
+   <xs:attribute name="name"
+     type="xs:string" use="optional" />
+   <xs:attribute name="action"
+     type="xs:string" use="optional" />
+   <xs:attribute name="sid"
+     type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="Members_t">
+   <xs:sequence>
+      <xs:element name="Member" type="Member_t" maxOccurs="unbounded"/>
+   </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GroupProperties_t">
+   <xs:sequence>
+      <xs:element name="Members" type="Members_t" minOccurs="0" maxOccurs="unbounded"/>
+   </xs:sequence>
+   <xs:attribute name="action"
+     type="xs:string" use="optional" />
+   <xs:attribute name="newName"
+     type="xs:string" use="optional" />
+   <xs:attribute name="description"
+     type="xs:string" use="optional" />
+   <xs:attribute name="userAction"
+     type="xs:string" use="optional" />
+   <xs:attribute name="deleteAllUsers"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="deleteAllGroups"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="removeAccounts"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="groupName"
+     type="xs:string" use="required" />
+   <xs:attribute name="groupSid"
+     type="xs:string" use="optional" />
+  <xs:attribute name="disabled"
+     type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="Group_t">
+   <xs:sequence>
+      <xs:element name="Properties" type="GroupProperties_t" maxOccurs="unbounded"/>
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional"/>
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:element name="Groups">
+  <xs:complexType>
+     <xs:sequence>
+        <xs:element name="User" type="User_t" maxOccurs="unbounded"/>
+        <xs:element name="Group" type="Group_t" maxOccurs="unbounded"/>
+     </xs:sequence>
+     <xs:attribute name="clsid" type="xs:string" use="required" />
+     <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

@@ -1,8 +1,0 @@
-add_subdirectory(common)
-add_subdirectory(drives)
-add_subdirectory(files)
-add_subdirectory(folders)
-add_subdirectory(ini)
-add_subdirectory(shares)
-add_subdirectory(shortcuts)
-add_subdirectory(variables)

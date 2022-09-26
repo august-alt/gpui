@@ -29,6 +29,7 @@ macro(add_gpui_library name)
 endmacro(add_gpui_library)
 
 add_subdirectory(app)
+add_subdirectory(core)
 add_subdirectory(gui)
 add_subdirectory(io)
 add_subdirectory(model)

@@ -79,14 +79,6 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_libdir/gpui/plugins/libspol-plugin.so
 %_libdir/gpui/plugins/libpol-plugin.so
 
-%_libdir/gpui/plugins/libdrives-plugin.so
-%_libdir/gpui/plugins/libfiles-plugin.so
-%_libdir/gpui/plugins/libfolders-plugin.so
-%_libdir/gpui/plugins/libini-plugin.so
-%_libdir/gpui/plugins/libshares-plugin.so
-%_libdir/gpui/plugins/libshortcuts-plugin.so
-%_libdir/gpui/plugins/libvariables-plugin.so
-
 %_libdir/gpui/plugins/libsmb-storage-plugin.so
 
 %_datadir/icons/hicolor/48x48/apps/gpui.png

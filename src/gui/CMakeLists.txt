@@ -7,6 +7,7 @@ set(HEADERS
     contentwidget.h
     commandlineoptions.h
     commandlineparser.h
+    filedialogutils.h
     gui.h
     listboxdialog.h
     mainwindow.h
@@ -19,6 +20,7 @@ set(SOURCES
     aboutdialog.cpp
     commandlineparser.cpp
     contentwidget.cpp
+    filedialogutils.cpp
     gui.cpp
     listboxdialog.cpp
     mainwindow.cpp
@@ -37,6 +39,7 @@ set(UI_FORMS
 set(MOC_HEADERS
     aboutdialog.h
     contentwidget.h
+    filedialogutils.h
     listboxdialog.h
     mainwindow.h
     mainwindowsettings.h

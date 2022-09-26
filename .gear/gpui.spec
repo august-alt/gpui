@@ -26,6 +26,10 @@ BuildRequires: boost-devel-headers
 
 BuildRequires: desktop-file-utils ImageMagick-tools
 
+BuildRequires: libqt-mvvm-devel
+
+BuildRequires: xorg-xvfb xvfb-run
+
 Requires: admx-basealt
 
 Source0: %name-%version.tar

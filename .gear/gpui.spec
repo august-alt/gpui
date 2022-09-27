@@ -66,6 +66,7 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %doc INSTALL.md
 %_bindir/gpui-main
 
+%_libdir/libgpui-core.so
 %_libdir/libgpui-gui.so
 %_libdir/libgpui-io.so
 %_libdir/libgpui-model.so

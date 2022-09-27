@@ -19,8 +19,8 @@
 ***********************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "mainwindowsettings.h"
+#include "ui_mainwindow.h"
 
 #include "aboutdialog.h"
 
@@ -30,10 +30,10 @@
 
 #include "treevieweventfilter.h"
 
-#include "../model/bundle/policybundle.h"
+#include "../plugins/administrative_templates/bundle/policybundle.h"
 
-#include "../model/registry/registry.h"
-#include "../model/registry/polregistrysource.h"
+#include "../plugins/administrative_templates/registry/polregistrysource.h"
+#include "../plugins/administrative_templates/registry/registry.h"
 
 #include "../io/registryfileformat.h"
 
@@ -48,41 +48,42 @@
 
 #include "../plugins/storage/smb/smbfile.h"
 
-#include "../model/bundle/policyroles.h"
+#include "../plugins/administrative_templates/bundle/policyroles.h"
 
 void registerResources()
 {
     Q_INIT_RESOURCE(translations);
 }
 
-namespace gpui {
-
-class MainWindowPrivate {
+namespace gpui
+{
+class MainWindowPrivate
+{
 public:
-    std::unique_ptr<QStandardItemModel> model = nullptr;
-    ContentWidget* contentWidget = nullptr;
+    std::unique_ptr<QStandardItemModel> model    = nullptr;
+    ContentWidget *contentWidget                 = nullptr;
     std::unique_ptr<MainWindowSettings> settings = nullptr;
 
-    std::shared_ptr<model::registry::Registry> userRegistry = {};
+    std::shared_ptr<model::registry::Registry> userRegistry                     = {};
     std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource = {};
-    QString userRegistryPath {};
+    QString userRegistryPath{};
 
-    std::shared_ptr<model::registry::Registry> machineRegistry = nullptr;
+    std::shared_ptr<model::registry::Registry> machineRegistry                     = nullptr;
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource = nullptr;
-    QString machineRegistryPath {};
+    QString machineRegistryPath{};
 
     std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
-    std::unique_ptr<QSortFilterProxyModel> searchModel = nullptr;
+    std::unique_ptr<QSortFilterProxyModel> searchModel       = nullptr;
 
-    std::vector<std::unique_ptr<QTranslator>> translators {};
-    QString localeName {};
+    std::vector<std::unique_ptr<QTranslator>> translators{};
+    QString localeName{};
 
-    QString itemName {};
+    QString itemName{};
 
-    QIcon windowIcon {};
+    QIcon windowIcon{};
 
-    CommandLineOptions options {};
+    CommandLineOptions options{};
 
     std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
@@ -95,10 +96,10 @@ public:
     {}
 
 private:
-    MainWindowPrivate(const MainWindowPrivate&)            = delete;   // copy ctor
-    MainWindowPrivate(MainWindowPrivate&&)                 = delete;   // move ctor
-    MainWindowPrivate& operator=(const MainWindowPrivate&) = delete;   // copy assignment
-    MainWindowPrivate& operator=(MainWindowPrivate&&)      = delete;   // move assignment
+    MainWindowPrivate(const MainWindowPrivate &) = delete;            // copy ctor
+    MainWindowPrivate(MainWindowPrivate &&)      = delete;            // move ctor
+    MainWindowPrivate &operator=(const MainWindowPrivate &) = delete; // copy assignment
+    MainWindowPrivate &operator=(MainWindowPrivate &&) = delete;      // move assignment
 };
 
 void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
@@ -107,9 +108,10 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
     fileData->setRegistry(registry);
 
     QString pluginName = QString::fromStdString(fileName);
-    pluginName = pluginName.mid(pluginName.lastIndexOf('.') + 1);
+    pluginName         = pluginName.mid(pluginName.lastIndexOf('.') + 1);
 
-    io::RegistryFileFormat<io::RegistryFile>* format = gpui::PluginStorage::instance()->createPluginClass<io::RegistryFileFormat<io::RegistryFile> >(pluginName);
+    io::RegistryFileFormat<io::RegistryFile> *format
+        = gpui::PluginStorage::instance()->createPluginClass<io::RegistryFileFormat<io::RegistryFile>>(pluginName);
 
     if (!format)
     {
@@ -131,16 +133,16 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
 
     bool ifShowError = false;
 
-    auto showMessageFunction = [&fileName]()
-    {
+    auto showMessageFunction = [&fileName]() {
         QMessageBox messageBox(QMessageBox::Critical,
-                    QObject::tr("Error"),
-                    QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
-                    QMessageBox::Ok);
+                               QObject::tr("Error"),
+                               QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
+                               QMessageBox::Ok);
         messageBox.exec();
     };
 
-    try {
+    try
+    {
         if (QString::fromStdString(fileName).startsWith("smb://"))
         {
             gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
@@ -170,7 +172,7 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
             registryFile.close();
         }
     }
-    catch (std::exception& e)
+    catch (std::exception &e)
     {
         ifShowError = true;
         showMessageFunction();
@@ -209,24 +211,22 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
 
     ui->splitter->addWidget(d->contentWidget);
 
-    connect(d->eventFilter.get(), &TreeViewEventFilter::onEnter, this, [&]()
-    {
+    connect(d->eventFilter.get(), &TreeViewEventFilter::onEnter, this, [&]() {
         ui->treeView->clicked(ui->treeView->currentIndex());
     });
 
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
-    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex& index) { d->itemName = index.data().toString(); });
+    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex &index) { d->itemName = index.data().toString(); });
 
-    QLocale locale(!d->localeName.trimmed().isEmpty()
-                   ? d->localeName.replace("-","_")
-                   : QLocale::system().name().replace("-","_"));
+    QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
+                                                      : QLocale::system().name().replace("-", "_"));
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
     qtTranslator->load(locale, "gui", "_", ":/");
     QCoreApplication::installTranslator(qtTranslator.get());
     d->translators.push_back(std::move(qtTranslator));
-    d->localeName = locale.name().replace("_","-");
+    d->localeName = locale.name().replace("_", "-");
     d->contentWidget->onLanguageChaged();
     ui->retranslateUi(this);
 
@@ -243,20 +243,22 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
 
     if (!d->options.path.isEmpty())
     {
-        d->userRegistryPath = d->options.path + "/User/Registry.pol";
+        d->userRegistryPath    = d->options.path + "/User/Registry.pol";
         d->machineRegistryPath = d->options.path + "/Machine/Registry.pol";
 
-        onPolFileOpen(d->userRegistryPath, d->userRegistry, d->userRegistrySource,
-                      [&](model::registry::AbstractRegistrySource* source)
-        {
-            d->contentWidget->setUserRegistrySource(source);
-        });
+        onPolFileOpen(d->userRegistryPath,
+                      d->userRegistry,
+                      d->userRegistrySource,
+                      [&](model::registry::AbstractRegistrySource *source) {
+                          d->contentWidget->setUserRegistrySource(source);
+                      });
 
-        onPolFileOpen(d->machineRegistryPath, d->machineRegistry, d->machineRegistrySource,
-                      [&](model::registry::AbstractRegistrySource* source)
-        {
-            d->contentWidget->setMachineRegistrySource(source);
-        });
+        onPolFileOpen(d->machineRegistryPath,
+                      d->machineRegistry,
+                      d->machineRegistrySource,
+                      [&](model::registry::AbstractRegistrySource *source) {
+                          d->contentWidget->setMachineRegistrySource(source);
+                      });
 
         onIniFileOpen(d->options.path + "/gpt.ini");
     }
@@ -268,7 +270,7 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
 
     connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
 
-    connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString& text) {
+    connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString &text) {
         d->searchModel->setFilterFixedString(text);
     });
 }
@@ -310,12 +312,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString &locale)
+void gpui::MainWindow::loadPolicyBundleFolder(const QString &path, const QString &locale)
 {
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
-    d->model = bundle->loadFolder(path.toStdString(), locale.toStdString());
+    d->model    = bundle->loadFolder(path.toStdString(), locale.toStdString());
 
-    QStandardItem* header = d->model->invisibleRootItem()->child(0);
+    QStandardItem *header = d->model->invisibleRootItem()->child(0);
 
     if (d->options.path.startsWith("smb://"))
     {
@@ -363,8 +365,7 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
 }
 
 void MainWindow::onDirectoryOpen()
-{    
-
+{
     std::unique_ptr<QFileDialog> fileDialog = std::make_unique<QFileDialog>(this);
 
     fileDialog->setDirectory(QDir::homePath());
@@ -378,8 +379,7 @@ void MainWindow::onDirectoryOpen()
     fileDialog->setLabelText(QFileDialog::FileType, tr("File type"));
 
     fileDialog->setNameFilter(QObject::tr("All files (*.*)"));
-    fileDialog->setOptions(QFileDialog::ShowDirsOnly
-                           | QFileDialog::DontResolveSymlinks
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
                            | QFileDialog::DontUseNativeDialog);
 
     fileDialog->setWindowIcon(d->windowIcon);
@@ -424,7 +424,9 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionManual_triggered()
 {
-    const QUrl manual_url = QUrl("https://www.altlinux.org/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
+    const QUrl manual_url = QUrl(
+        "https://www.altlinux.org/"
+        "%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
     QDesktopServices::openUrl(manual_url);
 }
 
@@ -436,7 +438,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::onLanguageChanged(QAction *action)
 {
-    for (const auto& translator : d->translators)
+    for (const auto &translator : d->translators)
     {
         qApp->removeTranslator(translator.get());
     }
@@ -445,7 +447,7 @@ void MainWindow::onLanguageChanged(QAction *action)
     QString language = action->data().toString();
 
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    bool loadResult = qtTranslator->load("gui_" + language + ".qm", ":/");
+    bool loadResult                           = qtTranslator->load("gui_" + language + ".qm", ":/");
     QCoreApplication::installTranslator(qtTranslator.get());
     d->translators.push_back(std::move(qtTranslator));
     qWarning() << "Load language " << language << loadResult;
@@ -467,49 +469,49 @@ void MainWindow::onLanguageChanged(QAction *action)
 void MainWindow::onPolFileOpen(const QString &path,
                                std::shared_ptr<model::registry::Registry> &registry,
                                std::unique_ptr<model::registry::AbstractRegistrySource> &source,
-                               std::function<void (model::registry::AbstractRegistrySource *)> callback)
+                               std::function<void(model::registry::AbstractRegistrySource *)> callback)
 {
     qWarning() << "Path recieved: " << path;
 
     auto stringvalues = std::make_unique<std::string>();
 
-    try {
-
-    if (path.startsWith("smb://"))
+    try
     {
-        gpui::smb::SmbFile smbLocationItemFile(path);
-        smbLocationItemFile.open(QFile::ReadOnly);
-        stringvalues->resize(smbLocationItemFile.size(), 0);
-        smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
-        smbLocationItemFile.close();
+        if (path.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(path);
+            smbLocationItemFile.open(QFile::ReadOnly);
+            stringvalues->resize(smbLocationItemFile.size(), 0);
+            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(path);
+            registryFile.open(QFile::ReadWrite);
+            stringvalues->resize(registryFile.size(), 0);
+            registryFile.read(&stringvalues->at(0), registryFile.size());
+            registryFile.close();
+        }
+
+        auto iss = std::make_unique<std::istringstream>(*stringvalues);
+        std::string pluginName("pol");
+
+        auto reader       = std::make_unique<io::GenericReader>();
+        auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile>>(*iss, pluginName);
+        if (!registryFile)
+        {
+            qWarning() << "Unable to load registry file contents.";
+            return;
+        }
+
+        registry = registryFile->getRegistry();
+
+        source = std::make_unique<model::registry::PolRegistrySource>(registry);
+
+        callback(source.get());
     }
-    else
-    {
-        QFile registryFile(path);
-        registryFile.open(QFile::ReadWrite);
-        stringvalues->resize(registryFile.size(), 0);
-        registryFile.read(&stringvalues->at(0), registryFile.size());
-        registryFile.close();
-    }
-
-    auto iss = std::make_unique<std::istringstream>(*stringvalues);
-    std::string pluginName("pol");
-
-    auto reader = std::make_unique<io::GenericReader>();
-    auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile> >(*iss, pluginName);
-    if (!registryFile)
-    {
-        qWarning() << "Unable to load registry file contents.";
-        return;
-    }
-
-    registry = registryFile->getRegistry();
-
-    source = std::make_unique<model::registry::PolRegistrySource>(registry);
-
-    callback(source.get());
-    }
-    catch (std::exception& e)
+    catch (std::exception &e)
     {
         qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
     }
@@ -521,7 +523,8 @@ void MainWindow::onIniFileOpen(const QString &path)
 
     auto stringvalues = std::make_unique<std::string>();
 
-    try {
+    try
+    {
         if (path.startsWith("smb://"))
         {
             gpui::smb::SmbFile smbLocationItemFile(path);
@@ -542,8 +545,8 @@ void MainWindow::onIniFileOpen(const QString &path)
         auto iss = std::make_unique<std::istringstream>(*stringvalues);
         std::string pluginName("ini");
 
-        auto reader = std::make_unique<io::GenericReader>();
-        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile> >(*iss, pluginName);
+        auto reader  = std::make_unique<io::GenericReader>();
+        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile>>(*iss, pluginName);
         if (!iniFile)
         {
             qWarning() << "Unable to load registry file contents.";
@@ -554,7 +557,7 @@ void MainWindow::onIniFileOpen(const QString &path)
 
         if (d->options.policyName.isEmpty() && sections->find("General") != sections->end())
         {
-            auto& generalValues = (*sections)["General"];
+            auto &generalValues = (*sections)["General"];
 
             auto displayName = generalValues.find("displayName");
 
@@ -566,7 +569,7 @@ void MainWindow::onIniFileOpen(const QString &path)
             }
         }
     }
-    catch (std::exception& e)
+    catch (std::exception &e)
     {
         qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
     }
@@ -574,7 +577,7 @@ void MainWindow::onIniFileOpen(const QString &path)
 
 void MainWindow::createLanguageMenu()
 {
-    QActionGroup* langGroup = new QActionGroup(this);
+    QActionGroup *langGroup = new QActionGroup(this);
     langGroup->setExclusive(true);
 
     connect(langGroup, &QActionGroup::triggered, this, &MainWindow::onLanguageChanged);
@@ -583,7 +586,7 @@ void MainWindow::createLanguageMenu()
     QDir dir(":/");
     QStringList fileNames = dir.entryList(QStringList("gui_*.qm"));
 
-    QMenu* menu = new QMenu(this);
+    QMenu *menu = new QMenu(this);
     ui->actionLanguage->setMenu(menu);
 
     for (QString locale : fileNames)
@@ -607,4 +610,4 @@ void MainWindow::createLanguageMenu()
     }
 }
 
-}
+} // namespace gpui

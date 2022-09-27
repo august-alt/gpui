@@ -18,20 +18,21 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
 #include "admxformat.h"
 
-namespace gpui {
-    class AdmxPlugin : public Plugin
+namespace gpui
+{
+class AdmxPlugin : public Plugin
+{
+public:
+    AdmxPlugin()
+        : Plugin("admx")
     {
-    public:
-        AdmxPlugin()
-            : Plugin("admx")
-        {
-            GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::PolicyDefinitionsFile>).name(), AdmxFormat);
-        }
-    };
-}
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::PolicyDefinitionsFile>).name(), AdmxFormat);
+    }
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(admx, gpui::AdmxPlugin)

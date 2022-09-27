@@ -20,14 +20,14 @@
 
 #include "registryfile.h"
 
-#include "../model/registry/registry.h"
+#include "../plugins/administrative_templates/registry/registry.h"
 
 #include <algorithm>
 
 using namespace model::registry;
 
-namespace io {
-
+namespace io
+{
 class RegistryFilePrivate
 {
 public:
@@ -60,5 +60,4 @@ std::shared_ptr<Registry> RegistryFile::getRegistry()
     return d->registry;
 }
 
-
-}
+} // namespace io

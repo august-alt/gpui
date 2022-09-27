@@ -20,14 +20,14 @@
 
 #include "policyresourcesfile.h"
 
-#include "../model/presentation/policyresources.h"
+//#include "../model/presentation/policyresources.h"
 
 #include <algorithm>
 
 using namespace model::presentation;
 
-namespace io {
-
+namespace io
+{
 class PolicyResourcesFilePrivate
 {
 public:
@@ -45,9 +45,7 @@ public:
 PolicyResourcesFile::PolicyResourcesFile()
     : GenericFile<PolicyResourcesFile, PolicyFileFormat<PolicyResourcesFile>>()
     , d(new PolicyResourcesFilePrivate())
-{
-
-}
+{}
 
 PolicyResourcesFile::~PolicyResourcesFile()
 {
@@ -69,18 +67,18 @@ void PolicyResourcesFile::add(std::shared_ptr<PolicyResources> policyDefinitions
  */
 void PolicyResourcesFile::remove(std::shared_ptr<PolicyResources> policyDefinitions)
 {
-    d->policyDefinitions.erase(std::remove_if(d->policyDefinitions.begin(), d->policyDefinitions.end(),
-                                     [policyDefinitions](std::shared_ptr<PolicyResources> currentPolicy)
-                                     {
-                                           return currentPolicy == policyDefinitions;
-                                     }));
+    d->policyDefinitions.erase(std::remove_if(d->policyDefinitions.begin(),
+                                              d->policyDefinitions.end(),
+                                              [policyDefinitions](std::shared_ptr<PolicyResources> currentPolicy) {
+                                                  return currentPolicy == policyDefinitions;
+                                              }));
 }
 
 /*!
  * \brief PolicyResourcesFile::getAllPolicyDefinitions Returns all policy definitions from the file.
  * \return
  */
-std::vector<std::shared_ptr<PolicyResources> > PolicyResourcesFile::getAll()
+std::vector<std::shared_ptr<PolicyResources>> PolicyResourcesFile::getAll()
 {
     return d->policyDefinitions;
 }
@@ -101,11 +99,12 @@ size_t PolicyResourcesFile::count()
  */
 std::shared_ptr<PolicyResources> PolicyResourcesFile::get(const size_t index)
 {
-    if (index < d->policyDefinitions.size()) {
+    if (index < d->policyDefinitions.size())
+    {
         return d->policyDefinitions[index];
     }
 
     return std::shared_ptr<PolicyResources>(nullptr);
 }
 
-}
+} // namespace io

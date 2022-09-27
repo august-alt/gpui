@@ -18,13 +18,14 @@
 **
 ***********************************************************************************************************************/
 
+#include "../core/pluginstorage.h"
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
-#include "../model/pluginstorage.h"
 
 #include <QApplication>
 
-int main(int argc, char ** argv) {
+int main(int argc, char **argv)
+{
     // Load plugins.
     gpui::PluginStorage::instance()->loadDefaultPlugins();
 
@@ -39,8 +40,8 @@ int main(int argc, char ** argv) {
     app.setApplicationVersion("0.2.0");
 
     gpui::CommandLineParser parser(app);
-    gpui::CommandLineOptions options {};
-    QString errorMessage {};
+    gpui::CommandLineOptions options{};
+    QString errorMessage{};
 
     gpui::CommandLineParser::CommandLineParseResult parserResult = parser.parseCommandLine(&options, &errorMessage);
 
@@ -69,7 +70,7 @@ int main(int argc, char ** argv) {
     default:
         break;
     }
-    
+
     gpui::MainWindow window(options);
     window.show();
 

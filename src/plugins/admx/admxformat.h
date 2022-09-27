@@ -21,20 +21,22 @@
 #ifndef GPUI_ADMX_FORMAT_H
 #define GPUI_ADMX_FORMAT_H
 
-#include "../../../src/model/common.h"
+#include "../../../src/core/common.h"
 
 #include "../../../src/io/policydefinitionsfile.h"
 #include "../../../src/io/policyfileformat.h"
 
-namespace gpui {
-    class GPUI_SYMBOL_EXPORT AdmxFormat : public io::PolicyFileFormat<io::PolicyDefinitionsFile> {
-    public:
-        AdmxFormat();
+namespace gpui
+{
+class GPUI_SYMBOL_EXPORT AdmxFormat : public io::PolicyFileFormat<io::PolicyDefinitionsFile>
+{
+public:
+    AdmxFormat();
 
-        bool read(std::istream& input, io::PolicyDefinitionsFile* file) override;
+    bool read(std::istream &input, io::PolicyDefinitionsFile *file) override;
 
-        bool write(std::ostream& output, io::PolicyDefinitionsFile* file) override;
-    };
-}
+    bool write(std::ostream &output, io::PolicyDefinitionsFile *file) override;
+};
+} // namespace gpui
 
 #endif // GPUI_ADMX_FORMAT_H

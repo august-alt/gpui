@@ -18,17 +18,17 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
-namespace gpui {
-    class CmtxPlugin : public Plugin
-    {
-    public:
-        CmtxPlugin()
-            : Plugin("cmtx")
-        {            
-        }
-    };
-}
+namespace gpui
+{
+class CmtxPlugin : public Plugin
+{
+public:
+    CmtxPlugin()
+        : Plugin("cmtx")
+    {}
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(cmtx, gpui::CmtxPlugin)

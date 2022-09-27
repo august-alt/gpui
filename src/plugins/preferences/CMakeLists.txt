@@ -1,3 +1,5 @@
+find_package(GPUI COMPONENTS core io REQUIRED)
+
 find_package(MVVM REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -420,7 +422,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 add_library(preferences_static STATIC ${SOURCES})
 target_link_libraries(preferences_static Qt5::Core Qt5::Widgets)
-target_link_libraries(preferences_static ${PREFERENCES_EDITOR_LIBRARIES})
+target_link_libraries(preferences_static ${GPUI_LIBRARIES})
 target_link_libraries(preferences_static ${MVVM_LIBRARIES})
 
 target_link_libraries(preferences_static static_xsd_library)

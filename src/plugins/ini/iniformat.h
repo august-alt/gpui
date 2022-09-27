@@ -21,20 +21,22 @@
 #ifndef GPUI_ADMX_FORMAT_H
 #define GPUI_ADMX_FORMAT_H
 
-#include "../../../src/model/common.h"
+#include "../../../src/core/common.h"
 
 #include "../../../src/io/inifile.h"
 #include "../../../src/io/policyfileformat.h"
 
-namespace gpui {
-    class GPUI_SYMBOL_EXPORT IniFormat : public io::PolicyFileFormat<io::IniFile> {
-    public:
-        IniFormat();
+namespace gpui
+{
+class GPUI_SYMBOL_EXPORT IniFormat : public io::PolicyFileFormat<io::IniFile>
+{
+public:
+    IniFormat();
 
-        bool read(std::istream& input, io::IniFile* file) override;
+    bool read(std::istream &input, io::IniFile *file) override;
 
-        bool write(std::ostream& output, io::IniFile* file) override;
-    };
-}
+    bool write(std::ostream &output, io::IniFile *file) override;
+};
+} // namespace gpui
 
 #endif // GPUI_ADMX_FORMAT_H

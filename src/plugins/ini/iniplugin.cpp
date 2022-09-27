@@ -18,20 +18,21 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
 #include "iniformat.h"
 
-namespace gpui {
-    class IniPlugin : public Plugin
+namespace gpui
+{
+class IniPlugin : public Plugin
+{
+public:
+    IniPlugin()
+        : Plugin("ini")
     {
-    public:
-        IniPlugin()
-            : Plugin("ini")
-        {
-            GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::IniFile>).name(), IniFormat);
-        }
-    };
-}
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::IniFile>).name(), IniFormat);
+    }
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(inifile, gpui::IniPlugin)

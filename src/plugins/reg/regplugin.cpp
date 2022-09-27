@@ -18,18 +18,17 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
-namespace gpui {
-    class RegPlugin : public Plugin
-    {
-    public:
-        RegPlugin()
-            : Plugin("reg")
-        {
-
-        }
-    };
-}
+namespace gpui
+{
+class RegPlugin : public Plugin
+{
+public:
+    RegPlugin()
+        : Plugin("reg")
+    {}
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(reg, gpui::RegPlugin)

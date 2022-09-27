@@ -21,21 +21,22 @@
 #ifndef GPUI_POL_FORMAT_H
 #define GPUI_POL_FORMAT_H
 
-#include "../../../src/model/common.h"
+#include "../../../src/core/common.h"
 
 #include "../../../src/io/registryfile.h"
 #include "../../../src/io/registryfileformat.h"
 
+namespace gpui
+{
+class GPUI_SYMBOL_EXPORT PolFormat : public io::RegistryFileFormat<io::RegistryFile>
+{
+public:
+    PolFormat();
 
-namespace gpui {
-    class GPUI_SYMBOL_EXPORT PolFormat : public io::RegistryFileFormat<io::RegistryFile> {
-    public:
-        PolFormat();
+    bool read(std::istream &input, io::RegistryFile *file) override;
 
-        bool read(std::istream& input, io::RegistryFile* file) override;
-
-        bool write(std::ostream& output, io::RegistryFile* file) override;
-    };
-}
+    bool write(std::ostream &output, io::RegistryFile *file) override;
+};
+} // namespace gpui
 
 #endif // GPUI_POL_FORMAT_H

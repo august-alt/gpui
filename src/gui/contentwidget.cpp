@@ -24,32 +24,32 @@
 
 #include "presentationbuilder.h"
 
-#include "../model/registry/abstractregistrysource.h"
-#include "../model/registry/policystatemanager.h"
-#include "../model/admx/policy.h"
-#include "../model/admx/policyelement.h"
+#include "../plugins/administrative_templates/admx/policy.h"
+#include "../plugins/administrative_templates/admx/policyelement.h"
+#include "../plugins/administrative_templates/registry/abstractregistrysource.h"
+#include "../plugins/administrative_templates/registry/policystatemanager.h"
 
-#include "../model/bundle/itemtype.h"
-#include "../model/bundle/policyroles.h"
-#include "../model/commands/commandgroup.h"
+#include "../plugins/administrative_templates/bundle/itemtype.h"
+#include "../plugins/administrative_templates/bundle/policyroles.h"
+#include "../plugins/administrative_templates/commands/commandgroup.h"
 
 using namespace ::model::bundle;
 
-namespace gpui {
-
+namespace gpui
+{
 typedef std::shared_ptr<::model::presentation::Presentation> PresentationPtr;
 typedef std::shared_ptr<::model::admx::Policy> PolicyPtr;
 
 class ContentWidgetPrivate
 {
 public:
-    model::registry::AbstractRegistrySource* userSource = nullptr;
-    model::registry::AbstractRegistrySource* machineSource = nullptr;
+    model::registry::AbstractRegistrySource *userSource    = nullptr;
+    model::registry::AbstractRegistrySource *machineSource = nullptr;
 
     std::unique_ptr<model::registry::PolicyStateManager> manager = nullptr;
-    bool dataChanged = false;
-    bool stateEnabled = false;
-    QModelIndex currentIndex {};
+    bool dataChanged                                             = false;
+    bool stateEnabled                                            = false;
+    QModelIndex currentIndex{};
     ContentWidget::PolicyWidgetState state = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
 };
 
@@ -68,7 +68,7 @@ ContentWidget::ContentWidget(QWidget *parent)
 
     setPolicyWidgetsVisible(false);
 
-    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);    
+    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
 
     connect(ui->notConfiguredRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
@@ -123,12 +123,12 @@ void ContentWidget::setEventFilter(QObject *eventFilter)
     ui->contentListView->installEventFilter(eventFilter);
 }
 
-void ContentWidget::setModel(QAbstractItemModel* model)
+void ContentWidget::setModel(QAbstractItemModel *model)
 {
     ui->contentListView->setModel(model);
 }
 
-void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
+void ContentWidget::setSelectionModel(QItemSelectionModel *selectionModel)
 {
     if (ui->contentListView->selectionModel())
     {
@@ -136,9 +136,10 @@ void ContentWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     }
 
     ui->contentListView->setSelectionModel(selectionModel);
-    connect(ui->contentListView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
-            [&](const QItemSelection &selected, const QItemSelection &deselected)
-            {
+    connect(ui->contentListView->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            [&](const QItemSelection &selected, const QItemSelection &deselected) {
                 Q_UNUSED(deselected);
                 if (selected.isEmpty() || selected.first().indexes().isEmpty())
                 {
@@ -186,12 +187,13 @@ void ContentWidget::setMachineRegistrySource(model::registry::AbstractRegistrySo
 
 void ContentWidget::setPolicyWidgetState(ContentWidget::PolicyWidgetState state)
 {
-    switch (state) {
-    case STATE_ENABLED:
+    switch (state)
     {
+    case STATE_ENABLED: {
         d->stateEnabled = true;
         ui->contentScrollArea->setDisabled(false);
-    }break;
+    }
+    break;
     case STATE_DISABLED:
     case STATE_NOT_CONFIGURED:
     default:
@@ -211,10 +213,10 @@ void ContentWidget::onLanguageChaged()
 void gpui::ContentWidget::onDataChanged()
 {
     QMessageBox messageBox(QMessageBox::Question,
-                QObject::tr("Save settings dialog"),
-                QObject::tr("Policy settings were modified do you want to save them?"),
-                QMessageBox::Yes | QMessageBox::No,
-                this);
+                           QObject::tr("Save settings dialog"),
+                           QObject::tr("Policy settings were modified do you want to save them?"),
+                           QMessageBox::Yes | QMessageBox::No,
+                           this);
     messageBox.setButtonText(QMessageBox::Yes, tr("Yes"));
     messageBox.setButtonText(QMessageBox::No, tr("No"));
     int reply = messageBox.exec();
@@ -242,7 +244,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     d->currentIndex = index;
 
-    const QAbstractItemModel* model = index.model();
+    const QAbstractItemModel *model = index.model();
 
     if (d->dataChanged)
     {
@@ -274,8 +276,8 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             ui->supportedOnTextEdit->setText(model->data(index, PolicyRoles::SUPPORTED_ON).value<QString>());
 
             auto presentation = model->data(index, PolicyRoles::PRESENTATION).value<PresentationPtr>();
-            auto policy = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
-            model::registry::AbstractRegistrySource* source = d->userSource;
+            auto policy       = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
+            model::registry::AbstractRegistrySource *source = d->userSource;
 
             if (policy && d->machineSource)
             {
@@ -285,19 +287,22 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
                     source = d->machineSource;
                 }
 
-                auto policyType = static_cast<model::admx::PolicyType>(model->data(index, PolicyRoles::POLICY_TYPE).toUInt());
+                auto policyType = static_cast<model::admx::PolicyType>(
+                    model->data(index, PolicyRoles::POLICY_TYPE).toUInt());
 
                 qDebug() << policy->displayName.c_str() << " type: "
-                         << (policyType == model::admx::PolicyType::Machine ? "Machine" :
-                            (policyType == model::admx::PolicyType::User ? "User" :
-                            (policyType == model::admx::PolicyType::Both ? "Both" : "Error ")));
+                         << (policyType == model::admx::PolicyType::Machine
+                                 ? "Machine"
+                                 : (policyType == model::admx::PolicyType::User
+                                        ? "User"
+                                        : (policyType == model::admx::PolicyType::Both ? "Both" : "Error ")));
             }
 
             if (source && policy)
             {
                 d->manager = std::make_unique<model::registry::PolicyStateManager>(*source, *policy);
 
-                auto state = d->manager->determinePolicyState();                
+                auto state = d->manager->determinePolicyState();
                 if (state == model::registry::PolicyStateManager::STATE_ENABLED)
                 {
                     d->state = STATE_ENABLED;
@@ -322,14 +327,11 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
                 ui->okPushButton->disconnect();
                 ui->cancelPushButton->disconnect();
 
-                auto layout = ::gui::PresentationBuilder::build({
-                                                                *presentation, *policy, *source,
-                                                                *ui->okPushButton, d->dataChanged,
-                                                                d->stateEnabled
-                                                                });
+                auto layout = ::gui::PresentationBuilder::build(
+                    {*presentation, *policy, *source, *ui->okPushButton, d->dataChanged, d->stateEnabled});
                 connectDialogBoxSignals();
 
-                ui->contentScrollArea->widget()->setLayout(layout);                
+                ui->contentScrollArea->widget()->setLayout(layout);
             }
         }
         else
@@ -353,7 +355,6 @@ void ContentWidget::onCancelClicked()
     onListItemClicked(d->currentIndex);
 }
 
-
 void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
 {
     ui->supportedOnLabel->setVisible(visible);
@@ -369,7 +370,7 @@ void gpui::ContentWidget::setPolicyWidgetsVisible(bool visible)
     ui->policyNameFrame->setVisible(visible);
 }
 
-}
+} // namespace gpui
 
 Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)
 Q_DECLARE_METATYPE(std::shared_ptr<::model::admx::Policy>)

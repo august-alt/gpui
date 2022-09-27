@@ -1,4 +1,4 @@
-find_package(GPUI COMPONENTS io model REQUIRED)
+find_package(GPUI COMPONENTS core io REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
 find_package(Qt5 COMPONENTS Core REQUIRED)
@@ -16,3 +16,4 @@ add_gpui_plugin(adml-plugin ${SOURCES})
 target_link_libraries(adml-plugin Qt5::Core)
 target_link_libraries(adml-plugin ${GPUI_LIBRARIES} policy-common)
 target_link_libraries(adml-plugin xerces-c)
+target_link_libraries(adml-plugin administrative-templates-plugin)

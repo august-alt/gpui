@@ -20,15 +20,15 @@
 
 #include "policydefinitionsfile.h"
 
-#include "../model/admx/policydefinitions.h"
-#include "../model/admx/policyelement.h"
+//#include "../model/admx/policydefinitions.h"
+//#include "../model/admx/policyelement.h"
 
 #include <algorithm>
 
 using namespace model::admx;
 
-namespace io {
-
+namespace io
+{
 class PolicyDefinitionsFilePrivate
 {
 public:
@@ -46,9 +46,7 @@ public:
 PolicyDefinitionsFile::PolicyDefinitionsFile()
     : GenericFile<PolicyDefinitionsFile, PolicyFileFormat<PolicyDefinitionsFile>>()
     , d(new PolicyDefinitionsFilePrivate())
-{
-
-}
+{}
 
 PolicyDefinitionsFile::~PolicyDefinitionsFile()
 {
@@ -70,18 +68,18 @@ void PolicyDefinitionsFile::addPolicyDefinitions(std::shared_ptr<PolicyDefinitio
  */
 void PolicyDefinitionsFile::removePolicyDefinitions(std::shared_ptr<PolicyDefinitions> policyDefinitions)
 {
-    d->policyDefinitions.erase(std::remove_if(d->policyDefinitions.begin(), d->policyDefinitions.end(),
-                                     [policyDefinitions](std::shared_ptr<PolicyDefinitions> currentPolicy)
-                                     {
-                                           return currentPolicy == policyDefinitions;
-                                     }));
+    d->policyDefinitions.erase(std::remove_if(d->policyDefinitions.begin(),
+                                              d->policyDefinitions.end(),
+                                              [policyDefinitions](std::shared_ptr<PolicyDefinitions> currentPolicy) {
+                                                  return currentPolicy == policyDefinitions;
+                                              }));
 }
 
 /*!
  * \brief PolicyDefinitionsFile::getAllPolicyDefinitions Returns all policy definitions from the file.
  * \return
  */
-std::vector<std::shared_ptr<PolicyDefinitions> > PolicyDefinitionsFile::getAllPolicyDefinitions()
+std::vector<std::shared_ptr<PolicyDefinitions>> PolicyDefinitionsFile::getAllPolicyDefinitions()
 {
     return d->policyDefinitions;
 }
@@ -102,11 +100,12 @@ size_t PolicyDefinitionsFile::policyDefinitionsCount()
  */
 std::shared_ptr<PolicyDefinitions> PolicyDefinitionsFile::getPolicyDefinitions(const size_t index)
 {
-    if (index < d->policyDefinitions.size()) {
+    if (index < d->policyDefinitions.size())
+    {
         return d->policyDefinitions[index];
     }
 
     return std::shared_ptr<PolicyDefinitions>(nullptr);
 }
 
-}
+} // namespace io

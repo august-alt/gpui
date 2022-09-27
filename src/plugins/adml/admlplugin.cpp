@@ -18,20 +18,21 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
 #include "admlformat.h"
 
-namespace gpui {
-    class AdmlPlugin : public Plugin
+namespace gpui
+{
+class AdmlPlugin : public Plugin
+{
+public:
+    AdmlPlugin()
+        : Plugin("adml")
     {
-    public:
-        AdmlPlugin()
-            : Plugin("adml")
-        {
-            GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::PolicyResourcesFile>).name(), AdmlFormat);
-        }
-    };
-}
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::PolicyResourcesFile>).name(), AdmlFormat);
+    }
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(adml, gpui::AdmlPlugin)

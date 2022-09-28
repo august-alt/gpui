@@ -39,7 +39,6 @@ set(UI_FORMS
 set(MOC_HEADERS
     aboutdialog.h
     contentwidget.h
-    filedialogutils.h
     listboxdialog.h
     mainwindow.h
     mainwindowsettings.h

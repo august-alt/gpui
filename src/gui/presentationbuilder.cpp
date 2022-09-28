@@ -572,12 +572,11 @@ namespace gui
 
         template<typename Number>
         QWidget* createAnyDecimalTextBox(bool spin, Number value, Number step) const {
-
             auto clampAndDisplayMessage = [](Number current, Number min, Number max)
             {
                 qWarning() << current << " " << min << " " << max;
 
-                if (min < current)
+                if (min > current)
                 {
                     current = min;
 
@@ -615,8 +614,7 @@ namespace gui
                 AltSpinBox* spinBox = new AltSpinBox();
                 spinBox->setSingleStep(step);
                 spinBox->setRange(0, std::numeric_limits<int>::max());
-                spinBox->setValue(value);
-
+                spinBox->setValue(value);               
                 if (m_policy && m_source)
                 {
                     const ElementInfo elementInfo = findElementInfo();
@@ -639,12 +637,28 @@ namespace gui
                         maximum = longDecimal->maxValue;
                         spinBox->setRange(minimum, maximum);
                     }
-
                     spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=]()
                     {
                         *m_dataChanged = true;
                     });
-
+                    spinBox->connect(spinBox, &AltSpinBox::fixToValidRange, [spinBox](const QString &wrongInput)
+                    {
+                        int val = wrongInput.contains('-') ? spinBox->minimum() : spinBox->maximum();
+                        spinBox->setValue(val);
+                        val == spinBox->maximum() ?
+                                    QMessageBox::information(nullptr,
+                                        QObject::tr("Information message"),
+                                        QObject::tr("Value: ") + wrongInput
+                                        + QObject::tr(" is greater than maximum allowed value of: ")
+                                        + QString::number(spinBox->maximum()) + QObject::tr(". Maximum allowed value has been set."),
+                                        QMessageBox::Ok) :
+                                    QMessageBox::information(nullptr,
+                                        QObject::tr("Information message"),
+                                        QObject::tr("Value: ") + wrongInput
+                                        + QObject::tr(" is less than minimum allowed value of: ")
+                                        + QString::number(spinBox->minimum()) + QObject::tr(". Minimum allowed value has been set."),
+                                        QMessageBox::Ok);
+                    });
                     // TODO: Implement correct type on save.
                     m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, spinBox, this,
                                           &clampAndDisplayMessage, minimum, maximum]()
@@ -655,10 +669,8 @@ namespace gui
                         }
                         qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
                                    << " " << elementInfo.value.c_str() << spinBox->value();
-                        auto clampedValue = clampAndDisplayMessage(spinBox->value(), minimum, maximum);
                         m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type,
-                                           clampedValue);
-                        spinBox->setValue(clampedValue);
+                                           spinBox->value());
                     });
                 }
 
@@ -866,3 +878,4 @@ namespace gui
         return layout;
     }
 }
+

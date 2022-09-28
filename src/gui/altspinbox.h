@@ -33,8 +33,10 @@ class AltSpinBox final : public QSpinBox
     Q_OBJECT
 protected:
     void fixup(QString &input) const override;
-
     QValidator::State validate(QString &text, int &pos) const override;
+
+signals:
+    void fixToValidRange(const QString &wrongInput) const;
 };
 
 }

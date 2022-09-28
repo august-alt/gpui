@@ -1,8 +1,5 @@
 #include "altspinbox.h"
-
 #include <QDebug>
-
-#include "infint.h"
 
 namespace gui
 {
@@ -12,17 +9,22 @@ void AltSpinBox::fixup(QString &input) const
     qWarning() << "AltSpinBox::fixup " << input << " " << minimum() << " " << maximum();
 
     QRegExp regExp("(-?)(\\+?)\\d+");
-    auto isOk = regExp.exactMatch(input);
-    auto value = InfInt(input.toStdString());
+    if (!regExp.exactMatch(input))
+    {
+        QSpinBox::fixup(input);
+        return;
+    }
+    bool isOk = false;
+    int value = input.toInt(&isOk);
     if (isOk)
     {
-        value = qBound(InfInt(minimum()), value, InfInt(maximum()));
-        input = QString::number(value.toInt(), displayIntegerBase());
+        value = qBound(minimum(), value, maximum());
+        input = QString::number(value, displayIntegerBase());
         qWarning() << "AltSpinBox::fixup " << input;
     }
     else
     {
-        QSpinBox::fixup(input);
+        emit fixToValidRange(input);
     }
 }
 

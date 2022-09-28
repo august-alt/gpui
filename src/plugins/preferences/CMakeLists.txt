@@ -416,9 +416,28 @@ set(UI_FORMS
     preferenceswidget.ui
 )
 
+set(PLUGIN_HEADERS
+    modelcreator.h
+    preferencessnapin.h
+    preferencestreemodel.h
+    preferencestreeproxymodel.h
+)
+
+set(PLUGIN_SOURCES
+    modelcreator.cpp
+    preferencesplugin.cpp
+    preferencessnapin.cpp
+    preferencestreemodel.cpp
+    preferencestreeproxymodel.cpp
+)
+
+set(PLUGIN_SOURCES ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
+
 set(SOURCES ${SOURCES} ${HEADERS} ${UI_FORMS})
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
+
+set(PLUGIN_NAME preferences-plugin)
 
 add_library(preferences_static STATIC ${SOURCES})
 target_link_libraries(preferences_static Qt5::Core Qt5::Widgets)
@@ -427,4 +446,7 @@ target_link_libraries(preferences_static ${MVVM_LIBRARIES})
 
 target_link_libraries(preferences_static static_xsd_library)
 target_link_libraries(preferences_static xerces-c)
+
+add_gpui_plugin(${PLUGIN_NAME} ${PLUGIN_SOURCES})
+target_link_libraries(${PLUGIN_NAME} preferences_static)
 

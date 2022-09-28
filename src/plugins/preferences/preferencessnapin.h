@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -17,19 +17,34 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 ***********************************************************************************************************************/
+#ifndef GPUI_PREFERENCES_SNAP_IN_H
+#define GPUI_PREFERENCES_SNAP_IN_H
 
-#ifndef GPUI_PREFERENCES_TREE_PROXY_MODEL_H
-#define GPUI_PREFERENCES_TREE_PROXY_MODEL_H
+#include "../../core/abstractsnapin.h"
 
-#include <QIdentityProxyModel>
-
-namespace preferences
+namespace gpui
 {
-class PreferencesTreeProxyModel : public QIdentityProxyModel
+class PreferencesSnapInPrivate;
+
+class PreferencesSnapIn final : public AbstractSnapIn
 {
 public:
-    QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
-};
-} // namespace preferences
+    PreferencesSnapIn();
 
-#endif // GPUI_PREFERENCES_TREE_PROXY_MODEL_H
+    void onInitialize() override;
+
+    void onShutdown() override;
+
+    void onPolicyLoad(const std::string &policyPath);
+
+    void onPolicySave();
+
+    void onRetranslateUI(const std::string &locale);
+
+private:
+    std::unique_ptr<PreferencesSnapInPrivate> d;
+};
+
+} // namespace gpui
+
+#endif // GPUI_PREFERENCES_SNAP_IN_H

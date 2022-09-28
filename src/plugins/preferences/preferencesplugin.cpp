@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,18 +18,23 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PREFERENCES_TREE_PROXY_MODEL_H
-#define GPUI_PREFERENCES_TREE_PROXY_MODEL_H
+#include "../../core/plugin.h"
 
-#include <QIdentityProxyModel>
+#include "preferencessnapin.h"
 
-namespace preferences
+#include "../../core/isnapin.h"
+
+namespace gpui
 {
-class PreferencesTreeProxyModel : public QIdentityProxyModel
+class PreferencesPlugin : public Plugin
 {
 public:
-    QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
+    PreferencesPlugin()
+        : gpui::Plugin("PreferencesSnapIn")
+    {
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(::gpui::ISnapIn).name(), PreferencesSnapIn);
+    }
 };
-} // namespace preferences
+} // namespace gpui
 
-#endif // GPUI_PREFERENCES_TREE_PROXY_MODEL_H
+GPUI_EXPORT_PLUGIN(preferences, ::gpui::PreferencesPlugin)

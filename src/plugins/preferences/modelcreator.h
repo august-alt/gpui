@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,18 +18,32 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PREFERENCES_TREE_PROXY_MODEL_H
-#define GPUI_PREFERENCES_TREE_PROXY_MODEL_H
+#ifndef GPUI_PREFERENCES_SNAPIN_MODEL_CREATOR_H
+#define GPUI_PREFERENCES_SNAPIN_MODEL_CREATOR_H
 
-#include <QIdentityProxyModel>
+#include <memory>
+#include <string>
+
+#include "common/preferencesmodel.h"
 
 namespace preferences
 {
-class PreferencesTreeProxyModel : public QIdentityProxyModel
+class ModelCreator
 {
 public:
-    QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
+    ModelCreator();
+
+    void populateModels(const std::string &policyPath,
+                        const std::string &policyType,
+                        std::map<std::string, std::unique_ptr<PreferencesModel>> *map);
+
+private:
+    ModelCreator(const ModelCreator &) = delete;            // copy ctor
+    ModelCreator(ModelCreator &&)      = delete;            // move ctor
+    ModelCreator &operator=(const ModelCreator &) = delete; // copy assignment
+    ModelCreator &operator=(ModelCreator &&) = delete;      // move assignment
 };
+
 } // namespace preferences
 
-#endif // GPUI_PREFERENCES_TREE_PROXY_MODEL_H
+#endif //GPUI_PREFERENCES_SNAPIN_MODEL_CREATOR_H

@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%set_verify_elf_method unresolved=relaxed
 
 Name: gpui
 Version: 0.2.15
@@ -72,6 +71,8 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_libdir/libgpui-io.so
 
 %_libdir/gpui/plugins/libadministrative-templates-plugin.so
+%_libdir/gpui/plugins/libpreferences-plugin.so
+
 %_libdir/gpui/plugins/libadml-plugin.so
 %_libdir/gpui/plugins/libadmx-plugin.so
 %_libdir/gpui/plugins/libcmtl-plugin.so

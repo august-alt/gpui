@@ -51,7 +51,7 @@ public:
     bool stateEnabled = false;
     QModelIndex currentIndex {};
     ContentWidget::PolicyWidgetState state = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
-    ContentWidget::PolicyWidgetState primordialState = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
+    ContentWidget::PolicyWidgetState initialState = ContentWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
 };
 
 void gpui::ContentWidget::connectDialogBoxSignals()
@@ -75,7 +75,7 @@ ContentWidget::ContentWidget(QWidget *parent)
     connect(ui->notConfiguredRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
         if (checked)
         {
-            d->dataChanged = d->state != STATE_NOT_CONFIGURED && d->primordialState != STATE_NOT_CONFIGURED;
+            d->dataChanged = d->state != STATE_NOT_CONFIGURED && d->initialState != STATE_NOT_CONFIGURED;
             setPolicyWidgetState(STATE_NOT_CONFIGURED);
             qWarning() << "Setting state not configured" << d->manager.get();
             if (d->manager)
@@ -87,7 +87,7 @@ ContentWidget::ContentWidget(QWidget *parent)
     connect(ui->enabledRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
         if (checked)
         {
-            d->dataChanged = d->state != STATE_ENABLED && d->primordialState != STATE_ENABLED;
+            d->dataChanged = d->state != STATE_ENABLED && d->initialState != STATE_ENABLED;
             setPolicyWidgetState(STATE_ENABLED);
             qWarning() << "Setting state enabled" << d->manager.get();
             if (d->manager)
@@ -99,7 +99,7 @@ ContentWidget::ContentWidget(QWidget *parent)
     connect(ui->disabledRadioButton, &QRadioButton::toggled, this, [=](bool checked) {
         if (checked)
         {
-            d->dataChanged = d->state != STATE_DISABLED && d->primordialState != STATE_DISABLED;
+            d->dataChanged = d->state != STATE_DISABLED && d->initialState != STATE_DISABLED;
             setPolicyWidgetState(STATE_DISABLED);
             qWarning() << "Setting state disabled" << d->manager.get();
             if (d->manager)
@@ -301,21 +301,21 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
                 if (state == model::registry::PolicyStateManager::STATE_ENABLED)
                 {
                     d->state = STATE_ENABLED;
-                    d->primordialState = STATE_ENABLED;
+                    d->initialState = STATE_ENABLED;
                     ui->enabledRadioButton->setChecked(true);
                 }
 
                 if (state == model::registry::PolicyStateManager::STATE_DISABLED)
                 {
                     d->state = STATE_DISABLED;
-                    d->primordialState = STATE_DISABLED;
+                    d->initialState = STATE_DISABLED;
                     ui->disabledRadioButton->setChecked(true);
                 }
 
                 if (state == model::registry::PolicyStateManager::STATE_NOT_CONFIGURED)
                 {
                     d->state = STATE_NOT_CONFIGURED;
-                    d->primordialState = STATE_NOT_CONFIGURED;
+                    d->initialState = STATE_NOT_CONFIGURED;
                     ui->notConfiguredRadioButton->setChecked(true);
                 }
             }

@@ -40,7 +40,7 @@ namespace presentation
  * \ingroup model
  * \ingroup presentation
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT Text : public PresentationWidget
+class Text : public PresentationWidget
 {
 public:
     std::string content;

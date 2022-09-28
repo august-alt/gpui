@@ -39,7 +39,7 @@ namespace presentation
  * \ingroup model
  * \ingroup presentation
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT DecimalTextBox : public PresentationWidget
+class DecimalTextBox : public PresentationWidget
 {
 public:
     /*!

@@ -41,7 +41,7 @@ namespace presentation
  *
  * The CheckBox element must be associated with a boolean element defined in the elements element.
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT CheckBox : public PresentationWidget
+class CheckBox : public PresentationWidget
 {
 public:
     /*!

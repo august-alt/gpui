@@ -39,7 +39,7 @@ namespace presentation
  * \ingroup model
  * \ingroup presentation
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT TextBox : public PresentationWidget
+class TextBox : public PresentationWidget
 {
 public:
     /*!

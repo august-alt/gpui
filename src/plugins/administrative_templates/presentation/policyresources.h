@@ -42,7 +42,7 @@ class PresentationWidget;
  * Localization files are always in the namespace of the associated .admx file and never reference
  * definitions from other namespaces.
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT PolicyResources
+class PolicyResources
 {
 public:
     /*!

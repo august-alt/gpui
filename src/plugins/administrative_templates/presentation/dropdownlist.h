@@ -40,7 +40,7 @@ namespace presentation
  * \ingroup model
  * \ingroup presentation
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT DropdownList : public PresentationWidget
+class DropdownList : public PresentationWidget
 {
 public:
     /*!

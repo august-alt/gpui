@@ -39,7 +39,7 @@ namespace presentation
  * \ingroup model
  * \ingroup presentation
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT Presentation
+class Presentation
 {
 public:
     std::map<std::string, std::shared_ptr<PresentationWidget>> widgets{};

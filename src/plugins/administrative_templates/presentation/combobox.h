@@ -40,7 +40,7 @@ namespace presentation
  * \ingroup model
  * \ingroup presentation
  */
-class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT ComboBox : public PresentationWidget
+class ComboBox : public PresentationWidget
 {
 public:
     /*!

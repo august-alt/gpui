@@ -39,6 +39,8 @@ public:
 
     void loadSnapIns(const QDir &snapInDirectory);
 
+    void loadDefaultSnapIns();
+
 private:
     SnapInLoader(const SnapInLoader &) = delete;            // copy ctor
     SnapInLoader(SnapInLoader &&)      = delete;            // move ctor

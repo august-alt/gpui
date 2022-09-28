@@ -18,7 +18,13 @@
 **
 ***********************************************************************************************************************/
 
+#include "../core/compositesnapindetailsdialog.h"
 #include "../core/pluginstorage.h"
+#include "../core/snapindetailsdialog.h"
+#include "../core/snapindetailsfactory.h"
+#include "../core/snapinloader.h"
+#include "../core/snapinmanager.h"
+
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
 
@@ -26,8 +32,15 @@
 
 int main(int argc, char **argv)
 {
-    // Load plugins.
-    gpui::PluginStorage::instance()->loadDefaultPlugins();
+    // Register types for factory.
+    gpui::SnapInDetailsFactory::define<gpui::SnapInDetailsDialog>("ISnapIn");
+    gpui::SnapInDetailsFactory::define<gpui::CompositeSnapInDetailsDialog>("ICompositeSnapIn");
+
+    // Load plugins and snap-ins.
+    auto snapInManager = std::make_unique<gpui::SnapInManager>();
+    auto snapInLoader  = std::make_unique<gpui::SnapInLoader>(snapInManager.get());
+
+    snapInLoader->loadDefaultSnapIns();
 
     // Create window.
     QApplication app(argc, argv);

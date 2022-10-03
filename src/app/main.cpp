@@ -84,7 +84,7 @@ int main(int argc, char **argv)
         break;
     }
 
-    gpui::MainWindow window(options);
+    gpui::MainWindow window(options, snapInManager.get());
     window.show();
 
     return app.exec();

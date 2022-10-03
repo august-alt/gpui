@@ -26,73 +26,81 @@
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+class MainWindow;
+}
 QT_END_NAMESPACE
 
-namespace model {
-    namespace registry {
-        class AbstractRegistrySource;
-        class Registry;
-    }
-}
+namespace model
+{
+namespace registry
+{
+class AbstractRegistrySource;
+class Registry;
+} // namespace registry
+} // namespace model
 
-namespace gpui {
-    class CommandLineOptions;
-    class MainWindowPrivate;
+namespace gpui
+{
+class CommandLineOptions;
+class MainWindowPrivate;
+class ISnapInManager;
+class ISnapIn;
 
-    class GPUI_GUI_EXPORT MainWindow : public QMainWindow {
-        Q_OBJECT
+class GPUI_GUI_EXPORT MainWindow : public QMainWindow
+{
+    Q_OBJECT
 
-    public:
-        // construction and destruction
-        MainWindow(CommandLineOptions& options, QWidget *parent = 0);
-        ~MainWindow();
+public:
+    // construction and destruction
+    MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent = 0);
+    ~MainWindow();
 
-        void setLanguage(const QString& language);
-        QString getLanguage() const;
+    void setLanguage(const QString &language);
+    QString getLanguage() const;
 
-        void setAdmxPath(const QString& admxPath);
-        QString getAdmxPath() const;
+    void setAdmxPath(const QString &admxPath);
+    QString getAdmxPath() const;
 
-    protected:
-        void closeEvent(QCloseEvent *event) override;
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
-    private slots:
-        void on_actionManual_triggered();
+private slots:
+    void on_actionManual_triggered();
 
-    private:
+private:
+    MainWindowPrivate *const d;
 
-        MainWindowPrivate* const d;
+    Ui::MainWindow *ui;
 
-        Ui::MainWindow *ui;
+private slots:
+    void onDirectoryOpen();
+    void onRegistrySourceSave();
 
-    private slots:
-        void onDirectoryOpen();
-        void onRegistrySourceSave();
+    void on_actionExit_triggered();
+    void on_actionAbout_triggered();
 
-        void on_actionExit_triggered();
-        void on_actionAbout_triggered();
+    void onLanguageChanged(QAction *action);
 
-        void onLanguageChanged(QAction *action);
+private:
+    void onPolFileOpen(const QString &path,
+                       std::shared_ptr<model::registry::Registry> &registry,
+                       std::unique_ptr<model::registry::AbstractRegistrySource> &source,
+                       std::function<void(model::registry::AbstractRegistrySource *source)> callback);
 
-    private:
-        void onPolFileOpen(const QString& path,
-                           std::shared_ptr<model::registry::Registry>& registry,
-                           std::unique_ptr<model::registry::AbstractRegistrySource>& source,
-                           std::function<void(model::registry::AbstractRegistrySource* source)> callback);
+    void onIniFileOpen(const QString &path);
 
-        void onIniFileOpen(const QString& path);
+    void loadPolicyModel(ISnapIn *snapIn, const QString &locale);
 
-        void loadPolicyBundleFolder(const QString& path, const QString& locale);
+    void createLanguageMenu();
 
-        void createLanguageMenu();
-
-    private:
-        MainWindow(const MainWindow&)            = delete;   // copy ctor
-        MainWindow(MainWindow&&)                 = delete;   // move ctor
-        MainWindow& operator=(const MainWindow&) = delete;   // copy assignment
-        MainWindow& operator=(MainWindow&&)      = delete;   // move assignment
-    };
-}
+private:
+    MainWindow(const MainWindow &) = delete;            // copy ctor
+    MainWindow(MainWindow &&)      = delete;            // move ctor
+    MainWindow &operator=(const MainWindow &) = delete; // copy assignment
+    MainWindow &operator=(MainWindow &&) = delete;      // move assignment
+};
+} // namespace gpui
 
 #endif // GPUI_MAINWINDOW_H

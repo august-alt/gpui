@@ -30,6 +30,9 @@
 
 #include "treevieweventfilter.h"
 
+#include "../core/isnapin.h"
+#include "../core/isnapinmanager.h"
+
 #include "../plugins/administrative_templates/bundle/policybundle.h"
 
 #include "../plugins/administrative_templates/registry/polregistrysource.h"
@@ -60,7 +63,7 @@ namespace gpui
 class MainWindowPrivate
 {
 public:
-    std::unique_ptr<QStandardItemModel> model    = nullptr;
+    std::unique_ptr<QAbstractItemModel> model    = nullptr;
     ContentWidget *contentWidget                 = nullptr;
     std::unique_ptr<MainWindowSettings> settings = nullptr;
 
@@ -186,7 +189,7 @@ void save(const std::string &fileName, std::shared_ptr<model::registry::Registry
     delete format;
 }
 
-MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
+MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
@@ -239,28 +242,19 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
         d->options.policyBundle = "/usr/share/PolicyDefinitions";
     }
 
-    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
+    for (auto &snapIn : manager->getSnapIns())
+    {
+        qWarning() << "Loading model from: " << snapIn->getDisplayName();
+        snapIn->onInitialize();
+        loadPolicyModel(snapIn, d->localeName);
+    }
 
     if (!d->options.path.isEmpty())
     {
-        d->userRegistryPath    = d->options.path + "/User/Registry.pol";
-        d->machineRegistryPath = d->options.path + "/Machine/Registry.pol";
-
-        onPolFileOpen(d->userRegistryPath,
-                      d->userRegistry,
-                      d->userRegistrySource,
-                      [&](model::registry::AbstractRegistrySource *source) {
-                          d->contentWidget->setUserRegistrySource(source);
-                      });
-
-        onPolFileOpen(d->machineRegistryPath,
-                      d->machineRegistry,
-                      d->machineRegistrySource,
-                      [&](model::registry::AbstractRegistrySource *source) {
-                          d->contentWidget->setMachineRegistrySource(source);
-                      });
-
-        onIniFileOpen(d->options.path + "/gpt.ini");
+        for (auto &snapIn : manager->getSnapIns())
+        {
+            snapIn->onDataLoad(d->options.path.toStdString(), d->localeName.toStdString());
+        }
     }
 
     if (!d->options.policyName.isEmpty())
@@ -312,29 +306,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void gpui::MainWindow::loadPolicyBundleFolder(const QString &path, const QString &locale)
+void MainWindow::loadPolicyModel(ISnapIn *snapIn, const QString &locale)
 {
-    auto bundle = std::make_unique<model::bundle::PolicyBundle>();
-    d->model    = bundle->loadFolder(path.toStdString(), locale.toStdString());
+    Q_UNUSED(locale);
 
-    QStandardItem *header = d->model->invisibleRootItem()->child(0);
-
-    if (d->options.path.startsWith("smb://"))
-    {
-        QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
-        if (domainRegexp.indexIn(d->options.path) != -1)
-        {
-            header->setData('[' + domainRegexp.cap() + ']', Qt::DisplayRole);
-        }
-        else
-        {
-            header->setData(QObject::tr("[Domain Group Policy]"));
-        }
-    }
-    else
-    {
-        header->setData(QObject::tr("[Local Group Policy]"));
-    }
+    d->model = std::unique_ptr<QAbstractItemModel>(snapIn->getRootNode());
 
     d->itemNameSortModel = std::make_unique<QSortFilterProxyModel>();
     d->itemNameSortModel->setSourceModel(d->model.get());
@@ -360,6 +336,7 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString &path, const QString
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
 
     ui->treeView->expand(d->searchModel->index(0, 0));
+    ui->treeView->setColumnHidden(1, true);
 
     d->contentWidget->modelItemSelected(d->searchModel->index(0, 0));
 }
@@ -388,7 +365,6 @@ void MainWindow::onDirectoryOpen()
     if (fileDialog->exec() == QDialog::Accepted)
     {
         d->options.policyBundle = fileDialog->selectedUrls().value(0).toLocalFile();
-        loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
     }
 }
 
@@ -455,8 +431,6 @@ void MainWindow::onLanguageChanged(QAction *action)
     QLocale locale(language);
 
     d->localeName = locale.name().replace("_", "-");
-
-    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
 
     d->contentWidget->onLanguageChaged();
     ui->retranslateUi(this);

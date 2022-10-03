@@ -42,19 +42,30 @@ void ModelCreator::populateModels(const std::string &policyPath,
                                   std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
     std::map<std::string, std::unique_ptr<PreferenceReaderInterface>> readers;
-    readers["Files\\Files.xml"]                               = std::make_unique<FilesPreferenceReader>();
-    readers["Folders\\Folders.xml"]                           = std::make_unique<FolderPreferenceReader>();
-    readers["IniFiles\\IniFiles.xml"]                         = std::make_unique<IniPreferenceReader>();
-    readers["Registry\\Registry.xml"]                         = std::make_unique<RegistryPreferenceReader>();
-    readers["NetworkShares\\NetworkShares.xml"]               = std::make_unique<SharesPreferenceReader>();
-    readers["Shortcuts\\Shortcuts.xml"]                       = std::make_unique<ShortcutsPreferenceReader>();
-    readers["EnvironmentVariables\\EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceReader>();
+    readers["Files/Files.xml"]                               = std::make_unique<FilesPreferenceReader>();
+    readers["Folders/Folders.xml"]                           = std::make_unique<FolderPreferenceReader>();
+    readers["IniFiles/IniFiles.xml"]                         = std::make_unique<IniPreferenceReader>();
+    readers["Registry/Registry.xml"]                         = std::make_unique<RegistryPreferenceReader>();
+    readers["NetworkShares/NetworkShares.xml"]               = std::make_unique<SharesPreferenceReader>();
+    readers["Shortcuts/Shortcuts.xml"]                       = std::make_unique<ShortcutsPreferenceReader>();
+    readers["EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceReader>();
 
     for (const auto &readerPair : readers)
     {
         auto &reader = readerPair.second;
-        auto model   = reader->read(policyPath + "\\" + policyType + "\\" + readerPair.first);
-        map->insert(std::pair<std::string, std::unique_ptr<PreferencesModel>>(reader->getType(), std::move(model)));
+        try
+        {
+            auto model = reader->read(policyPath + "/" + policyType + "/" + readerPair.first);
+            if (model)
+            {
+                map->insert(
+                    std::pair<std::string, std::unique_ptr<PreferencesModel>>(reader->getType(), std::move(model)));
+            }
+        }
+        catch (std::exception &ex)
+        {
+            qWarning() << ex.what();
+        }
     }
 }
 

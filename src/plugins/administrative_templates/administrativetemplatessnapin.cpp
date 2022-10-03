@@ -71,4 +71,12 @@ void AdministrativeTemplatesSnapIn::onShutdown()
     std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
 }
 
+void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)
+{
+    Q_UNUSED(policyPath);
+    Q_UNUSED(locale);
+}
+
+void AdministrativeTemplatesSnapIn::onDataSave() {}
+
 } // namespace gpui

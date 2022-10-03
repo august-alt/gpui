@@ -35,9 +35,9 @@ public:
 
     void onShutdown() override;
 
-    void onPolicyLoad(const std::string &policyPath);
+    void onDataLoad(const std::string &policyPath, const std::string &locale) override;
 
-    void onPolicySave();
+    void onDataSave() override;
 
     void onRetranslateUI(const std::string &locale);
 

@@ -51,6 +51,18 @@ public:
     virtual void onShutdown() = 0;
 
     /**
+     * @brief onDataLoad Called when snap-in loads data from policy folder.
+     * @param policyPath Path to load policy data from.
+     * @param locale Locale to use.
+     */
+    virtual void onDataLoad(const std::string &policyPath, const std::string &locale) = 0;
+
+    /**
+     * @brief onDataSave Called when snap-in saves data.
+     */
+    virtual void onDataSave() = 0;
+
+    /**
      * @brief Gets the identifier for the instance of the snap-in.
      *  The identifier is unique across snap-in instances within a application.
      */

@@ -35,6 +35,10 @@ public:
 
     void onShutdown() override;
 
+    void onDataLoad(const std::string &policyPath, const std::string &locale) override;
+
+    void onDataSave() override;
+
 private:
     std::unique_ptr<AdministrativeTemplatesSnapInPrivate> d;
 };

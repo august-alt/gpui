@@ -87,15 +87,17 @@ void PreferencesSnapIn::onShutdown()
     std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
 }
 
-void PreferencesSnapIn::onPolicyLoad(const std::string &policyPath)
+void PreferencesSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)
 {
+    Q_UNUSED(locale);
+
     auto modelCreator = std::make_unique<ModelCreator>();
 
-    modelCreator->populateModels(policyPath, "MACHINE", d->machinePreferencesModels.get());
-    modelCreator->populateModels(policyPath, "USER", d->userPreferencesModels.get());
+    modelCreator->populateModels(policyPath, "Machine", d->machinePreferencesModels.get());
+    modelCreator->populateModels(policyPath, "User", d->userPreferencesModels.get());
 }
 
-void PreferencesSnapIn::onPolicySave() {}
+void PreferencesSnapIn::onDataSave() {}
 
 void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
 {

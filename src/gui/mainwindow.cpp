@@ -66,6 +66,7 @@ public:
     std::unique_ptr<QAbstractItemModel> model    = nullptr;
     ContentWidget *contentWidget                 = nullptr;
     std::unique_ptr<MainWindowSettings> settings = nullptr;
+    ISnapInManager *manager                      = nullptr;
 
     std::shared_ptr<model::registry::Registry> userRegistry                     = {};
     std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource = {};
@@ -195,6 +196,8 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     , ui(new Ui::MainWindow())
 {
     registerResources();
+
+    d->manager = manager;
 
     d->options = options;
 
@@ -421,6 +424,11 @@ void MainWindow::onLanguageChanged(QAction *action)
     d->translators.clear();
 
     QString language = action->data().toString();
+
+    for (auto &snapIn : d->manager->getSnapIns())
+    {
+        snapIn->onRetranslateUI(language.toStdString());
+    }
 
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
     bool loadResult                           = qtTranslator->load("gui_" + language + ".qm", ":/");

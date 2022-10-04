@@ -106,6 +106,12 @@ public:
      * @brief getCopyright Returns copyright of snap-in.
      */
     virtual QString getCopyright() const = 0;
+
+    /**
+     * @brief onRetranslateUI Retranslate UI
+     * @param locale locale to use in current snap-in.
+     */
+    virtual void onRetranslateUI(const std::string &locale) = 0;
 };
 
 } // namespace gpui

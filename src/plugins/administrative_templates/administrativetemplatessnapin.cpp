@@ -79,4 +79,9 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
 
 void AdministrativeTemplatesSnapIn::onDataSave() {}
 
+void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
+{
+    Q_UNUSED(locale);
+}
+
 } // namespace gpui

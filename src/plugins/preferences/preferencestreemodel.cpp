@@ -54,6 +54,7 @@ class FolderItem : public ModelView::GroupItem
 public:
     static inline const std::string NODE_ID   = "NODE_ID";
     static inline const std::string PARENT_ID = "PARENT_ID";
+    static inline const std::string HELP_MSG  = "HELP_MSG";
 
 public:
     FolderItem()
@@ -61,6 +62,7 @@ public:
     {
         addProperty(NODE_ID, QUuid::createUuid());
         addProperty(PARENT_ID, QUuid::createUuid());
+        addProperty(HELP_MSG, "");
     }
 
     template<typename T>
@@ -150,164 +152,211 @@ void PreferencesTreeModel::populateModel()
                                                             {typeid(FolderOptionsContainerItem<OpenWithItem>).name(),
                                                              QObject::tr("Open With")}};
 
-    auto machineNamespace = insertItem<FolderItem>(this->rootItem());
-    machineNamespace->setDisplayName("Machine");
+    auto topItem = insertItem<FolderItem>(this->rootItem());
+    topItem->setDisplayName(QObject::tr("[Local Group Policy]").toStdString());
+    topItem->setProperty(FolderItem::HELP_MSG, "");
+
+    auto machineNamespace = insertItem<FolderItem>(topItem);
+    machineNamespace->setDisplayName(QObject::tr("Machine").toStdString());
     auto machineUuid = QUuid("{123e4567-e89b-12d3-a456-426652340000}");
     machineNamespace->setProperty(FolderItem::NODE_ID, machineUuid);
+    machineNamespace->setProperty(FolderItem::HELP_MSG, QObject::tr("Machine level policies").toStdString());
 
     auto machinePreferencesItem = insertItem<FolderItem>(machineNamespace);
-    machinePreferencesItem->setDisplayName("Preferences");
+    machinePreferencesItem->setDisplayName(QObject::tr("Preferences").toStdString());
     auto machinePreferencesUuid = QUuid::createUuid();
     machinePreferencesItem->setProperty(FolderItem::NODE_ID, machinePreferencesUuid);
     machinePreferencesItem->setProperty(FolderItem::PARENT_ID, machineUuid);
+    machinePreferencesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Preferences policies.").toStdString());
 
     auto machineSystemSettingsItem = insertItem<FolderItem>(machinePreferencesItem);
-    machineSystemSettingsItem->setDisplayName("System Settings");
+    machineSystemSettingsItem->setDisplayName(QObject::tr("System Settings").toStdString());
     auto machineSystemSettingsUuid = QUuid::createUuid();
     machineSystemSettingsItem->setProperty(FolderItem::NODE_ID, machineSystemSettingsUuid);
     machineSystemSettingsItem->setProperty(FolderItem::PARENT_ID, machinePreferencesUuid);
+    machineSystemSettingsItem->setProperty(FolderItem::HELP_MSG,
+                                           QObject::tr("Policies that set system settings.").toStdString());
 
     auto machineVariablesItems = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
-    machineVariablesItems->setDisplayName("Environment");
+    machineVariablesItems->setDisplayName(QObject::tr("Environment").toStdString());
     machineVariablesItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, variablesTypeIds);
     machineVariablesItems->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineVariablesItems->setProperty(FolderItem::HELP_MSG,
+                                       QObject::tr("Environment variable settings.").toStdString());
 
     auto machineFilesItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
-    machineFilesItem->setDisplayName("Files");
+    machineFilesItem->setDisplayName(QObject::tr("Files").toStdString());
     machineFilesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, filesTypeIds);
     machineFilesItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineFilesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("File policy settings.").toStdString());
 
     auto machineFoldersItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
-    machineFoldersItem->setDisplayName("Folders");
+    machineFoldersItem->setDisplayName(QObject::tr("Folders").toStdString());
     machineFoldersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, foldersTypeIds);
     machineFoldersItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineFoldersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Folder policy settings.").toStdString());
 
     auto machineIniItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
-    machineIniItem->setDisplayName("Ini Files");
+    machineIniItem->setDisplayName(QObject::tr("Ini Files").toStdString());
     machineIniItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, iniTypeIds);
     machineIniItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineIniItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Ini policy settings.").toStdString());
 
     auto machineRegistryItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
-    machineRegistryItem->setDisplayName("Registry");
+    machineRegistryItem->setDisplayName(QObject::tr("Registry").toStdString());
     machineRegistryItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, registryTypeIds);
     machineRegistryItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineRegistryItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Registry policy settings.").toStdString());
 
     auto machineSharesItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
-    machineSharesItem->setDisplayName("Network Shares");
+    machineSharesItem->setDisplayName(QObject::tr("Network Shares").toStdString());
     machineSharesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, sharesTypeIds);
     machineSharesItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineSharesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network shares settings.").toStdString());
 
     auto machineShortcutsItems = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
-    machineShortcutsItems->setDisplayName("Shortcuts");
+    machineShortcutsItems->setDisplayName(QObject::tr("Shortcuts").toStdString());
     machineShortcutsItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, shortcutsTypeIds);
     machineShortcutsItems->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
 
     auto machineControlPanelSettingsItem = insertItem<FolderItem>(machinePreferencesItem);
-    machineControlPanelSettingsItem->setDisplayName("Control Panel Settings");
+    machineControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
+    machineControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG,
+                                                 QObject::tr("Control Panel Settings.").toStdString());
 
     auto machineDataSourceItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineDataSourceItem->setDisplayName("Data Sources");
+    machineDataSourceItem->setDisplayName(QObject::tr("Data Sources").toStdString());
     machineDataSourceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, dataSourceTypeIds);
+    machineDataSourceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Data Source settings.").toStdString());
 
     auto machineDeviceItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineDeviceItem->setDisplayName("Devices");
+    machineDeviceItem->setDisplayName(QObject::tr("Devices").toStdString());
     machineDeviceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, deviceTypeIds);
+    machineDeviceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Devices settings.").toStdString());
 
     auto machineFolderOptionsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineFolderOptionsItem->setDisplayName("Folder Options");
+    machineFolderOptionsItem->setDisplayName(QObject::tr("Folder Options").toStdString());
     machineFolderOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, {});
+    machineFolderOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Folders settings.").toStdString());
 
     auto machineLocalUsersAndGroupsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
     machineLocalUsersAndGroupsItem->setDisplayName("Local Users And Groups");
     machineLocalUsersAndGroupsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE,
                                                                                 localGroupTypeIds);
+    machineLocalUsersAndGroupsItem->setProperty(FolderItem::HELP_MSG,
+                                                QObject::tr("Local Users And Groups settings.").toStdString());
 
     auto machineNetworkOptionsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineNetworkOptionsItem->setDisplayName("Network Options");
+    machineNetworkOptionsItem->setDisplayName(QObject::tr("Network Options").toStdString());
     machineNetworkOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, networkTypeIds);
+    machineNetworkOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network Options settings.").toStdString());
 
     auto machinePowerOptionsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machinePowerOptionsItem->setDisplayName("Power Options");
+    machinePowerOptionsItem->setDisplayName(QObject::tr("Power Options").toStdString());
     machinePowerOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, powerTypeIds);
+    machinePowerOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Power settings.").toStdString());
 
     auto machinePrintersItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machinePrintersItem->setDisplayName("Printers");
+    machinePrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
     machinePrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
+    machinePrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
 
     //======================================================================================================================
 
-    auto userNamespace = insertItem<FolderItem>(this->rootItem());
-    userNamespace->setDisplayName("User");
+    auto userNamespace = insertItem<FolderItem>(topItem);
+    userNamespace->setDisplayName(QObject::tr("User").toStdString());
     auto userUuid = QUuid("{123e4567-e89b-12d3-a456-426652340001}");
     userNamespace->setProperty(FolderItem::NODE_ID, userUuid);
+    userNamespace->setProperty(FolderItem::HELP_MSG, QObject::tr("User level policies.").toStdString());
 
     auto userPreferencesItem = insertItem<FolderItem>(userNamespace);
-    userPreferencesItem->setDisplayName("Preferences");
+    userPreferencesItem->setDisplayName(QObject::tr("Preferences").toStdString());
     userPreferencesItem->setProperty(FolderItem::PARENT_ID, userUuid);
+    userPreferencesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Preferences policies.").toStdString());
 
     auto userSystemSettingsItem = insertItem<FolderItem>(userPreferencesItem);
-    userSystemSettingsItem->setDisplayName("System Settings");
+    userSystemSettingsItem->setDisplayName(QObject::tr("System Settings").toStdString());
+    userSystemSettingsItem->setProperty(FolderItem::HELP_MSG,
+                                        QObject::tr("Policies that set system settings.").toStdString());
 
     auto userDrivesItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
-    userDrivesItem->setDisplayName("Drive Maps");
+    userDrivesItem->setDisplayName(QObject::tr("Drive Maps").toStdString());
     userDrivesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, drivesTypeIds);
+    userDrivesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Drive Maps Settings.").toStdString());
 
     auto userVariablesItems = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
-    userVariablesItems->setDisplayName("Environment");
+    userVariablesItems->setDisplayName(QObject::tr("Environment").toStdString());
     userVariablesItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, variablesTypeIds);
+    userVariablesItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Environment variable settings.").toStdString());
 
     auto userFilesItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
-    userFilesItem->setDisplayName("Files");
+    userFilesItem->setDisplayName(QObject::tr("Files").toStdString());
     userFilesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, filesTypeIds);
+    userFilesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("File policy settings.").toStdString());
 
     auto userFoldersItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
-    userFoldersItem->setDisplayName("Folders");
+    userFoldersItem->setDisplayName(QObject::tr("Folders").toStdString());
     userFoldersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, foldersTypeIds);
+    userFoldersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Folders policy settings.").toStdString());
 
     auto userIniItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
-    userIniItem->setDisplayName("Ini Files");
+    userIniItem->setDisplayName(QObject::tr("Ini Files").toStdString());
     userIniItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, iniTypeIds);
+    userIniItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Ini policy settings.").toStdString());
 
     auto userRegistryItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
-    userRegistryItem->setDisplayName("Registry");
+    userRegistryItem->setDisplayName(QObject::tr("Registry").toStdString());
     userRegistryItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, registryTypeIds);
+    userRegistryItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Registry policy settings.").toStdString());
 
     auto userShortcutsItems = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
-    userShortcutsItems->setDisplayName("Shortcuts");
+    userShortcutsItems->setDisplayName(QObject::tr("Shortcuts").toStdString());
     userShortcutsItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, shortcutsTypeIds);
+    userShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
 
     auto userControlPanelSettingsItem = insertItem<FolderItem>(userPreferencesItem);
-    userControlPanelSettingsItem->setDisplayName("Control Panel Settings");
+    userControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
+    userControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG,
+                                              QObject::tr("Control Panel Settings.").toStdString());
 
     auto userDataSourceItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userDataSourceItem->setDisplayName("Data Sources");
+    userDataSourceItem->setDisplayName(QObject::tr("Data Sources").toStdString());
     userDataSourceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, dataSourceTypeIds);
+    userDataSourceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Data Source settings.").toStdString());
 
     auto userDeviceItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userDeviceItem->setDisplayName("Devices");
+    userDeviceItem->setDisplayName(QObject::tr("Devices").toStdString());
     userDeviceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, deviceTypeIds);
+    userDeviceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Devices settings.").toStdString());
 
     auto userFolderOptionsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userFolderOptionsItem->setDisplayName("Folder Options");
+    userFolderOptionsItem->setDisplayName(QObject::tr("Folder Options").toStdString());
     userFolderOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE,
                                                                        userFolderOptionsTypeIds);
+    userFolderOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Folders settings.").toStdString());
 
     auto userLocalUsersAndGroupsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userLocalUsersAndGroupsItem->setDisplayName("Local Users And Groups");
+    userLocalUsersAndGroupsItem->setDisplayName(QObject::tr("Local Users And Groups").toStdString());
     userLocalUsersAndGroupsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE,
                                                                              localGroupTypeIds);
+    userLocalUsersAndGroupsItem->setProperty(FolderItem::HELP_MSG,
+                                             QObject::tr("Local Users And Groups settings.").toStdString());
 
     auto userNetworkOptionsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userNetworkOptionsItem->setDisplayName("Network Options");
+    userNetworkOptionsItem->setDisplayName(QObject::tr("Network Options").toStdString());
     userNetworkOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, networkTypeIds);
+    userNetworkOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network Options settings.").toStdString());
 
     auto userPowerOptionsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userPowerOptionsItem->setDisplayName("Power Options");
+    userPowerOptionsItem->setDisplayName(QObject::tr("Power Options").toStdString());
     userPowerOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, powerTypeIds);
+    userPowerOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Power settings.").toStdString());
 
     auto userPrintersItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userPrintersItem->setDisplayName("Printers");
+    userPrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
     userPrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
+    userPrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
 }
 
 } // namespace preferences

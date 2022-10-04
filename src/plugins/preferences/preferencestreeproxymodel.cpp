@@ -20,6 +20,8 @@
 
 #include "preferencestreeproxymodel.h"
 
+#include "../../../src/plugins/administrative_templates/bundle/policyroles.h"
+
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
@@ -62,6 +64,14 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
     {
         auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
         return QVariant::fromValue(viewModel->sessionItemFromIndex(proxyIndex)->property<QUuid>("PARENT_ID"));
+    }
+
+    if (role == model::bundle::EXPLAIN_TEXT)
+    {
+        auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
+        auto qtText    = QString::fromStdString(
+            viewModel->sessionItemFromIndex(proxyIndex)->property<std::string>("HELP_MSG"));
+        return QVariant::fromValue(qtText);
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);

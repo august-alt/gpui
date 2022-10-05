@@ -229,6 +229,8 @@ void AdministrativeTemplatesSnapIn::onInitialize()
 
     setRootNode(static_cast<QAbstractItemModel *>(d->model.get()));
 
+    // TODO: Register action to load model from path.
+
     std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
 }
 

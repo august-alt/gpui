@@ -106,90 +106,6 @@ private:
     MainWindowPrivate &operator=(MainWindowPrivate &&) = delete;      // move assignment
 };
 
-void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
-{
-    std::unique_ptr<io::RegistryFile> fileData = std::make_unique<io::RegistryFile>();
-    fileData->setRegistry(registry);
-
-    QString pluginName = QString::fromStdString(fileName);
-    pluginName         = pluginName.mid(pluginName.lastIndexOf('.') + 1);
-
-    io::RegistryFileFormat<io::RegistryFile> *format
-        = gpui::PluginStorage::instance()->createPluginClass<io::RegistryFileFormat<io::RegistryFile>>(pluginName);
-
-    if (!format)
-    {
-        qWarning() << "Format supporting: " << pluginName << " not found.";
-
-        return;
-    }
-
-    auto oss = std::make_unique<std::ostringstream>();
-
-    if (!format->write(*oss, fileData.get()))
-    {
-        qWarning() << fileName.c_str() << " " << format->getErrorString().c_str();
-    }
-
-    oss->flush();
-
-    qWarning() << "Current string values." << oss->str().c_str();
-
-    bool ifShowError = false;
-
-    auto showMessageFunction = [&fileName]() {
-        QMessageBox messageBox(QMessageBox::Critical,
-                               QObject::tr("Error"),
-                               QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
-                               QMessageBox::Ok);
-        messageBox.exec();
-    };
-
-    try
-    {
-        if (QString::fromStdString(fileName).startsWith("smb://"))
-        {
-            gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
-            ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
-            if (!ifShowError)
-            {
-                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
-            }
-            if (ifShowError && oss->str().size() > 0)
-            {
-                smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
-            }
-            smbLocationItemFile.close();
-        }
-        else
-        {
-            QFile registryFile(QString::fromStdString(fileName));
-            ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
-            if (!ifShowError)
-            {
-                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
-            }
-            if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
-            {
-                registryFile.write(&oss->str().at(0), oss->str().size());
-            }
-            registryFile.close();
-        }
-    }
-    catch (std::exception &e)
-    {
-        ifShowError = true;
-        showMessageFunction();
-    }
-
-    if (!ifShowError)
-    {
-        showMessageFunction();
-    }
-
-    delete format;
-}
-
 MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
@@ -373,24 +289,9 @@ void MainWindow::onDirectoryOpen()
 
 void MainWindow::onRegistrySourceSave()
 {
-    if (!d->machineRegistryPath.isEmpty())
+    for (auto snapIn : d->manager->getSnapIns())
     {
-        qWarning() << "Saving machine registry to: " << d->machineRegistryPath;
-        save(d->machineRegistryPath.toStdString(), d->machineRegistry);
-    }
-    else
-    {
-        qWarning() << "Unable to save machine registry path is empty!";
-    }
-
-    if (!d->userRegistryPath.isEmpty())
-    {
-        qWarning() << "Saving user registry to: " << d->userRegistryPath;
-        save(d->userRegistryPath.toStdString(), d->userRegistry);
-    }
-    else
-    {
-        qWarning() << "Unable to save user registry path is empty!";
+        snapIn->onDataSave();
     }
 
     ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);

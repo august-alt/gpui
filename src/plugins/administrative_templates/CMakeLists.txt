@@ -82,3 +82,4 @@ add_definitions(
 add_gpui_plugin(${PLUGIN_NAME} ${SOURCES})
 target_link_libraries(${PLUGIN_NAME} Qt5::Core)
 target_link_libraries(${PLUGIN_NAME} ${GPUI_CORE_LIBRARY} ${GPUI_IO_LIBRARY})
+target_link_libraries(${PLUGIN_NAME} smb-storage-static)

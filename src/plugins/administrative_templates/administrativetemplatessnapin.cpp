@@ -45,6 +45,7 @@
 #include "../io/inifile.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 namespace gpui
 {
@@ -127,6 +128,90 @@ void onPolFileOpen(const QString &path,
     }
 }
 
+void onPolFileSave(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
+{
+    std::unique_ptr<io::RegistryFile> fileData = std::make_unique<io::RegistryFile>();
+    fileData->setRegistry(registry);
+
+    QString pluginName = QString::fromStdString(fileName);
+    pluginName         = pluginName.mid(pluginName.lastIndexOf('.') + 1);
+
+    io::RegistryFileFormat<io::RegistryFile> *format
+        = gpui::PluginStorage::instance()->createPluginClass<io::RegistryFileFormat<io::RegistryFile>>(pluginName);
+
+    if (!format)
+    {
+        qWarning() << "Format supporting: " << pluginName << " not found.";
+
+        return;
+    }
+
+    auto oss = std::make_unique<std::ostringstream>();
+
+    if (!format->write(*oss, fileData.get()))
+    {
+        qWarning() << fileName.c_str() << " " << format->getErrorString().c_str();
+    }
+
+    oss->flush();
+
+    qWarning() << "Current string values." << oss->str().c_str();
+
+    bool ifShowError = false;
+
+    auto showMessageFunction = [&fileName]() {
+        QMessageBox messageBox(QMessageBox::Critical,
+                               QObject::tr("Error"),
+                               QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
+                               QMessageBox::Ok);
+        messageBox.exec();
+    };
+
+    try
+    {
+        if (QString::fromStdString(fileName).startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
+            ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && oss->str().size() > 0)
+            {
+                smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
+            }
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(QString::fromStdString(fileName));
+            ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
+            {
+                registryFile.write(&oss->str().at(0), oss->str().size());
+            }
+            registryFile.close();
+        }
+    }
+    catch (std::exception &e)
+    {
+        ifShowError = true;
+        showMessageFunction();
+    }
+
+    if (!ifShowError)
+    {
+        showMessageFunction();
+    }
+
+    delete format;
+}
+
 AdministrativeTemplatesSnapIn::AdministrativeTemplatesSnapIn()
     : AbstractSnapIn("ISnapIn",
                      "AdministrativeTemplatesSnapIn",
@@ -156,9 +241,52 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
 {
     Q_UNUSED(policyPath);
     Q_UNUSED(locale);
+
+    if (!policyPath.empty())
+    {
+        d->userRegistryPath    = QString::fromStdString(policyPath) + "/User/Registry.pol";
+        d->machineRegistryPath = QString::fromStdString(policyPath) + "/Machine/Registry.pol";
+
+        onPolFileOpen(d->userRegistryPath,
+                      d->userRegistry,
+                      d->userRegistrySource,
+                      [&](model::registry::AbstractRegistrySource *source) {
+                          Q_UNUSED(source);
+                          // TODO: set registry source to content widget.
+                      });
+
+        onPolFileOpen(d->machineRegistryPath,
+                      d->machineRegistry,
+                      d->machineRegistrySource,
+                      [&](model::registry::AbstractRegistrySource *source) {
+                          Q_UNUSED(source);
+                          // TODO: set registry source to content widget.
+                      });
+    }
 }
 
-void AdministrativeTemplatesSnapIn::onDataSave() {}
+void AdministrativeTemplatesSnapIn::onDataSave()
+{
+    if (!d->machineRegistryPath.isEmpty())
+    {
+        qWarning() << "Saving machine registry to: " << d->machineRegistryPath;
+        onPolFileSave(d->machineRegistryPath.toStdString(), d->machineRegistry);
+    }
+    else
+    {
+        qWarning() << "Unable to save machine registry path is empty!";
+    }
+
+    if (!d->userRegistryPath.isEmpty())
+    {
+        qWarning() << "Saving user registry to: " << d->userRegistryPath;
+        onPolFileSave(d->userRegistryPath.toStdString(), d->userRegistry);
+    }
+    else
+    {
+        qWarning() << "Unable to save user registry path is empty!";
+    }
+}
 
 void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {

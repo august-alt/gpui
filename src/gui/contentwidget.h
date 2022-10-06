@@ -26,70 +26,63 @@
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class ContentWidget; }
+namespace Ui
+{
+class ContentWidget;
+}
 QT_END_NAMESPACE
 
-namespace model {
-    namespace registry {
-        class AbstractRegistrySource;
-    }
+namespace model
+{
+namespace registry
+{
+class AbstractRegistrySource;
 }
+} // namespace model
 
-namespace gpui {
-    class ContentWidgetPrivate;
+namespace gpui
+{
+class ContentWidgetPrivate;
 
-    class GPUI_GUI_EXPORT ContentWidget : public QWidget {
-        Q_OBJECT
-    public:
-        enum PolicyWidgetState
-        {
-            STATE_NOT_CONFIGURED        = 0,
-            STATE_ENABLED               = 1,
-            STATE_DISABLED              = 2
-        };
-
-    public:
-        // construction and destruction
-        ContentWidget(QWidget *parent = 0);
-        ~ContentWidget();
-
-        void setEventFilter(QObject* eventFilter);
-
-        void setModel(QAbstractItemModel *model);
-        void setSelectionModel(QItemSelectionModel* selectionModel);
-
-        void setUserRegistrySource(model::registry::AbstractRegistrySource* registrySource);
-        void setMachineRegistrySource(model::registry::AbstractRegistrySource* registrySource);
-
-        void setPolicyWidgetState(PolicyWidgetState state);
-
-        void onLanguageChaged();
-
-    signals:
-        void modelItemSelected(const QModelIndex& index);
-        void savePolicyChanges();
-
-    private:
-        Ui::ContentWidget *ui;
-        ContentWidgetPrivate* d;
-
-    private slots:
-        void onListItemClicked(const QModelIndex &index);
-
-        void onApplyClicked();
-        void onCancelClicked();
-        void onDataChanged();
-
-    private:
-        void setPolicyWidgetsVisible(bool visible);
-        void connectDialogBoxSignals();
-
-    private:
-        ContentWidget(const ContentWidget&)            = delete;   // copy ctor
-        ContentWidget(ContentWidget&&)                 = delete;   // move ctor
-        ContentWidget& operator=(const ContentWidget&) = delete;   // copy assignment
-        ContentWidget& operator=(ContentWidget&&)      = delete;   // move assignment        
+class GPUI_GUI_EXPORT ContentWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    enum PolicyWidgetState
+    {
+        STATE_NOT_CONFIGURED = 0,
+        STATE_ENABLED        = 1,
+        STATE_DISABLED       = 2
     };
-}
+
+public:
+    // construction and destruction
+    ContentWidget(QWidget *parent = 0);
+    ~ContentWidget();
+
+    void setEventFilter(QObject *eventFilter);
+
+    void setModel(QAbstractItemModel *model);
+    void setSelectionModel(QItemSelectionModel *selectionModel);
+
+    void onLanguageChanged();
+
+signals:
+    void modelItemSelected(const QModelIndex &index);
+
+private:
+    Ui::ContentWidget *ui;
+    ContentWidgetPrivate *d;
+
+private slots:
+    void onListItemClicked(const QModelIndex &index);
+
+private:
+    ContentWidget(const ContentWidget &) = delete;            // copy ctor
+    ContentWidget(ContentWidget &&)      = delete;            // move ctor
+    ContentWidget &operator=(const ContentWidget &) = delete; // copy assignment
+    ContentWidget &operator=(ContentWidget &&) = delete;      // move assignment
+};
+} // namespace gpui
 
 #endif // GPUI_CONTENT_WIDGET_H

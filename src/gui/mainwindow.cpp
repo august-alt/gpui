@@ -127,8 +127,6 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     createLanguageMenu();
 
     d->contentWidget = new ContentWidget(this);
-    d->contentWidget->setMachineRegistrySource(d->machineRegistrySource.get());
-    d->contentWidget->setUserRegistrySource(d->userRegistrySource.get());
     d->contentWidget->setEventFilter(d->eventFilter.get());
 
     ui->splitter->addWidget(d->contentWidget);
@@ -149,7 +147,7 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     QCoreApplication::installTranslator(qtTranslator.get());
     d->translators.push_back(std::move(qtTranslator));
     d->localeName = locale.name().replace("_", "-");
-    d->contentWidget->onLanguageChaged();
+    d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
 
     d->windowIcon = QIcon(":gpui.png");
@@ -181,7 +179,7 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
         setWindowTitle("GPUI - " + d->options.policyName);
     }
 
-    connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
+    //    connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
 
     connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString &text) {
         d->searchModel->setFilterFixedString(text);
@@ -341,7 +339,7 @@ void MainWindow::onLanguageChanged(QAction *action)
 
     d->localeName = locale.name().replace("_", "-");
 
-    d->contentWidget->onLanguageChaged();
+    d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
 
     ui->treeView->selectionModel()->clearSelection();

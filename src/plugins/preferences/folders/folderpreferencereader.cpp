@@ -26,7 +26,7 @@
 namespace preferences
 {
 FolderPreferenceReader::FolderPreferenceReader()
-    : BasePreferenceReader("Folder")
+    : BasePreferenceReader("FolderContainerItem")
 {}
 
 std::unique_ptr<PreferencesModel> FolderPreferenceReader::createModel(std::istream &input)

@@ -26,7 +26,7 @@
 namespace preferences
 {
 IniPreferenceReader::IniPreferenceReader()
-    : BasePreferenceReader("Ini")
+    : BasePreferenceReader("IniContainerItem")
 {}
 
 std::unique_ptr<PreferencesModel> IniPreferenceReader::createModel(std::istream &input)

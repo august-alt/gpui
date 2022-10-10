@@ -26,7 +26,7 @@
 namespace preferences
 {
 RegistryPreferenceReader::RegistryPreferenceReader()
-    : BasePreferenceReader("Registry")
+    : BasePreferenceReader("RegistryContainerItem")
 {}
 
 std::unique_ptr<PreferencesModel> RegistryPreferenceReader::createModel(std::istream &input)

@@ -26,7 +26,7 @@
 namespace preferences
 {
 SharesPreferenceReader::SharesPreferenceReader()
-    : BasePreferenceReader("Shares")
+    : BasePreferenceReader("SharesContainerItem")
 {}
 
 std::unique_ptr<PreferencesModel> SharesPreferenceReader::createModel(std::istream &input)

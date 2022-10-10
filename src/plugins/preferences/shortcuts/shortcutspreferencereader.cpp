@@ -26,7 +26,7 @@
 namespace preferences
 {
 ShortcutsPreferenceReader::ShortcutsPreferenceReader()
-    : BasePreferenceReader("Shortcuts")
+    : BasePreferenceReader("ShortcutsContainerItem")
 {}
 
 std::unique_ptr<PreferencesModel> ShortcutsPreferenceReader::createModel(std::istream &input)

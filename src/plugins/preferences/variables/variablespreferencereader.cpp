@@ -26,7 +26,7 @@
 namespace preferences
 {
 VariablesPreferenceReader::VariablesPreferenceReader()
-    : BasePreferenceReader("Variables")
+    : BasePreferenceReader("VariablesContainerItem")
 {}
 
 std::unique_ptr<PreferencesModel> VariablesPreferenceReader::createModel(std::istream &input)

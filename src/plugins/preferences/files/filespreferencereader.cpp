@@ -25,17 +25,15 @@
 
 namespace preferences
 {
-
 FilesPreferenceReader::FilesPreferenceReader()
-    : BasePreferenceReader("Files")
-{
-}
+    : BasePreferenceReader("FilesContainerItem")
+{}
 
 std::unique_ptr<PreferencesModel> FilesPreferenceReader::createModel(std::istream &input)
 {
-    auto files = Files_(input, ::xsd::cxx::tree::flags::dont_validate);
+    auto files        = Files_(input, ::xsd::cxx::tree::flags::dont_validate);
     auto modelBuilder = std::make_unique<FilesModelBuilder>();
     return modelBuilder->schemaToModel(files);
 }
 
-}
+} // namespace preferences

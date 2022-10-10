@@ -23,18 +23,21 @@
 
 #include <QAbstractItemModel>
 
-namespace model {
-    namespace bundle {
-        enum PolicyRoles
-        {
-            ITEM_TYPE = Qt::UserRole + 1,
-            EXPLAIN_TEXT = Qt::UserRole + 2,
-            SUPPORTED_ON = Qt::UserRole + 4,
-            PRESENTATION = Qt::UserRole + 5,
-            POLICY = Qt::UserRole + 6,
-            POLICY_TYPE = Qt::UserRole + 7,
-        };
-    }
+namespace model
+{
+namespace bundle
+{
+enum PolicyRoles
+{
+    ITEM_TYPE     = Qt::UserRole + 1,
+    EXPLAIN_TEXT  = Qt::UserRole + 2,
+    SUPPORTED_ON  = Qt::UserRole + 4,
+    PRESENTATION  = Qt::UserRole + 5,
+    POLICY        = Qt::UserRole + 6,
+    POLICY_TYPE   = Qt::UserRole + 7,
+    POLICY_WIDGET = Qt::UserRole + 8,
+};
 }
+} // namespace model
 
 #endif // GPUI_POLICY_ROLES_H

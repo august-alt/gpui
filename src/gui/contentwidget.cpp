@@ -119,7 +119,14 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
         if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
         {
-            // TODO: Implement widget display.
+            auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET).value<QWidget *>();
+
+            delete ui->scrollArea->takeWidget();
+
+            if (policyWidget)
+            {
+                ui->scrollArea->setWidget(policyWidget);
+            }
         }
         else
         {

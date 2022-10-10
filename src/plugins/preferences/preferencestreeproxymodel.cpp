@@ -20,7 +20,13 @@
 
 #include "preferencestreeproxymodel.h"
 
+#include "../../../src/plugins/administrative_templates/bundle/itemtype.h"
 #include "../../../src/plugins/administrative_templates/bundle/policyroles.h"
+
+#include "common/preferencesmodel.h"
+#include "common/tabledetailswidget.h"
+
+#include "common/preferencecategoryitem.h"
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
@@ -30,6 +36,23 @@
 
 namespace preferences
 {
+class PreferencesTreeProxyModelPrivate
+{
+public:
+    std::map<std::string, std::unique_ptr<PreferencesModel>> *machineModels = nullptr;
+    std::map<std::string, std::unique_ptr<PreferencesModel>> *userModels    = nullptr;
+};
+
+PreferencesTreeProxyModel::PreferencesTreeProxyModel()
+    : QIdentityProxyModel()
+    , d(new PreferencesTreeProxyModelPrivate())
+{}
+
+PreferencesTreeProxyModel::~PreferencesTreeProxyModel()
+{
+    delete d;
+}
+
 QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
     static QVariant folder = QVariant(QIcon::fromTheme("folder"));
@@ -74,7 +97,51 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
         return QVariant::fromValue(qtText);
     }
 
+    if (role == model::bundle::POLICY_WIDGET)
+    {
+        auto contentWidget = new TableDetailsWidget();
+
+        auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
+        auto item      = viewModel->sessionItemFromIndex(proxyIndex);
+
+        if (item->modelType().compare("PreferenceCategoryItem") == 0)
+        {
+            auto types = item->property<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE);
+            if (types.size() > 0)
+            {
+                auto modelType = d->machineModels->find(types.begin()->first);
+                if (modelType != d->machineModels->end())
+                {
+                    contentWidget->onItemTypeChange(types);
+                    contentWidget->setModel(modelType->second.get());
+                }
+            }
+        }
+
+        return QVariant::fromValue(static_cast<QWidget *>(contentWidget));
+    }
+
+    if (role == model::bundle::ITEM_TYPE)
+    {
+        auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
+        auto modelType = viewModel->sessionItemFromIndex(proxyIndex)->modelType();
+        if (modelType.compare("PreferenceCategoryItem") == 0)
+        {
+            return QVariant(static_cast<uint>(model::bundle::ITEM_TYPE_POLICY));
+        }
+
+        return QVariant(static_cast<uint>(model::bundle::ITEM_TYPE_CATEGORY));
+    }
+
     return QIdentityProxyModel::data(proxyIndex, role);
+}
+
+void PreferencesTreeProxyModel::setPreferencesModels(
+    std::map<std::string, std::unique_ptr<PreferencesModel>> *machineModels,
+    std::map<std::string, std::unique_ptr<PreferencesModel>> *userModels)
+{
+    d->machineModels = machineModels;
+    d->userModels    = userModels;
 }
 
 } // namespace preferences

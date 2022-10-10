@@ -42,12 +42,15 @@ class PreferencesSnapInPrivate
 public:
     std::unique_ptr<PreferencesTreeModel> model                   = nullptr;
     std::unique_ptr<ModelView::ViewModel> viewModel               = nullptr;
-    std::unique_ptr<QAbstractItemModel> proxyViewModel            = nullptr;
+    std::unique_ptr<PreferencesTreeProxyModel> proxyViewModel     = nullptr;
     std::unique_ptr<PreferencesModelMap> machinePreferencesModels = nullptr;
     std::unique_ptr<PreferencesModelMap> userPreferencesModels    = nullptr;
 
 public:
-    PreferencesSnapInPrivate() {}
+    PreferencesSnapInPrivate()
+        : machinePreferencesModels(new PreferencesModelMap())
+        , userPreferencesModels(new PreferencesModelMap())
+    {}
 
 private:
     PreferencesSnapInPrivate(const PreferencesSnapInPrivate &) = delete;            // copy ctor
@@ -95,6 +98,8 @@ void PreferencesSnapIn::onDataLoad(const std::string &policyPath, const std::str
 
     modelCreator->populateModels(policyPath, "Machine", d->machinePreferencesModels.get());
     modelCreator->populateModels(policyPath, "User", d->userPreferencesModels.get());
+
+    d->proxyViewModel->setPreferencesModels(d->machinePreferencesModels.get(), d->userPreferencesModels.get());
 }
 
 void PreferencesSnapIn::onDataSave() {}

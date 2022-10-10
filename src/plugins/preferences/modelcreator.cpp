@@ -61,6 +61,13 @@ void ModelCreator::populateModels(const std::string &policyPath,
                 map->insert(
                     std::pair<std::string, std::unique_ptr<PreferencesModel>>(reader->getType(), std::move(model)));
             }
+            else
+            {
+                model = std::make_unique<PreferencesModel>();
+
+                map->insert(
+                    std::pair<std::string, std::unique_ptr<PreferencesModel>>(reader->getType(), std::move(model)));
+            }
         }
         catch (std::exception &ex)
         {

@@ -23,12 +23,35 @@
 
 #include <QIdentityProxyModel>
 
+#include <map>
+#include <memory>
+
+#include <string>
+
 namespace preferences
 {
+class PreferencesModel;
+class PreferencesTreeProxyModelPrivate;
+
 class PreferencesTreeProxyModel : public QIdentityProxyModel
 {
 public:
+    PreferencesTreeProxyModel();
+    ~PreferencesTreeProxyModel();
+
     QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
+
+    void setPreferencesModels(std::map<std::string, std::unique_ptr<PreferencesModel>> *machineModels,
+                              std::map<std::string, std::unique_ptr<PreferencesModel>> *userModels);
+
+private:
+    PreferencesTreeProxyModelPrivate *d = nullptr;
+
+private:
+    PreferencesTreeProxyModel(const PreferencesTreeProxyModel &) = delete;            // copy ctor
+    PreferencesTreeProxyModel(PreferencesTreeProxyModel &&)      = delete;            // move ctor
+    PreferencesTreeProxyModel &operator=(const PreferencesTreeProxyModel &) = delete; // copy assignment
+    PreferencesTreeProxyModel &operator=(PreferencesTreeProxyModel &&) = delete;      // move assignment
 };
 } // namespace preferences
 

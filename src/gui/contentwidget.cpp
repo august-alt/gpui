@@ -29,6 +29,12 @@
 
 using namespace ::model::bundle;
 
+namespace
+{
+const int LIST_PAGE_INDEX = 0;
+const int DATA_PAGE_INDEX = 1;
+} // namespace
+
 namespace gpui
 {
 typedef std::shared_ptr<::model::presentation::Presentation> PresentationPtr;
@@ -127,10 +133,12 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             {
                 ui->scrollArea->setWidget(policyWidget);
             }
+            ui->stackedWidget->setCurrentIndex(DATA_PAGE_INDEX);
         }
         else
         {
             ui->contentListView->setRootIndex(index);
+            ui->stackedWidget->setCurrentIndex(LIST_PAGE_INDEX);
         }
     }
 }

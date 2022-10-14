@@ -27,6 +27,7 @@
 #include "preferencestreeproxymodel.h"
 
 #include "modelcreator.h"
+#include "modelwriter.h"
 
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 
@@ -45,6 +46,8 @@ public:
     std::unique_ptr<PreferencesTreeProxyModel> proxyViewModel     = nullptr;
     std::unique_ptr<PreferencesModelMap> machinePreferencesModels = nullptr;
     std::unique_ptr<PreferencesModelMap> userPreferencesModels    = nullptr;
+
+    std::string policyPath{};
 
 public:
     PreferencesSnapInPrivate()
@@ -94,6 +97,8 @@ void PreferencesSnapIn::onDataLoad(const std::string &policyPath, const std::str
 {
     Q_UNUSED(locale);
 
+    d->policyPath = policyPath;
+
     auto modelCreator = std::make_unique<ModelCreator>();
 
     modelCreator->populateModels(policyPath, "Machine", d->machinePreferencesModels.get());
@@ -102,7 +107,13 @@ void PreferencesSnapIn::onDataLoad(const std::string &policyPath, const std::str
     d->proxyViewModel->setPreferencesModels(d->machinePreferencesModels.get(), d->userPreferencesModels.get());
 }
 
-void PreferencesSnapIn::onDataSave() {}
+void PreferencesSnapIn::onDataSave()
+{
+    auto modelWriter = std::make_unique<ModelWriter>();
+
+    modelWriter->saveModels(d->policyPath, "Machine", d->machinePreferencesModels.get());
+    modelWriter->saveModels(d->policyPath, "User", d->userPreferencesModels.get());
+}
 
 void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
 {

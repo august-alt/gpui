@@ -39,7 +39,7 @@ public:
 
     void onDataSave() override;
 
-    void onRetranslateUI(const std::string &locale);
+    void onRetranslateUI(const std::string &locale) override;
 
 private:
     std::unique_ptr<PreferencesSnapInPrivate> d;

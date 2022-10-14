@@ -20,6 +20,15 @@
 
 #include "modelwriter.h"
 
+#include "files/filespreferencewriter.h"
+#include "folders/folderpreferencewriter.h"
+#include "ini/inipreferencewriter.h"
+#include "interfaces/preferencesreaderinterface.h"
+#include "registry/registrypreferencewriter.h"
+#include "shares/sharespreferencewriter.h"
+#include "shortcuts/shortcutspreferencewriter.h"
+#include "variables/variablespreferencewriter.h"
+
 #include <QDebug>
 
 namespace preferences
@@ -30,16 +39,14 @@ void ModelWriter::saveModels(const std::string &policyPath,
                              const std::string &policyType,
                              std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
-    Q_UNUSED(map);
-
-    std::map<std::string, std::unique_ptr<int>> writers;
-    writers["Files/Files.xml"]                               = std::make_unique<int>();
-    writers["Folders/Folders.xml"]                           = std::make_unique<int>();
-    writers["IniFiles/IniFiles.xml"]                         = std::make_unique<int>();
-    writers["Registry/Registry.xml"]                         = std::make_unique<int>();
-    writers["NetworkShares/NetworkShares.xml"]               = std::make_unique<int>();
-    writers["Shortcuts/Shortcuts.xml"]                       = std::make_unique<int>();
-    writers["EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<int>();
+    std::map<std::string, std::unique_ptr<PreferenceWriterInterface>> writers;
+    writers["Files/Files.xml"]                               = std::make_unique<FilesPreferenceWriter>();
+    writers["Folders/Folders.xml"]                           = std::make_unique<FolderPreferenceWriter>();
+    writers["IniFiles/IniFiles.xml"]                         = std::make_unique<IniPreferenceWriter>();
+    writers["Registry/Registry.xml"]                         = std::make_unique<RegistryPreferenceWriter>();
+    writers["NetworkShares/NetworkShares.xml"]               = std::make_unique<SharesPreferenceWriter>();
+    writers["Shortcuts/Shortcuts.xml"]                       = std::make_unique<ShortcutsPreferenceWriter>();
+    writers["EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceWriter>();
 
     for (const auto &writerPair : writers)
     {
@@ -47,10 +54,12 @@ void ModelWriter::saveModels(const std::string &policyPath,
         try
         {
             auto fullPath = policyPath + "/" + policyType + "/" + writerPair.first;
-            Q_UNUSED(fullPath);
-            Q_UNUSED(writer);
 
-            // TODO: Implement writing.
+            auto modelPair = map->find(writerPair.first);
+            if (modelPair != map->end())
+            {
+                writer->write(fullPath, modelPair->second);
+            }
         }
         catch (std::exception &ex)
         {

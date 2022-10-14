@@ -418,6 +418,7 @@ set(UI_FORMS
 
 set(PLUGIN_HEADERS
     modelcreator.h
+    modelwriter.h
     preferencessnapin.h
     preferencestreemodel.h
     preferencestreeproxymodel.h
@@ -425,6 +426,7 @@ set(PLUGIN_HEADERS
 
 set(PLUGIN_SOURCES
     modelcreator.cpp
+    modelwriter.cpp
     preferencesplugin.cpp
     preferencessnapin.cpp
     preferencestreemodel.cpp

@@ -16,6 +16,7 @@ set(HEADERS
     common/basepreferenceitem.h
     common/basepreferencewidget.h
     common/basepreferencereader.h
+    common/basepreferencewriter.h
     common/commonitem.h
     common/commonutils.h
     common/commonview.h
@@ -42,6 +43,7 @@ set(HEADERS
 
     folders/foldercontaineritem.h
     folders/folderpreferencereader.h
+    folders/folderpreferencewriter.h
     folders/folderitem.h
     folders/foldermodelbuilder.h
     folders/folderwidget.h
@@ -60,17 +62,20 @@ set(HEADERS
 
     files/filesitem.h
     files/filespreferencereader.h
+    files/filespreferencewriter.h
     files/filescontaineritem.h
     files/filesmodelbuilder.h
     files/fileswidget.h
 
     ini/iniitem.h
     ini/inipreferencereader.h
+    ini/inipreferencewriter.h
     ini/inicontaineritem.h
     ini/inimodelbuilder.h
     ini/iniwidget.h
 
     interfaces/preferencesreaderinterface.h
+    interfaces/preferenceswriterinterface.h
 
     local_users_and_groups/baselocalitem.h
     local_users_and_groups/groupmemberdialog.h
@@ -126,6 +131,7 @@ set(HEADERS
 
     registry/registrycontaineritem.h
     registry/registrypreferencereader.h
+    registry/registrypreferencewriter.h
     registry/registryitem.h
     registry/registrymodelbuilder.h
     registry/registrywidget.h
@@ -155,18 +161,21 @@ set(HEADERS
 
     shares/sharesitem.h
     shares/sharespreferencereader.h
+    shares/sharespreferencewriter.h
     shares/sharesmodelbuilder.h
     shares/sharescontaineritem.h
     shares/shareswidget.h
 
     shortcuts/shortcutsitem.h
     shortcuts/shortcutspreferencereader.h
+    shortcuts/shortcutspreferencewriter.h
     shortcuts/shortcutsmodelbuilder.h
     shortcuts/shortcutscontaineritem.h
     shortcuts/shortcutswidget.h
 
     variables/variablesitem.h
     variables/variablespreferencereader.h
+    variables/variablespreferencewriter.h
     variables/variablesmodelbuilder.h
     variables/variablescontaineritem.h
     variables/variableswidget.h
@@ -183,6 +192,7 @@ set(SOURCES
     common/basemodelbuilder.cpp
     common/basepreferencewidget.cpp
     common/basepreferencereader.cpp
+    common/basepreferencewriter.cpp
     common/commonitem.cpp
     common/commonutils.cpp
     common/commonview.cpp
@@ -211,6 +221,7 @@ set(SOURCES
 
     folders/foldercontaineritem.cpp
     folders/folderpreferencereader.cpp
+    folders/folderpreferencewriter.cpp
     folders/folderitem.cpp
     folders/foldermodelbuilder.cpp
     folders/folderwidget.cpp
@@ -229,6 +240,7 @@ set(SOURCES
 
     files/filesitem.cpp
     files/filespreferencereader.cpp
+    files/filespreferencewriter.cpp
     files/filescontaineritem.cpp
     files/filesmodelbuilder.cpp
     files/fileswidget.cpp
@@ -236,6 +248,7 @@ set(SOURCES
 
     ini/iniitem.cpp
     ini/inipreferencereader.cpp
+    ini/inipreferencewriter.cpp
     ini/inicontaineritem.cpp
     ini/inimodelbuilder.cpp
     ini/iniwidget.cpp
@@ -310,6 +323,7 @@ set(SOURCES
 
     registry/registrycontaineritem.cpp
     registry/registrypreferencereader.cpp
+    registry/registrypreferencewriter.cpp
     registry/registryitem.cpp
     registry/registrymodelbuilder.cpp
     registry/registrywidget.cpp
@@ -317,6 +331,7 @@ set(SOURCES
 
     shares/sharesitem.cpp
     shares/sharespreferencereader.cpp
+    shares/sharespreferencewriter.cpp
     shares/sharescontaineritem.cpp
     shares/sharesmodelbuilder.cpp
     shares/shareswidget.cpp
@@ -324,6 +339,7 @@ set(SOURCES
 
     shortcuts/shortcutsitem.cpp
     shortcuts/shortcutspreferencereader.cpp
+    shortcuts/shortcutspreferencewriter.cpp
     shortcuts/shortcutscontaineritem.cpp
     shortcuts/shortcutsmodelbuilder.cpp
     shortcuts/shortcutswidget.cpp
@@ -331,6 +347,7 @@ set(SOURCES
 
     variables/variablesitem.cpp
     variables/variablespreferencereader.cpp
+    variables/variablespreferencewriter.cpp
     variables/variablescontaineritem.cpp
     variables/variablesmodelbuilder.cpp
     variables/variableswidget.cpp

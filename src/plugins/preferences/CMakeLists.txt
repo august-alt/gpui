@@ -437,6 +437,7 @@ set(PLUGIN_HEADERS
     modelcreator.h
     modelwriter.h
     preferencessnapin.h
+    preferencessnapinprivate.h
     preferencestreemodel.h
     preferencestreeproxymodel.h
 )
@@ -446,6 +447,7 @@ set(PLUGIN_SOURCES
     modelwriter.cpp
     preferencesplugin.cpp
     preferencessnapin.cpp
+    preferencessnapinprivate.cpp
     preferencestreemodel.cpp
     preferencestreeproxymodel.cpp
 )

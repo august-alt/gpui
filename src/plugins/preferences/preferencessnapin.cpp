@@ -20,6 +20,8 @@
 
 #include "preferencessnapin.h"
 
+#include "preferencessnapinprivate.h"
+
 #include <iostream>
 
 #include "common/preferencesmodel.h"
@@ -34,33 +36,6 @@
 namespace gpui
 {
 using namespace preferences;
-
-class PreferencesSnapInPrivate
-{
-    typedef std::unique_ptr<PreferencesModel> PreferencesModelPtr;
-    typedef std::map<std::string, PreferencesModelPtr> PreferencesModelMap;
-
-public:
-    std::unique_ptr<PreferencesTreeModel> model                   = nullptr;
-    std::unique_ptr<ModelView::ViewModel> viewModel               = nullptr;
-    std::unique_ptr<PreferencesTreeProxyModel> proxyViewModel     = nullptr;
-    std::unique_ptr<PreferencesModelMap> machinePreferencesModels = nullptr;
-    std::unique_ptr<PreferencesModelMap> userPreferencesModels    = nullptr;
-
-    std::string policyPath{};
-
-public:
-    PreferencesSnapInPrivate()
-        : machinePreferencesModels(new PreferencesModelMap())
-        , userPreferencesModels(new PreferencesModelMap())
-    {}
-
-private:
-    PreferencesSnapInPrivate(const PreferencesSnapInPrivate &) = delete;            // copy ctor
-    PreferencesSnapInPrivate(PreferencesSnapInPrivate &&)      = delete;            // move ctor
-    PreferencesSnapInPrivate &operator=(const PreferencesSnapInPrivate &) = delete; // copy assignment
-    PreferencesSnapInPrivate &operator=(PreferencesSnapInPrivate &&) = delete;      // move assignment
-};
 
 PreferencesSnapIn::PreferencesSnapIn()
     : AbstractSnapIn("ISnapIn",
@@ -105,14 +80,12 @@ void PreferencesSnapIn::onDataLoad(const std::string &policyPath, const std::str
     modelCreator->populateModels(policyPath, "User", d->userPreferencesModels.get());
 
     d->proxyViewModel->setPreferencesModels(d->machinePreferencesModels.get(), d->userPreferencesModels.get());
+    d->proxyViewModel->setSnapIn(d.get());
 }
 
 void PreferencesSnapIn::onDataSave()
 {
-    auto modelWriter = std::make_unique<ModelWriter>();
-
-    modelWriter->saveModels(d->policyPath, "Machine", d->machinePreferencesModels.get());
-    modelWriter->saveModels(d->policyPath, "User", d->userPreferencesModels.get());
+    d->onDataSave();
 }
 
 void PreferencesSnapIn::onRetranslateUI(const std::string &locale)

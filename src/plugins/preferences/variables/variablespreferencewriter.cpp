@@ -33,7 +33,8 @@ bool VariablesPreferenceWriter::writeModel(std::ostream &output, const std::uniq
 {
     auto modelBuilder = std::make_unique<VariablesModelBuilder>();
     auto variables    = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    output << (*variables.get());
+    const ::xml_schema::NamespaceInfomap map;
+    EnvironmentVariables_(output, *variables.get(), map);
     return true;
 }
 

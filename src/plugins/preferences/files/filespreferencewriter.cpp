@@ -33,7 +33,8 @@ bool FilesPreferenceWriter::writeModel(std::ostream &output, const std::unique_p
 {
     auto modelBuilder = std::make_unique<FilesModelBuilder>();
     auto files        = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    output << (*files.get());
+    const ::xml_schema::NamespaceInfomap map;
+    Files_(output, *files.get(), map);
     return true;
 }
 

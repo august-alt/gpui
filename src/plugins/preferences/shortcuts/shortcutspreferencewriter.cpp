@@ -33,7 +33,8 @@ bool ShortcutsPreferenceWriter::writeModel(std::ostream &output, const std::uniq
 {
     auto modelBuilder = std::make_unique<ShortcutsModelBuilder>();
     auto shortcuts    = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    output << (*shortcuts.get());
+    const ::xml_schema::NamespaceInfomap map;
+    Shortcuts_(output, *shortcuts.get(), map);
     return true;
 }
 

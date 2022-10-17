@@ -33,7 +33,8 @@ bool SharesPreferenceWriter::writeModel(std::ostream &output, const std::unique_
 {
     auto modelBuilder = std::make_unique<SharesModelBuilder>();
     auto shares       = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    output << (*shares.get());
+    const ::xml_schema::NamespaceInfomap map;
+    NetworkShareSettings_(output, *shares.get(), map);
     return true;
 }
 

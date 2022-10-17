@@ -33,7 +33,8 @@ bool IniPreferenceWriter::writeModel(std::ostream &output, const std::unique_ptr
 {
     auto modelBuilder = std::make_unique<IniModelBuilder>();
     auto ini          = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    output << (*ini.get());
+    const ::xml_schema::NamespaceInfomap map;
+    IniFiles_(output, *ini.get(), map);
     return true;
 }
 

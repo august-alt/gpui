@@ -33,7 +33,8 @@ bool FolderPreferenceWriter::writeModel(std::ostream &output, const std::unique_
 {
     auto modelBuilder = std::make_unique<FolderModelBuilder>();
     auto folder       = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    output << (*folder.get());
+    const ::xml_schema::NamespaceInfomap map;
+    Folders_(output, *folder.get(), map);
     return true;
 }
 

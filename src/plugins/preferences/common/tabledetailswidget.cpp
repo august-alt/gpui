@@ -28,14 +28,13 @@
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/propertytableviewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 #include <QDebug>
 
 namespace preferences
 {
-
 TableDetailsWidget::TableDetailsWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::TableDetailsWidget())
@@ -47,6 +46,8 @@ TableDetailsWidget::TableDetailsWidget(QWidget *parent)
     ui->setupUi(this);
 
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &TableDetailsWidget::okPressed);
 }
 
 TableDetailsWidget::~TableDetailsWidget()
@@ -79,7 +80,7 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
         return;
     }
 
-    auto treeView = qobject_cast<QTreeView*>(sender());
+    auto treeView = qobject_cast<QTreeView *>(sender());
 
     QModelIndex index = treeView->indexAt(point);
 
@@ -100,13 +101,13 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
     menu.addSeparator();
     menu.addAction("Help");
 
-    for (const auto& itemType : itemTypes)
+    for (const auto &itemType : itemTypes)
     {
         auto addItemAction = newMenuItem->addAction(itemType.second);
-        auto add_item = [&]() {
+        auto add_item      = [&]() {
             auto newItem = view_model->sessionModel()->insertNewItem(itemType.first,
                                                                      view_model->sessionModel()->rootItem());
-            if (auto containerItemInterface = dynamic_cast<ContainerItemInterface*>(newItem))
+            if (auto containerItemInterface = dynamic_cast<ContainerItemInterface *>(newItem))
             {
                 containerItemInterface->setupListeners();
             }
@@ -117,12 +118,12 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
 
     if (view_item)
     {
-        auto item = view_item->item()->parent();
+        auto item   = view_item->item()->parent();
         auto tagrow = item->tagRow();
 
         // removing item under the mouse
         auto removeItemAction = menu.addAction("Remove item");
-        auto remove_item = [=]() { view_model->sessionModel()->removeItem(item->parent(), tagrow); };
+        auto remove_item      = [=]() { view_model->sessionModel()->removeItem(item->parent(), tagrow); };
         connect(removeItemAction, &QAction::triggered, remove_item);
     }
 
@@ -140,22 +141,22 @@ void TableDetailsWidget::on_treeView_doubleClicked(const QModelIndex &index)
 
 void TableDetailsWidget::setupConnections()
 {
-    connect(ui->treeView->selectionModel(), &QItemSelectionModel::selectionChanged,
-            [&](const QItemSelection &selected, const QItemSelection &deselected)
-    {
-        Q_UNUSED(deselected);
-        if (selected.isEmpty() || selected.first().indexes().isEmpty())
-        {
-            return;
-        }
+    connect(ui->treeView->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            [&](const QItemSelection &selected, const QItemSelection &deselected) {
+                Q_UNUSED(deselected);
+                if (selected.isEmpty() || selected.first().indexes().isEmpty())
+                {
+                    return;
+                }
 
-        auto indexes = selected.indexes();
-        if (!indexes.empty())
-        {
-            auto item = view_model->sessionItemFromIndex(indexes.at(0));
-            ui->propertiesWidget->setItem(item->parent()->children()[item->parent()->children().size() - 2]);
-        }
-    });
+                auto indexes = selected.indexes();
+                if (!indexes.empty())
+                {
+                    auto item = view_model->sessionItemFromIndex(indexes.at(0));
+                    ui->propertiesWidget->setItem(item->parent()->children()[item->parent()->children().size() - 2]);
+                }
+            });
 }
 
-}
+} // namespace preferences

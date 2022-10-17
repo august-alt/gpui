@@ -24,29 +24,34 @@
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class TableDetailsWidget; }
+namespace Ui
+{
+class TableDetailsWidget;
+}
 QT_END_NAMESPACE
 
 namespace ModelView
 {
-    class ViewModel;
-    class ViewModelDelegate;
-    class SessionModel;
-}
+class ViewModel;
+class ViewModelDelegate;
+class SessionModel;
+} // namespace ModelView
 
 namespace preferences
 {
-
 class TableDetailsWidget : public QWidget
 {
 public:
     Q_OBJECT
 
 public:
-    explicit TableDetailsWidget(QWidget* parent = nullptr);
+    explicit TableDetailsWidget(QWidget *parent = nullptr);
     ~TableDetailsWidget() override;
 
     void setModel(ModelView::SessionModel *model);
+
+signals:
+    void okPressed();
 
 public slots:
     void onItemTypeChange(const std::map<std::string, QString> &newItemTypes);
@@ -59,13 +64,13 @@ private:
     void setupConnections();
 
 private:
-    TableDetailsWidget(const TableDetailsWidget&)            = delete;   // copy ctor
-    TableDetailsWidget(TableDetailsWidget&&)                 = delete;   // move ctor
-    TableDetailsWidget& operator=(const TableDetailsWidget&) = delete;   // copy assignment
-    TableDetailsWidget& operator=(TableDetailsWidget&&)      = delete;   // move assignment
+    TableDetailsWidget(const TableDetailsWidget &) = delete;            // copy ctor
+    TableDetailsWidget(TableDetailsWidget &&)      = delete;            // move ctor
+    TableDetailsWidget &operator=(const TableDetailsWidget &) = delete; // copy assignment
+    TableDetailsWidget &operator=(TableDetailsWidget &&) = delete;      // move assignment
 
 private:
-    Ui::TableDetailsWidget *ui {nullptr};
+    Ui::TableDetailsWidget *ui{nullptr};
 
 private:
     std::unique_ptr<ModelView::ViewModel> view_model;
@@ -75,6 +80,6 @@ private:
     std::map<std::string, QString> itemTypes;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_TABLE_DETAILS_WIDGET_H
+#endif //GPUI_TABLE_DETAILS_WIDGET_H

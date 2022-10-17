@@ -31,9 +31,10 @@ RegistryPreferenceWriter::RegistryPreferenceWriter()
 
 bool RegistryPreferenceWriter::writeModel(std::ostream &output, const std::unique_ptr<PreferencesModel> &model)
 {
+    Q_UNUSED(output);
     auto modelBuilder = std::make_unique<RegistryModelBuilder>();
     auto registry     = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    output << (*registry.get());
+    // TODO: Implement.
     return true;
 }
 

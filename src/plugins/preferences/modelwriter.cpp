@@ -55,10 +55,12 @@ void ModelWriter::saveModels(const std::string &policyPath,
         {
             auto fullPath = policyPath + "/" + policyType + "/" + writerPair.first;
 
-            auto modelPair = map->find(writerPair.first);
+            auto modelPair = map->find(writerPair.second->getType());
             if (modelPair != map->end())
             {
                 writer->write(fullPath, modelPair->second);
+
+                qWarning() << "Saving file: " << fullPath.c_str();
             }
         }
         catch (std::exception &ex)

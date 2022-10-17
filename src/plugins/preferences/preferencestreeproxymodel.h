@@ -28,6 +28,11 @@
 
 #include <string>
 
+namespace gpui
+{
+class PreferencesSnapInPrivate;
+}
+
 namespace preferences
 {
 class PreferencesModel;
@@ -43,6 +48,8 @@ public:
 
     void setPreferencesModels(std::map<std::string, std::unique_ptr<PreferencesModel>> *machineModels,
                               std::map<std::string, std::unique_ptr<PreferencesModel>> *userModels);
+
+    void setSnapIn(gpui::PreferencesSnapInPrivate *snapIn);
 
 private:
     PreferencesTreeProxyModelPrivate *d = nullptr;

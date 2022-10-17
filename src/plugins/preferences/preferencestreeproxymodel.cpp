@@ -31,6 +31,8 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
+#include "preferencessnapinprivate.h"
+
 #include <QIcon>
 #include <QUuid>
 
@@ -41,6 +43,8 @@ class PreferencesTreeProxyModelPrivate
 public:
     std::map<std::string, std::unique_ptr<PreferencesModel>> *machineModels = nullptr;
     std::map<std::string, std::unique_ptr<PreferencesModel>> *userModels    = nullptr;
+
+    gpui::PreferencesSnapInPrivate *snapIn = nullptr;
 };
 
 PreferencesTreeProxyModel::PreferencesTreeProxyModel()
@@ -114,6 +118,10 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
                 {
                     contentWidget->onItemTypeChange(types);
                     contentWidget->setModel(modelType->second.get());
+                    QObject::connect(contentWidget,
+                                     &TableDetailsWidget::okPressed,
+                                     d->snapIn,
+                                     &gpui::PreferencesSnapInPrivate::onDataSave);
                 }
             }
         }
@@ -142,6 +150,11 @@ void PreferencesTreeProxyModel::setPreferencesModels(
 {
     d->machineModels = machineModels;
     d->userModels    = userModels;
+}
+
+void PreferencesTreeProxyModel::setSnapIn(gpui::PreferencesSnapInPrivate *snapIn)
+{
+    d->snapIn = snapIn;
 }
 
 } // namespace preferences

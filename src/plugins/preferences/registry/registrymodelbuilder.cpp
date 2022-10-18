@@ -35,20 +35,60 @@ RegistryModelBuilder::RegistryModelBuilder()
 
 std::unique_ptr<PreferencesModel> RegistryModelBuilder::schemaToModel(std::unique_ptr<RegistrySettings> &registry)
 {
-    Q_UNUSED(registry);
-
     auto model = std::make_unique<PreferencesModel>();
 
-    // TODO: Implement.
+    for (const auto& registrySchema : registry->Registry())
+    {
+        auto sessionItem = model->insertItem<RegistryContainerItem>(model->rootItem());
+
+        for (const auto& properties : registrySchema.Properties())
+        {
+            auto registryKey = sessionItem->getRegistry();
+            registryKey->setProperty(RegistryItem::ACTION, getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
+            registryKey->setProperty(RegistryItem::HIVE, properties.hive().c_str());
+            registryKey->setProperty(RegistryItem::KEY, properties.key().c_str());
+            registryKey->setProperty(RegistryItem::NAME, getOptionalPropertyData(properties.name()).c_str());
+            registryKey->setProperty(RegistryItem::TYPE, getOptionalPropertyData(properties.type()).c_str());
+            registryKey->setProperty(RegistryItem::VALUE, getOptionalPropertyData(properties.value()).c_str());
+            registryKey->setProperty(RegistryItem::DEFAULT, getOptionalPropertyData(properties.default_()));
+
+            auto common = sessionItem->getCommon();
+            setCommonItemData(common, registrySchema);
+        }
+    }
 
     return model;
 }
 
 std::unique_ptr<RegistrySettings> RegistryModelBuilder::modelToSchema(std::unique_ptr<PreferencesModel> &model)
 {
-    Q_UNUSED(model);
+    auto registryKeys = std::make_unique<RegistrySettings>("{A3CCFC41-DFDB-43a5-8D26-0FE8B954DA51}");
 
-    return nullptr;
+    for (const auto& containerItem : model->topItems())
+    {
+        if (auto registryContainer = dynamic_cast<RegistryContainerItem*>(containerItem))
+        {
+            auto registryModel = registryContainer->getRegistry();
+            auto commonModel = registryContainer->getCommon();
+
+            auto registryKey = createRootElement<Registry_t>("{9CD4B2F4-923D-47f5-A062-E897DD1DAD50}");
+
+            auto properties = RegistryProperties_t(SubProp_t("", 0, 0), registryModel->property<std::string>(RegistryItem::HIVE),
+                                                   registryModel->property<std::string>(RegistryItem::KEY));
+            properties.action(registryModel->property<std::string>(RegistryItem::ACTION));
+            properties.name(registryModel->property<std::string>(RegistryItem::NAME));
+            properties.type(registryModel->property<std::string>(RegistryItem::TYPE));
+            properties.value(registryModel->property<std::string>(RegistryItem::VALUE));
+            properties.default_(registryModel->property<bool>(RegistryItem::DEFAULT));
+
+            setCommonModelData(registryKey, commonModel);
+            registryKey.Properties().push_back(properties);
+
+            registryKeys->Registry().push_back(registryKey);
+        }
+    }
+
+    return registryKeys;
 }
 
 }

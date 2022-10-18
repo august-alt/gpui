@@ -31,10 +31,10 @@ RegistryPreferenceWriter::RegistryPreferenceWriter()
 
 bool RegistryPreferenceWriter::writeModel(std::ostream &output, const std::unique_ptr<PreferencesModel> &model)
 {
-    Q_UNUSED(output);
     auto modelBuilder = std::make_unique<RegistryModelBuilder>();
     auto registry     = modelBuilder->modelToSchema(const_cast<std::unique_ptr<PreferencesModel> &>(model));
-    // TODO: Implement.
+    const ::xml_schema::NamespaceInfomap map;
+    RegistrySettings_(output, *registry.get(), map);
     return true;
 }
 

@@ -27,23 +27,22 @@
 
 namespace preferences
 {
-
 SharesModelBuilder::SharesModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
 std::unique_ptr<PreferencesModel> SharesModelBuilder::schemaToModel(std::unique_ptr<NetworkShareSettings> &shares)
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    for (const auto& sharesSchema : shares->NetShare())
+    for (const auto &sharesSchema : shares->NetShare())
     {
-        for (const auto& properties : sharesSchema.Properties())
+        for (const auto &properties : sharesSchema.Properties())
         {
             auto sessionItem = model->insertItem<SharesContainerItem>(model->rootItem());
-            auto shareItem = sessionItem->getShares();
-            shareItem->setProperty(SharesItem::ACTION, getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
+            auto shareItem   = sessionItem->getShares();
+            shareItem->setProperty(SharesItem::ACTION,
+                                   getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
             shareItem->setProperty(SharesItem::NAME, properties.name().c_str());
             shareItem->setProperty(SharesItem::PATH, getOptionalPropertyData(properties.path()).c_str());
             shareItem->setProperty(SharesItem::COMMENT, getOptionalPropertyData(properties.comment()).c_str());
@@ -51,8 +50,10 @@ std::unique_ptr<PreferencesModel> SharesModelBuilder::schemaToModel(std::unique_
             shareItem->setProperty(SharesItem::ALL_HIDDEN, getOptionalPropertyData(properties.allHidden()));
             shareItem->setProperty(SharesItem::ALL_ADMIN_DRIVE, getOptionalPropertyData(properties.allAdminDrive()));
             shareItem->setProperty(SharesItem::LIMIT_USERS, getOptionalPropertyData(properties.limitUsers()).c_str());
-            shareItem->setProperty(SharesItem::USER_LIMIT, static_cast<int>(getOptionalPropertyData(properties.userLimit())));
-            shareItem->setProperty(SharesItem::ACCESS_BASED_ENUMERATION, getOptionalPropertyData(properties.abe()).c_str());
+            shareItem->setProperty(SharesItem::USER_LIMIT,
+                                   static_cast<int>(getOptionalPropertyData(properties.userLimit())));
+            shareItem->setProperty(SharesItem::ACCESS_BASED_ENUMERATION,
+                                   getOptionalPropertyData(properties.abe()).c_str());
 
             auto common = sessionItem->getCommon();
             setCommonItemData(common, sharesSchema);
@@ -66,14 +67,17 @@ std::unique_ptr<NetworkShareSettings> SharesModelBuilder::modelToSchema(std::uni
 {
     auto shares = std::make_unique<NetworkShareSettings>("{520870D8-A6E7-47e8-A8D8-E6A4E76EAEC2}");
 
-    for (const auto& containerItem : model->topItems())
+    for (const auto &containerItem : model->topItems())
     {
-        if (auto variablesContainer = dynamic_cast<SharesContainerItem*>(containerItem); variablesContainer)
+        if (auto variablesContainer = dynamic_cast<SharesContainerItem *>(containerItem); variablesContainer)
         {
             auto sharesModel = variablesContainer->getShares();
             auto commonModel = variablesContainer->getCommon();
 
-            auto share = createRootElement<NetShare_t>("{2888C5E7-94FC-4739-90AA-2C1536D68BC0}");
+            auto share = NetShare_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{2888C5E7-94FC-4739-90AA-2C1536D68BC0}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
             auto properties = ShareProperties_t(sharesModel->property<std::string>(SharesItem::NAME));
             properties.comment(sharesModel->property<std::string>(SharesItem::COMMENT));
@@ -96,5 +100,4 @@ std::unique_ptr<NetworkShareSettings> SharesModelBuilder::modelToSchema(std::uni
     return shares;
 }
 
-}
-
+} // namespace preferences

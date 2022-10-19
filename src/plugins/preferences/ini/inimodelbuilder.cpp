@@ -27,23 +27,21 @@
 
 namespace preferences
 {
-
 IniModelBuilder::IniModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
 std::unique_ptr<PreferencesModel> IniModelBuilder::schemaToModel(std::unique_ptr<IniFiles> &ini)
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    for (const auto& iniSchema : ini->Ini())
+    for (const auto &iniSchema : ini->Ini())
     {
-        for (const auto& properties : iniSchema.Properties())
+        for (const auto &properties : iniSchema.Properties())
         {
             auto sessionItem = model->insertItem<IniContainerItem>(model->rootItem());
-            auto iniItem = sessionItem->getIni();
-            auto action = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
+            auto iniItem     = sessionItem->getIni();
+            auto action      = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
             iniItem->setProperty(IniItem::ACTION, action);
             iniItem->setProperty(IniItem::PATH, properties.path().c_str());
             iniItem->setProperty(IniItem::SECTION, getOptionalPropertyData(properties.section()).c_str());
@@ -62,14 +60,17 @@ std::unique_ptr<IniFiles> IniModelBuilder::modelToSchema(std::unique_ptr<Prefere
 {
     auto drives = std::make_unique<IniFiles>("{694C651A-08F2-47fa-A427-34C4F62BA207}");
 
-    for (const auto& containerItem : model->topItems())
+    for (const auto &containerItem : model->topItems())
     {
-        if (auto iniContainer = dynamic_cast<IniContainerItem*>(containerItem); iniContainer)
+        if (auto iniContainer = dynamic_cast<IniContainerItem *>(containerItem); iniContainer)
         {
-            auto iniModel = iniContainer->getIni();
+            auto iniModel    = iniContainer->getIni();
             auto commonModel = iniContainer->getCommon();
 
-            auto ini = createRootElement<Ini_t>("{EEFACE84-D3D8-4680-8D4B-BF103E759448}");
+            auto ini = Ini_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{EEFACE84-D3D8-4680-8D4B-BF103E759448}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
             auto properties = IniProperties_t(iniModel->property<std::string>(IniItem::PATH));
             properties.action(iniModel->property<std::string>(IniItem::ACTION));
@@ -88,5 +89,4 @@ std::unique_ptr<IniFiles> IniModelBuilder::modelToSchema(std::unique_ptr<Prefere
     return drives;
 }
 
-}
-
+} // namespace preferences

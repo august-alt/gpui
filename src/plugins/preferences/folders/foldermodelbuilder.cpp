@@ -27,33 +27,37 @@
 
 namespace preferences
 {
-
 FolderModelBuilder::FolderModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
 std::unique_ptr<PreferencesModel> FolderModelBuilder::schemaToModel(std::unique_ptr<Folders> &folderSource)
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    for (const auto& foldersSchema : folderSource->Folder())
+    for (const auto &foldersSchema : folderSource->Folder())
     {
         auto sessionItem = model->insertItem<FolderContainerItem>(model->rootItem());
 
-        for (const auto& properties: foldersSchema.Properties())
+        for (const auto &properties : foldersSchema.Properties())
         {
             auto folders = sessionItem->getFolder();
-            folders->setProperty(FolderItem::ACTION, getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
+            folders->setProperty(FolderItem::ACTION,
+                                 getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
             folders->setProperty(FolderItem::PATH, properties.path().c_str());
             folders->setProperty(FolderItem::READONLY, static_cast<bool>(properties.readOnly()));
             folders->setProperty(FolderItem::ARCHIVE, static_cast<bool>(properties.archive()));
-            folders->setProperty(FolderItem::HIDDEN,  static_cast<bool>(properties.hidden()));
-            folders->setProperty(FolderItem::DELETE_IGNORE_ERRORS, static_cast<bool>(getOptionalPropertyData(properties.deleteIgnoreErrors())));
-            folders->setProperty(FolderItem::DELETE_FILES, static_cast<bool>(getOptionalPropertyData(properties.deleteFiles())));
-            folders->setProperty(FolderItem::DELETE_SUB_FOLDERS, static_cast<bool>(getOptionalPropertyData(properties.deleteSubFolders())));
-            folders->setProperty(FolderItem::DELETE_FOLDER, static_cast<bool>(getOptionalPropertyData(properties.deleteFolder())));
-            folders->setProperty(FolderItem::DELETE_READ_ONLY, static_cast<bool>(getOptionalPropertyData(properties.deleteReadOnly())));
+            folders->setProperty(FolderItem::HIDDEN, static_cast<bool>(properties.hidden()));
+            folders->setProperty(FolderItem::DELETE_IGNORE_ERRORS,
+                                 static_cast<bool>(getOptionalPropertyData(properties.deleteIgnoreErrors())));
+            folders->setProperty(FolderItem::DELETE_FILES,
+                                 static_cast<bool>(getOptionalPropertyData(properties.deleteFiles())));
+            folders->setProperty(FolderItem::DELETE_SUB_FOLDERS,
+                                 static_cast<bool>(getOptionalPropertyData(properties.deleteSubFolders())));
+            folders->setProperty(FolderItem::DELETE_FOLDER,
+                                 static_cast<bool>(getOptionalPropertyData(properties.deleteFolder())));
+            folders->setProperty(FolderItem::DELETE_READ_ONLY,
+                                 static_cast<bool>(getOptionalPropertyData(properties.deleteReadOnly())));
 
             auto common = sessionItem->getCommon();
             setCommonItemData(common, foldersSchema);
@@ -67,14 +71,17 @@ std::unique_ptr<Folders> FolderModelBuilder::modelToSchema(std::unique_ptr<Prefe
 {
     auto folders = std::make_unique<Folders>("{77CC39E7-3D16-4f8f-AF86-EC0BBEE2C861}");
 
-    for (const auto& containerItem : model->topItems())
+    for (const auto &containerItem : model->topItems())
     {
-        if (auto foldersContainer = dynamic_cast<FolderContainerItem*>(containerItem); foldersContainer)
+        if (auto foldersContainer = dynamic_cast<FolderContainerItem *>(containerItem); foldersContainer)
         {
             auto folderModel = foldersContainer->getFolder();
             auto commonModel = foldersContainer->getCommon();
 
-            auto folder = createRootElement<Folder_t>("{07DA02F5-F9CD-4397-A550-4AE21B6B4BD3}");
+            auto folder = Folder_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{07DA02F5-F9CD-4397-A550-4AE21B6B4BD3}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
             auto properties = FolderProperties_t(folderModel->property<std::string>(FolderItem::PATH),
                                                  folderModel->property<bool>(FolderItem::READONLY),
@@ -97,5 +104,4 @@ std::unique_ptr<Folders> FolderModelBuilder::modelToSchema(std::unique_ptr<Prefe
     return folders;
 }
 
-}
-
+} // namespace preferences

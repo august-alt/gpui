@@ -27,22 +27,22 @@
 
 namespace preferences
 {
-
 VariablesModelBuilder::VariablesModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
-std::unique_ptr<PreferencesModel> VariablesModelBuilder::schemaToModel(std::unique_ptr<EnvironmentVariables> &variablesSource)
+std::unique_ptr<PreferencesModel> VariablesModelBuilder::schemaToModel(
+    std::unique_ptr<EnvironmentVariables> &variablesSource)
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    for (const auto& variablesSchema : variablesSource->EnvironmentVariable())
+    for (const auto &variablesSchema : variablesSource->EnvironmentVariable())
     {
         auto properties = variablesSchema.Properties();
-        for (const auto& currentProperties : properties)
+        for (const auto &currentProperties : properties)
         {
-            std::string actionState = getActionCheckboxState(getOptionalPropertyData(currentProperties.action()).c_str());
+            std::string actionState = getActionCheckboxState(
+                getOptionalPropertyData(currentProperties.action()).c_str());
 
             auto sessionItem = model->insertItem<VariablesContainerItem>(model->rootItem());
 
@@ -66,14 +66,17 @@ std::unique_ptr<EnvironmentVariables> VariablesModelBuilder::modelToSchema(std::
 {
     auto variables = std::make_unique<EnvironmentVariables>("{BF141A63-327B-438a-B9BF-2C188F13B7AD}");
 
-    for (const auto& containerItem : model->topItems())
+    for (const auto &containerItem : model->topItems())
     {
-        if (auto variablesContainer = dynamic_cast<VariablesContainerItem*>(containerItem); variablesContainer)
+        if (auto variablesContainer = dynamic_cast<VariablesContainerItem *>(containerItem); variablesContainer)
         {
-            auto varModel = variablesContainer->getVariables();
+            auto varModel    = variablesContainer->getVariables();
             auto commonModel = variablesContainer->getCommon();
 
-            auto var = createRootElement<EnvironmentVariable_t>("{78570023-8373-4a19-BA80-2F150738EA19}");
+            auto var = EnvironmentVariable_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{78570023-8373-4a19-BA80-2F150738EA19}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
             auto properties = EnvironmentVariableProperties_t(varModel->property<std::string>(VariablesItem::NAME),
                                                               varModel->property<std::string>(VariablesItem::VALUE));
@@ -91,5 +94,4 @@ std::unique_ptr<EnvironmentVariables> VariablesModelBuilder::modelToSchema(std::
     return variables;
 }
 
-}
-
+} // namespace preferences

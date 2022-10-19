@@ -30,7 +30,6 @@
 
 namespace preferences
 {
-
 class BaseModelBuilder
 {
 public:
@@ -39,13 +38,13 @@ public:
 protected:
     BaseModelBuilder() = default;
 
-    BaseModelBuilder(const BaseModelBuilder&)            = delete;   // copy ctor
-    BaseModelBuilder(BaseModelBuilder&&)                 = delete;   // move ctor
-    BaseModelBuilder& operator=(const BaseModelBuilder&) = delete;   // copy assignment
-    BaseModelBuilder& operator=(BaseModelBuilder&&)      = delete;   // move assignment
+    BaseModelBuilder(const BaseModelBuilder &) = delete;            // copy ctor
+    BaseModelBuilder(BaseModelBuilder &&)      = delete;            // move ctor
+    BaseModelBuilder &operator=(const BaseModelBuilder &) = delete; // copy assignment
+    BaseModelBuilder &operator=(BaseModelBuilder &&) = delete;      // move assignment
 
-    template <template <typename> typename OptionalType, typename T>
-    T getOptionalPropertyData(const OptionalType<T>& data)
+    template<template<typename> typename OptionalType, typename T>
+    T getOptionalPropertyData(const OptionalType<T> &data)
     {
         if (data.present())
         {
@@ -57,25 +56,32 @@ protected:
         }
     }
 
-    std::string getActionCheckboxState(const std::string& data);
+    std::string getActionCheckboxState(const std::string &data);
 
-    template <typename SchemaType>
-    void setCommonItemData(CommonItem* common, const SchemaType& schema)
+    template<typename SchemaType>
+    void setCommonItemData(CommonItem *common, const SchemaType &schema)
     {
         common->setProperty(CommonItem::propertyToString(CommonItem::CLSID), schema.clsid().c_str());
         common->setProperty(CommonItem::propertyToString(CommonItem::NAME), schema.name().c_str());
-        common->setProperty(CommonItem::propertyToString(CommonItem::STATUS), getOptionalPropertyData(schema.status()).c_str());
-        common->setProperty(CommonItem::propertyToString(CommonItem::IMAGE), static_cast<int>(getOptionalPropertyData(schema.image())));
-        common->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), getOptionalPropertyData(schema.changed()).c_str());
+        common->setProperty(CommonItem::propertyToString(CommonItem::STATUS),
+                            getOptionalPropertyData(schema.status()).c_str());
+        common->setProperty(CommonItem::propertyToString(CommonItem::IMAGE),
+                            static_cast<int>(getOptionalPropertyData(schema.image())));
+        common->setProperty(CommonItem::propertyToString(CommonItem::CHANGED),
+                            getOptionalPropertyData(schema.changed()).c_str());
         common->setProperty(CommonItem::propertyToString(CommonItem::UID), schema.uid().c_str());
-        common->setProperty(CommonItem::propertyToString(CommonItem::DESC), getOptionalPropertyData(schema.desc()).c_str());
-        common->setProperty(CommonItem::propertyToString(CommonItem::BYPASS_ERRORS), getOptionalPropertyData(schema.bypassErrors()));
-        common->setProperty(CommonItem::propertyToString(CommonItem::USER_CONTEXT), getOptionalPropertyData(schema.userContext()));
-        common->setProperty(CommonItem::propertyToString(CommonItem::REMOVE_POLICY), getOptionalPropertyData(schema.removePolicy()));
+        common->setProperty(CommonItem::propertyToString(CommonItem::DESC),
+                            getOptionalPropertyData(schema.desc()).c_str());
+        common->setProperty(CommonItem::propertyToString(CommonItem::BYPASS_ERRORS),
+                            getOptionalPropertyData(schema.bypassErrors()));
+        common->setProperty(CommonItem::propertyToString(CommonItem::USER_CONTEXT),
+                            getOptionalPropertyData(schema.userContext()));
+        common->setProperty(CommonItem::propertyToString(CommonItem::REMOVE_POLICY),
+                            getOptionalPropertyData(schema.removePolicy()));
     }
 
-    template <typename CommonData>
-    void setCommonModelData(CommonData& data, const preferences::CommonItem* commonModel)
+    template<typename CommonData>
+    void setCommonModelData(CommonData &data, const preferences::CommonItem *commonModel)
     {
         data.clsid(commonModel->property<std::string>(CommonItem::propertyToString(CommonItem::CLSID)));
         data.name(commonModel->property<std::string>(CommonItem::propertyToString(CommonItem::NAME)));
@@ -89,21 +95,23 @@ protected:
         data.removePolicy(commonModel->property<bool>(CommonItem::propertyToString(CommonItem::REMOVE_POLICY)));
     }
 
-    template <typename T>
-    T createRootElement(const std::string& guid)
+    template<typename T>
+    T createRootElement(const std::string &guid)
     {
-        QString dateOfChange(QDate::currentDate().toString(Qt::ISODate)
-                           + " "
-                           + QTime::currentTime().toString("hh:mm:ss"));
+        QString dateOfChange(QDate::currentDate().toString(Qt::ISODate) + " "
+                             + QTime::currentTime().toString("hh:mm:ss"));
 
-        return T(
-                 guid,
-                 dateOfChange.toStdString(),
-                 ""
-                 );
+        return T(guid, dateOfChange.toStdString(), "");
+    }
+
+    std::string createDateOfChange()
+    {
+        QString dateOfChange(QDate::currentDate().toString(Qt::ISODate) + " "
+                             + QTime::currentTime().toString("hh:mm:ss"));
+        return dateOfChange.toStdString();
     }
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_BASE_MODEL_BUILDER_H
+#endif //GPUI_BASE_MODEL_BUILDER_H

@@ -162,6 +162,17 @@ void PreferencesTreeModel::populateModel()
     machineNamespace->setProperty(FolderItem::NODE_ID, machineUuid);
     machineNamespace->setProperty(FolderItem::HELP_MSG, QObject::tr("Machine level policies").toStdString());
 
+    auto machineAdministrativeTemplatesItem = insertItem<FolderItem>(machineNamespace);
+    machineAdministrativeTemplatesItem->setDisplayName(QObject::tr("Administrative Templates").toStdString());
+    auto machineAdministrativeTemplatesUuid = QUuid::createUuid();
+    machineAdministrativeTemplatesItem->setProperty(FolderItem::NODE_ID, machineAdministrativeTemplatesUuid);
+    machineAdministrativeTemplatesItem->setProperty(FolderItem::PARENT_ID, machineUuid);
+    machineAdministrativeTemplatesItem->setProperty(FolderItem::HELP_MSG,
+                                                    QObject::tr("Administrative Templates.").toStdString());
+
+    auto machineTestItem = insertItem<FolderItem>(machineAdministrativeTemplatesItem);
+    machineTestItem->setDisplayName(QObject::tr("Preferences").toStdString());
+
     auto machinePreferencesItem = insertItem<FolderItem>(machineNamespace);
     machinePreferencesItem->setDisplayName(QObject::tr("Preferences").toStdString());
     auto machinePreferencesUuid = QUuid::createUuid();

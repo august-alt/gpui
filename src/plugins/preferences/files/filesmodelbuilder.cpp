@@ -27,24 +27,23 @@
 
 namespace preferences
 {
-
 FilesModelBuilder::FilesModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
 std::unique_ptr<PreferencesModel> FilesModelBuilder::schemaToModel(std::unique_ptr<Files> &filesSource)
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    for (const auto& filesSchema : filesSource->File())
+    for (const auto &filesSchema : filesSource->File())
     {
         auto sessionItem = model->insertItem<FilesContainerItem>(model->rootItem());
 
-        for (const auto& properties: filesSchema.Properties())
+        for (const auto &properties : filesSchema.Properties())
         {
             auto files = sessionItem->getFiles();
-            files->setProperty(FilesItem::ACTION, getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
+            files->setProperty(FilesItem::ACTION,
+                               getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
             files->setProperty(FilesItem::FROM_PATH, getOptionalPropertyData(properties.fromPath()).c_str());
             files->setProperty(FilesItem::TARGET_PATH, properties.targetPath().c_str());
             files->setProperty(FilesItem::SUPPRESS, getOptionalPropertyData(properties.suppress()));
@@ -64,14 +63,17 @@ std::unique_ptr<Files> FilesModelBuilder::modelToSchema(std::unique_ptr<Preferen
 {
     auto files = std::make_unique<Files>("{215B2E53-57CE-475c-80FE-9EEC14635851}");
 
-    for (const auto& containerItem : model->topItems())
+    for (const auto &containerItem : model->topItems())
     {
-        if (auto filesContainer = dynamic_cast<FilesContainerItem*>(containerItem); filesContainer)
+        if (auto filesContainer = dynamic_cast<FilesContainerItem *>(containerItem); filesContainer)
         {
-            auto driveModel = filesContainer->getFiles();
+            auto driveModel  = filesContainer->getFiles();
             auto commonModel = filesContainer->getCommon();
 
-            auto file = createRootElement<File_t>("{50BE44C8-567A-4ed1-B1D0-9234FE1F38AF}");
+            auto file = File_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{50BE44C8-567A-4ed1-B1D0-9234FE1F38AF}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
             auto properties = FileProperties_t(driveModel->property<std::string>(FilesItem::TARGET_PATH));
             properties.action(driveModel->property<std::string>(FilesItem::FROM_PATH));
@@ -91,5 +93,4 @@ std::unique_ptr<Files> FilesModelBuilder::modelToSchema(std::unique_ptr<Preferen
     return files;
 }
 
-}
-
+} // namespace preferences

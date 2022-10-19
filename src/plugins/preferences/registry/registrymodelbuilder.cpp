@@ -27,24 +27,23 @@
 
 namespace preferences
 {
-
 RegistryModelBuilder::RegistryModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
 std::unique_ptr<PreferencesModel> RegistryModelBuilder::schemaToModel(std::unique_ptr<RegistrySettings> &registry)
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    for (const auto& registrySchema : registry->Registry())
+    for (const auto &registrySchema : registry->Registry())
     {
         auto sessionItem = model->insertItem<RegistryContainerItem>(model->rootItem());
 
-        for (const auto& properties : registrySchema.Properties())
+        for (const auto &properties : registrySchema.Properties())
         {
             auto registryKey = sessionItem->getRegistry();
-            registryKey->setProperty(RegistryItem::ACTION, getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
+            registryKey->setProperty(RegistryItem::ACTION,
+                                     getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
             registryKey->setProperty(RegistryItem::HIVE, properties.hive().c_str());
             registryKey->setProperty(RegistryItem::KEY, properties.key().c_str());
             registryKey->setProperty(RegistryItem::NAME, getOptionalPropertyData(properties.name()).c_str());
@@ -64,16 +63,20 @@ std::unique_ptr<RegistrySettings> RegistryModelBuilder::modelToSchema(std::uniqu
 {
     auto registryKeys = std::make_unique<RegistrySettings>("{A3CCFC41-DFDB-43a5-8D26-0FE8B954DA51}");
 
-    for (const auto& containerItem : model->topItems())
+    for (const auto &containerItem : model->topItems())
     {
-        if (auto registryContainer = dynamic_cast<RegistryContainerItem*>(containerItem))
+        if (auto registryContainer = dynamic_cast<RegistryContainerItem *>(containerItem))
         {
             auto registryModel = registryContainer->getRegistry();
-            auto commonModel = registryContainer->getCommon();
+            auto commonModel   = registryContainer->getCommon();
 
-            auto registryKey = createRootElement<Registry_t>("{9CD4B2F4-923D-47f5-A062-E897DD1DAD50}");
+            auto registryKey = Registry_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{9CD4B2F4-923D-47f5-A062-E897DD1DAD50}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
-            auto properties = RegistryProperties_t(SubProp_t("", 0, 0), registryModel->property<std::string>(RegistryItem::HIVE),
+            auto properties = RegistryProperties_t(SubProp_t("", 0, 0),
+                                                   registryModel->property<std::string>(RegistryItem::HIVE),
                                                    registryModel->property<std::string>(RegistryItem::KEY));
             properties.action(registryModel->property<std::string>(RegistryItem::ACTION));
             properties.name(registryModel->property<std::string>(RegistryItem::NAME));
@@ -91,5 +94,4 @@ std::unique_ptr<RegistrySettings> RegistryModelBuilder::modelToSchema(std::uniqu
     return registryKeys;
 }
 
-}
-
+} // namespace preferences

@@ -45,6 +45,7 @@ std::unique_ptr<PreferencesModel> VariablesModelBuilder::schemaToModel(
                 getOptionalPropertyData(currentProperties.action()).c_str());
 
             auto sessionItem = model->insertItem<VariablesContainerItem>(model->rootItem());
+            sessionItem->setupListeners();
 
             auto variables = sessionItem->getVariables();
             variables->setProperty(VariablesItem::ACTION, actionState);

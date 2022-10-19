@@ -38,6 +38,7 @@ std::unique_ptr<PreferencesModel> RegistryModelBuilder::schemaToModel(std::uniqu
     for (const auto &registrySchema : registry->Registry())
     {
         auto sessionItem = model->insertItem<RegistryContainerItem>(model->rootItem());
+        sessionItem->setupListeners();
 
         for (const auto &properties : registrySchema.Properties())
         {

@@ -45,6 +45,7 @@ std::unique_ptr<PreferencesModel> ShortcutsModelBuilder::schemaToModel(std::uniq
             int iconIndex = static_cast<int>(getOptionalPropertyData(currentProperties.iconIndex()));
 
             auto sessionItem = model->insertItem<ShortcutsContainerItem>(model->rootItem());
+            sessionItem->setupListeners();
 
             auto shortcuts = sessionItem->getShortcuts();
             shortcuts->setProperty(ShortcutsItem::ACTION, actionState);

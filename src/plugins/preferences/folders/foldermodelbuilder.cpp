@@ -38,6 +38,7 @@ std::unique_ptr<PreferencesModel> FolderModelBuilder::schemaToModel(std::unique_
     for (const auto &foldersSchema : folderSource->Folder())
     {
         auto sessionItem = model->insertItem<FolderContainerItem>(model->rootItem());
+        sessionItem->setupListeners();
 
         for (const auto &properties : foldersSchema.Properties())
         {

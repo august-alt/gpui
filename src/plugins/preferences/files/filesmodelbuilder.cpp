@@ -38,6 +38,7 @@ std::unique_ptr<PreferencesModel> FilesModelBuilder::schemaToModel(std::unique_p
     for (const auto &filesSchema : filesSource->File())
     {
         auto sessionItem = model->insertItem<FilesContainerItem>(model->rootItem());
+        sessionItem->setupListeners();
 
         for (const auto &properties : filesSchema.Properties())
         {

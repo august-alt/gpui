@@ -40,7 +40,9 @@ std::unique_ptr<PreferencesModel> SharesModelBuilder::schemaToModel(std::unique_
         for (const auto &properties : sharesSchema.Properties())
         {
             auto sessionItem = model->insertItem<SharesContainerItem>(model->rootItem());
-            auto shareItem   = sessionItem->getShares();
+            sessionItem->setupListeners();
+
+            auto shareItem = sessionItem->getShares();
             shareItem->setProperty(SharesItem::ACTION,
                                    getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
             shareItem->setProperty(SharesItem::NAME, properties.name().c_str());

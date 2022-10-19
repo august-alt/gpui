@@ -40,13 +40,13 @@ void ModelWriter::saveModels(const std::string &policyPath,
                              std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
     std::map<std::string, std::unique_ptr<PreferenceWriterInterface>> writers;
-    writers["Files/Files.xml"]                               = std::make_unique<FilesPreferenceWriter>();
-    writers["Folders/Folders.xml"]                           = std::make_unique<FolderPreferenceWriter>();
-    writers["IniFiles/IniFiles.xml"]                         = std::make_unique<IniPreferenceWriter>();
-    writers["Registry/Registry.xml"]                         = std::make_unique<RegistryPreferenceWriter>();
-    writers["NetworkShares/NetworkShares.xml"]               = std::make_unique<SharesPreferenceWriter>();
-    writers["Shortcuts/Shortcuts.xml"]                       = std::make_unique<ShortcutsPreferenceWriter>();
-    writers["EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceWriter>();
+    writers["Preferences/Files/Files.xml"]                 = std::make_unique<FilesPreferenceWriter>();
+    writers["Preferences/Folders/Folders.xml"]             = std::make_unique<FolderPreferenceWriter>();
+    writers["Preferences/IniFiles/IniFiles.xml"]           = std::make_unique<IniPreferenceWriter>();
+    writers["Preferences/Registry/Registry.xml"]           = std::make_unique<RegistryPreferenceWriter>();
+    writers["Preferences/NetworkShares/NetworkShares.xml"] = std::make_unique<SharesPreferenceWriter>();
+    writers["Preferences/Shortcuts/Shortcuts.xml"]         = std::make_unique<ShortcutsPreferenceWriter>();
+    writers["Preferences/EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceWriter>();
 
     for (const auto &writerPair : writers)
     {

@@ -42,13 +42,13 @@ void ModelCreator::populateModels(const std::string &policyPath,
                                   std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
     std::map<std::string, std::unique_ptr<PreferenceReaderInterface>> readers;
-    readers["Files/Files.xml"]                               = std::make_unique<FilesPreferenceReader>();
-    readers["Folders/Folders.xml"]                           = std::make_unique<FolderPreferenceReader>();
-    readers["IniFiles/IniFiles.xml"]                         = std::make_unique<IniPreferenceReader>();
-    readers["Registry/Registry.xml"]                         = std::make_unique<RegistryPreferenceReader>();
-    readers["NetworkShares/NetworkShares.xml"]               = std::make_unique<SharesPreferenceReader>();
-    readers["Shortcuts/Shortcuts.xml"]                       = std::make_unique<ShortcutsPreferenceReader>();
-    readers["EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceReader>();
+    readers["Preferences/Files/Files.xml"]                 = std::make_unique<FilesPreferenceReader>();
+    readers["Preferences/Folders/Folders.xml"]             = std::make_unique<FolderPreferenceReader>();
+    readers["Preferences/IniFiles/IniFiles.xml"]           = std::make_unique<IniPreferenceReader>();
+    readers["Preferences/Registry/Registry.xml"]           = std::make_unique<RegistryPreferenceReader>();
+    readers["Preferences/NetworkShares/NetworkShares.xml"] = std::make_unique<SharesPreferenceReader>();
+    readers["Preferences/Shortcuts/Shortcuts.xml"]         = std::make_unique<ShortcutsPreferenceReader>();
+    readers["Preferences/EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceReader>();
 
     for (const auto &readerPair : readers)
     {

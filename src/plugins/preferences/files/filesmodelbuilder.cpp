@@ -77,12 +77,12 @@ std::unique_ptr<Files> FilesModelBuilder::modelToSchema(std::unique_ptr<Preferen
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
             auto properties = FileProperties_t(driveModel->property<std::string>(FilesItem::TARGET_PATH));
-            properties.action(driveModel->property<std::string>(FilesItem::FROM_PATH));
+            properties.fromPath(driveModel->property<std::string>(FilesItem::FROM_PATH));
             properties.action(driveModel->property<std::string>(FilesItem::ACTION));
-            properties.action(driveModel->property<std::string>(FilesItem::SUPPRESS));
-            properties.action(driveModel->property<std::string>(FilesItem::READONLY));
-            properties.action(driveModel->property<std::string>(FilesItem::ARCHIVE));
-            properties.action(driveModel->property<std::string>(FilesItem::HIDDEN));
+            properties.suppress(driveModel->property<bool>(FilesItem::SUPPRESS));
+            properties.readOnly(driveModel->property<bool>(FilesItem::READONLY));
+            properties.archive(driveModel->property<bool>(FilesItem::ARCHIVE));
+            properties.hidden(driveModel->property<bool>(FilesItem::HIDDEN));
 
             setCommonModelData(file, commonModel);
             file.Properties().push_back(properties);

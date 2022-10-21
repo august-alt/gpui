@@ -57,6 +57,7 @@ protected:
     }
 
     std::string getActionCheckboxState(const std::string &data);
+    std::string getActionCheckboxModel(const std::string &data);
 
     template<typename SchemaType>
     void setCommonItemData(CommonItem *common, const SchemaType &schema)

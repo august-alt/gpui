@@ -22,7 +22,6 @@
 
 namespace preferences
 {
-
 std::string BaseModelBuilder::getActionCheckboxState(const std::string &data)
 {
     if (data.compare("U") == 0)
@@ -43,4 +42,24 @@ std::string BaseModelBuilder::getActionCheckboxState(const std::string &data)
     return "Create";
 }
 
+std::string BaseModelBuilder::getActionCheckboxModel(const std::string &data)
+{
+    if (data.compare("Update") == 0)
+    {
+        return "U";
+    }
+
+    if (data.compare("Replace") == 0)
+    {
+        return "R";
+    }
+
+    if (data.compare("Delete") == 0)
+    {
+        return "D";
+    }
+
+    return "C";
 }
+
+} // namespace preferences

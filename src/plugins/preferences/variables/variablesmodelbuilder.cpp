@@ -81,7 +81,7 @@ std::unique_ptr<EnvironmentVariables> VariablesModelBuilder::modelToSchema(std::
 
             auto properties = EnvironmentVariableProperties_t(varModel->property<std::string>(VariablesItem::NAME),
                                                               varModel->property<std::string>(VariablesItem::VALUE));
-            properties.action(varModel->property<std::string>(VariablesItem::ACTION));
+            properties.action(getActionCheckboxModel(varModel->property<std::string>(VariablesItem::ACTION)));
             properties.user(varModel->property<bool>(VariablesItem::USER));
             properties.partial(varModel->property<bool>(VariablesItem::PARTIAL));
 

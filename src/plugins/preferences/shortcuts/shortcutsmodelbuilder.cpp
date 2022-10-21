@@ -96,7 +96,7 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
             auto properties = ShortcutsProperties_t(shortcutModel->property<std::string>(ShortcutsItem::TARGET_TYPE),
                                                     shortcutModel->property<std::string>(ShortcutsItem::TARGET_PATH),
                                                     shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_PATH));
-            properties.action(shortcutModel->property<std::string>(ShortcutsItem::ACTION));
+            properties.action(getActionCheckboxModel(shortcutModel->property<std::string>(ShortcutsItem::ACTION)));
             properties.pidl(shortcutModel->property<std::string>(ShortcutsItem::PIDL));
             properties.arguments(shortcutModel->property<std::string>(ShortcutsItem::ARGUMENTS));
             properties.startIn(shortcutModel->property<std::string>(ShortcutsItem::START_IN));

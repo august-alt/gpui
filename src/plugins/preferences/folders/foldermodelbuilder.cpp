@@ -88,7 +88,7 @@ std::unique_ptr<Folders> FolderModelBuilder::modelToSchema(std::unique_ptr<Prefe
                                                  folderModel->property<bool>(FolderItem::READONLY),
                                                  folderModel->property<bool>(FolderItem::ARCHIVE),
                                                  folderModel->property<bool>(FolderItem::HIDDEN));
-            properties.action(folderModel->property<std::string>(FolderItem::ACTION));
+            properties.action(getActionCheckboxModel(folderModel->property<std::string>(FolderItem::ACTION)));
             properties.deleteIgnoreErrors(folderModel->property<bool>(FolderItem::DELETE_IGNORE_ERRORS));
             properties.deleteFiles(folderModel->property<bool>(FolderItem::DELETE_FILES));
             properties.deleteSubFolders(folderModel->property<bool>(FolderItem::DELETE_SUB_FOLDERS));

@@ -75,7 +75,7 @@ std::unique_ptr<IniFiles> IniModelBuilder::modelToSchema(std::unique_ptr<Prefere
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
 
             auto properties = IniProperties_t(iniModel->property<std::string>(IniItem::PATH));
-            properties.action(iniModel->property<std::string>(IniItem::ACTION));
+            properties.action(getActionCheckboxModel(iniModel->property<std::string>(IniItem::ACTION)));
             properties.path(iniModel->property<std::string>(IniItem::PATH));
             properties.section(iniModel->property<std::string>(IniItem::SECTION));
             properties.value(iniModel->property<std::string>(IniItem::VALUE));

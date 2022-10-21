@@ -80,6 +80,8 @@ std::unique_ptr<NetworkShareSettings> SharesModelBuilder::modelToSchema(std::uni
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
                                      "{2888C5E7-94FC-4739-90AA-2C1536D68BC0}");
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     sharesModel->property<std::string>(SharesItem::NAME));
 
             auto properties = ShareProperties_t(sharesModel->property<std::string>(SharesItem::NAME));
             properties.comment(sharesModel->property<std::string>(SharesItem::COMMENT));
@@ -89,7 +91,11 @@ std::unique_ptr<NetworkShareSettings> SharesModelBuilder::modelToSchema(std::uni
             properties.allHidden(sharesModel->property<bool>(SharesItem::ALL_HIDDEN));
             properties.allAdminDrive(sharesModel->property<bool>(SharesItem::ALL_ADMIN_DRIVE));
             properties.limitUsers(sharesModel->property<std::string>(SharesItem::LIMIT_USERS));
-            properties.userLimit(sharesModel->property<int>(SharesItem::USER_LIMIT));
+            auto userLimit = sharesModel->property<int>(SharesItem::USER_LIMIT);
+            if (userLimit > 0)
+            {
+                properties.userLimit(userLimit);
+            }
             properties.abe(sharesModel->property<std::string>(SharesItem::ACCESS_BASED_ENUMERATION));
 
             setCommonModelData(share, commonModel);

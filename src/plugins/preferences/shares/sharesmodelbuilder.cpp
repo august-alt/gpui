@@ -48,9 +48,12 @@ std::unique_ptr<PreferencesModel> SharesModelBuilder::schemaToModel(std::unique_
             shareItem->setProperty(SharesItem::NAME, properties.name().c_str());
             shareItem->setProperty(SharesItem::PATH, getOptionalPropertyData(properties.path()).c_str());
             shareItem->setProperty(SharesItem::COMMENT, getOptionalPropertyData(properties.comment()).c_str());
-            shareItem->setProperty(SharesItem::ALL_REGULAR, getOptionalPropertyData(properties.allRegular()));
-            shareItem->setProperty(SharesItem::ALL_HIDDEN, getOptionalPropertyData(properties.allHidden()));
-            shareItem->setProperty(SharesItem::ALL_ADMIN_DRIVE, getOptionalPropertyData(properties.allAdminDrive()));
+            shareItem->setProperty(SharesItem::ALL_REGULAR,
+                                   static_cast<bool>(getOptionalPropertyData(properties.allRegular())));
+            shareItem->setProperty(SharesItem::ALL_HIDDEN,
+                                   static_cast<bool>(getOptionalPropertyData(properties.allHidden())));
+            shareItem->setProperty(SharesItem::ALL_ADMIN_DRIVE,
+                                   static_cast<bool>(getOptionalPropertyData(properties.allAdminDrive())));
             shareItem->setProperty(SharesItem::LIMIT_USERS, getOptionalPropertyData(properties.limitUsers()).c_str());
             shareItem->setProperty(SharesItem::USER_LIMIT,
                                    static_cast<int>(getOptionalPropertyData(properties.userLimit())));

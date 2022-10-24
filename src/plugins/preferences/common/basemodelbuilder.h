@@ -74,11 +74,11 @@ protected:
         common->setProperty(CommonItem::propertyToString(CommonItem::DESC),
                             getOptionalPropertyData(schema.desc()).c_str());
         common->setProperty(CommonItem::propertyToString(CommonItem::BYPASS_ERRORS),
-                            getOptionalPropertyData(schema.bypassErrors()));
+                            static_cast<bool>(getOptionalPropertyData(schema.bypassErrors())));
         common->setProperty(CommonItem::propertyToString(CommonItem::USER_CONTEXT),
-                            getOptionalPropertyData(schema.userContext()));
+                            static_cast<bool>(getOptionalPropertyData(schema.userContext())));
         common->setProperty(CommonItem::propertyToString(CommonItem::REMOVE_POLICY),
-                            getOptionalPropertyData(schema.removePolicy()));
+                            static_cast<bool>(getOptionalPropertyData(schema.removePolicy())));
     }
 
     template<typename CommonData>

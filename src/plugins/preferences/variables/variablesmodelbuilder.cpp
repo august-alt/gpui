@@ -49,11 +49,14 @@ std::unique_ptr<PreferencesModel> VariablesModelBuilder::schemaToModel(
 
             auto variables = sessionItem->getVariables();
             variables->setProperty(VariablesItem::ACTION, actionState);
-            variables->setProperty(VariablesItem::USER, getOptionalPropertyData(currentProperties.user()));
+            variables->setProperty(VariablesItem::USER,
+                                   static_cast<bool>(getOptionalPropertyData(currentProperties.user())));
             variables->setProperty(VariablesItem::NAME, currentProperties.name().c_str());
-            variables->setProperty(VariablesItem::PARTIAL, getOptionalPropertyData(currentProperties.partial()));
+            variables->setProperty(VariablesItem::PARTIAL,
+                                   static_cast<bool>(getOptionalPropertyData(currentProperties.partial())));
             variables->setProperty(VariablesItem::VALUE, currentProperties.value().c_str());
-            variables->setProperty(VariablesItem::SYSTEM, !getOptionalPropertyData(currentProperties.user()));
+            variables->setProperty(VariablesItem::SYSTEM,
+                                   static_cast<bool>(!getOptionalPropertyData(currentProperties.user())));
 
             auto common = sessionItem->getCommon();
             setCommonItemData(common, variablesSchema);

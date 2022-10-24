@@ -47,10 +47,10 @@ std::unique_ptr<PreferencesModel> FilesModelBuilder::schemaToModel(std::unique_p
                                getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str()));
             files->setProperty(FilesItem::FROM_PATH, getOptionalPropertyData(properties.fromPath()).c_str());
             files->setProperty(FilesItem::TARGET_PATH, properties.targetPath().c_str());
-            files->setProperty(FilesItem::SUPPRESS, getOptionalPropertyData(properties.suppress()));
-            files->setProperty(FilesItem::READONLY, getOptionalPropertyData(properties.readOnly()));
-            files->setProperty(FilesItem::ARCHIVE, getOptionalPropertyData(properties.archive()));
-            files->setProperty(FilesItem::HIDDEN, getOptionalPropertyData(properties.hidden()));
+            files->setProperty(FilesItem::SUPPRESS, static_cast<bool>(getOptionalPropertyData(properties.suppress())));
+            files->setProperty(FilesItem::READONLY, static_cast<bool>(getOptionalPropertyData(properties.readOnly())));
+            files->setProperty(FilesItem::ARCHIVE, static_cast<bool>(getOptionalPropertyData(properties.archive())));
+            files->setProperty(FilesItem::HIDDEN, static_cast<bool>(getOptionalPropertyData(properties.hidden())));
 
             auto common = sessionItem->getCommon();
             setCommonItemData(common, filesSchema);

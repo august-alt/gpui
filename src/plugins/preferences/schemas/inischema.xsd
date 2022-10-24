@@ -19,9 +19,9 @@
      <xs:attribute name="changed" type="xs:string" use="optional"/>
      <xs:attribute name="uid" type="xs:string" use="required"/>
      <xs:attribute name="desc" type="xs:string" use="optional"/>
-     <xs:attribute name="bypassErrors" type="xs:boolean" use="optional"/>
-     <xs:attribute name="userContext" type="xs:boolean" use="optional"/>
-     <xs:attribute name="removePolicy" type="xs:boolean" use="optional"/>
+     <xs:attribute name="bypassErrors" type="xs:integer" use="optional"/>
+     <xs:attribute name="userContext" type="xs:integer" use="optional"/>
+     <xs:attribute name="removePolicy" type="xs:integer" use="optional"/>
    </xs:complexType>
    <xs:element name="IniFiles">
      <xs:complexType>

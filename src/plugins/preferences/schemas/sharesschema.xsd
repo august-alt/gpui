@@ -5,13 +5,13 @@
        <xs:attribute name="name" type="xs:string" use="required"/>
        <xs:attribute name="path" type="xs:string" use="optional"/>
        <xs:attribute name="comment" type="xs:string" use="optional"/>
-       <xs:attribute name="allRegular" type="xs:boolean" use="optional"/>
-       <xs:attribute name="allHidden" type="xs:boolean" use="optional"/>
-       <xs:attribute name="allAdminDrive" type="xs:boolean" use="optional"/>
+       <xs:attribute name="allRegular" type="xs:integer" use="optional"/>
+       <xs:attribute name="allHidden" type="xs:integer" use="optional"/>
+       <xs:attribute name="allAdminDrive" type="xs:integer" use="optional"/>
        <xs:attribute name="limitUsers" type="xs:string" use="optional"/>
        <xs:attribute name="abe" type="xs:string" use="optional"/>
        <xs:attribute name="userLimit" type="xs:unsignedByte" use="optional"/>
-       <xs:attribute name="disabled" type="xs:boolean" use="optional"/>
+       <xs:attribute name="disabled" type="xs:integer" use="optional"/>
     </xs:complexType>
     <xs:complexType name="NetShare_t">
        <xs:sequence>
@@ -23,9 +23,9 @@
        <xs:attribute name="changed" type="xs:string" use="optional"/>
        <xs:attribute name="uid" type="xs:string" use="required"/>
        <xs:attribute name="desc" type="xs:string" use="optional"/>
-       <xs:attribute name="bypassErrors" type="xs:boolean" use="optional"/>
-       <xs:attribute name="userContext" type="xs:boolean" use="optional"/>
-       <xs:attribute name="removePolicy" type="xs:boolean" use="optional"/>
+       <xs:attribute name="bypassErrors" type="xs:integer" use="optional"/>
+       <xs:attribute name="userContext" type="xs:integer" use="optional"/>
+       <xs:attribute name="removePolicy" type="xs:integer" use="optional"/>
        <xs:attribute name="status" type="xs:string" use="optional" />
     </xs:complexType>
     <xs:element name="NetworkShareSettings">
@@ -34,7 +34,7 @@
              <xs:element name="NetShare" type="NetShare_t" maxOccurs="unbounded"/>
           </xs:sequence>
           <xs:attribute name="clsid" type="xs:string" use="required"/>
-          <xs:attribute name="disabled" type="xs:boolean" use="optional"/>
+          <xs:attribute name="disabled" type="xs:integer" use="optional"/>
        </xs:complexType>
     </xs:element>
  </xs:schema>

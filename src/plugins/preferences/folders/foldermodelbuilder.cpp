@@ -83,6 +83,8 @@ std::unique_ptr<Folders> FolderModelBuilder::modelToSchema(std::unique_ptr<Prefe
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
                                      "{07DA02F5-F9CD-4397-A550-4AE21B6B4BD3}");
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     foldersContainer->property<std::string>(FolderContainerItem::NAME));
 
             auto properties = FolderProperties_t(folderModel->property<std::string>(FolderItem::PATH),
                                                  folderModel->property<bool>(FolderItem::READONLY),

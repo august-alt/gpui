@@ -75,6 +75,8 @@ std::unique_ptr<Files> FilesModelBuilder::modelToSchema(std::unique_ptr<Preferen
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
                                      "{50BE44C8-567A-4ed1-B1D0-9234FE1F38AF}");
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     filesContainer->property<std::string>(FilesContainerItem::NAME));
 
             auto properties = FileProperties_t(driveModel->property<std::string>(FilesItem::TARGET_PATH));
             properties.fromPath(driveModel->property<std::string>(FilesItem::FROM_PATH));

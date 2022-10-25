@@ -34,16 +34,19 @@ class ShortcutsModelBuilder : public BaseModelBuilder
 public:
     ShortcutsModelBuilder();
 
-    std::unique_ptr<PreferencesModel> schemaToModel(std::unique_ptr<Shortcuts>& shortcuts);
+    std::unique_ptr<PreferencesModel> schemaToModel(std::unique_ptr<Shortcuts> &shortcuts);
 
-    std::unique_ptr<Shortcuts> modelToSchema(std::unique_ptr<PreferencesModel>& model);
+    std::unique_ptr<Shortcuts> modelToSchema(std::unique_ptr<PreferencesModel> &model);
 
 private:
     std::string decodeShortcutKey(unsigned char shortcutKey);
 
     unsigned char encodeShortcutKey(std::string shortcutKey);
+
+    std::string decodeWindowMode(const std::string &windowMode);
+
+    std::string encodeWindowMode(const std::string &windowMode);
 };
-}
+} // namespace preferences
 
 #endif // GPUI_SHORTCUTS_MODEL_BUILDER_H
-

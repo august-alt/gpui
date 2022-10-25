@@ -76,6 +76,8 @@ std::unique_ptr<RegistrySettings> RegistryModelBuilder::modelToSchema(std::uniqu
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
                                      "{9CD4B2F4-923D-47f5-A062-E897DD1DAD50}");
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     registryModel->property<std::string>(RegistryItem::NAME));
 
             auto properties = RegistryProperties_t(SubProp_t("", 0, 0),
                                                    registryModel->property<std::string>(RegistryItem::HIVE),

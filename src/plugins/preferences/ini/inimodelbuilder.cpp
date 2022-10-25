@@ -73,6 +73,8 @@ std::unique_ptr<IniFiles> IniModelBuilder::modelToSchema(std::unique_ptr<Prefere
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
                                      "{EEFACE84-D3D8-4680-8D4B-BF103E759448}");
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     iniContainer->property<std::string>(IniContainerItem::NAME));
 
             auto properties = IniProperties_t(iniModel->property<std::string>(IniItem::PATH));
             properties.action(getActionCheckboxModel(iniModel->property<std::string>(IniItem::ACTION)));

@@ -81,6 +81,8 @@ std::unique_ptr<EnvironmentVariables> VariablesModelBuilder::modelToSchema(std::
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
                                      "{78570023-8373-4a19-BA80-2F150738EA19}");
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     varModel->property<std::string>(VariablesItem::NAME));
 
             auto properties = EnvironmentVariableProperties_t(varModel->property<std::string>(VariablesItem::NAME),
                                                               varModel->property<std::string>(VariablesItem::VALUE));

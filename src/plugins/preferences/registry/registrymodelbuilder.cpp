@@ -50,7 +50,8 @@ std::unique_ptr<PreferencesModel> RegistryModelBuilder::schemaToModel(std::uniqu
             registryKey->setProperty(RegistryItem::NAME, getOptionalPropertyData(properties.name()).c_str());
             registryKey->setProperty(RegistryItem::TYPE, getOptionalPropertyData(properties.type()).c_str());
             registryKey->setProperty(RegistryItem::VALUE, getOptionalPropertyData(properties.value()).c_str());
-            registryKey->setProperty(RegistryItem::DEFAULT, getOptionalPropertyData(properties.default_()));
+            registryKey->setProperty(RegistryItem::DEFAULT,
+                                     static_cast<bool>(getOptionalPropertyData(properties.default_())));
 
             auto common = sessionItem->getCommon();
             setCommonItemData(common, registrySchema);

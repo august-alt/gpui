@@ -26,10 +26,11 @@
 #include <string>
 
 #include <QObject>
+#include <QTranslator>
 
 #include "common/preferencesmodel.h"
-#include "preferencestreemodel.h"
-#include "preferencestreeproxymodel.h"
+#include "common/preferencestreemodel.h"
+#include "common/preferencestreeproxymodel.h"
 
 #include "modelcreator.h"
 #include "modelwriter.h"
@@ -55,6 +56,8 @@ public:
     std::unique_ptr<PreferencesModelMap> userPreferencesModels             = nullptr;
 
     std::string policyPath{};
+
+    std::vector<std::unique_ptr<QTranslator>> translators{};
 
 public:
     PreferencesSnapInPrivate();

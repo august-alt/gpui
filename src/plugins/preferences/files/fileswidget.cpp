@@ -21,17 +21,16 @@
 #include "fileswidget.h"
 #include "ui_fileswidget.h"
 
-#include "filesitem.h"
 #include "common/commonutils.h"
+#include "filesitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 FilesWidget::FilesWidget(QWidget *parent, FilesItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -49,7 +48,7 @@ FilesWidget::~FilesWidget()
     delete ui;
 }
 
-void FilesWidget::setItem(ModelView::SessionItem* item)
+void FilesWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -91,7 +90,7 @@ bool FilesWidget::validate()
 
 QString FilesWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
-}
+} // namespace preferences

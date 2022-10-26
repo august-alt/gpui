@@ -21,17 +21,16 @@
 #include "registrywidget.h"
 #include "ui_registrywidget.h"
 
-#include "registryitem.h"
 #include "common/commonutils.h"
+#include "registryitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 RegistryWidget::RegistryWidget(QWidget *parent, RegistryItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -51,7 +50,7 @@ RegistryWidget::~RegistryWidget()
     delete ui;
 }
 
-void RegistryWidget::setItem(ModelView::SessionItem* item)
+void RegistryWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -100,7 +99,7 @@ bool RegistryWidget::validate()
 
 QString RegistryWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
-}
+} // namespace preferences

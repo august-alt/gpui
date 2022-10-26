@@ -21,17 +21,16 @@
 #include "iniwidget.h"
 #include "ui_iniwidget.h"
 
-#include "iniitem.h"
 #include "common/commonutils.h"
+#include "iniitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 IniWidget::IniWidget(QWidget *parent, IniItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -49,7 +48,7 @@ IniWidget::~IniWidget()
     delete ui;
 }
 
-void IniWidget::setItem(ModelView::SessionItem* item)
+void IniWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -96,7 +95,7 @@ bool IniWidget::validate()
 
 QString IniWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
-}
+} // namespace preferences

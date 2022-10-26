@@ -84,8 +84,7 @@ bool ShortcutsWidget::validate()
         return false;
     }
 
-    if (!CommonUtils::validateLineEdit(ui->targetPathLineEdit,
-                                       tr("Please input target path value.")))
+    if (!CommonUtils::validateLineEdit(ui->targetPathLineEdit, tr("Please input target path value.")))
     {
         return false;
     }
@@ -95,7 +94,7 @@ bool ShortcutsWidget::validate()
 
 QString ShortcutsWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
 } // namespace preferences

@@ -25,13 +25,17 @@
 #include <iostream>
 
 #include "common/preferencesmodel.h"
-#include "preferencestreemodel.h"
-#include "preferencestreeproxymodel.h"
+#include "common/preferencestreemodel.h"
+#include "common/preferencestreeproxymodel.h"
 
 #include "modelcreator.h"
 #include "modelwriter.h"
 
 #include <mvvm/viewmodel/topitemsviewmodel.h>
+
+#include <QCoreApplication>
+#include <QDebug>
+#include <QDirIterator>
 
 namespace gpui
 {
@@ -90,7 +94,35 @@ void PreferencesSnapIn::onDataSave()
 
 void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
 {
-    Q_UNUSED(locale);
+    for (const auto &translator : d->translators)
+    {
+        QCoreApplication::removeTranslator(translator.get());
+    }
+    d->translators.clear();
+
+    auto language = QString::fromStdString(locale);
+
+    QDirIterator it(":/", QDirIterator::Subdirectories);
+    while (it.hasNext())
+    {
+        if (!it.fileInfo().isFile())
+        {
+            it.hasNext();
+        }
+
+        if (it.fileName().contains(language) && it.fileName().endsWith(".qm"))
+        {
+            std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+            bool loadResult                           = qtTranslator->load(it.fileName(), ":/");
+            if (loadResult)
+            {
+                QCoreApplication::installTranslator(qtTranslator.get());
+                d->translators.push_back(std::move(qtTranslator));
+            }
+        }
+
+        it.next();
+    }
 }
 
 } // namespace gpui

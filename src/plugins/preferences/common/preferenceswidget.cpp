@@ -31,7 +31,7 @@
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
-#include "preferencestreeproxymodel.h"
+#include "common/preferencestreeproxymodel.h"
 
 #include "common/preferencesmodel.h"
 #include "shortcuts/shortcutswidget.h"
@@ -50,8 +50,7 @@ PreferencesWidget::PreferencesWidget(ModelView::SessionModel *model, QWidget *pa
     , m_horizontalViewModel(nullptr)
     , m_selectionModel(std::make_unique<QItemSelectionModel>())
     , m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
-    , m_modelsMap(
-          std::make_unique<std::map<std::string, std::unique_ptr<::ModelView::SessionModel>>>())
+    , m_modelsMap(std::make_unique<std::map<std::string, std::unique_ptr<::ModelView::SessionModel>>>())
     , m_proxyModel(nullptr)
 {
     ui->setupUi(this);
@@ -107,8 +106,7 @@ void PreferencesWidget::setupConnections()
                         return;
                     }
 
-                    std::map<std::string, QString> types
-                        = item->property<std::map<std::string, QString>>(TYPE);
+                    std::map<std::string, QString> types = item->property<std::map<std::string, QString>>(TYPE);
                     if (types.size() > 0)
                     {
                         auto modelType = types.begin()->first;

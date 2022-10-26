@@ -21,17 +21,16 @@
 #include "shareswidget.h"
 #include "ui_shareswidget.h"
 
-#include "sharesitem.h"
 #include "common/commonutils.h"
+#include "sharesitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 SharesWidget::SharesWidget(QWidget *parent, SharesItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -54,9 +53,9 @@ SharesWidget::~SharesWidget()
     delete ui;
 }
 
-void SharesWidget::setItem(ModelView::SessionItem* item)
+void SharesWidget::setItem(ModelView::SessionItem *item)
 {
-    m_item = dynamic_cast<SharesItem*>(item);
+    m_item = dynamic_cast<SharesItem *>(item);
 
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -104,7 +103,7 @@ bool SharesWidget::validate()
 
 QString SharesWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
-}
+} // namespace preferences

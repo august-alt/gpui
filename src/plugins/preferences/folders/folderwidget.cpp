@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 FolderWidget::FolderWidget(QWidget *parent, FolderItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ FolderWidget::~FolderWidget()
     delete ui;
 }
 
-void FolderWidget::setItem(ModelView::SessionItem* item)
+void FolderWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -78,7 +77,7 @@ void FolderWidget::setItem(ModelView::SessionItem* item)
 
 QString FolderWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
-}
+} // namespace preferences

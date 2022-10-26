@@ -21,17 +21,16 @@
 #include "variableswidget.h"
 #include "ui_variableswidget.h"
 
-#include "variablesitem.h"
 #include "common/commonutils.h"
+#include "variablesitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 VariablesWidget::VariablesWidget(QWidget *parent, VariablesItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -51,7 +50,7 @@ VariablesWidget::~VariablesWidget()
     delete ui;
 }
 
-void VariablesWidget::setItem(ModelView::SessionItem* item)
+void VariablesWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -84,7 +83,8 @@ bool VariablesWidget::validate()
         return false;
     }
 
-    if (!CommonUtils::validateLineEdit(ui->valueLineEdit, tr("A blank value is reserved for delete mode. Use delete mode.")))
+    if (!CommonUtils::validateLineEdit(ui->valueLineEdit,
+                                       tr("A blank value is reserved for delete mode. Use delete mode.")))
     {
         return false;
     }
@@ -94,7 +94,7 @@ bool VariablesWidget::validate()
 
 QString VariablesWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
-}
+} // namespace preferences

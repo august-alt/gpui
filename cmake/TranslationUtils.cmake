@@ -17,7 +17,6 @@ function(add_translation out_files)
     foreach(filename ${ARGN})
         get_filename_component(basename ${filename} NAME_WE)
         set(qm "${CMAKE_CURRENT_SOURCE_DIR}/${basename}.qm")
-        message("${qm}")
         add_custom_command(
             OUTPUT "${qm}"
             COMMAND "${Qt5_LRELEASE_EXECUTABLE}"

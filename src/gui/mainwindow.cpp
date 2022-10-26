@@ -68,14 +68,6 @@ public:
     std::unique_ptr<MainWindowSettings> settings = nullptr;
     ISnapInManager *manager                      = nullptr;
 
-    std::shared_ptr<model::registry::Registry> userRegistry                     = {};
-    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource = {};
-    QString userRegistryPath{};
-
-    std::shared_ptr<model::registry::Registry> machineRegistry                     = nullptr;
-    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource = nullptr;
-    QString machineRegistryPath{};
-
     std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> searchModel       = nullptr;
@@ -92,11 +84,7 @@ public:
     std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
     MainWindowPrivate()
-        : userRegistry(new model::registry::Registry())
-        , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
-        , machineRegistry(new model::registry::Registry())
-        , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
-        , eventFilter(new TreeViewEventFilter())
+        : eventFilter(new TreeViewEventFilter())
     {}
 
 private:
@@ -345,57 +333,6 @@ void MainWindow::onLanguageChanged(QAction *action)
     ui->treeView->selectionModel()->clearSelection();
 
     ui->searchLineEdit->clear();
-}
-
-void MainWindow::onPolFileOpen(const QString &path,
-                               std::shared_ptr<model::registry::Registry> &registry,
-                               std::unique_ptr<model::registry::AbstractRegistrySource> &source,
-                               std::function<void(model::registry::AbstractRegistrySource *)> callback)
-{
-    qWarning() << "Path recieved: " << path;
-
-    auto stringvalues = std::make_unique<std::string>();
-
-    try
-    {
-        if (path.startsWith("smb://"))
-        {
-            gpui::smb::SmbFile smbLocationItemFile(path);
-            smbLocationItemFile.open(QFile::ReadOnly);
-            stringvalues->resize(smbLocationItemFile.size(), 0);
-            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
-            smbLocationItemFile.close();
-        }
-        else
-        {
-            QFile registryFile(path);
-            registryFile.open(QFile::ReadWrite);
-            stringvalues->resize(registryFile.size(), 0);
-            registryFile.read(&stringvalues->at(0), registryFile.size());
-            registryFile.close();
-        }
-
-        auto iss = std::make_unique<std::istringstream>(*stringvalues);
-        std::string pluginName("pol");
-
-        auto reader       = std::make_unique<io::GenericReader>();
-        auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile>>(*iss, pluginName);
-        if (!registryFile)
-        {
-            qWarning() << "Unable to load registry file contents.";
-            return;
-        }
-
-        registry = registryFile->getRegistry();
-
-        source = std::make_unique<model::registry::PolRegistrySource>(registry);
-
-        callback(source.get());
-    }
-    catch (std::exception &e)
-    {
-        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
-    }
 }
 
 void MainWindow::onIniFileOpen(const QString &path)

@@ -71,5 +71,5 @@ qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 
 add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES} ${LIB_RESOURCES})
 target_link_libraries(gpui-gui Qt5::Widgets Qt5::Qml)
-target_link_libraries(gpui-gui gpui-core gpui-io administrative-templates-plugin)
+target_link_libraries(gpui-gui gpui-core gpui-io)
 target_link_libraries(gpui-gui smb-storage-static)

@@ -84,11 +84,6 @@ private slots:
     void onLanguageChanged(QAction *action);
 
 private:
-    void onPolFileOpen(const QString &path,
-                       std::shared_ptr<model::registry::Registry> &registry,
-                       std::unique_ptr<model::registry::AbstractRegistrySource> &source,
-                       std::function<void(model::registry::AbstractRegistrySource *source)> callback);
-
     void onIniFileOpen(const QString &path);
 
     void loadPolicyModel(ISnapIn *snapIn, const QString &locale);

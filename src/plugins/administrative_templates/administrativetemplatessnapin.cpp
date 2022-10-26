@@ -252,7 +252,7 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
         onPolFileOpen(d->userRegistryPath,
                       d->userRegistry,
                       d->userRegistrySource,
-                      [&](model::registry::AbstractRegistrySource *source) {
+                      [&](model::registry::AbstractRegistrySource *source) noexcept {
                           Q_UNUSED(source);
                           // TODO: set registry source to content widget.
                       });
@@ -260,7 +260,7 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
         onPolFileOpen(d->machineRegistryPath,
                       d->machineRegistry,
                       d->machineRegistrySource,
-                      [&](model::registry::AbstractRegistrySource *source) {
+                      [&](model::registry::AbstractRegistrySource *source) noexcept {
                           Q_UNUSED(source);
                           // TODO: set registry source to content widget.
                       });

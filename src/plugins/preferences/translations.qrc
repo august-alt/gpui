@@ -1,5 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
  <qresource prefix="/">
+  <file>common_translation_en.qm</file>
+  <file>common_translation_ru.qm</file>
   <file>datasource_translation_en.qm</file>
   <file>datasource_translation_ru.qm</file>
   <file>device_translation_en.qm</file>

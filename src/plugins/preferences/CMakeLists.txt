@@ -182,10 +182,10 @@ set(HEADERS
     variables/variablescontaineritem.h
     variables/variableswidget.h
 
-    preferencestreemodel.h
-    preferencestreeproxymodel.h
+    common/preferencestreemodel.h
+    common/preferencestreeproxymodel.h
 
-    preferenceswidget.h
+    common/preferenceswidget.h
 )
 
 set(SOURCES
@@ -355,10 +355,10 @@ set(SOURCES
     variables/variableswidget.cpp
     variables/variableswidgetslots.cpp
 
-    preferencestreemodel.cpp
-    preferencestreeproxymodel.cpp
+    common/preferencestreemodel.cpp
+    common/preferencestreeproxymodel.cpp
 
-    preferenceswidget.cpp
+    common/preferenceswidget.cpp
 )
 
 set(UI_FORMS
@@ -432,7 +432,7 @@ set(UI_FORMS
 
     variables/variableswidget.ui
 
-    preferenceswidget.ui
+    common/preferenceswidget.ui
 )
 
 set(PLUGIN_HEADERS
@@ -440,8 +440,6 @@ set(PLUGIN_HEADERS
     modelwriter.h
     preferencessnapin.h
     preferencessnapinprivate.h
-    preferencestreemodel.h
-    preferencestreeproxymodel.h
 )
 
 set(PLUGIN_SOURCES
@@ -450,8 +448,6 @@ set(PLUGIN_SOURCES
     preferencesplugin.cpp
     preferencessnapin.cpp
     preferencessnapinprivate.cpp
-    preferencestreemodel.cpp
-    preferencestreeproxymodel.cpp
 )
 
 file(GLOB_RECURSE TS_FILES ${CMAKE_CURRENT_SOURCE_DIR} *.ts)

@@ -536,4 +536,57 @@ context (user policy option).</translation>
         <translation>Common</translation>
     </message>
 </context>
+<context>
+    <name>preferences::TableDetailsWidget</name>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="91"/>
+        <source>New</source>
+        <translation>New</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="92"/>
+        <source>All Tasks</source>
+        <translation>All Tasks</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="94"/>
+        <source>Paste</source>
+        <translation>Paste</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="95"/>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="96"/>
+        <source>Export List...</source>
+        <translation>Export List...</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="97"/>
+        <source>View</source>
+        <translation>View</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="99"/>
+        <source>Arrange Icons</source>
+        <translation>Arrange Icons</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="100"/>
+        <source>Line Up Icons</source>
+        <translation>Line Up Icons</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="102"/>
+        <source>Help</source>
+        <translation>Help</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="125"/>
+        <source>Remove item</source>
+        <translation>Remove item</translation>
+    </message>
+</context>
 </TS>

@@ -537,4 +537,57 @@ context (user policy option).</source>
         <translation>Общие</translation>
     </message>
 </context>
+<context>
+    <name>preferences::TableDetailsWidget</name>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="91"/>
+        <source>New</source>
+        <translation>Новый</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="92"/>
+        <source>All Tasks</source>
+        <translation>Все задачи</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="94"/>
+        <source>Paste</source>
+        <translation>Вставить</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="95"/>
+        <source>Refresh</source>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="96"/>
+        <source>Export List...</source>
+        <translation>Экспортировать список...</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="97"/>
+        <source>View</source>
+        <translation>Вид</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="99"/>
+        <source>Arrange Icons</source>
+        <translation>Упорядочить иконки</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="100"/>
+        <source>Line Up Icons</source>
+        <translation>Выровнять иконки</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="102"/>
+        <source>Help</source>
+        <translation>Помощь</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="125"/>
+        <source>Remove item</source>
+        <translation>Удалить элемент</translation>
+    </message>
+</context>
 </TS>

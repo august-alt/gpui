@@ -7,6 +7,11 @@ include_directories(${PREFERENCES_EDITOR_INCLUDE_DIRS})
 
 set(PLUGIN_NAME administrative-templates-plugin)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+
 include_directories("${CMAKE_SOURCE_DIR}/src/core")
 
 set(HEADERS
@@ -59,6 +64,7 @@ set(HEADERS
     registry/registryentry.h
     registry/registryentrytype.h
     registry/registrysourcetype.h
+    ui/administrativetemplateswidget.h
 )
 
 set(SOURCES
@@ -71,9 +77,14 @@ set(SOURCES
     registry/abstractregistrysource.cpp
     registry/policystatemanager.cpp
     registry/polregistrysource.cpp
+    ui/administrativetemplateswidget.cpp
 )
 
-set(SOURCES ${SOURCES} ${HEADERS})
+set(UI_FORMS
+    ui/administrativetemplateswidget.ui
+)
+
+set(SOURCES ${SOURCES} ${HEADERS} ${UI_FORMS})
 
 add_definitions(
     -DGPUI_ADMINISTRATIVE_TEMPLATES_PLUGIN

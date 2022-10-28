@@ -55,14 +55,12 @@ void PreferencesSnapIn::onInitialize()
 {
     d->model = std::make_unique<PreferencesTreeModel>();
 
-    auto proxyModel = std::make_unique<PreferencesTreeProxyModel>();
+    d->proxyViewModel = std::make_unique<PreferencesTreeProxyModel>();
 
     d->viewModel = std::make_unique<ModelView::TopItemsViewModel>(d->model.get());
-    proxyModel->setSourceModel(d->viewModel.get());
+    d->proxyViewModel->setSourceModel(d->viewModel.get());
 
-    setRootNode(proxyModel.get());
-
-    d->proxyViewModel = std::move(proxyModel);
+    setRootNode(d->proxyViewModel.get());
 
     std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
 }

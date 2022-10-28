@@ -21,6 +21,8 @@
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
 #include "../model/pluginstorage.h"
+#include "../ldap/ldapimpl.h"
+#include "../ldap/ldapcontract.h"
 
 #include <QApplication>
 
@@ -74,4 +76,5 @@ int main(int argc, char ** argv) {
     window.show();
 
     return app.exec();
+
 }

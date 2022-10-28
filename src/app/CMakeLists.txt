@@ -32,3 +32,4 @@ add_gpui_executable(main ${SOURCES})
 
 target_link_libraries(main ${GPUI_LIBRARIES})
 target_link_libraries(main Qt5::Widgets)
+#target_link_libraries(main gpui-ldap)

@@ -39,6 +39,15 @@ SnapInManager::SnapInManager()
 
 SnapInManager::~SnapInManager()
 {
+    for (auto &snapIn : d->snapIns)
+    {
+        if (snapIn)
+        {
+            delete snapIn;
+            snapIn = nullptr;
+        }
+    }
+
     delete d;
 }
 

@@ -87,6 +87,12 @@ namespace gpui {
 
         void createLanguageMenu();
 
+        QString isAnyIPAddress(QString &path);
+
+        QString isAnyDomainName(QString &path);
+
+        QString isAnyGUID(QString &path);
+
     private:
         MainWindow(const MainWindow&)            = delete;   // copy ctor
         MainWindow(MainWindow&&)                 = delete;   // move ctor

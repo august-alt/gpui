@@ -9,6 +9,8 @@ License: GPLv2+
 Group: Other
 Url: https://github.com/august-alt/gpui
 
+BuildRequires(pre): catch2-devel
+
 BuildRequires: cmake
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
@@ -16,7 +18,17 @@ BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
+BuildRequires: qt5-base-common
 BuildRequires: libsmbclient-devel libsmbclient
+
+BuildRequires: samba-devel
+BuildRequires: libldap-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libsmbclient-devel
+BuildRequires: libuuid-devel
+BuildRequires: glib2-devel
+BuildRequires: libpcre-devel
+BuildRequires: libkrb5-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
@@ -27,6 +39,14 @@ BuildRequires: boost-devel-headers
 BuildRequires: desktop-file-utils ImageMagick-tools
 
 Requires: admx-basealt
+Requires: libldap
+Requires: libsasl2
+Requires: libsasl2-plugin-gssapi
+Requires: libsmbclient
+Requires: libuuid
+Requires: qt5-base-common
+Requires: glib2
+Requires: libkrb
 
 Source0: %name-%version.tar
 
@@ -65,6 +85,7 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_libdir/libgpui-gui.so
 %_libdir/libgpui-io.so
 %_libdir/libgpui-model.so
+%_libdir/libgpui-ldap.so
 
 %_libdir/gpui/plugins/libadml-plugin.so
 %_libdir/gpui/plugins/libadmx-plugin.so

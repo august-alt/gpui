@@ -49,6 +49,11 @@
 #include "../plugins/storage/smb/smbfile.h"
 
 #include "../model/bundle/policyroles.h"
+#include "../ldap/ldapcontract.h"
+#include "../ldap/ldapimpl.h"
+
+#include <QList>
+
 
 void registerResources()
 {
@@ -86,12 +91,15 @@ public:
 
     std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
+    std::unique_ptr<ldap::LDAPContract> ldapImpl = nullptr;
+
     MainWindowPrivate()
         : userRegistry(new model::registry::Registry())
         , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
         , machineRegistry(new model::registry::Registry())
         , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
         , eventFilter(new TreeViewEventFilter())
+        , ldapImpl(new ldap::LDAPImpl())
     {}
 
 private:
@@ -196,6 +204,8 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
     ui->setupUi(this);
 
     ui->treeView->installEventFilter(d->eventFilter.get());
+
+    d->ldapImpl->initialize();
 
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
     d->settings->restoreSettings();
@@ -313,6 +323,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString &locale)
 {
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
+
     d->model = bundle->loadFolder(path.toStdString(), locale.toStdString());
 
     QStandardItem* header = d->model->invisibleRootItem()->child(0);
@@ -320,14 +331,62 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     if (d->options.path.startsWith("smb://"))
     {
         QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
+
         if (domainRegexp.indexIn(d->options.path) != -1)
         {
             header->setData('[' + domainRegexp.cap() + ']', Qt::DisplayRole);
+
+            QStringList capText = domainRegexp.capturedTexts();
+
+            QString textHeader = "[Domain Group Policy]";
+
+            QString ipAddress = isAnyIPAddress(capText[1]);
+
+            if(ipAddress != "")
+            {
+                textHeader = ipAddress;
+
+                qWarning() << "IP: " << ipAddress;
+            }
+
+            QString domainName = isAnyDomainName(capText[1]);
+
+            if(domainName != "")
+            {
+                textHeader = domainName;
+
+                qWarning() << "Domain: " << domainName;
+            }
+
+            char *strTextHeader = textHeader.toLocal8Bit().data();
+
+            header->setData(QObject::tr(strTextHeader), Qt::DisplayRole);
+
         }
         else
         {
             header->setData(QObject::tr("[Domain Group Policy]"));
         }
+
+        QString guid = isAnyGUID(d->options.path);
+
+        QString displayName = "[Domain Group Policy]";
+
+        if(guid != "")
+        {
+            QString guidDisplayName = d->ldapImpl->getDisplayNameGPO(guid);
+
+            if(guidDisplayName != "") {
+                displayName = guidDisplayName;
+
+                qWarning() << "Display name of " << guid << " : " << guidDisplayName;
+            }
+        }
+
+        char *dN = displayName.toLocal8Bit().data();
+
+        header->setData(QObject::tr(dN), Qt::DisplayRole);
+
     }
     else
     {
@@ -360,6 +419,67 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     ui->treeView->expand(d->searchModel->index(0, 0));
 
     d->contentWidget->modelItemSelected(d->searchModel->index(0, 0));
+}
+
+QString MainWindow::isAnyIPAddress(QString &path)
+{
+    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
+    QRegExp ipRegex ("^" + ipRange
+                         + "\\." + ipRange
+                         + "\\." + ipRange
+                         + "\\." + ipRange + "$");
+
+    if(ipRegex.indexIn(path) != -1) {
+
+        QString dcName = d->ldapImpl->getDCName();
+
+        char *dd = dcName.toLocal8Bit().data();
+
+        return ipRegex.capturedTexts()[0];
+    }
+
+    return NULL;
+}
+
+QString MainWindow::isAnyDomainName(QString &path)
+{
+    QRegExp domainRegExp("^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\\.(xn--)?([a-z0-9\\-]{1,61}|[a-z0-9-]{1,30}\\.[a-z]{2,})$");
+
+    if(domainRegExp.indexIn(path) != -1) {
+
+        QStringList domains = domainRegExp.capturedTexts();
+
+        return domains[0];
+    }
+
+    return NULL;
+}
+
+QString MainWindow::isAnyGUID(QString &path)
+{
+    QRegExp lastPartOfPath("/\\{([^/]+)\\}$");
+    QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
+
+    if(lastPartOfPath.indexIn(d->options.path) != -1)
+    {
+       QStringList lastPart = lastPartOfPath.capturedTexts();
+
+       QString preGuid = lastPart[lastPart.size()-1];
+
+       if(regExpGuid.indexIn(preGuid) != -1)
+       {
+           return preGuid;
+       }
+       else
+       {
+           return NULL;
+       }
+    }
+    else
+    {
+        return NULL;
+    }
+
 }
 
 void MainWindow::onDirectoryOpen()

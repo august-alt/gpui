@@ -10,6 +10,7 @@ set(CMAKE_MODULE_PATH ${GPUI_SOURCE_DIR}/cmake)
 set(GPUI_DIR "${CMAKE_BINARY_DIR}")
 
 include(TranslationUtils)
+include(FindLdap)
 
 if(UNIX)
   include(GNUInstallDirs)

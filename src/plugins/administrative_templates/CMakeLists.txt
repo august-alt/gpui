@@ -65,6 +65,7 @@ set(HEADERS
     registry/registryentrytype.h
     registry/registrysourcetype.h
     ui/administrativetemplateswidget.h
+    ui/administrativetemplatesproxymodel.h
 )
 
 set(SOURCES
@@ -78,6 +79,7 @@ set(SOURCES
     registry/policystatemanager.cpp
     registry/polregistrysource.cpp
     ui/administrativetemplateswidget.cpp
+    ui/administrativetemplatesproxymodel.cpp
 )
 
 set(UI_FORMS

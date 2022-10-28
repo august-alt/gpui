@@ -44,6 +44,8 @@
 
 #include "../io/inifile.h"
 
+#include "ui/administrativetemplatesproxymodel.h"
+
 #include <QDebug>
 #include <QMessageBox>
 
@@ -52,7 +54,8 @@ namespace gpui
 class AdministrativeTemplatesSnapInPrivate
 {
 public:
-    std::unique_ptr<QStandardItemModel> model = nullptr;
+    std::unique_ptr<QStandardItemModel> model      = nullptr;
+    std::unique_ptr<QAbstractItemModel> proxyModel = nullptr;
 
     std::shared_ptr<model::registry::Registry> userRegistry{};
     std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource{};
@@ -227,7 +230,12 @@ void AdministrativeTemplatesSnapIn::onInitialize()
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
     d->model    = bundle->loadFolder("/usr/share/PolicyDefinitions/", "ru-ru");
 
-    setRootNode(static_cast<QAbstractItemModel *>(d->model.get()));
+    auto proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
+    proxyModel->setSourceModel(d->model.get());
+
+    d->proxyModel = std::move(proxyModel);
+
+    setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
 
     // TODO: Register action to load model from path.
 

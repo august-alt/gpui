@@ -34,10 +34,18 @@ class QDataWidgetMapper;
 
 namespace gpui
 {
+class AdministrativeTemplatesWidgetPrivate;
+
 class AdministrativeTemplatesWidget : public QWidget
 {
-public:
     Q_OBJECT
+public:
+    enum PolicyWidgetState
+    {
+        STATE_NOT_CONFIGURED = 0,
+        STATE_ENABLED        = 1,
+        STATE_DISABLED       = 2
+    };
 
 public:
     explicit AdministrativeTemplatesWidget(QWidget *parent = nullptr);
@@ -51,6 +59,12 @@ private:
 
 private:
     Ui::AdministrativeTemplatesWidget *ui{nullptr};
+
+private:
+    AdministrativeTemplatesWidgetPrivate *d;
+
+private:
+    void setPolicyWidgetState(AdministrativeTemplatesWidget::PolicyWidgetState state);
 };
 
 } // namespace gpui

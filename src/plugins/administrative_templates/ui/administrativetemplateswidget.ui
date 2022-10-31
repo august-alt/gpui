@@ -7,13 +7,22 @@
     <x>0</x>
     <y>0</y>
     <width>649</width>
-    <height>499</height>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
    <item row="0" column="0">
     <widget class="QFrame" name="policyNameFrame">
      <property name="sizePolicy">
@@ -134,8 +143,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>411</width>
-            <height>265</height>
+            <width>429</width>
+            <height>314</height>
            </rect>
           </property>
          </widget>

@@ -286,11 +286,13 @@ void AdministrativeTemplatesWidget::onCancelClicked()
 
 void AdministrativeTemplatesWidget::setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource)
 {
+    qWarning() << "Test user registry source";
     d->userSource = registrySource;
 }
 
 void AdministrativeTemplatesWidget::setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource)
 {
+    qWarning() << "Test machine registry source";
     d->machineSource = registrySource;
 }
 

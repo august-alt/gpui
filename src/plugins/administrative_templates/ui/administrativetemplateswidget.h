@@ -65,7 +65,6 @@ public:
     void setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource);
 
 signals:
-    void modelItemSelected(const QModelIndex &index);
     void savePolicyChanges();
 
 private:

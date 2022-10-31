@@ -51,86 +51,6 @@
 
 namespace gpui
 {
-class AdministrativeTemplatesSnapInPrivate
-{
-public:
-    std::unique_ptr<QStandardItemModel> model      = nullptr;
-    std::unique_ptr<QAbstractItemModel> proxyModel = nullptr;
-
-    std::shared_ptr<model::registry::Registry> userRegistry{};
-    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource{};
-    QString userRegistryPath{};
-
-    std::shared_ptr<model::registry::Registry> machineRegistry{};
-    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource{};
-    QString machineRegistryPath{};
-
-    AdministrativeTemplatesSnapInPrivate()
-        : userRegistry(new model::registry::Registry())
-        , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
-        , machineRegistry(new model::registry::Registry())
-        , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
-    {}
-
-private:
-    AdministrativeTemplatesSnapInPrivate(const AdministrativeTemplatesSnapInPrivate &) = delete; // copy ctor
-    AdministrativeTemplatesSnapInPrivate(AdministrativeTemplatesSnapInPrivate &&)      = delete; // move ctor
-    AdministrativeTemplatesSnapInPrivate &operator=(const AdministrativeTemplatesSnapInPrivate &)
-        = delete; // copy assignment
-    AdministrativeTemplatesSnapInPrivate &operator=(AdministrativeTemplatesSnapInPrivate &&) = delete; // move assignment
-};
-
-void onPolFileOpen(const QString &path,
-                   std::shared_ptr<model::registry::Registry> &registry,
-                   std::unique_ptr<model::registry::AbstractRegistrySource> &source,
-                   std::function<void(model::registry::AbstractRegistrySource *)> callback)
-{
-    qWarning() << "Path recieved: " << path;
-
-    auto stringvalues = std::make_unique<std::string>();
-
-    try
-    {
-        if (path.startsWith("smb://"))
-        {
-            gpui::smb::SmbFile smbLocationItemFile(path);
-            smbLocationItemFile.open(QFile::ReadOnly);
-            stringvalues->resize(smbLocationItemFile.size(), 0);
-            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
-            smbLocationItemFile.close();
-        }
-        else
-        {
-            QFile registryFile(path);
-            registryFile.open(QFile::ReadWrite);
-            stringvalues->resize(registryFile.size(), 0);
-            registryFile.read(&stringvalues->at(0), registryFile.size());
-            registryFile.close();
-        }
-
-        auto iss = std::make_unique<std::istringstream>(*stringvalues);
-        std::string pluginName("pol");
-
-        auto reader       = std::make_unique<io::GenericReader>();
-        auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile>>(*iss, pluginName);
-        if (!registryFile)
-        {
-            qWarning() << "Unable to load registry file contents.";
-            return;
-        }
-
-        registry = registryFile->getRegistry();
-
-        source = std::make_unique<model::registry::PolRegistrySource>(registry);
-
-        callback(source.get());
-    }
-    catch (std::exception &e)
-    {
-        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
-    }
-}
-
 void onPolFileSave(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
 {
     std::unique_ptr<io::RegistryFile> fileData = std::make_unique<io::RegistryFile>();
@@ -215,6 +135,112 @@ void onPolFileSave(const std::string &fileName, std::shared_ptr<model::registry:
     delete format;
 }
 
+class AdministrativeTemplatesSnapInPrivate
+{
+public:
+    std::unique_ptr<QStandardItemModel> model                     = nullptr;
+    std::unique_ptr<AdministrativeTemplatesProxyModel> proxyModel = nullptr;
+
+    std::shared_ptr<model::registry::Registry> userRegistry{};
+    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource{};
+    QString userRegistryPath{};
+
+    std::shared_ptr<model::registry::Registry> machineRegistry{};
+    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource{};
+    QString machineRegistryPath{};
+
+    std::vector<std::unique_ptr<QTranslator>> translators{};
+
+    AdministrativeTemplatesSnapInPrivate()
+        : userRegistry(new model::registry::Registry())
+        , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
+        , machineRegistry(new model::registry::Registry())
+        , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
+    {}
+
+public:
+    void onDataSave()
+    {
+        if (!machineRegistryPath.isEmpty())
+        {
+            qWarning() << "Saving machine registry to: " << machineRegistryPath;
+            onPolFileSave(machineRegistryPath.toStdString(), machineRegistry);
+        }
+        else
+        {
+            qWarning() << "Unable to save machine registry path is empty!";
+        }
+
+        if (!userRegistryPath.isEmpty())
+        {
+            qWarning() << "Saving user registry to: " << userRegistryPath;
+            onPolFileSave(userRegistryPath.toStdString(), userRegistry);
+        }
+        else
+        {
+            qWarning() << "Unable to save user registry path is empty!";
+        }
+    }
+
+private:
+    AdministrativeTemplatesSnapInPrivate(const AdministrativeTemplatesSnapInPrivate &) = delete; // copy ctor
+    AdministrativeTemplatesSnapInPrivate(AdministrativeTemplatesSnapInPrivate &&)      = delete; // move ctor
+    AdministrativeTemplatesSnapInPrivate &operator=(const AdministrativeTemplatesSnapInPrivate &)
+        = delete; // copy assignment
+    AdministrativeTemplatesSnapInPrivate &operator=(AdministrativeTemplatesSnapInPrivate &&) = delete; // move assignment
+};
+
+void onPolFileOpen(const QString &path,
+                   std::shared_ptr<model::registry::Registry> &registry,
+                   std::unique_ptr<model::registry::AbstractRegistrySource> &source,
+                   std::function<void(model::registry::AbstractRegistrySource *)> callback)
+{
+    qWarning() << "Path recieved: " << path;
+
+    auto stringvalues = std::make_unique<std::string>();
+
+    try
+    {
+        if (path.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(path);
+            smbLocationItemFile.open(QFile::ReadOnly);
+            stringvalues->resize(smbLocationItemFile.size(), 0);
+            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(path);
+            registryFile.open(QFile::ReadWrite);
+            stringvalues->resize(registryFile.size(), 0);
+            registryFile.read(&stringvalues->at(0), registryFile.size());
+            registryFile.close();
+        }
+
+        auto iss = std::make_unique<std::istringstream>(*stringvalues);
+        std::string pluginName("pol");
+
+        auto reader       = std::make_unique<io::GenericReader>();
+        auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile>>(*iss, pluginName);
+        if (!registryFile)
+        {
+            qWarning() << "Unable to load registry file contents.";
+            return;
+        }
+
+        registry = registryFile->getRegistry();
+
+        source = std::make_unique<model::registry::PolRegistrySource>(registry);
+
+        callback(source.get());
+    }
+    catch (std::exception &e)
+    {
+        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
+    }
+}
+
 AdministrativeTemplatesSnapIn::AdministrativeTemplatesSnapIn()
     : AbstractSnapIn("ISnapIn",
                      "AdministrativeTemplatesSnapIn",
@@ -230,10 +256,12 @@ void AdministrativeTemplatesSnapIn::onInitialize()
     auto bundle = std::make_unique<model::bundle::PolicyBundle>();
     d->model    = bundle->loadFolder("/usr/share/PolicyDefinitions/", "ru-ru");
 
-    auto proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
-    proxyModel->setSourceModel(d->model.get());
+    d->proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
+    d->proxyModel->setSourceModel(d->model.get());
 
-    d->proxyModel = std::move(proxyModel);
+    QObject::connect(d->proxyModel.get(), &AdministrativeTemplatesProxyModel::savePolicyChanges, [&]() {
+        d->onDataSave();
+    });
 
     setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
 
@@ -249,7 +277,6 @@ void AdministrativeTemplatesSnapIn::onShutdown()
 
 void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)
 {
-    Q_UNUSED(policyPath);
     Q_UNUSED(locale);
 
     if (!policyPath.empty())
@@ -261,46 +288,54 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
                       d->userRegistry,
                       d->userRegistrySource,
                       [&](model::registry::AbstractRegistrySource *source) noexcept {
-                          Q_UNUSED(source);
-                          // TODO: set registry source to content widget.
+                          d->proxyModel->setUserRegistrySource(source);
                       });
 
         onPolFileOpen(d->machineRegistryPath,
                       d->machineRegistry,
                       d->machineRegistrySource,
                       [&](model::registry::AbstractRegistrySource *source) noexcept {
-                          Q_UNUSED(source);
-                          // TODO: set registry source to content widget.
+                          d->proxyModel->setMachineRegistrySource(source);
                       });
     }
 }
 
 void AdministrativeTemplatesSnapIn::onDataSave()
 {
-    if (!d->machineRegistryPath.isEmpty())
-    {
-        qWarning() << "Saving machine registry to: " << d->machineRegistryPath;
-        onPolFileSave(d->machineRegistryPath.toStdString(), d->machineRegistry);
-    }
-    else
-    {
-        qWarning() << "Unable to save machine registry path is empty!";
-    }
-
-    if (!d->userRegistryPath.isEmpty())
-    {
-        qWarning() << "Saving user registry to: " << d->userRegistryPath;
-        onPolFileSave(d->userRegistryPath.toStdString(), d->userRegistry);
-    }
-    else
-    {
-        qWarning() << "Unable to save user registry path is empty!";
-    }
+    d->onDataSave();
 }
 
 void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {
-    Q_UNUSED(locale);
+    for (const auto &translator : d->translators)
+    {
+        QCoreApplication::removeTranslator(translator.get());
+    }
+    d->translators.clear();
+
+    auto language = QString::fromStdString(locale);
+
+    QDirIterator it(":/", QDirIterator::Subdirectories);
+    while (it.hasNext())
+    {
+        if (!it.fileInfo().isFile())
+        {
+            it.hasNext();
+        }
+
+        if (it.fileName().contains(language) && it.fileName().endsWith(".qm"))
+        {
+            std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+            bool loadResult                           = qtTranslator->load(it.fileName(), ":/");
+            if (loadResult)
+            {
+                QCoreApplication::installTranslator(qtTranslator.get());
+                d->translators.push_back(std::move(qtTranslator));
+            }
+        }
+
+        it.next();
+    }
 }
 
 } // namespace gpui

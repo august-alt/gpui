@@ -20,8 +20,8 @@
 
 #include "administrativetemplatesproxymodel.h"
 
-#include "../../../src/plugins/administrative_templates/bundle/itemtype.h"
-#include "../../../src/plugins/administrative_templates/bundle/policyroles.h"
+#include "../bundle/itemtype.h"
+#include "../bundle/policyroles.h"
 
 #include "administrativetemplateswidget.h"
 
@@ -30,6 +30,8 @@ namespace gpui
 class AdministrativeTemplatesProxyModelPrivate
 {
 public:
+    model::registry::AbstractRegistrySource *userSource    = nullptr;
+    model::registry::AbstractRegistrySource *machineSource = nullptr;
 };
 
 AdministrativeTemplatesProxyModel::AdministrativeTemplatesProxyModel()
@@ -48,10 +50,30 @@ QVariant AdministrativeTemplatesProxyModel::data(const QModelIndex &proxyIndex, 
     {
         auto contentWidget = new AdministrativeTemplatesWidget();
 
+        contentWidget->setMachineRegistrySource(d->machineSource);
+        contentWidget->setUserRegistrySource(d->userSource);
+
+        contentWidget->setModelIndex(proxyIndex);
+
+        connect(contentWidget,
+                &AdministrativeTemplatesWidget::savePolicyChanges,
+                this,
+                &AdministrativeTemplatesProxyModel::savePolicyChanges);
+
         return QVariant::fromValue(static_cast<QWidget *>(contentWidget));
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);
+}
+
+void AdministrativeTemplatesProxyModel::setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource)
+{
+    d->userSource = registrySource;
+}
+
+void AdministrativeTemplatesProxyModel::setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource)
+{
+    d->machineSource = registrySource;
 }
 
 } // namespace gpui

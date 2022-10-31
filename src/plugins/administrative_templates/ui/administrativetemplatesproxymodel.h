@@ -23,6 +23,14 @@
 
 #include <QIdentityProxyModel>
 
+namespace model
+{
+namespace registry
+{
+class AbstractRegistrySource;
+}
+} // namespace model
+
 namespace gpui
 {
 class AdministrativeTemplatesProxyModelPrivate;
@@ -36,6 +44,12 @@ public:
     ~AdministrativeTemplatesProxyModel();
 
     QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
+
+    void setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource);
+    void setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource);
+
+signals:
+    void savePolicyChanges();
 
 private:
     AdministrativeTemplatesProxyModelPrivate *d = nullptr;

@@ -32,6 +32,14 @@ QT_END_NAMESPACE
 
 class QDataWidgetMapper;
 
+namespace model
+{
+namespace registry
+{
+class AbstractRegistrySource;
+}
+} // namespace model
+
 namespace gpui
 {
 class AdministrativeTemplatesWidgetPrivate;
@@ -51,6 +59,15 @@ public:
     explicit AdministrativeTemplatesWidget(QWidget *parent = nullptr);
     ~AdministrativeTemplatesWidget();
 
+    void setModelIndex(const QModelIndex &index);
+
+    void setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource);
+    void setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource);
+
+signals:
+    void modelItemSelected(const QModelIndex &index);
+    void savePolicyChanges();
+
 private:
     AdministrativeTemplatesWidget(const AdministrativeTemplatesWidget &) = delete;            // copy ctor
     AdministrativeTemplatesWidget(AdministrativeTemplatesWidget &&)      = delete;            // move ctor
@@ -65,6 +82,12 @@ private:
 
 private:
     void setPolicyWidgetState(AdministrativeTemplatesWidget::PolicyWidgetState state);
+
+    void connectDialogBoxSignals();
+    void onDataChanged();
+
+    void onApplyClicked();
+    void onCancelClicked();
 };
 
 } // namespace gpui

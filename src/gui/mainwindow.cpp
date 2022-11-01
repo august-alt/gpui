@@ -34,6 +34,7 @@
 #include "../core/isnapinmanager.h"
 
 #include "../plugins/administrative_templates/bundle/policybundle.h"
+#include "../plugins/administrative_templates/bundle/policyroles.h"
 
 #include "../plugins/administrative_templates/registry/polregistrysource.h"
 #include "../plugins/administrative_templates/registry/registry.h"
@@ -163,6 +164,13 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
             child = new QStandardItem();
             child->setData(index.data(Qt::DisplayRole), Qt::DisplayRole);
             child->setData(index.data(Qt::DecorationRole), Qt::DecorationRole);
+            child->setData(index.data(model::bundle::ITEM_TYPE), model::bundle::ITEM_TYPE);
+            child->setData(index.data(model::bundle::EXPLAIN_TEXT), model::bundle::EXPLAIN_TEXT);
+            child->setData(index.data(model::bundle::SUPPORTED_ON), model::bundle::SUPPORTED_ON);
+            child->setData(index.data(model::bundle::PRESENTATION), model::bundle::PRESENTATION);
+            child->setData(index.data(model::bundle::POLICY), model::bundle::POLICY);
+            child->setData(index.data(model::bundle::POLICY_TYPE), model::bundle::POLICY_TYPE);
+            child->setData(index.data(model::bundle::POLICY_WIDGET), model::bundle::POLICY_WIDGET);
             child->setData(index.data(Qt::UserRole + 12), Qt::UserRole + 12);
             child->setData(index.data(Qt::UserRole + 13), Qt::UserRole + 13);
 

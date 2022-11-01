@@ -125,13 +125,17 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
         if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
         {
-            auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET).value<QWidget *>();
+            auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET).value<std::function<QWidget *()>>();
 
-            delete ui->scrollArea->takeWidget();
+            auto widget = ui->scrollArea->takeWidget();
+            if (widget)
+            {
+                delete widget;
+            }
 
             if (policyWidget)
             {
-                ui->scrollArea->setWidget(policyWidget);
+                ui->scrollArea->setWidget(policyWidget());
             }
             ui->stackedWidget->setCurrentIndex(DATA_PAGE_INDEX);
         }
@@ -145,5 +149,6 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
 } // namespace gpui
 
+Q_DECLARE_METATYPE(std::function<QWidget *()>)
 Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)
 Q_DECLARE_METATYPE(std::shared_ptr<::model::admx::Policy>)

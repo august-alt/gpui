@@ -255,8 +255,6 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
         snapIn->onInitialize();
     }
 
-    loadPolicyModel(manager);
-
     if (!d->options.path.isEmpty())
     {
         for (auto &snapIn : manager->getSnapIns())
@@ -264,6 +262,8 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
             snapIn->onDataLoad(d->options.path.toStdString(), d->localeName.toStdString());
         }
     }
+
+    loadPolicyModel(manager);
 
     if (!d->options.policyName.isEmpty())
     {

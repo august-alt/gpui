@@ -48,19 +48,22 @@ QVariant AdministrativeTemplatesProxyModel::data(const QModelIndex &proxyIndex, 
 {
     if (role == model::bundle::POLICY_WIDGET)
     {
-        auto contentWidget = new AdministrativeTemplatesWidget();
+        std::function<QWidget *()> widgetCreator = [=]() {
+            auto contentWidget = new AdministrativeTemplatesWidget();
 
-        contentWidget->setMachineRegistrySource(d->machineSource);
-        contentWidget->setUserRegistrySource(d->userSource);
+            contentWidget->setMachineRegistrySource(d->machineSource);
+            contentWidget->setUserRegistrySource(d->userSource);
 
-        contentWidget->setModelIndex(proxyIndex);
+            contentWidget->setModelIndex(proxyIndex);
 
-        connect(contentWidget,
-                &AdministrativeTemplatesWidget::savePolicyChanges,
-                this,
-                &AdministrativeTemplatesProxyModel::savePolicyChanges);
+            connect(contentWidget,
+                    &AdministrativeTemplatesWidget::savePolicyChanges,
+                    this,
+                    &AdministrativeTemplatesProxyModel::savePolicyChanges);
+            return contentWidget;
+        };
 
-        return QVariant::fromValue(static_cast<QWidget *>(contentWidget));
+        return QVariant::fromValue(widgetCreator);
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);
@@ -77,3 +80,5 @@ void AdministrativeTemplatesProxyModel::setMachineRegistrySource(model::registry
 }
 
 } // namespace gpui
+
+Q_DECLARE_METATYPE(std::function<QWidget *()>)

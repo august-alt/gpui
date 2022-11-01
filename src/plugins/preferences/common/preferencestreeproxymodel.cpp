@@ -103,30 +103,33 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
 
     if (role == model::bundle::POLICY_WIDGET)
     {
-        auto contentWidget = new TableDetailsWidget();
+        std::function<QWidget *()> widgetCreator = [=]() {
+            auto contentWidget = new TableDetailsWidget();
 
-        auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
-        auto item      = viewModel->sessionItemFromIndex(proxyIndex);
+            auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
+            auto item      = viewModel->sessionItemFromIndex(proxyIndex);
 
-        if (item->modelType().compare("PreferenceCategoryItem") == 0)
-        {
-            auto types = item->property<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE);
-            if (types.size() > 0)
+            if (item->modelType().compare("PreferenceCategoryItem") == 0)
             {
-                auto modelType = d->machineModels->find(types.begin()->first);
-                if (modelType != d->machineModels->end())
+                auto types = item->property<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE);
+                if (types.size() > 0)
                 {
-                    contentWidget->onItemTypeChange(types);
-                    contentWidget->setModel(modelType->second.get());
-                    QObject::connect(contentWidget,
-                                     &TableDetailsWidget::okPressed,
-                                     d->snapIn,
-                                     &gpui::PreferencesSnapInPrivate::onDataSave);
+                    auto modelType = d->machineModels->find(types.begin()->first);
+                    if (modelType != d->machineModels->end())
+                    {
+                        contentWidget->onItemTypeChange(types);
+                        contentWidget->setModel(modelType->second.get());
+                        QObject::connect(contentWidget,
+                                         &TableDetailsWidget::okPressed,
+                                         d->snapIn,
+                                         &gpui::PreferencesSnapInPrivate::onDataSave);
+                    }
                 }
             }
-        }
+            return contentWidget;
+        };
 
-        return QVariant::fromValue(static_cast<QWidget *>(contentWidget));
+        return QVariant::fromValue(widgetCreator);
     }
 
     if (role == model::bundle::ITEM_TYPE)
@@ -158,3 +161,5 @@ void PreferencesTreeProxyModel::setSnapIn(gpui::PreferencesSnapInPrivate *snapIn
 }
 
 } // namespace preferences
+
+Q_DECLARE_METATYPE(std::function<QWidget *()>)

@@ -155,23 +155,16 @@ void PreferencesTreeModel::populateModel()
     auto topItem = insertItem<FolderItem>(this->rootItem());
     topItem->setDisplayName(QObject::tr("[Local Group Policy]").toStdString());
     topItem->setProperty(FolderItem::HELP_MSG, "");
+    auto topUuid = QUuid("{123e4567-e89b-12d3-a456-426652340003}");
+    topItem->setProperty(FolderItem::NODE_ID, topUuid);
+    topItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Group policiy").toStdString());
 
     auto machineNamespace = insertItem<FolderItem>(topItem);
     machineNamespace->setDisplayName(QObject::tr("Machine").toStdString());
     auto machineUuid = QUuid("{123e4567-e89b-12d3-a456-426652340000}");
     machineNamespace->setProperty(FolderItem::NODE_ID, machineUuid);
+    machineNamespace->setProperty(FolderItem::PARENT_ID, topUuid);
     machineNamespace->setProperty(FolderItem::HELP_MSG, QObject::tr("Machine level policies").toStdString());
-
-    auto machineAdministrativeTemplatesItem = insertItem<FolderItem>(machineNamespace);
-    machineAdministrativeTemplatesItem->setDisplayName(QObject::tr("Administrative Templates").toStdString());
-    auto machineAdministrativeTemplatesUuid = QUuid::createUuid();
-    machineAdministrativeTemplatesItem->setProperty(FolderItem::NODE_ID, machineAdministrativeTemplatesUuid);
-    machineAdministrativeTemplatesItem->setProperty(FolderItem::PARENT_ID, machineUuid);
-    machineAdministrativeTemplatesItem->setProperty(FolderItem::HELP_MSG,
-                                                    QObject::tr("Administrative Templates.").toStdString());
-
-    auto machineTestItem = insertItem<FolderItem>(machineAdministrativeTemplatesItem);
-    machineTestItem->setDisplayName(QObject::tr("Preferences").toStdString());
 
     auto machinePreferencesItem = insertItem<FolderItem>(machineNamespace);
     machinePreferencesItem->setDisplayName(QObject::tr("Preferences").toStdString());
@@ -279,6 +272,7 @@ void PreferencesTreeModel::populateModel()
     userNamespace->setDisplayName(QObject::tr("User").toStdString());
     auto userUuid = QUuid("{123e4567-e89b-12d3-a456-426652340001}");
     userNamespace->setProperty(FolderItem::NODE_ID, userUuid);
+    userNamespace->setProperty(FolderItem::PARENT_ID, topUuid);
     userNamespace->setProperty(FolderItem::HELP_MSG, QObject::tr("User level policies.").toStdString());
 
     auto userPreferencesItem = insertItem<FolderItem>(userNamespace);

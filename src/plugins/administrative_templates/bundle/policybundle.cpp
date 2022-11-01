@@ -92,22 +92,39 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                                 QObject::tr("Local group policies"),
                                                 ItemType::ITEM_TYPE_CATEGORY,
                                                 model::admx::PolicyType::Both);
+    visibleRootItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 12);
 
     rootItem->appendRow(visibleRootItem);
 
-    d->rootMachineItem = createItem(QObject::tr("Machine"),
-                                    "computer",
-                                    QObject::tr("Machine level policies"),
+    QStandardItem *machineItem = createItem(QObject::tr("Machine"),
+                                            "computer",
+                                            QObject::tr("Machine level policies"),
+                                            ItemType::ITEM_TYPE_CATEGORY,
+                                            model::admx::PolicyType::Machine);
+    machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 13);
+    machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), Qt::UserRole + 12);
+    d->rootMachineItem = createItem(QObject::tr("Administrative Templates"),
+                                    "folder",
+                                    QObject::tr("Machine administrative templates"),
                                     ItemType::ITEM_TYPE_CATEGORY,
                                     model::admx::PolicyType::Machine);
-    d->rootUserItem    = createItem(QObject::tr("User"),
-                                 "user-home",
-                                 QObject::tr("User level policies"),
+    machineItem->appendRow(d->rootMachineItem);
+    QStandardItem *userItem = createItem(QObject::tr("User"),
+                                         "user-home",
+                                         QObject::tr("User level policies"),
+                                         ItemType::ITEM_TYPE_CATEGORY,
+                                         model::admx::PolicyType::User);
+    userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 13);
+    userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), Qt::UserRole + 12);
+    d->rootUserItem = createItem(QObject::tr("Administrative Templates"),
+                                 "folder",
+                                 QObject::tr("User administrative templates"),
                                  ItemType::ITEM_TYPE_CATEGORY,
                                  model::admx::PolicyType::User);
+    userItem->appendRow(d->rootUserItem);
 
-    visibleRootItem->appendRow(d->rootMachineItem);
-    visibleRootItem->appendRow(d->rootUserItem);
+    visibleRootItem->appendRow(machineItem);
+    visibleRootItem->appendRow(userItem);
 
     const QDir dir(path.c_str());
     const QFileInfoList files       = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);

@@ -53,6 +53,8 @@
 
 #include "../plugins/administrative_templates/bundle/policyroles.h"
 
+#include <stack>
+
 void registerResources()
 {
     Q_INIT_RESOURCE(translations);
@@ -93,6 +95,98 @@ private:
     MainWindowPrivate &operator=(const MainWindowPrivate &) = delete; // copy assignment
     MainWindowPrivate &operator=(MainWindowPrivate &&) = delete;      // move assignment
 };
+
+QModelIndex findParent(QAbstractItemModel *model, const QModelIndex &parent, const QUuid &id)
+{
+    auto stack = std::make_unique<std::stack<QModelIndex>>();
+    stack->push(parent);
+
+    while (!stack->empty())
+    {
+        auto current = stack->top();
+        stack->pop();
+
+        auto currentId = current.data(Qt::UserRole + 12).value<QUuid>();
+        if (currentId == id)
+        {
+            return current;
+        }
+
+        for (int row = 0; row < model->rowCount(current); ++row)
+        {
+            QModelIndex index = model->index(row, 0, current);
+            auto indexId      = index.data(Qt::UserRole + 12).value<QUuid>();
+            if (indexId == id)
+            {
+                return index;
+            }
+
+            if (model->hasChildren(index))
+            {
+                for (int childRow = 0; childRow < model->rowCount(index); ++childRow)
+                {
+                    QModelIndex childIndex = model->index(childRow, 0, index);
+                    stack->push(childIndex);
+                }
+            }
+        }
+    }
+
+    return QModelIndex();
+}
+
+void appendModel(QStandardItem *target, const QAbstractItemModel *model, const QModelIndex &parent)
+{
+    for (int rowIndex = 0; rowIndex < model->rowCount(parent); ++rowIndex)
+    {
+        QModelIndex index = model->index(rowIndex, 0, parent);
+
+        auto parentId    = index.data(Qt::UserRole + 13).value<QUuid>();
+        auto parentIndex = QModelIndex();
+        auto currentId   = index.data(Qt::UserRole + 12).value<QUuid>();
+
+        auto currentIndex    = findParent(target->model(), target->model()->index(0, 0).parent(), currentId);
+        QStandardItem *child = nullptr;
+
+        if (!currentIndex.isValid())
+        {
+            if (!currentId.isNull())
+            {
+                qWarning() << "Current id: " << currentId;
+            }
+            if (!parentId.isNull())
+            {
+                qWarning() << "Non null uuid" << index.data() << parentId;
+                parentIndex = findParent(target->model(), target->model()->index(0, 0), parentId);
+            }
+
+            child = new QStandardItem();
+            child->setData(index.data(Qt::DisplayRole), Qt::DisplayRole);
+            child->setData(index.data(Qt::DecorationRole), Qt::DecorationRole);
+            child->setData(index.data(Qt::UserRole + 12), Qt::UserRole + 12);
+            child->setData(index.data(Qt::UserRole + 13), Qt::UserRole + 13);
+
+            if (parentIndex.isValid())
+            {
+                qWarning() << "Found valid index" << parentIndex.data();
+                target->model()->itemFromIndex(parentIndex)->appendRow(child);
+            }
+            else
+            {
+                target->insertRow(rowIndex, child);
+            }
+        }
+        else
+        {
+            child = target->model()->itemFromIndex(currentIndex);
+        }
+
+        if (model->hasChildren(index))
+        {
+            appendModel(child, model, index);
+        }
+    }
+}
 
 MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent)
     : QMainWindow(parent)
@@ -151,8 +245,9 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     {
         qWarning() << "Loading model from: " << snapIn->getDisplayName();
         snapIn->onInitialize();
-        loadPolicyModel(snapIn, d->localeName);
     }
+
+    loadPolicyModel(manager);
 
     if (!d->options.path.isEmpty())
     {
@@ -166,8 +261,6 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     {
         setWindowTitle("GPUI - " + d->options.policyName);
     }
-
-    //    connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
 
     connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString &text) {
         d->searchModel->setFilterFixedString(text);
@@ -211,11 +304,24 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::loadPolicyModel(ISnapIn *snapIn, const QString &locale)
+void MainWindow::loadPolicyModel(ISnapInManager *manager)
 {
-    Q_UNUSED(locale);
+    auto concatenateRowsModel = std::make_unique<QStandardItemModel>();
 
-    d->model = std::unique_ptr<QAbstractItemModel>(snapIn->getRootNode());
+    QStandardItem *item = concatenateRowsModel->invisibleRootItem();
+    item->setData("Root Item", Qt::DisplayRole);
+
+    for (auto &snapIn : manager->getSnapIns())
+    {
+        if (snapIn->getRootNode())
+        {
+            QAbstractItemModel *snapInModel = snapIn->getRootNode();
+            qWarning() << "Appending model from: " << snapIn->getDisplayName();
+            appendModel(item, snapInModel, snapInModel->index(0, 0));
+        }
+    }
+
+    d->model = std::move(concatenateRowsModel);
 
     d->itemNameSortModel = std::make_unique<QSortFilterProxyModel>();
     d->itemNameSortModel->setSourceModel(d->model.get());
@@ -235,6 +341,7 @@ void MainWindow::loadPolicyModel(ISnapIn *snapIn, const QString &locale)
     d->searchModel->setRecursiveFilteringEnabled(true);
 
     ui->treeView->setModel(d->searchModel.get());
+    ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     d->contentWidget->setModel(d->searchModel.get());
 

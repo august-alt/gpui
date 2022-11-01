@@ -86,7 +86,7 @@ private slots:
 private:
     void onIniFileOpen(const QString &path);
 
-    void loadPolicyModel(ISnapIn *snapIn, const QString &locale);
+    void loadPolicyModel(ISnapInManager *manager);
 
     void createLanguageMenu();
 

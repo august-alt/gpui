@@ -98,7 +98,7 @@ void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
     }
     d->translators.clear();
 
-    auto language = QString::fromStdString(locale);
+    QString language = QString::fromStdString(locale).split("-")[0];
 
     QDirIterator it(":/", QDirIterator::Subdirectories);
     while (it.hasNext())

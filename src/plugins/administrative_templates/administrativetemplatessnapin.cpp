@@ -46,7 +46,11 @@
 
 #include "ui/administrativetemplatesproxymodel.h"
 
+#include <QAction>
+#include <QApplication>
 #include <QDebug>
+#include <QFileDialog>
+#include <QMainWindow>
 #include <QMessageBox>
 
 namespace gpui
@@ -151,6 +155,11 @@ public:
 
     std::vector<std::unique_ptr<QTranslator>> translators{};
 
+    std::string admxPath   = "/usr/share/PolicyDefinitions/";
+    std::string localeName = "en-US";
+
+    QAction *fileAction{};
+
     AdministrativeTemplatesSnapInPrivate()
         : userRegistry(new model::registry::Registry())
         , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
@@ -180,6 +189,13 @@ public:
         {
             qWarning() << "Unable to save user registry path is empty!";
         }
+    }
+
+    void policyBundleLoad()
+    {
+        auto bundle = std::make_unique<model::bundle::PolicyBundle>();
+        model       = bundle->loadFolder(admxPath, localeName);
+        proxyModel->setSourceModel(model.get());
     }
 
 private:
@@ -253,11 +269,9 @@ AdministrativeTemplatesSnapIn::AdministrativeTemplatesSnapIn()
 
 void AdministrativeTemplatesSnapIn::onInitialize()
 {
-    auto bundle = std::make_unique<model::bundle::PolicyBundle>();
-    d->model    = bundle->loadFolder("/usr/share/PolicyDefinitions/", "ru-ru");
-
     d->proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
-    d->proxyModel->setSourceModel(d->model.get());
+
+    d->policyBundleLoad();
 
     QObject::connect(d->proxyModel.get(), &AdministrativeTemplatesProxyModel::savePolicyChanges, [&]() {
         d->onDataSave();
@@ -266,6 +280,7 @@ void AdministrativeTemplatesSnapIn::onInitialize()
     setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
 
     // TODO: Register action to load model from path.
+    // TODO: Load application settings.
 
     std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
 }
@@ -337,9 +352,8 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
         it.next();
     }
 
-    auto bundle = std::make_unique<model::bundle::PolicyBundle>();
-    d->model    = bundle->loadFolder("/usr/share/PolicyDefinitions/", locale);
-    d->proxyModel->setSourceModel(d->model.get());
+    d->localeName = locale;
+    d->policyBundleLoad();
     setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
 }
 

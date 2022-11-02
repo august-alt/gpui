@@ -93,8 +93,8 @@ add_definitions(
 )
 
 set(TS_FILES
-    ui/i18n/common_translation_en.ts
-    ui/i18n/common_translation_ru.ts
+    ui/i18n/administrative_templates_common_translation_en.ts
+    ui/i18n/administrative_templates_common_translation_ru.ts
 )
 
 set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRENT_SOURCE_DIR})

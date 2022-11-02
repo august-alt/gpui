@@ -427,11 +427,6 @@ void MainWindow::onLanguageChanged(QAction *action)
 
     QString language = action->data().toString();
 
-    for (auto &snapIn : d->manager->getSnapIns())
-    {
-        snapIn->onRetranslateUI(language.toStdString());
-    }
-
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
     bool loadResult                           = qtTranslator->load("gui_" + language + ".qm", ":/");
     QCoreApplication::installTranslator(qtTranslator.get());
@@ -442,8 +437,16 @@ void MainWindow::onLanguageChanged(QAction *action)
 
     d->localeName = locale.name().replace("_", "-");
 
+    for (auto &snapIn : d->manager->getSnapIns())
+    {
+        snapIn->onRetranslateUI(d->localeName.toStdString());
+        qWarning() << d->localeName;
+    }
+
     d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
+
+    loadPolicyModel(d->manager);
 
     ui->treeView->selectionModel()->clearSelection();
 

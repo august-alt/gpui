@@ -313,7 +313,7 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
     }
     d->translators.clear();
 
-    auto language = QString::fromStdString(locale);
+    QString language = QString::fromStdString(locale).split("-")[0];
 
     QDirIterator it(":/", QDirIterator::Subdirectories);
     while (it.hasNext())
@@ -336,6 +336,11 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 
         it.next();
     }
+
+    auto bundle = std::make_unique<model::bundle::PolicyBundle>();
+    d->model    = bundle->loadFolder("/usr/share/PolicyDefinitions/", locale);
+    d->proxyModel->setSourceModel(d->model.get());
+    setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
 }
 
 } // namespace gpui

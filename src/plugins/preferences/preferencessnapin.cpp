@@ -121,6 +121,10 @@ void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
 
         it.next();
     }
+
+    d->model     = std::make_unique<PreferencesTreeModel>();
+    d->viewModel = std::make_unique<ModelView::TopItemsViewModel>(d->model.get());
+    d->proxyViewModel->setSourceModel(d->viewModel.get());
 }
 
 } // namespace gpui

@@ -257,8 +257,8 @@ context (user policy option).</source>
     </message>
     <message>
         <location filename="../preferencestreemodel.cpp" line="151"/>
-        <location filename="../preferencestreemodel.cpp" line="250"/>
-        <location filename="../preferencestreemodel.cpp" line="345"/>
+        <location filename="../preferencestreemodel.cpp" line="243"/>
+        <location filename="../preferencestreemodel.cpp" line="339"/>
         <source>Folder Options</source>
         <translation>Настройки папок</translation>
     </message>
@@ -274,241 +274,243 @@ context (user policy option).</source>
     </message>
     <message>
         <location filename="../preferencestreemodel.cpp" line="160"/>
+        <source>Group policiy</source>
+        <translation>Групповая политика</translation>
+    </message>
+    <message>
+        <location filename="../preferencestreemodel.cpp" line="163"/>
         <source>Machine</source>
         <translation>Компьютер</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="163"/>
+        <location filename="../preferencestreemodel.cpp" line="167"/>
         <source>Machine level policies</source>
         <translation>Политики настройки компьютера</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="166"/>
         <source>Administrative Templates</source>
-        <translation>Административные шаблоны</translation>
+        <translation type="vanished">Административные шаблоны</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="171"/>
         <source>Administrative Templates.</source>
-        <translation>Административные шаблоны.</translation>
+        <translation type="vanished">Административные шаблоны.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="174"/>
-        <location filename="../preferencestreemodel.cpp" line="177"/>
-        <location filename="../preferencestreemodel.cpp" line="285"/>
+        <location filename="../preferencestreemodel.cpp" line="170"/>
+        <location filename="../preferencestreemodel.cpp" line="279"/>
         <source>Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="181"/>
-        <location filename="../preferencestreemodel.cpp" line="287"/>
+        <location filename="../preferencestreemodel.cpp" line="174"/>
+        <location filename="../preferencestreemodel.cpp" line="281"/>
         <source>Preferences policies.</source>
         <translation>Политики настроек.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="184"/>
-        <location filename="../preferencestreemodel.cpp" line="290"/>
+        <location filename="../preferencestreemodel.cpp" line="177"/>
+        <location filename="../preferencestreemodel.cpp" line="284"/>
         <source>System Settings</source>
         <translation>Настройки Системы</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="189"/>
-        <location filename="../preferencestreemodel.cpp" line="292"/>
+        <location filename="../preferencestreemodel.cpp" line="182"/>
+        <location filename="../preferencestreemodel.cpp" line="286"/>
         <source>Policies that set system settings.</source>
         <translation>Политики устанваливающие настройки системы.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="192"/>
-        <location filename="../preferencestreemodel.cpp" line="300"/>
+        <location filename="../preferencestreemodel.cpp" line="185"/>
+        <location filename="../preferencestreemodel.cpp" line="294"/>
         <source>Environment</source>
         <translation>Окружение</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="196"/>
-        <location filename="../preferencestreemodel.cpp" line="302"/>
+        <location filename="../preferencestreemodel.cpp" line="189"/>
+        <location filename="../preferencestreemodel.cpp" line="296"/>
         <source>Environment variable settings.</source>
         <translation>Настройки переменныз окружения.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="199"/>
-        <location filename="../preferencestreemodel.cpp" line="305"/>
+        <location filename="../preferencestreemodel.cpp" line="192"/>
+        <location filename="../preferencestreemodel.cpp" line="299"/>
         <source>Files</source>
         <translation>Файлы</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="202"/>
-        <location filename="../preferencestreemodel.cpp" line="307"/>
+        <location filename="../preferencestreemodel.cpp" line="195"/>
+        <location filename="../preferencestreemodel.cpp" line="301"/>
         <source>File policy settings.</source>
         <translation>Политика настройки файлов.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="205"/>
-        <location filename="../preferencestreemodel.cpp" line="310"/>
+        <location filename="../preferencestreemodel.cpp" line="198"/>
+        <location filename="../preferencestreemodel.cpp" line="304"/>
         <source>Folders</source>
         <translation>Папки</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="208"/>
+        <location filename="../preferencestreemodel.cpp" line="201"/>
         <source>Folder policy settings.</source>
         <translation>Политики настройки папок.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="211"/>
-        <location filename="../preferencestreemodel.cpp" line="315"/>
+        <location filename="../preferencestreemodel.cpp" line="204"/>
+        <location filename="../preferencestreemodel.cpp" line="309"/>
         <source>Ini Files</source>
         <translation>Ini файлы</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="214"/>
-        <location filename="../preferencestreemodel.cpp" line="317"/>
+        <location filename="../preferencestreemodel.cpp" line="207"/>
+        <location filename="../preferencestreemodel.cpp" line="311"/>
         <source>Ini policy settings.</source>
         <translation>Политики насройки Ini файлов.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="217"/>
-        <location filename="../preferencestreemodel.cpp" line="320"/>
+        <location filename="../preferencestreemodel.cpp" line="210"/>
+        <location filename="../preferencestreemodel.cpp" line="314"/>
         <source>Registry</source>
         <translation>Реестр</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="220"/>
-        <location filename="../preferencestreemodel.cpp" line="322"/>
+        <location filename="../preferencestreemodel.cpp" line="213"/>
+        <location filename="../preferencestreemodel.cpp" line="316"/>
         <source>Registry policy settings.</source>
         <translation>Настройки политик реестра.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="223"/>
+        <location filename="../preferencestreemodel.cpp" line="216"/>
         <source>Network Shares</source>
         <translation>Сетевые папки</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="226"/>
+        <location filename="../preferencestreemodel.cpp" line="219"/>
         <source>Network shares settings.</source>
         <translation>Настройки сетевых папок.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="229"/>
-        <location filename="../preferencestreemodel.cpp" line="325"/>
+        <location filename="../preferencestreemodel.cpp" line="222"/>
+        <location filename="../preferencestreemodel.cpp" line="319"/>
         <source>Shortcuts</source>
         <translation>Значки</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="232"/>
-        <location filename="../preferencestreemodel.cpp" line="327"/>
+        <location filename="../preferencestreemodel.cpp" line="225"/>
+        <location filename="../preferencestreemodel.cpp" line="321"/>
         <source>Shortcuts settings.</source>
         <translation>Настройки значков.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="235"/>
-        <location filename="../preferencestreemodel.cpp" line="330"/>
+        <location filename="../preferencestreemodel.cpp" line="228"/>
+        <location filename="../preferencestreemodel.cpp" line="324"/>
         <source>Control Panel Settings</source>
         <translation>Настройки Панели управления</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="237"/>
-        <location filename="../preferencestreemodel.cpp" line="332"/>
+        <location filename="../preferencestreemodel.cpp" line="230"/>
+        <location filename="../preferencestreemodel.cpp" line="326"/>
         <source>Control Panel Settings.</source>
         <translation>Настройки Панели управления.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="240"/>
-        <location filename="../preferencestreemodel.cpp" line="335"/>
+        <location filename="../preferencestreemodel.cpp" line="233"/>
+        <location filename="../preferencestreemodel.cpp" line="329"/>
         <source>Data Sources</source>
         <translation>Источники данных</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="242"/>
-        <location filename="../preferencestreemodel.cpp" line="337"/>
+        <location filename="../preferencestreemodel.cpp" line="235"/>
+        <location filename="../preferencestreemodel.cpp" line="331"/>
         <source>Data Source settings.</source>
         <translation>Настройки источников данных.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="245"/>
-        <location filename="../preferencestreemodel.cpp" line="340"/>
+        <location filename="../preferencestreemodel.cpp" line="238"/>
+        <location filename="../preferencestreemodel.cpp" line="334"/>
         <source>Devices</source>
         <translation>Устройства</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="247"/>
-        <location filename="../preferencestreemodel.cpp" line="342"/>
+        <location filename="../preferencestreemodel.cpp" line="240"/>
+        <location filename="../preferencestreemodel.cpp" line="336"/>
         <source>Devices settings.</source>
         <translation>Настройки устройств.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="252"/>
-        <location filename="../preferencestreemodel.cpp" line="348"/>
+        <location filename="../preferencestreemodel.cpp" line="245"/>
+        <location filename="../preferencestreemodel.cpp" line="342"/>
         <source>Folders settings.</source>
         <translation>Настройки папок.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="259"/>
-        <location filename="../preferencestreemodel.cpp" line="355"/>
+        <location filename="../preferencestreemodel.cpp" line="252"/>
+        <location filename="../preferencestreemodel.cpp" line="349"/>
         <source>Local Users And Groups settings.</source>
         <translation>Настройки локальных пользователей и групп.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="262"/>
-        <location filename="../preferencestreemodel.cpp" line="358"/>
+        <location filename="../preferencestreemodel.cpp" line="255"/>
+        <location filename="../preferencestreemodel.cpp" line="352"/>
         <source>Network Options</source>
         <translation>Опции Сети</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="264"/>
-        <location filename="../preferencestreemodel.cpp" line="360"/>
+        <location filename="../preferencestreemodel.cpp" line="257"/>
+        <location filename="../preferencestreemodel.cpp" line="354"/>
         <source>Network Options settings.</source>
         <translation>Сетевые настройки.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="267"/>
-        <location filename="../preferencestreemodel.cpp" line="363"/>
+        <location filename="../preferencestreemodel.cpp" line="260"/>
+        <location filename="../preferencestreemodel.cpp" line="357"/>
         <source>Power Options</source>
         <translation>Управление питанием</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="269"/>
-        <location filename="../preferencestreemodel.cpp" line="365"/>
+        <location filename="../preferencestreemodel.cpp" line="262"/>
+        <location filename="../preferencestreemodel.cpp" line="359"/>
         <source>Power settings.</source>
         <translation>Настройки питания.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="272"/>
-        <location filename="../preferencestreemodel.cpp" line="368"/>
+        <location filename="../preferencestreemodel.cpp" line="265"/>
+        <location filename="../preferencestreemodel.cpp" line="362"/>
         <source>Printers</source>
         <translation>Принтеры</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="274"/>
-        <location filename="../preferencestreemodel.cpp" line="370"/>
+        <location filename="../preferencestreemodel.cpp" line="267"/>
+        <location filename="../preferencestreemodel.cpp" line="364"/>
         <source>Printers settings.</source>
         <translation>Настройки принтеров.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="279"/>
+        <location filename="../preferencestreemodel.cpp" line="272"/>
         <source>User</source>
         <translation>Пользователь</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="282"/>
+        <location filename="../preferencestreemodel.cpp" line="276"/>
         <source>User level policies.</source>
         <translation>Пользовательские политики.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="295"/>
+        <location filename="../preferencestreemodel.cpp" line="289"/>
         <source>Drive Maps</source>
         <translation>Сетевые диски</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="297"/>
+        <location filename="../preferencestreemodel.cpp" line="291"/>
         <source>Drive Maps Settings.</source>
         <translation>Настройки сетевых дисков.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="312"/>
+        <location filename="../preferencestreemodel.cpp" line="306"/>
         <source>Folders policy settings.</source>
         <translation>Политики настройки папок.</translation>
     </message>
     <message>
-        <location filename="../preferencestreemodel.cpp" line="351"/>
+        <location filename="../preferencestreemodel.cpp" line="345"/>
         <source>Local Users And Groups</source>
         <translation>Локальные пользователи и группы</translation>
     </message>

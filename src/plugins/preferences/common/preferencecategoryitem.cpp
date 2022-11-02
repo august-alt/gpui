@@ -33,6 +33,7 @@ PreferenceCategoryItem::PreferenceCategoryItem()
     addProperty(NODE_ID, QUuid::createUuid());
     addProperty(PARENT_ID, QUuid::createUuid());
     addProperty(HELP_MSG, "");
+    addProperty(MODEL_TYPE, false);
 }
 
 PreferenceCategoryItem::PreferenceCategoryItem(const PreferenceCategoryItem &other)
@@ -44,6 +45,7 @@ PreferenceCategoryItem::PreferenceCategoryItem(const PreferenceCategoryItem &oth
     setProperty(NODE_ID, other.property<QUuid>(NODE_ID));
     setProperty(PARENT_ID, other.property<QUuid>(PARENT_ID));
     setProperty(HELP_MSG, other.property<std::string>(HELP_MSG));
+    setProperty(MODEL_TYPE, other.property<std::string>(MODEL_TYPE));
 }
 
 } // namespace preferences

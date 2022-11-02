@@ -30,10 +30,11 @@ namespace preferences
 class PreferenceCategoryItem : public ModelView::CompoundItem
 {
 public:
-    static inline const std::string TYPE      = "type";
-    static inline const std::string NODE_ID   = "NODE_ID";
-    static inline const std::string PARENT_ID = "PARENT_ID";
-    static inline const std::string HELP_MSG  = "HELP_MSG";
+    static inline const std::string TYPE       = "type";
+    static inline const std::string NODE_ID    = "NODE_ID";
+    static inline const std::string PARENT_ID  = "PARENT_ID";
+    static inline const std::string HELP_MSG   = "HELP_MSG";
+    static inline const std::string MODEL_TYPE = "MODEL_TYPE";
 
     explicit PreferenceCategoryItem();
     PreferenceCategoryItem(const PreferenceCategoryItem &other);

@@ -103,19 +103,23 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
 
     if (role == model::bundle::POLICY_WIDGET)
     {
+        auto viewModel      = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
+        auto isMachineModel = viewModel->sessionItemFromIndex(proxyIndex)->property<bool>("MODEL_TYPE");
+
         std::function<QWidget *()> widgetCreator = [=]() {
             auto contentWidget = new TableDetailsWidget();
 
-            auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
-            auto item      = viewModel->sessionItemFromIndex(proxyIndex);
+            auto item = viewModel->sessionItemFromIndex(proxyIndex);
 
             if (item->modelType().compare("PreferenceCategoryItem") == 0)
             {
                 auto types = item->property<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE);
                 if (types.size() > 0)
                 {
-                    auto modelType = d->machineModels->find(types.begin()->first);
-                    if (modelType != d->machineModels->end())
+                    auto &models = isMachineModel ? d->machineModels : d->userModels;
+
+                    auto modelType = models->find(types.begin()->first);
+                    if (modelType != models->end())
                     {
                         contentWidget->onItemTypeChange(types);
                         contentWidget->setModel(modelType->second.get());

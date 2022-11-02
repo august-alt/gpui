@@ -72,24 +72,40 @@
         <translation>Local group policies</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="98"/>
+        <location filename="../../bundle/policybundle.cpp" line="99"/>
         <source>Machine</source>
         <translation>Machine</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="100"/>
+        <location filename="../../bundle/policybundle.cpp" line="101"/>
         <source>Machine level policies</source>
         <translation>Machine level policies</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="103"/>
+        <location filename="../../bundle/policybundle.cpp" line="106"/>
+        <location filename="../../bundle/policybundle.cpp" line="119"/>
+        <source>Administrative Templates</source>
+        <translation>Administrative Templates</translation>
+    </message>
+    <message>
+        <location filename="../../bundle/policybundle.cpp" line="108"/>
+        <source>Machine administrative templates</source>
+        <translation>Machine administrative templates</translation>
+    </message>
+    <message>
+        <location filename="../../bundle/policybundle.cpp" line="112"/>
         <source>User</source>
         <translation>User</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="105"/>
+        <location filename="../../bundle/policybundle.cpp" line="114"/>
         <source>User level policies</source>
         <translation>User level policies</translation>
+    </message>
+    <message>
+        <location filename="../../bundle/policybundle.cpp" line="121"/>
+        <source>User administrative templates</source>
+        <translation>User administrative templates</translation>
     </message>
     <message>
         <location filename="../administrativetemplateswidget.cpp" line="247"/>

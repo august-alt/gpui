@@ -72,24 +72,40 @@
         <translation>Локальные групповые политики</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="98"/>
+        <location filename="../../bundle/policybundle.cpp" line="99"/>
         <source>Machine</source>
         <translation>Компьютер</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="100"/>
+        <location filename="../../bundle/policybundle.cpp" line="101"/>
         <source>Machine level policies</source>
         <translation>Политики настройки компьютера</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="103"/>
+        <location filename="../../bundle/policybundle.cpp" line="106"/>
+        <location filename="../../bundle/policybundle.cpp" line="119"/>
+        <source>Administrative Templates</source>
+        <translation>Административные шаблоны</translation>
+    </message>
+    <message>
+        <location filename="../../bundle/policybundle.cpp" line="108"/>
+        <source>Machine administrative templates</source>
+        <translation>Административные шаблоны компьютера</translation>
+    </message>
+    <message>
+        <location filename="../../bundle/policybundle.cpp" line="112"/>
         <source>User</source>
         <translation>Пользователь</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="105"/>
+        <location filename="../../bundle/policybundle.cpp" line="114"/>
         <source>User level policies</source>
         <translation>Политики настройки пользователя</translation>
+    </message>
+    <message>
+        <location filename="../../bundle/policybundle.cpp" line="121"/>
+        <source>User administrative templates</source>
+        <translation>Пользовательские административные шаблоны</translation>
     </message>
     <message>
         <location filename="../administrativetemplateswidget.cpp" line="247"/>

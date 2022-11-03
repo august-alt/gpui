@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.15
+Version: 0.2.17
 Release: alt1
 
 Summary: Group policy editor

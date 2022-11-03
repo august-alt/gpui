@@ -233,48 +233,6 @@ void PreferencesTreeModel::populateModel()
     machineShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
     machineShortcutsItems->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
 
-    auto machineControlPanelSettingsItem = insertItem<FolderItem>(machinePreferencesItem);
-    machineControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
-    machineControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG,
-                                                 QObject::tr("Control Panel Settings.").toStdString());
-
-    auto machineDataSourceItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineDataSourceItem->setDisplayName(QObject::tr("Data Sources").toStdString());
-    machineDataSourceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, dataSourceTypeIds);
-    machineDataSourceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Data Source settings.").toStdString());
-
-    auto machineDeviceItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineDeviceItem->setDisplayName(QObject::tr("Devices").toStdString());
-    machineDeviceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, deviceTypeIds);
-    machineDeviceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Devices settings.").toStdString());
-
-    auto machineFolderOptionsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineFolderOptionsItem->setDisplayName(QObject::tr("Folder Options").toStdString());
-    machineFolderOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, {});
-    machineFolderOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Folders settings.").toStdString());
-
-    auto machineLocalUsersAndGroupsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineLocalUsersAndGroupsItem->setDisplayName("Local Users And Groups");
-    machineLocalUsersAndGroupsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE,
-                                                                                localGroupTypeIds);
-    machineLocalUsersAndGroupsItem->setProperty(FolderItem::HELP_MSG,
-                                                QObject::tr("Local Users And Groups settings.").toStdString());
-
-    auto machineNetworkOptionsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machineNetworkOptionsItem->setDisplayName(QObject::tr("Network Options").toStdString());
-    machineNetworkOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, networkTypeIds);
-    machineNetworkOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network Options settings.").toStdString());
-
-    auto machinePowerOptionsItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machinePowerOptionsItem->setDisplayName(QObject::tr("Power Options").toStdString());
-    machinePowerOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, powerTypeIds);
-    machinePowerOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Power settings.").toStdString());
-
-    auto machinePrintersItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
-    machinePrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
-    machinePrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
-    machinePrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
-
     //======================================================================================================================
 
     auto userNamespace = insertItem<FolderItem>(topItem);
@@ -328,49 +286,6 @@ void PreferencesTreeModel::populateModel()
     userShortcutsItems->setDisplayName(QObject::tr("Shortcuts").toStdString());
     userShortcutsItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, shortcutsTypeIds);
     userShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
-
-    auto userControlPanelSettingsItem = insertItem<FolderItem>(userPreferencesItem);
-    userControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
-    userControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG,
-                                              QObject::tr("Control Panel Settings.").toStdString());
-
-    auto userDataSourceItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userDataSourceItem->setDisplayName(QObject::tr("Data Sources").toStdString());
-    userDataSourceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, dataSourceTypeIds);
-    userDataSourceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Data Source settings.").toStdString());
-
-    auto userDeviceItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userDeviceItem->setDisplayName(QObject::tr("Devices").toStdString());
-    userDeviceItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, deviceTypeIds);
-    userDeviceItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Devices settings.").toStdString());
-
-    auto userFolderOptionsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userFolderOptionsItem->setDisplayName(QObject::tr("Folder Options").toStdString());
-    userFolderOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE,
-                                                                       userFolderOptionsTypeIds);
-    userFolderOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Folders settings.").toStdString());
-
-    auto userLocalUsersAndGroupsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userLocalUsersAndGroupsItem->setDisplayName(QObject::tr("Local Users And Groups").toStdString());
-    userLocalUsersAndGroupsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE,
-                                                                             localGroupTypeIds);
-    userLocalUsersAndGroupsItem->setProperty(FolderItem::HELP_MSG,
-                                             QObject::tr("Local Users And Groups settings.").toStdString());
-
-    auto userNetworkOptionsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userNetworkOptionsItem->setDisplayName(QObject::tr("Network Options").toStdString());
-    userNetworkOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, networkTypeIds);
-    userNetworkOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network Options settings.").toStdString());
-
-    auto userPowerOptionsItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userPowerOptionsItem->setDisplayName(QObject::tr("Power Options").toStdString());
-    userPowerOptionsItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, powerTypeIds);
-    userPowerOptionsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Power settings.").toStdString());
-
-    auto userPrintersItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
-    userPrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
-    userPrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
-    userPrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
 }
 
 } // namespace preferences

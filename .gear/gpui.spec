@@ -103,6 +103,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 * Thu Aug 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt1
 - 0.2.17
 
+* Thu Sep 29 2022 Vladimir Rubanov <august@altlinux.org> 0.2.16-alt1
+- Fixes:
+  + #84127 Fix invalid types for list enums.
+  + #76835 Fix message on policy state change.
+
 * Thu Aug 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.15-alt1
 - Fixes:
   + #81760 Fix disabled and enabled list in policies.

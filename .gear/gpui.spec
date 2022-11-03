@@ -100,6 +100,9 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Aug 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt1
+- 0.2.17
+
 * Thu Aug 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.15-alt1
 - Fixes:
   + #81760 Fix disabled and enabled list in policies.

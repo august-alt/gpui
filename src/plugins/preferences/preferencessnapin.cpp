@@ -51,7 +51,7 @@ PreferencesSnapIn::PreferencesSnapIn()
     , d(new PreferencesSnapInPrivate())
 {}
 
-void PreferencesSnapIn::onInitialize()
+void PreferencesSnapIn::onInitialize(QMainWindow *mainWindow)
 {
     d->model = std::make_unique<PreferencesTreeModel>();
 

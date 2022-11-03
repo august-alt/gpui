@@ -31,7 +31,7 @@ class PreferencesSnapIn final : public AbstractSnapIn
 public:
     PreferencesSnapIn();
 
-    void onInitialize() override;
+    void onInitialize(QMainWindow *mainWindow) override;
 
     void onShutdown() override;
 

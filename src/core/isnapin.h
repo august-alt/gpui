@@ -24,6 +24,7 @@
 #include "core.h"
 
 #include <QAbstractItemModel>
+#include <QMainWindow>
 #include <QUuid>
 #include <QVersionNumber>
 
@@ -41,7 +42,7 @@ public:
      * @brief Called when a snap-in is initialized.
      * It allows derived classes to provide additional initialization.
      */
-    virtual void onInitialize() = 0;
+    virtual void onInitialize(QMainWindow *mainWindow) = 0;
 
     /**
      * @brief onShutdown Called when the snap-in is shutting down.

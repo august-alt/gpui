@@ -24,6 +24,8 @@
 
 #include <iostream>
 
+#include "../../gui/mainwindow.h"
+
 #include "common/preferencesmodel.h"
 #include "common/preferencestreemodel.h"
 #include "common/preferencestreeproxymodel.h"
@@ -51,14 +53,18 @@ PreferencesSnapIn::PreferencesSnapIn()
     , d(new PreferencesSnapInPrivate())
 {}
 
-void PreferencesSnapIn::onInitialize(QMainWindow *mainWindow)
+void PreferencesSnapIn::onInitialize(QMainWindow *window)
 {
-    d->model = std::make_unique<PreferencesTreeModel>();
+    auto mainWindow = dynamic_cast<MainWindow *>(window);
+
+    if (mainWindow)
+    {
+        d->localeName = mainWindow->getLanguage().toStdString();
+    }
 
     d->proxyViewModel = std::make_unique<PreferencesTreeProxyModel>();
 
-    d->viewModel = std::make_unique<ModelView::TopItemsViewModel>(d->model.get());
-    d->proxyViewModel->setSourceModel(d->viewModel.get());
+    onRetranslateUI(d->localeName);
 
     setRootNode(d->proxyViewModel.get());
 
@@ -108,7 +114,7 @@ void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
             it.hasNext();
         }
 
-        if (it.fileName().contains(language) && it.fileName().endsWith(".qm"))
+        if (it.fileName().endsWith(language + ".qm"))
         {
             std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
             bool loadResult                           = qtTranslator->load(it.fileName(), ":/");

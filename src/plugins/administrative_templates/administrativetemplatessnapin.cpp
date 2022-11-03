@@ -360,7 +360,7 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
             it.hasNext();
         }
 
-        if (it.fileName().contains(language) && it.fileName().endsWith(".qm"))
+        if (it.fileName().endsWith(language + ".qm"))
         {
             std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
             bool loadResult                           = qtTranslator->load(it.fileName(), ":/");

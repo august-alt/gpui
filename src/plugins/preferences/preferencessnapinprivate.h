@@ -59,6 +59,8 @@ public:
 
     std::vector<std::unique_ptr<QTranslator>> translators{};
 
+    std::string localeName = "en-US";
+
 public:
     PreferencesSnapInPrivate();
 

@@ -226,7 +226,7 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     });
 
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
-    connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
+    connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::updateStatusBar);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
     connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex &index) { d->itemName = index.data().toString(); });
 
@@ -252,7 +252,7 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     for (auto &snapIn : manager->getSnapIns())
     {
         qWarning() << "Loading model from: " << snapIn->getDisplayName();
-        snapIn->onInitialize();
+        snapIn->onInitialize(this);
     }
 
     if (!d->options.path.isEmpty())
@@ -294,9 +294,10 @@ QString MainWindow::getLanguage() const
 
 void MainWindow::setAdmxPath(const QString &admxPath)
 {
-    if (d->options.policyBundle.trimmed().isEmpty())
+    if (!d->options.policyBundle.trimmed().isEmpty())
     {
         d->options.policyBundle = admxPath;
+        admxPathChanged(admxPath);
     }
 }
 
@@ -384,17 +385,13 @@ void MainWindow::onDirectoryOpen()
 
     if (fileDialog->exec() == QDialog::Accepted)
     {
-        d->options.policyBundle = fileDialog->selectedUrls().value(0).toLocalFile();
+        setAdmxPath(fileDialog->selectedUrls().value(0).toLocalFile());
+        loadPolicyModel(d->manager);
     }
 }
 
-void MainWindow::onRegistrySourceSave()
+void MainWindow::updateStatusBar()
 {
-    for (auto snapIn : d->manager->getSnapIns())
-    {
-        snapIn->onDataSave();
-    }
-
     ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);
 }
 
@@ -451,64 +448,6 @@ void MainWindow::onLanguageChanged(QAction *action)
     ui->treeView->selectionModel()->clearSelection();
 
     ui->searchLineEdit->clear();
-}
-
-void MainWindow::onIniFileOpen(const QString &path)
-{
-    qWarning() << "Path recieved: " << path;
-
-    auto stringvalues = std::make_unique<std::string>();
-
-    try
-    {
-        if (path.startsWith("smb://"))
-        {
-            gpui::smb::SmbFile smbLocationItemFile(path);
-            smbLocationItemFile.open(QFile::ReadOnly);
-            stringvalues->resize(smbLocationItemFile.size(), 0);
-            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
-            smbLocationItemFile.close();
-        }
-        else
-        {
-            QFile registryFile(path);
-            registryFile.open(QFile::ReadWrite);
-            stringvalues->resize(registryFile.size(), 0);
-            registryFile.read(&stringvalues->at(0), registryFile.size());
-            registryFile.close();
-        }
-
-        auto iss = std::make_unique<std::istringstream>(*stringvalues);
-        std::string pluginName("ini");
-
-        auto reader  = std::make_unique<io::GenericReader>();
-        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile>>(*iss, pluginName);
-        if (!iniFile)
-        {
-            qWarning() << "Unable to load registry file contents.";
-            return;
-        }
-
-        auto sections = iniFile->getAllSections();
-
-        if (d->options.policyName.isEmpty() && sections->find("General") != sections->end())
-        {
-            auto &generalValues = (*sections)["General"];
-
-            auto displayName = generalValues.find("displayName");
-
-            if (displayName != generalValues.end())
-            {
-                qWarning() << "display name " << displayName.value().c_str();
-
-                setWindowTitle(QString::fromStdString("GPUI - " + displayName.value()));
-            }
-        }
-    }
-    catch (std::exception &e)
-    {
-        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
-    }
 }
 
 void MainWindow::createLanguageMenu()

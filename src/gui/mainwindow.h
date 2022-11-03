@@ -51,7 +51,6 @@ class ISnapIn;
 class GPUI_GUI_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     // construction and destruction
     MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent = 0);
@@ -62,6 +61,12 @@ public:
 
     void setAdmxPath(const QString &admxPath);
     QString getAdmxPath() const;
+
+signals:
+    void admxPathChanged(const QString &admxPath);
+
+public slots:
+    void updateStatusBar();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -76,7 +81,6 @@ private:
 
 private slots:
     void onDirectoryOpen();
-    void onRegistrySourceSave();
 
     void on_actionExit_triggered();
     void on_actionAbout_triggered();

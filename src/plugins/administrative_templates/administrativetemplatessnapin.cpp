@@ -33,6 +33,8 @@
 
 #include "../plugins/storage/smb/smbfile.h"
 
+#include "../gui/mainwindow.h"
+
 #include "../io/registryfileformat.h"
 
 #include "../io/genericreader.h"
@@ -267,8 +269,18 @@ AdministrativeTemplatesSnapIn::AdministrativeTemplatesSnapIn()
     , d(new AdministrativeTemplatesSnapInPrivate())
 {}
 
-void AdministrativeTemplatesSnapIn::onInitialize()
+void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
 {
+    auto mainWindow = dynamic_cast<::gpui::MainWindow *>(window);
+
+    if (mainWindow)
+    {
+        d->admxPath   = mainWindow->getAdmxPath().toStdString();
+        d->localeName = mainWindow->getLanguage().toStdString();
+        qWarning() << "Setting default settings for administrative templates snap-in: " << d->admxPath.c_str()
+                   << d->localeName.c_str();
+    }
+
     d->proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
 
     d->policyBundleLoad();
@@ -279,8 +291,18 @@ void AdministrativeTemplatesSnapIn::onInitialize()
 
     setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
 
-    // TODO: Register action to load model from path.
-    // TODO: Load application settings.
+    if (mainWindow)
+    {
+        QObject::connect(mainWindow, &MainWindow::admxPathChanged, [&](const QString &admxPath) {
+            d->admxPath = admxPath.toStdString();
+            d->policyBundleLoad();
+        });
+
+        QObject::connect(d->proxyModel.get(),
+                         &AdministrativeTemplatesProxyModel::savePolicyChanges,
+                         mainWindow,
+                         &MainWindow::updateStatusBar);
+    }
 
     std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
 }

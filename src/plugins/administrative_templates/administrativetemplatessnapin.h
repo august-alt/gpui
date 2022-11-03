@@ -31,7 +31,7 @@ class AdministrativeTemplatesSnapIn final : public AbstractSnapIn
 public:
     AdministrativeTemplatesSnapIn();
 
-    void onInitialize() override;
+    void onInitialize(QMainWindow *mainWindow) override;
 
     void onShutdown() override;
 

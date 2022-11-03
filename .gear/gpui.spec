@@ -100,7 +100,7 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
-* Thu Aug 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt1
+* Thu Nov 03 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt1
 - 0.2.17
 
 * Thu Sep 29 2022 Vladimir Rubanov <august@altlinux.org> 0.2.16-alt1

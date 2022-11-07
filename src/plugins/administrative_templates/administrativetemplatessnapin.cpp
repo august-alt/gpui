@@ -46,6 +46,8 @@
 
 #include "../io/inifile.h"
 
+#include "../../src/plugins/storage/smb/smbdirectory.h"
+
 #include "ui/administrativetemplatesproxymodel.h"
 
 #include <QAction>
@@ -159,6 +161,7 @@ public:
 
     std::string admxPath   = "/usr/share/PolicyDefinitions/";
     std::string localeName = "en-US";
+    std::string policyPath = "";
 
     QAction *fileAction{};
 
@@ -172,6 +175,9 @@ public:
 public:
     void onDataSave()
     {
+        createDirectory(policyPath + "/User/");
+        createDirectory(policyPath + "/Machine/");
+
         if (!machineRegistryPath.isEmpty())
         {
             qWarning() << "Saving machine registry to: " << machineRegistryPath;
@@ -190,6 +196,30 @@ public:
         else
         {
             qWarning() << "Unable to save user registry path is empty!";
+        }
+    }
+
+    void createDirectory(const std::string &directoryName)
+    {
+        const QString path = QString::fromStdString(directoryName);
+
+        if (path.startsWith("smb://"))
+        {
+            gpui::smb::SmbDirectory dir(path);
+
+            if (!dir.exists())
+            {
+                dir.mkdir(path);
+            }
+        }
+        else
+        {
+            QDir dir(path);
+
+            if (!dir.exists())
+            {
+                dir.mkdir(path);
+            }
         }
     }
 
@@ -318,6 +348,8 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
 
     if (!policyPath.empty())
     {
+        d->policyPath = policyPath;
+
         d->userRegistryPath    = QString::fromStdString(policyPath) + "/User/Registry.pol";
         d->machineRegistryPath = QString::fromStdString(policyPath) + "/Machine/Registry.pol";
 

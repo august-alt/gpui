@@ -20,6 +20,7 @@
 
 #include "modelwriter.h"
 
+#include "drives/drivespreferencewriter.h"
 #include "files/filespreferencewriter.h"
 #include "folders/folderpreferencewriter.h"
 #include "ini/inipreferencewriter.h"
@@ -43,6 +44,7 @@ void ModelWriter::saveModels(const std::string &policyPath,
                              std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
     std::map<std::string, std::unique_ptr<PreferenceWriterInterface>> writers;
+    writers["Preferences/Drives/"]               = std::make_unique<DrivesPreferenceWriter>();
     writers["Preferences/Files/"]                = std::make_unique<FilesPreferenceWriter>();
     writers["Preferences/Folders/"]              = std::make_unique<FolderPreferenceWriter>();
     writers["Preferences/IniFiles/"]             = std::make_unique<IniPreferenceWriter>();
@@ -52,6 +54,7 @@ void ModelWriter::saveModels(const std::string &policyPath,
     writers["Preferences/EnvironmentVariables/"] = std::make_unique<VariablesPreferenceWriter>();
 
     std::vector<std::string> fileNames = {
+        "Drives.xml",
         "EnvironmentVariables.xml",
         "Files.xml",
         "Folders.xml",

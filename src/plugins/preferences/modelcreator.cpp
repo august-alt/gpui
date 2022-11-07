@@ -24,6 +24,7 @@
 
 #include <fstream>
 
+#include "drives/drivespreferencereader.h"
 #include "files/filespreferencereader.h"
 #include "folders/folderpreferencereader.h"
 #include "ini/inipreferencereader.h"
@@ -42,6 +43,7 @@ void ModelCreator::populateModels(const std::string &policyPath,
                                   std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
     std::map<std::string, std::unique_ptr<PreferenceReaderInterface>> readers;
+    readers["Preferences/Drives/Drives.xml"]               = std::make_unique<DrivesPreferenceReader>();
     readers["Preferences/Files/Files.xml"]                 = std::make_unique<FilesPreferenceReader>();
     readers["Preferences/Folders/Folders.xml"]             = std::make_unique<FolderPreferenceReader>();
     readers["Preferences/IniFiles/IniFiles.xml"]           = std::make_unique<IniPreferenceReader>();
@@ -56,7 +58,7 @@ void ModelCreator::populateModels(const std::string &policyPath,
         try
         {
             auto model = reader->read(policyPath + "/" + policyType + "/" + readerPair.first);
-            if (model)
+            if (model.get())
             {
                 map->insert(
                     std::pair<std::string, std::unique_ptr<PreferencesModel>>(reader->getType(), std::move(model)));

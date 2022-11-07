@@ -41,6 +41,8 @@ set(HEADERS
     drives/drivesitem.h
     drives/drivescontaineritem.h
     drives/drivesmodelbuilder.h
+    drives/drivespreferencereader.h
+    drives/drivespreferencewriter.h
     drives/driveswidget.h
 
     folders/foldercontaineritem.h
@@ -219,6 +221,8 @@ set(SOURCES
     drives/drivesitem.cpp
     drives/drivescontaineritem.cpp
     drives/driveswidget.cpp
+    drives/drivespreferencereader.cpp
+    drives/drivespreferencewriter.cpp
     drives/driveswidgetslots.cpp
 
     folders/foldercontaineritem.cpp

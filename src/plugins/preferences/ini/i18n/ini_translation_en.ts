@@ -98,7 +98,7 @@
         <translation>Value</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="71"/>
+        <location filename="../iniwidgetslots.cpp" line="63"/>
         <source>Ini files (*.ini)</source>
         <translation>Ini files (*.ini)</translation>
     </message>
@@ -121,34 +121,33 @@
         <translation>Please input property value.</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="65"/>
+        <location filename="../iniwidget.cpp" line="98"/>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="66"/>
         <source>File name</source>
-        <translation>File name</translation>
+        <translation type="vanished">File name</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="67"/>
         <source>Look in</source>
-        <translation>Look in</translation>
+        <translation type="vanished">Look in</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="68"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="vanished">Cancel</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="69"/>
         <source>File type</source>
-        <translation>File type</translation>
+        <translation type="vanished">File type</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="74"/>
         <source>Open File</source>
-        <translation>Open File</translation>
+        <translation type="vanished">Open File</translation>
     </message>
 </context>
 </TS>

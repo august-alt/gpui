@@ -98,7 +98,7 @@
         <translation>Значение</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="71"/>
+        <location filename="../iniwidgetslots.cpp" line="63"/>
         <source>Ini files (*.ini)</source>
         <translation>Ini файлы (*.ini)</translation>
     </message>
@@ -121,34 +121,33 @@
         <translation>Введите занчение свойства.</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="65"/>
+        <location filename="../iniwidget.cpp" line="98"/>
+        <source>General</source>
+        <translation>Основные настройки</translation>
+    </message>
+    <message>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation type="vanished">Открыть</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="66"/>
         <source>File name</source>
-        <translation>Имя файла</translation>
+        <translation type="vanished">Имя файла</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="67"/>
         <source>Look in</source>
-        <translation>Искать в</translation>
+        <translation type="vanished">Искать в</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="68"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="69"/>
         <source>File type</source>
-        <translation>Тип файла</translation>
+        <translation type="vanished">Тип файла</translation>
     </message>
     <message>
-        <location filename="../iniwidgetslots.cpp" line="74"/>
         <source>Open File</source>
-        <translation>Открыть Файл</translation>
+        <translation type="vanished">Открыть Файл</translation>
     </message>
 </context>
 </TS>

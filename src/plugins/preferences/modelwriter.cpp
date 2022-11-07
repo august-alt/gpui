@@ -61,6 +61,10 @@ void ModelWriter::saveModels(const std::string &policyPath,
         "Shortcuts.xml",
     };
 
+    auto topDirectoryPath = policyPath + "/" + policyType + "/" + "Preferences";
+
+    createDirectory(topDirectoryPath);
+
     auto fileIt = fileNames.begin();
 
     for (const auto &writerPair : writers)

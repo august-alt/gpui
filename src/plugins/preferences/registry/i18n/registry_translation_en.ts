@@ -126,19 +126,24 @@
 <context>
     <name>preferences::RegistryWidget</name>
     <message>
-        <location filename="../registrywidget.cpp" line="84"/>
+        <location filename="../registrywidget.cpp" line="82"/>
         <source>Please input key path value.</source>
         <translation>Please input key path value.</translation>
     </message>
     <message>
-        <location filename="../registrywidget.cpp" line="89"/>
+        <location filename="../registrywidget.cpp" line="87"/>
         <source>Please input name value.</source>
         <translation>Please input name value.</translation>
     </message>
     <message>
-        <location filename="../registrywidget.cpp" line="94"/>
+        <location filename="../registrywidget.cpp" line="92"/>
         <source>Please input data value.</source>
         <translation>Please input data value.</translation>
+    </message>
+    <message>
+        <location filename="../registrywidget.cpp" line="102"/>
+        <source>General</source>
+        <translation>General</translation>
     </message>
 </context>
 </TS>

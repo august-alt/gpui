@@ -24,7 +24,7 @@
         <translation>Цель</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="102"/>
+        <location filename="../shortcutswidgetslots.cpp" line="92"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -239,47 +239,52 @@
 <context>
     <name>preferences::ShortcutsWidget</name>
     <message>
-        <location filename="../shortcutswidget.cpp" line="84"/>
+        <location filename="../shortcutswidget.cpp" line="82"/>
         <source>Please input name value.</source>
         <translation>Пожалуйста введите имя переменной.</translation>
     </message>
     <message>
-        <location filename="../shortcutswidget.cpp" line="89"/>
+        <location filename="../shortcutswidget.cpp" line="87"/>
         <source>Please input target path value.</source>
         <translation>Введите путь к цели.</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="93"/>
+        <location filename="../shortcutswidget.cpp" line="97"/>
+        <source>General</source>
+        <translation>Основные настройки</translation>
+    </message>
+    <message>
+        <location filename="../shortcutswidgetslots.cpp" line="83"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="94"/>
+        <location filename="../shortcutswidgetslots.cpp" line="84"/>
         <source>File name</source>
         <translation>Название файла</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="95"/>
+        <location filename="../shortcutswidgetslots.cpp" line="85"/>
         <source>Look in</source>
         <translation>Посмотреть в</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="96"/>
+        <location filename="../shortcutswidgetslots.cpp" line="86"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="97"/>
+        <location filename="../shortcutswidgetslots.cpp" line="87"/>
         <source>File type</source>
         <translation>Тип файла</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="106"/>
+        <location filename="../shortcutswidgetslots.cpp" line="96"/>
         <source>Open Directory</source>
         <translation>Открыть Директорию</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="114"/>
+        <location filename="../shortcutswidgetslots.cpp" line="104"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>

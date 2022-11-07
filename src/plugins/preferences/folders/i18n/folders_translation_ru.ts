@@ -122,7 +122,7 @@
         <translation>Путь</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="69"/>
+        <location filename="../folderviewslots.cpp" line="57"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -130,34 +130,33 @@
 <context>
     <name>preferences::FolderWidget</name>
     <message>
-        <location filename="../folderviewslots.cpp" line="63"/>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation type="vanished">Открыть</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="64"/>
         <source>File name</source>
-        <translation>Название файла</translation>
+        <translation type="vanished">Название файла</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="65"/>
         <source>Look in</source>
-        <translation>Посмотреть в</translation>
+        <translation type="vanished">Посмотреть в</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="66"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="67"/>
         <source>File type</source>
-        <translation>Тип файла</translation>
+        <translation type="vanished">Тип файла</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="74"/>
         <source>Open Directory</source>
-        <translation>Открыть Директорию</translation>
+        <translation type="vanished">Открыть Директорию</translation>
+    </message>
+    <message>
+        <location filename="../folderwidget.cpp" line="80"/>
+        <source>General</source>
+        <translation>Основные настройки</translation>
     </message>
 </context>
 </TS>

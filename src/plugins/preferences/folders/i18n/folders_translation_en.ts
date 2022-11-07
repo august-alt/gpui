@@ -122,7 +122,7 @@
         <translation>Path</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="69"/>
+        <location filename="../folderviewslots.cpp" line="57"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -130,34 +130,33 @@
 <context>
     <name>preferences::FolderWidget</name>
     <message>
-        <location filename="../folderviewslots.cpp" line="63"/>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="64"/>
         <source>File name</source>
-        <translation>File name</translation>
+        <translation type="vanished">File name</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="65"/>
         <source>Look in</source>
-        <translation>Look in</translation>
+        <translation type="vanished">Look in</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="66"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="vanished">Cancel</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="67"/>
         <source>File type</source>
-        <translation>File type</translation>
+        <translation type="vanished">File type</translation>
     </message>
     <message>
-        <location filename="../folderviewslots.cpp" line="74"/>
         <source>Open Directory</source>
-        <translation>Open Directory</translation>
+        <translation type="vanished">Open Directory</translation>
+    </message>
+    <message>
+        <location filename="../folderwidget.cpp" line="80"/>
+        <source>General</source>
+        <translation>General</translation>
     </message>
 </context>
 </TS>

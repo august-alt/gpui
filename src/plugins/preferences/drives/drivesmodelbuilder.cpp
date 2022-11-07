@@ -27,27 +27,27 @@
 
 namespace preferences
 {
-
 DrivesModelBuilder::DrivesModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
 std::unique_ptr<PreferencesModel> DrivesModelBuilder::schemaToModel(std::unique_ptr<Drives> &drivesSource)
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    for (const auto& drivesSchema : drivesSource->Drive())
+    for (const auto &drivesSchema : drivesSource->Drive())
     {
         auto properties = drivesSchema.Properties();
-        for (const auto& currentProperties : properties)
+        for (const auto &currentProperties : properties)
         {
             int thisDriveIndex = getDrivesCheckboxIndex(getOptionalPropertyData(currentProperties.thisDrive()).c_str());
             int allDrivesIndex = getDrivesCheckboxIndex(getOptionalPropertyData(currentProperties.allDrives()).c_str());
 
-            std::string actionState = getActionCheckboxState(getOptionalPropertyData(currentProperties.action()).c_str());
+            std::string actionState = getActionCheckboxState(
+                getOptionalPropertyData(currentProperties.action()).c_str());
 
             auto sessionItem = model->insertItem<DrivesContainerItem>(model->rootItem());
+            sessionItem->setupListeners();
 
             auto drives = sessionItem->getDrives();
             drives->setProperty(DrivesItem::ACTION, actionState);
@@ -74,11 +74,11 @@ std::unique_ptr<Drives> DrivesModelBuilder::modelToSchema(std::unique_ptr<Prefer
 {
     auto drives = std::make_unique<Drives>("{8FDDCC1A-0C3C-43cd-A6B4-71A6DF20DA8C}");
 
-    for (const auto& containerItem : model->topItems())
+    for (const auto &containerItem : model->topItems())
     {
-        if (auto drivesContainer = dynamic_cast<DrivesContainerItem*>(containerItem); drivesContainer)
+        if (auto drivesContainer = dynamic_cast<DrivesContainerItem *>(containerItem); drivesContainer)
         {
-            auto driveModel = drivesContainer->getDrives();
+            auto driveModel  = drivesContainer->getDrives();
             auto commonModel = drivesContainer->getCommon();
 
             auto drive = createRootElement<Drive_t>("{935D1B74-9CB8-4e3c-9914-7DD559B7A417}");
@@ -125,5 +125,4 @@ int DrivesModelBuilder::getDrivesCheckboxIndex(const std::string &data)
     return 0;
 }
 
-}
-
+} // namespace preferences

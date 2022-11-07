@@ -57,7 +57,7 @@
         <translation>Выключено</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="172"/>
+        <location filename="../shareswidgetslots.cpp" line="164"/>
         <source>All files (*.*)</source>
         <translation>Все файлы(*.*)</translation>
     </message>
@@ -195,34 +195,33 @@ Enumeration:</source>
         <translation>Введите путь к папке.</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="166"/>
+        <location filename="../shareswidget.cpp" line="106"/>
+        <source>General</source>
+        <translation>Основные настройки</translation>
+    </message>
+    <message>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation type="vanished">Открыть</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="167"/>
         <source>File name</source>
-        <translation>Имя файла</translation>
+        <translation type="vanished">Имя файла</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="168"/>
         <source>Look in</source>
-        <translation>Искать в</translation>
+        <translation type="vanished">Искать в</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="169"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="170"/>
         <source>File type</source>
-        <translation>Тип файла</translation>
+        <translation type="vanished">Тип файла</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="177"/>
         <source>Open Directory</source>
-        <translation>Открыть Каталог</translation>
+        <translation type="vanished">Открыть Каталог</translation>
     </message>
 </context>
 </TS>

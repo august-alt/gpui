@@ -57,7 +57,7 @@
         <translation>Disabled</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="172"/>
+        <location filename="../shareswidgetslots.cpp" line="164"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -194,34 +194,33 @@ Enumeration:</translation>
         <translation>Please input folder path value.</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="166"/>
+        <location filename="../shareswidget.cpp" line="106"/>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="167"/>
         <source>File name</source>
-        <translation>File name</translation>
+        <translation type="vanished">File name</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="168"/>
         <source>Look in</source>
-        <translation>Look in</translation>
+        <translation type="vanished">Look in</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="169"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="vanished">Cancel</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="170"/>
         <source>File type</source>
-        <translation>File type</translation>
+        <translation type="vanished">File type</translation>
     </message>
     <message>
-        <location filename="../shareswidgetslots.cpp" line="177"/>
         <source>Open Directory</source>
-        <translation>Open Directory</translation>
+        <translation type="vanished">Open Directory</translation>
     </message>
 </context>
 </TS>

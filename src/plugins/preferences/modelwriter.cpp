@@ -30,6 +30,9 @@
 #include "variables/variablespreferencewriter.h"
 
 #include <QDebug>
+#include <QDir>
+
+#include "../../../src/plugins/storage/smb/smbdirectory.h"
 
 namespace preferences
 {
@@ -40,20 +43,36 @@ void ModelWriter::saveModels(const std::string &policyPath,
                              std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
     std::map<std::string, std::unique_ptr<PreferenceWriterInterface>> writers;
-    writers["Preferences/Files/Files.xml"]                 = std::make_unique<FilesPreferenceWriter>();
-    writers["Preferences/Folders/Folders.xml"]             = std::make_unique<FolderPreferenceWriter>();
-    writers["Preferences/IniFiles/IniFiles.xml"]           = std::make_unique<IniPreferenceWriter>();
-    writers["Preferences/Registry/Registry.xml"]           = std::make_unique<RegistryPreferenceWriter>();
-    writers["Preferences/NetworkShares/NetworkShares.xml"] = std::make_unique<SharesPreferenceWriter>();
-    writers["Preferences/Shortcuts/Shortcuts.xml"]         = std::make_unique<ShortcutsPreferenceWriter>();
-    writers["Preferences/EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceWriter>();
+    writers["Preferences/Files/"]                = std::make_unique<FilesPreferenceWriter>();
+    writers["Preferences/Folders/"]              = std::make_unique<FolderPreferenceWriter>();
+    writers["Preferences/IniFiles/"]             = std::make_unique<IniPreferenceWriter>();
+    writers["Preferences/Registry/"]             = std::make_unique<RegistryPreferenceWriter>();
+    writers["Preferences/NetworkShares/"]        = std::make_unique<SharesPreferenceWriter>();
+    writers["Preferences/Shortcuts/"]            = std::make_unique<ShortcutsPreferenceWriter>();
+    writers["Preferences/EnvironmentVariables/"] = std::make_unique<VariablesPreferenceWriter>();
+
+    std::vector<std::string> fileNames = {
+        "EnvironmentVariables.xml",
+        "Files.xml",
+        "Folders.xml",
+        "IniFiles.xml",
+        "NetworkShares.xml",
+        "Registry.xml",
+        "Shortcuts.xml",
+    };
+
+    auto fileIt = fileNames.begin();
 
     for (const auto &writerPair : writers)
     {
         auto &writer = writerPair.second;
         try
         {
-            auto fullPath = policyPath + "/" + policyType + "/" + writerPair.first;
+            auto directoryPath = policyPath + "/" + policyType + "/" + writerPair.first;
+
+            createDirectory(directoryPath);
+
+            auto fullPath = directoryPath + (*fileIt);
 
             auto modelPair = map->find(writerPair.second->getType());
             if (modelPair != map->end())
@@ -66,6 +85,32 @@ void ModelWriter::saveModels(const std::string &policyPath,
         catch (std::exception &ex)
         {
             qWarning() << ex.what();
+        }
+
+        ++fileIt;
+    }
+}
+
+void ModelWriter::createDirectory(const std::string &directoryName)
+{
+    const QString path = QString::fromStdString(directoryName);
+
+    if (path.startsWith("smb://"))
+    {
+        gpui::smb::SmbDirectory dir(path);
+
+        if (!dir.exists())
+        {
+            dir.mkdir(path);
+        }
+    }
+    else
+    {
+        QDir dir(path);
+
+        if (!dir.exists())
+        {
+            dir.mkdir(path);
         }
     }
 }

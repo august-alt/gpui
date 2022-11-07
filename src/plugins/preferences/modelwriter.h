@@ -42,8 +42,11 @@ private:
     ModelWriter(ModelWriter &&)      = delete;            // move ctor
     ModelWriter &operator=(const ModelWriter &) = delete; // copy assignment
     ModelWriter &operator=(ModelWriter &&) = delete;      // move assignment
+
+private:
+    void createDirectory(const std::string &directoryName);
 };
 
 } // namespace preferences
 
-#endif//GPUI_PREFERENCES_SNAPIN_MODEL_WRITER_H
+#endif //GPUI_PREFERENCES_SNAPIN_MODEL_WRITER_H

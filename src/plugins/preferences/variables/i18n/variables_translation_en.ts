@@ -116,68 +116,73 @@
 <context>
     <name>preferences::VariablesWidget</name>
     <message>
-        <location filename="../variableswidget.cpp" line="83"/>
+        <location filename="../variableswidget.cpp" line="81"/>
         <source>Please input name value.</source>
         <translation>Please input name value.</translation>
     </message>
     <message>
-        <location filename="../variableswidget.cpp" line="88"/>
+        <location filename="../variableswidget.cpp" line="87"/>
         <source>A blank value is reserved for delete mode. Use delete mode.</source>
         <translation>A blank value is reserved for delete mode. Use delete mode.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="112"/>
-        <location filename="../variableswidgetslots.cpp" line="125"/>
+        <location filename="../variableswidget.cpp" line="97"/>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <location filename="../variableswidgetslots.cpp" line="102"/>
+        <location filename="../variableswidgetslots.cpp" line="115"/>
         <source>Create will add the variable to the specified environment. If it already exists, the value will not be changed.</source>
         <translation>Create will add the variable to the specified environment. If it already exists, the value will not be changed.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="117"/>
+        <location filename="../variableswidgetslots.cpp" line="107"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</source>
         <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="134"/>
+        <location filename="../variableswidgetslots.cpp" line="124"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</source>
         <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="142"/>
+        <location filename="../variableswidgetslots.cpp" line="132"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the FULL path variable as specified. This will remove all previously existing path values.</source>
         <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="150"/>
+        <location filename="../variableswidgetslots.cpp" line="140"/>
         <source>Update will replace the variable in the specified environment. If it doesn&apos;t exist, it will be created.</source>
         <translation>Update will replace the variable in the specified environment. If it doesn&apos;t exist, it will be created.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="159"/>
+        <location filename="../variableswidgetslots.cpp" line="149"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</source>
         <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="168"/>
+        <location filename="../variableswidgetslots.cpp" line="158"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</source>
         <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="176"/>
+        <location filename="../variableswidgetslots.cpp" line="166"/>
         <source>Replace will replace the variable in the specified environment. If it doesn&apos;t exist, it will be created.</source>
         <translation>Replace will replace the variable in the specified environment. If it doesn&apos;t exist, it will be created.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="185"/>
+        <location filename="../variableswidgetslots.cpp" line="175"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will remove the specified segment from the existing path variable. If the segment doesn&apos;t exist, an error is not returned. Multiple segments are not supported by this option.</source>
         <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will remove the specified segment from the existing path variable. If the segment doesn&apos;t exist, an error is not returned. Multiple segments are not supported by this option.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="193"/>
+        <location filename="../variableswidgetslots.cpp" line="183"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</source>
         <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="201"/>
+        <location filename="../variableswidgetslots.cpp" line="191"/>
         <source>Delete will remove the variable from the specified environment. If it doesn&apos;t exist, an error is not returned.</source>
         <translation>Delete will remove the variable from the specified environment. If it doesn&apos;t exist, an error is not returned.</translation>
     </message>

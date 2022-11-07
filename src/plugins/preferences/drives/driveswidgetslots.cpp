@@ -44,8 +44,8 @@ void DrivesWidget::on_actionComboBox_currentIndexChanged(int index)
     ui->locationFrame->setDisabled(deleteMode);
     ui->thisGroupBox->setDisabled(deleteMode);
 
-    ui->firstAvailableRadioButton->setText(deleteMode ? "Delete all, starting at:"
-                                                      : "Use first available, starting at:");
+    ui->firstAvailableRadioButton->setText(deleteMode ? tr("Delete all, starting at:")
+                                                      : tr("Use first available, starting at:"));
 
     setDriveRadioButtonText(deleteMode ? DrivesWidgetMode::DELETE
                             : (ui->pathLineEdit->text().isEmpty() && index == ViewMode::UPDATE__MODE)
@@ -83,13 +83,13 @@ void DrivesWidget::setDriveRadioButtonText(DrivesWidgetMode mode)
     switch (mode)
     {
     case DrivesWidgetMode::CREATE:
-        ui->driveRadioButton->setText("Use:");
+        ui->driveRadioButton->setText(tr("Use:"));
         break;
     case DrivesWidgetMode::USE_EXISTING:
-        ui->driveRadioButton->setText("Existing:");
+        ui->driveRadioButton->setText(tr("Existing:"));
         break;
     case DrivesWidgetMode::DELETE:
-        ui->driveRadioButton->setText("Delete:");
+        ui->driveRadioButton->setText(tr("Delete:"));
         break;
     default:
         break;

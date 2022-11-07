@@ -265,7 +265,7 @@
         <translation>Переподключится</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="89"/>
+        <location filename="../driveswidgetslots.cpp" line="78"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -273,34 +273,58 @@
 <context>
     <name>preferences::DrivesWidget</name>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="83"/>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation type="vanished">Открыть</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="84"/>
         <source>File name</source>
-        <translation>Имя файла</translation>
+        <translation type="vanished">Имя файла</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="85"/>
         <source>Look in</source>
-        <translation>Искать в</translation>
+        <translation type="vanished">Искать в</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">Отмена</translation>
+    </message>
+    <message>
+        <source>File type</source>
+        <translation type="vanished">Тип файла</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation type="vanished">Открыть Папку</translation>
+    </message>
+    <message>
+        <location filename="../driveswidget.cpp" line="92"/>
+        <source>General</source>
+        <translation>Общие</translation>
+    </message>
+    <message>
+        <location filename="../driveswidgetslots.cpp" line="47"/>
+        <source>Delete all, starting at:</source>
+        <translation>Удалить начиная с:</translation>
+    </message>
+    <message>
+        <location filename="../driveswidgetslots.cpp" line="48"/>
+        <source>Use first available, starting at:</source>
+        <translation>Первый доступный, начиная с:</translation>
     </message>
     <message>
         <location filename="../driveswidgetslots.cpp" line="86"/>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
+        <source>Use:</source>
+        <translation>Использовать:</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="87"/>
-        <source>File type</source>
-        <translation>Тип файла</translation>
+        <location filename="../driveswidgetslots.cpp" line="89"/>
+        <source>Existing:</source>
+        <translation>Существующий:</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="94"/>
-        <source>Open Directory</source>
-        <translation>Открыть Папку</translation>
+        <location filename="../driveswidgetslots.cpp" line="92"/>
+        <source>Delete:</source>
+        <translation>Удалить:</translation>
     </message>
 </context>
 </TS>

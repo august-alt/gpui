@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 DrivesWidget::DrivesWidget(QWidget *parent, DrivesItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -56,9 +55,9 @@ DrivesWidget::~DrivesWidget()
     delete ui;
 }
 
-void DrivesWidget::setItem(ModelView::SessionItem* item)
+void DrivesWidget::setItem(ModelView::SessionItem *item)
 {
-    m_item = dynamic_cast<DrivesItem*>(item);
+    m_item = dynamic_cast<DrivesItem *>(item);
 
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -90,7 +89,7 @@ void DrivesWidget::setItem(ModelView::SessionItem* item)
 
 QString DrivesWidget::name() const
 {
-    return "General";
+    return tr("General");
 }
 
-}
+} // namespace preferences

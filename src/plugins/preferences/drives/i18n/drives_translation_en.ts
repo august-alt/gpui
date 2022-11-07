@@ -265,7 +265,7 @@
         <translation>Reconnect</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="89"/>
+        <location filename="../driveswidgetslots.cpp" line="78"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -273,34 +273,58 @@
 <context>
     <name>preferences::DrivesWidget</name>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="83"/>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="84"/>
         <source>File name</source>
-        <translation>File name</translation>
+        <translation type="vanished">File name</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="85"/>
         <source>Look in</source>
-        <translation>Look in</translation>
+        <translation type="vanished">Look in</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">Cancel</translation>
+    </message>
+    <message>
+        <source>File type</source>
+        <translation type="vanished">File type</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation type="vanished">Open Directory</translation>
+    </message>
+    <message>
+        <location filename="../driveswidget.cpp" line="92"/>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <location filename="../driveswidgetslots.cpp" line="47"/>
+        <source>Delete all, starting at:</source>
+        <translation>Delete all, starting at:</translation>
+    </message>
+    <message>
+        <location filename="../driveswidgetslots.cpp" line="48"/>
+        <source>Use first available, starting at:</source>
+        <translation>Use first available, starting at:</translation>
     </message>
     <message>
         <location filename="../driveswidgetslots.cpp" line="86"/>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
+        <source>Use:</source>
+        <translation>Use:</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="87"/>
-        <source>File type</source>
-        <translation>File type</translation>
+        <location filename="../driveswidgetslots.cpp" line="89"/>
+        <source>Existing:</source>
+        <translation>Existing:</translation>
     </message>
     <message>
-        <location filename="../driveswidgetslots.cpp" line="94"/>
-        <source>Open Directory</source>
-        <translation>Open Directory</translation>
+        <location filename="../driveswidgetslots.cpp" line="92"/>
+        <source>Delete:</source>
+        <translation>Delete:</translation>
     </message>
 </context>
 </TS>

@@ -132,7 +132,7 @@
     <message>
         <location filename="../fileswidget.cpp" line="93"/>
         <source>General</source>
-        <translation>Общие</translation>
+        <translation>Основные настройки</translation>
     </message>
     <message>
         <location filename="../fileswidgetslots.cpp" line="69"/>

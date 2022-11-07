@@ -299,7 +299,7 @@
     <message>
         <location filename="../driveswidget.cpp" line="92"/>
         <source>General</source>
-        <translation>Общие</translation>
+        <translation type="unfinished">Основные настройки</translation>
     </message>
     <message>
         <location filename="../driveswidgetslots.cpp" line="47"/>

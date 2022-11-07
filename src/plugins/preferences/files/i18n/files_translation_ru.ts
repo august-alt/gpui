@@ -110,8 +110,9 @@
         <translation>Цель</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="87"/>
-        <location filename="../fileswidgetslots.cpp" line="123"/>
+        <location filename="../fileswidgetslots.cpp" line="79"/>
+        <location filename="../fileswidgetslots.cpp" line="86"/>
+        <location filename="../fileswidgetslots.cpp" line="90"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -119,64 +120,57 @@
 <context>
     <name>preferences::FilesWidget</name>
     <message>
-        <location filename="../fileswidget.cpp" line="80"/>
+        <location filename="../fileswidget.cpp" line="78"/>
         <source>Please enter source file(s) value.</source>
         <translation>Пожалуйста, введите источник файла(ов).</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="85"/>
+        <location filename="../fileswidget.cpp" line="83"/>
         <source>Please enter destination file(s) value.</source>
         <translation>Пожалуйста, введите место назначения файла(ов).</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="65"/>
-        <source>Delete file(s):</source>
-        <translation>Удалить файл(ы)</translation>
+        <location filename="../fileswidget.cpp" line="93"/>
+        <source>General</source>
+        <translation>Общие</translation>
     </message>
     <message>
         <location filename="../fileswidgetslots.cpp" line="69"/>
-        <location filename="../fileswidgetslots.cpp" line="146"/>
+        <source>Delete file(s):</source>
+        <translation>Удалить файл(ы):</translation>
+    </message>
+    <message>
+        <location filename="../fileswidgetslots.cpp" line="73"/>
+        <location filename="../fileswidgetslots.cpp" line="106"/>
         <source>Destination file:</source>
         <translation>Место назначения файлов:</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="81"/>
-        <location filename="../fileswidgetslots.cpp" line="117"/>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation type="vanished">Открыть</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="82"/>
-        <location filename="../fileswidgetslots.cpp" line="118"/>
         <source>File name</source>
-        <translation>Название файла</translation>
+        <translation type="vanished">Название файла</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="83"/>
-        <location filename="../fileswidgetslots.cpp" line="119"/>
         <source>Look in</source>
-        <translation>Посмотреть в</translation>
+        <translation type="vanished">Посмотреть в</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="84"/>
-        <location filename="../fileswidgetslots.cpp" line="120"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="85"/>
-        <location filename="../fileswidgetslots.cpp" line="121"/>
         <source>File type</source>
-        <translation>Тип файла</translation>
+        <translation type="vanished">Тип файла</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="90"/>
-        <location filename="../fileswidgetslots.cpp" line="126"/>
         <source>Open Directory</source>
-        <translation>Открыть Директорию</translation>
+        <translation type="vanished">Открыть Директорию</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="140"/>
+        <location filename="../fileswidgetslots.cpp" line="100"/>
         <source>Destination folder:</source>
         <translation>Папка назначения:</translation>
     </message>

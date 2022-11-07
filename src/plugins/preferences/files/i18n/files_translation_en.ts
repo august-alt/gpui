@@ -110,8 +110,9 @@
         <translation>Target</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="87"/>
-        <location filename="../fileswidgetslots.cpp" line="123"/>
+        <location filename="../fileswidgetslots.cpp" line="79"/>
+        <location filename="../fileswidgetslots.cpp" line="86"/>
+        <location filename="../fileswidgetslots.cpp" line="90"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -119,64 +120,57 @@
 <context>
     <name>preferences::FilesWidget</name>
     <message>
-        <location filename="../fileswidget.cpp" line="80"/>
+        <location filename="../fileswidget.cpp" line="78"/>
         <source>Please enter source file(s) value.</source>
         <translation>Please enter source file(s) value.</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="85"/>
+        <location filename="../fileswidget.cpp" line="83"/>
         <source>Please enter destination file(s) value.</source>
         <translation>Please enter destination file(s) value.</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="65"/>
+        <location filename="../fileswidget.cpp" line="93"/>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <location filename="../fileswidgetslots.cpp" line="69"/>
         <source>Delete file(s):</source>
         <translation>Delete file(s):</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="69"/>
-        <location filename="../fileswidgetslots.cpp" line="146"/>
+        <location filename="../fileswidgetslots.cpp" line="73"/>
+        <location filename="../fileswidgetslots.cpp" line="106"/>
         <source>Destination file:</source>
         <translation>Destination file:</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="81"/>
-        <location filename="../fileswidgetslots.cpp" line="117"/>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="82"/>
-        <location filename="../fileswidgetslots.cpp" line="118"/>
         <source>File name</source>
-        <translation>File name</translation>
+        <translation type="vanished">File name</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="83"/>
-        <location filename="../fileswidgetslots.cpp" line="119"/>
         <source>Look in</source>
-        <translation>Look in</translation>
+        <translation type="vanished">Look in</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="84"/>
-        <location filename="../fileswidgetslots.cpp" line="120"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="vanished">Cancel</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="85"/>
-        <location filename="../fileswidgetslots.cpp" line="121"/>
         <source>File type</source>
-        <translation>File type</translation>
+        <translation type="vanished">File type</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="90"/>
-        <location filename="../fileswidgetslots.cpp" line="126"/>
         <source>Open Directory</source>
-        <translation>Open Directory</translation>
+        <translation type="vanished">Open Directory</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="140"/>
+        <location filename="../fileswidgetslots.cpp" line="100"/>
         <source>Destination folder:</source>
         <translation>Destination folder:</translation>
     </message>

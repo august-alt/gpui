@@ -43,7 +43,7 @@ PreferencesDialog::PreferencesDialog(ModelView::SessionItem *item, QWidget *pare
         for (auto &widget : widgets)
         {
             widget->setItem(item->children().back());
-            connect(ui->buttonBox, &QDialogButtonBox::accepted, widget.get(), &PreferenceWidgetInterface::submit);
+            connect(ui->okPushButton, &QPushButton::clicked, widget.get(), &PreferenceWidgetInterface::submit);
 
             // TODO: Replace with proper condition checking.
             // For multiple widgets this will not work.
@@ -58,7 +58,8 @@ PreferencesDialog::PreferencesDialog(ModelView::SessionItem *item, QWidget *pare
         ui->tabWidget->setCurrentIndex(0);
     }
 
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, ui->commonTab, &CommonView::submit);
+    connect(ui->okPushButton, &QPushButton::clicked, ui->commonTab, &CommonView::submit);
+    connect(ui->cancelPushButton, &QPushButton::clicked, this, &PreferencesDialog::reject);
 }
 
 PreferencesDialog::~PreferencesDialog()

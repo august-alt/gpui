@@ -46,8 +46,6 @@ TableDetailsWidget::TableDetailsWidget(QWidget *parent)
     ui->setupUi(this);
 
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &TableDetailsWidget::okPressed);
 }
 
 TableDetailsWidget::~TableDetailsWidget()
@@ -97,7 +95,10 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
 
         // removing item under the mouse
         auto removeItemAction = menu.addAction(tr("Remove item"));
-        auto remove_item      = [=]() { view_model->sessionModel()->removeItem(item->parent(), tagrow); };
+        auto remove_item      = [=]() {
+            view_model->sessionModel()->removeItem(item->parent(), tagrow);
+            emit okPressed();
+        };
         connect(removeItemAction, &QAction::triggered, remove_item);
     }
 
@@ -118,6 +119,7 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
             connect(preferencesDialog, &QDialog::rejected, [&]() {
                 view_model->sessionModel()->removeItem(newItem->parent(), newItem->tagRow());
             });
+            connect(preferencesDialog, &QDialog::accepted, [&]() { emit okPressed(); });
             preferencesDialog->exec();
         };
         connect(addItemAction, &QAction::triggered, add_item);

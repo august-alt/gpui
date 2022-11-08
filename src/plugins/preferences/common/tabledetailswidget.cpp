@@ -89,15 +89,6 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
     QMenu menu;
 
     auto newMenuItem = menu.addMenu(tr("New"));
-    menu.addMenu(tr("All Tasks"));
-    menu.addSeparator();
-    menu.addAction(tr("Paste"));
-    menu.addAction(tr("Refresh"));
-    menu.addAction(tr("Export List..."));
-    menu.addMenu(tr("View"));
-    menu.addSeparator();
-    menu.addMenu(tr("Arrange Icons"));
-    menu.addAction(tr("Line Up Icons"));
     menu.addSeparator();
     menu.addAction(tr("Help"));
 

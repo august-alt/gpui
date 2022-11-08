@@ -111,7 +111,11 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
             {
                 containerItemInterface->setupListeners();
             }
-            PreferencesDialog(newItem, nullptr).exec();
+            auto preferencesDialog = new PreferencesDialog(newItem, this);
+            connect(preferencesDialog, &QDialog::rejected, [&]() {
+                view_model->sessionModel()->removeItem(newItem->parent(), newItem->tagRow());
+            });
+            preferencesDialog->exec();
         };
         connect(addItemAction, &QAction::triggered, add_item);
     }

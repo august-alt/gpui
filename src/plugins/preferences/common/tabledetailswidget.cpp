@@ -89,6 +89,18 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
     QMenu menu;
 
     auto newMenuItem = menu.addMenu(tr("New"));
+
+    if (view_item)
+    {
+        auto item   = view_item->item()->parent();
+        auto tagrow = item->tagRow();
+
+        // removing item under the mouse
+        auto removeItemAction = menu.addAction(tr("Remove item"));
+        auto remove_item      = [=]() { view_model->sessionModel()->removeItem(item->parent(), tagrow); };
+        connect(removeItemAction, &QAction::triggered, remove_item);
+    }
+
     menu.addSeparator();
     menu.addAction(tr("Help"));
 
@@ -109,17 +121,6 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
             preferencesDialog->exec();
         };
         connect(addItemAction, &QAction::triggered, add_item);
-    }
-
-    if (view_item)
-    {
-        auto item   = view_item->item()->parent();
-        auto tagrow = item->tagRow();
-
-        // removing item under the mouse
-        auto removeItemAction = menu.addAction(tr("Remove item"));
-        auto remove_item      = [=]() { view_model->sessionModel()->removeItem(item->parent(), tagrow); };
-        connect(removeItemAction, &QAction::triggered, remove_item);
     }
 
     menu.exec(treeView->mapToGlobal(point));

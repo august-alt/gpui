@@ -33,6 +33,7 @@
 #include "../core/isnapin.h"
 #include "../core/isnapinmanager.h"
 
+#include "../plugins/administrative_templates/bundle/itemtype.h"
 #include "../plugins/administrative_templates/bundle/policybundle.h"
 #include "../plugins/administrative_templates/bundle/policyroles.h"
 
@@ -317,8 +318,17 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
 {
     auto concatenateRowsModel = std::make_unique<QStandardItemModel>();
 
-    QStandardItem *item = concatenateRowsModel->invisibleRootItem();
-    item->setData("Root Item", Qt::DisplayRole);
+    QStandardItem *rootItem = concatenateRowsModel->invisibleRootItem();
+    rootItem->setData("Root Item", Qt::DisplayRole);
+
+    QStandardItem *visibleRootItem = new QStandardItem();
+    visibleRootItem->setData(QObject::tr("[Local Group Policy]"), Qt::DisplayRole);
+    visibleRootItem->setData(QIcon::fromTheme("text-x-generic-template"), Qt::DecorationRole);
+    visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY), model::bundle::ITEM_TYPE);
+    visibleRootItem->setData(QObject::tr("Local group policies"), model::bundle::EXPLAIN_TEXT);
+    visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both), model::bundle::POLICY_TYPE);
+
+    rootItem->appendRow(visibleRootItem);
 
     for (auto &snapIn : manager->getSnapIns())
     {
@@ -326,7 +336,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
         {
             QAbstractItemModel *snapInModel = snapIn->getRootNode();
             qWarning() << "Appending model from: " << snapIn->getDisplayName();
-            appendModel(item, snapInModel, snapInModel->index(0, 0));
+            appendModel(visibleRootItem, snapInModel, snapInModel->index(0, 0));
         }
     }
 

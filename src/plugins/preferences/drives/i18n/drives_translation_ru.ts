@@ -297,9 +297,14 @@
         <translation type="vanished">Открыть Папку</translation>
     </message>
     <message>
-        <location filename="../driveswidget.cpp" line="92"/>
+        <location filename="../driveswidget.cpp" line="93"/>
         <source>General</source>
-        <translation type="unfinished">Основные настройки</translation>
+        <translation>Основные настройки</translation>
+    </message>
+    <message>
+        <location filename="../driveswidget.cpp" line="98"/>
+        <source>Please enter location.</source>
+        <translation>Пожалуйста, введите путь.</translation>
     </message>
     <message>
         <location filename="../driveswidgetslots.cpp" line="47"/>

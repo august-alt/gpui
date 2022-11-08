@@ -297,9 +297,14 @@
         <translation type="vanished">Open Directory</translation>
     </message>
     <message>
-        <location filename="../driveswidget.cpp" line="92"/>
+        <location filename="../driveswidget.cpp" line="93"/>
         <source>General</source>
         <translation>General</translation>
+    </message>
+    <message>
+        <location filename="../driveswidget.cpp" line="98"/>
+        <source>Please enter location.</source>
+        <translation>Please enter location.</translation>
     </message>
     <message>
         <location filename="../driveswidgetslots.cpp" line="47"/>

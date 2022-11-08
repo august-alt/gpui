@@ -26,7 +26,10 @@
 #include "common/basepreferencewidget.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class DrivesWidget; }
+namespace Ui
+{
+class DrivesWidget;
+}
 QT_END_NAMESPACE
 
 class QDataWidgetMapper;
@@ -36,11 +39,10 @@ namespace ModelView
 class ViewModel;
 class ViewModelDelegate;
 class SessionItem;
-}
+} // namespace ModelView
 
 namespace preferences
 {
-
 class DrivesItem;
 class DrivesItemController;
 
@@ -60,12 +62,14 @@ public:
     };
 
 public:
-    explicit DrivesWidget(QWidget* parent = nullptr, DrivesItem* item = nullptr);
+    explicit DrivesWidget(QWidget *parent = nullptr, DrivesItem *item = nullptr);
     ~DrivesWidget() override;
 
     void setItem(ModelView::SessionItem *item) override;
 
     QString name() const override;
+
+    bool validate() override;
 
 public slots:
     void submit() override;
@@ -77,27 +81,27 @@ private slots:
 
 private:
     void setDriveRadioButtonText(DrivesWidgetMode mode);
-    void disableLetterWidgets(const QString& text, int index);
+    void disableLetterWidgets(const QString &text, int index);
     void setThisDriveCheckBox(const int index);
     void setAllDrivesCheckBox(const int index);
 
 private:
-    DrivesWidget(const DrivesWidget&)            = delete;   // copy ctor
-    DrivesWidget(DrivesWidget&&)                 = delete;   // move ctor
-    DrivesWidget& operator=(const DrivesWidget&) = delete;   // copy assignment
-    DrivesWidget& operator=(DrivesWidget&&)      = delete;   // move assignment
+    DrivesWidget(const DrivesWidget &) = delete;            // copy ctor
+    DrivesWidget(DrivesWidget &&)      = delete;            // move ctor
+    DrivesWidget &operator=(const DrivesWidget &) = delete; // copy assignment
+    DrivesWidget &operator=(DrivesWidget &&) = delete;      // move assignment
 
 private:
     //!< Underlying item of this view.
-    DrivesItem* m_item {nullptr};
+    DrivesItem *m_item{nullptr};
 
     std::unique_ptr<ModelView::ViewModel> view_model;
     std::unique_ptr<ModelView::ViewModelDelegate> delegate;
 
 private:
-    Ui::DrivesWidget *ui {nullptr};
+    Ui::DrivesWidget *ui{nullptr};
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_DRIVES_WIDGET_H
+#endif //GPUI_DRIVES_WIDGET_H

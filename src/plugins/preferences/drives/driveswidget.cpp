@@ -21,6 +21,7 @@
 #include "driveswidget.h"
 #include "ui_driveswidget.h"
 
+#include "common/commonutils.h"
 #include "drivesitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
@@ -90,6 +91,16 @@ void DrivesWidget::setItem(ModelView::SessionItem *item)
 QString DrivesWidget::name() const
 {
     return tr("General");
+}
+
+bool DrivesWidget::validate()
+{
+    if (!CommonUtils::validateLineEdit(ui->pathLineEdit, tr("Please enter location.")))
+    {
+        return false;
+    }
+
+    return true;
 }
 
 } // namespace preferences

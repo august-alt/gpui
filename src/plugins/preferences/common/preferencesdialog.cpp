@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 PreferencesDialog::PreferencesDialog(ModelView::SessionItem *item, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::PreferencesDialog())
@@ -41,10 +40,16 @@ PreferencesDialog::PreferencesDialog(ModelView::SessionItem *item, QWidget *pare
         ui->commonTab->setItem(item->children()[item->children().size() - 2]);
 
         auto widgets = factory->create(item->children().back()->modelType());
-        for (auto& widget : widgets)
+        for (auto &widget : widgets)
         {
             widget->setItem(item->children().back());
             connect(ui->buttonBox, &QDialogButtonBox::accepted, widget.get(), &PreferenceWidgetInterface::submit);
+
+            // TODO: Replace with proper condition checking.
+            // For multiple widgets this will not work.
+            // Check if signal dataChanged has fired for all
+            // of content widgets.
+            connect(widget.get(), &PreferenceWidgetInterface::dataChanged, this, &QDialog::accept);
 
             auto widgetName = widget->name();
 
@@ -61,4 +66,4 @@ PreferencesDialog::~PreferencesDialog()
     delete ui;
 }
 
-}
+} // namespace preferences

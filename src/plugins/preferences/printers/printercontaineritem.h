@@ -27,13 +27,12 @@
 
 namespace preferences
 {
-
 //! Printer container item representation for editor.
 
 class CommonItem;
 class LocalPrinterItem;
 
-template <typename PrinterItemType>
+template<typename PrinterItemType>
 class PrinterContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
@@ -48,17 +47,19 @@ public:
 
     explicit PrinterContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    PrinterItemType* getPrinter() const;
-    void setPrinter(const PrinterItemType& item);
+    PrinterItemType *getPrinter() const;
+    void setPrinter(const PrinterItemType &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
 #include "printercontaineritem.inl"
 
-#endif//GPUI_PRINTER_CONTAINER_ITEM_H
+#endif //GPUI_PRINTER_CONTAINER_ITEM_H

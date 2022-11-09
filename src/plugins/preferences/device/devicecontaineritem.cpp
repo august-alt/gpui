@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 DeviceContainerItem::DeviceContainerItem()
     : ModelView::CompoundItem("DeviceContainerItem")
 {
@@ -61,9 +60,8 @@ void DeviceContainerItem::setDevice(const DeviceItem &item)
 
 void DeviceContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto deviceItem = dynamic_cast<DeviceItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto deviceItem = dynamic_cast<DeviceItem *>(item))
         {
             if (property == DeviceItem::DEVICE_ACTION)
             {
@@ -80,4 +78,11 @@ void DeviceContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void DeviceContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
 }
+
+} // namespace preferences

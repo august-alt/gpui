@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -36,11 +35,11 @@ class SharesItem;
 class SharesContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME   = "name";
-    static inline const std::string ORDER  = "order";
-    static inline const std::string ACTION = "action";
-    static inline const std::string PATH   = "path";
-    static inline const std::string USER_LIMIT = "userLimit";
+    static inline const std::string NAME                     = "name";
+    static inline const std::string ORDER                    = "order";
+    static inline const std::string ACTION                   = "action";
+    static inline const std::string PATH                     = "path";
+    static inline const std::string USER_LIMIT               = "userLimit";
     static inline const std::string ACCESS_BASED_ENUMERATION = "abe";
 
     static inline const std::string COMMON = "common";
@@ -48,15 +47,17 @@ public:
 
     explicit SharesContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    SharesItem* getShares() const;
-    void setShares(const SharesItem& item);
+    SharesItem *getShares() const;
+    void setShares(const SharesItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_SHARES_CONTAINER_ITEM_H
+#endif //GPUI_SHARES_CONTAINER_ITEM_H

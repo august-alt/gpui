@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Device item representation for editor.
 
 class CommonItem;
@@ -36,9 +35,9 @@ class DeviceItem;
 class DeviceContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME       = "name";
-    static inline const std::string ORDER      = "order";
-    static inline const std::string ACTION     = "action";
+    static inline const std::string NAME   = "name";
+    static inline const std::string ORDER  = "order";
+    static inline const std::string ACTION = "action";
 
     static inline const std::string COMMON = "common";
     static inline const std::string DEVICE = "device";
@@ -46,14 +45,16 @@ public:
     explicit DeviceContainerItem();
 
     CommonItem getCommon() const;
-    void setCommon(const CommonItem& item);
+    void setCommon(const CommonItem &item);
 
     DeviceItem getDevice() const;
-    void setDevice(const DeviceItem& item);
+    void setDevice(const DeviceItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_DEVICE_CONTAINER_ITEM_H
+#endif //GPUI_DEVICE_CONTAINER_ITEM_H

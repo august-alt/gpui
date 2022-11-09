@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 DataSourceContainerItem::DataSourceContainerItem()
     : ModelView::CompoundItem("DataSourceContainerItem")
 {
@@ -64,9 +63,8 @@ void DataSourceContainerItem::setDataSource(const DataSourceItem &item)
 
 void DataSourceContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto dataSourceItem = dynamic_cast<DataSourceItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto dataSourceItem = dynamic_cast<DataSourceItem *>(item))
         {
             if (property == ACTION)
             {
@@ -98,4 +96,14 @@ void DataSourceContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void DataSourceContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Driver").toStdString());
+    children()[4]->setDisplayName(QObject::tr("User DSN").toStdString());
+    children()[5]->setDisplayName(QObject::tr("Username").toStdString());
 }
+
+} // namespace preferences

@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -42,20 +41,22 @@ public:
     static inline const std::string VALUE  = "value";
     static inline const std::string USER   = "user";
 
-    static inline const std::string COMMON = "common";
+    static inline const std::string COMMON    = "common";
     static inline const std::string VARIABLES = "variables";
 
     explicit VariablesContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    VariablesItem* getVariables() const;
-    void setVariables(const VariablesItem& item);
+    VariablesItem *getVariables() const;
+    void setVariables(const VariablesItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_VARIABLES_CONTAINER_ITEM_H
+#endif //GPUI_VARIABLES_CONTAINER_ITEM_H

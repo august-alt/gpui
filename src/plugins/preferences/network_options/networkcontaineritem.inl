@@ -18,15 +18,14 @@
 **
 ***********************************************************************************************************************/
 
-#include "common/commonitem.h"
 #include "basenetworkitem.h"
+#include "common/commonitem.h"
 
 #include <mvvm/signals/itemmapper.h>
 
 namespace preferences
 {
-
-template <typename NetworkItem>
+template<typename NetworkItem>
 NetworkContainerItem<NetworkItem>::NetworkContainerItem()
     : ModelView::CompoundItem(typeid(NetworkContainerItem<NetworkItem>).name())
 {
@@ -39,36 +38,35 @@ NetworkContainerItem<NetworkItem>::NetworkContainerItem()
     addProperty<NetworkItem>(NETWORK)->setVisible(false);
 }
 
-template <typename NetworkItem>
-CommonItem* NetworkContainerItem<NetworkItem>::getCommon() const
+template<typename NetworkItem>
+CommonItem *NetworkContainerItem<NetworkItem>::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
-template <typename NetworkItem>
+template<typename NetworkItem>
 void NetworkContainerItem<NetworkItem>::setCommon(const CommonItem &item)
 {
     setProperty(COMMON, item);
 }
 
-template <typename NetworkItem>
-NetworkItem* NetworkContainerItem<NetworkItem>::getNetwork() const
+template<typename NetworkItem>
+NetworkItem *NetworkContainerItem<NetworkItem>::getNetwork() const
 {
-    return static_cast<NetworkItem*>(children()[childrenCount() - 1]);
+    return static_cast<NetworkItem *>(children()[childrenCount() - 1]);
 }
 
-template <typename NetworkItem>
+template<typename NetworkItem>
 void NetworkContainerItem<NetworkItem>::setNetwork(const NetworkItem &item)
 {
     setProperty(NETWORK, item);
 }
 
-template <typename NetworkItem>
+template<typename NetworkItem>
 void NetworkContainerItem<NetworkItem>::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto networkItem = dynamic_cast<NetworkItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto networkItem = dynamic_cast<NetworkItem *>(item))
         {
             if (property == ACTION)
             {
@@ -95,4 +93,13 @@ void NetworkContainerItem<NetworkItem>::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+template<typename NetworkItem>
+void NetworkContainerItem<NetworkItem>::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Address").toStdString());
 }
+
+} // namespace preferences

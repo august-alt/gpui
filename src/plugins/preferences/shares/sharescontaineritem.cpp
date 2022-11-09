@@ -29,7 +29,6 @@ static inline const std::string LIMIT_USERS = "limitUsers";
 
 namespace preferences
 {
-
 SharesContainerItem::SharesContainerItem()
     : ModelView::CompoundItem("SharesContainerItem")
 {
@@ -38,17 +37,19 @@ SharesContainerItem::SharesContainerItem()
     addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
     addProperty(PATH, "")->setDisplayName(QObject::tr("Path").toStdString())->setEditable(false);
     addProperty(USER_LIMIT, QObject::tr("Unchanged").toStdString())
-            ->setDisplayName(QObject::tr("User Limit").toStdString())->setEditable(false);
+        ->setDisplayName(QObject::tr("User Limit").toStdString())
+        ->setEditable(false);
     addProperty(ACCESS_BASED_ENUMERATION, QObject::tr("Unchanged").toStdString())
-            ->setDisplayName(QObject::tr("ABE").toStdString())->setEditable(false);
+        ->setDisplayName(QObject::tr("ABE").toStdString())
+        ->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
     addProperty<SharesItem>(SHARES)->setVisible(false);
 }
 
-CommonItem* SharesContainerItem::getCommon() const
+CommonItem *SharesContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void SharesContainerItem::setCommon(const CommonItem &item)
@@ -56,9 +57,9 @@ void SharesContainerItem::setCommon(const CommonItem &item)
     setProperty(COMMON, item);
 }
 
-SharesItem* SharesContainerItem::getShares() const
+SharesItem *SharesContainerItem::getShares() const
 {
-    return static_cast<SharesItem*>(children().back());
+    return static_cast<SharesItem *>(children().back());
 }
 
 void SharesContainerItem::setShares(const SharesItem &item)
@@ -68,9 +69,8 @@ void SharesContainerItem::setShares(const SharesItem &item)
 
 void SharesContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto sharesItem = dynamic_cast<SharesItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto sharesItem = dynamic_cast<SharesItem *>(item))
         {
             if (property == ACTION)
             {
@@ -128,4 +128,46 @@ void SharesContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void SharesContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Path").toStdString());
+    children()[4]->setDisplayName(QObject::tr("User Limit").toStdString());
+    children()[5]->setDisplayName(QObject::tr("ABE").toStdString());
+
+    auto sharesItem = getShares();
+
+    auto limitUsers = sharesItem->property<std::string>(LIMIT_USERS);
+
+    if (limitUsers.compare("NO_CHANGE") == 0)
+    {
+        setProperty(USER_LIMIT, QObject::tr("Unchanged").toStdString());
+    }
+    else if (limitUsers.compare("MAX_ALLOWED") == 0)
+    {
+        setProperty(USER_LIMIT, QObject::tr("Maximum").toStdString());
+    }
+    else
+    {
+        setProperty(USER_LIMIT, QString::number(sharesItem->property<int>(USER_LIMIT)).toStdString());
+    }
+
+    auto abe = sharesItem->property<std::string>(ACCESS_BASED_ENUMERATION);
+
+    if (abe.compare("NO_CHANGE") == 0)
+    {
+        setProperty(ACCESS_BASED_ENUMERATION, QObject::tr("Unchanged").toStdString());
+    }
+    else if (abe.compare("ENABLE") == 0)
+    {
+        setProperty(ACCESS_BASED_ENUMERATION, QObject::tr("Enabled").toStdString());
+    }
+    else
+    {
+        setProperty(ACCESS_BASED_ENUMERATION, QObject::tr("Disabled").toStdString());
+    }
 }
+
+} // namespace preferences

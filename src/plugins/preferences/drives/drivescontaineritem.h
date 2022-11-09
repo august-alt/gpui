@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -47,15 +46,17 @@ public:
 
     explicit DrivesContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
     DrivesItem *getDrives() const;
-    void setDrives(const DrivesItem& item);
+    void setDrives(const DrivesItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_DRIVES_CONTAINER_ITEM_H
+#endif //GPUI_DRIVES_CONTAINER_ITEM_H

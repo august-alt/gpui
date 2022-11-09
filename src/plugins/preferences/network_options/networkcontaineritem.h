@@ -27,40 +27,41 @@
 
 namespace preferences
 {
-
 //! Network container item representation for editor.
 
 class CommonItem;
 class BaseNetworkItem;
 class DialUpItem;
 
-template <typename NetworkItem>
+template<typename NetworkItem>
 class NetworkContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME = "name";
-    static inline const std::string ORDER = "order";
-    static inline const std::string ACTION = "action";
-    static inline const std::string ADDRESS = "address";
-    static inline const std::string IP_ADDRESS = "ipAddress";
+    static inline const std::string NAME         = "name";
+    static inline const std::string ORDER        = "order";
+    static inline const std::string ACTION       = "action";
+    static inline const std::string ADDRESS      = "address";
+    static inline const std::string IP_ADDRESS   = "ipAddress";
     static inline const std::string PHONE_NUMBER = "phoneNumber";
 
-    static inline const std::string COMMON = "common";
+    static inline const std::string COMMON  = "common";
     static inline const std::string NETWORK = "network";
 
     explicit NetworkContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    NetworkItem* getNetwork() const;
+    NetworkItem *getNetwork() const;
     void setNetwork(const NetworkItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
 #include "networkcontaineritem.inl"
 
-#endif//GPUI_NETWORK_CONTAINER_ITEM_H
+#endif //GPUI_NETWORK_CONTAINER_ITEM_H

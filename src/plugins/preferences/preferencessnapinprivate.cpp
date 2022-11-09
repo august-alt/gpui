@@ -20,6 +20,8 @@
 
 #include "preferencessnapinprivate.h"
 
+#include "interfaces/containeriteminterface.h"
+
 namespace gpui
 {
 using namespace preferences;
@@ -35,6 +37,23 @@ void PreferencesSnapInPrivate::onDataSave()
 
     modelWriter->saveModels(this->policyPath, "Machine", this->machinePreferencesModels.get());
     modelWriter->saveModels(this->policyPath, "User", this->userPreferencesModels.get());
+}
+
+void PreferencesSnapInPrivate::retranslateModels(std::unique_ptr<PreferencesSnapInPrivate::PreferencesModelMap> &models)
+{
+    if (models)
+    {
+        for (auto &dataModel : (*models))
+        {
+            for (auto &item : dataModel.second->topItems())
+            {
+                auto containerItem = dynamic_cast<ContainerItemInterface *>(item);
+                {
+                    containerItem->retranslateStrings();
+                }
+            }
+        }
+    }
 }
 
 } // namespace gpui

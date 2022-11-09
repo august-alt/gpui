@@ -62,6 +62,9 @@ public:
     std::string localeName = "en-US";
 
 public:
+    void retranslateModels(std::unique_ptr<PreferencesModelMap> &models);
+
+public:
     PreferencesSnapInPrivate();
 
 public slots:

@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 DrivesContainerItem::DrivesContainerItem()
     : ModelView::CompoundItem("DrivesContainerItem")
 {
@@ -35,7 +34,9 @@ DrivesContainerItem::DrivesContainerItem()
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
     addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
     addProperty(PATH, "")->setDisplayName(QObject::tr("Path").toStdString())->setEditable(false);
-    addProperty(PERSISTENT, "No")->setDisplayName(QObject::tr("Reconnect").toStdString())->setEditable(false);
+    addProperty(PERSISTENT, QObject::tr("No").toStdString())
+        ->setDisplayName(QObject::tr("Reconnect").toStdString())
+        ->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
     addProperty<DrivesItem>(DRIVES)->setVisible(false);
@@ -43,7 +44,7 @@ DrivesContainerItem::DrivesContainerItem()
 
 CommonItem *DrivesContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void DrivesContainerItem::setCommon(const CommonItem &item)
@@ -51,9 +52,9 @@ void DrivesContainerItem::setCommon(const CommonItem &item)
     setProperty<CommonItem>(COMMON, item);
 }
 
-DrivesItem* DrivesContainerItem::getDrives() const
+DrivesItem *DrivesContainerItem::getDrives() const
 {
-    return static_cast<DrivesItem*>(children().back());
+    return static_cast<DrivesItem *>(children().back());
 }
 
 void DrivesContainerItem::setDrives(const DrivesItem &item)
@@ -63,9 +64,8 @@ void DrivesContainerItem::setDrives(const DrivesItem &item)
 
 void DrivesContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto drivesItem = dynamic_cast<DrivesItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto drivesItem = dynamic_cast<DrivesItem *>(item))
         {
             if (property == ACTION)
             {
@@ -80,13 +80,29 @@ void DrivesContainerItem::setupListeners()
 
             if (property == PERSISTENT)
             {
-                setProperty(PERSISTENT, drivesItem->property<bool>(PERSISTENT) ? "Yes" : "No");
+                setProperty(PERSISTENT,
+                            drivesItem->property<bool>(PERSISTENT) ? QObject::tr("Yes").toStdString()
+                                                                   : QObject::tr("No").toStdString());
             }
-
         }
     };
 
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void DrivesContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Path").toStdString());
+    children()[4]->setDisplayName(QObject::tr("Reconnect").toStdString());
+
+    auto drivesItem = getDrives();
+
+    setProperty(PERSISTENT,
+                drivesItem->property<bool>(PERSISTENT) ? QObject::tr("Yes").toStdString()
+                                                       : QObject::tr("No").toStdString());
 }
+
+} // namespace preferences

@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -36,26 +35,28 @@ class RegistryItem;
 class RegistryContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME = "name";
-    static inline const std::string ORDER = "order";
+    static inline const std::string NAME   = "name";
+    static inline const std::string ORDER  = "order";
     static inline const std::string ACTION = "action";
     static inline const std::string HIVE   = "hive";
     static inline const std::string KEY    = "key";
 
-    static inline const std::string COMMON = "common";
+    static inline const std::string COMMON   = "common";
     static inline const std::string REGISTRY = "registry";
 
     explicit RegistryContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    RegistryItem* getRegistry() const;
-    void setRegistry(const RegistryItem& item);
+    RegistryItem *getRegistry() const;
+    void setRegistry(const RegistryItem &item);
 
     virtual void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_REGISTRY_CONTAINER_ITEM_H
+#endif //GPUI_REGISTRY_CONTAINER_ITEM_H

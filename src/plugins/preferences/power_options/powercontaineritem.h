@@ -27,36 +27,37 @@
 
 namespace preferences
 {
-
 //! Power container item representation for editor.
 
 class CommonItem;
 class PowerOptionsItem;
 
-template <typename PowerItemType>
+template<typename PowerItemType>
 class PowerContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME = "name";
-    static inline const std::string ORDER = "order";
+    static inline const std::string NAME   = "name";
+    static inline const std::string ORDER  = "order";
     static inline const std::string ACTION = "action";
 
     static inline const std::string COMMON = "common";
-    static inline const std::string POWER = "power";
+    static inline const std::string POWER  = "power";
 
     explicit PowerContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    PowerItemType* getPower() const;
-    void setPower(const PowerItemType& item);
+    PowerItemType *getPower() const;
+    void setPower(const PowerItemType &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
 #include "powercontaineritem.inl"
 
-#endif//GPUI_POWER_CONTAINER_ITEM_H
+#endif //GPUI_POWER_CONTAINER_ITEM_H

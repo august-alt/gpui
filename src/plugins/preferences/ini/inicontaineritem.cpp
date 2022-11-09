@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 IniContainerItem::IniContainerItem()
     : ModelView::CompoundItem("IniContainerItem")
 {
@@ -43,9 +42,9 @@ IniContainerItem::IniContainerItem()
     addProperty<IniItem>(INI)->setVisible(false);
 }
 
-CommonItem* IniContainerItem::getCommon() const
+CommonItem *IniContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void IniContainerItem::setCommon(const CommonItem &item)
@@ -55,7 +54,7 @@ void IniContainerItem::setCommon(const CommonItem &item)
 
 IniItem *IniContainerItem::getIni() const
 {
-    return static_cast<IniItem*>(children().back());
+    return static_cast<IniItem *>(children().back());
 }
 
 void IniContainerItem::setIni(const IniItem &item)
@@ -65,9 +64,8 @@ void IniContainerItem::setIni(const IniItem &item)
 
 void IniContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto iniItem = dynamic_cast<IniItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto iniItem = dynamic_cast<IniItem *>(item))
         {
             if (property == ACTION)
             {
@@ -101,4 +99,15 @@ void IniContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void IniContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Path").toStdString());
+    children()[4]->setDisplayName(QObject::tr("Section").toStdString());
+    children()[5]->setDisplayName(QObject::tr("Property").toStdString());
+    children()[6]->setDisplayName(QObject::tr("Value").toStdString());
 }
+
+} // namespace preferences

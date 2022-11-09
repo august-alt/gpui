@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 RegistryContainerItem::RegistryContainerItem()
     : ModelView::CompoundItem("RegistryContainerItem")
 {
@@ -41,9 +40,9 @@ RegistryContainerItem::RegistryContainerItem()
     addProperty<RegistryItem>(REGISTRY)->setVisible(false);
 }
 
-CommonItem* RegistryContainerItem::getCommon() const
+CommonItem *RegistryContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void RegistryContainerItem::setCommon(const CommonItem &item)
@@ -53,7 +52,7 @@ void RegistryContainerItem::setCommon(const CommonItem &item)
 
 RegistryItem *RegistryContainerItem::getRegistry() const
 {
-    return static_cast<RegistryItem*>(children().back());
+    return static_cast<RegistryItem *>(children().back());
 }
 
 void RegistryContainerItem::setRegistry(const RegistryItem &item)
@@ -63,9 +62,8 @@ void RegistryContainerItem::setRegistry(const RegistryItem &item)
 
 void RegistryContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto registryItem = dynamic_cast<RegistryItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto registryItem = dynamic_cast<RegistryItem *>(item))
         {
             if (property == ACTION)
             {
@@ -92,4 +90,13 @@ void RegistryContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void RegistryContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Hive").toStdString());
+    children()[4]->setDisplayName(QObject::tr("Key").toStdString());
 }
+
+} // namespace preferences

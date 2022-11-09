@@ -24,51 +24,53 @@
 
 namespace preferences
 {
-
-template <typename PrinterItemType>
+template<typename PrinterItemType>
 PrinterContainerItem<PrinterItemType>::PrinterContainerItem()
     : ModelView::CompoundItem(typeid(PrinterContainerItem<PrinterItemType>).name())
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
     addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
-    addProperty(PATH, QObject::tr("N/A").toStdString())->setDisplayName(QObject::tr("Path").toStdString())->setEditable(false);
-    addProperty(DEFAULT, QObject::tr("N/A").toStdString())->setDisplayName(QObject::tr("Default").toStdString())->setEditable(false);
+    addProperty(PATH, QObject::tr("N/A").toStdString())
+        ->setDisplayName(QObject::tr("Path").toStdString())
+        ->setEditable(false);
+    addProperty(DEFAULT, QObject::tr("N/A").toStdString())
+        ->setDisplayName(QObject::tr("Default").toStdString())
+        ->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
     addProperty<PrinterItemType>(PRINTER)->setVisible(false);
 }
 
-template <typename PrinterItemType>
-CommonItem* PrinterContainerItem<PrinterItemType>::getCommon() const
+template<typename PrinterItemType>
+CommonItem *PrinterContainerItem<PrinterItemType>::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
-template <typename PrinterItemType>
+template<typename PrinterItemType>
 void PrinterContainerItem<PrinterItemType>::setCommon(const CommonItem &item)
 {
     setProperty(COMMON, item);
 }
 
-template <typename PrinterItemType>
-PrinterItemType* PrinterContainerItem<PrinterItemType>::getPrinter() const
+template<typename PrinterItemType>
+PrinterItemType *PrinterContainerItem<PrinterItemType>::getPrinter() const
 {
-    return static_cast<PrinterItemType*>(children().back());
+    return static_cast<PrinterItemType *>(children().back());
 }
 
-template <typename PrinterItemType>
+template<typename PrinterItemType>
 void PrinterContainerItem<PrinterItemType>::setPrinter(const PrinterItemType &item)
 {
     setProperty(PRINTER, item);
 }
 
-template <typename PrinterItemType>
+template<typename PrinterItemType>
 void PrinterContainerItem<PrinterItemType>::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto printerItem = dynamic_cast<PrinterItemType*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto printerItem = dynamic_cast<PrinterItemType *>(item))
         {
             if (property == ACTION)
             {
@@ -87,9 +89,9 @@ void PrinterContainerItem<PrinterItemType>::setupListeners()
 
             if (property == DEFAULT)
             {
-                setProperty(DEFAULT, printerItem->template property<bool>(DEFAULT)
-                            ? "Yes"
-                            : "No");
+                setProperty(DEFAULT,
+                            printerItem->template property<bool>(DEFAULT) ? QObject::tr("Yes").toStdString()
+                                                                          : QObject::tr("No").toStdString());
             }
         }
     };
@@ -97,5 +99,22 @@ void PrinterContainerItem<PrinterItemType>::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+template<typename PrinterItemType>
+void PrinterContainerItem<PrinterItemType>::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Path").toStdString());
+    children()[4]->setDisplayName(QObject::tr("Default").toStdString());
+
+    auto printerItem = getPrinter();
+
+    setProperty(PATH, printerItem->template property<std::string>(PATH));
+
+    setProperty(DEFAULT,
+                printerItem->template property<bool>(DEFAULT) ? QObject::tr("Yes").toStdString()
+                                                              : QObject::tr("No").toStdString());
 }
 
+} // namespace preferences

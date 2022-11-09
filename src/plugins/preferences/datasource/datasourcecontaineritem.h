@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -50,14 +49,16 @@ public:
     explicit DataSourceContainerItem();
 
     CommonItem getCommon() const;
-    void setCommon(const CommonItem& item);
+    void setCommon(const CommonItem &item);
 
     DataSourceItem getDataSource() const;
-    void setDataSource(const DataSourceItem& item);
+    void setDataSource(const DataSourceItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_DataSource_CONTAINER_ITEM_H
+#endif //GPUI_DataSource_CONTAINER_ITEM_H

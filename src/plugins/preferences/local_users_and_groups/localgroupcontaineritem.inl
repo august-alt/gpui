@@ -24,51 +24,51 @@
 
 namespace preferences
 {
-
-template <typename LocalItem>
+template<typename LocalItem>
 LocalGroupContainerItem<LocalItem>::LocalGroupContainerItem()
     : ModelView::CompoundItem(typeid(LocalGroupContainerItem<LocalItem>).name())
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
     addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
-    addProperty(FULL_NAME, "N/A")->setDisplayName(QObject::tr("Full Name").toStdString())->setEditable(false);
+    addProperty(FULL_NAME, QObject::tr("N/A").toStdString())
+        ->setDisplayName(QObject::tr("Full Name").toStdString())
+        ->setEditable(false);
     addProperty(DESCRIPTION, "")->setDisplayName(QObject::tr("Description").toStdString())->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
     addProperty<LocalItem>(LOCAL_USER_OR_GROUP)->setVisible(false);
 }
 
-template <typename LocalItem>
-CommonItem* LocalGroupContainerItem<LocalItem>::getCommon() const
+template<typename LocalItem>
+CommonItem *LocalGroupContainerItem<LocalItem>::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
-template <typename LocalItem>
+template<typename LocalItem>
 void LocalGroupContainerItem<LocalItem>::setCommon(const CommonItem &item)
 {
     setProperty(COMMON, item);
 }
 
-template <typename LocalItem>
+template<typename LocalItem>
 LocalItem LocalGroupContainerItem<LocalItem>::getLocalGroup() const
 {
     return property<LocalItem>(LOCAL_USER_OR_GROUP);
 }
 
-template <typename LocalItem>
+template<typename LocalItem>
 void LocalGroupContainerItem<LocalItem>::setLocalGroup(const LocalItem &item)
 {
     setProperty(LOCAL_USER_OR_GROUP, item);
 }
 
-template <typename LocalItem>
+template<typename LocalItem>
 void LocalGroupContainerItem<LocalItem>::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto baseItem = dynamic_cast<LocalItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto baseItem = dynamic_cast<LocalItem *>(item))
         {
             if (property == ACTION)
             {
@@ -100,4 +100,14 @@ void LocalGroupContainerItem<LocalItem>::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+template<typename LocalGroupItem>
+void LocalGroupContainerItem<LocalGroupItem>::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Full Name").toStdString());
+    children()[4]->setDisplayName(QObject::tr("Description").toStdString());
 }
+
+} // namespace preferences

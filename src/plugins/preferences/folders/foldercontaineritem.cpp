@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 FolderContainerItem::FolderContainerItem()
     : ModelView::CompoundItem("FolderContainerItem")
 {
@@ -42,7 +41,7 @@ FolderContainerItem::FolderContainerItem()
 
 CommonItem *FolderContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void FolderContainerItem::setCommon(const CommonItem &item)
@@ -50,9 +49,9 @@ void FolderContainerItem::setCommon(const CommonItem &item)
     setProperty(COMMON, item);
 }
 
-FolderItem* FolderContainerItem::getFolder() const
+FolderItem *FolderContainerItem::getFolder() const
 {
-    return static_cast<FolderItem*>(children().back());
+    return static_cast<FolderItem *>(children().back());
 }
 
 void FolderContainerItem::setFolder(const FolderItem &item)
@@ -62,9 +61,8 @@ void FolderContainerItem::setFolder(const FolderItem &item)
 
 void FolderContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto filesItem = dynamic_cast<FolderItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto filesItem = dynamic_cast<FolderItem *>(item))
         {
             if (property == ACTION)
             {
@@ -73,8 +71,7 @@ void FolderContainerItem::setupListeners()
 
             if (property == PATH)
             {
-                auto name = QUrl(QString::fromStdString(filesItem->property<std::string>(PATH))).fileName()
-                        .toStdString();
+                auto name = QUrl(QString::fromStdString(filesItem->property<std::string>(PATH))).fileName().toStdString();
                 setProperty(NAME, name);
                 setProperty(PATH, filesItem->property<std::string>(PATH));
             }
@@ -84,4 +81,12 @@ void FolderContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void FolderContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Path").toStdString());
 }
+
+} // namespace preferences

@@ -27,40 +27,41 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
 class LocalGroupItem;
 
-template <typename LocalGroupItem>
+template<typename LocalGroupItem>
 class LocalGroupContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME = "name";
-    static inline const std::string ORDER = "order";
-    static inline const std::string ACTION = "action";
+    static inline const std::string NAME        = "name";
+    static inline const std::string ORDER       = "order";
+    static inline const std::string ACTION      = "action";
     static inline const std::string DESCRIPTION = "description";
-    static inline const std::string FULL_NAME = "fullName";
-    static inline const std::string USER_NAME = "userName";
-    static inline const std::string GROUP_NAME = "groupName";
+    static inline const std::string FULL_NAME   = "fullName";
+    static inline const std::string USER_NAME   = "userName";
+    static inline const std::string GROUP_NAME  = "groupName";
 
-    static inline const std::string COMMON = "common";
+    static inline const std::string COMMON              = "common";
     static inline const std::string LOCAL_USER_OR_GROUP = "localUserOrGroupGroup";
 
     explicit LocalGroupContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
     LocalGroupItem getLocalGroup() const;
-    void setLocalGroup(const LocalGroupItem& item);
+    void setLocalGroup(const LocalGroupItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
 #include "localgroupcontaineritem.inl"
 
-#endif//GPUI_LOCALGROUP_CONTAINER_ITEM_H
+#endif //GPUI_LOCALGROUP_CONTAINER_ITEM_H

@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 FilesContainerItem::FilesContainerItem()
     : ModelView::CompoundItem("FilesContainerItem")
 {
@@ -41,9 +40,9 @@ FilesContainerItem::FilesContainerItem()
     addProperty<FilesItem>(FILES)->setVisible(false);
 }
 
-CommonItem* FilesContainerItem::getCommon() const
+CommonItem *FilesContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void FilesContainerItem::setCommon(const CommonItem &item)
@@ -53,7 +52,7 @@ void FilesContainerItem::setCommon(const CommonItem &item)
 
 FilesItem *FilesContainerItem::getFiles() const
 {
-    return static_cast<FilesItem*>(children().back());
+    return static_cast<FilesItem *>(children().back());
 }
 
 void FilesContainerItem::setFiles(const FilesItem &item)
@@ -63,9 +62,8 @@ void FilesContainerItem::setFiles(const FilesItem &item)
 
 void FilesContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto filesItem = dynamic_cast<FilesItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto filesItem = dynamic_cast<FilesItem *>(item))
         {
             if (property == ACTION)
             {
@@ -79,8 +77,9 @@ void FilesContainerItem::setupListeners()
 
             if (property == TARGET_PATH)
             {
-                auto name = QUrl(QString::fromStdString(filesItem->property<std::string>(TARGET_PATH))).fileName()
-                        .toStdString();
+                auto name = QUrl(QString::fromStdString(filesItem->property<std::string>(TARGET_PATH)))
+                                .fileName()
+                                .toStdString();
                 setProperty(NAME, name);
                 setProperty(TARGET_PATH, filesItem->property<std::string>(TARGET_PATH));
             }
@@ -90,4 +89,13 @@ void FilesContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void FilesContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Source").toStdString());
+    children()[4]->setDisplayName(QObject::tr("Target").toStdString());
 }
+
+} // namespace preferences

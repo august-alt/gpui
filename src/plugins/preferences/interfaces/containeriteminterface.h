@@ -25,19 +25,21 @@
 
 namespace ModelView
 {
-    class SessionItem;
+class SessionItem;
 }
 
 namespace preferences
 {
-    class ContainerItemInterface
-    {
-    public:
-        ContainerItemInterface() = default;
-        virtual ~ContainerItemInterface() = default;
+class ContainerItemInterface
+{
+public:
+    ContainerItemInterface()          = default;
+    virtual ~ContainerItemInterface() = default;
 
-        virtual void setupListeners() = 0;
-    };
-}
+    virtual void setupListeners() = 0;
 
-#endif//GPUI_CONTAINER_ITEM_INTERFACE_H
+    virtual void retranslateStrings() = 0;
+};
+} // namespace preferences
+
+#endif //GPUI_CONTAINER_ITEM_INTERFACE_H

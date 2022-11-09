@@ -30,7 +30,6 @@
 
 namespace preferences
 {
-
 ShortcutsContainerItem::ShortcutsContainerItem()
     : ModelView::CompoundItem("ShortcutsContainerItem")
 {
@@ -43,9 +42,9 @@ ShortcutsContainerItem::ShortcutsContainerItem()
     addProperty<ShortcutsItem>(SHORTCUTS)->setVisible(false);
 }
 
-CommonItem* ShortcutsContainerItem::getCommon() const
+CommonItem *ShortcutsContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void ShortcutsContainerItem::setCommon(const CommonItem &item)
@@ -53,9 +52,9 @@ void ShortcutsContainerItem::setCommon(const CommonItem &item)
     setProperty(COMMON, item);
 }
 
-ShortcutsItem* ShortcutsContainerItem::getShortcuts() const
+ShortcutsItem *ShortcutsContainerItem::getShortcuts() const
 {
-    return static_cast<ShortcutsItem*>(children().back());
+    return static_cast<ShortcutsItem *>(children().back());
 }
 
 void ShortcutsContainerItem::setShortcuts(const ShortcutsItem &item)
@@ -65,9 +64,8 @@ void ShortcutsContainerItem::setShortcuts(const ShortcutsItem &item)
 
 void ShortcutsContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto shortcutsItem = dynamic_cast<ShortcutsItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto shortcutsItem = dynamic_cast<ShortcutsItem *>(item))
         {
             if (property == ACTION)
             {
@@ -89,4 +87,12 @@ void ShortcutsContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void ShortcutsContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Target").toStdString());
 }
+
+} // namespace preferences

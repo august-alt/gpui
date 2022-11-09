@@ -24,50 +24,51 @@
 
 namespace preferences
 {
-
-template <typename PowerItemType>
+template<typename PowerItemType>
 PowerContainerItem<PowerItemType>::PowerContainerItem()
     : ModelView::CompoundItem(typeid(PowerContainerItem<PowerItemType>).name())
 {
     addProperty(NAME, PowerItemType().template property<std::string>(NAME))
-            ->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
+        ->setDisplayName(QObject::tr("Name").toStdString())
+        ->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "N/A")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, QObject::tr("N/A").toStdString())
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
     addProperty<PowerItemType>(POWER)->setVisible(false);
 }
 
-template <typename PowerItemType>
-CommonItem* PowerContainerItem<PowerItemType>::getCommon() const
+template<typename PowerItemType>
+CommonItem *PowerContainerItem<PowerItemType>::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
-template <typename PowerItemType>
+template<typename PowerItemType>
 void PowerContainerItem<PowerItemType>::setCommon(const CommonItem &item)
 {
     setProperty(COMMON, item);
 }
 
-template <typename PowerItemType>
-PowerItemType* PowerContainerItem<PowerItemType>::getPower() const
+template<typename PowerItemType>
+PowerItemType *PowerContainerItem<PowerItemType>::getPower() const
 {
-    return static_cast<PowerItemType*>(children().back());
+    return static_cast<PowerItemType *>(children().back());
 }
 
-template <typename PowerItemType>
-void PowerContainerItem<PowerItemType>::setPower(const PowerItemType& item)
+template<typename PowerItemType>
+void PowerContainerItem<PowerItemType>::setPower(const PowerItemType &item)
 {
     setProperty(POWER, item);
 }
 
-template <typename PowerItemType>
+template<typename PowerItemType>
 void PowerContainerItem<PowerItemType>::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto powerItem = dynamic_cast<PowerItemType*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto powerItem = dynamic_cast<PowerItemType *>(item))
         {
             if (property == ACTION)
             {
@@ -84,4 +85,12 @@ void PowerContainerItem<PowerItemType>::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+template<typename PowerItemType>
+void PowerContainerItem<PowerItemType>::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
 }
+
+} // namespace preferences

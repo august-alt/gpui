@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -46,15 +45,17 @@ public:
 
     explicit FolderContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    FolderItem* getFolder() const;
-    void setFolder(const FolderItem& item);
+    FolderItem *getFolder() const;
+    void setFolder(const FolderItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_FOLDER_CONTAINER_ITEM_H
+#endif //GPUI_FOLDER_CONTAINER_ITEM_H

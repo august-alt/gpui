@@ -24,8 +24,7 @@
 
 namespace preferences
 {
-
-template <typename FolderOptionItem>
+template<typename FolderOptionItem>
 FolderOptionsContainerItem<FolderOptionItem>::FolderOptionsContainerItem()
     : ModelView::CompoundItem(typeid(FolderOptionsContainerItem<FolderOptionItem>).name())
 {
@@ -33,36 +32,35 @@ FolderOptionsContainerItem<FolderOptionItem>::FolderOptionsContainerItem()
     addProperty<FolderOptionItem>(FOLDER_OPTION)->setVisible(false);
 }
 
-template <typename FolderOptionItem>
+template<typename FolderOptionItem>
 CommonItem FolderOptionsContainerItem<FolderOptionItem>::getCommon() const
 {
     return property<CommonItem>(COMMON);
 }
 
-template <typename FolderOptionItem>
+template<typename FolderOptionItem>
 void FolderOptionsContainerItem<FolderOptionItem>::setCommon(const CommonItem &item)
 {
     setProperty(COMMON, item);
 }
 
-template <typename FolderOptionItem>
+template<typename FolderOptionItem>
 FolderOptionItem FolderOptionsContainerItem<FolderOptionItem>::getFolderOption() const
 {
     return property<FolderOptionItem>(FOLDER_OPTION);
 }
 
-template <typename FolderOptionItem>
+template<typename FolderOptionItem>
 void FolderOptionsContainerItem<FolderOptionItem>::setFolderOption(const FolderOptionItem &item)
 {
     setProperty(FOLDER_OPTION, item);
 }
 
-template <typename FolderOptionItem>
+template<typename FolderOptionItem>
 void FolderOptionsContainerItem<FolderOptionItem>::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto folderOptionItem = dynamic_cast<FolderOptionItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto folderOptionItem = dynamic_cast<FolderOptionItem *>(item))
         {
             if (property == ACTION)
             {
@@ -84,4 +82,10 @@ void FolderOptionsContainerItem<FolderOptionItem>::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+template<typename FolderOptionItem>
+void FolderOptionsContainerItem<FolderOptionItem>::retranslateStrings()
+{
+    // TODO: Retranslate action.
 }
+
+} // namespace preferences

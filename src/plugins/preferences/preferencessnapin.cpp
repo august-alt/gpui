@@ -26,6 +26,8 @@
 
 #include "../../gui/mainwindow.h"
 
+#include "interfaces/containeriteminterface.h"
+
 #include "common/preferencesmodel.h"
 #include "common/preferencestreemodel.h"
 #include "common/preferencestreeproxymodel.h"
@@ -131,6 +133,9 @@ void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
     d->model     = std::make_unique<PreferencesTreeModel>();
     d->viewModel = std::make_unique<ModelView::TopItemsViewModel>(d->model.get());
     d->proxyViewModel->setSourceModel(d->viewModel.get());
+
+    d->retranslateModels(d->machinePreferencesModels);
+    d->retranslateModels(d->userPreferencesModels);
 }
 
 } // namespace gpui

@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -36,26 +35,28 @@ class FilesItem;
 class FilesContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME   = "name";
-    static inline const std::string ORDER  = "order";
-    static inline const std::string ACTION = "action";
-    static inline const std::string FROM_PATH = "fromPath";
+    static inline const std::string NAME        = "name";
+    static inline const std::string ORDER       = "order";
+    static inline const std::string ACTION      = "action";
+    static inline const std::string FROM_PATH   = "fromPath";
     static inline const std::string TARGET_PATH = "targetPath";
 
     static inline const std::string COMMON = "common";
-    static inline const std::string FILES = "files";
+    static inline const std::string FILES  = "files";
 
     explicit FilesContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    FilesItem* getFiles() const;
-    void setFiles(const FilesItem& item);
+    FilesItem *getFiles() const;
+    void setFiles(const FilesItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_FILES_CONTAINER_ITEM_H
+#endif //GPUI_FILES_CONTAINER_ITEM_H

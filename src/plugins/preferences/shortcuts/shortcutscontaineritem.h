@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 //! Folder item representation for editor.
 
 class CommonItem;
@@ -41,20 +40,22 @@ public:
     static inline const std::string ACTION        = "action";
     static inline const std::string TARGET_PATH   = "targetPath";
 
-    static inline const std::string COMMON        = "common";
-    static inline const std::string SHORTCUTS     = "shortcuts";
+    static inline const std::string COMMON    = "common";
+    static inline const std::string SHORTCUTS = "shortcuts";
 
     explicit ShortcutsContainerItem();
 
-    CommonItem* getCommon() const;
-    void setCommon(const CommonItem& item);
+    CommonItem *getCommon() const;
+    void setCommon(const CommonItem &item);
 
-    ShortcutsItem* getShortcuts() const;
-    void setShortcuts(const ShortcutsItem& item);
+    ShortcutsItem *getShortcuts() const;
+    void setShortcuts(const ShortcutsItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_SHORTCUTS_CONTAINER_ITEM_H
+#endif //GPUI_SHORTCUTS_CONTAINER_ITEM_H

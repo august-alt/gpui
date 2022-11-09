@@ -27,7 +27,6 @@
 
 namespace preferences
 {
-
 VariablesContainerItem::VariablesContainerItem()
     : ModelView::CompoundItem("VariablesContainerItem")
 {
@@ -35,15 +34,17 @@ VariablesContainerItem::VariablesContainerItem()
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
     addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
     addProperty(VALUE, "")->setDisplayName(QObject::tr("Value").toStdString())->setEditable(false);
-    addProperty(USER, "No")->setDisplayName(QObject::tr("User").toStdString())->setEditable(false);
+    addProperty(USER, QObject::tr("No").toStdString())
+        ->setDisplayName(QObject::tr("User").toStdString())
+        ->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
     addProperty<VariablesItem>(VARIABLES)->setVisible(false);
 }
 
-CommonItem* VariablesContainerItem::getCommon() const
+CommonItem *VariablesContainerItem::getCommon() const
 {
-    return static_cast<CommonItem*>(children()[childrenCount() - 2]);
+    return static_cast<CommonItem *>(children()[childrenCount() - 2]);
 }
 
 void VariablesContainerItem::setCommon(const CommonItem &item)
@@ -53,7 +54,7 @@ void VariablesContainerItem::setCommon(const CommonItem &item)
 
 VariablesItem *VariablesContainerItem::getVariables() const
 {
-    return static_cast<VariablesItem*>(children().back());
+    return static_cast<VariablesItem *>(children().back());
 }
 
 void VariablesContainerItem::setVariables(const VariablesItem &item)
@@ -63,9 +64,8 @@ void VariablesContainerItem::setVariables(const VariablesItem &item)
 
 void VariablesContainerItem::setupListeners()
 {
-    auto onChildPropertyChange = [&](SessionItem* item, std::string property)
-    {
-        if (auto variablesItem = dynamic_cast<VariablesItem*>(item))
+    auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
+        if (auto variablesItem = dynamic_cast<VariablesItem *>(item))
         {
             if (property == ACTION)
             {
@@ -79,7 +79,9 @@ void VariablesContainerItem::setupListeners()
 
             if (property == USER)
             {
-                setProperty(USER, variablesItem->property<bool>(USER) ? "Yes" : "No");
+                setProperty(USER,
+                            variablesItem->property<bool>(USER) ? QObject::tr("Yes").toStdString()
+                                                                : QObject::tr("No").toStdString());
             }
 
             if (property == NAME)
@@ -92,4 +94,19 @@ void VariablesContainerItem::setupListeners()
     this->mapper()->setOnChildPropertyChange(onChildPropertyChange, nullptr);
 }
 
+void VariablesContainerItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Order").toStdString());
+    children()[2]->setDisplayName(QObject::tr("Action").toStdString());
+    children()[3]->setDisplayName(QObject::tr("Value").toStdString());
+    children()[4]->setDisplayName(QObject::tr("User").toStdString());
+
+    auto variablesItem = getVariables();
+
+    setProperty(USER,
+                variablesItem->property<bool>(USER) ? QObject::tr("Yes").toStdString()
+                                                    : QObject::tr("No").toStdString());
 }
+
+} // namespace preferences

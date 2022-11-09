@@ -27,20 +27,19 @@
 
 namespace preferences
 {
-
 //! Network container item representation for editor.
 
 class CommonItem;
 class BaseNetworkItem;
 class DialUpItem;
 
-template <typename FolderOptionItem>
+template<typename FolderOptionItem>
 class FolderOptionsContainerItem : public ModelView::CompoundItem, public ContainerItemInterface
 {
 public:
-    static inline const std::string NAME = "name";
-    static inline const std::string ORDER = "order";
-    static inline const std::string ACTION = "action";
+    static inline const std::string NAME        = "name";
+    static inline const std::string ORDER       = "order";
+    static inline const std::string ACTION      = "action";
     static inline const std::string ASSOCIATION = "association";
 
     static inline const std::string COMMON        = "common";
@@ -49,16 +48,18 @@ public:
     explicit FolderOptionsContainerItem();
 
     CommonItem getCommon() const;
-    void setCommon(const CommonItem& item);
+    void setCommon(const CommonItem &item);
 
     FolderOptionItem getFolderOption() const;
     void setFolderOption(const FolderOptionItem &item);
 
     void setupListeners() override;
+
+    void retranslateStrings() override;
 };
 
-}
+} // namespace preferences
 
 #include "folderoptionscontaineritem.inl"
 
-#endif//GPUI_FOLDER_OPTIONS_CONTAINER_ITEM_H
+#endif //GPUI_FOLDER_OPTIONS_CONTAINER_ITEM_H

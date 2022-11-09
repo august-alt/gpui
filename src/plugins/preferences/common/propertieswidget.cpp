@@ -30,19 +30,19 @@
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/propertytableviewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/viewmodel/viewitem.h>
+
+#include "propertieswidgetdelegate.h"
 
 #include <QStyledItemDelegate>
 
 namespace preferences
 {
-
 PropertiesWidget::PropertiesWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PropertiesWidget())
     , view_model(nullptr)
-    , delegate(new ModelView::ViewModelDelegate())
+    , delegate(new PropertiesWidgetDelegate())
     , mapper(nullptr)
 {
     ui->setupUi(this);
@@ -66,14 +66,13 @@ void PropertiesWidget::setItem(ModelView::SessionItem *item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->stopProcessingStatusLabel, CommonItem::propertyToInt(CommonItem::BYPASS_ERRORS), "text");
-    mapper->addMapping(ui->runInUsersContextStatusLabel, CommonItem::propertyToInt(CommonItem::USER_CONTEXT), "text");
-    mapper->addMapping(ui->removeIfNotAppliedStatusLabel, CommonItem::propertyToInt(CommonItem::REMOVE_POLICY), "text");
+    mapper->addMapping(ui->stopProcessingStatusLabel, CommonItem::propertyToInt(CommonItem::BYPASS_ERRORS));
+    mapper->addMapping(ui->runInUsersContextStatusLabel, CommonItem::propertyToInt(CommonItem::USER_CONTEXT));
+    mapper->addMapping(ui->removeIfNotAppliedStatusLabel, CommonItem::propertyToInt(CommonItem::REMOVE_POLICY));
 
     mapper->addMapping(ui->plainTextEdit, CommonItem::propertyToInt(CommonItem::DESC));
 
     mapper->setCurrentModelIndex(view_model->index(0, 1));
-
 }
 
-}
+} // namespace preferences

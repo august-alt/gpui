@@ -492,6 +492,16 @@ context (user policy option).</translation>
         <source>Local Users And Groups</source>
         <translation type="vanished">Local Users And Groups</translation>
     </message>
+    <message>
+        <location filename="../propertieswidgetdelegate.cpp" line="43"/>
+        <source>Yes</source>
+        <translation>Yes</translation>
+    </message>
+    <message>
+        <location filename="../propertieswidgetdelegate.cpp" line="43"/>
+        <source>No</source>
+        <translation>No</translation>
+    </message>
 </context>
 <context>
     <name>SelectDialog</name>

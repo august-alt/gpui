@@ -493,6 +493,16 @@ context (user policy option).</source>
         <source>Local Users And Groups</source>
         <translation type="vanished">Локальные пользователи и группы</translation>
     </message>
+    <message>
+        <location filename="../propertieswidgetdelegate.cpp" line="43"/>
+        <source>Yes</source>
+        <translation>Да</translation>
+    </message>
+    <message>
+        <location filename="../propertieswidgetdelegate.cpp" line="43"/>
+        <source>No</source>
+        <translation>Нет</translation>
+    </message>
 </context>
 <context>
     <name>SelectDialog</name>

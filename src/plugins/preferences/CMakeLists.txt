@@ -26,6 +26,7 @@ set(HEADERS
     common/preferencesdialog.h
     common/preferencesmodel.h
     common/propertieswidget.h
+    common/propertieswidgetdelegate.h
     common/tabledetailswidget.h
     common/widgetfactory.h
 
@@ -204,6 +205,7 @@ set(SOURCES
     common/preferencesdialog.cpp
     common/preferencesmodel.cpp
     common/propertieswidget.cpp
+    common/propertieswidgetdelegate.cpp
     common/tabledetailswidget.cpp
     common/widgetfactory.cpp
 

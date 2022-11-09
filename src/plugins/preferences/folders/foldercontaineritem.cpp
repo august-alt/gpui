@@ -20,6 +20,8 @@
 
 #include "foldercontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "folderitem.h"
 
@@ -32,7 +34,9 @@ FolderContainerItem::FolderContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(PATH, "")->setDisplayName(QObject::tr("Path").toStdString())->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
@@ -62,18 +66,19 @@ void FolderContainerItem::setFolder(const FolderItem &item)
 void FolderContainerItem::setupListeners()
 {
     auto onChildPropertyChange = [&](SessionItem *item, std::string property) {
-        if (auto filesItem = dynamic_cast<FolderItem *>(item))
+        if (auto foldersItem = dynamic_cast<FolderItem *>(item))
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, filesItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(foldersItem->property<int>(ACTION)));
             }
 
             if (property == PATH)
             {
-                auto name = QUrl(QString::fromStdString(filesItem->property<std::string>(PATH))).fileName().toStdString();
+                auto name
+                    = QUrl(QString::fromStdString(foldersItem->property<std::string>(PATH))).fileName().toStdString();
                 setProperty(NAME, name);
-                setProperty(PATH, filesItem->property<std::string>(PATH));
+                setProperty(PATH, foldersItem->property<std::string>(PATH));
             }
         }
     };
@@ -87,6 +92,10 @@ void FolderContainerItem::retranslateStrings()
     children()[1]->setDisplayName(QObject::tr("Order").toStdString());
     children()[2]->setDisplayName(QObject::tr("Action").toStdString());
     children()[3]->setDisplayName(QObject::tr("Path").toStdString());
+
+    auto foldersItem = getFolder();
+
+    setProperty(ACTION, defaultActionsToString(foldersItem->property<int>(ACTION)));
 }
 
 } // namespace preferences

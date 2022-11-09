@@ -82,7 +82,7 @@ std::unique_ptr<RegistrySettings> RegistryModelBuilder::modelToSchema(std::uniqu
             auto properties = RegistryProperties_t(SubProp_t("", 0, 0),
                                                    registryModel->property<std::string>(RegistryItem::HIVE),
                                                    registryModel->property<std::string>(RegistryItem::KEY));
-            properties.action(getActionCheckboxModel(registryModel->property<std::string>(RegistryItem::ACTION)));
+            properties.action(getActionCheckboxModel(registryModel->property<int>(RegistryItem::ACTION)));
             properties.name(registryModel->property<std::string>(RegistryItem::NAME));
             properties.type(registryModel->property<std::string>(RegistryItem::TYPE));
             properties.value(registryModel->property<std::string>(RegistryItem::VALUE));

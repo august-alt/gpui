@@ -41,8 +41,7 @@ std::unique_ptr<PreferencesModel> VariablesModelBuilder::schemaToModel(
         auto properties = variablesSchema.Properties();
         for (const auto &currentProperties : properties)
         {
-            std::string actionState = getActionCheckboxState(
-                getOptionalPropertyData(currentProperties.action()).c_str());
+            int actionState = getActionCheckboxState(getOptionalPropertyData(currentProperties.action()).c_str());
 
             auto sessionItem = model->insertItem<VariablesContainerItem>(model->rootItem());
             sessionItem->setupListeners();
@@ -86,7 +85,7 @@ std::unique_ptr<EnvironmentVariables> VariablesModelBuilder::modelToSchema(std::
 
             auto properties = EnvironmentVariableProperties_t(varModel->property<std::string>(VariablesItem::NAME),
                                                               varModel->property<std::string>(VariablesItem::VALUE));
-            properties.action(getActionCheckboxModel(varModel->property<std::string>(VariablesItem::ACTION)));
+            properties.action(getActionCheckboxModel(varModel->property<int>(VariablesItem::ACTION)));
             properties.user(varModel->property<bool>(VariablesItem::USER));
             properties.partial(varModel->property<bool>(VariablesItem::PARTIAL));
 

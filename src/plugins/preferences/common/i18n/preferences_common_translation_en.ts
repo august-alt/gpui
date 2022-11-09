@@ -33,22 +33,22 @@ context (user policy option).</translation>
         <translation>Remove this item when it is no longer applied.</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="69"/>
+        <location filename="../commonview.ui" line="72"/>
         <source>Apply once and do not reapply.</source>
         <translation>Apply once and do not reapply.</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="86"/>
+        <location filename="../commonview.ui" line="89"/>
         <source>Item-level targeting.</source>
         <translation>Item-level targeting.</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="96"/>
+        <location filename="../commonview.ui" line="99"/>
         <source>Targetting...</source>
         <translation>Targetting...</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="108"/>
+        <location filename="../commonview.ui" line="111"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
@@ -97,64 +97,64 @@ context (user policy option).</translation>
         <translation>Properties:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="51"/>
+        <location filename="../propertieswidget.ui" line="54"/>
         <source>Stop processing items in extension on error:</source>
         <translation>Stop processing items in extension on error:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="67"/>
-        <location filename="../propertieswidget.ui" line="96"/>
-        <location filename="../propertieswidget.ui" line="125"/>
-        <location filename="../propertieswidget.ui" line="151"/>
-        <location filename="../propertieswidget.ui" line="177"/>
-        <location filename="../propertieswidget.ui" line="203"/>
-        <location filename="../propertieswidget.ui" line="229"/>
-        <location filename="../propertieswidget.ui" line="255"/>
+        <location filename="../propertieswidget.ui" line="70"/>
+        <location filename="../propertieswidget.ui" line="99"/>
+        <location filename="../propertieswidget.ui" line="128"/>
+        <location filename="../propertieswidget.ui" line="163"/>
+        <location filename="../propertieswidget.ui" line="198"/>
+        <location filename="../propertieswidget.ui" line="233"/>
+        <location filename="../propertieswidget.ui" line="268"/>
+        <location filename="../propertieswidget.ui" line="303"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="80"/>
+        <location filename="../propertieswidget.ui" line="83"/>
         <source>Run in user&apos;s context:</source>
         <translation>Run in user&apos;s context:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="109"/>
+        <location filename="../propertieswidget.ui" line="112"/>
         <source>Remove if not applied:</source>
         <translation>Remove if not applied:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="138"/>
+        <location filename="../propertieswidget.ui" line="144"/>
         <source>Apply once:</source>
         <translation>Apply once:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="164"/>
+        <location filename="../propertieswidget.ui" line="179"/>
         <source>Filtered Directly:</source>
         <translation>Filtered Directly:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="190"/>
+        <location filename="../propertieswidget.ui" line="214"/>
         <source>Filtered by ancestor:</source>
         <translation>Filtered by ancestor:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="216"/>
+        <location filename="../propertieswidget.ui" line="249"/>
         <source>Disabled directly:</source>
         <translation>Disabled directly:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="242"/>
+        <location filename="../propertieswidget.ui" line="284"/>
         <source>Disabled by ancestor:</source>
         <translation>Disabled by ancestor:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="265"/>
+        <location filename="../propertieswidget.ui" line="313"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="275"/>
+        <location filename="../propertieswidget.ui" line="323"/>
         <source>No description provided.</source>
         <translation>No description provided.</translation>
     </message>
@@ -501,6 +501,27 @@ context (user policy option).</translation>
         <location filename="../propertieswidgetdelegate.cpp" line="43"/>
         <source>No</source>
         <translation>No</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="31"/>
+        <location filename="../defaultactions.cpp" line="40"/>
+        <source>Create</source>
+        <translation>Create</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="33"/>
+        <source>Replace</source>
+        <translation>Replace</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="35"/>
+        <source>Update</source>
+        <translation>Update</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="37"/>
+        <source>Delete</source>
+        <translation>Delete</translation>
     </message>
 </context>
 <context>

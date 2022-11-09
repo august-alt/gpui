@@ -40,9 +40,8 @@ std::unique_ptr<PreferencesModel> ShortcutsModelBuilder::schemaToModel(std::uniq
         auto properties = shortcutsSchema.Properties();
         for (const auto &currentProperties : properties)
         {
-            std::string actionState = getActionCheckboxState(
-                getOptionalPropertyData(currentProperties.action()).c_str());
-            int iconIndex = static_cast<int>(getOptionalPropertyData(currentProperties.iconIndex()));
+            auto actionState = getActionCheckboxState(getOptionalPropertyData(currentProperties.action()).c_str());
+            int iconIndex    = static_cast<int>(getOptionalPropertyData(currentProperties.iconIndex()));
 
             auto sessionItem = model->insertItem<ShortcutsContainerItem>(model->rootItem());
             sessionItem->setupListeners();
@@ -99,7 +98,7 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
             auto properties = ShortcutsProperties_t(shortcutModel->property<std::string>(ShortcutsItem::TARGET_TYPE),
                                                     shortcutModel->property<std::string>(ShortcutsItem::TARGET_PATH),
                                                     shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_PATH));
-            properties.action(getActionCheckboxModel(shortcutModel->property<std::string>(ShortcutsItem::ACTION)));
+            properties.action(getActionCheckboxModel(shortcutModel->property<int>(ShortcutsItem::ACTION)));
             properties.pidl(shortcutModel->property<std::string>(ShortcutsItem::PIDL));
             properties.arguments(shortcutModel->property<std::string>(ShortcutsItem::ARGUMENTS));
             properties.startIn(shortcutModel->property<std::string>(ShortcutsItem::START_IN));

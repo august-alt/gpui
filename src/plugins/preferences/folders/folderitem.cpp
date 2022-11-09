@@ -26,7 +26,7 @@ namespace preferences
 FolderItem::FolderItem()
     : ModelView::CompoundItem("FolderItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(PATH, "");
     addProperty(READONLY, false);
     addProperty(ARCHIVE, false);

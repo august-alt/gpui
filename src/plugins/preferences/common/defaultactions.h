@@ -18,24 +18,24 @@
 **
 ***********************************************************************************************************************/
 
-#include "powerplanitem.h"
+#ifndef GPUI_DEFAULT_ACTIONS_H
+#define GPUI_DEFAULT_ACTIONS_H
+
+#include <string>
+#include <QObject>
 
 namespace preferences
 {
-
-PowerPlanItem::PowerPlanItem()
-    : ModelView::CompoundItem("PowerPlanItem")
+enum DefaultActions
 {
-    addProperty(ACTION, 0);
-    addProperty(NAME, "");
-}
+    CREATE__MODE = 0,
+    REPLACE_MODE = 1,
+    UPDATE__MODE = 2,
+    DELETE__MODE = 3
+};
 
-PowerPlanItem::PowerPlanItem(const PowerPlanItem &other)
-    : ModelView::CompoundItem("PowerPlanItem")
-{
-    Q_UNUSED(other);
-    addProperty(ACTION, 0);
-    addProperty(NAME, "");
-}
+std::string defaultActionsToString(int mode);
 
-}
+} // namespace preferences
+
+#endif //GPUI_DEFAULT_ACTIONS_H

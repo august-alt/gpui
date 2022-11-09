@@ -26,7 +26,7 @@ namespace preferences
 SharedPrinterItem::SharedPrinterItem()
     : BasePreferenceItem<::preferences::SharedPrinterItem>("SharedPrinterItem")
 {
-    addProperty(propertyToString(ACTION), "");
+    addProperty(propertyToString(ACTION), 0);
     addProperty(propertyToString(LOCATION), "");
     addProperty(propertyToString(PATH), "");
     addProperty(propertyToString(COMMENT), "");
@@ -43,7 +43,7 @@ SharedPrinterItem::SharedPrinterItem()
 SharedPrinterItem::SharedPrinterItem(const SharedPrinterItem &other)
     : BasePreferenceItem<::preferences::SharedPrinterItem>("SharedPrinterItem")
 {
-    copyProperty<std::string>(ACTION, other);
+    copyProperty<int>(ACTION, other);
     copyProperty<std::string>(LOCATION, other);
     copyProperty<std::string>(PATH, other);
     copyProperty<std::string>(COMMENT, other);

@@ -22,11 +22,10 @@
 
 namespace preferences
 {
-
 IniItem::IniItem()
     : ModelView::CompoundItem("IniItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(PATH, "");
     addProperty(SECTION, "");
     addProperty(VALUE, "");
@@ -36,11 +35,11 @@ IniItem::IniItem()
 IniItem::IniItem(const IniItem &other)
     : ModelView::CompoundItem("IniItem")
 {
-    addProperty(ACTION, other.property<QString>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(PATH, other.property<QString>(PATH));
     addProperty(SECTION, other.property<QString>(SECTION));
     addProperty(VALUE, other.property<QString>(VALUE));
     addProperty(PROPERTY, other.property<QString>(PROPERTY));
 }
 
-}
+} // namespace preferences

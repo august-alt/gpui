@@ -20,6 +20,8 @@
 
 #include "filescontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "filesitem.h"
 
@@ -32,7 +34,9 @@ FilesContainerItem::FilesContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(FROM_PATH, "")->setDisplayName(QObject::tr("Source").toStdString())->setEditable(false);
     addProperty(TARGET_PATH, "")->setDisplayName(QObject::tr("Target").toStdString())->setEditable(false);
 
@@ -67,7 +71,7 @@ void FilesContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, filesItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(filesItem->property<int>(ACTION)));
             }
 
             if (property == FROM_PATH)
@@ -96,6 +100,10 @@ void FilesContainerItem::retranslateStrings()
     children()[2]->setDisplayName(QObject::tr("Action").toStdString());
     children()[3]->setDisplayName(QObject::tr("Source").toStdString());
     children()[4]->setDisplayName(QObject::tr("Target").toStdString());
+
+    auto filesItem = getFiles();
+
+    setProperty(ACTION, defaultActionsToString(filesItem->property<int>(ACTION)));
 }
 
 } // namespace preferences

@@ -69,7 +69,7 @@ void SharesWidget::setItem(ModelView::SessionItem *item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->shareNameLineEdit, 1);
     mapper->addMapping(ui->folderPathLineEdit, 2);
     mapper->addMapping(ui->commentLineEdit, 3);

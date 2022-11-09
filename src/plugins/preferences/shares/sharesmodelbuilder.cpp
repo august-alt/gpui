@@ -89,7 +89,7 @@ std::unique_ptr<NetworkShareSettings> SharesModelBuilder::modelToSchema(std::uni
             auto properties = ShareProperties_t(sharesModel->property<std::string>(SharesItem::NAME));
             properties.comment(sharesModel->property<std::string>(SharesItem::COMMENT));
             properties.path(sharesModel->property<std::string>(SharesItem::PATH));
-            properties.action(getActionCheckboxModel(sharesModel->property<std::string>(SharesItem::ACTION)));
+            properties.action(getActionCheckboxModel(sharesModel->property<int>(SharesItem::ACTION)));
             properties.allRegular(sharesModel->property<bool>(SharesItem::ALL_REGULAR));
             properties.allHidden(sharesModel->property<bool>(SharesItem::ALL_HIDDEN));
             properties.allAdminDrive(sharesModel->property<bool>(SharesItem::ALL_ADMIN_DRIVE));

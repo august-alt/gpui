@@ -20,6 +20,8 @@
 
 #include "shortcutscontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "shortcutsitem.h"
 
@@ -35,7 +37,9 @@ ShortcutsContainerItem::ShortcutsContainerItem()
 {
     addProperty(SHORTCUT_PATH, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(TARGET_PATH, "")->setDisplayName(QObject::tr("Target").toStdString())->setEditable(false);
 
     addProperty<CommonItem>(COMMON)->setVisible(false);
@@ -69,7 +73,7 @@ void ShortcutsContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, shortcutsItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(shortcutsItem->property<int>(ACTION)));
             }
 
             if (property == SHORTCUT_PATH)
@@ -93,6 +97,10 @@ void ShortcutsContainerItem::retranslateStrings()
     children()[1]->setDisplayName(QObject::tr("Order").toStdString());
     children()[2]->setDisplayName(QObject::tr("Action").toStdString());
     children()[3]->setDisplayName(QObject::tr("Target").toStdString());
+
+    auto shortcutsItem = getShortcuts();
+
+    setProperty(ACTION, defaultActionsToString(shortcutsItem->property<int>(ACTION)));
 }
 
 } // namespace preferences

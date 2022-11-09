@@ -61,7 +61,7 @@ void FolderWidget::setItem(ModelView::SessionItem *item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->pathLineEdit, 1);
     mapper->addMapping(ui->readOnly, 2);
     mapper->addMapping(ui->archive, 3);

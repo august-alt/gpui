@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 LocalUserWidget::LocalUserWidget(QWidget *parent, LocalUserItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ LocalUserWidget::~LocalUserWidget()
     delete ui;
 }
 
-void LocalUserWidget::setItem(ModelView::SessionItem* item)
+void LocalUserWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -62,7 +61,7 @@ void LocalUserWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->userComboBox, 1);
     mapper->addMapping(ui->renameLineEdit, 2);
     mapper->addMapping(ui->fullNameLineEdit, 3);
@@ -84,4 +83,4 @@ QString LocalUserWidget::name() const
     return "General";
 }
 
-}
+} // namespace preferences

@@ -26,7 +26,7 @@ namespace preferences
 DrivesItem::DrivesItem()
     : ModelView::CompoundItem("DrivesItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(PATH, "");
     addProperty(PERSISTENT, false);
     addProperty(LABEL, "");
@@ -42,7 +42,7 @@ DrivesItem::DrivesItem()
 DrivesItem::DrivesItem(const DrivesItem &other)
     : ModelView::CompoundItem("DrivesItem")
 {
-    addProperty(ACTION, other.property<std::string>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(PATH, other.property<std::string>(PATH));
     addProperty(PERSISTENT, other.property<bool>(PERSISTENT));
     addProperty(LABEL, other.property<std::string>(LABEL));

@@ -20,6 +20,8 @@
 
 #include "drivescontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "drivesitem.h"
 
@@ -32,7 +34,9 @@ DrivesContainerItem::DrivesContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(PATH, "")->setDisplayName(QObject::tr("Path").toStdString())->setEditable(false);
     addProperty(PERSISTENT, QObject::tr("No").toStdString())
         ->setDisplayName(QObject::tr("Reconnect").toStdString())
@@ -69,7 +73,7 @@ void DrivesContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, drivesItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(drivesItem->property<int>(ACTION)));
             }
 
             if (property == PATH)
@@ -99,6 +103,8 @@ void DrivesContainerItem::retranslateStrings()
     children()[4]->setDisplayName(QObject::tr("Reconnect").toStdString());
 
     auto drivesItem = getDrives();
+
+    setProperty(ACTION, defaultActionsToString(drivesItem->property<int>(ACTION)));
 
     setProperty(PERSISTENT,
                 drivesItem->property<bool>(PERSISTENT) ? QObject::tr("Yes").toStdString()

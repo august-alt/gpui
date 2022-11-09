@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 SharedPrinterWidget::SharedPrinterWidget(QWidget *parent, SharedPrinterItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ SharedPrinterWidget::~SharedPrinterWidget()
     delete ui;
 }
 
-void SharedPrinterWidget::setItem(ModelView::SessionItem* item)
+void SharedPrinterWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -62,7 +61,7 @@ void SharedPrinterWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, SharedPrinterItem::propertyToInt(SharedPrinterItem::ACTION));
+    mapper->addMapping(ui->actionComboBox, SharedPrinterItem::propertyToInt(SharedPrinterItem::ACTION), "currentIndex");
     mapper->addMapping(ui->sharedPathLineEdit, SharedPrinterItem::propertyToInt(SharedPrinterItem::PATH));
     mapper->addMapping(ui->setPrinterCheckBox, SharedPrinterItem::propertyToInt(SharedPrinterItem::DEFAULT));
     mapper->addMapping(ui->onlyIfCheckBox, SharedPrinterItem::propertyToInt(SharedPrinterItem::SKIP_LOCAL));
@@ -84,5 +83,4 @@ QString SharedPrinterWidget::name() const
     return "General";
 }
 
-}
-
+} // namespace preferences

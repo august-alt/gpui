@@ -22,11 +22,10 @@
 
 namespace preferences
 {
-
 VariablesItem::VariablesItem()
     : ModelView::CompoundItem("VariablesItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(USER, true);
     addProperty(NAME, "");
     addProperty(PARTIAL, false);
@@ -37,7 +36,7 @@ VariablesItem::VariablesItem()
 VariablesItem::VariablesItem(const VariablesItem &other)
     : ModelView::CompoundItem("VariablesItem")
 {
-    addProperty(ACTION, other.property<QString>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(USER, other.property<bool>(USER));
     addProperty(NAME, other.property<QString>(NAME));
     addProperty(PARTIAL, other.property<bool>(PARTIAL));
@@ -45,4 +44,4 @@ VariablesItem::VariablesItem(const VariablesItem &other)
     addProperty(SYSTEM, !other.property<bool>(USER));
 }
 
-}
+} // namespace preferences

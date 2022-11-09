@@ -22,7 +22,6 @@
 
 namespace preferences
 {
-
 GroupMemberItem::GroupMemberItem()
     : ModelView::CompoundItem("GroupMemberItem")
 {
@@ -35,9 +34,8 @@ GroupMemberItem::GroupMemberItem(const GroupMemberItem &other)
     : ModelView::CompoundItem("GroupMemberItem")
 {
     addProperty(NAME, other.property<std::string>(NAME));
-    addProperty(ACTION, other.property<std::string>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(SID, other.property<std::string>(SID));
 }
 
-}
-
+} // namespace preferences

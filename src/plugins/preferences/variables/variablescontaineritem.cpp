@@ -20,6 +20,8 @@
 
 #include "variablescontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "variablesitem.h"
 
@@ -32,7 +34,9 @@ VariablesContainerItem::VariablesContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(VALUE, "")->setDisplayName(QObject::tr("Value").toStdString())->setEditable(false);
     addProperty(USER, QObject::tr("No").toStdString())
         ->setDisplayName(QObject::tr("User").toStdString())
@@ -69,7 +73,7 @@ void VariablesContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, variablesItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(variablesItem->property<int>(ACTION)));
             }
 
             if (property == VALUE)
@@ -103,6 +107,8 @@ void VariablesContainerItem::retranslateStrings()
     children()[4]->setDisplayName(QObject::tr("User").toStdString());
 
     auto variablesItem = getVariables();
+
+    setProperty(ACTION, defaultActionsToString(variablesItem->property<int>(ACTION)));
 
     setProperty(USER,
                 variablesItem->property<bool>(USER) ? QObject::tr("Yes").toStdString()

@@ -22,11 +22,10 @@
 
 namespace preferences
 {
-
 OpenWithItem::OpenWithItem()
     : ModelView::CompoundItem("OpenWithItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(FILE_EXTENSION, "");
     addProperty(APPLICATION_PATH, "");
     addProperty(DEFAULT, false);
@@ -35,10 +34,10 @@ OpenWithItem::OpenWithItem()
 OpenWithItem::OpenWithItem(const OpenWithItem &other)
     : ModelView::CompoundItem("OpenWithItem")
 {
-    addProperty(ACTION, other.property<QString>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(FILE_EXTENSION, other.property<std::string>(FILE_EXTENSION));
     addProperty(APPLICATION_PATH, other.property<std::string>(APPLICATION_PATH));
     addProperty(DEFAULT, other.property<bool>(DEFAULT));
 }
 
-}
+} // namespace preferences

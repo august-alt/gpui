@@ -64,7 +64,7 @@ void VariablesWidget::setItem(ModelView::SessionItem *item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->userVariableRadio, 1);
     mapper->addMapping(ui->nameLineEdit, 2);
     mapper->addMapping(ui->partialCheckBox, 3);

@@ -20,6 +20,8 @@
 
 #include "sharescontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "sharesitem.h"
 
@@ -34,7 +36,9 @@ SharesContainerItem::SharesContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(PATH, "")->setDisplayName(QObject::tr("Path").toStdString())->setEditable(false);
     addProperty(USER_LIMIT, QObject::tr("Unchanged").toStdString())
         ->setDisplayName(QObject::tr("User Limit").toStdString())
@@ -74,7 +78,7 @@ void SharesContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, sharesItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(sharesItem->property<int>(ACTION)));
             }
 
             if (property == NAME)
@@ -138,6 +142,8 @@ void SharesContainerItem::retranslateStrings()
     children()[5]->setDisplayName(QObject::tr("ABE").toStdString());
 
     auto sharesItem = getShares();
+
+    setProperty(ACTION, defaultActionsToString(sharesItem->property<int>(ACTION)));
 
     auto limitUsers = sharesItem->property<std::string>(LIMIT_USERS);
 

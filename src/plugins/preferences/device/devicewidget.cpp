@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 DeviceWidget::DeviceWidget(QWidget *parent, DeviceItem *item)
     : PreferenceWidgetInterface(parent)
     , m_item(item)
@@ -47,7 +46,7 @@ DeviceWidget::~DeviceWidget()
     delete ui;
 }
 
-void DeviceWidget::setItem(ModelView::SessionItem* item)
+void DeviceWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -61,7 +60,7 @@ void DeviceWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->deviceClassLineEdit, 1);
     mapper->addMapping(ui->deviceTypeLineEdit, 2);
 
@@ -90,4 +89,4 @@ QString DeviceWidget::name() const
     return "General";
 }
 
-}
+} // namespace preferences

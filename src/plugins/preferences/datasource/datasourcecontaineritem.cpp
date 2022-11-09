@@ -20,6 +20,8 @@
 
 #include "datasourcecontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "datasourceitem.h"
 
@@ -32,7 +34,9 @@ DataSourceContainerItem::DataSourceContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(DRIVER, "")->setDisplayName(QObject::tr("Driver").toStdString())->setEditable(false);
     addProperty(USERDSN, "")->setDisplayName(QObject::tr("User DSN").toStdString())->setEditable(false);
     addProperty(USERNAME, "")->setDisplayName(QObject::tr("Username").toStdString())->setEditable(false);
@@ -51,9 +55,9 @@ void DataSourceContainerItem::setCommon(const CommonItem &item)
     setProperty(COMMON, item);
 }
 
-DataSourceItem DataSourceContainerItem::getDataSource() const
+DataSourceItem *DataSourceContainerItem::getDataSource() const
 {
-    return property<DataSourceItem>(DATASOURCE);
+    return static_cast<DataSourceItem *>(children().back());
 }
 
 void DataSourceContainerItem::setDataSource(const DataSourceItem &item)
@@ -68,7 +72,7 @@ void DataSourceContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, dataSourceItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(dataSourceItem->property<int>(ACTION)));
             }
 
             if (property == DSN)
@@ -104,6 +108,10 @@ void DataSourceContainerItem::retranslateStrings()
     children()[3]->setDisplayName(QObject::tr("Driver").toStdString());
     children()[4]->setDisplayName(QObject::tr("User DSN").toStdString());
     children()[5]->setDisplayName(QObject::tr("Username").toStdString());
+
+    auto dataSourceItem = getDataSource();
+
+    setProperty(ACTION, defaultActionsToString(dataSourceItem->property<int>(ACTION)));
 }
 
 } // namespace preferences

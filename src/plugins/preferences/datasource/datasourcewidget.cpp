@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 DataSourceWidget::DataSourceWidget(QWidget *parent, DataSourceItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ DataSourceWidget::~DataSourceWidget()
     delete ui;
 }
 
-void DataSourceWidget::setItem(ModelView::SessionItem* item)
+void DataSourceWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -62,7 +61,7 @@ void DataSourceWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->dataSourceLineEdit, 2);
     mapper->addMapping(ui->driverLineEdit, 3);
     mapper->addMapping(ui->descriptionLineEdit, 4);
@@ -80,4 +79,4 @@ QString DataSourceWidget::name() const
     return "General";
 }
 
-}
+} // namespace preferences

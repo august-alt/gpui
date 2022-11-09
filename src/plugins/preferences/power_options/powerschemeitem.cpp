@@ -26,7 +26,7 @@ namespace preferences
 PowerSchemeItem::PowerSchemeItem()
     : BasePreferenceItem<PowerSchemeItem>("PowerSchemeItem")
 {
-    addProperty(propertyToString(ACTION), "");
+    addProperty(propertyToString(ACTION), 0);
     addProperty(propertyToString(NAME), "");
     addProperty(propertyToString(DEFAULT), false);
     addProperty(propertyToString(MONITOR_AC), "");
@@ -42,7 +42,7 @@ PowerSchemeItem::PowerSchemeItem()
 PowerSchemeItem::PowerSchemeItem(const PowerSchemeItem &other)
     : BasePreferenceItem<PowerSchemeItem>("PowerSchemeItem")
 {
-    copyProperty<std::string>(ACTION, other);
+    copyProperty<int>(ACTION, other);
     copyProperty<std::string>(NAME, other);
     copyProperty<bool>(DEFAULT, other);
     copyProperty<std::string>(MONITOR_AC, other);

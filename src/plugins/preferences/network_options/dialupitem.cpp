@@ -26,7 +26,7 @@ namespace preferences
 DialUpItem::DialUpItem()
     : ModelView::CompoundItem("DialUpItem")
 {
-    addProperty(propertyToString(ACTION), "");
+    addProperty(propertyToString(ACTION), 0);
     addProperty(propertyToString(USER), false);
     addProperty(propertyToString(NAME), "");
     addProperty(propertyToString(PHONE_NUMBER), "");
@@ -36,7 +36,7 @@ DialUpItem::DialUpItem()
 DialUpItem::DialUpItem(const DialUpItem &other)
     : ModelView::CompoundItem("DialUpItem")
 {
-    copyProperty<std::string>(ACTION, other);
+    copyProperty<int>(ACTION, other);
     copyProperty<bool>(USER, other);
     copyProperty<std::string>(NAME, other);
     copyProperty<std::string>(PHONE_NUMBER, other);

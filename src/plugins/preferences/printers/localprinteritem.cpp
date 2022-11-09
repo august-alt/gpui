@@ -26,7 +26,7 @@ namespace preferences
 LocalPrinterItem::LocalPrinterItem()
     : BasePreferenceItem<::preferences::LocalPrinterItem>("LocalPrinterItem")
 {
-    addProperty(propertyToString(ACTION), "");
+    addProperty(propertyToString(ACTION), 0);
     addProperty(propertyToString(NAME), "");
     addProperty(propertyToString(PORT), "");
     addProperty(propertyToString(PATH), "");
@@ -39,7 +39,7 @@ LocalPrinterItem::LocalPrinterItem()
 LocalPrinterItem::LocalPrinterItem(const LocalPrinterItem &other)
     : BasePreferenceItem<::preferences::LocalPrinterItem>("LocalPrinterItem")
 {
-    copyProperty<std::string>(ACTION, other);
+    copyProperty<int>(ACTION, other);
     copyProperty<std::string>(NAME, other);
     copyProperty<std::string>(PORT, other);
     copyProperty<std::string>(PATH, other);

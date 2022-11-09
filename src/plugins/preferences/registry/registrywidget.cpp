@@ -64,7 +64,7 @@ void RegistryWidget::setItem(ModelView::SessionItem *item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->hiveComboBox, 1);
     mapper->addMapping(ui->keyPathLineEdit, 2);
     mapper->addMapping(ui->valueNameLineEdit, 3);

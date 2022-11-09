@@ -22,11 +22,10 @@
 
 namespace preferences
 {
-
 TcpPrinterItem::TcpPrinterItem()
     : BasePreferenceItem<::preferences::TcpPrinterItem>("TcpPrinterItem")
 {
-    addProperty(propertyToString(ACTION), "");
+    addProperty(propertyToString(ACTION), 0);
     addProperty(propertyToString(IP_ADDRESS), "");
     addProperty(propertyToString(USE_DNS), false);
     addProperty(propertyToString(LOCAL_NAME), "");
@@ -49,7 +48,7 @@ TcpPrinterItem::TcpPrinterItem()
 TcpPrinterItem::TcpPrinterItem(const TcpPrinterItem &other)
     : BasePreferenceItem<::preferences::TcpPrinterItem>("TcpPrinterItem")
 {
-    copyProperty<std::string>(ACTION, other);
+    copyProperty<int>(ACTION, other);
     copyProperty<std::string>(IP_ADDRESS, other);
     copyProperty<bool>(USE_DNS, other);
     copyProperty<std::string>(LOCAL_NAME, other);
@@ -69,4 +68,4 @@ TcpPrinterItem::TcpPrinterItem(const TcpPrinterItem &other)
     copyProperty<bool>(LPR_PROTOCOL, other);
 }
 
-}
+} // namespace preferences

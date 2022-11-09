@@ -28,7 +28,7 @@ namespace preferences
 LocalGroupItem::LocalGroupItem()
     : BaseLocalItem("LocalGroupItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(GROUP_NAME, "");
     addProperty(GROUP_SID, "");
     addProperty(NEW_NAME, "");
@@ -44,7 +44,7 @@ LocalGroupItem::LocalGroupItem()
 LocalGroupItem::LocalGroupItem(const LocalGroupItem &other)
     : BaseLocalItem("LocalGroupItem")
 {
-    addProperty(ACTION, other.property<std::string>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(GROUP_NAME, other.property<std::string>(GROUP_NAME));
     addProperty(GROUP_SID, other.property<std::string>(GROUP_SID));
     addProperty(NEW_NAME, other.property<std::string>(NEW_NAME));

@@ -132,8 +132,10 @@ void TableDetailsWidget::on_treeView_doubleClicked(const QModelIndex &index)
 {
     if (index.isValid())
     {
-        auto item = view_model->sessionItemFromIndex(index);
-        PreferencesDialog(item->parent(), nullptr).exec();
+        auto item              = view_model->sessionItemFromIndex(index);
+        auto preferencesDialog = new PreferencesDialog(item->parent(), this);
+        connect(preferencesDialog, &QDialog::accepted, [&]() { emit okPressed(); });
+        preferencesDialog->exec();
     }
 }
 

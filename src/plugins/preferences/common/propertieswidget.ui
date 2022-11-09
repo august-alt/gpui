@@ -137,6 +137,9 @@
         <property name="text">
          <string>Apply once:</string>
         </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="3" column="1">
@@ -162,6 +165,9 @@
         </property>
         <property name="text">
          <string>Filtered Directly:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -189,6 +195,9 @@
         <property name="text">
          <string>Filtered by ancestor:</string>
         </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="5" column="1">
@@ -215,6 +224,9 @@
         <property name="text">
          <string>Disabled directly:</string>
         </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="6" column="1">
@@ -240,6 +252,9 @@
         </property>
         <property name="text">
          <string>Disabled by ancestor:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

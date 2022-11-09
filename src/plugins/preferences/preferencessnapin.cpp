@@ -70,6 +70,14 @@ void PreferencesSnapIn::onInitialize(QMainWindow *window)
 
     setRootNode(d->proxyViewModel.get());
 
+    if (mainWindow)
+    {
+        QObject::connect(d->proxyViewModel.get(),
+                         &PreferencesTreeProxyModel::savePolicyChanges,
+                         mainWindow,
+                         &MainWindow::updateStatusBar);
+    }
+
     std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
 }
 

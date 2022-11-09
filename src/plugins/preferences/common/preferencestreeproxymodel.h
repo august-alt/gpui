@@ -40,6 +40,8 @@ class PreferencesTreeProxyModelPrivate;
 
 class PreferencesTreeProxyModel : public QIdentityProxyModel
 {
+    Q_OBJECT
+
 public:
     PreferencesTreeProxyModel();
     ~PreferencesTreeProxyModel();
@@ -50,6 +52,9 @@ public:
                               std::map<std::string, std::unique_ptr<PreferencesModel>> *userModels);
 
     void setSnapIn(gpui::PreferencesSnapInPrivate *snapIn);
+
+signals:
+    void savePolicyChanges();
 
 private:
     PreferencesTreeProxyModelPrivate *d = nullptr;

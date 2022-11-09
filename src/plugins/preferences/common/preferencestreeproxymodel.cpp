@@ -127,6 +127,10 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
                                          &TableDetailsWidget::okPressed,
                                          d->snapIn,
                                          &gpui::PreferencesSnapInPrivate::onDataSave);
+                        QObject::connect(contentWidget,
+                                         &TableDetailsWidget::okPressed,
+                                         this,
+                                         &PreferencesTreeProxyModel::savePolicyChanges);
                     }
                 }
             }

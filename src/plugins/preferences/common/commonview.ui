@@ -60,6 +60,9 @@ context (user policy option).</string>
       </item>
       <item>
        <widget class="QCheckBox" name="applyOnceCheckBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>

@@ -3,13 +3,13 @@
 
 #include "ad_config.h"
 #include "ad_interface.h"
-#include "ldapcontract.h"
 #include "ldap-common.h"
+#include "ldapcontract.h"
 
 #include <memory>
 
-namespace ldap {
-
+namespace ldap
+{
 class LDAPImplPrivate;
 
 class GPUI_LDAP_EXPORT LDAPImpl : public LDAPContract
@@ -32,11 +32,17 @@ public:
      */
     virtual QString getDisplayNameGPO(const QString &guid);
 
-    virtual const QHash<QString, AdObject> search(const QString &base, const SearchScope scope, const QString &filter, const QList<QString> &attributes, const bool get_sacl = false);
+    virtual const QHash<QString, AdObject> search(const QString &base,
+                                                  const SearchScope scope,
+                                                  const QString &filter,
+                                                  const QList<QString> &attributes,
+                                                  const bool get_sacl = false);
 
-    virtual AdConfig* getAdConfig();
+    virtual AdConfig *getAdConfig();
 
-    virtual QString getFilterCondition(const LDAPContract::Condition condition, const QString &attribute, const QString &value = QString());
+    virtual QString getFilterCondition(const LDAPContract::Condition condition,
+                                       const QString &attribute,
+                                       const QString &value = QString());
 
     virtual QString getFilter_AND(const QList<QString> &subfilters);
 
@@ -45,12 +51,12 @@ public:
     virtual QString getDCName();
 
 private:
-    LDAPImplPrivate *d;
+    std::unique_ptr<LDAPImplPrivate> d;
 
-    LDAPImpl(const LDAPImpl&) = delete; //copy ctor
-    LDAPImpl(LDAPImpl&&) = delete; //move ctor
-    LDAPImpl& operator=(const LDAPImpl&) = delete; //copy assignment
-    LDAPImpl& operator=(LDAPImpl&&) = delete; //move assignment
+    LDAPImpl(const LDAPImpl &) = delete;            //copy ctor
+    LDAPImpl(LDAPImpl &&)      = delete;            //move ctor
+    LDAPImpl &operator=(const LDAPImpl &) = delete; //copy assignment
+    LDAPImpl &operator=(LDAPImpl &&) = delete;      //move assignment
 };
 
 } //namespace ldap

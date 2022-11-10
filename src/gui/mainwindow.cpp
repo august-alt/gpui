@@ -55,6 +55,8 @@
 
 #include "../plugins/administrative_templates/bundle/policyroles.h"
 
+#include "../ldap/ldapimpl.h"
+
 #include <stack>
 
 void registerResources()
@@ -87,8 +89,11 @@ public:
 
     std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
+    std::unique_ptr<ldap::LDAPContract> ldapImpl = nullptr;
+
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
+        , ldapImpl(new ldap::LDAPImpl())
     {}
 
 private:
@@ -212,6 +217,8 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
 
     ui->treeView->installEventFilter(d->eventFilter.get());
 
+    d->ldapImpl->initialize();
+
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
     d->settings->restoreSettings();
 
@@ -266,9 +273,14 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
 
     loadPolicyModel(manager);
 
-    if (!d->options.policyName.isEmpty())
+    QString guid = isAnyGUID(d->options.path);
+
+    qWarning() << "Guid: " << guid;
+
+    if (guid != "")
     {
-        setWindowTitle("GPUI - " + d->options.policyName);
+        auto windowTitle = d->ldapImpl.get()->getDisplayNameGPO(guid);
+        setWindowTitle("GPUI - " + windowTitle);
     }
 
     connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString &text) {
@@ -508,6 +520,34 @@ void MainWindow::createLanguageMenu()
         {
             action->setChecked(true);
         }
+    }
+}
+
+QString MainWindow::isAnyGUID(QString &path)
+{
+    QRegExp lastPartOfPath("/\\{([^/]+)\\}/?$");
+    QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
+
+    qWarning() << lastPartOfPath.indexIn(path);
+
+    if (lastPartOfPath.indexIn(path) != -1)
+    {
+        QStringList lastPart = lastPartOfPath.capturedTexts();
+
+        QString preGuid = lastPart[lastPart.size() - 1];
+
+        if (regExpGuid.indexIn(preGuid) != -1)
+        {
+            return preGuid;
+        }
+        else
+        {
+            return QString();
+        }
+    }
+    else
+    {
+        return QString();
     }
 }
 

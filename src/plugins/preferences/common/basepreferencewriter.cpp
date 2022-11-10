@@ -20,8 +20,12 @@
 
 #include "basepreferencewriter.h"
 
+#include "../../../src/plugins/storage/smb/smbfile.h"
+
 #include <fstream>
+#include <sstream>
 #include <QDebug>
+#include <QMessageBox>
 
 std::string preferences::BasePreferenceWriter::getType() const
 {
@@ -33,27 +37,65 @@ bool preferences::BasePreferenceWriter::write(const std::string path,
 {
     bool result = false;
 
-    std::ofstream file;
+    auto oss = std::make_unique<std::ostringstream>();
 
-    file.open(path, std::ostream::out);
+    result = writeModel(*oss, model);
 
-    bool ok = file.good();
-    if (!ok)
-    {
-        qWarning() << "Failed to create file file: " << path.c_str();
-        return false;
-    }
+    oss->flush();
+
+    qWarning() << "Current string values." << oss->str().c_str();
+
+    bool ifShowError = false;
+
+    auto showMessageFunction = [&path]() {
+        QMessageBox messageBox(QMessageBox::Critical,
+                               QObject::tr("Error"),
+                               QObject::tr("Error writing file:") + "\n" + qPrintable(path.c_str()),
+                               QMessageBox::Ok);
+        messageBox.exec();
+    };
 
     try
     {
-        result = writeModel(file, model);
+        if (QString::fromStdString(path).startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(path));
+            ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && oss->str().size() > 0)
+            {
+                smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
+            }
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(QString::fromStdString(path));
+            ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
+            {
+                registryFile.write(&oss->str().at(0), oss->str().size());
+            }
+            registryFile.close();
+        }
     }
-    catch (const std::exception &e)
+    catch (std::exception &e)
     {
-        qWarning() << e.what();
+        ifShowError = true;
+        showMessageFunction();
     }
 
-    file.close();
+    if (!ifShowError)
+    {
+        showMessageFunction();
+    }
 
     return result;
 }

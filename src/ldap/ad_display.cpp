@@ -29,19 +29,23 @@
 #include "ad_utils.h"
 #include "samba/dom_sid.h"
 
+#include <algorithm>
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QList>
 #include <QString>
-#include <algorithm>
 
-const qint64 SECONDS_TO_MILLIS = 1000LL;
+#include <memory>
+
+const qint64 SECONDS_TO_MILLIS  = 1000LL;
 const qint64 MINUTES_TO_SECONDS = 60LL;
-const qint64 HOURS_TO_SECONDS = MINUTES_TO_SECONDS * 60LL;
-const qint64 DAYS_TO_SECONDS = HOURS_TO_SECONDS * 24LL;
+const qint64 HOURS_TO_SECONDS   = MINUTES_TO_SECONDS * 60LL;
+const qint64 DAYS_TO_SECONDS    = HOURS_TO_SECONDS * 24LL;
 
-QString large_integer_datetime_display_value(const QString &attribute, const QByteArray &bytes, const AdConfig *adconfig);
+QString large_integer_datetime_display_value(const QString &attribute,
+                                             const QByteArray &bytes,
+                                             const AdConfig *adconfig);
 QString datetime_display_value(const QString &attribute, const QByteArray &bytes, const AdConfig *adconfig);
 QString timespan_display_value(const QByteArray &bytes);
 QString octet_display_value(const QByteArray &bytes);
@@ -50,69 +54,95 @@ QString uac_to_display_value(const QByteArray &bytes);
 QString samaccounttype_to_display_value(const QByteArray &bytes);
 QString primarygrouptype_to_display_value(const QByteArray &bytes);
 
-QString attribute_display_value(const QString &attribute, const QByteArray &value, const AdConfig *adconfig) {
-    if (adconfig == nullptr) {
+QString attribute_display_value(const QString &attribute, const QByteArray &value, const AdConfig *adconfig)
+{
+    if (adconfig == nullptr)
+    {
         return value;
     }
 
     const AttributeType type = adconfig->get_attribute_type(attribute);
 
-    switch (type) {
-        case AttributeType_Integer: {
-            if (attribute == ATTRIBUTE_USER_ACCOUNT_CONTROL) {
-                return uac_to_display_value(value);
-            } else if (attribute == ATTRIBUTE_SAM_ACCOUNT_TYPE) {
-                return samaccounttype_to_display_value(value);
-            } else if (attribute == ATTRIBUTE_PRIMARY_GROUP_ID) {
-                return primarygrouptype_to_display_value(value);
-            } else {
-                return QString(value);
-            }
+    switch (type)
+    {
+    case AttributeType_Integer: {
+        if (attribute == ATTRIBUTE_USER_ACCOUNT_CONTROL)
+        {
+            return uac_to_display_value(value);
         }
-        case AttributeType_LargeInteger: {
-            const LargeIntegerSubtype subtype = adconfig->get_attribute_large_integer_subtype(attribute);
-
-            switch (subtype) {
-                case LargeIntegerSubtype_Datetime: return large_integer_datetime_display_value(attribute, value, adconfig);
-                case LargeIntegerSubtype_Timespan: return timespan_display_value(value);
-                case LargeIntegerSubtype_Integer: return QString(value);
-            }
-
-            return QString();
+        else if (attribute == ATTRIBUTE_SAM_ACCOUNT_TYPE)
+        {
+            return samaccounttype_to_display_value(value);
         }
-        case AttributeType_UTCTime: return datetime_display_value(attribute, value, adconfig);
-        case AttributeType_GeneralizedTime: return datetime_display_value(attribute, value, adconfig);
-        case AttributeType_Sid: return object_sid_display_value(value);
-        case AttributeType_Octet: {
-            if (attribute == ATTRIBUTE_OBJECT_GUID) {
-                return guid_to_display_value(value);
-            } else {
-                return octet_display_value(value);
-            }
+        else if (attribute == ATTRIBUTE_PRIMARY_GROUP_ID)
+        {
+            return primarygrouptype_to_display_value(value);
         }
-        case AttributeType_NTSecDesc: {
-            return QCoreApplication::translate("attribute_display", "<BINARY VALUE>");
-        }
-        default: {
+        else
+        {
             return QString(value);
         }
     }
+    case AttributeType_LargeInteger: {
+        const LargeIntegerSubtype subtype = adconfig->get_attribute_large_integer_subtype(attribute);
+
+        switch (subtype)
+        {
+        case LargeIntegerSubtype_Datetime:
+            return large_integer_datetime_display_value(attribute, value, adconfig);
+        case LargeIntegerSubtype_Timespan:
+            return timespan_display_value(value);
+        case LargeIntegerSubtype_Integer:
+            return QString(value);
+        }
+
+        return QString();
+    }
+    case AttributeType_UTCTime:
+        return datetime_display_value(attribute, value, adconfig);
+    case AttributeType_GeneralizedTime:
+        return datetime_display_value(attribute, value, adconfig);
+    case AttributeType_Sid:
+        return object_sid_display_value(value);
+    case AttributeType_Octet: {
+        if (attribute == ATTRIBUTE_OBJECT_GUID)
+        {
+            return guid_to_display_value(value);
+        }
+        else
+        {
+            return octet_display_value(value);
+        }
+    }
+    case AttributeType_NTSecDesc: {
+        return QCoreApplication::translate("attribute_display", "<BINARY VALUE>");
+    }
+    default: {
+        return QString(value);
+    }
+    }
 }
 
-QString attribute_display_values(const QString &attribute, const QList<QByteArray> &values, const AdConfig *adconfig) {
-    if (values.isEmpty()) {
+QString attribute_display_values(const QString &attribute, const QList<QByteArray> &values, const AdConfig *adconfig)
+{
+    if (values.isEmpty())
+    {
         return QCoreApplication::translate("attribute_display", "<unset>");
-    } else {
+    }
+    else
+    {
         QString out;
 
         // Convert values list to
         // "display_value1;display_value2;display_value3..."
-        for (int i = 0; i < values.size(); i++) {
-            if (i > 0) {
+        for (int i = 0; i < values.size(); i++)
+        {
+            if (i > 0)
+            {
                 out += ";";
             }
 
-            const QByteArray value = values[i];
+            const QByteArray value      = values[i];
             const QString display_value = attribute_display_value(attribute, value, adconfig);
 
             out += display_value;
@@ -122,91 +152,107 @@ QString attribute_display_values(const QString &attribute, const QList<QByteArra
     }
 }
 
-QString object_sid_display_value(const QByteArray &sid_bytes) {
-    dom_sid *sid = (dom_sid *) sid_bytes.data();
+QString object_sid_display_value(const QByteArray &sid_bytes)
+{
+    std::unique_ptr<dom_sid> sid;
+    memcpy(sid.get(), sid_bytes.data(), sizeof(dom_sid));
 
     TALLOC_CTX *tmp_ctx = talloc_new(NULL);
 
-    const char *sid_cstr = dom_sid_string(tmp_ctx, sid);
-    const QString out = QString(sid_cstr);
+    const char *sid_cstr = dom_sid_string(tmp_ctx, sid.get());
+    const QString out    = QString(sid_cstr);
 
     talloc_free(tmp_ctx);
 
     return out;
 }
 
-QString large_integer_datetime_display_value(const QString &attribute, const QByteArray &value, const AdConfig *adconfig) {
+QString large_integer_datetime_display_value(const QString &attribute, const QByteArray &value, const AdConfig *adconfig)
+{
     const QString value_string = QString(value);
 
-    if (large_integer_datetime_is_never(value_string)) {
+    if (large_integer_datetime_is_never(value_string))
+    {
         return QCoreApplication::translate("attribute_display", "(never)");
-    } else {
-        QDateTime datetime = datetime_string_to_qdatetime(attribute, value_string, adconfig);
+    }
+    else
+    {
+        QDateTime datetime    = datetime_string_to_qdatetime(attribute, value_string, adconfig);
         const QString display = datetime.toLocalTime().toString(DATETIME_DISPLAY_FORMAT);
 
         return display;
     }
 }
 
-QString datetime_display_value(const QString &attribute, const QByteArray &bytes, const AdConfig *adconfig) {
-    const QString value_string = QString(bytes);
-    const QDateTime datetime = datetime_string_to_qdatetime(attribute, value_string, adconfig);
+QString datetime_display_value(const QString &attribute, const QByteArray &bytes, const AdConfig *adconfig)
+{
+    const QString value_string     = QString(bytes);
+    const QDateTime datetime       = datetime_string_to_qdatetime(attribute, value_string, adconfig);
     const QDateTime datetime_local = datetime.toLocalTime();
-    const QString display = datetime_local.toString(DATETIME_DISPLAY_FORMAT) + datetime.toLocalTime().timeZoneAbbreviation();
+    const QString display          = datetime_local.toString(DATETIME_DISPLAY_FORMAT)
+                            + datetime.toLocalTime().timeZoneAbbreviation();
 
     return display;
 }
 
-QString timespan_display_value(const QByteArray &bytes) {
+QString timespan_display_value(const QByteArray &bytes)
+{
     // Timespan = integer value of hundred nanosecond quantities
     // (also negated)
     // Convert to dd:hh:mm:ss
-    const QString value_string = QString(bytes);
+    const QString value_string          = QString(bytes);
     const qint64 hundred_nanos_negative = value_string.toLongLong();
 
-    if (hundred_nanos_negative == LLONG_MIN) {
+    if (hundred_nanos_negative == LLONG_MIN)
+    {
         return "(never)";
     }
 
     qint64 seconds_total = [hundred_nanos_negative]() {
         const qint64 hundred_nanos = -hundred_nanos_negative;
-        const qint64 millis = hundred_nanos / MILLIS_TO_100_NANOS;
-        const qint64 seconds = millis / SECONDS_TO_MILLIS;
+        const qint64 millis        = hundred_nanos / MILLIS_TO_100_NANOS;
+        const qint64 seconds       = millis / SECONDS_TO_MILLIS;
 
         return seconds;
     }();
 
     const qint64 days = seconds_total / DAYS_TO_SECONDS;
-    seconds_total = days % DAYS_TO_SECONDS;
+    seconds_total     = days % DAYS_TO_SECONDS;
 
     const qint64 hours = seconds_total / HOURS_TO_SECONDS;
-    seconds_total = hours % HOURS_TO_SECONDS;
+    seconds_total      = hours % HOURS_TO_SECONDS;
 
     const qint64 minutes = seconds_total / MINUTES_TO_SECONDS;
-    seconds_total = minutes % MINUTES_TO_SECONDS;
+    seconds_total        = minutes % MINUTES_TO_SECONDS;
 
     const qint64 seconds = seconds_total;
 
     // Convert arbitrary time unit value to string with format
     // "00-99" with leading zero if needed
     const auto time_unit_to_string = [](qint64 time) -> QString {
-        if (time > 99) {
+        if (time > 99)
+        {
             time = 99;
         }
 
         const QString time_string = QString::number(time);
 
-        if (time == 0) {
+        if (time == 0)
+        {
             return "00";
-        } else if (time < 10) {
+        }
+        else if (time < 10)
+        {
             return "0" + time_string;
-        } else {
+        }
+        else
+        {
             return time_string;
         }
     };
 
-    const QString days_string = time_unit_to_string(days);
-    const QString hours_string = time_unit_to_string(hours);
+    const QString days_string    = time_unit_to_string(days);
+    const QString hours_string   = time_unit_to_string(hours);
     const QString minutes_string = time_unit_to_string(minutes);
     const QString seconds_string = time_unit_to_string(seconds);
 
@@ -215,7 +261,8 @@ QString timespan_display_value(const QByteArray &bytes) {
     return display;
 }
 
-QString guid_to_display_value(const QByteArray &bytes) {
+QString guid_to_display_value(const QByteArray &bytes)
+{
     // NOTE: have to do some weird pre-processing to match
     // how Windows displays GUID's. The GUID is broken down
     // into 5 segments, each separated by '-':
@@ -236,10 +283,12 @@ QString guid_to_display_value(const QByteArray &bytes) {
     const QString guid_display_string = [&]() {
         QString out;
 
-        for (int i = 0; i < segments_count; i++) {
+        for (int i = 0; i < segments_count; i++)
+        {
             const QByteArray segment = segments[i];
 
-            if (i > 0) {
+            if (i > 0)
+            {
                 out += '-';
             }
 
@@ -252,16 +301,19 @@ QString guid_to_display_value(const QByteArray &bytes) {
     return guid_display_string;
 }
 
-QString octet_display_value(const QByteArray &bytes) {
+QString octet_display_value(const QByteArray &bytes)
+{
     const QByteArray bytes_hex = bytes.toHex();
 
     QByteArray out = bytes_hex;
 
     // Add " 0x" before each byte (every 2 indexes)
-    for (int i = out.size() - 2; i >= 0; i -= 2) {
+    for (int i = out.size() - 2; i >= 0; i -= 2)
+    {
         out.insert(i, "0x");
 
-        if (i != 0) {
+        if (i != 0)
+        {
             out.insert(i, " ");
         }
     }
@@ -269,11 +321,13 @@ QString octet_display_value(const QByteArray &bytes) {
     return QString(out);
 }
 
-QString uac_to_display_value(const QByteArray &bytes) {
+QString uac_to_display_value(const QByteArray &bytes)
+{
     bool uac_toInt_ok;
     const int uac = bytes.toInt(&uac_toInt_ok);
 
-    if (!uac_toInt_ok) {
+    if (!uac_toInt_ok)
+    {
         return QCoreApplication::translate("attribute_display", "<invalid UAC value>");
     }
 
@@ -335,13 +389,15 @@ QString uac_to_display_value(const QByteArray &bytes) {
             {UAC_USER_USE_AES_KEYS, "USER_USE_AES_KEYS"},
         };
 
-        const QList<QString> set_mask_name_list = [&]() { 
+        const QList<QString> set_mask_name_list = [&]() {
             QList<QString> out_list;
 
-            for (const int mask : mask_list) {
+            for (const int mask : mask_list)
+            {
                 const bool mask_is_set = bitmask_is_set(uac, mask);
 
-                if (mask_is_set) {
+                if (mask_is_set)
+                {
                     const QString mask_name = mask_name_map[mask];
                     out_list.append(mask_name);
                 }
@@ -360,11 +416,13 @@ QString uac_to_display_value(const QByteArray &bytes) {
     return out;
 }
 
-QString samaccounttype_to_display_value(const QByteArray &bytes) {
+QString samaccounttype_to_display_value(const QByteArray &bytes)
+{
     bool toInt_ok;
     const int value_int = bytes.toInt(&toInt_ok);
 
-    if (!toInt_ok) {
+    if (!toInt_ok)
+    {
         return QCoreApplication::translate("attribute_display", "<invalid value>");
     }
 
@@ -390,11 +448,13 @@ QString samaccounttype_to_display_value(const QByteArray &bytes) {
     return out;
 }
 
-QString primarygrouptype_to_display_value(const QByteArray &bytes) {
+QString primarygrouptype_to_display_value(const QByteArray &bytes)
+{
     bool toInt_ok;
     const int value_int = bytes.toInt(&toInt_ok);
 
-    if (!toInt_ok) {
+    if (!toInt_ok)
+    {
         return QCoreApplication::translate("attribute_display", "<invalid value>");
     }
 
@@ -414,12 +474,15 @@ QString primarygrouptype_to_display_value(const QByteArray &bytes) {
         {DOMAIN_RID_RAS_SERVERS, "GROUP_RID_RAS_SERVERS"},
     };
 
-    if (mask_name_map.contains(value_int)) {
+    if (mask_name_map.contains(value_int))
+    {
         const QString mask_name = mask_name_map[value_int];
-        const QString out = QString("%1 = ( %2 )").arg(QString(bytes), mask_name);
+        const QString out       = QString("%1 = ( %2 )").arg(QString(bytes), mask_name);
 
         return out;
-    } else {
+    }
+    else
+    {
         return QString::number(value_int);
     }
 }

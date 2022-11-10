@@ -64,6 +64,11 @@ public:
 
     virtual bool initialize() = 0;
 
+    /**
+     * @brief getDisplayNameGPO returns displayName attribute of LDAP object
+     * @param guid QString with GUID
+     * @return return QSrting with displayName attribute or NULL, if error
+     */
     virtual QString getDisplayNameGPO(const QString &guid) = 0;
 
     virtual const QHash<QString, AdObject> search(const QString &base, const SearchScope scope, const QString &filter, const QList<QString> &attributes, const bool get_sacl = false) = 0;

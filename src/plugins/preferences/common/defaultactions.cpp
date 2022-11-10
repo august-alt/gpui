@@ -18,24 +18,28 @@
 **
 ***********************************************************************************************************************/
 
-#include "powerplanitem.h"
+#include "defaultactions.h"
 
 namespace preferences
 {
 
-PowerPlanItem::PowerPlanItem()
-    : ModelView::CompoundItem("PowerPlanItem")
+std::string defaultActionsToString(int mode)
 {
-    addProperty(ACTION, 0);
-    addProperty(NAME, "");
+    switch (mode)
+    {
+    case CREATE__MODE:
+        return QObject::tr("Create").toStdString();
+    case REPLACE_MODE:
+        return QObject::tr("Replace").toStdString();
+    case UPDATE__MODE:
+        return QObject::tr("Update").toStdString();
+    case DELETE__MODE:
+        return QObject::tr("Delete").toStdString();
+    }
+
+    return QObject::tr("Create").toStdString();
 }
 
-PowerPlanItem::PowerPlanItem(const PowerPlanItem &other)
-    : ModelView::CompoundItem("PowerPlanItem")
-{
-    Q_UNUSED(other);
-    addProperty(ACTION, 0);
-    addProperty(NAME, "");
-}
+} // namespace preferences
 
-}
+

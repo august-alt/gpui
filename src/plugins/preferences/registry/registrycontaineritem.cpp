@@ -20,6 +20,8 @@
 
 #include "registrycontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "registryitem.h"
 
@@ -32,7 +34,9 @@ RegistryContainerItem::RegistryContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(HIVE, "")->setDisplayName(QObject::tr("Hive").toStdString())->setEditable(false);
     addProperty(KEY, "")->setDisplayName(QObject::tr("Key").toStdString())->setEditable(false);
 
@@ -67,7 +71,7 @@ void RegistryContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, registryItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(registryItem->property<int>(ACTION)));
             }
 
             if (property == NAME)
@@ -97,6 +101,10 @@ void RegistryContainerItem::retranslateStrings()
     children()[2]->setDisplayName(QObject::tr("Action").toStdString());
     children()[3]->setDisplayName(QObject::tr("Hive").toStdString());
     children()[4]->setDisplayName(QObject::tr("Key").toStdString());
+
+    auto registryItem = getRegistry();
+
+    setProperty(ACTION, defaultActionsToString(registryItem->property<int>(ACTION)));
 }
 
 } // namespace preferences

@@ -20,6 +20,8 @@
 
 #include "inicontaineritem.h"
 
+#include "common/defaultactions.h"
+
 #include "common/commonitem.h"
 #include "iniitem.h"
 
@@ -32,7 +34,9 @@ IniContainerItem::IniContainerItem()
 {
     addProperty(NAME, "")->setDisplayName(QObject::tr("Name").toStdString())->setEditable(false);
     addProperty(ORDER, 0)->setDisplayName(QObject::tr("Order").toStdString())->setEditable(false);
-    addProperty(ACTION, "")->setDisplayName(QObject::tr("Action").toStdString())->setEditable(false);
+    addProperty(ACTION, defaultActionsToString(CREATE__MODE))
+        ->setDisplayName(QObject::tr("Action").toStdString())
+        ->setEditable(false);
     addProperty(PATH, "")->setDisplayName(QObject::tr("Path").toStdString())->setEditable(false);
     addProperty(SECTION, "")->setDisplayName(QObject::tr("Section").toStdString())->setEditable(false);
     addProperty(PROPERTY, "")->setDisplayName(QObject::tr("Property").toStdString())->setEditable(false);
@@ -69,7 +73,7 @@ void IniContainerItem::setupListeners()
         {
             if (property == ACTION)
             {
-                setProperty(ACTION, iniItem->property<std::string>(ACTION));
+                setProperty(ACTION, defaultActionsToString(iniItem->property<int>(ACTION)));
             }
 
             if (property == PATH)
@@ -108,6 +112,10 @@ void IniContainerItem::retranslateStrings()
     children()[4]->setDisplayName(QObject::tr("Section").toStdString());
     children()[5]->setDisplayName(QObject::tr("Property").toStdString());
     children()[6]->setDisplayName(QObject::tr("Value").toStdString());
+
+    auto iniItem = getIni();
+
+    setProperty(ACTION, defaultActionsToString(iniItem->property<int>(ACTION)));
 }
 
 } // namespace preferences

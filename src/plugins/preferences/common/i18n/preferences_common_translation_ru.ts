@@ -34,22 +34,22 @@ context (user policy option).</source>
         <translation>Удалить элемент если больше не применим.</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="69"/>
+        <location filename="../commonview.ui" line="72"/>
         <source>Apply once and do not reapply.</source>
         <translation>Применить только один раз.</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="86"/>
+        <location filename="../commonview.ui" line="89"/>
         <source>Item-level targeting.</source>
         <translation>Выбор элементов.</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="96"/>
+        <location filename="../commonview.ui" line="99"/>
         <source>Targetting...</source>
         <translation>Нацеливание...</translation>
     </message>
     <message>
-        <location filename="../commonview.ui" line="108"/>
+        <location filename="../commonview.ui" line="111"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -98,64 +98,64 @@ context (user policy option).</source>
         <translation>Настройки:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="51"/>
+        <location filename="../propertieswidget.ui" line="54"/>
         <source>Stop processing items in extension on error:</source>
         <translation>Не обрабатывать элементы в расширении при ошибке:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="67"/>
-        <location filename="../propertieswidget.ui" line="96"/>
-        <location filename="../propertieswidget.ui" line="125"/>
-        <location filename="../propertieswidget.ui" line="151"/>
-        <location filename="../propertieswidget.ui" line="177"/>
-        <location filename="../propertieswidget.ui" line="203"/>
-        <location filename="../propertieswidget.ui" line="229"/>
-        <location filename="../propertieswidget.ui" line="255"/>
+        <location filename="../propertieswidget.ui" line="70"/>
+        <location filename="../propertieswidget.ui" line="99"/>
+        <location filename="../propertieswidget.ui" line="128"/>
+        <location filename="../propertieswidget.ui" line="163"/>
+        <location filename="../propertieswidget.ui" line="198"/>
+        <location filename="../propertieswidget.ui" line="233"/>
+        <location filename="../propertieswidget.ui" line="268"/>
+        <location filename="../propertieswidget.ui" line="303"/>
         <source>No</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="80"/>
+        <location filename="../propertieswidget.ui" line="83"/>
         <source>Run in user&apos;s context:</source>
         <translation>Запускать в контескте пользователя:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="109"/>
+        <location filename="../propertieswidget.ui" line="112"/>
         <source>Remove if not applied:</source>
         <translation>Удалить если не применимо:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="138"/>
+        <location filename="../propertieswidget.ui" line="144"/>
         <source>Apply once:</source>
         <translation>Применить один раз:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="164"/>
+        <location filename="../propertieswidget.ui" line="179"/>
         <source>Filtered Directly:</source>
         <translation>Отфильтровано:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="190"/>
+        <location filename="../propertieswidget.ui" line="214"/>
         <source>Filtered by ancestor:</source>
         <translation>Отфильровано уровнем выше:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="216"/>
+        <location filename="../propertieswidget.ui" line="249"/>
         <source>Disabled directly:</source>
         <translation>Отключено:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="242"/>
+        <location filename="../propertieswidget.ui" line="284"/>
         <source>Disabled by ancestor:</source>
         <translation>Отключено упровнем выше:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="265"/>
+        <location filename="../propertieswidget.ui" line="313"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
     <message>
-        <location filename="../propertieswidget.ui" line="275"/>
+        <location filename="../propertieswidget.ui" line="323"/>
         <source>No description provided.</source>
         <translation>Без описания.</translation>
     </message>
@@ -502,6 +502,27 @@ context (user policy option).</source>
         <location filename="../propertieswidgetdelegate.cpp" line="43"/>
         <source>No</source>
         <translation>Нет</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="31"/>
+        <location filename="../defaultactions.cpp" line="40"/>
+        <source>Create</source>
+        <translation>Создать</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="33"/>
+        <source>Replace</source>
+        <translation>Заменить</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="35"/>
+        <source>Update</source>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <location filename="../defaultactions.cpp" line="37"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>

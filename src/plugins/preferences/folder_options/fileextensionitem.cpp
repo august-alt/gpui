@@ -28,7 +28,7 @@ namespace preferences
 FileExtensionItem::FileExtensionItem()
     : BasePreferenceItem<::preferences::FileExtensionItem>("FileExtensionItem")
 {
-    addProperty(propertyToString(ACTION), "");
+    addProperty(propertyToString(ACTION), 0);
     addProperty(propertyToString(FILE_EXT), "");
     addProperty(propertyToString(APPLICATION), "");
     addProperty(propertyToString(APP_PROG_ID), "");
@@ -45,7 +45,7 @@ FileExtensionItem::FileExtensionItem()
 FileExtensionItem::FileExtensionItem(const FileExtensionItem &other)
     : BasePreferenceItem<::preferences::FileExtensionItem>("FileExtensionItem")
 {
-    copyProperty<std::string>(ACTION, other);
+    copyProperty<int>(ACTION, other);
     copyProperty<std::string>(FILE_EXT, other);
     copyProperty<std::string>(APPLICATION, other);
     copyProperty<std::string>(APP_PROG_ID, other);

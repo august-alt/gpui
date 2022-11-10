@@ -26,7 +26,7 @@ namespace preferences
 FolderOptionsItem::FolderOptionsItem()
     : ModelView::CompoundItem("FolderOptionsItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
 }
 
 FolderOptionsItem::FolderOptionsItem(const FolderOptionsItem &other)

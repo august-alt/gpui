@@ -62,7 +62,7 @@ void FilesWidget::setItem(ModelView::SessionItem *item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->sourceLineEdit, 1);
     mapper->addMapping(ui->destinationLineEdit, 2);
     mapper->addMapping(ui->supressErrorsCheckBox, 3);

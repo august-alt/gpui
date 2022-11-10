@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 OpenWithWidget::OpenWithWidget(QWidget *parent, OpenWithItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ OpenWithWidget::~OpenWithWidget()
     delete ui;
 }
 
-void OpenWithWidget::setItem(ModelView::SessionItem* item)
+void OpenWithWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -62,7 +61,7 @@ void OpenWithWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, 0);
+    mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->fileLineEdit, 1);
     mapper->addMapping(ui->associatedProgramLineEdit, 2);
     mapper->addMapping(ui->defaultCheckBox, 3);
@@ -75,4 +74,4 @@ QString OpenWithWidget::name() const
     return "General";
 }
 
-}
+} // namespace preferences

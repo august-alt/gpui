@@ -20,41 +20,43 @@
 
 #include "basemodelbuilder.h"
 
+#include "defaultactions.h"
+
 namespace preferences
 {
-std::string BaseModelBuilder::getActionCheckboxState(const std::string &data)
+int BaseModelBuilder::getActionCheckboxState(const std::string &data)
 {
     if (data.compare("U") == 0)
     {
-        return "Update";
+        return static_cast<int>(DefaultActions::UPDATE__MODE);
     }
 
     if (data.compare("R") == 0)
     {
-        return "Replace";
+        return static_cast<int>(DefaultActions::REPLACE_MODE);
     }
 
     if (data.compare("D") == 0)
     {
-        return "Delete";
+        return static_cast<int>(DefaultActions::DELETE__MODE);
     }
 
-    return "Create";
+    return static_cast<int>(DefaultActions::CREATE__MODE);
 }
 
-std::string BaseModelBuilder::getActionCheckboxModel(const std::string &data)
+std::string BaseModelBuilder::getActionCheckboxModel(const int &data)
 {
-    if (data.compare("Update") == 0)
+    if (data == DefaultActions::UPDATE__MODE)
     {
         return "U";
     }
 
-    if (data.compare("Replace") == 0)
+    if (data == DefaultActions::REPLACE_MODE)
     {
         return "R";
     }
 
-    if (data.compare("Delete") == 0)
+    if (data == DefaultActions::DELETE__MODE)
     {
         return "D";
     }

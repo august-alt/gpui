@@ -55,9 +55,6 @@
 
 #include "../plugins/administrative_templates/bundle/policyroles.h"
 
-#include "../ldap/ldapcontract.h"
-#include "../ldap/ldapimpl.h"
-
 #include <stack>
 
 void registerResources()
@@ -90,11 +87,8 @@ public:
 
     std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
-    std::unique_ptr<ldap::LDAPContract> ldapImpl = nullptr;
-
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
-        , ldapImpl(new ldap::LDAPImpl())
     {}
 
 private:
@@ -328,15 +322,26 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     rootItem->setData("Root Item", Qt::DisplayRole);
 
     QStandardItem *visibleRootItem = new QStandardItem();
-    visibleRootItem->setData(QObject::tr("[Local Group Policy]"), Qt::DisplayRole);
     visibleRootItem->setData(QIcon::fromTheme("text-x-generic-template"), Qt::DecorationRole);
     visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY), model::bundle::ITEM_TYPE);
     visibleRootItem->setData(QObject::tr("Local group policies"), model::bundle::EXPLAIN_TEXT);
     visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both), model::bundle::POLICY_TYPE);
 
-    QString guid = isAnyGUID(d->options.path);
-    if(guid != "") {
-        visibleRootItem->setData(QObject::tr(guid.toStdString().c_str()), Qt::DisplayRole);
+    if (d->options.path.startsWith("smb://"))
+    {
+        QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
+        if (domainRegexp.indexIn(d->options.path) != -1)
+        {
+            visibleRootItem->setData('[' + domainRegexp.cap() + ']', Qt::DisplayRole);
+        }
+        else
+        {
+            visibleRootItem->setData(QObject::tr("[Domain Group Policy]"), Qt::DisplayRole);
+        }
+    }
+    else
+    {
+        visibleRootItem->setData(QObject::tr("[Local Group Policy]"), Qt::DisplayRole);
     }
 
     rootItem->appendRow(visibleRootItem);
@@ -504,62 +509,6 @@ void MainWindow::createLanguageMenu()
             action->setChecked(true);
         }
     }
-}
-
-QString MainWindow::isAnyIPAddress(const QString &path)
-{
-    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
-    QRegExp ipRegex ("^" + ipRange
-                         + "\\." + ipRange
-                         + "\\." + ipRange
-                         + "\\." + ipRange + "$");
-
-    if(ipRegex.indexIn(path) != -1)
-    {
-        return ipRegex.capturedTexts()[0];
-    }
-
-    return NULL;
-}
-
-QString MainWindow::isAnyDomainName(const QString &path)
-{
-    QRegExp domainRegExp("^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\\.(xn--)?([a-z0-9\\-]{1,61}|[a-z0-9-]{1,30}\\.[a-z]{2,})$");
-
-    if(domainRegExp.indexIn(path) != -1)
-    {
-
-        QStringList domains = domainRegExp.capturedTexts();
-
-        return domains[0];
-    }
-
-    return NULL;
-}
-
-QString MainWindow::isAnyGUID(const QString &path)
-{
-    QRegExp lastPartOfPath("/\\{([^/]+)\\}$");
-    QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
-
-    if(lastPartOfPath.indexIn(path) != -1)
-    {
-       QStringList lastPart = lastPartOfPath.capturedTexts();
-
-       QString preGuid = lastPart[lastPart.size()-1];
-
-       if(regExpGuid.indexIn(preGuid) != -1)
-       {
-           return preGuid;
-       }
-       else
-       {
-           return NULL;
-       }
-    }
-
-    return NULL;
-
 }
 
 } // namespace gpui

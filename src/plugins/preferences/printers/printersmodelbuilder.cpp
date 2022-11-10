@@ -20,8 +20,8 @@
 
 #include "printersmodelbuilder.h"
 
-#include "printercontaineritem.h"
 #include "localprinteritem.h"
+#include "printercontaineritem.h"
 #include "sharedprinteritem.h"
 #include "tcpprinteritem.h"
 
@@ -29,23 +29,21 @@
 
 namespace preferences
 {
-
 PrintersModelBuilder::PrintersModelBuilder()
     : BaseModelBuilder()
-{
-}
+{}
 
-void preferences::PrintersModelBuilder::processLocalPrinter(LocalPrinterItem* localPrinter,
-                                                             LocalPrinterProperties_t properties)
+void preferences::PrintersModelBuilder::processLocalPrinter(LocalPrinterItem *localPrinter,
+                                                            LocalPrinterProperties_t properties)
 {
-    std::string actionState = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
-    std::string name = properties.name().c_str();
-    std::string port = properties.port().c_str();
-    std::string path = properties.path().c_str();
-    bool defaultOn = properties.default_();
+    int actionState      = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
+    std::string name     = properties.name().c_str();
+    std::string port     = properties.port().c_str();
+    std::string path     = properties.path().c_str();
+    bool defaultOn       = properties.default_();
     std::string location = getOptionalPropertyData(properties.location()).c_str();
-    std::string comment = getOptionalPropertyData(properties.comment()).c_str();
-    bool deleteAll = properties.deleteAll();
+    std::string comment  = getOptionalPropertyData(properties.comment()).c_str();
+    bool deleteAll       = properties.deleteAll();
 
     localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::ACTION), actionState);
     localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::NAME), name);
@@ -59,16 +57,16 @@ void preferences::PrintersModelBuilder::processLocalPrinter(LocalPrinterItem* lo
 
 void PrintersModelBuilder::processSharedPrinter(SharedPrinterItem *sharedPrinter, SharedPrinterProperties_t properties)
 {
-    std::string actionState = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
+    int actionState      = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
     std::string location = getOptionalPropertyData(properties.location()).c_str();
-    std::string path = properties.path().c_str();
-    std::string comment = getOptionalPropertyData(properties.comment()).c_str();
-    bool defaultOn = properties.default_();
-    bool skipLocal = properties.skipLocal();
-    bool deleteAll = properties.deleteAll();
-    std::string port = properties.port().c_str();
-    bool persistent = properties.persistent();
-    bool deleteMaps = properties.deleteMaps();
+    std::string path     = properties.path().c_str();
+    std::string comment  = getOptionalPropertyData(properties.comment()).c_str();
+    bool defaultOn       = properties.default_();
+    bool skipLocal       = properties.skipLocal();
+    bool deleteAll       = properties.deleteAll();
+    std::string port     = properties.port().c_str();
+    bool persistent      = properties.persistent();
+    bool deleteMaps      = properties.deleteMaps();
     std::string username = getOptionalPropertyData(properties.username()).c_str();
     std::string password = getOptionalPropertyData(properties.cpassword()).c_str();
 
@@ -88,22 +86,22 @@ void PrintersModelBuilder::processSharedPrinter(SharedPrinterItem *sharedPrinter
 
 void PrintersModelBuilder::processTcpPrinter(TcpPrinterItem *tcpPrinter, PortPrinterProperties_t properties)
 {
-    std::string actionState = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
-    std::string ipAddress = properties.ipAddress().c_str();
-    bool useDns = getOptionalPropertyData(properties.useDNS());
-    std::string localName = getOptionalPropertyData(properties.localName()).c_str();
-    std::string path = properties.path().c_str();
-    bool defaultOn = properties.default_();
-    bool skipLocal = properties.skipLocal();
-    bool deleteAll = properties.deleteAll();
-    std::string location = getOptionalPropertyData(properties.location()).c_str();
-    std::string comment = getOptionalPropertyData(properties.comment()).c_str();
-    std::string lprQueue = getOptionalPropertyData(properties.lprQueue()).c_str();
+    int actionState           = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
+    std::string ipAddress     = properties.ipAddress().c_str();
+    bool useDns               = getOptionalPropertyData(properties.useDNS());
+    std::string localName     = getOptionalPropertyData(properties.localName()).c_str();
+    std::string path          = properties.path().c_str();
+    bool defaultOn            = properties.default_();
+    bool skipLocal            = properties.skipLocal();
+    bool deleteAll            = properties.deleteAll();
+    std::string location      = getOptionalPropertyData(properties.location()).c_str();
+    std::string comment       = getOptionalPropertyData(properties.comment()).c_str();
+    std::string lprQueue      = getOptionalPropertyData(properties.lprQueue()).c_str();
     std::string snmpCommunity = getOptionalPropertyData(properties.snmpCommunity()).c_str();
-    int portNumber = getOptionalPropertyData(properties.portNumber());
-    bool doubleSpool = getOptionalPropertyData(properties.doubleSpool());
-    bool snmpEnabled = getOptionalPropertyData(properties.snmpEnabled());
-    int snmpDevIndex = getOptionalPropertyData(properties.snmpDevIndex());
+    int portNumber            = getOptionalPropertyData(properties.portNumber());
+    bool doubleSpool          = getOptionalPropertyData(properties.doubleSpool());
+    bool snmpEnabled          = getOptionalPropertyData(properties.snmpEnabled());
+    int snmpDevIndex          = getOptionalPropertyData(properties.snmpDevIndex());
 
     std::string protocol = getOptionalPropertyData(properties.protocol()).c_str();
 
@@ -135,18 +133,18 @@ void PrintersModelBuilder::processTcpPrinter(TcpPrinterItem *tcpPrinter, PortPri
     tcpPrinter->setProperty(TcpPrinterItem::propertyToString(TcpPrinterItem::TCP_PROTOCOL), !lprProtocol);
 }
 
-template <typename PrinterSourceType, typename ItemType, typename PropertiesType>
+template<typename PrinterSourceType, typename ItemType, typename PropertiesType>
 void preferences::PrintersModelBuilder::processLocalPrinters(PrinterSourceType &printersSource,
-                                                              std::unique_ptr<PreferencesModel>& model,
-                                                              std::function<void(ItemType*, PropertiesType)>& callback)
+                                                             std::unique_ptr<PreferencesModel> &model,
+                                                             std::function<void(ItemType *, PropertiesType)> &callback)
 {
-    for (const auto& localPrintersSchema : printersSource)
+    for (const auto &localPrintersSchema : printersSource)
     {
         auto sessionItem = model->insertItem<PrinterContainerItem<ItemType>>(model->rootItem());
 
-        for (const auto& properties : localPrintersSchema.Properties())
+        for (const auto &properties : localPrintersSchema.Properties())
         {
-            ItemType* localPrinter = sessionItem->getPrinter();
+            ItemType *localPrinter = sessionItem->getPrinter();
 
             callback(localPrinter, properties);
 
@@ -160,32 +158,31 @@ std::unique_ptr<PreferencesModel> PrintersModelBuilder::schemaToModel(std::uniqu
 {
     auto model = std::make_unique<PreferencesModel>();
 
-    std::function<void(LocalPrinterItem*, LocalPrinterProperties_t)> localPrinterHandler
-            = [&](LocalPrinterItem* localPrinter, LocalPrinterProperties_t properties)
-            {
-                processLocalPrinter(localPrinter, properties);
-            };
+    std::function<void(LocalPrinterItem *, LocalPrinterProperties_t)> localPrinterHandler =
+        [&](LocalPrinterItem *localPrinter, LocalPrinterProperties_t properties) {
+            processLocalPrinter(localPrinter, properties);
+        };
 
-    std::function<void(SharedPrinterItem*, SharedPrinterProperties_t)> sharedPrinterHandler
-            = [&](SharedPrinterItem* sharedPrinter, SharedPrinterProperties_t properties)
-            {
-                processSharedPrinter(sharedPrinter, properties);
-            };
+    std::function<void(SharedPrinterItem *, SharedPrinterProperties_t)> sharedPrinterHandler =
+        [&](SharedPrinterItem *sharedPrinter, SharedPrinterProperties_t properties) {
+            processSharedPrinter(sharedPrinter, properties);
+        };
 
-    std::function<void(TcpPrinterItem*, PortPrinterProperties_t)> tcpPrinterHandler
-            = [&](TcpPrinterItem* tcpPrinter, PortPrinterProperties_t properties)
-            {
-                processTcpPrinter(tcpPrinter, properties);
-            };
+    std::function<void(TcpPrinterItem *, PortPrinterProperties_t)> tcpPrinterHandler =
+        [&](TcpPrinterItem *tcpPrinter, PortPrinterProperties_t properties) {
+            processTcpPrinter(tcpPrinter, properties);
+        };
 
     processLocalPrinters<Printers::LocalPrinterSequence, LocalPrinterItem, LocalPrinterProperties_t>(
-                printersSource->LocalPrinter(), model, localPrinterHandler);
+        printersSource->LocalPrinter(), model, localPrinterHandler);
 
     processLocalPrinters<Printers::SharedPrinterSequence, SharedPrinterItem, SharedPrinterProperties_t>(
-                printersSource->SharedPrinter(), model, sharedPrinterHandler);
+        printersSource->SharedPrinter(), model, sharedPrinterHandler);
 
-    processLocalPrinters<Printers::PortPrinterSequence, TcpPrinterItem, PortPrinterProperties_t>(
-                printersSource->PortPrinter(), model, tcpPrinterHandler);
+    processLocalPrinters<Printers::PortPrinterSequence, TcpPrinterItem, PortPrinterProperties_t>(printersSource
+                                                                                                     ->PortPrinter(),
+                                                                                                 model,
+                                                                                                 tcpPrinterHandler);
 
     return model;
 }
@@ -197,5 +194,4 @@ std::unique_ptr<Printers> PrintersModelBuilder::modelToSchema(std::unique_ptr<Pr
     return nullptr;
 }
 
-}
-
+} // namespace preferences

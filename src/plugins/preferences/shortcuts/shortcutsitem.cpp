@@ -27,7 +27,7 @@ namespace preferences
 ShortcutsItem::ShortcutsItem()
     : ModelView::CompoundItem("ShortcutsItem")
 {
-    addProperty(ACTION, "Create");
+    addProperty(ACTION, 0);
     addProperty(PIDL, "");
     addProperty(SHORTCUT_PATH, "");
     addProperty(TARGET_TYPE, "");
@@ -44,7 +44,7 @@ ShortcutsItem::ShortcutsItem()
 ShortcutsItem::ShortcutsItem(const ShortcutsItem &other)
     : ModelView::CompoundItem("ShortcutsItem")
 {
-    addProperty(ACTION, other.property<std::string>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(PIDL, other.property<std::string>(PIDL));
     addProperty(SHORTCUT_PATH, other.property<std::string>(SHORTCUT_PATH));
     addProperty(TARGET_TYPE, other.property<std::string>(TARGET_TYPE));

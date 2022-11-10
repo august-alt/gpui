@@ -26,7 +26,7 @@ namespace preferences
 RegistryItem::RegistryItem()
     : ModelView::CompoundItem("RegistryItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(HIVE, "");
     addProperty(KEY, "");
     addProperty(NAME, "");
@@ -38,7 +38,7 @@ RegistryItem::RegistryItem()
 RegistryItem::RegistryItem(const RegistryItem &other)
     : ModelView::CompoundItem("RegistryItem")
 {
-    addProperty(ACTION, other.property<std::string>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(HIVE, other.property<std::string>(HIVE));
     addProperty(KEY, other.property<std::string>(KEY));
     addProperty(NAME, other.property<std::string>(NAME));

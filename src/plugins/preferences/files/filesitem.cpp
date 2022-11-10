@@ -22,11 +22,10 @@
 
 namespace preferences
 {
-
 FilesItem::FilesItem()
     : ModelView::CompoundItem("FilesItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(FROM_PATH, "");
     addProperty(TARGET_PATH, "");
     addProperty(SUPPRESS, false);
@@ -38,7 +37,7 @@ FilesItem::FilesItem()
 FilesItem::FilesItem(const FilesItem &other)
     : ModelView::CompoundItem("FilesItem")
 {
-    addProperty(ACTION, other.property<QString>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(FROM_PATH, other.property<QString>(FROM_PATH));
     addProperty(TARGET_PATH, other.property<QString>(TARGET_PATH));
     addProperty(SUPPRESS, other.property<bool>(SUPPRESS));
@@ -47,4 +46,4 @@ FilesItem::FilesItem(const FilesItem &other)
     addProperty(HIDDEN, other.property<bool>(HIDDEN));
 }
 
-}
+} // namespace preferences

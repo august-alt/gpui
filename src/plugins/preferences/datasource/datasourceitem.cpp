@@ -24,11 +24,10 @@
 
 namespace preferences
 {
-
 DataSourceItem::DataSourceItem()
     : ModelView::CompoundItem("DataSourceItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(USERDSN, "");
     addProperty(DSN, "");
     addProperty(DRIVER, "");
@@ -44,7 +43,7 @@ DataSourceItem::DataSourceItem()
 DataSourceItem::DataSourceItem(const DataSourceItem &other)
     : ModelView::CompoundItem("DataSourceItem")
 {
-    addProperty(ACTION, other.property<std::string>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(USERDSN, other.property<std::string>(USERDSN));
     addProperty(DSN, other.property<std::string>(DSN));
     addProperty(DRIVER, other.property<std::string>(DRIVER));
@@ -57,4 +56,4 @@ DataSourceItem::DataSourceItem(const DataSourceItem &other)
     addProperty(ATTRIBUTES, other.property<AttributesItem>(ATTRIBUTES));
 }
 
-}
+} // namespace preferences

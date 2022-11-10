@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 LocalPrinterWidget::LocalPrinterWidget(QWidget *parent, LocalPrinterItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ LocalPrinterWidget::~LocalPrinterWidget()
     delete ui;
 }
 
-void LocalPrinterWidget::setItem(ModelView::SessionItem* item)
+void LocalPrinterWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -62,7 +61,7 @@ void LocalPrinterWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, LocalPrinterItem::propertyToInt(LocalPrinterItem::ACTION));
+    mapper->addMapping(ui->actionComboBox, LocalPrinterItem::propertyToInt(LocalPrinterItem::ACTION), "currentIndex");
     mapper->addMapping(ui->nameLineEdit, LocalPrinterItem::propertyToInt(LocalPrinterItem::NAME));
     mapper->addMapping(ui->portComboBox, LocalPrinterItem::propertyToInt(LocalPrinterItem::PORT));
     mapper->addMapping(ui->pathLineEdit, LocalPrinterItem::propertyToInt(LocalPrinterItem::PATH));
@@ -83,5 +82,4 @@ QString LocalPrinterWidget::name() const
     return "General";
 }
 
-}
-
+} // namespace preferences

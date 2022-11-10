@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 FileExtensionWidget::FileExtensionWidget(QWidget *parent, FileExtensionItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ FileExtensionWidget::~FileExtensionWidget()
     delete ui;
 }
 
-void FileExtensionWidget::setItem(ModelView::SessionItem* item)
+void FileExtensionWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -62,7 +61,7 @@ void FileExtensionWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, FileExtensionItem::propertyToInt(FileExtensionItem::ACTION));
+    mapper->addMapping(ui->actionComboBox, FileExtensionItem::propertyToInt(FileExtensionItem::ACTION), "currentIndex");
     mapper->addMapping(ui->fileExtentionLineEdit, FileExtensionItem::propertyToInt(FileExtensionItem::FILE_EXT));
     mapper->addMapping(ui->classComboBox, FileExtensionItem::propertyToInt(FileExtensionItem::APPLICATION));
     mapper->addMapping(ui->classComboBox, FileExtensionItem::propertyToInt(FileExtensionItem::APP_PROG_ID));
@@ -86,5 +85,4 @@ void FileExtensionWidget::on_actionComboBox_currentIndexChanged(int index)
     Q_UNUSED(index);
 }
 
-}
-
+} // namespace preferences

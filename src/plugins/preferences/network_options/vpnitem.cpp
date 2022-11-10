@@ -26,7 +26,7 @@ namespace preferences
 VpnItem::VpnItem()
     : BaseNetworkItem("VpnItem")
 {
-    addProperty(propertyToString(ACTION), "");
+    addProperty(propertyToString(ACTION), 0);
     addProperty(propertyToString(USER), false);
     addProperty(propertyToString(NAME), "");
     addProperty(propertyToString(IP_ADDRESS), "");
@@ -58,7 +58,7 @@ VpnItem::VpnItem()
 VpnItem::VpnItem(const VpnItem &other)
     : BaseNetworkItem("VpnItem")
 {
-    copyProperty<std::string>(ACTION, other);
+    copyProperty<int>(ACTION, other);
     copyProperty<bool>(USER, other);
     copyProperty<std::string>(NAME, other);
     copyProperty<std::string>(IP_ADDRESS, other);

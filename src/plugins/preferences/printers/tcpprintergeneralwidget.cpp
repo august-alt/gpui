@@ -28,9 +28,8 @@
 
 #include <QDataWidgetMapper>
 
-namespace  preferences
+namespace preferences
 {
-
 TcpPrinterGeneralWidget::TcpPrinterGeneralWidget(QWidget *parent, TcpPrinterItem *item)
     : BasePreferenceWidget(parent)
     , m_item(item)
@@ -48,7 +47,7 @@ TcpPrinterGeneralWidget::~TcpPrinterGeneralWidget()
     delete ui;
 }
 
-void TcpPrinterGeneralWidget::setItem(ModelView::SessionItem* item)
+void TcpPrinterGeneralWidget::setItem(ModelView::SessionItem *item)
 {
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -62,7 +61,7 @@ void TcpPrinterGeneralWidget::setItem(ModelView::SessionItem* item)
     mapper->setItemDelegate(delegate.get());
     mapper->setRootIndex(QModelIndex());
 
-    mapper->addMapping(ui->actionComboBox, TcpPrinterItem::propertyToInt(TcpPrinterItem::ACTION));
+    mapper->addMapping(ui->actionComboBox, TcpPrinterItem::propertyToInt(TcpPrinterItem::ACTION), "currentIndex");
     mapper->addMapping(ui->deleteCheckBox, TcpPrinterItem::propertyToInt(TcpPrinterItem::DELETE_ALL));
     mapper->addMapping(ui->ipaddressLineEdit, TcpPrinterItem::propertyToInt(TcpPrinterItem::IP_ADDRESS));
     mapper->addMapping(ui->usednsCheckBox, TcpPrinterItem::propertyToInt(TcpPrinterItem::USE_DNS));
@@ -86,4 +85,4 @@ QString TcpPrinterGeneralWidget::name() const
     return "General";
 }
 
-}
+} // namespace preferences

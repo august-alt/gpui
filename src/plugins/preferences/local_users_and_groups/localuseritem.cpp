@@ -28,7 +28,7 @@ namespace preferences
 LocalUserItem::LocalUserItem()
     : BaseLocalItem("LocalUserItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(USER_NAME, "");
     addProperty(NEW_NAME, "");
     addProperty(FULL_NAME, "");
@@ -45,7 +45,7 @@ LocalUserItem::LocalUserItem()
 LocalUserItem::LocalUserItem(const LocalUserItem &other)
     : BaseLocalItem("LocalUserItem")
 {
-    addProperty(ACTION, other.property<std::string>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(USER_NAME, other.property<std::string>(USER_NAME));
     addProperty(NEW_NAME, other.property<std::string>(NEW_NAME));
     addProperty(FULL_NAME, other.property<std::string>(FULL_NAME));

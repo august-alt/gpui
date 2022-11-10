@@ -43,8 +43,7 @@ std::unique_ptr<PreferencesModel> DrivesModelBuilder::schemaToModel(std::unique_
             int thisDriveIndex = getDrivesCheckboxIndex(getOptionalPropertyData(currentProperties.thisDrive()).c_str());
             int allDrivesIndex = getDrivesCheckboxIndex(getOptionalPropertyData(currentProperties.allDrives()).c_str());
 
-            std::string actionState = getActionCheckboxState(
-                getOptionalPropertyData(currentProperties.action()).c_str());
+            int actionState = getActionCheckboxState(getOptionalPropertyData(currentProperties.action()).c_str());
 
             auto sessionItem = model->insertItem<DrivesContainerItem>(model->rootItem());
             sessionItem->setupListeners();
@@ -87,7 +86,7 @@ std::unique_ptr<Drives> DrivesModelBuilder::modelToSchema(std::unique_ptr<Prefer
                                                 driveModel->property<bool>(DrivesItem::PERSISTENT),
                                                 driveModel->property<bool>(DrivesItem::USE_LETTER),
                                                 driveModel->property<std::string>(DrivesItem::LETTER));
-            properties.action(driveModel->property<std::string>(DrivesItem::ACTION));
+            properties.action(getActionCheckboxModel(driveModel->property<int>(DrivesItem::ACTION)));
             properties.path(driveModel->property<std::string>(DrivesItem::PATH));
             properties.label(driveModel->property<std::string>(DrivesItem::LABEL));
             properties.userName(driveModel->property<std::string>(DrivesItem::USER_NAME));

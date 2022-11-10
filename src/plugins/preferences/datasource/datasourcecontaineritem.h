@@ -51,7 +51,7 @@ public:
     CommonItem getCommon() const;
     void setCommon(const CommonItem &item);
 
-    DataSourceItem getDataSource() const;
+    DataSourceItem *getDataSource() const;
     void setDataSource(const DataSourceItem &item);
 
     void setupListeners() override;

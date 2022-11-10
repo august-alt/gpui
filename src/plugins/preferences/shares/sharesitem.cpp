@@ -22,11 +22,10 @@
 
 namespace preferences
 {
-
 SharesItem::SharesItem()
     : ModelView::CompoundItem("SharesItem")
 {
-    addProperty(ACTION, "");
+    addProperty(ACTION, 0);
     addProperty(NAME, "");
     addProperty(PATH, "");
     addProperty(COMMENT, "");
@@ -41,7 +40,7 @@ SharesItem::SharesItem()
 SharesItem::SharesItem(const SharesItem &other)
     : ModelView::CompoundItem("SharesItem")
 {
-    addProperty(ACTION, other.property<QString>(ACTION));
+    addProperty(ACTION, other.property<int>(ACTION));
     addProperty(NAME, other.property<QString>(NAME));
     addProperty(PATH, other.property<QString>(PATH));
     addProperty(COMMENT, other.property<QString>(COMMENT));
@@ -53,4 +52,4 @@ SharesItem::SharesItem(const SharesItem &other)
     addProperty(ACCESS_BASED_ENUMERATION, other.property<QString>(ACCESS_BASED_ENUMERATION));
 }
 
-}
+} // namespace preferences

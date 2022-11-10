@@ -21,7 +21,10 @@
 #include "basepreferencereader.h"
 
 #include <fstream>
+#include <sstream>
 #include <QDebug>
+
+#include "../../../src/plugins/storage/smb/smbfile.h"
 
 std::string preferences::BasePreferenceReader::getType() const
 {
@@ -32,27 +35,37 @@ std::unique_ptr<preferences::PreferencesModel> preferences::BasePreferenceReader
 {
     std::unique_ptr<PreferencesModel> result;
 
-    std::ifstream file;
-
-    file.open(path, std::ifstream::in);
-
-    bool ok = file.good();
-    if (!ok)
-    {
-        qWarning() << "Failed to read file: " << path.c_str();
-        return nullptr;
-    }
+    auto stringvalues = std::make_unique<std::string>();
 
     try
     {
-        result = createModel(file);
+        QString qtPath = QString::fromStdString(path);
+
+        if (qtPath.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbFile(qtPath);
+            smbFile.open(QFile::ReadOnly);
+            stringvalues->resize(smbFile.size(), 0);
+            smbFile.read(&stringvalues->at(0), smbFile.size());
+            smbFile.close();
+        }
+        else
+        {
+            QFile registryFile(qtPath);
+            registryFile.open(QFile::ReadWrite);
+            stringvalues->resize(registryFile.size(), 0);
+            registryFile.read(&stringvalues->at(0), registryFile.size());
+            registryFile.close();
+        }
+
+        auto iss = std::make_unique<std::istringstream>(*stringvalues);
+
+        result = createModel(*iss.get());
     }
     catch (const std::exception &e)
     {
         qWarning() << e.what();
     }
-
-    file.close();
 
     return result;
 }

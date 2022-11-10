@@ -27,15 +27,15 @@
 #include "ad_filter.h"
 #include "ad_interface.h"
 #include "ad_object.h"
-#include "ad_utils.h"
 #include "ad_security.h"
+#include "ad_utils.h"
 
 #include "samba/ndr_security.h"
 
+#include <algorithm>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QLocale>
-#include <algorithm>
 
 #define ATTRIBUTE_ATTRIBUTE_DISPLAY_NAMES "attributeDisplayNames"
 #define ATTRIBUTE_EXTRA_COLUMNS "extraColumns"
@@ -65,18 +65,20 @@
 
 #define FLAG_ATTR_IS_CONSTRUCTED 0x00000004
 
-AdConfigPrivate::AdConfigPrivate() {
-}
+AdConfigPrivate::AdConfigPrivate() {}
 
-AdConfig::AdConfig() {
+AdConfig::AdConfig()
+{
     d = new AdConfigPrivate();
 }
 
-AdConfig::~AdConfig() {
+AdConfig::~AdConfig()
+{
     delete d;
 }
 
-void AdConfig::load(AdInterface &ad, const QLocale &locale) {
+void AdConfig::load(AdInterface &ad, const QLocale &locale)
+{
     d->domain = get_default_domain_from_krb5();
 
     d->filter_containers.clear();
@@ -89,16 +91,19 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
     d->class_schemas.clear();
 
     const AdObject rootDSE_object = ad.search_object(ROOT_DSE);
-    d->domain_dn = rootDSE_object.get_string(ATTRIBUTE_ROOT_DOMAIN_NAMING_CONTEXT);
-    d->schema_dn = rootDSE_object.get_string(ATTRIBUTE_SCHEMA_NAMING_CONTEXT);
-    d->configuration_dn = rootDSE_object.get_string(ATTRIBUTE_CONFIGURATION_NAMING_CONTEXT);
-    d->supported_control_list = rootDSE_object.get_strings(ATTRIBUTE_SUPPORTED_CONTROL);
+    d->domain_dn                  = rootDSE_object.get_string(ATTRIBUTE_ROOT_DOMAIN_NAMING_CONTEXT);
+    d->schema_dn                  = rootDSE_object.get_string(ATTRIBUTE_SCHEMA_NAMING_CONTEXT);
+    d->configuration_dn           = rootDSE_object.get_string(ATTRIBUTE_CONFIGURATION_NAMING_CONTEXT);
+    d->supported_control_list     = rootDSE_object.get_strings(ATTRIBUTE_SUPPORTED_CONTROL);
 
     const QString locale_dir = [this, locale]() {
         const QString locale_code = [locale]() {
-            if (locale.language() == QLocale::Russian) {
+            if (locale.language() == QLocale::Russian)
+            {
                 return "419";
-            } else {
+            }
+            else
+            {
                 // English
                 return "409";
             }
@@ -125,11 +130,12 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
 
         const QHash<QString, AdObject> results = ad.search(schema_dn(), SearchScope_Children, filter, attributes);
 
-        for (const AdObject &object : results.values()) {
-            const QString attribute = object.get_string(ATTRIBUTE_LDAP_DISPLAY_NAME);
+        for (const AdObject &object : results.values())
+        {
+            const QString attribute         = object.get_string(ATTRIBUTE_LDAP_DISPLAY_NAME);
             d->attribute_schemas[attribute] = object;
 
-            const QByteArray guid = object.get_value(ATTRIBUTE_SCHEMA_ID_GUID);
+            const QByteArray guid          = object.get_value(ATTRIBUTE_SCHEMA_ID_GUID);
             d->guid_to_attribute_map[guid] = attribute;
         }
     }
@@ -154,14 +160,15 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
 
         const QHash<QString, AdObject> results = ad.search(schema_dn(), SearchScope_Children, filter, attributes);
 
-        for (const AdObject &object : results.values()) {
-            const QString object_class = object.get_string(ATTRIBUTE_LDAP_DISPLAY_NAME);
+        for (const AdObject &object : results.values())
+        {
+            const QString object_class     = object.get_string(ATTRIBUTE_LDAP_DISPLAY_NAME);
             d->class_schemas[object_class] = object;
 
-            const QByteArray guid = object.get_value(ATTRIBUTE_SCHEMA_ID_GUID);
+            const QByteArray guid      = object.get_value(ATTRIBUTE_SCHEMA_ID_GUID);
             d->guid_to_class_map[guid] = object_class;
 
-            const QString sub_class_of = object.get_string(ATTRIBUTE_SUB_CLASS_OF);
+            const QString sub_class_of        = object.get_string(ATTRIBUTE_SUB_CLASS_OF);
             d->sub_class_of_map[object_class] = sub_class_of;
         }
     }
@@ -178,31 +185,35 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
 
         const QHash<QString, AdObject> results = ad.search(locale_dir, SearchScope_Children, filter, search_attributes);
 
-        for (const AdObject &object : results) {
+        for (const AdObject &object : results)
+        {
             const QString dn = object.get_dn();
 
             // Display specifier DN is "CN=object-class-Display,CN=..."
             // Get "object-class" from that
             const QString object_class = [dn]() {
                 const QString rdn = dn.split(",")[0];
-                QString out = rdn;
+                QString out       = rdn;
                 out.remove("CN=", Qt::CaseInsensitive);
                 out.remove("-Display");
 
                 return out;
             }();
 
-            if (object.contains(ATTRIBUTE_CLASS_DISPLAY_NAME)) {
+            if (object.contains(ATTRIBUTE_CLASS_DISPLAY_NAME))
+            {
                 d->class_display_names[object_class] = object.get_string(ATTRIBUTE_CLASS_DISPLAY_NAME);
             }
 
-            if (object.contains(ATTRIBUTE_ATTRIBUTE_DISPLAY_NAMES)) {
+            if (object.contains(ATTRIBUTE_ATTRIBUTE_DISPLAY_NAMES))
+            {
                 const QList<QString> display_names = object.get_strings(ATTRIBUTE_ATTRIBUTE_DISPLAY_NAMES);
 
-                for (const auto &display_name_pair : display_names) {
-                    const QList<QString> split = display_name_pair.split(",");
+                for (const auto &display_name_pair : display_names)
+                {
+                    const QList<QString> split   = display_name_pair.split(",");
                     const QString attribute_name = split[0];
-                    const QString display_name = split[1];
+                    const QString display_name   = split[1];
 
                     d->attribute_display_names[object_class][attribute_name] = display_name;
                 }
@@ -210,9 +221,10 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
                 d->find_attributes[object_class] = [object_class, display_names]() {
                     QList<QString> out;
 
-                    for (const auto &display_name_pair : display_names) {
+                    for (const auto &display_name_pair : display_names)
+                    {
                         const QList<QString> split = display_name_pair.split(",");
-                        const QString attribute = split[0];
+                        const QString attribute    = split[0];
 
                         out.append(attribute);
                     }
@@ -226,7 +238,7 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
     // Columns
     {
         const QList<QString> columns_values = [&] {
-            const QString dn = QString("CN=default-Display,%1").arg(locale_dir);
+            const QString dn      = QString("CN=default-Display,%1").arg(locale_dir);
             const AdObject object = ad.search_object(dn, {ATTRIBUTE_EXTRA_COLUMNS});
 
             // NOTE: order as stored in attribute is reversed. Order is not sorted alphabetically so can't just sort.
@@ -239,14 +251,16 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
         // ATTRIBUTE_EXTRA_COLUMNS value is
         // "$attribute,$display_name,..."
         // Get attributes out of that
-        for (const QString &value : columns_values) {
+        for (const QString &value : columns_values)
+        {
             const QList<QString> column_split = value.split(',');
 
-            if (column_split.size() < 2) {
+            if (column_split.size() < 2)
+            {
                 continue;
             }
 
-            const QString attribute = column_split[0];
+            const QString attribute              = column_split[0];
             const QString attribute_display_name = column_split[1];
 
             d->columns.append(attribute);
@@ -269,7 +283,7 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
         QList<QString> out;
 
         const QString ui_settings_dn = QString("CN=DS-UI-Default-Settings,%1").arg(locale_dir);
-        const AdObject object = ad.search_object(ui_settings_dn, {ATTRIBUTE_FILTER_CONTAINERS});
+        const AdObject object        = ad.search_object(ui_settings_dn, {ATTRIBUTE_FILTER_CONTAINERS});
 
         // NOTE: dns-Zone category is mispelled in
         // ATTRIBUTE_FILTER_CONTAINERS, no idea why, might
@@ -284,10 +298,11 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
         // NOTE: ATTRIBUTE_FILTER_CONTAINERS contains object
         // *categories* not classes, so need to get object
         // class from category object
-        for (const auto &object_category : categories) {
-            const QString category_dn = QString("CN=%1,%2").arg(object_category, schema_dn());
+        for (const auto &object_category : categories)
+        {
+            const QString category_dn      = QString("CN=%1,%2").arg(object_category, schema_dn());
             const AdObject category_object = ad.search_object(category_dn, {ATTRIBUTE_LDAP_DISPLAY_NAME});
-            const QString object_class = category_object.get_string(ATTRIBUTE_LDAP_DISPLAY_NAME);
+            const QString object_class     = category_object.get_string(ATTRIBUTE_LDAP_DISPLAY_NAME);
 
             out.append(object_class);
         }
@@ -317,18 +332,20 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
 
         const QHash<QString, AdObject> search_results = ad.search(search_base, SearchScope_Children, filter, attributes);
 
-        for (const AdObject &object : search_results.values()) {
-            const QString cn = object.get_string(ATTRIBUTE_CN);
-            const QString guid_string = object.get_string(ATTRIBUTE_RIGHTS_GUID);
-            const QByteArray guid = guid_string_to_bytes(guid_string);
-            const QByteArray display_name = object.get_value(ATTRIBUTE_DISPLAY_NAME);
+        for (const AdObject &object : search_results.values())
+        {
+            const QString cn                = object.get_string(ATTRIBUTE_CN);
+            const QString guid_string       = object.get_string(ATTRIBUTE_RIGHTS_GUID);
+            const QByteArray guid           = guid_string_to_bytes(guid_string);
+            const QByteArray display_name   = object.get_value(ATTRIBUTE_DISPLAY_NAME);
             const QList<QString> applies_to = [this, object]() {
                 QList<QString> out;
-                
+
                 const QList<QString> class_guid_string_list = object.get_strings(ATTRIBUTE_APPLIES_TO);
-                for (const QString &class_guid_string : class_guid_string_list) {
+                for (const QString &class_guid_string : class_guid_string_list)
+                {
                     const QByteArray class_guid = guid_string_to_bytes(class_guid_string);
-                    const QString object_class = guid_to_class(class_guid);
+                    const QString object_class  = guid_to_class(class_guid);
 
                     out.append(object_class);
                 }
@@ -337,53 +354,63 @@ void AdConfig::load(AdInterface &ad, const QLocale &locale) {
             }();
             const int valid_accesses = object.get_int(ATTRIBUTE_VALID_ACCESSES);
 
-            d->right_to_guid_map[cn] = guid;
-            d->right_guid_to_cn_map[guid] = cn;
+            d->right_to_guid_map[cn]         = guid;
+            d->right_guid_to_cn_map[guid]    = cn;
             d->rights_guid_to_name_map[guid] = display_name;
-            d->rights_name_to_guid_map[cn] = guid;
-            d->rights_applies_to_map[guid] = applies_to;
+            d->rights_name_to_guid_map[cn]   = guid;
+            d->rights_applies_to_map[guid]   = applies_to;
             d->extended_rights_list.append(cn);
             d->rights_valid_accesses_map[cn] = valid_accesses;
         }
     }
 }
 
-QString AdConfig::domain() const {
+QString AdConfig::domain() const
+{
     return d->domain;
 }
 
-QString AdConfig::domain_dn() const {
+QString AdConfig::domain_dn() const
+{
     return d->domain_dn;
 }
 
-QString AdConfig::configuration_dn() const {
+QString AdConfig::configuration_dn() const
+{
     return d->configuration_dn;
 }
 
-QString AdConfig::schema_dn() const {
+QString AdConfig::schema_dn() const
+{
     return d->schema_dn;
 }
 
-QString AdConfig::partitions_dn() const {
+QString AdConfig::partitions_dn() const
+{
     return QString("CN=Partitions,%1").arg(configuration_dn());
 }
 
-QString AdConfig::extended_rights_dn() const {
+QString AdConfig::extended_rights_dn() const
+{
     return QString("CN=Extended-Rights,%1").arg(configuration_dn());
 }
 
-QString AdConfig::policies_dn() const {
+QString AdConfig::policies_dn() const
+{
     return QString("CN=Policies,CN=System,%1").arg(domain_dn());
 }
 
-bool AdConfig::control_is_supported(const QString &control_oid) const {
+bool AdConfig::control_is_supported(const QString &control_oid) const
+{
     const bool supported = d->supported_control_list.contains(control_oid);
 
     return supported;
 }
 
-QString AdConfig::get_attribute_display_name(const Attribute &attribute, const ObjectClass &objectClass) const {
-    if (d->attribute_display_names.contains(objectClass) && d->attribute_display_names[objectClass].contains(attribute)) {
+QString AdConfig::get_attribute_display_name(const Attribute &attribute, const ObjectClass &objectClass) const
+{
+    if (d->attribute_display_names.contains(objectClass) && d->attribute_display_names[objectClass].contains(attribute))
+    {
         const QString display_name = d->attribute_display_names[objectClass][attribute];
 
         return display_name;
@@ -411,34 +438,42 @@ QString AdConfig::get_attribute_display_name(const Attribute &attribute, const O
     return fallback_display_names.value(attribute, attribute);
 }
 
-QString AdConfig::get_class_display_name(const QString &objectClass) const {
+QString AdConfig::get_class_display_name(const QString &objectClass) const
+{
     return d->class_display_names.value(objectClass, objectClass);
 }
 
-QList<QString> AdConfig::get_columns() const {
+QList<QString> AdConfig::get_columns() const
+{
     return d->columns;
 }
 
-QString AdConfig::get_column_display_name(const Attribute &attribute) const {
+QString AdConfig::get_column_display_name(const Attribute &attribute) const
+{
     return d->column_display_names.value(attribute, attribute);
 }
 
-int AdConfig::get_column_index(const QString &attribute) const {
-    if (!d->columns.contains(attribute)) {
+int AdConfig::get_column_index(const QString &attribute) const
+{
+    if (!d->columns.contains(attribute))
+    {
         qWarning() << "ADCONFIG columns missing attribute:" << attribute;
     }
 
     return d->columns.indexOf(attribute);
 }
 
-QList<QString> AdConfig::get_filter_containers() const {
+QList<QString> AdConfig::get_filter_containers() const
+{
     return d->filter_containers;
 }
 
-QList<QString> AdConfig::get_possible_superiors(const QList<ObjectClass> &object_classes) const {
+QList<QString> AdConfig::get_possible_superiors(const QList<ObjectClass> &object_classes) const
+{
     QList<QString> out;
 
-    for (const QString &object_class : object_classes) {
+    for (const QString &object_class : object_classes)
+    {
         const AdObject schema = d->class_schemas[object_class];
         out += schema.get_strings(ATTRIBUTE_POSSIBLE_SUPERIORS);
         out += schema.get_strings(ATTRIBUTE_SYSTEM_POSSIBLE_SUPERIORS);
@@ -449,27 +484,33 @@ QList<QString> AdConfig::get_possible_superiors(const QList<ObjectClass> &object
     return out;
 }
 
-ObjectClass AdConfig::get_parent_class(const ObjectClass &object_class) const {
+ObjectClass AdConfig::get_parent_class(const ObjectClass &object_class) const
+{
     const ObjectClass out = d->sub_class_of_map.value(object_class);
 
     return out;
 }
 
-QList<ObjectClass> AdConfig::get_inherit_chain(const ObjectClass &object_class) const {
+QList<ObjectClass> AdConfig::get_inherit_chain(const ObjectClass &object_class) const
+{
     QList<QString> out;
 
     ObjectClass current_class = object_class;
 
-    while (true) {
+    while (true)
+    {
         out.append(current_class);
 
         const QString parent_class = get_parent_class(current_class);
 
         const bool chain_ended = (parent_class == current_class);
 
-        if (chain_ended) {
+        if (chain_ended)
+        {
             break;
-        } else {
+        }
+        else
+        {
             current_class = parent_class;
         }
     }
@@ -477,12 +518,14 @@ QList<ObjectClass> AdConfig::get_inherit_chain(const ObjectClass &object_class) 
     return out;
 }
 
-QList<QString> AdConfig::get_optional_attributes(const QList<QString> &object_classes) const {
+QList<QString> AdConfig::get_optional_attributes(const QList<QString> &object_classes) const
+{
     const QList<QString> all_classes = d->add_auxiliary_classes(object_classes);
 
     QList<QString> attributes;
 
-    for (const auto &object_class : all_classes) {
+    for (const auto &object_class : all_classes)
+    {
         const AdObject schema = d->class_schemas[object_class];
         attributes += schema.get_strings(ATTRIBUTE_MAY_CONTAIN);
         attributes += schema.get_strings(ATTRIBUTE_SYSTEM_MAY_CONTAIN);
@@ -493,12 +536,14 @@ QList<QString> AdConfig::get_optional_attributes(const QList<QString> &object_cl
     return attributes;
 }
 
-QList<QString> AdConfig::get_mandatory_attributes(const QList<QString> &object_classes) const {
+QList<QString> AdConfig::get_mandatory_attributes(const QList<QString> &object_classes) const
+{
     const QList<QString> all_classes = d->add_auxiliary_classes(object_classes);
 
     QList<QString> attributes;
 
-    for (const auto &object_class : all_classes) {
+    for (const auto &object_class : all_classes)
+    {
         const AdObject schema = d->class_schemas[object_class];
         attributes += schema.get_strings(ATTRIBUTE_MUST_CONTAIN);
         attributes += schema.get_strings(ATTRIBUTE_SYSTEM_MUST_CONTAIN);
@@ -509,20 +554,22 @@ QList<QString> AdConfig::get_mandatory_attributes(const QList<QString> &object_c
     return attributes;
 }
 
-QList<QString> AdConfig::get_find_attributes(const QString &object_class) const {
+QList<QString> AdConfig::get_find_attributes(const QString &object_class) const
+{
     return d->find_attributes.value(object_class, QList<QString>());
 }
 
-AttributeType AdConfig::get_attribute_type(const QString &attribute) const {
+AttributeType AdConfig::get_attribute_type(const QString &attribute) const
+{
     // NOTE: replica of: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/7cda533e-d7a4-4aec-a517-91d02ff4a1aa
     // syntax -> om syntax list -> type
     static QHash<QString, QHash<QString, AttributeType>> type_map = {
         {"2.5.5.8", {{"1", AttributeType_Boolean}}},
         {"2.5.5.9",
-            {
-                {"10", AttributeType_Enumeration},
-                {"2", AttributeType_Integer},
-            }},
+         {
+             {"10", AttributeType_Enumeration},
+             {"2", AttributeType_Integer},
+         }},
         {"2.5.5.16", {{"65", AttributeType_LargeInteger}}},
         {"2.5.5.3", {{"27", AttributeType_StringCase}}},
         {"2.5.5.5", {{"22", AttributeType_IA5}}},
@@ -530,19 +577,19 @@ AttributeType AdConfig::get_attribute_type(const QString &attribute) const {
         {"2.5.5.6", {{"18", AttributeType_Numeric}}},
         {"2.5.5.2", {{"6", AttributeType_ObjectIdentifier}}},
         {"2.5.5.10",
-            {
-                {"4", AttributeType_Octet},
-                {"127", AttributeType_ReplicaLink},
-            }},
+         {
+             {"4", AttributeType_Octet},
+             {"127", AttributeType_ReplicaLink},
+         }},
         {"2.5.5.5", {{"19", AttributeType_Printable}}},
         {"2.5.5.17", {{"4", AttributeType_Sid}}},
         {"2.5.5.4", {{"20", AttributeType_Teletex}}},
         {"2.5.5.12", {{"64", AttributeType_Unicode}}},
         {"2.5.5.11",
-            {
-                {"23", AttributeType_UTCTime},
-                {"24", AttributeType_GeneralizedTime},
-            }},
+         {
+             {"23", AttributeType_UTCTime},
+             {"24", AttributeType_GeneralizedTime},
+         }},
         {"2.5.5.14", {{"127", AttributeType_DNString}}},
         {"2.5.5.7", {{"127", AttributeType_DNBinary}}},
         {"2.5.5.1", {{"127", AttributeType_DSDN}}},
@@ -551,16 +598,20 @@ AttributeType AdConfig::get_attribute_type(const QString &attribute) const {
     const AdObject schema = d->attribute_schemas[attribute];
 
     const QString attribute_syntax = schema.get_string(ATTRIBUTE_ATTRIBUTE_SYNTAX);
-    const QString om_syntax = schema.get_string(ATTRIBUTE_OM_SYNTAX);
+    const QString om_syntax        = schema.get_string(ATTRIBUTE_OM_SYNTAX);
 
-    if (type_map.contains(attribute_syntax) && type_map[attribute_syntax].contains(om_syntax)) {
+    if (type_map.contains(attribute_syntax) && type_map[attribute_syntax].contains(om_syntax))
+    {
         return type_map[attribute_syntax][om_syntax];
-    } else {
+    }
+    else
+    {
         return AttributeType_StringCase;
     }
 }
 
-LargeIntegerSubtype AdConfig::get_attribute_large_integer_subtype(const QString &attribute) const {
+LargeIntegerSubtype AdConfig::get_attribute_large_integer_subtype(const QString &attribute) const
+{
     // Manually remap large integer types to subtypes
     static const QList<QString> datetimes = {
         ATTRIBUTE_ACCOUNT_EXPIRES,
@@ -576,16 +627,22 @@ LargeIntegerSubtype AdConfig::get_attribute_large_integer_subtype(const QString 
         ATTRIBUTE_LOCKOUT_DURATION,
     };
 
-    if (datetimes.contains(attribute)) {
+    if (datetimes.contains(attribute))
+    {
         return LargeIntegerSubtype_Datetime;
-    } else if (timespans.contains(attribute)) {
+    }
+    else if (timespans.contains(attribute))
+    {
         return LargeIntegerSubtype_Timespan;
-    } else {
+    }
+    else
+    {
         return LargeIntegerSubtype_Integer;
     }
 }
 
-bool AdConfig::get_attribute_is_number(const QString &attribute) const {
+bool AdConfig::get_attribute_is_number(const QString &attribute) const
+{
     static const QList<AttributeType> number_types = {
         AttributeType_Integer,
         AttributeType_LargeInteger,
@@ -597,39 +654,47 @@ bool AdConfig::get_attribute_is_number(const QString &attribute) const {
     return number_types.contains(type);
 }
 
-bool AdConfig::get_attribute_is_single_valued(const QString &attribute) const {
+bool AdConfig::get_attribute_is_single_valued(const QString &attribute) const
+{
     return d->attribute_schemas[attribute].get_bool(ATTRIBUTE_IS_SINGLE_VALUED);
 }
 
-bool AdConfig::get_attribute_is_system_only(const QString &attribute) const {
+bool AdConfig::get_attribute_is_system_only(const QString &attribute) const
+{
     return d->attribute_schemas[attribute].get_bool(ATTRIBUTE_SYSTEM_ONLY);
 }
 
-int AdConfig::get_attribute_range_upper(const QString &attribute) const {
+int AdConfig::get_attribute_range_upper(const QString &attribute) const
+{
     return d->attribute_schemas[attribute].get_int(ATTRIBUTE_RANGE_UPPER);
 }
 
-bool AdConfig::get_attribute_is_backlink(const QString &attribute) const {
-    if (d->attribute_schemas[attribute].contains(ATTRIBUTE_LINK_ID)) {
-        const int link_id = d->attribute_schemas[attribute].get_int(ATTRIBUTE_LINK_ID);
+bool AdConfig::get_attribute_is_backlink(const QString &attribute) const
+{
+    if (d->attribute_schemas[attribute].contains(ATTRIBUTE_LINK_ID))
+    {
+        const int link_id         = d->attribute_schemas[attribute].get_int(ATTRIBUTE_LINK_ID);
         const bool link_id_is_odd = (link_id % 2 != 0);
 
         return link_id_is_odd;
-    } else {
+    }
+    else
+    {
         return false;
     }
 }
 
-bool AdConfig::get_attribute_is_constructed(const QString &attribute) const {
+bool AdConfig::get_attribute_is_constructed(const QString &attribute) const
+{
     const int system_flags = d->attribute_schemas[attribute].get_int(ATTRIBUTE_SYSTEM_FLAGS);
     return bitmask_is_set(system_flags, FLAG_ATTR_IS_CONSTRUCTED);
 }
 
-QByteArray AdConfig::get_right_guid(const QString &right_cn) const {
+QByteArray AdConfig::get_right_guid(const QString &right_cn) const
+{
     const QByteArray out = d->right_to_guid_map.value(right_cn, QByteArray());
     return out;
 }
-
 
 // NOTE: technically, Active Directory provides
 // translations for right names but it's not
@@ -638,7 +703,8 @@ QByteArray AdConfig::get_right_guid(const QString &right_cn) const {
 // retrieved from schema to get translation from
 // dssec.dll. And we don't have dssec.dll, nor do we
 // have the ability to interact with it!
-QString AdConfig::get_right_name(const QByteArray &right_guid, const QLocale::Language language) const {
+QString AdConfig::get_right_name(const QByteArray &right_guid, const QLocale::Language language) const
+{
     const QHash<QString, QString> cn_to_map_russian = {
         {"DS-Replication-Get-Changes", QCoreApplication::translate("AdConfig", "DS Replication Get Changes")},
         {"DS-Replication-Get-Changes-All", QCoreApplication::translate("AdConfig", "DS Replication Get Changes All")},
@@ -657,10 +723,12 @@ QString AdConfig::get_right_name(const QByteArray &right_guid, const QLocale::La
         {"Generate-RSoP-Logging", QCoreApplication::translate("AdConfig", "Generate RSoP Logging")},
         {"Run-Protect-Admin-Groups-Task", QCoreApplication::translate("AdConfig", "Run Protect Admin Groups Task")},
         {"Self-Membership", QCoreApplication::translate("AdConfig", "Self Membership")},
-        {"DS-Clone-Domain-Controller", QCoreApplication::translate("AdConfig", "Allow a DC to create a clone of itself")},
+        {"DS-Clone-Domain-Controller",
+         QCoreApplication::translate("AdConfig", "Allow a DC to create a clone of itself")},
         {"Domain-Other-Parameters", QCoreApplication::translate("AdConfig", "Other Domain Parameters (for use by SAM)")},
         {"SAM-Enumerate-Entire-Domain", QCoreApplication::translate("AdConfig", "SAM Enumerate Entire Domain")},
-        {"DS-Write-Partition-Secrets", QCoreApplication::translate("AdConfig", "Write secret attributes of objects in a Partition")},
+        {"DS-Write-Partition-Secrets",
+         QCoreApplication::translate("AdConfig", "Write secret attributes of objects in a Partition")},
         {"Send-As", QCoreApplication::translate("AdConfig", "Send As")},
         {"DS-Replication-Manage-Topology", QCoreApplication::translate("AdConfig", "DS Replication Manage Topology")},
         {"DS-Set-Owner", QCoreApplication::translate("AdConfig", "Set Owner of an object during creation.")},
@@ -669,15 +737,20 @@ QString AdConfig::get_right_name(const QByteArray &right_guid, const QLocale::La
         {"Web-Information", QCoreApplication::translate("AdConfig", "Web Information")},
         {"Create-Inbound-Forest-Trust", QCoreApplication::translate("AdConfig", "Create Inbound Forest Trust")},
         {"Migrate-SID-History", QCoreApplication::translate("AdConfig", "Migrate SID History")},
-        {"Update-Password-Not-Required-Bit", QCoreApplication::translate("AdConfig", "Update Password Not Required Bit")},
+        {"Update-Password-Not-Required-Bit",
+         QCoreApplication::translate("AdConfig", "Update Password Not Required Bit")},
         {"MS-TS-GatewayAccess", QCoreApplication::translate("AdConfig", "MS-TS-GatewayAccess")},
-        {"Validated-MS-DS-Additional-DNS-Host-Name", QCoreApplication::translate("AdConfig", "Validated write to MS DS Additional DNS Host Name")},
+        {"Validated-MS-DS-Additional-DNS-Host-Name",
+         QCoreApplication::translate("AdConfig", "Validated write to MS DS Additional DNS Host Name")},
         {"msmq-Receive", QCoreApplication::translate("AdConfig", "msmq Receive")},
         {"Validated-DNS-Host-Name", QCoreApplication::translate("AdConfig", "Validated DNS Host Name")},
         {"Send-To", QCoreApplication::translate("AdConfig", "Send To")},
-        {"DS-Replication-Get-Changes-In-Filtered-Set", QCoreApplication::translate("AdConfig", "DS Replication Get Changes In Filtered Set")},
-        {"Read-Only-Replication-Secret-Synchronization", QCoreApplication::translate("AdConfig", "Read Only Replication Secret Synchronization")},
-        {"Validated-MS-DS-Behavior-Version", QCoreApplication::translate("AdConfig", "Validated write to MS DS behavior version")},
+        {"DS-Replication-Get-Changes-In-Filtered-Set",
+         QCoreApplication::translate("AdConfig", "DS Replication Get Changes In Filtered Set")},
+        {"Read-Only-Replication-Secret-Synchronization",
+         QCoreApplication::translate("AdConfig", "Read Only Replication Secret Synchronization")},
+        {"Validated-MS-DS-Behavior-Version",
+         QCoreApplication::translate("AdConfig", "Validated write to MS DS behavior version")},
         {"msmq-Open-Connector", QCoreApplication::translate("AdConfig", "msmq Open Connector")},
         {"Terminal-Server-License-Server", QCoreApplication::translate("AdConfig", "Terminal Server License Server")},
         {"Change-Schema-Master", QCoreApplication::translate("AdConfig", "Change Schema Master")},
@@ -699,7 +772,8 @@ QString AdConfig::get_right_name(const QByteArray &right_guid, const QLocale::La
         {"Apply-Group-Policy", QCoreApplication::translate("AdConfig", "Apply Group Policy")},
         {"User-Account-Restrictions", QCoreApplication::translate("AdConfig", "Account Restrictions")},
         {"Validated-SPN", QCoreApplication::translate("AdConfig", "Validated SPN")},
-        {"DS-Read-Partition-Secrets", QCoreApplication::translate("AdConfig", "Read secret attributes of objects in a Partition")},
+        {"DS-Read-Partition-Secrets",
+         QCoreApplication::translate("AdConfig", "Read secret attributes of objects in a Partition")},
         {"User-Logon", QCoreApplication::translate("AdConfig", "Logon Information")},
         {"DS-Query-Self-Quota", QCoreApplication::translate("AdConfig", "DS Query Self Quota")},
         {"Change-Infrastructure-Master", QCoreApplication::translate("AdConfig", "Change Infrastructure Master")},
@@ -709,11 +783,13 @@ QString AdConfig::get_right_name(const QByteArray &right_guid, const QLocale::La
         {"Change-Domain-Master", QCoreApplication::translate("AdConfig", "Change Domain Master")},
         {"msmq-Send", QCoreApplication::translate("AdConfig", "msmq Send")},
         {"Change-Rid-Master", QCoreApplication::translate("AdConfig", "Change Rid Master")},
-        {"Recalculate-Security-Inheritance", QCoreApplication::translate("AdConfig", "Recalculate Security Inheritance")},
+        {"Recalculate-Security-Inheritance",
+         QCoreApplication::translate("AdConfig", "Recalculate Security Inheritance")},
         {"Refresh-Group-Cache", QCoreApplication::translate("AdConfig", "Refresh Group Cache")},
         {"Manage-Optional-Features", QCoreApplication::translate("AdConfig", "Manage Optional Features")},
         {"Reload-SSL-Certificate", QCoreApplication::translate("AdConfig", "Reload SSL Certificate")},
-        {"Enable-Per-User-Reversibly-Encrypted-Password", QCoreApplication::translate("AdConfig", "Enable Per User Reversibly Encrypted Password")},
+        {"Enable-Per-User-Reversibly-Encrypted-Password",
+         QCoreApplication::translate("AdConfig", "Enable Per User Reversibly Encrypted Password")},
         {"DS-Replication-Monitor-Topology", QCoreApplication::translate("AdConfig", "DS Replication Monitor Topology")},
         {"Public-Information", QCoreApplication::translate("AdConfig", "Public Information")},
         {"Private-Information", QCoreApplication::translate("AdConfig", "Private Information")},
@@ -723,22 +799,27 @@ QString AdConfig::get_right_name(const QByteArray &right_guid, const QLocale::La
     };
 
     const QString right_cn = d->right_guid_to_cn_map[right_guid];
-    if (language == QLocale::Russian && cn_to_map_russian.contains(right_cn)) {
+    if (language == QLocale::Russian && cn_to_map_russian.contains(right_cn))
+    {
         const QString out = cn_to_map_russian[right_cn];
-        
+
         return out;
     }
 
-    const QString out = d->rights_guid_to_name_map.value(right_guid, QCoreApplication::translate("AdConfig", "<unknown rights>"));
+    const QString out = d->rights_guid_to_name_map.value(right_guid,
+                                                         QCoreApplication::translate("AdConfig", "<unknown rights>"));
     return out;
 }
 
-QList<QString> AdConfig::get_extended_rights_list(const QList<QString> &class_list) const {
+QList<QString> AdConfig::get_extended_rights_list(const QList<QString> &class_list) const
+{
     QList<QString> out;
-    
-    for (const QString &rights : d->extended_rights_list) {
+
+    for (const QString &rights : d->extended_rights_list)
+    {
         const bool applies_to = rights_applies_to_class(rights, class_list);
-        if (applies_to) {
+        if (applies_to)
+        {
             out.append(rights);
         }
     }
@@ -746,12 +827,14 @@ QList<QString> AdConfig::get_extended_rights_list(const QList<QString> &class_li
     return out;
 }
 
-int AdConfig::get_rights_valid_accesses(const QString &rights_cn) const {
+int AdConfig::get_rights_valid_accesses(const QString &rights_cn) const
+{
     // NOTE: awkward exception. Can't write group
     // membership because target attribute is
     // constructed. For some reason valid accesses for
     // membership right does allow writing.
-    if (rights_cn == "Membership") {
+    if (rights_cn == "Membership")
+    {
         return SEC_ADS_READ_PROP;
     }
 
@@ -760,47 +843,54 @@ int AdConfig::get_rights_valid_accesses(const QString &rights_cn) const {
     return out;
 }
 
-QString AdConfig::guid_to_attribute(const QByteArray &guid) const {
+QString AdConfig::guid_to_attribute(const QByteArray &guid) const
+{
     const QString out = d->guid_to_attribute_map.value(guid, "<unknown attribute>");
     return out;
 }
 
-QString AdConfig::guid_to_class(const QByteArray &guid) const {
+QString AdConfig::guid_to_class(const QByteArray &guid) const
+{
     const QString out = d->guid_to_class_map.value(guid, "<unknown class>");
     return out;
 }
 
 // (noncontainer classes) = (all classes) - (container classes)
-QList<QString> AdConfig::get_noncontainer_classes() {
+QList<QString> AdConfig::get_noncontainer_classes()
+{
     QList<QString> out = filter_classes;
 
     const QList<QString> container_classes = get_filter_containers();
-    for (const QString &container_class : container_classes) {
+    for (const QString &container_class : container_classes)
+    {
         out.removeAll(container_class);
     }
 
     return out;
 }
 
-bool AdConfig::rights_applies_to_class(const QString &rights_cn, const QList<QString> &class_list) const {
+bool AdConfig::rights_applies_to_class(const QString &rights_cn, const QList<QString> &class_list) const
+{
     const QByteArray rights_guid = d->rights_name_to_guid_map[rights_cn];
 
-    const QList<QString> applies_to_list = d->rights_applies_to_map[rights_guid]; 
-    const QSet<QString> applies_to_set = QSet<QString>(applies_to_list.begin(), applies_to_list.end());
+    const QList<QString> applies_to_list = d->rights_applies_to_map[rights_guid];
+    const QSet<QString> applies_to_set   = QSet<QString>::fromList(applies_to_list);
 
-    const QSet<QString> class_set = QSet<QString>(class_list.begin(), class_list.end());
+    const QSet<QString> class_set = QSet<QString>::fromList(class_list);
 
     const bool applies = applies_to_set.intersects(class_set);
 
     return applies;
 }
 
-QList<QString> AdConfigPrivate::add_auxiliary_classes(const QList<QString> &object_classes) const {
+QList<QString> AdConfigPrivate::add_auxiliary_classes(const QList<QString> &object_classes) const
+{
     QList<QString> out;
 
     out += object_classes;
 
-    for (const auto &object_class : object_classes) {
+    for (const auto &object_class : object_classes)
+    {
         const AdObject schema = class_schemas[object_class];
         out += schema.get_strings(ATTRIBUTE_AUXILIARY_CLASS);
         out += schema.get_strings(ATTRIBUTE_SYSTEM_AUXILIARY_CLASS);

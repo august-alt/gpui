@@ -15,6 +15,7 @@ macro(add_gpui_plugin name)
 
 endmacro(add_gpui_plugin)
 
+add_subdirectory(administrative_templates)
 add_subdirectory(adml)
 add_subdirectory(admx)
 add_subdirectory(cmtl)

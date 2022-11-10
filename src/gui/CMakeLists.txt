@@ -7,6 +7,7 @@ set(HEADERS
     contentwidget.h
     commandlineoptions.h
     commandlineparser.h
+    filedialogutils.h
     gui.h
     listboxdialog.h
     mainwindow.h
@@ -19,6 +20,7 @@ set(SOURCES
     aboutdialog.cpp
     commandlineparser.cpp
     contentwidget.cpp
+    filedialogutils.cpp
     gui.cpp
     listboxdialog.cpp
     mainwindow.cpp
@@ -69,5 +71,5 @@ qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 
 add_gpui_library(gpui-gui ${UI_SOURCES} ${MOC_SOURCES} ${SOURCES} ${LIB_RESOURCES})
 target_link_libraries(gpui-gui Qt5::Widgets Qt5::Qml)
-target_link_libraries(gpui-gui gpui-model gpui-io gpui-ldap)
+target_link_libraries(gpui-gui gpui-core gpui-io gpui-ldap)
 target_link_libraries(gpui-gui smb-storage-static)

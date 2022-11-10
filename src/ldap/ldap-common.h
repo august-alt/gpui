@@ -21,7 +21,7 @@
 #ifndef LDAP_COMMON_H
 #define LDAP_COMMON_H
 
-#include "../model/common.h"
+#include "../core/common.h"
 
 #ifdef GPUI_LDAP_LIBRARY
     #define GPUI_LDAP_EXPORT GPUI_SYMBOL_EXPORT

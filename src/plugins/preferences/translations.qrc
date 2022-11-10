@@ -1,0 +1,44 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+  <file>preferences_common_translation_en.qm</file>
+  <file>preferences_common_translation_ru.qm</file>
+  <file>datasource_translation_en.qm</file>
+  <file>datasource_translation_ru.qm</file>
+  <file>device_translation_en.qm</file>
+  <file>device_translation_ru.qm</file>
+  <file>drives_translation_en.qm</file>
+  <file>drives_translation_ru.qm</file>
+  <file>files_translation_en.qm</file>
+  <file>files_translation_ru.qm</file>
+  <file>folder_options_translation_en.qm</file>
+  <file>folder_options_translation_ru.qm</file>
+  <file>folders_translation_en.qm</file>
+  <file>folders_translation_ru.qm</file>
+  <file>ini_translation_en.qm</file>
+  <file>ini_translation_ru.qm</file>
+  <file>item_level_targeting_translation_en.qm</file>
+  <file>item_level_targeting_translation_ru.qm</file>
+  <file>users_translation_en.qm</file>
+  <file>users_translation_ru.qm</file>
+  <file>network_options_translation_en.qm</file>
+  <file>network_options_translation_ru.qm</file>
+  <file>power_options_translation_en.qm</file>
+  <file>power_options_translation_ru.qm</file>
+  <file>printers_translation_en.qm</file>
+  <file>printers_translation_ru.qm</file>
+  <file>regional_options_translation_en.qm</file>
+  <file>regional_options_translation_ru.qm</file>
+  <file>registry_translation_en.qm</file>
+  <file>registry_translation_ru.qm</file>
+  <file>tasks_translation_en.qm</file>
+  <file>tasks_translation_ru.qm</file>
+  <file>shares_translation_en.qm</file>
+  <file>shares_translation_ru.qm</file>
+  <file>shortcuts_translation_en.qm</file>
+  <file>shortcuts_translation_ru.qm</file>
+  <file>start_menu_translation_en.qm</file>
+  <file>start_menu_translation_ru.qm</file>
+  <file>variables_translation_en.qm</file>
+  <file>variables_translation_ru.qm</file>
+ </qresource>
+</RCC>

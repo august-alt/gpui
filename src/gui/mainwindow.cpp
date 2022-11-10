@@ -19,8 +19,8 @@
 ***********************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "mainwindowsettings.h"
+#include "ui_mainwindow.h"
 
 #include "aboutdialog.h"
 
@@ -30,10 +30,15 @@
 
 #include "treevieweventfilter.h"
 
-#include "../model/bundle/policybundle.h"
+#include "../core/isnapin.h"
+#include "../core/isnapinmanager.h"
 
-#include "../model/registry/registry.h"
-#include "../model/registry/polregistrysource.h"
+#include "../plugins/administrative_templates/bundle/itemtype.h"
+#include "../plugins/administrative_templates/bundle/policybundle.h"
+#include "../plugins/administrative_templates/bundle/policyroles.h"
+
+#include "../plugins/administrative_templates/registry/polregistrysource.h"
+#include "../plugins/administrative_templates/registry/registry.h"
 
 #include "../io/registryfileformat.h"
 
@@ -48,156 +53,164 @@
 
 #include "../plugins/storage/smb/smbfile.h"
 
-#include "../model/bundle/policyroles.h"
+#include "../plugins/administrative_templates/bundle/policyroles.h"
+
 #include "../ldap/ldapcontract.h"
 #include "../ldap/ldapimpl.h"
 
-#include <QList>
-
+#include <stack>
 
 void registerResources()
 {
     Q_INIT_RESOURCE(translations);
 }
 
-namespace gpui {
-
-class MainWindowPrivate {
+namespace gpui
+{
+class MainWindowPrivate
+{
 public:
-    std::unique_ptr<QStandardItemModel> model = nullptr;
-    ContentWidget* contentWidget = nullptr;
+    std::unique_ptr<QAbstractItemModel> model    = nullptr;
+    ContentWidget *contentWidget                 = nullptr;
     std::unique_ptr<MainWindowSettings> settings = nullptr;
-
-    std::shared_ptr<model::registry::Registry> userRegistry = {};
-    std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource = {};
-    QString userRegistryPath {};
-
-    std::shared_ptr<model::registry::Registry> machineRegistry = nullptr;
-    std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource = nullptr;
-    QString machineRegistryPath {};
+    ISnapInManager *manager                      = nullptr;
 
     std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
-    std::unique_ptr<QSortFilterProxyModel> searchModel = nullptr;
+    std::unique_ptr<QSortFilterProxyModel> searchModel       = nullptr;
 
-    std::vector<std::unique_ptr<QTranslator>> translators {};
-    QString localeName {};
+    std::vector<std::unique_ptr<QTranslator>> translators{};
+    QString localeName{};
 
-    QString itemName {};
+    QString itemName{};
 
-    QIcon windowIcon {};
+    QIcon windowIcon{};
 
-    CommandLineOptions options {};
+    CommandLineOptions options{};
 
     std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
     std::unique_ptr<ldap::LDAPContract> ldapImpl = nullptr;
 
     MainWindowPrivate()
-        : userRegistry(new model::registry::Registry())
-        , userRegistrySource(new model::registry::PolRegistrySource(userRegistry))
-        , machineRegistry(new model::registry::Registry())
-        , machineRegistrySource(new model::registry::PolRegistrySource(machineRegistry))
-        , eventFilter(new TreeViewEventFilter())
+        : eventFilter(new TreeViewEventFilter())
         , ldapImpl(new ldap::LDAPImpl())
     {}
 
 private:
-    MainWindowPrivate(const MainWindowPrivate&)            = delete;   // copy ctor
-    MainWindowPrivate(MainWindowPrivate&&)                 = delete;   // move ctor
-    MainWindowPrivate& operator=(const MainWindowPrivate&) = delete;   // copy assignment
-    MainWindowPrivate& operator=(MainWindowPrivate&&)      = delete;   // move assignment
+    MainWindowPrivate(const MainWindowPrivate &) = delete;            // copy ctor
+    MainWindowPrivate(MainWindowPrivate &&)      = delete;            // move ctor
+    MainWindowPrivate &operator=(const MainWindowPrivate &) = delete; // copy assignment
+    MainWindowPrivate &operator=(MainWindowPrivate &&) = delete;      // move assignment
 };
 
-void save(const std::string &fileName, std::shared_ptr<model::registry::Registry> registry)
+QModelIndex findParent(QAbstractItemModel *model, const QModelIndex &parent, const QUuid &id)
 {
-    std::unique_ptr<io::RegistryFile> fileData = std::make_unique<io::RegistryFile>();
-    fileData->setRegistry(registry);
+    auto stack = std::make_unique<std::stack<QModelIndex>>();
+    stack->push(parent);
 
-    QString pluginName = QString::fromStdString(fileName);
-    pluginName = pluginName.mid(pluginName.lastIndexOf('.') + 1);
-
-    io::RegistryFileFormat<io::RegistryFile>* format = gpui::PluginStorage::instance()->createPluginClass<io::RegistryFileFormat<io::RegistryFile> >(pluginName);
-
-    if (!format)
+    while (!stack->empty())
     {
-        qWarning() << "Format supporting: " << pluginName << " not found.";
+        auto current = stack->top();
+        stack->pop();
 
-        return;
-    }
-
-    auto oss = std::make_unique<std::ostringstream>();
-
-    if (!format->write(*oss, fileData.get()))
-    {
-        qWarning() << fileName.c_str() << " " << format->getErrorString().c_str();
-    }
-
-    oss->flush();
-
-    qWarning() << "Current string values." << oss->str().c_str();
-
-    bool ifShowError = false;
-
-    auto showMessageFunction = [&fileName]()
-    {
-        QMessageBox messageBox(QMessageBox::Critical,
-                    QObject::tr("Error"),
-                    QObject::tr("Error writing file:") + "\n" + qPrintable(fileName.c_str()),
-                    QMessageBox::Ok);
-        messageBox.exec();
-    };
-
-    try {
-        if (QString::fromStdString(fileName).startsWith("smb://"))
+        auto currentId = current.data(Qt::UserRole + 12).value<QUuid>();
+        if (currentId == id)
         {
-            gpui::smb::SmbFile smbLocationItemFile(QString::fromStdString(fileName));
-            ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
-            if (!ifShowError)
+            return current;
+        }
+
+        for (int row = 0; row < model->rowCount(current); ++row)
+        {
+            QModelIndex index = model->index(row, 0, current);
+            auto indexId      = index.data(Qt::UserRole + 12).value<QUuid>();
+            if (indexId == id)
             {
-                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+                return index;
             }
-            if (ifShowError && oss->str().size() > 0)
+
+            if (model->hasChildren(index))
             {
-                smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
+                for (int childRow = 0; childRow < model->rowCount(index); ++childRow)
+                {
+                    QModelIndex childIndex = model->index(childRow, 0, index);
+                    stack->push(childIndex);
+                }
             }
-            smbLocationItemFile.close();
+        }
+    }
+
+    return QModelIndex();
+}
+
+void appendModel(QStandardItem *target, const QAbstractItemModel *model, const QModelIndex &parent)
+{
+    for (int rowIndex = 0; rowIndex < model->rowCount(parent); ++rowIndex)
+    {
+        QModelIndex index = model->index(rowIndex, 0, parent);
+
+        auto parentId    = index.data(Qt::UserRole + 13).value<QUuid>();
+        auto parentIndex = QModelIndex();
+        auto currentId   = index.data(Qt::UserRole + 12).value<QUuid>();
+
+        auto currentIndex    = findParent(target->model(), target->model()->index(0, 0).parent(), currentId);
+        QStandardItem *child = nullptr;
+
+        if (!currentIndex.isValid())
+        {
+            if (!currentId.isNull())
+            {
+                qWarning() << "Current id: " << currentId;
+            }
+            if (!parentId.isNull())
+            {
+                qWarning() << "Non null uuid" << index.data() << parentId;
+                parentIndex = findParent(target->model(), target->model()->index(0, 0), parentId);
+            }
+
+            child = new QStandardItem();
+            child->setData(index.data(Qt::DisplayRole), Qt::DisplayRole);
+            child->setData(index.data(Qt::DecorationRole), Qt::DecorationRole);
+            child->setData(index.data(model::bundle::ITEM_TYPE), model::bundle::ITEM_TYPE);
+            child->setData(index.data(model::bundle::EXPLAIN_TEXT), model::bundle::EXPLAIN_TEXT);
+            child->setData(index.data(model::bundle::SUPPORTED_ON), model::bundle::SUPPORTED_ON);
+            child->setData(index.data(model::bundle::PRESENTATION), model::bundle::PRESENTATION);
+            child->setData(index.data(model::bundle::POLICY), model::bundle::POLICY);
+            child->setData(index.data(model::bundle::POLICY_TYPE), model::bundle::POLICY_TYPE);
+            child->setData(index.data(model::bundle::POLICY_WIDGET), model::bundle::POLICY_WIDGET);
+            child->setData(index.data(Qt::UserRole + 12), Qt::UserRole + 12);
+            child->setData(index.data(Qt::UserRole + 13), Qt::UserRole + 13);
+
+            if (parentIndex.isValid())
+            {
+                qWarning() << "Found valid index" << parentIndex.data();
+                target->model()->itemFromIndex(parentIndex)->appendRow(child);
+            }
+            else
+            {
+                target->insertRow(rowIndex, child);
+            }
         }
         else
         {
-            QFile registryFile(QString::fromStdString(fileName));
-            ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
-            if (!ifShowError)
-            {
-                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
-            }
-            if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
-            {
-                registryFile.write(&oss->str().at(0), oss->str().size());
-            }
-            registryFile.close();
+            child = target->model()->itemFromIndex(currentIndex);
+        }
+
+        if (model->hasChildren(index))
+        {
+            appendModel(child, model, index);
         }
     }
-    catch (std::exception& e)
-    {
-        ifShowError = true;
-        showMessageFunction();
-    }
-
-    if (!ifShowError)
-    {
-        showMessageFunction();
-    }
-
-    delete format;
 }
 
-MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
+MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
 {
     registerResources();
+
+    d->manager = manager;
 
     d->options = options;
 
@@ -205,39 +218,33 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
 
     ui->treeView->installEventFilter(d->eventFilter.get());
 
-    d->ldapImpl->initialize();
-
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
     d->settings->restoreSettings();
 
     createLanguageMenu();
 
     d->contentWidget = new ContentWidget(this);
-    d->contentWidget->setMachineRegistrySource(d->machineRegistrySource.get());
-    d->contentWidget->setUserRegistrySource(d->userRegistrySource.get());
     d->contentWidget->setEventFilter(d->eventFilter.get());
 
     ui->splitter->addWidget(d->contentWidget);
 
-    connect(d->eventFilter.get(), &TreeViewEventFilter::onEnter, this, [&]()
-    {
+    connect(d->eventFilter.get(), &TreeViewEventFilter::onEnter, this, [&]() {
         ui->treeView->clicked(ui->treeView->currentIndex());
     });
 
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
-    connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::onRegistrySourceSave);
+    connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::updateStatusBar);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
-    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex& index) { d->itemName = index.data().toString(); });
+    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex &index) { d->itemName = index.data().toString(); });
 
-    QLocale locale(!d->localeName.trimmed().isEmpty()
-                   ? d->localeName.replace("-","_")
-                   : QLocale::system().name().replace("-","_"));
+    QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
+                                                      : QLocale::system().name().replace("-", "_"));
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
     qtTranslator->load(locale, "gui", "_", ":/");
     QCoreApplication::installTranslator(qtTranslator.get());
     d->translators.push_back(std::move(qtTranslator));
-    d->localeName = locale.name().replace("_","-");
-    d->contentWidget->onLanguageChaged();
+    d->localeName = locale.name().replace("_", "-");
+    d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
 
     d->windowIcon = QIcon(":gpui.png");
@@ -249,36 +256,28 @@ MainWindow::MainWindow(CommandLineOptions &options, QWidget *parent)
         d->options.policyBundle = "/usr/share/PolicyDefinitions";
     }
 
-    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
+    for (auto &snapIn : manager->getSnapIns())
+    {
+        qWarning() << "Loading model from: " << snapIn->getDisplayName();
+        snapIn->onInitialize(this);
+    }
 
     if (!d->options.path.isEmpty())
     {
-        d->userRegistryPath = d->options.path + "/User/Registry.pol";
-        d->machineRegistryPath = d->options.path + "/Machine/Registry.pol";
-
-        onPolFileOpen(d->userRegistryPath, d->userRegistry, d->userRegistrySource,
-                      [&](model::registry::AbstractRegistrySource* source)
+        for (auto &snapIn : manager->getSnapIns())
         {
-            d->contentWidget->setUserRegistrySource(source);
-        });
-
-        onPolFileOpen(d->machineRegistryPath, d->machineRegistry, d->machineRegistrySource,
-                      [&](model::registry::AbstractRegistrySource* source)
-        {
-            d->contentWidget->setMachineRegistrySource(source);
-        });
-
-        onIniFileOpen(d->options.path + "/gpt.ini");
+            snapIn->onDataLoad(d->options.path.toStdString(), d->localeName.toStdString());
+        }
     }
+
+    loadPolicyModel(manager);
 
     if (!d->options.policyName.isEmpty())
     {
         setWindowTitle("GPUI - " + d->options.policyName);
     }
 
-    connect(d->contentWidget, &ContentWidget::savePolicyChanges, this, &MainWindow::onRegistrySourceSave);
-
-    connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString& text) {
+    connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString &text) {
         d->searchModel->setFilterFixedString(text);
     });
 }
@@ -302,9 +301,10 @@ QString MainWindow::getLanguage() const
 
 void MainWindow::setAdmxPath(const QString &admxPath)
 {
-    if (d->options.policyBundle.trimmed().isEmpty())
+    if (!d->options.policyBundle.trimmed().isEmpty())
     {
         d->options.policyBundle = admxPath;
+        admxPathChanged(admxPath);
     }
 }
 
@@ -320,78 +320,38 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString &locale)
+void MainWindow::loadPolicyModel(ISnapInManager *manager)
 {
-    auto bundle = std::make_unique<model::bundle::PolicyBundle>();
+    auto concatenateRowsModel = std::make_unique<QStandardItemModel>();
 
-    d->model = bundle->loadFolder(path.toStdString(), locale.toStdString());
+    QStandardItem *rootItem = concatenateRowsModel->invisibleRootItem();
+    rootItem->setData("Root Item", Qt::DisplayRole);
 
-    QStandardItem* header = d->model->invisibleRootItem()->child(0);
+    QStandardItem *visibleRootItem = new QStandardItem();
+    visibleRootItem->setData(QObject::tr("[Local Group Policy]"), Qt::DisplayRole);
+    visibleRootItem->setData(QIcon::fromTheme("text-x-generic-template"), Qt::DecorationRole);
+    visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY), model::bundle::ITEM_TYPE);
+    visibleRootItem->setData(QObject::tr("Local group policies"), model::bundle::EXPLAIN_TEXT);
+    visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both), model::bundle::POLICY_TYPE);
 
-    if (d->options.path.startsWith("smb://"))
-    {
-        QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
-
-        if (domainRegexp.indexIn(d->options.path) != -1)
-        {
-            header->setData('[' + domainRegexp.cap() + ']', Qt::DisplayRole);
-
-            QStringList capText = domainRegexp.capturedTexts();
-
-            QString textHeader = "[Domain Group Policy]";
-
-            QString ipAddress = isAnyIPAddress(capText[1]);
-
-            if(ipAddress != "")
-            {
-                textHeader = ipAddress;
-
-                qWarning() << "IP: " << ipAddress;
-            }
-
-            QString domainName = isAnyDomainName(capText[1]);
-
-            if(domainName != "")
-            {
-                textHeader = domainName;
-
-                qWarning() << "Domain: " << domainName;
-            }
-
-            char *strTextHeader = textHeader.toLocal8Bit().data();
-
-            header->setData(QObject::tr(strTextHeader), Qt::DisplayRole);
-
-        }
-        else
-        {
-            header->setData(QObject::tr("[Domain Group Policy]"));
-        }
-
-        QString guid = isAnyGUID(d->options.path);
-
-        QString displayName = "[Domain Group Policy]";
-
-        if(guid != "")
-        {
-            QString guidDisplayName = d->ldapImpl->getDisplayNameGPO(guid);
-
-            if(guidDisplayName != "") {
-                displayName = guidDisplayName;
-
-                qWarning() << "Display name of " << guid << " : " << guidDisplayName;
-            }
-        }
-
-        char *dN = displayName.toLocal8Bit().data();
-
-        header->setData(QObject::tr(dN), Qt::DisplayRole);
-
+    QString guid = isAnyGUID(d->options.path);
+    if(guid != "") {
+        visibleRootItem->setData(QObject::tr(guid.toStdString().c_str()), Qt::DisplayRole);
     }
-    else
+
+    rootItem->appendRow(visibleRootItem);
+
+    for (auto &snapIn : manager->getSnapIns())
     {
-        header->setData(QObject::tr("[Local Group Policy]"));
+        if (snapIn->getRootNode())
+        {
+            QAbstractItemModel *snapInModel = snapIn->getRootNode();
+            qWarning() << "Appending model from: " << snapIn->getDisplayName();
+            appendModel(visibleRootItem, snapInModel, snapInModel->index(0, 0));
+        }
     }
+
+    d->model = std::move(concatenateRowsModel);
 
     d->itemNameSortModel = std::make_unique<QSortFilterProxyModel>();
     d->itemNameSortModel->setSourceModel(d->model.get());
@@ -411,80 +371,20 @@ void gpui::MainWindow::loadPolicyBundleFolder(const QString& path, const QString
     d->searchModel->setRecursiveFilteringEnabled(true);
 
     ui->treeView->setModel(d->searchModel.get());
+    ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     d->contentWidget->setModel(d->searchModel.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
 
     ui->treeView->expand(d->searchModel->index(0, 0));
+    ui->treeView->setColumnHidden(1, true);
 
     d->contentWidget->modelItemSelected(d->searchModel->index(0, 0));
 }
 
-QString MainWindow::isAnyIPAddress(QString &path)
-{
-    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
-    QRegExp ipRegex ("^" + ipRange
-                         + "\\." + ipRange
-                         + "\\." + ipRange
-                         + "\\." + ipRange + "$");
-
-    if(ipRegex.indexIn(path) != -1) {
-
-        QString dcName = d->ldapImpl->getDCName();
-
-        char *dd = dcName.toLocal8Bit().data();
-
-        return ipRegex.capturedTexts()[0];
-    }
-
-    return NULL;
-}
-
-QString MainWindow::isAnyDomainName(QString &path)
-{
-    QRegExp domainRegExp("^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\\.(xn--)?([a-z0-9\\-]{1,61}|[a-z0-9-]{1,30}\\.[a-z]{2,})$");
-
-    if(domainRegExp.indexIn(path) != -1) {
-
-        QStringList domains = domainRegExp.capturedTexts();
-
-        return domains[0];
-    }
-
-    return NULL;
-}
-
-QString MainWindow::isAnyGUID(QString &path)
-{
-    QRegExp lastPartOfPath("/\\{([^/]+)\\}$");
-    QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
-
-    if(lastPartOfPath.indexIn(d->options.path) != -1)
-    {
-       QStringList lastPart = lastPartOfPath.capturedTexts();
-
-       QString preGuid = lastPart[lastPart.size()-1];
-
-       if(regExpGuid.indexIn(preGuid) != -1)
-       {
-           return preGuid;
-       }
-       else
-       {
-           return NULL;
-       }
-    }
-    else
-    {
-        return NULL;
-    }
-
-}
-
 void MainWindow::onDirectoryOpen()
-{    
-
+{
     std::unique_ptr<QFileDialog> fileDialog = std::make_unique<QFileDialog>(this);
 
     fileDialog->setDirectory(QDir::homePath());
@@ -498,8 +398,7 @@ void MainWindow::onDirectoryOpen()
     fileDialog->setLabelText(QFileDialog::FileType, tr("File type"));
 
     fileDialog->setNameFilter(QObject::tr("All files (*.*)"));
-    fileDialog->setOptions(QFileDialog::ShowDirsOnly
-                           | QFileDialog::DontResolveSymlinks
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
                            | QFileDialog::DontUseNativeDialog);
 
     fileDialog->setWindowIcon(d->windowIcon);
@@ -507,33 +406,13 @@ void MainWindow::onDirectoryOpen()
 
     if (fileDialog->exec() == QDialog::Accepted)
     {
-        d->options.policyBundle = fileDialog->selectedUrls().value(0).toLocalFile();
-        loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
+        setAdmxPath(fileDialog->selectedUrls().value(0).toLocalFile());
+        loadPolicyModel(d->manager);
     }
 }
 
-void MainWindow::onRegistrySourceSave()
+void MainWindow::updateStatusBar()
 {
-    if (!d->machineRegistryPath.isEmpty())
-    {
-        qWarning() << "Saving machine registry to: " << d->machineRegistryPath;
-        save(d->machineRegistryPath.toStdString(), d->machineRegistry);
-    }
-    else
-    {
-        qWarning() << "Unable to save machine registry path is empty!";
-    }
-
-    if (!d->userRegistryPath.isEmpty())
-    {
-        qWarning() << "Saving user registry to: " << d->userRegistryPath;
-        save(d->userRegistryPath.toStdString(), d->userRegistry);
-    }
-    else
-    {
-        qWarning() << "Unable to save user registry path is empty!";
-    }
-
     ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);
 }
 
@@ -544,7 +423,9 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionManual_triggered()
 {
-    const QUrl manual_url = QUrl("https://www.altlinux.org/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
+    const QUrl manual_url = QUrl(
+        "https://www.altlinux.org/"
+        "%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
     QDesktopServices::openUrl(manual_url);
 }
 
@@ -556,7 +437,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::onLanguageChanged(QAction *action)
 {
-    for (const auto& translator : d->translators)
+    for (const auto &translator : d->translators)
     {
         qApp->removeTranslator(translator.get());
     }
@@ -565,7 +446,7 @@ void MainWindow::onLanguageChanged(QAction *action)
     QString language = action->data().toString();
 
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    bool loadResult = qtTranslator->load("gui_" + language + ".qm", ":/");
+    bool loadResult                           = qtTranslator->load("gui_" + language + ".qm", ":/");
     QCoreApplication::installTranslator(qtTranslator.get());
     d->translators.push_back(std::move(qtTranslator));
     qWarning() << "Load language " << language << loadResult;
@@ -574,127 +455,25 @@ void MainWindow::onLanguageChanged(QAction *action)
 
     d->localeName = locale.name().replace("_", "-");
 
-    loadPolicyBundleFolder(d->options.policyBundle, d->localeName);
+    for (auto &snapIn : d->manager->getSnapIns())
+    {
+        snapIn->onRetranslateUI(d->localeName.toStdString());
+        qWarning() << d->localeName;
+    }
 
-    d->contentWidget->onLanguageChaged();
+    d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
+
+    loadPolicyModel(d->manager);
 
     ui->treeView->selectionModel()->clearSelection();
 
     ui->searchLineEdit->clear();
 }
 
-void MainWindow::onPolFileOpen(const QString &path,
-                               std::shared_ptr<model::registry::Registry> &registry,
-                               std::unique_ptr<model::registry::AbstractRegistrySource> &source,
-                               std::function<void (model::registry::AbstractRegistrySource *)> callback)
-{
-    qWarning() << "Path recieved: " << path;
-
-    auto stringvalues = std::make_unique<std::string>();
-
-    try {
-
-    if (path.startsWith("smb://"))
-    {
-        gpui::smb::SmbFile smbLocationItemFile(path);
-        smbLocationItemFile.open(QFile::ReadOnly);
-        stringvalues->resize(smbLocationItemFile.size(), 0);
-        smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
-        smbLocationItemFile.close();
-    }
-    else
-    {
-        QFile registryFile(path);
-        registryFile.open(QFile::ReadWrite);
-        stringvalues->resize(registryFile.size(), 0);
-        registryFile.read(&stringvalues->at(0), registryFile.size());
-        registryFile.close();
-    }
-
-    auto iss = std::make_unique<std::istringstream>(*stringvalues);
-    std::string pluginName("pol");
-
-    auto reader = std::make_unique<io::GenericReader>();
-    auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile> >(*iss, pluginName);
-    if (!registryFile)
-    {
-        qWarning() << "Unable to load registry file contents.";
-        return;
-    }
-
-    registry = registryFile->getRegistry();
-
-    source = std::make_unique<model::registry::PolRegistrySource>(registry);
-
-    callback(source.get());
-    }
-    catch (std::exception& e)
-    {
-        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
-    }
-}
-
-void MainWindow::onIniFileOpen(const QString &path)
-{
-    qWarning() << "Path recieved: " << path;
-
-    auto stringvalues = std::make_unique<std::string>();
-
-    try {
-        if (path.startsWith("smb://"))
-        {
-            gpui::smb::SmbFile smbLocationItemFile(path);
-            smbLocationItemFile.open(QFile::ReadOnly);
-            stringvalues->resize(smbLocationItemFile.size(), 0);
-            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
-            smbLocationItemFile.close();
-        }
-        else
-        {
-            QFile registryFile(path);
-            registryFile.open(QFile::ReadWrite);
-            stringvalues->resize(registryFile.size(), 0);
-            registryFile.read(&stringvalues->at(0), registryFile.size());
-            registryFile.close();
-        }
-
-        auto iss = std::make_unique<std::istringstream>(*stringvalues);
-        std::string pluginName("ini");
-
-        auto reader = std::make_unique<io::GenericReader>();
-        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile> >(*iss, pluginName);
-        if (!iniFile)
-        {
-            qWarning() << "Unable to load registry file contents.";
-            return;
-        }
-
-        auto sections = iniFile->getAllSections();
-
-        if (d->options.policyName.isEmpty() && sections->find("General") != sections->end())
-        {
-            auto& generalValues = (*sections)["General"];
-
-            auto displayName = generalValues.find("displayName");
-
-            if (displayName != generalValues.end())
-            {
-                qWarning() << "display name " << displayName.value().c_str();
-
-                setWindowTitle(QString::fromStdString("GPUI - " + displayName.value()));
-            }
-        }
-    }
-    catch (std::exception& e)
-    {
-        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
-    }
-}
-
 void MainWindow::createLanguageMenu()
 {
-    QActionGroup* langGroup = new QActionGroup(this);
+    QActionGroup *langGroup = new QActionGroup(this);
     langGroup->setExclusive(true);
 
     connect(langGroup, &QActionGroup::triggered, this, &MainWindow::onLanguageChanged);
@@ -703,7 +482,7 @@ void MainWindow::createLanguageMenu()
     QDir dir(":/");
     QStringList fileNames = dir.entryList(QStringList("gui_*.qm"));
 
-    QMenu* menu = new QMenu(this);
+    QMenu *menu = new QMenu(this);
     ui->actionLanguage->setMenu(menu);
 
     for (QString locale : fileNames)
@@ -727,4 +506,60 @@ void MainWindow::createLanguageMenu()
     }
 }
 
+QString MainWindow::isAnyIPAddress(const QString &path)
+{
+    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
+    QRegExp ipRegex ("^" + ipRange
+                         + "\\." + ipRange
+                         + "\\." + ipRange
+                         + "\\." + ipRange + "$");
+
+    if(ipRegex.indexIn(path) != -1)
+    {
+        return ipRegex.capturedTexts()[0];
+    }
+
+    return NULL;
 }
+
+QString MainWindow::isAnyDomainName(const QString &path)
+{
+    QRegExp domainRegExp("^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\\.(xn--)?([a-z0-9\\-]{1,61}|[a-z0-9-]{1,30}\\.[a-z]{2,})$");
+
+    if(domainRegExp.indexIn(path) != -1)
+    {
+
+        QStringList domains = domainRegExp.capturedTexts();
+
+        return domains[0];
+    }
+
+    return NULL;
+}
+
+QString MainWindow::isAnyGUID(const QString &path)
+{
+    QRegExp lastPartOfPath("/\\{([^/]+)\\}$");
+    QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
+
+    if(lastPartOfPath.indexIn(path) != -1)
+    {
+       QStringList lastPart = lastPartOfPath.capturedTexts();
+
+       QString preGuid = lastPart[lastPart.size()-1];
+
+       if(regExpGuid.indexIn(preGuid) != -1)
+       {
+           return preGuid;
+       }
+       else
+       {
+           return NULL;
+       }
+    }
+
+    return NULL;
+
+}
+
+} // namespace gpui

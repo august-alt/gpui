@@ -21,16 +21,15 @@
 #ifndef GPUI_GUI_H
 #define GPUI_GUI_H
 
-#include "../model/common.h"
+#include "../core/common.h"
 
 #ifdef GPUI_GUI_LIBRARY
-    #define GPUI_GUI_EXPORT GPUI_SYMBOL_EXPORT
+#define GPUI_GUI_EXPORT GPUI_SYMBOL_EXPORT
 #else
-    #define GPUI_GUI_EXPORT GPUI_SYMBOL_IMPORT
+#define GPUI_GUI_EXPORT GPUI_SYMBOL_IMPORT
 #endif
 
-namespace gpui {
-
-}
+namespace gpui
+{}
 
 #endif // GPUI_GUI_H

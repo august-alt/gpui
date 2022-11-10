@@ -18,22 +18,23 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
 #include "polformat.h"
 
 #include <QString>
 
-namespace gpui {
-    class PolPlugin : public Plugin
+namespace gpui
+{
+class PolPlugin : public Plugin
+{
+public:
+    PolPlugin()
+        : Plugin("pol")
     {
-    public:
-        PolPlugin()
-            : Plugin("pol")
-        {
-            GPUI_REGISTER_PLUGIN_CLASS(typeid(io::RegistryFileFormat<io::RegistryFile>).name(), PolFormat);
-        }
-    };
-}
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::RegistryFileFormat<io::RegistryFile>).name(), PolFormat);
+    }
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(pol, gpui::PolPlugin)

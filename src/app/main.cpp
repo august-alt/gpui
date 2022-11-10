@@ -18,17 +18,29 @@
 **
 ***********************************************************************************************************************/
 
+#include "../core/compositesnapindetailsdialog.h"
+#include "../core/pluginstorage.h"
+#include "../core/snapindetailsdialog.h"
+#include "../core/snapindetailsfactory.h"
+#include "../core/snapinloader.h"
+#include "../core/snapinmanager.h"
+
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
-#include "../model/pluginstorage.h"
-#include "../ldap/ldapimpl.h"
-#include "../ldap/ldapcontract.h"
 
 #include <QApplication>
 
-int main(int argc, char ** argv) {
-    // Load plugins.
-    gpui::PluginStorage::instance()->loadDefaultPlugins();
+int main(int argc, char **argv)
+{
+    // Register types for factory.
+    gpui::SnapInDetailsFactory::define<gpui::SnapInDetailsDialog>("ISnapIn");
+    gpui::SnapInDetailsFactory::define<gpui::CompositeSnapInDetailsDialog>("ICompositeSnapIn");
+
+    // Load plugins and snap-ins.
+    auto snapInManager = std::make_unique<gpui::SnapInManager>();
+    auto snapInLoader  = std::make_unique<gpui::SnapInLoader>(snapInManager.get());
+
+    snapInLoader->loadDefaultSnapIns();
 
     // Create window.
     QApplication app(argc, argv);
@@ -41,8 +53,8 @@ int main(int argc, char ** argv) {
     app.setApplicationVersion("0.2.0");
 
     gpui::CommandLineParser parser(app);
-    gpui::CommandLineOptions options {};
-    QString errorMessage {};
+    gpui::CommandLineOptions options{};
+    QString errorMessage{};
 
     gpui::CommandLineParser::CommandLineParseResult parserResult = parser.parseCommandLine(&options, &errorMessage);
 
@@ -71,8 +83,8 @@ int main(int argc, char ** argv) {
     default:
         break;
     }
-    
-    gpui::MainWindow window(options);
+
+    gpui::MainWindow window(options, snapInManager.get());
     window.show();
 
     return app.exec();

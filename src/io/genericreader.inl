@@ -20,24 +20,24 @@
 
 #include "genericreader.h"
 
-#include "../model/pluginstorage.h"
+#include "../core/pluginstorage.h"
 
 #include <fstream>
 
-#include <QString>
 #include <QDebug>
+#include <QString>
 
-namespace io {
-
+namespace io
+{
 template<typename TData, typename TFormat>
 std::unique_ptr<TData> GenericReader::load(const std::string &fileName)
 {
     std::unique_ptr<TData> fileData;
 
     QString pluginName = QString::fromStdString(fileName);
-    pluginName = pluginName.mid(pluginName.lastIndexOf('.') + 1);
+    pluginName         = pluginName.mid(pluginName.lastIndexOf('.') + 1);
 
-    TFormat* format = gpui::PluginStorage::instance()->createPluginClass<TFormat>(pluginName);
+    TFormat *format = gpui::PluginStorage::instance()->createPluginClass<TFormat>(pluginName);
 
     if (!format)
     {
@@ -50,7 +50,8 @@ std::unique_ptr<TData> GenericReader::load(const std::string &fileName)
 
     file.open(fileName, std::ifstream::in);
 
-    if (file.good()) {
+    if (file.good())
+    {
         fileData = std::make_unique<TData>();
 
         if (!format->read(file, fileData.get()))
@@ -67,11 +68,11 @@ std::unique_ptr<TData> GenericReader::load(const std::string &fileName)
 }
 
 template<typename TData, typename TFormat>
-std::unique_ptr<TData> GenericReader::load(std::istream& fileContent, const std::string& pluginName)
+std::unique_ptr<TData> GenericReader::load(std::istream &fileContent, const std::string &pluginName)
 {
     std::unique_ptr<TData> fileData;
 
-    TFormat* format = gpui::PluginStorage::instance()->createPluginClass<TFormat>(QString::fromStdString(pluginName));
+    TFormat *format = gpui::PluginStorage::instance()->createPluginClass<TFormat>(QString::fromStdString(pluginName));
 
     if (!format)
     {
@@ -80,7 +81,8 @@ std::unique_ptr<TData> GenericReader::load(std::istream& fileContent, const std:
         return fileData;
     }
 
-    if (fileContent.good()) {
+    if (fileContent.good())
+    {
         fileData = std::make_unique<TData>();
 
         if (!format->read(fileContent, fileData.get()))
@@ -94,4 +96,4 @@ std::unique_ptr<TData> GenericReader::load(std::istream& fileContent, const std:
     return fileData;
 }
 
-}
+} // namespace io

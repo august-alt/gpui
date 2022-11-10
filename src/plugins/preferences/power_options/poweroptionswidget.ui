@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PowerOptionsWidget</class>
+ <widget class="QWidget" name="PowerOptionsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>443</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>380</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>380</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="1" column="0">
+    <widget class="QFrame" name="locationFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="showIconCheckBox">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="showIconLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Always show icon on the taskbar</string>
+        </property>
+        <property name="buddy">
+         <cstring>showIconCheckBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="promptPasswordCheckBox">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="promptPasswordLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Prompt for password when computers resumes from standby</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="buddy">
+         <cstring>promptPasswordCheckBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="enableHibernationCheckBox">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="enableHibernationLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Enable hibernation</string>
+        </property>
+        <property name="buddy">
+         <cstring>enableHibernationCheckBox</cstring>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="powerGroupBox">
+     <property name="title">
+      <string>Power buttons</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="closeLidLabel">
+        <property name="text">
+         <string>When I close the lid of my portable computer:</string>
+        </property>
+        <property name="buddy">
+         <cstring>closeLidComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QComboBox" name="closeLidComboBox">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Do nothing</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Stand By</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hibernate</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="pressPowerBtnLabel">
+        <property name="text">
+         <string>When I press the power button on my computer:</string>
+        </property>
+        <property name="buddy">
+         <cstring>pressPowerBtnComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QComboBox" name="pressPowerBtnComboBox">
+        <property name="currentIndex">
+         <number>3</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Do nothing</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Ask me what to do</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Stand by</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Shutdown</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hibernate</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="pressSleepBtnLabel">
+        <property name="text">
+         <string>When I press the sleep button on my computer:</string>
+        </property>
+        <property name="buddy">
+         <cstring>pressSleepBtnComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QComboBox" name="pressSleepBtnComboBox">
+        <property name="currentIndex">
+         <number>3</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Do nothing</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Ask me what to do</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Stand By</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Shutdown</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hibernate</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Select the power saving settings you want to use.</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>showIconCheckBox</tabstop>
+  <tabstop>promptPasswordCheckBox</tabstop>
+  <tabstop>enableHibernationCheckBox</tabstop>
+  <tabstop>closeLidComboBox</tabstop>
+  <tabstop>pressPowerBtnComboBox</tabstop>
+  <tabstop>pressSleepBtnComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

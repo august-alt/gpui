@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.16
+Version: 0.2.17
 Release: alt1
 
 Summary: Group policy editor
@@ -18,7 +18,6 @@ BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
-BuildRequires: qt5-base-common
 BuildRequires: libsmbclient-devel libsmbclient
 
 BuildRequires: samba-devel
@@ -38,15 +37,9 @@ BuildRequires: boost-devel-headers
 
 BuildRequires: desktop-file-utils ImageMagick-tools
 
-Requires: admx-basealt
-Requires: libldap
-Requires: libsasl2
-Requires: libsasl2-plugin-gssapi
-Requires: libsmbclient
-Requires: libuuid
-Requires: qt5-base-common
-Requires: glib2
-Requires: libkrb
+BuildRequires: libqt-mvvm-devel
+
+BuildRequires: xorg-xvfb xvfb-run
 
 Source0: %name-%version.tar
 
@@ -77,15 +70,22 @@ done
 install -v -p -m 644 -D ../setup/man/en/gpui.1 %buildroot%_man1dir/gpui.1
 install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:%_libdir/gpui/plugins/
+
+LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
+
 %files
 %doc README.md
 %doc INSTALL.md
 %_bindir/gpui-main
 
+%_libdir/libgpui-core.so
 %_libdir/libgpui-gui.so
 %_libdir/libgpui-io.so
-%_libdir/libgpui-model.so
 %_libdir/libgpui-ldap.so
+
+%_libdir/gpui/plugins/libadministrative-templates-plugin.so
+%_libdir/gpui/plugins/libpreferences-plugin.so
 
 %_libdir/gpui/plugins/libadml-plugin.so
 %_libdir/gpui/plugins/libadmx-plugin.so
@@ -110,6 +110,9 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Nov 03 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt1
+- 0.2.17
+
 * Thu Sep 29 2022 Vladimir Rubanov <august@altlinux.org> 0.2.16-alt1
 - Fixes:
   + #84127 Fix invalid types for list enums.

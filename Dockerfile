@@ -21,6 +21,33 @@ RUN apt-get update \
     rpm-macros-generic-compat \
     apt-repo \
     apt-repo-tools \
+    cmake \
+    rpm-macros-cmake \
+    cmake-modules \
+    gcc-c++ \
+    qt5-base-devel \
+    qt5-declarative-devel \
+    qt5-tools-devel \
+    libsmbclient-devel \
+    libsmbclient \
+    qt5-base-common \
+    doxygen \
+    samba-devel \
+    catch2-devel \
+    libldap-devel \
+    libsasl2-devel \
+    libuuid-devel \
+    glib2-devel \
+    libpcre-devel \
+    libkrb5-devel \
+    libxerces-c-devel \
+    xsd \
+    boost-devel-headers \
+    desktop-file-utils \
+    ImageMagick-tools \
+    libqt-mvvm-devel \
+    xorg-xvfb \
+    xvfb-run \
     sudo \
     && export CURRENT_PWD=`pwd` \
     && groupadd --gid $GROUP_ID builder2 \
@@ -38,7 +65,7 @@ RUN apt-get update \
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY script/build.sh /build.sh
 
-ARG ARCH 
+ARG ARCH
 
 RUN if [ "$ARCH" = "i386" ]; then \
        sed -i 's/gear-hsh/i586 gear-hsh/g' /build.sh; \

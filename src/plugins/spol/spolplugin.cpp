@@ -18,18 +18,17 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
-namespace gpui {
-    class SpolPlugin : public Plugin
-    {
-    public:
-        SpolPlugin()
-            : Plugin("spol")
-        {
-
-        }
-    };
-}
+namespace gpui
+{
+class SpolPlugin : public Plugin
+{
+public:
+    SpolPlugin()
+        : Plugin("spol")
+    {}
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(spol, gpui::SpolPlugin)

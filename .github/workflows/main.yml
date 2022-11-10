@@ -8,7 +8,7 @@ jobs:
     name: Build software using docker
     strategy:
       matrix:
-        alt-version: [ { dist: "alt:p10", artifact: "p10" } ]
+        alt-version: [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
         architecture: [ amd64 ]
 
     steps:

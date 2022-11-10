@@ -25,80 +25,91 @@
 
 #include <QtWidgets>
 
+#include "../ldap/ldapimpl.h"
+#include "../ldap/ldapcontract.h"
+
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+class MainWindow;
+}
 QT_END_NAMESPACE
 
-namespace model {
-    namespace registry {
-        class AbstractRegistrySource;
-        class Registry;
-    }
-}
+namespace model
+{
+namespace registry
+{
+class AbstractRegistrySource;
+class Registry;
+} // namespace registry
+} // namespace model
 
-namespace gpui {
-    class CommandLineOptions;
-    class MainWindowPrivate;
+namespace gpui
+{
+class CommandLineOptions;
+class MainWindowPrivate;
+class ISnapInManager;
+class ISnapIn;
 
-    class GPUI_GUI_EXPORT MainWindow : public QMainWindow {
-        Q_OBJECT
+class GPUI_GUI_EXPORT MainWindow : public QMainWindow
+{
+    Q_OBJECT
+public:
+    // construction and destruction
+    MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent = 0);
+    ~MainWindow();
 
-    public:
-        // construction and destruction
-        MainWindow(CommandLineOptions& options, QWidget *parent = 0);
-        ~MainWindow();
+    void setLanguage(const QString &language);
+    QString getLanguage() const;
 
-        void setLanguage(const QString& language);
-        QString getLanguage() const;
+    void setAdmxPath(const QString &admxPath);
+    QString getAdmxPath() const;
 
-        void setAdmxPath(const QString& admxPath);
-        QString getAdmxPath() const;
+signals:
+    void admxPathChanged(const QString &admxPath);
 
-    protected:
-        void closeEvent(QCloseEvent *event) override;
+public slots:
+    void updateStatusBar();
 
-    private slots:
-        void on_actionManual_triggered();
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
-    private:
+private slots:
+    void on_actionManual_triggered();
 
-        MainWindowPrivate* const d;
+private:
+    MainWindowPrivate *const d;
 
-        Ui::MainWindow *ui;
+    Ui::MainWindow *ui;
 
-    private slots:
-        void onDirectoryOpen();
-        void onRegistrySourceSave();
+private slots:
+    void onDirectoryOpen();
 
-        void on_actionExit_triggered();
-        void on_actionAbout_triggered();
+    void on_actionExit_triggered();
+    void on_actionAbout_triggered();
 
-        void onLanguageChanged(QAction *action);
+    void onLanguageChanged(QAction *action);
 
-    private:
-        void onPolFileOpen(const QString& path,
-                           std::shared_ptr<model::registry::Registry>& registry,
-                           std::unique_ptr<model::registry::AbstractRegistrySource>& source,
-                           std::function<void(model::registry::AbstractRegistrySource* source)> callback);
+private:
+    void onIniFileOpen(const QString &path);
 
-        void onIniFileOpen(const QString& path);
+    void loadPolicyModel(ISnapInManager *manager);
 
-        void loadPolicyBundleFolder(const QString& path, const QString& locale);
+    void createLanguageMenu();
 
-        void createLanguageMenu();
+    QString isAnyIPAddress(const QString &path);
 
-        QString isAnyIPAddress(QString &path);
+    QString isAnyDomainName(const QString &path);
 
-        QString isAnyDomainName(QString &path);
+    QString isAnyGUID(const QString &path);
 
-        QString isAnyGUID(QString &path);
+private:
+    MainWindow(const MainWindow &) = delete;            // copy ctor
+    MainWindow(MainWindow &&)      = delete;            // move ctor
+    MainWindow &operator=(const MainWindow &) = delete; // copy assignment
+    MainWindow &operator=(MainWindow &&) = delete;      // move assignment
+};
+} // namespace gpu
 
-    private:
-        MainWindow(const MainWindow&)            = delete;   // copy ctor
-        MainWindow(MainWindow&&)                 = delete;   // move ctor
-        MainWindow& operator=(const MainWindow&) = delete;   // copy assignment
-        MainWindow& operator=(MainWindow&&)      = delete;   // move assignment
-    };
-}
 
 #endif // GPUI_MAINWINDOW_H

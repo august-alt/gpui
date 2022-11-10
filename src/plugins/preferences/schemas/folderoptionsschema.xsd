@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:include schemaLocation="targetingschema.xsd"/>
+
+<xs:complexType name="GlobalFolderOptionsProperties_t">
+   <xs:attribute name="noNetCrawling"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="folderContentsInfoTip"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="friendlyTree"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="fullPathAddress"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="fullPath"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="disableThumbnailCache"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="hidden"
+     type="xs:string" use="required" />
+   <xs:attribute name="hideFileExt"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="separateProcess"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showSuperHidden"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="classicViewState"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="persistBrowsers"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showControlPanel"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showCompColor"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showInfoTip"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="forceGuest"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="webViewBarricade"
+     type="xs:boolean" use="required" />
+  <xs:attribute name="disabled"
+     type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="GlobalFolderOptions_t">
+   <xs:sequence>
+      <xs:element name="Filters" type="Filters_t" />
+      <xs:element name="Properties" type="GlobalFolderOptionsProperties_t"/>
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+   <xs:attribute name="status" type="xs:string" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="GlobalFolderOptionsVistaProperties_t">
+   <xs:attribute name="alwaysShowIcons"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="alwaysShowMenus"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="displayIconThumb"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="displayFileSize"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="displaySimpleFolders"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="fullPath"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="hidden"
+     type="xs:string" use="required" />
+   <xs:attribute name="hideFileExt"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showSuperHidden"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="separateProcess"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="classicViewState"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="persistBrowsers"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showDriveLetter"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showCompColor"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showInfoTip"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="showPreviewHandlers"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="useCheckBoxes"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="useSharingWizard"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="listViewTyping"
+     type="xs:string" use="required" />
+   <xs:attribute name="disabled"
+     type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="GlobalFolderOptionsVista_t">
+   <xs:sequence>
+      <xs:element name="Filters" type="Filters_t">
+      </xs:element>
+      <xs:element name="Properties" type="GlobalFolderOptionsVistaProperties_t"/>
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="OpenWithProperties_t">
+  <xs:attribute name="action"
+    type="xs:string" use="optional" />
+  <xs:attribute name="fileExtension"
+    type="xs:string" use="required" />
+  <xs:attribute name="applicationPath"
+    type="xs:string" use="required" />
+  <xs:attribute name="default"
+    type="xs:boolean" use="optional" />
+ <xs:attribute name="disabled"
+    type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="OpenWith_t">
+   <xs:sequence>
+      <xs:element name="Properties" type="OpenWithProperties_t"/>
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="FileTypeProperties_t">
+   <xs:attribute name="action"
+     type="xs:string" use="optional" />
+   <xs:attribute name="fileExt"
+     type="xs:string" use="required" />
+   <xs:attribute name="application"
+     type="xs:string" use="required" />
+   <xs:attribute name="appProgID"
+     type="xs:string" use="required" />
+   <xs:attribute name="configActions"
+     type="xs:boolean" use="required" />
+   <xs:attribute name="iconPath"
+     type="xs:string" use="optional" />
+   <xs:attribute name="iconIndex"
+     type="xs:string" use="optional" />
+   <xs:attribute name="confirmOpen"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="alwaysShow"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="sameWindow"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="name"
+     type="xs:string" use="optional" />
+   <xs:attribute name="appUsed"
+     type="xs:string" use="optional" />
+   <xs:attribute name="default"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="useDDE"
+     type="xs:boolean" use="optional" />
+   <xs:attribute name="ddeMessage"
+     type="xs:string" use="optional" />
+   <xs:attribute name="ddeApplication"
+     type="xs:string" use="optional" />
+   <xs:attribute name="ddeAppNotRunning"
+     type="xs:string" use="optional" />
+   <xs:attribute name="ddeTopic"
+     type="xs:string" use="optional" />
+  <xs:attribute name="disabled"
+     type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:complexType name="FileType_t">
+   <xs:sequence>
+      <xs:element name="Properties" type="FileTypeProperties_t"/>
+   </xs:sequence>
+   <xs:attribute name="clsid" type="xs:string" use="required" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+   <xs:attribute name="image" type="xs:unsignedByte" use="optional" />
+   <xs:attribute name="changed" type="xs:string" use="optional" />
+   <xs:attribute name="uid" type="xs:string" use="required" />
+   <xs:attribute name="desc" type="xs:string" use="optional" />
+   <xs:attribute name="bypassErrors" type="xs:boolean" use="optional" />
+   <xs:attribute name="userContext" type="xs:boolean" use="optional" />
+   <xs:attribute name="removePolicy" type="xs:boolean" use="optional" />
+</xs:complexType>
+
+<xs:element name="FolderOptions">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="GlobalFolderOptions" type="GlobalFolderOptions_t"/>
+            <xs:element name="GlobalFolderOptionsVista" type="GlobalFolderOptionsVista_t"/>
+            <xs:element name="OpenWith" type="OpenWith_t"/>
+            <xs:element name="FileType" type="FileType_t"/>
+         </xs:sequence>
+         <xs:attribute name="clsid" type="xs:string" use="required" />
+         <xs:attribute name="disabled" type="xs:boolean" use="optional" />
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

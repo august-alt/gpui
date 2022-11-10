@@ -1,4 +1,4 @@
-find_package(GPUI COMPONENTS io model REQUIRED)
+find_package(GPUI COMPONENTS core io REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
 find_package(Qt5 COMPONENTS Core REQUIRED)
@@ -10,7 +10,7 @@ set(HEADERS
     policydefinitions.h
 )
 
-set(SOURCES    
+set(SOURCES
     basetypes.cpp
     exceptionhandler.cpp
     policydefinitionfiles.cpp

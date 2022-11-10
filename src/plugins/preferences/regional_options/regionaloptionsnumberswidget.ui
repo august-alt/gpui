@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegionalNumbersWidget</class>
+ <widget class="QWidget" name="RegionalNumbersWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>454</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="NumbersSampleGroupBox">
+     <property name="title">
+      <string>Sample</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="PositiveSampleLabel">
+        <property name="text">
+         <string>Positive</string>
+        </property>
+        <property name="buddy">
+         <cstring>PositiveSampleLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="PositiveSampleLineEdit"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="NegativeSampleLabel">
+        <property name="text">
+         <string>Negative</string>
+        </property>
+        <property name="buddy">
+         <cstring>NegativeSampleLineEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="NegativeSampleLineEdit"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QFrame" name="RegionalNumbersFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="numDeciSymbolLabel">
+        <property name="text">
+         <string>Decimal symbol:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numDeciSymbolComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="numDeciSymbolComboBox"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="numNumDecimalsLabel">
+        <property name="text">
+         <string>No. of digits after decimal:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numNumDecimalsComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="numNumDecimalsComboBox"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="numGrpSymbolLabel">
+        <property name="text">
+         <string>Digit grouping symbol:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numGrpSymbolComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="numGrpSymbolComboBox"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="numDigitGrpFmtLabel">
+        <property name="text">
+         <string>Digit grouping:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numDigitGrpFmtComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="numDigitGrpFmtComboBox"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="numNegSymbolLabel">
+        <property name="text">
+         <string>Negative sign symbol:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numNegSymbolComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="numNegSymbolComboBox"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="numNegFormatLabel">
+        <property name="text">
+         <string>Negative number format:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numNegFormatComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="numNegFormatComboBox"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="numLeadingZerosLabel">
+        <property name="text">
+         <string>Display leading zeros:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numLeadingZerosComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QComboBox" name="numLeadingZerosComboBox"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="numListSeparatorLabel">
+        <property name="text">
+         <string>List separator:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numListSeparatorComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="numListSeparatorComboBox"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="numMeasurementLabel">
+        <property name="text">
+         <string>Measurement system:</string>
+        </property>
+        <property name="buddy">
+         <cstring>numMeasurementComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QComboBox" name="numMeasurementComboBox"/>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="StandartDigitsLabel">
+        <property name="text">
+         <string>Standart Digits:</string>
+        </property>
+        <property name="buddy">
+         <cstring>StandartDigitsComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QComboBox" name="StandartDigitsComboBox"/>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="UseNativeDigitsLabel">
+        <property name="text">
+         <string>Use native digits:</string>
+        </property>
+        <property name="buddy">
+         <cstring>UseNativeDigitsComboBox</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QComboBox" name="UseNativeDigitsComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <spacer name="RegionalNumbersFrameVerticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>346</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

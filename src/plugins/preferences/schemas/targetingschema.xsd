@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="enumFilterTerminalOption">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="APPLICATION"/>
+      <xs:enumeration value="PROGRAM"/>
+      <xs:enumeration value="CLIENT"/>
+      <xs:enumeration value="SESSION"/>
+      <xs:enumeration value="DIRECTORY"/>
+      <xs:enumeration value="IP"/>
+      <xs:enumeration value="NE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterTerminalType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="TS"/>
+      <xs:enumeration value="CONSOLE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterRegistryHive">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HKEY_LOCAL_MACHINE"/>
+      <xs:enumeration value="HKEY_CLASSES_ROOT"/>
+      <xs:enumeration value="HKEY_CURRENT_USER"/>
+      <xs:enumeration value="HKEY_CURRENT_CONFIG"/>
+      <xs:enumeration value="HKEY_USERS"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterRegistryValueType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REG_SZ"/>
+      <xs:enumeration value="REG_EXPAND_SZ"/>
+      <xs:enumeration value="REG_MULTI_SZ"/>
+      <xs:enumeration value="REG_DWORD"/>
+      <xs:enumeration value="REG_BINARY"/>
+      <xs:enumeration value=""/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterRegistrySubType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EQUALHEX"/>
+      <xs:enumeration value="EQUALDEC"/>
+      <xs:enumeration value="SUBSTRING"/>
+      <xs:enumeration value="VERSION"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterRegistryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VALUEEXISTS"/>
+      <xs:enumeration value="KEYEXISTS"/>
+      <xs:enumeration value="MATCHVALUE"/>
+      <xs:enumeration value="GETVALUE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterOsSp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="Gold"/>
+      <xs:enumeration value="Service Pack 1"/>
+      <xs:enumeration value="Service Pack 2"/>
+      <xs:enumeration value="Service Pack 3"/>
+      <xs:enumeration value="Service Pack 4"/>
+      <xs:enumeration value="Service Pack 5"/>
+      <xs:enumeration value="Service Pack 6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterOsEdition">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="64EP"/>
+      <xs:enumeration value="64DC"/>
+      <xs:enumeration value="AS"/>
+      <xs:enumeration value="DTC"/>
+      <xs:enumeration value="EP"/>
+      <xs:enumeration value="WEB"/>
+      <xs:enumeration value="64"/>
+      <xs:enumeration value="HM"/>
+      <xs:enumeration value="MC"/>
+      <xs:enumeration value="TPC"/>
+      <xs:enumeration value="SRV"/>
+      <xs:enumeration value="STD"/>
+      <xs:enumeration value="TSE"/>
+      <xs:enumeration value="SBS"/>
+      <xs:enumeration value="PRO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterOsType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="R2"/>
+      <xs:enumeration value="SE"/>
+      <xs:enumeration value="WS"/>
+      <xs:enumeration value="SV"/>
+      <xs:enumeration value="DC"/>
+      <xs:enumeration value="PRO"/>
+      <xs:enumeration value="PR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterOsVersion">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="95"/>
+      <xs:enumeration value="98"/>
+      <xs:enumeration value="ME"/>
+      <xs:enumeration value="NT"/>
+      <xs:enumeration value="2K"/>
+      <xs:enumeration value="XP"/>
+      <xs:enumeration value="2K3"/>
+      <xs:enumeration value="2K3R2"/>
+      <xs:enumeration value="VISTA"/>
+      <xs:enumeration value="2K8"/>
+      <xs:enumeration value="WIN7"/>
+      <xs:enumeration value="2K8R2"/>
+      <xs:enumeration value="WIN8"/>
+      <xs:enumeration value="WIN8S"/>
+      <xs:enumeration value="WINBLUE"/>
+      <xs:enumeration value="WINBLUESRV"/>
+      <xs:enumeration value="WINTHRESHOLD"/>
+      <xs:enumeration value="WINTHRESHOLDSRV"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterOsClass">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="9X"/>
+      <xs:enumeration value="NT"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterMsiSubType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EXISTS"/>
+      <xs:enumeration value="VERSION"/>
+      <xs:enumeration value="GET_PROPERTY"/>
+      <xs:enumeration value="GET_INFORMATION"/>
+      <xs:enumeration value="MATCH_PROPERTY"/>
+      <xs:enumeration value="MATCH_INFORMATION"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterMsiType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PRODUCT"/>
+      <xs:enumeration value="PATCH"/>
+      <xs:enumeration value="FILECOMPONENT"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterFileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EXISTS"/>
+      <xs:enumeration value="VERSION"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterDunType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value=""/>
+      <xs:enumeration value="modem"/>
+      <xs:enumeration value="isdn"/>
+      <xs:enumeration value="x25"/>
+      <xs:enumeration value="vpn"/>
+      <xs:enumeration value="pad"/>
+      <xs:enumeration value="GENERIC"/>
+      <xs:enumeration value="SERIAL"/>
+      <xs:enumeration value="FRAMERELAY"/>
+      <xs:enumeration value="ATM"/>
+      <xs:enumeration value="SONET"/>
+      <xs:enumeration value="SW56"/>
+      <xs:enumeration value="IRDA"/>
+      <xs:enumeration value="PARALLEL"/>
+      <xs:enumeration value="PPPoE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterDateDow">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SUN"/>
+      <xs:enumeration value="MON"/>
+      <xs:enumeration value="TUE"/>
+      <xs:enumeration value="WED"/>
+      <xs:enumeration value="THU"/>
+      <xs:enumeration value="FRI"/>
+      <xs:enumeration value="SAT"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterDatePeriod">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MONTHLY"/>
+      <xs:enumeration value="WEEKLY"/>
+      <xs:enumeration value="YEARLY"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterComputerNameType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DNS"/>
+      <xs:enumeration value="NETBIOS"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumFilterBool">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AND"/>
+      <xs:enumeration value="OR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enumTrueFalse">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="IFilter" abstract="true">
+    <xs:attribute name="bool" type="enumFilterBool" use="required" />
+    <xs:attribute name="not" type="enumTrueFalse" use="required" />
+    <xs:attribute name="hidden" type="enumTrueFalse" use="optional" />
+  </xs:complexType>
+
+  <xs:group name="gFilterTypes">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterSite">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="name" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterGroup">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="name" type="xs:string" use="optional" default="" />
+                <xs:attribute name="sid" type="xs:string" use="optional" default="" />
+                <xs:attribute name="userContext" type="enumTrueFalse" use="optional" default="1" />
+                <xs:attribute name="primaryGroup" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="localGroup" type="enumTrueFalse" use="optional" default="0" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterRunOnce">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="id" type="xs:string" use="required" />
+                <xs:attribute name="userContext" type="enumTrueFalse" use="optional" default="1"/>
+                <xs:attribute name="comments" type="xs:string" use="optional" default="" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterLdap">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="searchFilter" type="xs:string" use="optional" />
+                <xs:attribute name="binding" type="xs:string" use="required" />
+                <xs:attribute name="variableName" type="xs:string" use="optional" />
+                <xs:attribute name="attribute" type="xs:string" use="optional" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterBattery">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter"/>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterComputer">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="type" type="enumFilterComputerNameType" use="required" />
+                <xs:attribute name="name" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterCpu">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="speedMHz" type="xs:unsignedShort" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterDate">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="period" type="enumFilterDatePeriod" use="required" />
+                <xs:attribute name="dow" type="enumFilterDateDow" use="optional" />
+                <xs:attribute name="day" type="xs:unsignedByte" use="optional" />
+                <xs:attribute name="month" type="xs:unsignedByte" use="optional" />
+                <xs:attribute name="year" type="xs:unsignedShort" use="optional" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterDun">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="type" type="enumFilterDunType" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterDisk">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="freeSpace" type="xs:unsignedByte" use="required" />
+                <xs:attribute name="drive" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterDomain">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="name" type="xs:string" use="required" />
+                <xs:attribute name="userContext" type="enumTrueFalse" use="optional" default="1" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterVariable">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="variableName" type="xs:string" use="required" />
+                <xs:attribute name="value" type="xs:string" use="optional" default="1" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterFile">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="gte" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="lte" type="enumTrueFalse" use="optional" default="0"/>
+                <xs:attribute name="min" type="xs:string" use="optional" />
+                <xs:attribute name="max" type="xs:string" use="optional" />
+                <xs:attribute name="path" type="xs:string" use="required" />
+                <xs:attribute name="type" type="enumFilterFileType" use="optional" default="EXISTS" />
+                <xs:attribute name="folder" type="enumTrueFalse" use="optional" default="0" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterIpRange">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="min" type="xs:string" use="required" />
+                <xs:attribute name="max" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterLanguage">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="default" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="system" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="native" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="displayName" type="xs:string" use="optional" />
+                <xs:attribute name="language" type="xs:unsignedByte" use="required" />
+                <xs:attribute name="locale" type="xs:unsignedByte" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterMacRange">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="min" type="xs:string" use="required" />
+                <xs:attribute name="max" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterMsi">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="type" type="enumFilterMsiType" use="required" />
+                <xs:attribute name="subtype" type="enumFilterMsiSubType" use="required" />
+                <xs:attribute name="code" type="xs:string" use="optional" />
+                <xs:attribute name="item" type="xs:string" use="optional" />
+                <xs:attribute name="value" type="xs:string" use="optional" />
+                <xs:attribute name="min" type="xs:string" use="optional" />
+                <xs:attribute name="max" type="xs:string" use="optional" />
+                <xs:attribute name="gte" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="lte" type="enumTrueFalse" use="optional" default="0" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterOs">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="class" type="enumFilterOsClass" use="optional" default="NE" />
+                <xs:attribute name="version" type="enumFilterOsVersion" use="optional" default="NE" />
+                <xs:attribute name="type" type="enumFilterOsType" use="optional" default="NE" />
+                <xs:attribute name="edition" type="enumFilterOsEdition" use="optional" default="NE" />
+                <xs:attribute name="sp" type="enumFilterOsSp" use="optional" default="NE" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterOrgUnit">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="name" type="xs:string" use="required" />
+                <xs:attribute name="userContext" type="enumTrueFalse" use="optional" default="1" />
+                <xs:attribute name="directMember" type="enumTrueFalse" use="optional" default="0" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterPcmcia">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter"/>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterPortable">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="unknown" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="docked" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="undocked" type="enumTrueFalse" use="optional" default="0" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterProcMode">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="synchFore" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="asynchFore" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="backRefr" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="forceRefr" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="linkTrns" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="noChg" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="rsopTrns" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="safeBoot" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="slowLink" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="verbLog" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="rsopEnbl" type="enumTrueFalse" use="optional" default="0" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterRam">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="totalMB" type="xs:unsignedShort" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterRegistry">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="type" type="enumFilterRegistryType" use="optional" default="KEYEXISTS" />
+                <xs:attribute name="subtype" type="enumFilterRegistrySubType" use="optional" default="EQUALHEX" />
+                <xs:attribute name="valueName" type="xs:string" use="optional" />
+                <xs:attribute name="valueType" type="enumFilterRegistryValueType" use="optional" default=""/>
+                <xs:attribute name="valueData" type="xs:string" use="optional" />
+                <xs:attribute name="variableName" type="xs:string" use="optional" />
+                <xs:attribute name="key" type="xs:string" use="required" />
+                <xs:attribute name="hive" type="enumFilterRegistryHive" use="optional" default="HKEY_LOCAL_MACHINE"/>
+                <xs:attribute name="min" type="xs:string" use="optional" />
+                <xs:attribute name="max" type="xs:string" use="optional" />
+                <xs:attribute name="gte" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="lte" type="enumTrueFalse" use="optional" default="0" />
+                <xs:attribute name="version" type="xs:string" use="optional" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterTerminal">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="type" type="enumFilterTerminalType" use="required" />
+                <xs:attribute name="option" type="enumFilterTerminalOption" use="required" />
+                <xs:attribute name="value" type="xs:string" use="optional" default="" />
+                <xs:attribute name="min" type="xs:string" use="optional" default="" />
+                <xs:attribute name="max" type="xs:string" use="optional" default="" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterTime">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="begin" type="xs:time" use="required" />
+                <xs:attribute name="end" type="xs:time" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterUser">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="name" type="xs:string" use="optional" />
+                <xs:attribute name="sid" type="xs:string" use="optional" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterWmi">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:attribute name="query" type="xs:string" use="required" />
+                <xs:attribute name="nameSpace" type="xs:string" use="optional" default="root\cimv2" />
+                <xs:attribute name="property" type="xs:string" use="optional" />
+                <xs:attribute name="variableName" type="xs:string" use="optional" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterCollection">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IFilter">
+                <xs:sequence>
+                  <xs:group ref="gFilterTypes"/>
+                </xs:sequence>
+                <xs:attribute name="name" type="xs:string" use="optional" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="gFilters">
+    <xs:sequence>
+        <xs:group ref="gFilterTypes"/>
+    </xs:sequence>
+  </xs:group>
+
+<xs:complexType name="Filters_t">
+  <xs:sequence>
+    <xs:group ref="gFilters"/>
+  </xs:sequence>
+</xs:complexType>
+
+  <xs:element name="Filters" type="Filters_t">
+  </xs:element>
+</xs:schema>

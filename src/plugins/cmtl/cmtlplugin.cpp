@@ -18,17 +18,17 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../model/plugin.h"
+#include "../../core/plugin.h"
 
-namespace gpui {
-    class CmtlPlugin : public Plugin
-    {
-    public:
-        CmtlPlugin()
-            : Plugin("cmtl")
-        {            
-        }
-    };
-}
+namespace gpui
+{
+class CmtlPlugin : public Plugin
+{
+public:
+    CmtlPlugin()
+        : Plugin("cmtl")
+    {}
+};
+} // namespace gpui
 
 GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)

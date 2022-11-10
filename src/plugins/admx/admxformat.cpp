@@ -24,18 +24,18 @@
 
 #include "../../../src/io/policydefinitionsfile.h"
 
-#include "../../../src/model/admx/policydefinitions.h"
+#include "../../../src/plugins/administrative_templates/admx/policydefinitions.h"
 
-#include "../../../src/model/admx/policy.h"
+#include "../../../src/plugins/administrative_templates/admx/policy.h"
 
-#include "../../../src/model/admx/policybooleanelement.h"
-#include "../../../src/model/admx/policydecimalelement.h"
-#include "../../../src/model/admx/policyelement.h"
-#include "../../../src/model/admx/policyenumelement.h"
-#include "../../../src/model/admx/policylistelement.h"
-#include "../../../src/model/admx/policylongdecimalelement.h"
-#include "../../../src/model/admx/policymultitextelement.h"
-#include "../../../src/model/admx/policytextelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policybooleanelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policydecimalelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policyelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policyenumelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policylistelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policylongdecimalelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policymultitextelement.h"
+#include "../../../src/plugins/administrative_templates/admx/policytextelement.h"
 
 #include "../common/basetypes.h"
 #include "../common/exceptionhandler.h"
@@ -56,8 +56,7 @@ inline void assign_if_exists(TOutput &output, const TInput &input)
 }
 
 template<typename AdapterType, typename SequenceType>
-void adapt_elements(const SequenceType &sequence,
-                    std::vector<std::unique_ptr<model::admx::PolicyElement>> &elements)
+void adapt_elements(const SequenceType &sequence, std::vector<std::unique_ptr<model::admx::PolicyElement>> &elements)
 {
     for (const auto &adaptee : sequence)
     {
@@ -108,16 +107,14 @@ public:
     {
         if (element.decimal().present())
         {
-            auto value = std::make_unique<model::admx::RegistryValue<uint32_t>>(
-                element.decimal()->value());
+            auto value  = std::make_unique<model::admx::RegistryValue<uint32_t>>(element.decimal()->value());
             value->type = model::admx::RegistryValueType::DECIMAL;
             return value;
         }
 
         if (element.longDecimal().present())
         {
-            auto value = std::make_unique<model::admx::RegistryValue<uint64_t>>(
-                element.longDecimal()->value());
+            auto value  = std::make_unique<model::admx::RegistryValue<uint64_t>>(element.longDecimal()->value());
             value->type = model::admx::RegistryValueType::LONG_DECIMAL;
             return value;
         }
@@ -125,8 +122,8 @@ public:
         if (element.string().present())
         {
             auto adaptedString = QString::fromStdString(element.string().get());
-            auto value  = std::make_unique<model::admx::RegistryValue<QString>>(adaptedString);
-            value->type = model::admx::RegistryValueType::STRING;
+            auto value         = std::make_unique<model::admx::RegistryValue<QString>>(adaptedString);
+            value->type        = model::admx::RegistryValueType::STRING;
             return value;
         }
 
@@ -236,8 +233,7 @@ public:
         }
     }
 
-    static std::shared_ptr<model::admx::Policy> create(
-        const ::GroupPolicy::PolicyDefinitions::PolicyDefinition &input)
+    static std::shared_ptr<model::admx::Policy> create(const ::GroupPolicy::PolicyDefinitions::PolicyDefinition &input)
     {
         return std::make_shared<XsdPolicyAdapter>(input);
     }
@@ -376,13 +372,9 @@ private:
     typedef ::GroupPolicy::PolicyDefinitions::LongDecimalElement LongDecimalElement;
 
 public:
-    XsdLongDecimalElementAdapter(const LongDecimalElement &element)
-    {
-        decimal_adapter_base(this, element);
-    }
+    XsdLongDecimalElementAdapter(const LongDecimalElement &element) { decimal_adapter_base(this, element); }
 
-    static std::unique_ptr<model::admx::PolicyLongDecimalElement> create(
-        const LongDecimalElement &element)
+    static std::unique_ptr<model::admx::PolicyLongDecimalElement> create(const LongDecimalElement &element)
     {
         return std::make_unique<XsdLongDecimalElementAdapter>(element);
     }
@@ -401,8 +393,7 @@ public:
         assign_if_exists(this->valueName, element.valueName());
     }
 
-    static std::unique_ptr<model::admx::PolicyMultiTextElement> create(
-        const MultiTextElement &element)
+    static std::unique_ptr<model::admx::PolicyMultiTextElement> create(const MultiTextElement &element)
     {
         return std::make_unique<XsdMultiTextElementAdapter>(element);
     }
@@ -451,8 +442,7 @@ public:
         this->name        = category.name();
     }
 
-    static std::shared_ptr<model::admx::SupportedDefinition> create(
-        const SupportedOnDefinition &element)
+    static std::shared_ptr<model::admx::SupportedDefinition> create(const SupportedOnDefinition &element)
     {
         return std::make_shared<XsdSupportedDefinitionAdapter>(element);
     }
@@ -507,8 +497,7 @@ public:
             {
                 for (const auto &definition : definitions.supportedOn()->definitions()->definition())
                 {
-                    this->supportedOn->definitions.push_back(
-                        XsdSupportedDefinitionAdapter::create(definition));
+                    this->supportedOn->definitions.push_back(XsdSupportedDefinitionAdapter::create(definition));
                 }
             }
 
@@ -516,8 +505,7 @@ public:
             {
                 for (const auto &product : definitions.supportedOn()->products()->product())
                 {
-                    this->supportedOn->products.push_back(
-                        XsdSupportedProductAdapter::create(product));
+                    this->supportedOn->products.push_back(XsdSupportedProductAdapter::create(product));
                 }
             }
         }
@@ -538,26 +526,19 @@ public:
 
                 if (policy.elements().present())
                 {
-                    adapt_elements<XsdBooleanElementAdapter>(policy.elements()->boolean(),
-                                                             ourPolicy->elements);
+                    adapt_elements<XsdBooleanElementAdapter>(policy.elements()->boolean(), ourPolicy->elements);
 
-                    adapt_elements<XsdDecimalElementAdapter>(policy.elements()->decimal(),
-                                                             ourPolicy->elements);
+                    adapt_elements<XsdDecimalElementAdapter>(policy.elements()->decimal(), ourPolicy->elements);
 
-                    adapt_elements<XsdEnumElementAdapter>(policy.elements()->enum_(),
-                                                          ourPolicy->elements);
+                    adapt_elements<XsdEnumElementAdapter>(policy.elements()->enum_(), ourPolicy->elements);
 
-                    adapt_elements<XsdTextElementAdapter>(policy.elements()->text(),
-                                                          ourPolicy->elements);
+                    adapt_elements<XsdTextElementAdapter>(policy.elements()->text(), ourPolicy->elements);
 
-                    adapt_elements<XsdListElementAdapter>(policy.elements()->list(),
-                                                          ourPolicy->elements);
+                    adapt_elements<XsdListElementAdapter>(policy.elements()->list(), ourPolicy->elements);
 
-                    adapt_elements<XsdLongDecimalElementAdapter>(policy.elements()->longDecimal(),
-                                                                 ourPolicy->elements);
+                    adapt_elements<XsdLongDecimalElementAdapter>(policy.elements()->longDecimal(), ourPolicy->elements);
 
-                    adapt_elements<XsdMultiTextElementAdapter>(policy.elements()->multiText(),
-                                                               ourPolicy->elements);
+                    adapt_elements<XsdMultiTextElementAdapter>(policy.elements()->multiText(), ourPolicy->elements);
                 }
 
                 this->policies.push_back(ourPolicy);
@@ -600,9 +581,7 @@ std::ostream &operator<<(std::ostream &os, const model::admx::Policy &policy)
     return os;
 }
 
-inline void element_operator_base(std::ostream &os,
-                                  const model::admx::PolicyElement &element,
-                                  const std::string &type)
+inline void element_operator_base(std::ostream &os, const model::admx::PolicyElement &element, const std::string &type)
 {
     os << "\t" << type << ":" << std::endl;
     os << "\t\tID: " << element.id << std::endl;
@@ -611,18 +590,14 @@ inline void element_operator_base(std::ostream &os,
 }
 
 template<typename TElement>
-inline void element_with_value_base(std::ostream &os,
-                                    const TElement &element,
-                                    const std::string &type)
+inline void element_with_value_base(std::ostream &os, const TElement &element, const std::string &type)
 {
     element_operator_base(os, element, type);
     os << "\t\tValue: " << element.valueName << std::endl;
 }
 
 template<typename TElement>
-void decimal_element_operator_base(std::ostream &os,
-                                   const TElement &element,
-                                   const std::string &type)
+void decimal_element_operator_base(std::ostream &os, const TElement &element, const std::string &type)
 {
     element_with_value_base(os, element, type);
 
@@ -710,8 +685,8 @@ bool AdmxFormat::read(std::istream &input, PolicyDefinitionsFile *file)
 {
     std::unique_ptr<::GroupPolicy::PolicyDefinitions::PolicyDefinitions> policyDefinitions;
     auto operation = [&]() {
-        policyDefinitions = GroupPolicy::PolicyDefinitions::policyDefinitions(
-            input, ::xsd::cxx::tree::flags::dont_validate);
+        policyDefinitions = GroupPolicy::PolicyDefinitions::policyDefinitions(input,
+                                                                              ::xsd::cxx::tree::flags::dont_validate);
 
         file->addPolicyDefinitions(XsdPolicyDefinitionsAdapter::create(*policyDefinitions));
     };

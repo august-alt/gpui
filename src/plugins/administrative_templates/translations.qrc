@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+  <file>administrative_templates_common_translation_en.qm</file>
+  <file>administrative_templates_common_translation_ru.qm</file>
+ </qresource>
+</RCC>

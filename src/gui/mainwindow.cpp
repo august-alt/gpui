@@ -336,12 +336,12 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
         }
         else
         {
-            visibleRootItem->setData(QObject::tr("[Domain Group Policy]"));
+            visibleRootItem->setData(QObject::tr("[Domain Group Policy]"), Qt::DisplayRole);
         }
     }
     else
     {
-        visibleRootItem->setData(QObject::tr("[Local Group Policy]"));
+        visibleRootItem->setData(QObject::tr("[Local Group Policy]"), Qt::DisplayRole);
     }
 
     rootItem->appendRow(visibleRootItem);

@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt1
+Release: alt2
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,9 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Nov 10 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt2
+- 0.2.17-alt2
+
 * Thu Nov 03 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt1
 - 0.2.17
 

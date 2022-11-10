@@ -25,6 +25,9 @@
 
 #include <QtWidgets>
 
+#include "../ldap/ldapimpl.h"
+#include "../ldap/ldapcontract.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -94,12 +97,19 @@ private:
 
     void createLanguageMenu();
 
+    QString isAnyIPAddress(const QString &path);
+
+    QString isAnyDomainName(const QString &path);
+
+    QString isAnyGUID(const QString &path);
+
 private:
     MainWindow(const MainWindow &) = delete;            // copy ctor
     MainWindow(MainWindow &&)      = delete;            // move ctor
     MainWindow &operator=(const MainWindow &) = delete; // copy assignment
     MainWindow &operator=(MainWindow &&) = delete;      // move assignment
 };
-} // namespace gpui
+} // namespace gpu
+
 
 #endif // GPUI_MAINWINDOW_H

@@ -11,6 +11,7 @@ set(GPUI_DIR "${CMAKE_BINARY_DIR}")
 
 include(TranslationUtils)
 include(FindXsd)
+include(FindLdap)
 
 if(UNIX)
   include(GNUInstallDirs)

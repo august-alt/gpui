@@ -9,6 +9,8 @@ License: GPLv2+
 Group: Other
 Url: https://github.com/august-alt/gpui
 
+BuildRequires(pre): catch2-devel
+
 BuildRequires: cmake
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
@@ -17,6 +19,15 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: libsmbclient-devel libsmbclient
+
+BuildRequires: samba-devel
+BuildRequires: libldap-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libsmbclient-devel
+BuildRequires: libuuid-devel
+BuildRequires: glib2-devel
+BuildRequires: libpcre-devel
+BuildRequires: libkrb5-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
@@ -29,8 +40,6 @@ BuildRequires: desktop-file-utils ImageMagick-tools
 BuildRequires: libqt-mvvm-devel
 
 BuildRequires: xorg-xvfb xvfb-run
-
-Requires: admx-basealt
 
 Source0: %name-%version.tar
 
@@ -73,6 +82,7 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_libdir/libgpui-core.so
 %_libdir/libgpui-gui.so
 %_libdir/libgpui-io.so
+%_libdir/libgpui-ldap.so
 
 %_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_libdir/gpui/plugins/libpreferences-plugin.so

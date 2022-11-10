@@ -32,6 +32,14 @@ RUN apt-get update \
     libsmbclient \
     qt5-base-common \
     doxygen \
+    samba-devel \
+    catch2-devel \
+    libldap-devel \
+    libsasl2-devel \
+    libuuid-devel \
+    glib2-devel \
+    libpcre-devel \
+    libkrb5-devel \
     libxerces-c-devel \
     xsd \
     boost-devel-headers \

@@ -322,11 +322,27 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     rootItem->setData("Root Item", Qt::DisplayRole);
 
     QStandardItem *visibleRootItem = new QStandardItem();
-    visibleRootItem->setData(QObject::tr("[Local Group Policy]"), Qt::DisplayRole);
     visibleRootItem->setData(QIcon::fromTheme("text-x-generic-template"), Qt::DecorationRole);
     visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY), model::bundle::ITEM_TYPE);
     visibleRootItem->setData(QObject::tr("Local group policies"), model::bundle::EXPLAIN_TEXT);
     visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both), model::bundle::POLICY_TYPE);
+
+    if (d->options.path.startsWith("smb://"))
+    {
+        QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
+        if (domainRegexp.indexIn(d->options.path) != -1)
+        {
+            visibleRootItem->setData('[' + domainRegexp.cap() + ']', Qt::DisplayRole);
+        }
+        else
+        {
+            visibleRootItem->setData(QObject::tr("[Domain Group Policy]"));
+        }
+    }
+    else
+    {
+        visibleRootItem->setData(QObject::tr("[Local Group Policy]"));
+    }
 
     rootItem->appendRow(visibleRootItem);
 

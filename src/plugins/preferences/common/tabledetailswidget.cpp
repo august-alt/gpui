@@ -97,6 +97,7 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
         auto removeItemAction = menu.addAction(tr("Remove item"));
         auto remove_item      = [=]() {
             view_model->sessionModel()->removeItem(item->parent(), tagrow);
+            ui->treeView->selectionModel()->select(QItemSelection(), QItemSelectionModel::ClearAndSelect);
             emit okPressed();
         };
         connect(removeItemAction, &QAction::triggered, remove_item);
@@ -152,6 +153,7 @@ void TableDetailsWidget::setupConnections()
                 Q_UNUSED(deselected);
                 if (selected.isEmpty() || selected.first().indexes().isEmpty())
                 {
+                    ui->propertiesWidget->setDescriptionVisibility(false);
                     return;
                 }
 

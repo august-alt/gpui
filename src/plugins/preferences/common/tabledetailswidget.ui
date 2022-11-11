@@ -55,6 +55,9 @@
        </property>
        <item>
         <widget class="preferences::PreferencesTreeView" name="treeView">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>

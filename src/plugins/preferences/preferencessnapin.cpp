@@ -65,6 +65,8 @@ void PreferencesSnapIn::onInitialize(QMainWindow *window)
     }
 
     d->proxyViewModel = std::make_unique<PreferencesTreeProxyModel>();
+    d->proxyViewModel->setPreferencesModels(d->machinePreferencesModels.get(), d->userPreferencesModels.get());
+    d->proxyViewModel->setSnapIn(d.get());
 
     onRetranslateUI(d->localeName);
 

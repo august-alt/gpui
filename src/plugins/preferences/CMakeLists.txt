@@ -26,6 +26,7 @@ set(HEADERS
     common/preferencecategoryitem.h
     common/preferencesdialog.h
     common/preferencesmodel.h
+    common/preferencestreeview.h
     common/propertieswidget.h
     common/propertieswidgetdelegate.h
     common/tabledetailswidget.h
@@ -206,6 +207,7 @@ set(SOURCES
     common/preferencecategoryitem.cpp
     common/preferencesdialog.cpp
     common/preferencesmodel.cpp
+    common/preferencestreeview.cpp
     common/propertieswidget.cpp
     common/propertieswidgetdelegate.cpp
     common/tabledetailswidget.cpp

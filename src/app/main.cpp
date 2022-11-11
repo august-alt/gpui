@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     app.setOrganizationName(QCoreApplication::translate("main", "BaseALT Ltd."));
     app.setOrganizationDomain("basealt.ru");
     app.setApplicationName("GPUI");
-    app.setApplicationVersion("0.2.0");
+    app.setApplicationVersion("0.2.17");
 
     gpui::CommandLineParser parser(app);
     gpui::CommandLineOptions options{};
@@ -88,5 +88,4 @@ int main(int argc, char **argv)
     window.show();
 
     return app.exec();
-
 }

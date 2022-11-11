@@ -17,6 +17,7 @@
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Version 0.2.17</source>
         <translation>Version 0.2.17</translation>
     </message>
@@ -655,44 +656,41 @@ context (user policy option).</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+73"/>
+        <location filename="../commandlineparser.cpp" line="+71"/>
         <source>The full path of policy to edit.</source>
         <translation>The full path of policy to edit.</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>path</source>
         <translation>path</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-1"/>
         <source>The full path of policy bundle to load.</source>
         <translation>The full path of policy bundle to load.</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>The name of a policy to display.</source>
         <translation>The name of a policy to display.</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>name</source>
         <translation>name</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Displays help on commandline options.</source>
         <translation>Displays help on commandline options.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+32"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
         <translation>Bad policy path: </translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Bad policy name: </source>
         <translation>Bad policy name: </translation>
     </message>
@@ -720,25 +718,46 @@ context (user policy option).</translation>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+327"/>
+        <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Local group policies templates</translation>
     </message>
     <message>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+7"/>
         <source>Machine</source>
         <translation>Machine</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>Machine level policies</source>
         <translation>Machine level policies</translation>
     </message>
     <message>
+        <location line="+5"/>
+        <location line="+13"/>
+        <source>Administrative Templates</source>
+        <translation>Administrative Templates</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <source>Machine administrative templates</source>
+        <translation>Machine administrative templates</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>User</source>
         <translation>User</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>User level policies</source>
         <translation>User level policies</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>User administrative templates</source>
+        <translation>User administrative templates</translation>
     </message>
     <message>
         <source>Error</source>
@@ -749,12 +768,13 @@ context (user policy option).</translation>
         <translation>Error writing file:</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location filename="../mainwindow.cpp" line="+12"/>
         <source>[Domain Group Policy]</source>
         <translation>[Domain Group Policy]</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="-31"/>
         <source>[Local Group Policy]</source>
         <translation>[Local Group Policy]</translation>
     </message>

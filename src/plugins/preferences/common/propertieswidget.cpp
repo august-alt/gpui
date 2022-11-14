@@ -46,6 +46,10 @@ PropertiesWidget::PropertiesWidget(QWidget *parent)
     , mapper(nullptr)
 {
     ui->setupUi(this);
+
+    setupWidgets();
+
+    setDescriptionVisibility(false);
 }
 
 PropertiesWidget::~PropertiesWidget()
@@ -73,6 +77,36 @@ void PropertiesWidget::setItem(ModelView::SessionItem *item)
     mapper->addMapping(ui->plainTextEdit, CommonItem::propertyToInt(CommonItem::DESC));
 
     mapper->setCurrentModelIndex(view_model->index(0, 1));
+}
+
+void PropertiesWidget::setDescriptionVisibility(bool visible)
+{
+    QList<QLabel *> allLabels = ui->propertiesFrame->findChildren<QLabel *>();
+
+    for (auto label : allLabels)
+    {
+        label->setVisible(visible);
+    }
+
+    ui->plainTextEdit->setVisible(visible);
+}
+
+void preferences::PropertiesWidget::setupWidgets()
+{
+    const auto changeSizePolicy = [](QWidget *widget) {
+        auto sizePolicy = widget->sizePolicy();
+        sizePolicy.setRetainSizeWhenHidden(true);
+        widget->setSizePolicy(sizePolicy);
+    };
+
+    QList<QLabel *> allLabels = ui->propertiesFrame->findChildren<QLabel *>();
+
+    for (auto label : allLabels)
+    {
+        changeSizePolicy(label);
+    }
+
+    changeSizePolicy(ui->plainTextEdit);
 }
 
 } // namespace preferences

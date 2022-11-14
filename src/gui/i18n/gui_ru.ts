@@ -17,6 +17,7 @@
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Version 0.2.17</source>
         <translation>Версия 0.2.17</translation>
     </message>
@@ -653,44 +654,41 @@ context (user policy option).</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+73"/>
+        <location filename="../commandlineparser.cpp" line="+71"/>
         <source>The full path of policy to edit.</source>
         <translation>Полный путь для редактируемой политики.</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>path</source>
         <translation>путь</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-1"/>
         <source>The full path of policy bundle to load.</source>
         <translation>Полный путь к набору ADMX файлов.</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>The name of a policy to display.</source>
         <translation>Имя политики для отображения.</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>name</source>
         <translation>имя</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Displays help on commandline options.</source>
         <translation>Показать описание опций коммандной строки.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+32"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Bad policy name: </source>
         <translation>Ошибочное название политики: </translation>
     </message>
@@ -718,25 +716,46 @@ context (user policy option).</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+327"/>
+        <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Шаблон локальных групповых политик</translation>
     </message>
     <message>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+7"/>
         <source>Machine</source>
         <translation>Компьютер</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>Machine level policies</source>
         <translation>Политики настройки компьютера</translation>
     </message>
     <message>
+        <location line="+5"/>
+        <location line="+13"/>
+        <source>Administrative Templates</source>
+        <translation>Административные шаблоны</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <source>Machine administrative templates</source>
+        <translation>Административные шаблоны компьютера</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>User</source>
         <translation>Пользователь</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>User level policies</source>
         <translation>Политики настройки пользователей</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>User administrative templates</source>
+        <translation>Пользовательские административные шаблоны</translation>
     </message>
     <message>
         <source>Error</source>
@@ -747,12 +766,13 @@ context (user policy option).</source>
         <translation>Ошибка записи файла:</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location filename="../mainwindow.cpp" line="+12"/>
         <source>[Domain Group Policy]</source>
         <translation>[Доменная групповая политика]</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="-31"/>
         <source>[Local Group Policy]</source>
         <translation>[Локальная групповая политика]</translation>
     </message>

@@ -271,17 +271,16 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
         }
     }
 
-    loadPolicyModel(manager);
-
     QString guid = isAnyGUID(d->options.path);
 
     qWarning() << "Guid: " << guid;
 
     if (guid != "")
     {
-        auto windowTitle = d->ldapImpl.get()->getDisplayNameGPO(guid);
-        setWindowTitle("GPUI - " + windowTitle);
+        d->options.policyName = " - " + d->ldapImpl.get()->getDisplayNameGPO(guid);
     }
+
+    loadPolicyModel(manager);
 
     connect(ui->searchLineEdit, &QLineEdit::textChanged, [&](const QString &text) {
         d->searchModel->setFilterFixedString(text);
@@ -344,16 +343,16 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
         QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
         if (domainRegexp.indexIn(d->options.path) != -1)
         {
-            visibleRootItem->setData('[' + domainRegexp.cap() + ']', Qt::DisplayRole);
+            visibleRootItem->setData('[' + domainRegexp.cap() + ']' + d->options.policyName, Qt::DisplayRole);
         }
         else
         {
-            visibleRootItem->setData(QObject::tr("[Domain Group Policy]"), Qt::DisplayRole);
+            visibleRootItem->setData(QObject::tr("[Domain Group Policy]") + d->options.policyName, Qt::DisplayRole);
         }
     }
     else
     {
-        visibleRootItem->setData(QObject::tr("[Local Group Policy]"), Qt::DisplayRole);
+        visibleRootItem->setData(QObject::tr("[Local Group Policy]") + d->options.policyName, Qt::DisplayRole);
     }
 
     rootItem->appendRow(visibleRootItem);

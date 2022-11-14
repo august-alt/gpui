@@ -24,45 +24,52 @@
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class PropertiesWidget; }
+namespace Ui
+{
+class PropertiesWidget;
+}
 QT_END_NAMESPACE
 
 namespace ModelView
 {
-    class ViewModel;
-    class ViewModelDelegate;
-    class SessionItem;
-}
+class ViewModel;
+class ViewModelDelegate;
+class SessionItem;
+} // namespace ModelView
 
 namespace preferences
 {
-
 class PropertiesWidget : public QWidget
 {
 public:
     Q_OBJECT
 
 public:
-    explicit PropertiesWidget(QWidget* parent = nullptr);
+    explicit PropertiesWidget(QWidget *parent = nullptr);
     ~PropertiesWidget() override;
 
     void setItem(ModelView::SessionItem *item);
 
-private:
-    PropertiesWidget(const PropertiesWidget&)            = delete;   // copy ctor
-    PropertiesWidget(PropertiesWidget&&)                 = delete;   // move ctor
-    PropertiesWidget& operator=(const PropertiesWidget&) = delete;   // copy assignment
-    PropertiesWidget& operator=(PropertiesWidget&&)      = delete;   // move assignment
+    void setDescriptionVisibility(bool visible);
 
 private:
-    Ui::PropertiesWidget *ui {nullptr};
+    PropertiesWidget(const PropertiesWidget &) = delete;            // copy ctor
+    PropertiesWidget(PropertiesWidget &&)      = delete;            // move ctor
+    PropertiesWidget &operator=(const PropertiesWidget &) = delete; // copy assignment
+    PropertiesWidget &operator=(PropertiesWidget &&) = delete;      // move assignment
+
+private:
+    Ui::PropertiesWidget *ui{nullptr};
 
 private:
     std::unique_ptr<ModelView::ViewModel> view_model;
     std::unique_ptr<ModelView::ViewModelDelegate> delegate;
     std::unique_ptr<QDataWidgetMapper> mapper;
+
+private:
+    void setupWidgets();
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_PROPERTIES_WIDGET_H
+#endif //GPUI_PROPERTIES_WIDGET_H

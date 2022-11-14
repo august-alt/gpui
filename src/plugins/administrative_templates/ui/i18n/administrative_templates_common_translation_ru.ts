@@ -52,12 +52,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="87"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="95"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="88"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="96"/>
         <source>Error writing file:</source>
         <translation>Ошибка записи файла:</translation>
     </message>

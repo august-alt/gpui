@@ -524,6 +524,16 @@ context (user policy option).</source>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
+    <message>
+        <location filename="../basepreferencewriter.cpp" line="52"/>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <location filename="../basepreferencewriter.cpp" line="53"/>
+        <source>Error writing file:</source>
+        <translation>Ошибка записи файла:</translation>
+    </message>
 </context>
 <context>
     <name>SelectDialog</name>
@@ -547,6 +557,14 @@ context (user policy option).</source>
         <location filename="../commonview.cpp" line="70"/>
         <source>Common</source>
         <translation>Общие</translation>
+    </message>
+</context>
+<context>
+    <name>preferences::PreferencesTreeView</name>
+    <message>
+        <location filename="../preferencestreeview.cpp" line="41"/>
+        <source>There are no policies currently</source>
+        <translation>В настоящий момент политик не добавлено</translation>
     </message>
 </context>
 <context>

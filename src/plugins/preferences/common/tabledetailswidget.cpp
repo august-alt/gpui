@@ -97,6 +97,7 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
         auto removeItemAction = menu.addAction(tr("Remove item"));
         auto remove_item      = [=]() {
             view_model->sessionModel()->removeItem(item->parent(), tagrow);
+            ui->treeView->selectionModel()->select(QItemSelection(), QItemSelectionModel::ClearAndSelect);
             emit okPressed();
         };
         connect(removeItemAction, &QAction::triggered, remove_item);
@@ -119,7 +120,12 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
             connect(preferencesDialog, &QDialog::rejected, [&]() {
                 view_model->sessionModel()->removeItem(newItem->parent(), newItem->tagRow());
             });
-            connect(preferencesDialog, &QDialog::accepted, [&]() { emit okPressed(); });
+
+            connect(preferencesDialog, &QDialog::accepted, [&]() {
+                emit okPressed();
+                ui->treeView->selectionModel()->select(view_model->index(view_model->rowCount() - 1, 0),
+                                                       QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+            });
             preferencesDialog->exec();
         };
         connect(addItemAction, &QAction::triggered, add_item);
@@ -147,6 +153,7 @@ void TableDetailsWidget::setupConnections()
                 Q_UNUSED(deselected);
                 if (selected.isEmpty() || selected.first().indexes().isEmpty())
                 {
+                    ui->propertiesWidget->setDescriptionVisibility(false);
                     return;
                 }
 
@@ -155,6 +162,11 @@ void TableDetailsWidget::setupConnections()
                 {
                     auto item = view_model->sessionItemFromIndex(indexes.at(0));
                     ui->propertiesWidget->setItem(item->parent()->children()[item->parent()->children().size() - 2]);
+                    ui->propertiesWidget->setDescriptionVisibility(true);
+                }
+                else
+                {
+                    ui->propertiesWidget->setDescriptionVisibility(false);
                 }
             });
 }

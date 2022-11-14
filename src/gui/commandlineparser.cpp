@@ -22,44 +22,42 @@
 
 #include <memory>
 
-#include <QUuid>
 #include <QCommandLineParser>
-#include <QTranslator>
 #include <QLibraryInfo>
+#include <QTranslator>
+#include <QUuid>
 
 namespace gpui
 {
-
 class CommandLineParserPrivate
 {
 public:
-    QApplication& application;
+    QApplication &application;
     std::unique_ptr<QCommandLineParser> parser;
 
     CommandLineParserPrivate(QApplication &currentApplication)
         : application(currentApplication)
         , parser(std::make_unique<QCommandLineParser>())
-    {
-    }
+    {}
 
 private:
-    CommandLineParserPrivate(const CommandLineParserPrivate&)            = delete;   // copy ctor
-    CommandLineParserPrivate(CommandLineParserPrivate&&)                 = delete;   // move ctor
-    CommandLineParserPrivate& operator=(const CommandLineParserPrivate&) = delete;   // copy assignment
-    CommandLineParserPrivate& operator=(CommandLineParserPrivate&&)      = delete;   // move assignment
+    CommandLineParserPrivate(const CommandLineParserPrivate &) = delete;            // copy ctor
+    CommandLineParserPrivate(CommandLineParserPrivate &&)      = delete;            // move ctor
+    CommandLineParserPrivate &operator=(const CommandLineParserPrivate &) = delete; // copy assignment
+    CommandLineParserPrivate &operator=(CommandLineParserPrivate &&) = delete;      // move assignment
 };
 
 CommandLineParser::CommandLineParser(QApplication &application)
     : d(new CommandLineParserPrivate(application))
-{
-}
+{}
 
 CommandLineParser::~CommandLineParser()
 {
     delete d;
 }
 
-CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(CommandLineOptions *options, QString *errorMessage)
+CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(CommandLineOptions *options,
+                                                                              QString *errorMessage)
 {
     QLocale locale;
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
@@ -71,20 +69,20 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
     QCoreApplication::installTranslator(qtTranslator2.get());
 
     const QCommandLineOption pathOption("p", QObject::tr("The full path of policy to edit."), QObject::tr("path"));
-    const QCommandLineOption bundleOption("b", QObject::tr("The full path of policy bundle to load."), QObject::tr("path"));
-    const QCommandLineOption nameOption("n", QObject::tr("The name of a policy to display."), QObject::tr("name"));
+    const QCommandLineOption bundleOption("b",
+                                          QObject::tr("The full path of policy bundle to load."),
+                                          QObject::tr("path"));
     const QCommandLineOption helpOption(QStringList()
-    #ifdef Q_OS_WIN
-                   << QStringLiteral("?")
-    #endif
-                   << QStringLiteral("h")
-                   << QStringLiteral("help"), QObject::tr("Displays help on commandline options."));
+#ifdef Q_OS_WIN
+                                            << QStringLiteral("?")
+#endif
+                                            << QStringLiteral("h") << QStringLiteral("help"),
+                                        QObject::tr("Displays help on commandline options."));
 
     d->parser->setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     d->parser->addOption(pathOption);
     d->parser->addOption(bundleOption);
     d->parser->addOption(helpOption);
-    d->parser->addOption(nameOption);
 
     const QCommandLineOption versionOption = d->parser->addVersionOption();
 
@@ -107,7 +105,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
     if (d->parser->isSet(pathOption))
     {
         const QString path = d->parser->value(pathOption);
-        options->path = path;
+        options->path      = path;
 
         if (options->path.isNull() || options->path.isEmpty())
         {
@@ -118,7 +116,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 
     if (d->parser->isSet(bundleOption))
     {
-        const QString path = d->parser->value(bundleOption);
+        const QString path    = d->parser->value(bundleOption);
         options->policyBundle = path;
 
         if (options->policyBundle.isNull() || options->policyBundle.isEmpty())
@@ -127,19 +125,6 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
             return CommandLineError;
         }
     }
-
-    if (d->parser->isSet(nameOption))
-    {
-        const QString name = d->parser->value(nameOption);
-        options->policyName = name;
-
-        if (options->policyName.isNull() || options->policyName.isEmpty())
-        {
-            *errorMessage = QObject::tr("Bad policy name: ") + name;
-            return CommandLineError;
-        }
-    }
-
 
     return CommandLineOk;
 }
@@ -154,4 +139,4 @@ void CommandLineParser::showVersion() const
     d->parser->showVersion();
 }
 
-}
+} // namespace gpui

@@ -523,6 +523,16 @@ context (user policy option).</translation>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
+    <message>
+        <location filename="../basepreferencewriter.cpp" line="52"/>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="../basepreferencewriter.cpp" line="53"/>
+        <source>Error writing file:</source>
+        <translation>Error writing file:</translation>
+    </message>
 </context>
 <context>
     <name>SelectDialog</name>
@@ -546,6 +556,14 @@ context (user policy option).</translation>
         <location filename="../commonview.cpp" line="70"/>
         <source>Common</source>
         <translation>Common</translation>
+    </message>
+</context>
+<context>
+    <name>preferences::PreferencesTreeView</name>
+    <message>
+        <location filename="../preferencestreeview.cpp" line="41"/>
+        <source>There are no policies currently</source>
+        <translation>There are no policies currently</translation>
     </message>
 </context>
 <context>

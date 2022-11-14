@@ -2,14 +2,12 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt2
+Release: alt4
 
 Summary: Group policy editor
 License: GPLv2+
 Group: Other
 Url: https://github.com/august-alt/gpui
-
-BuildRequires(pre): catch2-devel
 
 BuildRequires: cmake
 BuildRequires: rpm-macros-cmake
@@ -111,6 +109,17 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Nov 11 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt4
+- 0.2.17-alt4
+- Features:
+  + Add custom tree view for preferences.
+
+* Fri Nov 11 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt3
+- 0.2.17-alt3
+- Fixes:
+  + #74208 Fix group policy name.
+  + Fix translations in administrative templates plugin.
+
 * Thu Nov 10 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt2
 - 0.2.17-alt2
 

@@ -130,6 +130,66 @@ unsigned char ShortcutsModelBuilder::encodeShortcutKey(std::string shortcutKey)
     return 0;
 }
 
+std::string ShortcutsModelBuilder::encodeTargetType(const int targetType)
+{
+    std::string result = "";
+
+    switch (targetType)
+    {
+    case 0:
+        return result;
+    case 1:
+        result = "%DesktopDir%";
+        break;
+    case 2:
+        result = "%StartMenuDir%";
+    case 3:
+        break;
+        result = "%ProgramsDir%";
+        break;
+    case 4:
+        result = "%StartUpDir%";
+        break;
+    case 5:
+        result = "%FavoritesDir%";
+        break;
+    case 6:
+        result = "%FavoritesDir%";
+        break;
+    case 7:
+        result = "%SendToDir%";
+        break;
+    case 8:
+        result = "%RecentDocumentsDir%";
+        break;
+    case 9:
+        result = "%AppDataDir%";
+        break;
+    case 10:
+        result = "%NetPlacesDir%";
+        break;
+    case 11:
+        result = "%CommonDesktopDir%";
+        break;
+    case 12:
+        result = "%CommonStartMenuDir%";
+        break;
+    case 13:
+        result = "%CommonProgramsDir%";
+        break;
+    case 14:
+        result = "%CommonStartUpDir%";
+        break;
+    case 15:
+        result = "%CommonFavoritesDir%";
+        break;
+    default:
+        break;
+    }
+
+    return result + '\\';
+}
+
 std::string ShortcutsModelBuilder::decodeWindowMode(const std::string &windowMode)
 {
     if (windowMode.compare("MIN") == 0)

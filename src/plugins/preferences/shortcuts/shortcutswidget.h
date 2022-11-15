@@ -64,6 +64,9 @@ public:
     QString name() const override;
 
 private slots:
+    void on_shortkutKeySequenceEdit_editingFinished();
+
+private slots:
     void on_targetTypeComboBox_currentIndexChanged(int index);
 
 private slots:

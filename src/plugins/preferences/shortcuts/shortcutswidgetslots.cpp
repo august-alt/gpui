@@ -141,4 +141,16 @@ QString ShortcutsWidget::openFileOrFolder(bool folderMode)
     return "";
 }
 
+void ShortcutsWidget::on_shortkutKeySequenceEdit_editingFinished()
+{
+    auto keySequence = ui->shortkutKeySequenceEdit->keySequence();
+
+    if (!keySequence.isEmpty())
+    {
+        int value = ui->shortkutKeySequenceEdit->keySequence()[0];
+        QKeySequence shortcut(value);
+        ui->shortkutKeySequenceEdit->setKeySequence(shortcut);
+    }
+}
+
 } // namespace preferences

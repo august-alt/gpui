@@ -47,7 +47,9 @@ private:
 
     std::string encodeWindowMode(const std::string &windowMode);
 
-    std::string encodeTargetType(const int targetType);
+    std::string encodeLocation(const int targetType);
+
+    int decodeLocation(const std::string &type);
 };
 } // namespace preferences
 

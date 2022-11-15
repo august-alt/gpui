@@ -39,6 +39,7 @@ ShortcutsItem::ShortcutsItem()
     addProperty(COMMENT, "");
     addProperty(ICON_PATH, "");
     addProperty(ICON_INDEX, "");
+    addProperty(LOCATION, 0);
 }
 
 ShortcutsItem::ShortcutsItem(const ShortcutsItem &other)
@@ -56,6 +57,7 @@ ShortcutsItem::ShortcutsItem(const ShortcutsItem &other)
     addProperty(COMMENT, other.property<std::string>(COMMENT));
     addProperty(ICON_PATH, other.property<std::string>(ICON_PATH));
     addProperty(ICON_INDEX, other.property<std::string>(ICON_INDEX));
+    addProperty(LOCATION, other.property<int>(LOCATION));
 }
 
 } // namespace preferences

@@ -73,6 +73,7 @@ void ShortcutsWidget::setItem(ModelView::SessionItem *item)
     mapper->addMapping(ui->commentLineEdit, 9);
     mapper->addMapping(ui->iconFilePathLineEdit, 10);
     mapper->addMapping(ui->iconIndexLineEdit, 11);
+    mapper->addMapping(ui->locationComboBox, 12, "currentIndex");
 
     mapper->setCurrentModelIndex(view_model->index(0, 1));
 }

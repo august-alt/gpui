@@ -75,8 +75,10 @@ void FolderContainerItem::setupListeners()
 
             if (property == PATH)
             {
-                auto name
-                    = QUrl(QString::fromStdString(foldersItem->property<std::string>(PATH))).fileName().toStdString();
+                auto name = QString::fromStdString(foldersItem->property<std::string>(PATH))
+                                .section('\\', -1)
+                                .section('/', -1)
+                                .toStdString();
                 setProperty(NAME, name);
                 setProperty(PATH, foldersItem->property<std::string>(PATH));
             }

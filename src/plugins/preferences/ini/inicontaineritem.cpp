@@ -78,7 +78,10 @@ void IniContainerItem::setupListeners()
 
             if (property == PATH)
             {
-                auto name = QUrl(QString::fromStdString(iniItem->property<std::string>(PATH))).fileName().toStdString();
+                auto name = QString::fromStdString(iniItem->property<std::string>(PATH))
+                                .section('\\', -1)
+                                .section('/', -1)
+                                .toStdString();
                 setProperty(NAME, name);
                 setProperty(PATH, iniItem->property<std::string>(PATH));
             }

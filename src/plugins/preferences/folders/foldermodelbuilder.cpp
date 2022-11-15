@@ -25,6 +25,8 @@
 
 #include "common/commonitem.h"
 
+#include "common/defaultactions.h"
+
 namespace preferences
 {
 FolderModelBuilder::FolderModelBuilder()
@@ -91,11 +93,15 @@ std::unique_ptr<Folders> FolderModelBuilder::modelToSchema(std::unique_ptr<Prefe
                                                  folderModel->property<bool>(FolderItem::ARCHIVE),
                                                  folderModel->property<bool>(FolderItem::HIDDEN));
             properties.action(getActionCheckboxModel(folderModel->property<int>(FolderItem::ACTION)));
-            properties.deleteIgnoreErrors(folderModel->property<bool>(FolderItem::DELETE_IGNORE_ERRORS));
-            properties.deleteFiles(folderModel->property<bool>(FolderItem::DELETE_FILES));
-            properties.deleteSubFolders(folderModel->property<bool>(FolderItem::DELETE_SUB_FOLDERS));
-            properties.deleteFolder(folderModel->property<bool>(FolderItem::DELETE_FOLDER));
-            properties.deleteReadOnly(folderModel->property<bool>(FolderItem::DELETE_READ_ONLY));
+            if (folderModel->property<int>(FolderItem::ACTION) == DefaultActions::REPLACE_MODE
+                || folderModel->property<int>(FolderItem::ACTION) == DefaultActions::DELETE__MODE)
+            {
+                properties.deleteIgnoreErrors(folderModel->property<bool>(FolderItem::DELETE_IGNORE_ERRORS));
+                properties.deleteFiles(folderModel->property<bool>(FolderItem::DELETE_FILES));
+                properties.deleteSubFolders(folderModel->property<bool>(FolderItem::DELETE_SUB_FOLDERS));
+                properties.deleteFolder(folderModel->property<bool>(FolderItem::DELETE_FOLDER));
+                properties.deleteReadOnly(folderModel->property<bool>(FolderItem::DELETE_READ_ONLY));
+            }
 
             setCommonModelData(folder, commonModel);
             folder.Properties().push_back(properties);

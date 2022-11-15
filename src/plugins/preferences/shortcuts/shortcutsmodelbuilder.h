@@ -43,9 +43,9 @@ private:
 
     unsigned char encodeShortcutKey(std::string shortcutKey);
 
-    std::string decodeWindowMode(const std::string &windowMode);
+    int decodeWindowMode(const std::string &windowMode);
 
-    std::string encodeWindowMode(const std::string &windowMode);
+    std::string encodeWindowMode(const int &windowMode);
 
     std::string encodeLocation(const int targetType);
 

@@ -27,6 +27,13 @@
 
 namespace
 {
+enum WindowMode
+{
+    WINDOWED  = 0,
+    MINIMIZED = 1,
+    MAXIMIZED = 2,
+};
+
 std::vector<std::string> locations = {
     "%DesktopDir%",
     "%StartMenuDir%",
@@ -44,7 +51,7 @@ std::vector<std::string> locations = {
     "%CommonStartUpDir%",
     "%CommonFavoritesDir%",
 };
-}
+} // namespace
 
 namespace preferences
 {
@@ -139,7 +146,7 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
             properties.pidl(shortcutModel->property<std::string>(ShortcutsItem::PIDL));
             properties.arguments(shortcutModel->property<std::string>(ShortcutsItem::ARGUMENTS));
             properties.startIn(shortcutModel->property<std::string>(ShortcutsItem::START_IN));
-            properties.window(encodeWindowMode(shortcutModel->property<std::string>(ShortcutsItem::WINDOW)));
+            properties.window(encodeWindowMode(shortcutModel->property<int>(ShortcutsItem::WINDOW)));
             properties.comment(shortcutModel->property<std::string>(ShortcutsItem::COMMENT));
             properties.iconPath(shortcutModel->property<std::string>(ShortcutsItem::ICON_PATH));
 
@@ -194,29 +201,29 @@ int ShortcutsModelBuilder::decodeLocation(const std::string &type)
     return 0;
 }
 
-std::string ShortcutsModelBuilder::decodeWindowMode(const std::string &windowMode)
+int ShortcutsModelBuilder::decodeWindowMode(const std::string &windowMode)
 {
     if (windowMode.compare("MIN") == 0)
     {
-        return "Minimized";
+        return MINIMIZED;
     }
 
     if (windowMode.compare("MAX") == 0)
     {
-        return "Maximized";
+        return MAXIMIZED;
     }
 
-    return "Windowed";
+    return WINDOWED;
 }
 
-std::string ShortcutsModelBuilder::encodeWindowMode(const std::string &windowMode)
+std::string ShortcutsModelBuilder::encodeWindowMode(const int &windowMode)
 {
-    if (windowMode.compare("Minimized") == 0)
+    if (windowMode == MINIMIZED)
     {
         return "MIN";
     }
 
-    if (windowMode.compare("Maximized") == 0)
+    if (windowMode == MAXIMIZED)
     {
         return "MAX";
     }

@@ -67,12 +67,6 @@ private:
     ScriptsWidget &operator=(ScriptsWidget &&) = delete;      // move assignment
 
 private:
-    //!< Underlying item of this view.
-    GroupScriptContainerItem *m_item{nullptr};
-    ModelView::SessionItem *m_selectedItem{nullptr};
-
-    std::unique_ptr<ModelView::ViewModelDelegate> delegate = nullptr;
-
     Ui::ScriptsWidget *ui = nullptr;
 
     std::unique_ptr<ScriptWidgetCommonSlots> commonSlots;

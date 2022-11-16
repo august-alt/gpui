@@ -31,7 +31,7 @@ ScriptsWidget::ScriptsWidget(QWidget *parent)
     : QWidget(parent)
     , BaseScriptWidget()
     , ui(new Ui::ScriptsWidget())
-    , commonSlots(new ScriptWidgetCommonSlots())
+    , commonSlots(std::make_unique<ScriptWidgetCommonSlots>(parent, this))
 {
     ui->setupUi(this);
 }
@@ -43,7 +43,7 @@ ScriptsWidget::~ScriptsWidget()
 
 void ScriptsWidget::setItem(GroupScriptContainerItem *item)
 {
-    commonSlots->setItem(ui, item);
+    BaseScriptWidget::setItem(ui, item);
 }
 
 void ScriptsWidget::on_upPushButton_clicked()

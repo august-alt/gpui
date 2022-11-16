@@ -24,6 +24,7 @@
 #include "groupscriptcontaineritem.h"
 
 #include <mvvm/viewmodel/viewmodel.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 #include <mvvm/factories/viewmodelfactory.h>
 
@@ -42,16 +43,43 @@ public:
     BaseScriptWidget &operator=(const BaseScriptWidget &) = delete; //copy assignment
     BaseScriptWidget &operator=(BaseScriptWidget &&) = delete;      //mode assignment
 
-protected:
+public:
     std::unique_ptr<ModelView::ViewModel> model = nullptr;
+    ModelView::SessionModel *sessionModel       = nullptr;
+    ModelView::SessionItem *rootItem            = nullptr;
+
+    ModelView::ViewItem *selectedItem = nullptr;
 
     template<typename TUi>
     void setItem(TUi *ui, GroupScriptContainerItem *item)
     {
+        rootItem = item;
+
+        sessionModel = item->model();
+
         model = ModelView::Factory::CreatePropertyTableViewModel(item->model());
+
         model->setRootSessionItem(item);
 
         ui->treeView->setModel(model.get());
+
+        setupConnections(ui);
+    }
+
+    template<typename TUi>
+    void setupConnections(TUi *ui)
+    {
+        QObject::connect(ui->treeView->selectionModel(),
+                         &QItemSelectionModel::selectionChanged,
+                         [&](const QItemSelection &selected, const QItemSelection &deselected) {
+                             Q_UNUSED(deselected);
+
+                             if (model && selected.indexes().size() > 0)
+                             {
+                                 QModelIndex selectedIndex = selected.indexes().at(0);
+                                 selectedItem              = model->itemFromIndex(selectedIndex);
+                             }
+                         });
     }
 };
 } // namespace scripts_plugin

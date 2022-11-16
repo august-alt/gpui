@@ -26,6 +26,7 @@
 #include <mvvm/viewmodel/viewmodel.h>
 #include <qheaderview.h>
 
+#include "basescriptswidget.h"
 #include "groupscriptcontaineritem.h"
 #include "scriptitemcontainer.h"
 
@@ -34,7 +35,7 @@ namespace scripts_plugin
 class ScriptWidgetCommonSlots
 {
 public:
-    ScriptWidgetCommonSlots(QWidget *parentWidget = nullptr);
+    ScriptWidgetCommonSlots(QWidget *p, BaseScriptWidget *base);
     ~ScriptWidgetCommonSlots() = default;
 
     ScriptWidgetCommonSlots(const ScriptWidgetCommonSlots &) = delete;            // copy ctor
@@ -77,49 +78,13 @@ public:
      */
     void onOkClicked();
 
-    template<typename TUi>
-    void setItem(TUi *ui, GroupScriptContainerItem *item)
-    {
-        rootItem = item;
+private:
+    QWidget *parent;
 
-        sessionModel = item->model();
-
-        model = ModelView::Factory::CreatePropertyTableViewModel(item->model());
-
-        model->setRootSessionItem(item);
-
-        ui->treeView->setModel(model.get());
-
-        setupConnections(ui);
-    }
-
-    template<typename TUi>
-    void setupConnections(TUi *ui)
-    {
-        QObject::connect(ui->treeView->selectionModel(),
-                         &QItemSelectionModel::selectionChanged,
-                         [&](const QItemSelection &selected, const QItemSelection &deselected) {
-                             Q_UNUSED(deselected);
-
-                             if (model && selected.indexes().size() > 0)
-                             {
-                                 QModelIndex selectedIndex = selected.indexes().at(0);
-                                 selectedItem              = model->itemFromIndex(selectedIndex);
-                             }
-                         });
-    }
+    BaseScriptWidget *m_base;
 
 private:
-    std::unique_ptr<ModelView::ViewModel> model = nullptr;
-    ModelView::SessionModel *sessionModel       = nullptr;
-    ModelView::SessionItem *rootItem            = nullptr;
-    QWidget *parent                             = nullptr;
-
-    ModelView::ViewItem *selectedItem = nullptr;
-
-
-private:
-   void loadIniFile(QString file);
+    void loadIniFile(QString file);
 };
 
 } // namespace scripts_plugin

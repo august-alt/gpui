@@ -33,9 +33,9 @@ class ScriptModelBuilder
 public:
     ScriptModelBuilder();
 
-    std::unique_ptr<ScriptsModel> iniToModel(std::unique_ptr<io::IniFile> iniFile);
+    void iniToModel(ScriptsModel *model, io::IniFile *iniFile);
 
-    std::unique_ptr<io::IniFile> modelToIni(std::unique_ptr<ScriptsModel> model);
+    std::unique_ptr<io::IniFile> modelToIni(ScriptsModel *model);
 };
 } // namespace scripts_plugin
 

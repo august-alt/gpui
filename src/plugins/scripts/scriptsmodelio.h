@@ -11,22 +11,22 @@ class ScriptsModelIo
 public:
     ScriptsModelIo();
 
-    void loadPolicies(std::string path,
+    void loadPolicies(const std::string &path,
                       ScriptsModel *userScripts,
                       ScriptsModel *userPowerScripts,
                       ScriptsModel *machineScripts,
                       ScriptsModel *machinePowerScripts);
 
-    void savePolicies(std::string path,
+    void savePolicies(const std::string &path,
                       ScriptsModel *userScripts,
                       ScriptsModel *userPowerScripts,
                       ScriptsModel *machineScripts,
                       ScriptsModel *machinePowerScripts);
 
 private:
-    void loadIniFile(std::string path, ScriptsModel *model);
+    void loadIniFile(std::string &path, ScriptsModel *model);
 
-    void saveIniFile(std::string path, ScriptsModel *model);
+    void saveIniFile(std::string &path, ScriptsModel *model);
 };
 } // namespace scripts_plugin
 

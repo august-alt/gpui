@@ -1,12 +1,13 @@
 #include "scriptsmodelio.h"
-#include "../../plugins/storage/smb/smbclient.h"
-#include "../../plugins/storage/smb/smbfile.h"
 #include "../../io/genericreader.h"
 #include "../../io/genericwriter.h"
-#include "groupscriptcontaineritem.h"
 #include "../../io/inifile.h"
+#include "../../plugins/storage/smb/smbclient.h"
+#include "../../plugins/storage/smb/smbfile.h"
+#include "groupscriptcontaineritem.h"
 #include "scriptitem.h"
 #include "scriptitemcontainer.h"
+#include "scriptmodelbuilder.h"
 
 #include <QDebug>
 #include <QFile>
@@ -15,7 +16,7 @@ namespace scripts_plugin
 {
 ScriptsModelIo::ScriptsModelIo() {}
 
-void ScriptsModelIo::loadPolicies(std::string path,
+void ScriptsModelIo::loadPolicies(const std::string &path,
                                   ScriptsModel *userScripts,
                                   ScriptsModel *userPowerScripts,
                                   ScriptsModel *machineScripts,
@@ -32,7 +33,7 @@ void ScriptsModelIo::loadPolicies(std::string path,
     loadIniFile(userPathPowerScripts, userPowerScripts);
 }
 
-void ScriptsModelIo::savePolicies(std::string path,
+void ScriptsModelIo::savePolicies(const std::string &path,
                                   ScriptsModel *userScripts,
                                   ScriptsModel *userPowerScripts,
                                   ScriptsModel *machineScripts,
@@ -49,7 +50,7 @@ void ScriptsModelIo::savePolicies(std::string path,
     saveIniFile(userPathPowerScripts, userPowerScripts);
 }
 
-void ScriptsModelIo::loadIniFile(std::string path, ScriptsModel *model)
+void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
 {
     QString filePath = QString::fromStdString(path);
 
@@ -86,27 +87,9 @@ void ScriptsModelIo::loadIniFile(std::string path, ScriptsModel *model)
             return;
         }
 
-        model->clear();
+        ScriptModelBuilder builder;
 
-        auto sections = iniFile->getAllSections();
-
-        for (const auto &section : sections->keys())
-        {
-            auto container = model->insertItem<ScriptItemContainer>();
-            container->setProperty(ScriptItemContainer::SECTION_NAME, section);
-            container->setDisplayName(section);
-
-            auto group = container->getScripts();
-
-            for (const auto &script_path : sections.get()->value(section).keys())
-            {
-                auto item = group->insertItem<ScriptItem>(GroupScriptContainerItem::ITEM);
-
-                item->setProperty(ScriptItem::PATH, script_path);
-                item->setProperty(ScriptItem::PARAMETER,
-                                  sections.get()->value(section).value(script_path));
-            }
-        }
+        builder.iniToModel(model, iniFile.get());
     }
     catch (std::exception &e)
     {
@@ -115,33 +98,15 @@ void ScriptsModelIo::loadIniFile(std::string path, ScriptsModel *model)
     }
 }
 
-void ScriptsModelIo::saveIniFile(std::string path, ScriptsModel *model)
+void ScriptsModelIo::saveIniFile(std::string &path, ScriptsModel *model)
 {
     QString filePath = QString::fromStdString(path);
 
     auto writer = std::make_unique<io::GenericWriter>();
 
-    auto iniFile = std::make_unique<io::IniFile>();
+    ScriptModelBuilder builder;
 
-    for (auto section : model->rootItem()->children())
-    {
-        auto sectionName = section->property<std::string>(ScriptItemContainer::SECTION_NAME);
-
-        auto container = dynamic_cast<scripts_plugin::ScriptItemContainer *>(section);
-
-        if (container)
-        {
-            for (auto item : container->getScripts()->children())
-            {
-                auto pathProperty  = item->property<std::string>(ScriptItem::PATH);
-                auto paramProperty = item->property<std::string>(ScriptItem::PARAMETER);
-
-                iniFile->addValue(sectionName,
-                                  item->property<std::string>(ScriptItem::PATH),
-                                  item->property<std::string>(ScriptItem::PARAMETER));
-            }
-        }
-    }
+    auto iniFile = builder.modelToIni(model);
 
     try
     {

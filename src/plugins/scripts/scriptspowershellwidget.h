@@ -47,6 +47,8 @@ public:
     void setItem(GroupScriptContainerItem *item);
 
 private slots:
+    void on_upPushButton_clicked();
+
     void on_downPushButton_clicked();
 
     void on_addPushButton_clicked();
@@ -64,18 +66,9 @@ private:
     ScriptsPowerShellWidget &operator=(ScriptsPowerShellWidget &&) = delete;      // move assignment
 
 private:
-    //!< Underlying item of this view.
-    GroupScriptContainerItem *m_item{nullptr};
-    ModelView::SessionItem *m_selectedItem{nullptr};
-
-    std::unique_ptr<ModelView::ViewModelDelegate> delegate = nullptr;
-
     Ui::ScriptsPowerShellWidget *ui;
 
     std::unique_ptr<ScriptWidgetCommonSlots> commonSlots;
-
-private:
-    void on_upPushButton_clicked();
 };
 
 } // namespace scripts_plugin

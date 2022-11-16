@@ -37,23 +37,24 @@
 
 namespace scripts_plugin
 {
-ScriptWidgetCommonSlots::ScriptWidgetCommonSlots(QWidget *parentWidget)
-    : parent(parentWidget)
+ScriptWidgetCommonSlots::ScriptWidgetCommonSlots(QWidget *p, BaseScriptWidget *base)
+    : parent(p)
+    , m_base(base)
 {}
 
 void ScriptWidgetCommonSlots::onUpClicked()
 {
-    ModelView::Utils::MoveUp(selectedItem->item()->parent());
+    ModelView::Utils::MoveUp(m_base->selectedItem->item()->parent());
 }
 
 void ScriptWidgetCommonSlots::onDownClicked()
 {
-    ModelView::Utils::MoveDown(selectedItem->item()->parent());
+    ModelView::Utils::MoveDown(m_base->selectedItem->item()->parent());
 }
 
 void ScriptWidgetCommonSlots::onAddClicked()
 {
-    auto newItem = rootItem->insertItem<ScriptItem>({"", 0});
+    auto newItem = m_base->rootItem->insertItem<ScriptItem>({"", 0});
 
     auto addWidget = new AddScriptWidget(parent);
 
@@ -70,7 +71,7 @@ void ScriptWidgetCommonSlots::onEditClicked()
     auto addWidget = new AddScriptWidget(parent);
 
     addWidget->setWindowTitle("Edit script");
-    addWidget->setItem(selectedItem->item()->parent());
+    addWidget->setItem(m_base->selectedItem->item()->parent());
     addWidget->setModal(true);
 
     addWidget->show();
@@ -78,30 +79,30 @@ void ScriptWidgetCommonSlots::onEditClicked()
 
 void ScriptWidgetCommonSlots::onDeleteClicked()
 {
-    if (selectedItem && selectedItem->item()->parent())
+    if (m_base->selectedItem && m_base->selectedItem->item()->parent())
     {
-        auto parentItem = selectedItem->item()->parent();
+        auto parentItem = m_base->selectedItem->item()->parent();
 
-        sessionModel->removeItem(parentItem->parent(), parentItem->tagRow());
+        m_base->sessionModel->removeItem(parentItem->parent(), parentItem->tagRow());
     }
     else
     {
-        qWarning() << "Selected item: " << selectedItem
-                   << " Parent: " << selectedItem->item()->parent();
+        qWarning() << "Selected item: " << m_base->selectedItem
+                   << " Parent: " << m_base->selectedItem->item()->parent();
     }
 }
 
 void ScriptWidgetCommonSlots::onBrowseClicked()
 {
-    auto dialog = new gpui::FileDialogUtils;
+    auto dialog  = new gpui::FileDialogUtils;
     QString file = dialog->getOpenFileName();
 
-    if(!file.isEmpty()) {
+    if (!file.isEmpty())
+    {
         loadIniFile(file);
     }
 
     delete dialog;
-
 }
 
 void ScriptWidgetCommonSlots::onOkClicked() {}
@@ -130,13 +131,13 @@ void ScriptWidgetCommonSlots::loadIniFile(QString file)
             return;
         }
 
-        sessionModel->clear();
+        m_base->sessionModel->clear();
 
         auto sections = iniFile->getAllSections();
 
         for (const auto &section : sections->keys())
         {
-            auto container = sessionModel->insertItem<ScriptItemContainer>();
+            auto container = m_base->sessionModel->insertItem<ScriptItemContainer>();
             container->setProperty(ScriptItemContainer::SECTION_NAME, section);
             container->setDisplayName(section);
 
@@ -157,7 +158,6 @@ void ScriptWidgetCommonSlots::loadIniFile(QString file)
         qWarning() << "Warning: Unable to read file: " << file.toStdString().c_str()
                    << " description: " << e.what();
     }
-
 }
 
 } // namespace scripts_plugin

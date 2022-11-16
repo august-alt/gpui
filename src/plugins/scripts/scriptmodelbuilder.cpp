@@ -29,16 +29,15 @@ namespace scripts_plugin
 {
 ScriptModelBuilder::ScriptModelBuilder() {}
 
-std::unique_ptr<ScriptsModel> ScriptModelBuilder::iniToModel(std::unique_ptr<io::IniFile> iniFile)
+void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile)
 {
     auto sections = iniFile->getAllSections();
 
-    auto resultModel = std::make_unique<ScriptsModel>();
-    resultModel->clear();
+    model->clear();
 
     for (const auto &section : sections->keys())
     {
-        auto container = resultModel->insertItem<ScriptItemContainer>();
+        auto container = model->insertItem<ScriptItemContainer>();
         container->setProperty(ScriptItemContainer::SECTION_NAME, section);
         auto group = container->getScripts();
 
@@ -50,11 +49,9 @@ std::unique_ptr<ScriptsModel> ScriptModelBuilder::iniToModel(std::unique_ptr<io:
             item->setProperty(ScriptItem::PARAMETER, sections.get()->value(section).value(path));
         }
     }
-
-    return resultModel;
 }
 
-std::unique_ptr<io::IniFile> ScriptModelBuilder::modelToIni(std::unique_ptr<ScriptsModel> model)
+std::unique_ptr<io::IniFile> ScriptModelBuilder::modelToIni(ScriptsModel *model)
 {
     auto iniFile = std::make_unique<io::IniFile>();
 

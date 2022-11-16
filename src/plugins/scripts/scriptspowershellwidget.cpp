@@ -31,7 +31,7 @@ ScriptsPowerShellWidget::ScriptsPowerShellWidget(QWidget *parent)
     : QWidget(parent)
     , BaseScriptWidget()
     , ui(new Ui::ScriptsPowerShellWidget())
-    , commonSlots(new ScriptWidgetCommonSlots())
+    , commonSlots(std::make_unique<ScriptWidgetCommonSlots>(parent, this))
 {
     ui->setupUi(this);
 }
@@ -43,7 +43,7 @@ ScriptsPowerShellWidget::~ScriptsPowerShellWidget()
 
 void ScriptsPowerShellWidget::setItem(GroupScriptContainerItem *item)
 {
-    commonSlots->setItem(ui, item);
+    BaseScriptWidget::setItem(ui, item);
 }
 
 void ScriptsPowerShellWidget::on_upPushButton_clicked()
@@ -51,30 +51,25 @@ void ScriptsPowerShellWidget::on_upPushButton_clicked()
     commonSlots->onUpClicked();
 }
 
-
 void ScriptsPowerShellWidget::on_downPushButton_clicked()
 {
     commonSlots->onDownClicked();
 }
-
 
 void ScriptsPowerShellWidget::on_addPushButton_clicked()
 {
     commonSlots->onAddClicked();
 }
 
-
 void ScriptsPowerShellWidget::on_editPushButton_clicked()
 {
     commonSlots->onEditClicked();
 }
 
-
 void ScriptsPowerShellWidget::on_removePushButton_clicked()
 {
     commonSlots->onDeleteClicked();
 }
-
 
 void ScriptsPowerShellWidget::on_showPushButton_clicked()
 {

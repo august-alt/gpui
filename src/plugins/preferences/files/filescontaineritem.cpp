@@ -81,8 +81,9 @@ void FilesContainerItem::setupListeners()
 
             if (property == TARGET_PATH)
             {
-                auto name = QUrl(QString::fromStdString(filesItem->property<std::string>(TARGET_PATH)))
-                                .fileName()
+                auto name = QString::fromStdString(filesItem->property<std::string>(TARGET_PATH))
+                                .section('\\', -1)
+                                .section('/', -1)
                                 .toStdString();
                 setProperty(NAME, name);
                 setProperty(TARGET_PATH, filesItem->property<std::string>(TARGET_PATH));

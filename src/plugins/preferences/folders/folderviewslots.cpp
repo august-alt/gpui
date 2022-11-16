@@ -48,6 +48,8 @@ void FolderWidget::on_actionComboBox_currentIndexChanged(int index)
     default:
         break;
     }
+
+    ui->groupBox->setDisabled(index == ViewMode::DELETE__MODE);
 }
 
 void FolderWidget::on_pathToolButton_clicked()

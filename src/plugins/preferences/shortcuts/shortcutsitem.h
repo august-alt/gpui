@@ -25,31 +25,31 @@
 
 namespace preferences
 {
-
 //! Drives item representation for editor.
 
 class ShortcutsItem : public ModelView::CompoundItem
 {
 public:
-    static inline const std::string ACTION = "action";
-    static inline const std::string PIDL = "pidl";
+    static inline const std::string ACTION        = "action";
+    static inline const std::string PIDL          = "pidl";
     static inline const std::string SHORTCUT_PATH = "shortcutPath";
-    static inline const std::string TARGET_TYPE = "targetType";
-    static inline const std::string TARGET_PATH = "targetPath";
-    static inline const std::string ARGUMENTS = "arguments";
-    static inline const std::string START_IN = "startIn";
-    static inline const std::string SHORTCUT_KEY = "shortcutKey";
-    static inline const std::string WINDOW = "window";
-    static inline const std::string COMMENT = "comment";
-    static inline const std::string ICON_PATH = "iconPath";
-    static inline const std::string ICON_INDEX = "iconIndex";
+    static inline const std::string TARGET_TYPE   = "targetType";
+    static inline const std::string TARGET_PATH   = "targetPath";
+    static inline const std::string LOCATION      = "location";
+    static inline const std::string ARGUMENTS     = "arguments";
+    static inline const std::string START_IN      = "startIn";
+    static inline const std::string SHORTCUT_KEY  = "shortcutKey";
+    static inline const std::string WINDOW        = "window";
+    static inline const std::string COMMENT       = "comment";
+    static inline const std::string ICON_PATH     = "iconPath";
+    static inline const std::string ICON_INDEX    = "iconIndex";
 
     ShortcutsItem();
     ShortcutsItem(const ShortcutsItem &other);
 };
 
-}
+} // namespace preferences
 
 Q_DECLARE_METATYPE(::preferences::ShortcutsItem)
 
-#endif//GPUI_SHORTCUTS_ITEM_H
+#endif //GPUI_SHORTCUTS_ITEM_H

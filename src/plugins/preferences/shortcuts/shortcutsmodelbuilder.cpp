@@ -25,6 +25,34 @@
 
 #include "common/commonitem.h"
 
+namespace
+{
+enum WindowMode
+{
+    WINDOWED  = 0,
+    MINIMIZED = 1,
+    MAXIMIZED = 2,
+};
+
+std::vector<std::string> locations = {
+    "%DesktopDir%",
+    "%StartMenuDir%",
+    "%ProgramsDir%",
+    "%StartUpDir%",
+    "%FavoritesDir%",
+    "%FavoritesDir%",
+    "%SendToDir%",
+    "%RecentDocumentsDir%",
+    "%AppDataDir%",
+    "%NetPlacesDir%",
+    "%CommonDesktopDir%",
+    "%CommonStartMenuDir%",
+    "%CommonProgramsDir%",
+    "%CommonStartUpDir%",
+    "%CommonFavoritesDir%",
+};
+} // namespace
+
 namespace preferences
 {
 ShortcutsModelBuilder::ShortcutsModelBuilder()
@@ -46,12 +74,24 @@ std::unique_ptr<PreferencesModel> ShortcutsModelBuilder::schemaToModel(std::uniq
             auto sessionItem = model->insertItem<ShortcutsContainerItem>(model->rootItem());
             sessionItem->setupListeners();
 
+            auto path = QString::fromStdString(currentProperties.shortcutPath());
+
+            auto location     = path.section('\\', 0, 0);
+            auto index        = decodeLocation(location.toStdString());
+            auto shortcutPath = path.section('\\', 1).toStdString();
+
+            if (shortcutPath.empty())
+            {
+                shortcutPath = currentProperties.shortcutPath().c_str();
+            }
+
             auto shortcuts = sessionItem->getShortcuts();
             shortcuts->setProperty(ShortcutsItem::ACTION, actionState);
             shortcuts->setProperty(ShortcutsItem::PIDL, getOptionalPropertyData(currentProperties.pidl()).c_str());
-            shortcuts->setProperty(ShortcutsItem::SHORTCUT_PATH, currentProperties.shortcutPath().c_str());
+            shortcuts->setProperty(ShortcutsItem::SHORTCUT_PATH, shortcutPath);
             shortcuts->setProperty(ShortcutsItem::TARGET_TYPE, currentProperties.targetType().c_str());
             shortcuts->setProperty(ShortcutsItem::TARGET_PATH, currentProperties.targetPath().c_str());
+            shortcuts->setProperty(ShortcutsItem::LOCATION, index);
             shortcuts->setProperty(ShortcutsItem::ARGUMENTS,
                                    getOptionalPropertyData(currentProperties.arguments()).c_str());
             shortcuts->setProperty(ShortcutsItem::START_IN,
@@ -88,6 +128,8 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
 
             std::string key = shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_KEY);
 
+            auto prefix = encodeLocation(shortcutModel->property<int>(ShortcutsItem::LOCATION));
+
             auto shortcut = Shortcut_t("", "", "");
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
                                      "{4F2F7C55-2790-433e-8127-0739D1CFA327}");
@@ -95,14 +137,16 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
                                      shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_PATH));
 
+            auto shortcutPath = prefix + shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_PATH);
+
             auto properties = ShortcutsProperties_t(shortcutModel->property<std::string>(ShortcutsItem::TARGET_TYPE),
                                                     shortcutModel->property<std::string>(ShortcutsItem::TARGET_PATH),
-                                                    shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_PATH));
+                                                    shortcutPath);
             properties.action(getActionCheckboxModel(shortcutModel->property<int>(ShortcutsItem::ACTION)));
             properties.pidl(shortcutModel->property<std::string>(ShortcutsItem::PIDL));
             properties.arguments(shortcutModel->property<std::string>(ShortcutsItem::ARGUMENTS));
             properties.startIn(shortcutModel->property<std::string>(ShortcutsItem::START_IN));
-            properties.window(encodeWindowMode(shortcutModel->property<std::string>(ShortcutsItem::WINDOW)));
+            properties.window(encodeWindowMode(shortcutModel->property<int>(ShortcutsItem::WINDOW)));
             properties.comment(shortcutModel->property<std::string>(ShortcutsItem::COMMENT));
             properties.iconPath(shortcutModel->property<std::string>(ShortcutsItem::ICON_PATH));
 
@@ -130,29 +174,56 @@ unsigned char ShortcutsModelBuilder::encodeShortcutKey(std::string shortcutKey)
     return 0;
 }
 
-std::string ShortcutsModelBuilder::decodeWindowMode(const std::string &windowMode)
+std::string ShortcutsModelBuilder::encodeLocation(const int targetType)
+{
+    std::string result = "";
+
+    if (targetType <= 0 || targetType >= static_cast<int>(locations.size()))
+    {
+        return result;
+    }
+
+    return locations[targetType - 1] + '\\';
+}
+
+int ShortcutsModelBuilder::decodeLocation(const std::string &type)
+{
+    for (size_t index = 0; index < locations.size(); ++index)
+    {
+        const auto &currentLocation = locations[index];
+
+        if (currentLocation.compare(type) == 0)
+        {
+            return ++index;
+        }
+    }
+
+    return 0;
+}
+
+int ShortcutsModelBuilder::decodeWindowMode(const std::string &windowMode)
 {
     if (windowMode.compare("MIN") == 0)
     {
-        return "Minimized";
+        return MINIMIZED;
     }
 
     if (windowMode.compare("MAX") == 0)
     {
-        return "Maximized";
+        return MAXIMIZED;
     }
 
-    return "Windowed";
+    return WINDOWED;
 }
 
-std::string ShortcutsModelBuilder::encodeWindowMode(const std::string &windowMode)
+std::string ShortcutsModelBuilder::encodeWindowMode(const int &windowMode)
 {
-    if (windowMode.compare("Minimized") == 0)
+    if (windowMode == MINIMIZED)
     {
         return "MIN";
     }
 
-    if (windowMode.compare("Maximized") == 0)
+    if (windowMode == MAXIMIZED)
     {
         return "MAX";
     }

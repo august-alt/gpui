@@ -26,7 +26,10 @@
 #include "common/basepreferencewidget.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class ShortcutsWidget; }
+namespace Ui
+{
+class ShortcutsWidget;
+}
 QT_END_NAMESPACE
 
 class QDataWidgetMapper;
@@ -36,11 +39,10 @@ namespace ModelView
 class ViewModel;
 class ViewModelDelegate;
 class SessionItem;
-}
+} // namespace ModelView
 
 namespace preferences
 {
-
 class ShortcutsItem;
 class ShortcutsItemController;
 
@@ -52,7 +54,7 @@ public:
     Q_OBJECT
 
 public:
-    explicit ShortcutsWidget(QWidget* parent = nullptr, ShortcutsItem* item = nullptr);
+    explicit ShortcutsWidget(QWidget *parent = nullptr, ShortcutsItem *item = nullptr);
     ~ShortcutsWidget() override;
 
     void setItem(ModelView::SessionItem *item) override;
@@ -60,6 +62,12 @@ public:
     bool validate() override;
 
     QString name() const override;
+
+private slots:
+    void on_shortkutKeySequenceEdit_editingFinished();
+
+private slots:
+    void on_targetTypeComboBox_currentIndexChanged(int index);
 
 private slots:
     void on_actionComboBox_currentIndexChanged(int index);
@@ -74,22 +82,22 @@ private:
     QString openFileOrFolder(bool folderMode);
 
 private:
-    ShortcutsWidget(const ShortcutsWidget&)            = delete;   // copy ctor
-    ShortcutsWidget(ShortcutsWidget&&)                 = delete;   // move ctor
-    ShortcutsWidget& operator=(const ShortcutsWidget&) = delete;   // copy assignment
-    ShortcutsWidget& operator=(ShortcutsWidget&&)      = delete;   // move assignment
+    ShortcutsWidget(const ShortcutsWidget &) = delete;            // copy ctor
+    ShortcutsWidget(ShortcutsWidget &&)      = delete;            // move ctor
+    ShortcutsWidget &operator=(const ShortcutsWidget &) = delete; // copy assignment
+    ShortcutsWidget &operator=(ShortcutsWidget &&) = delete;      // move assignment
 
 private:
     //!< Underlying item of this view.
-    ShortcutsItem* m_item {nullptr};
+    ShortcutsItem *m_item{nullptr};
 
     std::unique_ptr<ModelView::ViewModel> view_model;
     std::unique_ptr<ModelView::ViewModelDelegate> delegate;
 
 private:
-    Ui::ShortcutsWidget *ui {nullptr};
+    Ui::ShortcutsWidget *ui{nullptr};
 };
 
-}
+} // namespace preferences
 
-#endif//GPUI_SHORTCUTS_WIDGET_H
+#endif //GPUI_SHORTCUTS_WIDGET_H

@@ -23,13 +23,19 @@
 
 namespace preferences
 {
-
 enum ViewMode
 {
     CREATE__MODE = 0,
     REPLACE_MODE = 1,
     UPDATE__MODE = 2,
     DELETE__MODE = 3
+};
+
+enum TargetTypeMode
+{
+    FILESYSTEM = 0,
+    URL        = 1,
+    SHELL      = 2,
 };
 
 void ShortcutsWidget::on_actionComboBox_currentIndexChanged(int index)
@@ -40,7 +46,6 @@ void ShortcutsWidget::on_actionComboBox_currentIndexChanged(int index)
     ui->iconFileWidget->setDisabled(disableWidgets);
     ui->startInWidget->setDisabled(disableWidgets);
 }
-
 
 void ShortcutsWidget::on_locationComboBox_currentIndexChanged(int index)
 {
@@ -67,6 +72,32 @@ void ShortcutsWidget::on_startInToolButton_clicked()
     ui->startInLineEdit->setText(openFileOrFolder(true));
 }
 
+void ShortcutsWidget::on_targetTypeComboBox_currentIndexChanged(int index)
+{
+    if (index == FILESYSTEM)
+    {
+        ui->startInLayout->setEnabled(true);
+        ui->argumentsLineEdit->setEnabled(true);
+        ui->runComboBox->setEnabled(true);
+        ui->commentLineEdit->setEnabled(true);
+    }
+
+    if (index == URL)
+    {
+        ui->startInLayout->setEnabled(false);
+        ui->argumentsLineEdit->setDisabled(true);
+        ui->runComboBox->setDisabled(true);
+        ui->commentLineEdit->setDisabled(true);
+    }
+
+    if (index == SHELL)
+    {
+        ui->argumentsLineEdit->setDisabled(true);
+        ui->startInLayout->setEnabled(false);
+        ui->runComboBox->setEnabled(true);
+        ui->commentLineEdit->setEnabled(true);
+    }
+}
 
 void ShortcutsWidget::on_iconFilePathLineEdit_textChanged(const QString &text)
 {
@@ -90,8 +121,7 @@ QString ShortcutsWidget::openFileOrFolder(bool folderMode)
     {
         fileDialog->setFileMode(QFileDialog::Directory);
         fileDialog->setNameFilter(QObject::tr("All files (*.*)"));
-        fileDialog->setOptions(QFileDialog::ShowDirsOnly
-                               | QFileDialog::DontResolveSymlinks
+        fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
                                | QFileDialog::DontUseNativeDialog);
         fileDialog->setWindowTitle(tr("Open Directory"));
     }
@@ -99,8 +129,7 @@ QString ShortcutsWidget::openFileOrFolder(bool folderMode)
     {
         fileDialog->setFileMode(QFileDialog::ExistingFile);
         fileDialog->setNameFilter("Ini Files (*.ini), Dll Files (*.dll), Png Files (*.png)");
-        fileDialog->setOptions(QFileDialog::DontResolveSymlinks
-                               | QFileDialog::DontUseNativeDialog);
+        fileDialog->setOptions(QFileDialog::DontResolveSymlinks | QFileDialog::DontUseNativeDialog);
         fileDialog->setWindowTitle(tr("Open File"));
     }
 
@@ -112,4 +141,16 @@ QString ShortcutsWidget::openFileOrFolder(bool folderMode)
     return "";
 }
 
+void ShortcutsWidget::on_shortkutKeySequenceEdit_editingFinished()
+{
+    auto keySequence = ui->shortkutKeySequenceEdit->keySequence();
+
+    if (!keySequence.isEmpty())
+    {
+        int value = ui->shortkutKeySequenceEdit->keySequence()[0];
+        QKeySequence shortcut(value);
+        ui->shortkutKeySequenceEdit->setKeySequence(shortcut);
+    }
 }
+
+} // namespace preferences

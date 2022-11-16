@@ -24,6 +24,7 @@
 #include "filesitem.h"
 
 #include "common/commonitem.h"
+#include "common/defaultactions.h"
 
 namespace preferences
 {
@@ -78,13 +79,22 @@ std::unique_ptr<Files> FilesModelBuilder::modelToSchema(std::unique_ptr<Preferen
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
                                      filesContainer->property<std::string>(FilesContainerItem::NAME));
 
+            auto action = driveModel->property<int>(FilesItem::ACTION);
+
             auto properties = FileProperties_t(driveModel->property<std::string>(FilesItem::TARGET_PATH));
-            properties.fromPath(driveModel->property<std::string>(FilesItem::FROM_PATH));
-            properties.action(getActionCheckboxModel(driveModel->property<int>(FilesItem::ACTION)));
-            properties.suppress(driveModel->property<bool>(FilesItem::SUPPRESS));
-            properties.readOnly(driveModel->property<bool>(FilesItem::READONLY));
-            properties.archive(driveModel->property<bool>(FilesItem::ARCHIVE));
-            properties.hidden(driveModel->property<bool>(FilesItem::HIDDEN));
+            properties.action(getActionCheckboxModel(action));
+            if (action != DefaultActions::DELETE__MODE)
+            {
+                properties.fromPath(driveModel->property<std::string>(FilesItem::FROM_PATH));
+                properties.readOnly(driveModel->property<bool>(FilesItem::READONLY));
+                properties.archive(driveModel->property<bool>(FilesItem::ARCHIVE));
+                properties.hidden(driveModel->property<bool>(FilesItem::HIDDEN));
+            }
+
+            if (driveModel->property<int>(FilesItem::ACTION) != DefaultActions::CREATE__MODE)
+            {
+                properties.suppress(driveModel->property<bool>(FilesItem::SUPPRESS));
+            }
 
             setCommonModelData(file, commonModel);
             file.Properties().push_back(properties);

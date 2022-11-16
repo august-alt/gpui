@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt5
+Release: alt6
 
 Summary: Group policy editor
 License: GPLv2+
@@ -108,6 +108,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt6
+- 0.2.17-alt6
+  Features:
+  + Add mapped drives for computers and network shares for user.
+
 * Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt5
 - 0.2.17-alt5
 - Fixes:

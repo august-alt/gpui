@@ -25,6 +25,8 @@
 
 #include "../../io/genericwriter.h"
 
+#include <regex>
+
 namespace scripts_plugin
 {
 ScriptModelBuilder::ScriptModelBuilder() {}
@@ -35,18 +37,38 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile)
 
     model->clear();
 
+    static const auto reg = std::regex("^\\d+");
+
     for (const auto &section : sections->keys())
     {
         auto container = model->insertItem<ScriptItemContainer>();
         container->setProperty(ScriptItemContainer::SECTION_NAME, section);
         auto group = container->getScripts();
 
+        std::string iniCommandPath;
+        std::string iniCommandParam;
+
         for (const auto &path : sections.get()->value(section).keys())
         {
-            auto item = group->insertItem<ScriptItem>(GroupScriptContainerItem::ITEM);
+            std::string value       = std::regex_replace(path, reg, "");
+            std::string secondValue = std::regex_replace(sections.get()->value(section).value(path),
+                                                         reg,
+                                                         "");
+            if (value.compare("CmdLine") == 0)
+            {
+                iniCommandPath = secondValue;
+                continue;
+            }
 
-            item->setProperty(ScriptItem::PATH, path);
-            item->setProperty(ScriptItem::PARAMETER, sections.get()->value(section).value(path));
+            if (value.compare("Parameters") == 0)
+            {
+                iniCommandParam = secondValue;
+
+                auto item = group->insertItem<ScriptItem>(GroupScriptContainerItem::ITEM);
+
+                item->setProperty(ScriptItem::PATH, iniCommandPath);
+                item->setProperty(ScriptItem::PARAMETER, iniCommandParam);
+            }
         }
     }
 }
@@ -59,14 +81,25 @@ std::unique_ptr<io::IniFile> ScriptModelBuilder::modelToIni(ScriptsModel *model)
     {
         auto sectionName = section->property<std::string>(ScriptItemContainer::SECTION_NAME);
 
-        for (auto item : section->children())
-        {
-            auto path  = item->property<std::string>(ScriptItem::PATH);
-            auto param = item->property<std::string>(ScriptItem::PARAMETER);
+        auto container = dynamic_cast<ScriptItemContainer *>(section);
 
-            iniFile->addValue(sectionName,
-                              item->property<std::string>(ScriptItem::PATH),
-                              item->property<std::string>(ScriptItem::PARAMETER));
+        if (container)
+        {
+            int numberOfCommand = 0;
+            for (auto item : container->getScripts()->children())
+            {
+                std::string cmdLine   = std::to_string(numberOfCommand) + "CmdLine";
+                std::string paramLine = std::to_string(numberOfCommand) + "Parameters";
+
+                auto path  = item->property<std::string>(ScriptItem::PATH);
+                auto param = item->property<std::string>(ScriptItem::PARAMETER);
+
+                iniFile->addValue(sectionName, cmdLine, path);
+
+                iniFile->addValue(sectionName, paramLine, param);
+
+                numberOfCommand++;
+            }
         }
     }
 

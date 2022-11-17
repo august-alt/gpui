@@ -21,8 +21,6 @@
 #include "shortcutswidget.h"
 #include "ui_shortcutswidget.h"
 
-#include <wine/windows/winuser.h>
-
 namespace
 {
 const std::vector<Qt::Key> WindowsToQt =

@@ -177,7 +177,7 @@
     <message>
         <location filename="../variableswidgetslots.cpp" line="158"/>
         <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</source>
-        <translation type="unfinished">Переменная PATH, содержит список папок, в которых система ищет исполняемые файлы. Действие &quot;Заменить&quot; заменит переменную PATH полностью. Это удалит все ранее существовавшие значения переменной PATH.</translation>
+        <translation>Переменная PATH, содержит список папок, в которых система ищет исполняемые файлы. Действие &quot;Заменить&quot; заменит переменную PATH полностью. Это удалит все ранее существовавшие значения переменной PATH.</translation>
     </message>
     <message>
         <location filename="../variableswidgetslots.cpp" line="175"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="../variableswidgetslots.cpp" line="183"/>
         <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</source>
-        <translation>Переменная PATH, содержит список папок, в которых система ищет исполняемые файлы. Действие &quot;Удалить&quot; полностью удалит переменную PATH. Если она не существует, то ошибки возвращатся не будут. Использование этой настройки не рекомендуется.</translation>
+        <translation>Переменная PATH, содержит список папок, в которых система ищет исполняемые файлы. Действие &quot;Удалить&quot; полностью удалит переменную PATH. Если она не существует, то ошибки возвращаться не будут. Использование этой настройки не рекомендуется.</translation>
     </message>
     <message>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</source>

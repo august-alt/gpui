@@ -34,7 +34,7 @@ ShortcutsItem::ShortcutsItem()
     addProperty(TARGET_PATH, "");
     addProperty(ARGUMENTS, "");
     addProperty(START_IN, "");
-    addProperty(SHORTCUT_KEY, 0);
+    addProperty(SHORTCUT_KEY, "");
     addProperty(WINDOW, 0);
     addProperty(COMMENT, "");
     addProperty(ICON_PATH, "");
@@ -52,7 +52,7 @@ ShortcutsItem::ShortcutsItem(const ShortcutsItem &other)
     addProperty(TARGET_PATH, other.property<std::string>(TARGET_PATH));
     addProperty(ARGUMENTS, other.property<std::string>(ARGUMENTS));
     addProperty(START_IN, other.property<std::string>(START_IN));
-    addProperty(SHORTCUT_KEY, other.property<int>(SHORTCUT_KEY));
+    addProperty(SHORTCUT_KEY, other.property<std::string>(SHORTCUT_KEY));
     addProperty(WINDOW, other.property<int>(WINDOW));
     addProperty(COMMENT, other.property<std::string>(COMMENT));
     addProperty(ICON_PATH, other.property<std::string>(ICON_PATH));

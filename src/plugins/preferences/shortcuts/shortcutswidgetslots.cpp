@@ -21,18 +21,6 @@
 #include "shortcutswidget.h"
 #include "ui_shortcutswidget.h"
 
-namespace
-{
-const std::vector<Qt::Key> WindowsToQt =
-{
-};
-
-const std::map<Qt::Key, int> QtToWindows =
-{
-};
-
-}
-
 namespace preferences
 {
 enum ViewMode
@@ -153,48 +141,15 @@ QString ShortcutsWidget::openFileOrFolder(bool folderMode)
     return "";
 }
 
-int encodeKeyToWindows(const Qt::Key& key)
-{
-    auto result = QtToWindows.find(key);
-
-    return result != QtToWindows.end() ? result->second : 0;
-}
-
-Qt::Key encodeKeyToQt(const int& key)
-{
-    if (key < 0 || key > static_cast<int>(WindowsToQt.size()))
-    {
-        return Qt::Key_unknown;
-    }
-
-    return WindowsToQt[key];
-}
-
-int ShortcutsWidget::encodeShortcutKey(QKeySequence& sequence)
-{
-    Q_UNUSED(sequence);
-
-    return 0;
-}
-
-QKeySequence ShortcutsWidget::decodeShortcutKey(const int &keycodes)
-{
-    Q_UNUSED(keycodes);
-
-    return QKeySequence();
-}
-
 void ShortcutsWidget::on_shortkutKeySequenceEdit_editingFinished()
 {
     auto keySequence = ui->shortkutKeySequenceEdit->keySequence();
 
-    if (keySequence.count() != 0)
+    if (!keySequence.isEmpty())
     {
         int value = ui->shortkutKeySequenceEdit->keySequence()[0];
         QKeySequence shortcut(value);
         ui->shortkutKeySequenceEdit->setKeySequence(shortcut);
-
-        shortcutChanged(encodeShortcutKey(shortcut));
     }
 }
 

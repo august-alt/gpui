@@ -63,9 +63,6 @@ public:
 
     QString name() const override;
 
-signals:
-    void shortcutChanged(int shortcut);
-
 private slots:
     void on_shortkutKeySequenceEdit_editingFinished();
 
@@ -83,9 +80,6 @@ private slots:
 
 private:
     QString openFileOrFolder(bool folderMode);
-
-    int encodeShortcutKey(QKeySequence &sequence);
-    QKeySequence decodeShortcutKey(const int& keycodes);
 
 private:
     ShortcutsWidget(const ShortcutsWidget &) = delete;            // copy ctor

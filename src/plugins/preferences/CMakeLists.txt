@@ -128,6 +128,8 @@ set(HEADERS
     printers/localprinteritem.h
     printers/localprinterwidget.h
     printers/printersmodelbuilder.h
+    printers/printerpreferencesreader.h
+    printers/printerpreferenceswriter.h
     printers/printercontaineritem.h
     printers/printercontaineritem.inl
     printers/sharedprinteritem.h
@@ -303,6 +305,8 @@ set(SOURCES
     printers/localprinteritem.cpp
     printers/localprinterwidget.cpp
     printers/printersmodelbuilder.cpp
+    printers/printerpreferencesreader.cpp
+    printers/printerpreferenceswriter.cpp
     printers/sharedprinteritem.cpp
     printers/sharedprinterwidget.cpp
     printers/tcpprintergeneralwidget.cpp

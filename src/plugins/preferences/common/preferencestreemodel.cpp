@@ -233,6 +233,13 @@ void PreferencesTreeModel::populateModel()
     machineShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
     machineShortcutsItems->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
 
+    auto machineControlPanelSettingsItem = insertItem<FolderItem>(machinePreferencesItem);
+    machineControlPanelSettingsItem->setDisplayName("Control Panel Settings");
+
+    auto machinePrintersItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
+    machinePrintersItem->setDisplayName("Printers");
+    machinePrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
+
     //======================================================================================================================
 
     auto userNamespace = insertItem<FolderItem>(topItem);

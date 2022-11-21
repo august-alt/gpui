@@ -33,6 +33,7 @@
 #include "shares/sharespreferencereader.h"
 #include "shortcuts/shortcutspreferencereader.h"
 #include "variables/variablespreferencereader.h"
+#include "printers/printerpreferencesreader.h"
 
 namespace preferences
 {
@@ -51,6 +52,7 @@ void ModelCreator::populateModels(const std::string &policyPath,
     readers["Preferences/NetworkShares/NetworkShares.xml"] = std::make_unique<SharesPreferenceReader>();
     readers["Preferences/Shortcuts/Shortcuts.xml"]         = std::make_unique<ShortcutsPreferenceReader>();
     readers["Preferences/EnvironmentVariables/EnvironmentVariables.xml"] = std::make_unique<VariablesPreferenceReader>();
+    readers["Preferences/Printers/Printers.xml"] = std::make_unique<PrinterPreferenceReader>();
 
     for (const auto &readerPair : readers)
     {

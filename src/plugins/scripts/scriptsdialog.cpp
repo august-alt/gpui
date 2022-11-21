@@ -27,6 +27,8 @@
 
 #include <mvvm/factories/viewmodelfactory.h>
 
+#include <QDebug>
+
 namespace scripts_plugin
 {
 ScriptsDialog::ScriptsDialog(ModelView::SessionItem *scriptsItem,
@@ -42,9 +44,25 @@ ScriptsDialog::ScriptsDialog(ModelView::SessionItem *scriptsItem,
     setItem(psScriptsItem, ui->powerShellScriptsTab);
 }
 
+ScriptsDialog::ScriptsDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::ScriptsDialog())
+{
+    ui->setupUi(this);
+}
+
 ScriptsDialog::~ScriptsDialog()
 {
     delete ui;
+}
+
+void ScriptsDialog::setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel)
+{
+    auto scriptsItem      = scriptsModel->topItem<ScriptItemContainer>();
+    auto powerScriptsItem = powerScriptsModel->topItem<ScriptItemContainer>();
+
+    setItem(scriptsItem, ui->scriptsTab);
+    setItem(powerScriptsItem, ui->powerShellScriptsTab);
 }
 
 template<typename TWidget>
@@ -58,5 +76,15 @@ void ScriptsDialog::setItem(ModelView::SessionItem *item, TWidget &widget)
 }
 
 void ScriptsDialog::submit() {}
+
+void ScriptsDialog::on_buttonBox_accepted()
+{
+    emit(saveDataSignal());
+}
+
+void ScriptsDialog::on_buttonBox_rejected()
+{
+    emit(reloaddataSignal());
+}
 
 } // namespace scripts_plugin

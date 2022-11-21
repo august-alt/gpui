@@ -78,10 +78,8 @@ private:
     std::unique_ptr<ModelView::ViewModelDelegate> delegate;
     std::unique_ptr<QDataWidgetMapper> mapper;
 
-private:
     QItemSelectionModel *selectionModel = nullptr;
 
-private:
     Ui::ScriptsContentWidget *ui{nullptr};
 };
 

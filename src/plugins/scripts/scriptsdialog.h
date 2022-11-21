@@ -53,14 +53,26 @@ public:
     ScriptsDialog(ModelView::SessionItem *scriptsItem,
                   ModelView::SessionItem *psScriptsItem,
                   QWidget *parent = nullptr);
+    ScriptsDialog(QWidget *parent = nullptr);
     ~ScriptsDialog();
+
+    void setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel);
 
 private:
     template<typename TWidget>
-    void setItem(ModelView::SessionItem *item, TWidget &widget);
+    void setItem(ModelView::SessionItem *scriptsItem, TWidget &widget);
 
 public slots:
     void submit();
+
+private slots:
+    void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
+
+signals:
+    void saveDataSignal();
+    void reloaddataSignal();
 
 private:
     ScriptsDialog(const ScriptsDialog &) = delete;

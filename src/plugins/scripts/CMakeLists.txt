@@ -22,6 +22,7 @@ set(HEADERS
     scriptwidgetcommonslots.h
     addscriptwidget.h
     scriptssnapin.h
+    scriptssnapinprivate.h
     scriptstreemodel.h
     scriptsmodelio.h
     scriptstreeproxymodel.h
@@ -43,6 +44,7 @@ set(SOURCES
     scriptwidgetcommonslots.cpp
     addscriptwidget.cpp
     scriptssnapin.cpp
+    scriptssnapinprivate.cpp
     scriptstreemodel.cpp
     scriptsmodelio.cpp
     scriptstreeproxymodel.cpp
@@ -67,6 +69,8 @@ add_translation_resource(RESOURCES_SRC ${QM_FILES})
 qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
 
 set(SOURCES ${SOURCES} ${HEADERS} ${UIFORMS})
+
+include_directories(${CMAKE_SOURCE_DIR}/src)
 
 set(PLUGIN_NAME scripts-plugin)
 

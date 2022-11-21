@@ -98,8 +98,10 @@ void ContentWidget::setSelectionModel(QItemSelectionModel *selectionModel)
 
                 auto modelIndex = selected.first().indexes().first();
 
-                ui->descriptionTextEdit->setText(modelIndex.data(PolicyRoles::EXPLAIN_TEXT).toString());
-                if (modelIndex.data(PolicyRoles::ITEM_TYPE).value<uint>() != ItemType::ITEM_TYPE_POLICY)
+                ui->descriptionTextEdit->setText(
+                    modelIndex.data(PolicyRoles::EXPLAIN_TEXT).toString());
+                if (modelIndex.data(PolicyRoles::ITEM_TYPE).value<uint>()
+                    != ItemType::ITEM_TYPE_POLICY)
                 {
                     ui->contentListView->setRootIndex(modelIndex);
                 }
@@ -121,11 +123,22 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
-        ui->descriptionTextEdit->setText(model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
+        ui->descriptionTextEdit->setText(
+            model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
+
+        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_SCRIPTS)
+        {
+            auto scriptsDialog = model->data(index, PolicyRoles::POLICY_WIDGET)
+                                     .value<std::function<QDialog *()>>();
+
+            auto dialog = scriptsDialog();
+            dialog->exec();
+        }
 
         if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
         {
-            auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET).value<std::function<QWidget *()>>();
+            auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET)
+                                    .value<std::function<QWidget *()>>();
 
             auto widget = ui->scrollArea->takeWidget();
             if (widget)
@@ -150,5 +163,6 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 } // namespace gpui
 
 Q_DECLARE_METATYPE(std::function<QWidget *()>)
+Q_DECLARE_METATYPE(std::function<QDialog *()>)
 Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)
 Q_DECLARE_METATYPE(std::shared_ptr<::model::admx::Policy>)

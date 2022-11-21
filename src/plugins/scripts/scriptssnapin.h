@@ -21,10 +21,12 @@
 #ifndef SCRIPTSSNAPIN_H
 #define SCRIPTSSNAPIN_H
 
-#include "../../core/core.h"
 #include "../../core/abstractsnapin.h"
+#include "../../core/core.h"
 
 #include "../../../src/core/common.h"
+
+#include "scriptssnapinprivate.h"
 
 namespace scripts_plugin
 {
@@ -46,9 +48,7 @@ public:
 
     virtual void onRetranslateUI(const std::string &locale) override;
 
-    QAbstractItemModel *getRootNode() const override;
-
-private:
+public:
     ScriptsSnapInPrivate *d;
 
 private:

@@ -22,30 +22,29 @@
 
 #include <QDebug>
 
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 using namespace io;
 
 namespace gpui
 {
-
 IniFormat::IniFormat()
     : PolicyFileFormat("ini")
-{
-}
+{}
 
 bool IniFormat::read(std::istream &input, IniFile *file)
 {
-    try {
+    try
+    {
         boost::property_tree::ptree pt;
         boost::property_tree::ini_parser::read_ini(input, pt);
 
-        for (auto& section : pt)
+        for (auto &section : pt)
         {
             qDebug() << "[" << section.first.c_str() << "]\n";
 
-            for (auto& key : section.second)
+            for (auto &key : section.second)
             {
                 qDebug() << key.first.c_str() << "=" << key.second.get_value("").c_str() << "\n";
 
@@ -53,7 +52,7 @@ bool IniFormat::read(std::istream &input, IniFile *file)
             }
         }
     }
-    catch (std::exception& e)
+    catch (std::exception &e)
     {
         setErrorString(std::string("Error: ") + e.what());
 
@@ -65,26 +64,32 @@ bool IniFormat::read(std::istream &input, IniFile *file)
 
 bool IniFormat::write(std::ostream &output, IniFile *file)
 {
-    try {
+    try
+    {
         boost::property_tree::ptree pt;
 
-        QMap<std::string, QMultiMap<std::string, std::string>>::const_iterator section_iterator =
-                file->getAllSections()->constBegin();
-        while (section_iterator != file->getAllSections()->constEnd()) {
+        QMap<std::string, QMultiMap<std::string, std::string>>::const_iterator section_iterator
+            = file->getAllSections()->constBegin();
+        while (section_iterator != file->getAllSections()->constEnd())
+        {
             qDebug() << "[" << section_iterator.key().c_str() << "]\n";
 
             auto keyIterator = section_iterator->constBegin();
 
             while (keyIterator != section_iterator->constEnd())
             {
-                qDebug() << keyIterator->c_str() << "=" << section_iterator->value(*keyIterator).c_str() << "\n";
-                pt.add(section_iterator.key() + "." + (*keyIterator), section_iterator->value(*keyIterator));
+                qDebug() << keyIterator->c_str() << "="
+                         << section_iterator->value(*keyIterator).c_str() << "\n";
+                pt.add(section_iterator.key() + "." + (*keyIterator),
+                       section_iterator->value(*keyIterator));
+                ++keyIterator;
             }
+            ++section_iterator;
         }
 
         boost::property_tree::ini_parser::write_ini(output, pt);
     }
-    catch (std::exception& e)
+    catch (std::exception &e)
     {
         setErrorString(std::string("Error: ") + e.what());
 
@@ -94,4 +99,4 @@ bool IniFormat::write(std::ostream &output, IniFile *file)
     return true;
 }
 
-}
+} // namespace gpui

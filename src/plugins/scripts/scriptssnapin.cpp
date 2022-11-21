@@ -19,9 +19,11 @@
 ***********************************************************************************************************************/
 
 #include "scriptssnapin.h"
-#include "../../plugins/storage/smb/smbfile.h"
 #include "../../io/genericreader.h"
 #include "../../io/inifile.h"
+#include "../../plugins/storage/smb/smbfile.h"
+#include "gui/mainwindow.h"
+
 #include "scriptmodelbuilder.h"
 #include "scriptsmodel.h"
 #include "scriptsmodelio.h"
@@ -40,37 +42,14 @@
 
 namespace scripts_plugin
 {
-class ScriptsSnapInPrivate
-{
-public:
-    std::unique_ptr<std::string> policyPath                        = nullptr;
-    std::unique_ptr<ScriptsModel> userScriptsModel                 = nullptr;
-    std::unique_ptr<ScriptsModel> userPowerScriptsModel            = nullptr;
-    std::unique_ptr<ScriptsModel> machineScriptsModel              = nullptr;
-    std::unique_ptr<ScriptsModel> machinePowerScriptsModel         = nullptr;
-    std::unique_ptr<ModelView::SessionModel> treeModel             = nullptr;
-    std::unique_ptr<ModelView::ViewModel> viewModel                = nullptr;
-    std::unique_ptr<ScriptsTreeProxyModel> proxyViewModel = nullptr;
-    std::unique_ptr<ScriptsModelIo> modelIo                        = nullptr;
-
-public:
-    ScriptsSnapInPrivate() {}
-
-private:
-    ScriptsSnapInPrivate(const ScriptsSnapInPrivate &) = delete;      //copy ctor
-    ScriptsSnapInPrivate(ScriptsSnapInPrivate &&)      = delete;      //move ctor
-    ScriptsSnapInPrivate operator=(ScriptsSnapInPrivate &) = delete;  //copy assignment
-    ScriptsSnapInPrivate operator=(ScriptsSnapInPrivate &&) = delete; //move assignment
-};
-
 ScriptsSnapIn::ScriptsSnapIn()
     : AbstractSnapIn("ISnapIn",
-                     "PreferencesSnapin",
+                     "ScriptsSnapin",
                      "SnapIn for Scripts management",
                      {1, 0, 0},
                      "GPL-2.0",
                      "Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru")
-    , d(new ScriptsSnapInPrivate())
+    , d(new ScriptsSnapInPrivate(this))
 {}
 
 ScriptsSnapIn::~ScriptsSnapIn()
@@ -80,26 +59,28 @@ ScriptsSnapIn::~ScriptsSnapIn()
 
 void ScriptsSnapIn::onInitialize(QMainWindow *mainWindow)
 {
-    d->userScriptsModel         = std::make_unique<ScriptsModel>();
-    d->userPowerScriptsModel    = std::make_unique<ScriptsModel>();
-    d->machineScriptsModel      = std::make_unique<ScriptsModel>();
-    d->machinePowerScriptsModel = std::make_unique<ScriptsModel>();
-    d->treeModel                = std::make_unique<ScriptsTreeModel>();
-    d->viewModel                = ModelView::Factory::CreateTopItemsViewModel(d->treeModel.get());
-    d->proxyViewModel           = std::make_unique<ScriptsTreeProxyModel>();
+    auto mWindow = dynamic_cast<gpui::MainWindow *>(mainWindow);
+
     d->proxyViewModel->setSourceModel(d->viewModel.get());
-    d->proxyViewModel->setTreeModel({d->treeModel.get(),
-                                     d->viewModel.get(),
-                                     d->machineScriptsModel.get(),
-                                     d->userScriptsModel.get(),
-                                     this});
-    d->modelIo = std::make_unique<ScriptsModelIo>();
+    d->proxyViewModel->setTreeModel(d->userScriptsModel.get(),
+                                    d->userPowerScriptsModel.get(),
+                                    d->machineScriptsModel.get(),
+                                    d->machinePowerScriptsModel.get());
+
+    d->proxyViewModel->setSnapIn(this);
+
+    setRootNode(d->proxyViewModel.get());
+
+    if (mainWindow)
+    {}
 }
 
 void ScriptsSnapIn::onShutdown() {}
 
 void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)
 {
+    d->currentLocale = locale;
+
     if (policyPath.empty())
     {
         qWarning() << "Warning: Unable to load ini file. Path is empty! ";
@@ -114,9 +95,6 @@ void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string 
                                    d->userPowerScriptsModel.get(),
                                    d->machineScriptsModel.get(),
                                    d->machinePowerScriptsModel.get());
-
-    d->proxyViewModel->setMachineModel(d->machineScriptsModel.get());
-    d->proxyViewModel->setUserModel(d->userScriptsModel.get());
 }
 
 void ScriptsSnapIn::onDataSave()
@@ -133,8 +111,4 @@ void ScriptsSnapIn::onRetranslateUI(const std::string &locale)
     Q_UNUSED(locale);
 }
 
-QAbstractItemModel *ScriptsSnapIn::getRootNode() const
-{
-    return d->proxyViewModel.get();
-}
 } // namespace scripts_plugin

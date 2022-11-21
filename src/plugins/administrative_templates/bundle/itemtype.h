@@ -21,14 +21,17 @@
 #ifndef GPUI_ITEM_TYPE_H
 #define GPUI_ITEM_TYPE_H
 
-namespace model {
-    namespace bundle {
-        enum ItemType
-        {
-            ITEM_TYPE_CATEGORY = 0,
-            ITEM_TYPE_POLICY   = 1,
-        };
-    }
+namespace model
+{
+namespace bundle
+{
+enum ItemType
+{
+    ITEM_TYPE_CATEGORY = 0,
+    ITEM_TYPE_POLICY   = 1,
+    ITEM_TYPE_SCRIPTS  = 2,
+};
 }
+} // namespace model
 
 #endif // GPUI_ITEM_TYPE_H

@@ -21,7 +21,7 @@
 #include "scriptstreeproxymodel.h"
 
 #include "scriptscontentwidget.h"
-
+#include "scriptsdialog.h"
 #include "scriptssnapin.h"
 
 #include <mvvm/model/sessionitem.h>
@@ -37,6 +37,10 @@
 
 namespace scripts_plugin
 {
+ScriptsTreeProxyModel::ScriptsTreeProxyModel()
+    : d(std::make_unique<ScriptsTreeProxyModelPrivate>())
+{}
+
 QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
     static QVariant folder = QVariant(QIcon::fromTheme("folder"));
@@ -74,55 +78,75 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
             viewModelProxy->sessionItemFromIndex(proxyIndex)->property<QUuid>("PARENT_ID"));
     }
 
-    if (role == Qt::UserRole + 14)
+    if (role == 264)
     {
-        auto contentWidget = new ScriptsContentWidget(nullptr, sessionModel);
-        connect(contentWidget, &ScriptsContentWidget::onAccepted, [&]() { snapIn->onDataSave(); });
+        std::function<QDialog *()> dialogCreator = [=]() {
+            auto dialog = new ScriptsDialog();
 
-        auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
+            auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
 
-        if (sessionItem->displayName().compare("Scripts") == 0)
-        {
-            auto nameSpace = sessionItem->property<std::string>("NAMESPACE");
-            if (nameSpace.compare("Machine") == 0)
+            if (sessionItem->displayName().compare("Scripts") == 0)
             {
-                contentWidget->setItem(machineDataModel->rootItem());
+                auto nameSpace = sessionItem->property<std::string>("NAMESPACE");
+                if (nameSpace.compare("Machine") == 0)
+                {
+                    dialog->setModels(d->machineScriptsModel, d->machinePowerScriptsModel);
+                }
+                else
+                {
+                    dialog->setModels(d->userScriptsModel, d->userPowerScriptsModel);
+                }
             }
-            else
-            {
-                contentWidget->setItem(userDataModel->rootItem());
-            }
-        }
-        else
-        {
-            contentWidget->setItem(sessionItem);
-        }
 
-        return QVariant::fromValue(contentWidget);
+            QObject::connect(dialog,
+                             &ScriptsDialog::saveDataSignal,
+                             d->snapIn->d,
+                             &ScriptsSnapInPrivate::saveData);
+
+            QObject::connect(dialog,
+                             &ScriptsDialog::reloaddataSignal,
+                             d->snapIn->d,
+                             &ScriptsSnapInPrivate::reloadData);
+
+            return dialog;
+        };
+
+        return QVariant::fromValue(dialogCreator);
+    }
+
+    if (role == 257)
+    {
+        return QVariant(static_cast<uint>(2));
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);
 }
 
-void ScriptsTreeProxyModel::setTreeModel(ModelStruct model)
+void ScriptsTreeProxyModel::setTreeModel(ScriptsModel *userScripts,
+                                         ScriptsModel *userPowerScripts,
+                                         ScriptsModel *machineScripts,
+                                         ScriptsModel *machinePowerScripst)
 {
-    this->sessionModel     = model.treeModel;
-    this->viewModel        = model.viewModel;
-    this->machineDataModel = model.machineDataModel;
-    this->userDataModel    = model.userDataModel;
-    this->snapIn           = model.snapIn;
+    d->userScriptsModel         = userScripts;
+    d->userPowerScriptsModel    = userPowerScripts;
+    d->machineScriptsModel      = machineScripts;
+    d->machinePowerScriptsModel = machinePowerScripst;
 }
 
-void ScriptsTreeProxyModel::setMachineModel(ModelView::SessionModel *machineDataModelProxy)
+void ScriptsTreeProxyModel::setSnapIn(ScriptsSnapIn *scriptsSnapIn)
 {
-    this->machineDataModel = machineDataModelProxy;
+    if (scriptsSnapIn != nullptr)
+    {
+        d->snapIn = scriptsSnapIn;
+    }
 }
 
-void ScriptsTreeProxyModel::setUserModel(ModelView::SessionModel *userDataModelProxy)
+ScriptsSnapIn *ScriptsTreeProxyModel::getSnapIn()
 {
-    this->userDataModel = userDataModelProxy;
+    return d->snapIn;
 }
 
 } // namespace scripts_plugin
 
 Q_DECLARE_METATYPE(std::shared_ptr<void(QWidget *, QItemSelectionModel *, const QModelIndex &)>)
+Q_DECLARE_METATYPE(std::function<QDialog *()>)

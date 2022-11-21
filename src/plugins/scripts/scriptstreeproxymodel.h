@@ -25,6 +25,9 @@
 
 #include "../../../src/core/common.h"
 
+#include "scriptsmodel.h"
+#include "scriptssnapin.h"
+
 namespace ModelView
 {
 class SessionModel;
@@ -39,35 +42,47 @@ class ScriptsSnapIn;
 }
 namespace scripts_plugin
 {
-struct ModelStruct
+class ScriptsTreeProxyModelPrivate
 {
-    ModelView::SessionModel *treeModel = nullptr;
-    ModelView::ViewModel *viewModel    = nullptr;
+public:
+    ScriptsModel *userScriptsModel      = nullptr;
+    ScriptsModel *userPowerScriptsModel = nullptr;
 
-    ModelView::SessionModel *machineDataModel = nullptr;
-    ModelView::SessionModel *userDataModel    = nullptr;
+    ScriptsModel *machineScriptsModel      = nullptr;
+    ScriptsModel *machinePowerScriptsModel = nullptr;
 
-    ScriptsSnapIn *snapIn;
+    ScriptsSnapIn *snapIn = nullptr;
 };
 
 class GPUI_SYMBOL_EXPORT ScriptsTreeProxyModel : public QIdentityProxyModel
 {
+    Q_OBJECT
+
 public:
+    ScriptsTreeProxyModel();
+
     QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
 
-    void setTreeModel(ModelStruct model);
+    void setTreeModel(ScriptsModel *userScripts,
+                      ScriptsModel *userPowerScripts,
+                      ScriptsModel *machineScripts,
+                      ScriptsModel *machinePowerScripst);
 
-    void setMachineModel(ModelView::SessionModel *machineDataModelProxy);
-    void setUserModel(ModelView::SessionModel *userDataModelProxy);
+    void setSnapIn(ScriptsSnapIn *scriptsSnapIn);
+
+    ScriptsSnapIn *getSnapIn();
 
 private:
     ModelView::SessionModel *sessionModel = nullptr;
     ModelView::ViewModel *viewModel       = nullptr;
 
-    ModelView::SessionModel *machineDataModel = nullptr;
-    ModelView::SessionModel *userDataModel    = nullptr;
+    std::unique_ptr<ScriptsTreeProxyModelPrivate> d;
 
-    ScriptsSnapIn *snapIn = nullptr;
+private:
+    ScriptsTreeProxyModel(const ScriptsTreeProxyModel &) = delete;
+    ScriptsTreeProxyModel(ScriptsTreeProxyModel &&)      = delete;
+    ScriptsTreeProxyModel &operator=(const ScriptsTreeProxyModel &) = delete;
+    ScriptsTreeProxyModel &operator=(const ScriptsTreeProxyModel &&) = delete;
 };
 } // namespace scripts_plugin
 

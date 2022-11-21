@@ -126,7 +126,8 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
         ui->descriptionTextEdit->setText(
             model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
 
-        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_SCRIPTS)
+        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>()
+            == ItemType::ITEM_TYPE_SCRIPTS_DIALOG)
         {
             auto scriptsDialog = model->data(index, PolicyRoles::POLICY_WIDGET)
                                      .value<std::function<QDialog *()>>();

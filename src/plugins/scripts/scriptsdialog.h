@@ -56,11 +56,13 @@ public:
     ScriptsDialog(QWidget *parent = nullptr);
     ~ScriptsDialog();
 
-    void setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel);
+    void setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel, bool isOnStartUp);
 
 private:
     template<typename TWidget>
     void setItem(ModelView::SessionItem *scriptsItem, TWidget &widget);
+
+    ScriptItemContainer *findItemContainer(ScriptsModel *model, std::string section);
 
 public slots:
     void submit();

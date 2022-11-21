@@ -27,9 +27,9 @@ namespace bundle
 {
 enum ItemType
 {
-    ITEM_TYPE_CATEGORY = 0,
-    ITEM_TYPE_POLICY   = 1,
-    ITEM_TYPE_SCRIPTS  = 2,
+    ITEM_TYPE_CATEGORY       = 0,
+    ITEM_TYPE_POLICY         = 1,
+    ITEM_TYPE_SCRIPTS_DIALOG = 2,
 };
 }
 } // namespace model

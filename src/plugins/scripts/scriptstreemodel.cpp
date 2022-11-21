@@ -1,4 +1,5 @@
 #include "scriptstreemodel.h"
+#include "scriptitem.h"
 
 #include <QUuid>
 
@@ -88,6 +89,14 @@ void ScriptsTreeModel::populateModel()
     machineScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     machineScripts->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
 
+    auto machineOnStartUpScrtips = insertItem<ScriptsFolderItem>(machineScripts);
+    machineOnStartUpScrtips->setDisplayName((QObject::tr("On startup").toStdString()));
+    machineOnStartUpScrtips->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
+
+    auto machineOnShutdownScrtips = insertItem<ScriptsFolderItem>(machineScripts);
+    machineOnShutdownScrtips->setDisplayName((QObject::tr("On shutdown").toStdString()));
+    machineOnShutdownScrtips->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
+
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     auto userNamespace = insertItem<ScriptsFolderItem>(topItem);
     userNamespace->setDisplayName(QObject::tr("User").toStdString());
@@ -104,5 +113,13 @@ void ScriptsTreeModel::populateModel()
     auto userScripts = insertItem<ScriptsFolderItem>(userSystemSetting);
     userScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     userScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
+
+    auto userOnStartUpScripts = insertItem<ScriptsFolderItem>(userScripts);
+    userOnStartUpScripts->setDisplayName(QObject::tr("On startup").toStdString());
+    userOnStartUpScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
+
+    auto userOnShutdownScripts = insertItem<ScriptsFolderItem>(userScripts);
+    userOnShutdownScripts->setDisplayName(QObject::tr("On shutdown").toStdString());
+    userOnShutdownScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
 }
 } // namespace scripts_plugin

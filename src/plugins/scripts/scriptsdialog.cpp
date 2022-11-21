@@ -56,13 +56,58 @@ ScriptsDialog::~ScriptsDialog()
     delete ui;
 }
 
-void ScriptsDialog::setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel)
+void ScriptsDialog::setModels(ScriptsModel *scriptsModel,
+                              ScriptsModel *powerScriptsModel,
+                              bool isOnStartUp)
 {
-    auto scriptsItem      = scriptsModel->topItem<ScriptItemContainer>();
-    auto powerScriptsItem = powerScriptsModel->topItem<ScriptItemContainer>();
+    ScriptItemContainer *scriptsItem      = nullptr;
+    ScriptItemContainer *powerScriptsItem = nullptr;
 
-    setItem(scriptsItem, ui->scriptsTab);
-    setItem(powerScriptsItem, ui->powerShellScriptsTab);
+    if (isOnStartUp)
+    {
+        scriptsItem      = findItemContainer(scriptsModel, "Logon");
+        powerScriptsItem = findItemContainer(powerScriptsModel, "Startup");
+    }
+    else
+    {
+        scriptsItem      = findItemContainer(scriptsModel, "Logoff");
+        powerScriptsItem = findItemContainer(powerScriptsModel, "Shutdown");
+    }
+
+    if (scriptsItem != nullptr)
+    {
+        setItem(scriptsItem, ui->scriptsTab);
+    }
+    if (powerScriptsItem != nullptr)
+    {
+        setItem(powerScriptsItem, ui->powerShellScriptsTab);
+    }
+}
+
+ScriptItemContainer *ScriptsDialog::findItemContainer(ScriptsModel *model, std::string section)
+{
+    auto containers = model->topItems();
+    for (size_t i = 0; i < containers.size(); i++)
+    {
+        auto item = dynamic_cast<ScriptItemContainer *>(containers[i]);
+
+        if (item)
+        {
+            auto containerSectionName = item->property<std::string>(
+                ScriptItemContainer::SECTION_NAME);
+
+            if (containerSectionName.compare(section) == 0)
+            {
+                qWarning() << "Section: " << section.c_str() << " found!";
+
+                return item;
+            }
+        }
+    }
+
+    qWarning() << "Section: " << section.c_str() << " not found!";
+
+    return nullptr;
 }
 
 template<typename TWidget>

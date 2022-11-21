@@ -85,16 +85,28 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
 
             auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
 
-            if (sessionItem->displayName().compare("Scripts") == 0)
+            auto name = sessionItem->displayName();
+
+            if (sessionItem->displayName().compare("On startup") == 0
+                || sessionItem->displayName().compare("On shutdown") == 0)
             {
+                bool isStartupScripts = false;
+
+                if (sessionItem->displayName().compare("On startup") == 0)
+                    isStartupScripts = true;
+
                 auto nameSpace = sessionItem->property<std::string>("NAMESPACE");
                 if (nameSpace.compare("Machine") == 0)
                 {
-                    dialog->setModels(d->machineScriptsModel, d->machinePowerScriptsModel);
+                    dialog->setModels(d->machineScriptsModel,
+                                      d->machinePowerScriptsModel,
+                                      isStartupScripts);
                 }
                 else
                 {
-                    dialog->setModels(d->userScriptsModel, d->userPowerScriptsModel);
+                    dialog->setModels(d->userScriptsModel,
+                                      d->userPowerScriptsModel,
+                                      isStartupScripts);
                 }
             }
 
@@ -116,7 +128,15 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
 
     if (role == 257)
     {
-        return QVariant(static_cast<uint>(2));
+        auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
+
+        auto name = sessionItem->displayName();
+
+        if (sessionItem->displayName().compare("On startup") == 0
+            || sessionItem->displayName().compare("On shutdown") == 0)
+        {
+            return QVariant(static_cast<uint>(2));
+        }
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);

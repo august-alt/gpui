@@ -118,6 +118,8 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
                 {
                     auto &models = isMachineModel ? d->machineModels : d->userModels;
 
+                    qWarning() << "Types debug: " << types.begin()->first.c_str();
+
                     auto modelType = models->find(types.begin()->first);
                     if (modelType != models->end())
                     {

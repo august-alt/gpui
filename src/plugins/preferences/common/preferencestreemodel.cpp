@@ -233,6 +233,16 @@ void PreferencesTreeModel::populateModel()
     machineShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
     machineShortcutsItems->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
 
+    auto machineControlPanelSettingsItem = insertItem<FolderItem>(machinePreferencesItem);
+    machineControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
+    machineControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Policies that set control panel settings.").toStdString());
+
+    auto machinePrintersItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
+    machinePrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
+    machinePrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
+    machinePrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
+    machinePrintersItem->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
+
     //======================================================================================================================
 
     auto userNamespace = insertItem<FolderItem>(topItem);
@@ -286,6 +296,16 @@ void PreferencesTreeModel::populateModel()
     userShortcutsItems->setDisplayName(QObject::tr("Shortcuts").toStdString());
     userShortcutsItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, shortcutsTypeIds);
     userShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
+
+    auto userControlPanelSettingsItem = insertItem<FolderItem>(userPreferencesItem);
+    userControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
+    userControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG,
+                                              QObject::tr("Policies that set control panel settings.").toStdString());
+
+    auto userPrintersItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
+    userPrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
+    userPrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
+    userPrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
 }
 
 } // namespace preferences

@@ -20,8 +20,8 @@
 
 #include "printersmodelbuilder.h"
 
-#include "localprinteritem.h"
 #include "printercontaineritem.h"
+#include "localprinteritem.h"
 #include "sharedprinteritem.h"
 #include "tcpprinteritem.h"
 
@@ -33,16 +33,18 @@ PrintersModelBuilder::PrintersModelBuilder()
     : BaseModelBuilder()
 {}
 
-void preferences::PrintersModelBuilder::processLocalPrinter(LocalPrinterItem *localPrinter,
+void PrintersModelBuilder::processLocalPrinter(LocalPrinterItem *localPrinter,
                                                             LocalPrinterProperties_t properties)
 {
-    int actionState      = getActionCheckboxState(getOptionalPropertyData(properties.action()).c_str());
+    std::string action = properties.action().present() ? properties.action().get() : "";
+
+    int actionState = getActionCheckboxState(action.c_str());
     std::string name     = properties.name().c_str();
     std::string port     = properties.port().c_str();
     std::string path     = properties.path().c_str();
     bool defaultOn       = properties.default_();
-    std::string location = getOptionalPropertyData(properties.location()).c_str();
-    std::string comment  = getOptionalPropertyData(properties.comment()).c_str();
+    std::string location = getOptionalPropertyData(properties.location());
+    std::string comment  = getOptionalPropertyData(properties.comment());
     bool deleteAll       = properties.deleteAll();
 
     localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::ACTION), actionState);
@@ -50,8 +52,8 @@ void preferences::PrintersModelBuilder::processLocalPrinter(LocalPrinterItem *lo
     localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::PORT), port);
     localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::PATH), path);
     localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::DEFAULT), defaultOn);
-    localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::LOCATION), location);
-    localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::COMMENT), comment);
+    localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::LOCATION), location.c_str());
+    localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::COMMENT), comment.c_str());
     localPrinter->setProperty(LocalPrinterItem::propertyToString(LocalPrinterItem::DELETE_ALL), deleteAll);
 }
 

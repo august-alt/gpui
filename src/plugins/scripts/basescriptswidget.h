@@ -50,9 +50,13 @@ public:
 
     ModelView::ViewItem *selectedItem = nullptr;
 
+    bool isStartUpScripts = false;
+
     template<typename TUi>
-    void setItem(TUi *ui, GroupScriptContainerItem *item)
+    void setItem(TUi *ui, GroupScriptContainerItem *item, bool startUpScriptsFlag)
     {
+        isStartUpScripts = startUpScriptsFlag;
+
         rootItem = item;
 
         sessionModel = item->model();

@@ -36,6 +36,7 @@ ScriptsDialog::ScriptsDialog(ModelView::SessionItem *scriptsItem,
                              QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ScriptsDialog())
+    , isStartUpScripts(false)
 
 {
     ui->setupUi(this);
@@ -47,6 +48,7 @@ ScriptsDialog::ScriptsDialog(ModelView::SessionItem *scriptsItem,
 ScriptsDialog::ScriptsDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ScriptsDialog())
+    , isStartUpScripts(false)
 {
     ui->setupUi(this);
 }
@@ -62,6 +64,8 @@ void ScriptsDialog::setModels(ScriptsModel *scriptsModel,
 {
     ScriptItemContainer *scriptsItem      = nullptr;
     ScriptItemContainer *powerScriptsItem = nullptr;
+
+    isStartUpScripts = isOnStartUp;
 
     if (isOnStartUp)
     {
@@ -98,8 +102,6 @@ ScriptItemContainer *ScriptsDialog::findItemContainer(ScriptsModel *model, std::
 
             if (containerSectionName.compare(section) == 0)
             {
-                qWarning() << "Section: " << section.c_str() << " found!";
-
                 return item;
             }
         }
@@ -111,12 +113,13 @@ ScriptItemContainer *ScriptsDialog::findItemContainer(ScriptsModel *model, std::
 }
 
 template<typename TWidget>
-void ScriptsDialog::setItem(ModelView::SessionItem *item, TWidget &widget)
+void ScriptsDialog::setItem(ModelView::SessionItem *scriptsItem, TWidget &widget)
 {
-    auto scriptsItem = dynamic_cast<ScriptItemContainer *>(item);
-    if (scriptsItem)
+    auto container = dynamic_cast<ScriptItemContainer *>(scriptsItem);
+
+    if (container)
     {
-        widget->setItem(scriptsItem->getScripts());
+        widget->setItem(container->getScripts(), isStartUpScripts);
     }
 }
 

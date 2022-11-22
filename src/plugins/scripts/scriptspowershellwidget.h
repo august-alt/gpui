@@ -44,7 +44,7 @@ public:
     explicit ScriptsPowerShellWidget(QWidget *parent = nullptr);
     ~ScriptsPowerShellWidget();
 
-    void setItem(GroupScriptContainerItem *item);
+    void setItem(GroupScriptContainerItem *item, bool isStartUpFlag);
 
 private slots:
     void on_upPushButton_clicked();

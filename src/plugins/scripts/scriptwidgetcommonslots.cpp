@@ -52,8 +52,15 @@ void ScriptWidgetCommonSlots::onDownClicked()
     ModelView::Utils::MoveDown(m_base->selectedItem->item()->parent());
 }
 
-void ScriptWidgetCommonSlots::onAddClicked()
+void ScriptWidgetCommonSlots::onAddClicked(bool isScripts)
 {
+    auto root = findRootItem(isScripts);
+
+    if (root == nullptr)
+    {
+        return;
+    }
+
     auto newItem = m_base->rootItem->insertItem<ScriptItem>({"", 0});
 
     auto addWidget = new AddScriptWidget(parent);
@@ -163,6 +170,53 @@ void ScriptWidgetCommonSlots::loadIniFile(QString file)
         qWarning() << "Warning: Unable to read file: " << file.toStdString().c_str()
                    << " description: " << e.what();
     }
+}
+
+ScriptItemContainer *ScriptWidgetCommonSlots::findRootItem(bool isScripts)
+{
+    std::string sectionName = "Shutdown";
+
+    if (isScripts)
+    {
+        if (m_base->isStartUpScripts)
+        {
+            sectionName = "Logon";
+        }
+        else
+        {
+            sectionName = "Logoff";
+        }
+    }
+    else
+    {
+        if (m_base->isStartUpScripts)
+        {
+            sectionName = "Startup";
+        }
+    }
+
+    auto containers = m_base->sessionModel->topItems();
+
+    for (size_t i = 0; i < containers.size(); i++)
+    {
+        auto itemContainer = containers[i];
+
+        auto section = dynamic_cast<ScriptItemContainer *>(itemContainer);
+
+        if (section)
+        {
+            if (sectionName.compare(
+                    section->property<std::string>(ScriptItemContainer::SECTION_NAME))
+                == 0)
+            {
+                return section;
+            }
+        }
+    }
+
+    qWarning() << "Section:" << sectionName.c_str() << " not found!!";
+
+    return nullptr;
 }
 
 } // namespace scripts_plugin

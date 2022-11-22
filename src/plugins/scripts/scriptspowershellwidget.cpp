@@ -41,9 +41,9 @@ ScriptsPowerShellWidget::~ScriptsPowerShellWidget()
     delete ui;
 }
 
-void ScriptsPowerShellWidget::setItem(GroupScriptContainerItem *item)
+void ScriptsPowerShellWidget::setItem(GroupScriptContainerItem *item, bool isStartUpFlag)
 {
-    BaseScriptWidget::setItem(ui, item);
+    BaseScriptWidget::setItem(ui, item, isStartUpFlag);
 }
 
 void ScriptsPowerShellWidget::on_upPushButton_clicked()
@@ -58,7 +58,7 @@ void ScriptsPowerShellWidget::on_downPushButton_clicked()
 
 void ScriptsPowerShellWidget::on_addPushButton_clicked()
 {
-    commonSlots->onAddClicked();
+    commonSlots->onAddClicked(false);
 }
 
 void ScriptsPowerShellWidget::on_editPushButton_clicked()

@@ -56,7 +56,7 @@ public:
     /**
     * @brief onAddClicked Launches widget to add new element to the list.
     */
-    void onAddClicked();
+    void onAddClicked(bool isScripts);
 
     /**
     * @brief onEditClicked Launches widget to edit selected element.
@@ -85,6 +85,8 @@ private:
 
 private:
     void loadIniFile(QString file);
+
+    ScriptItemContainer *findRootItem(bool isScripts);
 };
 
 } // namespace scripts_plugin

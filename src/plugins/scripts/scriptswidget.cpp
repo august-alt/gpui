@@ -41,9 +41,9 @@ ScriptsWidget::~ScriptsWidget()
     delete ui;
 }
 
-void ScriptsWidget::setItem(GroupScriptContainerItem *item)
+void ScriptsWidget::setItem(GroupScriptContainerItem *item, bool isStartUpFlag)
 {
-    BaseScriptWidget::setItem(ui, item);
+    BaseScriptWidget::setItem(ui, item, isStartUpFlag);
 }
 
 void ScriptsWidget::on_upPushButton_clicked()
@@ -58,7 +58,7 @@ void ScriptsWidget::on_downPushButton_clicked()
 
 void ScriptsWidget::on_addPushButton_clicked()
 {
-    commonSlots->onAddClicked();
+    commonSlots->onAddClicked(true);
 }
 
 void ScriptsWidget::on_editPushButton_clicked()

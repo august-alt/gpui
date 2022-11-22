@@ -173,7 +173,7 @@ context (user policy option)</source>
     <message>
         <location filename="../preferencestreemodel.cpp" line="110"/>
         <source>Mapped Drive</source>
-        <translation></translation>
+        <translation>Сетевой диск</translation>
     </message>
     <message>
         <location filename="../preferencestreemodel.cpp" line="112"/>

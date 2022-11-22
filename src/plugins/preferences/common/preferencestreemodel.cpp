@@ -243,6 +243,13 @@ void PreferencesTreeModel::populateModel()
     machinePrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
     machinePrintersItem->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
 
+    auto machineDrivesItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
+    machineDrivesItem->setDisplayName(QObject::tr("Drive Maps").toStdString());
+    machineDrivesItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineDrivesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, drivesTypeIds);
+    machineDrivesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Drive Maps Settings.").toStdString());
+    machineDrivesItem->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
+
     //======================================================================================================================
 
     auto userNamespace = insertItem<FolderItem>(topItem);
@@ -306,6 +313,11 @@ void PreferencesTreeModel::populateModel()
     userPrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
     userPrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
     userPrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
+
+    auto userSharesItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
+    userSharesItem->setDisplayName(QObject::tr("Network Shares").toStdString());
+    userSharesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, sharesTypeIds);
+    userSharesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network shares settings.").toStdString());
 }
 
 } // namespace preferences

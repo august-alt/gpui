@@ -39,6 +39,8 @@ BuildRequires: libqt-mvvm-devel
 
 BuildRequires: xorg-xvfb xvfb-run
 
+Requires: admx-basealt
+
 Source0: %name-%version.tar
 
 %description

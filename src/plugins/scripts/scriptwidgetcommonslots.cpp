@@ -68,13 +68,18 @@ void ScriptWidgetCommonSlots::onAddClicked()
 
 void ScriptWidgetCommonSlots::onEditClicked()
 {
-    auto addWidget = new AddScriptWidget(parent);
+    auto *item = m_base->selectedItem;
+    if (item != nullptr)
+    {
+        auto addWidget = new AddScriptWidget(parent);
 
-    addWidget->setWindowTitle("Edit script");
-    addWidget->setItem(m_base->selectedItem->item()->parent());
-    addWidget->setModal(true);
+        addWidget->setWindowTitle("Edit script");
 
-    addWidget->show();
+        addWidget->setItem(m_base->selectedItem->item()->parent());
+        addWidget->setModal(true);
+
+        addWidget->show();
+    }
 }
 
 void ScriptWidgetCommonSlots::onDeleteClicked()

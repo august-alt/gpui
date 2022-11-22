@@ -4,29 +4,47 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../variablescontaineritem.cpp" line="34"/>
+        <location filename="../variablescontaineritem.cpp" line="35"/>
+        <location filename="../variablescontaineritem.cpp" line="103"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../variablescontaineritem.cpp" line="35"/>
+        <location filename="../variablescontaineritem.cpp" line="36"/>
+        <location filename="../variablescontaineritem.cpp" line="104"/>
         <source>Order</source>
         <translation>Order</translation>
     </message>
     <message>
-        <location filename="../variablescontaineritem.cpp" line="36"/>
+        <location filename="../variablescontaineritem.cpp" line="38"/>
+        <location filename="../variablescontaineritem.cpp" line="105"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../variablescontaineritem.cpp" line="37"/>
+        <location filename="../variablescontaineritem.cpp" line="40"/>
+        <location filename="../variablescontaineritem.cpp" line="106"/>
         <source>Value</source>
         <translation>Value</translation>
     </message>
     <message>
-        <location filename="../variablescontaineritem.cpp" line="38"/>
+        <location filename="../variablescontaineritem.cpp" line="41"/>
+        <location filename="../variablescontaineritem.cpp" line="88"/>
+        <location filename="../variablescontaineritem.cpp" line="115"/>
+        <source>No</source>
+        <translation>No</translation>
+    </message>
+    <message>
+        <location filename="../variablescontaineritem.cpp" line="42"/>
+        <location filename="../variablescontaineritem.cpp" line="107"/>
         <source>User</source>
         <translation>User</translation>
+    </message>
+    <message>
+        <location filename="../variablescontaineritem.cpp" line="87"/>
+        <location filename="../variablescontaineritem.cpp" line="114"/>
+        <source>Yes</source>
+        <translation>Yes</translation>
     </message>
 </context>
 <context>
@@ -138,18 +156,50 @@
     </message>
     <message>
         <location filename="../variableswidgetslots.cpp" line="107"/>
-        <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</source>
-        <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</translation>
+        <source>The PATH variable contains a list of folder paths that systemuses when locating executable files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</source>
+        <translation>The PATH variable contains a list of folder paths that systemuses when locating executable files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</translation>
     </message>
     <message>
         <location filename="../variableswidgetslots.cpp" line="124"/>
-        <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</source>
-        <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
+        <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</source>
+        <translation>The PATH variable contains a list of folder paths that system uses when locating executable files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
     </message>
     <message>
         <location filename="../variableswidgetslots.cpp" line="132"/>
+        <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Update will replace the FULL path variable as specified. This will remove all previously existing path values.</source>
+        <translation>The PATH variable contains a list of folder paths that system uses when locating executable files. Update will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
+    </message>
+    <message>
+        <location filename="../variableswidgetslots.cpp" line="149"/>
+        <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Replace will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</source>
+        <translation>The PATH variable contains a list of folder paths that system uses when locating executable files. Replace will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
+    </message>
+    <message>
+        <location filename="../variableswidgetslots.cpp" line="158"/>
+        <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</source>
+        <translation>The PATH variable contains a list of folder paths that system uses when locating executable files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
+    </message>
+    <message>
+        <location filename="../variableswidgetslots.cpp" line="175"/>
+        <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Delete will remove the specified segment from the existing path variable. If the segment doesn&apos;t exist, an error is not returned. Multiple segments are not supported by this option.</source>
+        <translation>The PATH variable contains a list of folder paths that system uses when locating executable files. Delete will remove the specified segment from the existing path variable. If the segment doesn&apos;t exist, an error is not returned. Multiple segments are not supported by this option.</translation>
+    </message>
+    <message>
+        <location filename="../variableswidgetslots.cpp" line="183"/>
+        <source>The PATH variable contains a list of folder paths that system uses when locating executable files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</source>
+        <translation>The PATH variable contains a list of folder paths that system uses when locating executable files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</translation>
+    </message>
+    <message>
+        <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</source>
+        <translation type="vanished">The PATH variable contains a list of folder paths that system uses when locating executable files. Create will create the full path variable as specified if it does not exist. Generally the path will already exist.</translation>
+    </message>
+    <message>
+        <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</source>
+        <translation type="vanished">The PATH variable contains a list of folder paths that system uses when locating executable files. Update will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
+    </message>
+    <message>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the FULL path variable as specified. This will remove all previously existing path values.</source>
-        <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
+        <translation type="vanished">The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Update will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
     </message>
     <message>
         <location filename="../variableswidgetslots.cpp" line="140"/>
@@ -157,14 +207,12 @@
         <translation>Update will replace the variable in the specified environment. If it doesn&apos;t exist, it will be created.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="149"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</source>
-        <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
+        <translation type="vanished">The PATH variable contains a list of folder paths that system uses when locating executable files. Replace will replace the specified part of the path variable. This will have no net effect on the path with the possible exception of changing the text case of the specified segment. Multiple segments are not supported by this option.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="158"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</source>
-        <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
+        <translation type="vanished">The PATH variable contains a list of folder paths that system uses when locating executable files. Replace will replace the FULL path variable as specified. This will remove all previously existing path values.</translation>
     </message>
     <message>
         <location filename="../variableswidgetslots.cpp" line="166"/>
@@ -172,14 +220,12 @@
         <translation>Replace will replace the variable in the specified environment. If it doesn&apos;t exist, it will be created.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="175"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will remove the specified segment from the existing path variable. If the segment doesn&apos;t exist, an error is not returned. Multiple segments are not supported by this option.</source>
-        <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will remove the specified segment from the existing path variable. If the segment doesn&apos;t exist, an error is not returned. Multiple segments are not supported by this option.</translation>
+        <translation type="vanished">The PATH variable contains a list of folder paths that system uses when locating executable files. Delete will remove the specified segment from the existing path variable. If the segment doesn&apos;t exist, an error is not returned. Multiple segments are not supported by this option.</translation>
     </message>
     <message>
-        <location filename="../variableswidgetslots.cpp" line="183"/>
         <source>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</source>
-        <translation>The PATH variable contains a list of semicolon delimited folder paths that Windows uses when locating files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</translation>
+        <translation type="vanished">The PATH variable contains a list of folder paths that system uses when locating executable files. Delete will delete the FULL path variable. If it doesn&apos;t exist, an error is not returned. This setting is not generally recommended.</translation>
     </message>
     <message>
         <location filename="../variableswidgetslots.cpp" line="191"/>

@@ -11,13 +11,13 @@ class ScriptsModelIo
 public:
     ScriptsModelIo();
 
-    void loadPolicies(const std::string &path,
+    void loadPolicies(std::string *path,
                       ScriptsModel *userScripts,
                       ScriptsModel *userPowerScripts,
                       ScriptsModel *machineScripts,
                       ScriptsModel *machinePowerScripts);
 
-    void savePolicies(const std::string &path,
+    void savePolicies(std::string *path,
                       ScriptsModel *userScripts,
                       ScriptsModel *userPowerScripts,
                       ScriptsModel *machineScripts,

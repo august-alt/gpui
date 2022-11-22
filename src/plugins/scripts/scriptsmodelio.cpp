@@ -16,16 +16,16 @@ namespace scripts_plugin
 {
 ScriptsModelIo::ScriptsModelIo() {}
 
-void ScriptsModelIo::loadPolicies(const std::string &path,
+void ScriptsModelIo::loadPolicies(std::string *path,
                                   ScriptsModel *userScripts,
                                   ScriptsModel *userPowerScripts,
                                   ScriptsModel *machineScripts,
                                   ScriptsModel *machinePowerScripts)
 {
-    auto machinePathScripts      = path + "/Machine/scripts.ini";
-    auto machinePathPowerScripts = path + "/Machine/pscripts.ini";
-    auto userPathScripts         = path + "/User/scripts.ini";
-    auto userPathPowerScripts    = path + "/User/pscripts.ini";
+    auto machinePathScripts      = *path + "/Machine/scripts.ini";
+    auto machinePathPowerScripts = *path + "/Machine/pscripts.ini";
+    auto userPathScripts         = *path + "/User/scripts.ini";
+    auto userPathPowerScripts    = *path + "/User/pscripts.ini";
 
     loadIniFile(machinePathScripts, machineScripts);
     loadIniFile(machinePathPowerScripts, machinePowerScripts);
@@ -33,16 +33,16 @@ void ScriptsModelIo::loadPolicies(const std::string &path,
     loadIniFile(userPathPowerScripts, userPowerScripts);
 }
 
-void ScriptsModelIo::savePolicies(const std::string &path,
+void ScriptsModelIo::savePolicies(std::string *path,
                                   ScriptsModel *userScripts,
                                   ScriptsModel *userPowerScripts,
                                   ScriptsModel *machineScripts,
                                   ScriptsModel *machinePowerScripts)
 {
-    auto machinePathScripts      = path + "/Machine/scripts.ini";
-    auto machinePathPowerScripts = path + "/Machine/pscripts.ini";
-    auto userPathScripts         = path + "/User/scripts.ini";
-    auto userPathPowerScripts    = path + "/User/pscripts.ini";
+    auto machinePathScripts      = *path + "/Machine/scripts.ini";
+    auto machinePathPowerScripts = *path + "/Machine/pscripts.ini";
+    auto userPathScripts         = *path + "/User/scripts.ini";
+    auto userPathPowerScripts    = *path + "/User/pscripts.ini";
 
     saveIniFile(machinePathScripts, machineScripts);
     saveIniFile(machinePathPowerScripts, machinePowerScripts);

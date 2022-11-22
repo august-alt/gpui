@@ -17,7 +17,8 @@ void ScriptsSnapInPrivate::saveData()
 void ScriptsSnapInPrivate::reloadData()
 {
     qWarning() << "Scripts snapin reloaData()";
-    snapIn->onDataLoad(*policyPath.get(), currentLocale);
+    auto path = policyPath.get();
+    snapIn->onDataLoad(*path, currentLocale);
 }
 
 } // namespace scripts_plugin

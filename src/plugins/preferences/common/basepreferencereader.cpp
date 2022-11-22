@@ -52,7 +52,7 @@ std::unique_ptr<preferences::PreferencesModel> preferences::BasePreferenceReader
         else
         {
             QFile registryFile(qtPath);
-            registryFile.open(QFile::ReadWrite);
+            registryFile.open(QFile::ReadOnly);
             stringvalues->resize(registryFile.size(), 0);
             registryFile.read(&stringvalues->at(0), registryFile.size());
             registryFile.close();

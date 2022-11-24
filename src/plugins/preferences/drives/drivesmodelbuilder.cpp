@@ -91,8 +91,8 @@ std::unique_ptr<Drives> DrivesModelBuilder::modelToSchema(std::unique_ptr<Prefer
             properties.label(driveModel->property<std::string>(DrivesItem::LABEL));
             properties.userName(driveModel->property<std::string>(DrivesItem::USER_NAME));
             properties.cpassword(driveModel->property<std::string>(DrivesItem::CPASSWORD));
-            properties.thisDrive(driveModel->property<std::string>(DrivesItem::THIS_DRIVE));
-            properties.allDrives(driveModel->property<std::string>(DrivesItem::ALL_DRIVES));
+            properties.thisDrive(getDrivesCheckboxModel(driveModel->property<int>(DrivesItem::THIS_DRIVE)));
+            properties.allDrives(getDrivesCheckboxModel(driveModel->property<int>(DrivesItem::ALL_DRIVES)));
 
             drive.Properties().push_back(properties);
             setCommonModelData(drive, commonModel);
@@ -122,6 +122,21 @@ int DrivesModelBuilder::getDrivesCheckboxIndex(const std::string &data)
     }
 
     return 0;
+}
+
+std::string DrivesModelBuilder::getDrivesCheckboxModel(const int index)
+{
+    switch (index)
+    {
+    case 1:
+        return "HIDE";
+    case 2:
+        return "SHOW";
+    default:
+        break;
+    }
+
+    return "NOCHANGE";
 }
 
 } // namespace preferences

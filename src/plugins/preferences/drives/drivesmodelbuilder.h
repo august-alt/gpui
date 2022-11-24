@@ -29,21 +29,21 @@
 
 namespace preferences
 {
-
 class DrivesModelBuilder : public BaseModelBuilder
 {
 public:
     DrivesModelBuilder();
 
-    std::unique_ptr<PreferencesModel> schemaToModel(std::unique_ptr<Drives>& drives);
+    std::unique_ptr<PreferencesModel> schemaToModel(std::unique_ptr<Drives> &drives);
 
-    std::unique_ptr<Drives> modelToSchema(std::unique_ptr<PreferencesModel>& model);
+    std::unique_ptr<Drives> modelToSchema(std::unique_ptr<PreferencesModel> &model);
 
 private:
-    int getDrivesCheckboxIndex(const std::string& data);
+    int getDrivesCheckboxIndex(const std::string &data);
+
+    std::string getDrivesCheckboxModel(const int index);
 };
 
-}
+} // namespace preferences
 
 #endif // GPUI_DRIVES_MODEL_BUILDER_H
-

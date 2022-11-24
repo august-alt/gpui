@@ -178,7 +178,7 @@ context (user policy option)</source>
     <message>
         <location filename="../preferencestreemodel.cpp" line="112"/>
         <source>Environment Variable</source>
-        <translation>Переменные Окружения</translation>
+        <translation>Переменные окружения</translation>
     </message>
     <message>
         <location filename="../preferencestreemodel.cpp" line="114"/>

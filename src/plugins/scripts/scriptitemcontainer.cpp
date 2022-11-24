@@ -22,6 +22,8 @@
 #include "groupscriptcontaineritem.h"
 #include "scriptitem.h"
 
+#include <QDebug>
+
 namespace scripts_plugin
 {
 ScriptItemContainer::ScriptItemContainer()
@@ -43,6 +45,12 @@ ScriptItemContainer::ScriptItemContainer(const ScriptItemContainer &other)
 GroupScriptContainerItem *ScriptItemContainer::getScripts() const
 {
     return dynamic_cast<GroupScriptContainerItem *>(children().back());
+}
+
+void ScriptItemContainer::retranslateStrings()
+{
+    qWarning() << "TRanslate section: "
+               << this->property<std::string>(ScriptItemContainer::SECTION_NAME).c_str();
 }
 
 } // namespace scripts_plugin

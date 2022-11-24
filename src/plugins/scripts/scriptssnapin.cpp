@@ -40,6 +40,12 @@
 #include <QDebug>
 #include <QFile>
 
+inline void initMyResource()
+{
+    Q_INIT_RESOURCE(translations);
+    qWarning() << "Initializing script resources!";
+}
+
 namespace scripts_plugin
 {
 ScriptsSnapIn::ScriptsSnapIn()
@@ -50,7 +56,9 @@ ScriptsSnapIn::ScriptsSnapIn()
                      "GPL-2.0",
                      "Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru")
     , d(new ScriptsSnapInPrivate(this))
-{}
+{
+    initMyResource();
+}
 
 ScriptsSnapIn::~ScriptsSnapIn()
 {
@@ -59,6 +67,8 @@ ScriptsSnapIn::~ScriptsSnapIn()
 
 void ScriptsSnapIn::onInitialize(QMainWindow *mainWindow)
 {
+    onRetranslateUI("ru-RU");
+
     auto mWindow = dynamic_cast<gpui::MainWindow *>(mainWindow);
 
     d->proxyViewModel->setSourceModel(d->viewModel.get());
@@ -79,7 +89,7 @@ void ScriptsSnapIn::onShutdown() {}
 
 void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)
 {
-    d->currentLocale = locale;
+    d->localeName = locale;
 
     if (policyPath.empty())
     {
@@ -108,7 +118,60 @@ void ScriptsSnapIn::onDataSave()
 
 void ScriptsSnapIn::onRetranslateUI(const std::string &locale)
 {
-    Q_UNUSED(locale);
+    for (const auto &translator : d->translators)
+    {
+        QCoreApplication::removeTranslator(translator.get());
+    }
+    d->translators.clear();
+
+    QString language = QString::fromStdString(locale).split("-")[0];
+
+    qWarning() << "Language: " << language;
+
+    QDirIterator it(":/", QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+    while (it.hasNext())
+    {
+        qWarning() << "Resource name: " << it.fileName();
+
+        if (!it.fileInfo().isFile())
+        {
+            it.hasNext();
+        }
+
+        if (it.fileName().endsWith(language + ".qm"))
+        {
+            std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+            bool loadResult                           = qtTranslator->load(it.fileName(), ":/");
+            if (loadResult)
+            {
+                qWarning() << "Tr: " << it.fileName();
+                QCoreApplication::installTranslator(qtTranslator.get());
+                d->translators.push_back(std::move(qtTranslator));
+            }
+        }
+
+        it.next();
+    }
+
+    d->treeModel      = std::make_unique<ScriptsTreeModel>();
+    d->viewModel      = ModelView::Factory::CreateTopItemsViewModel(d->treeModel.get());
+    d->proxyViewModel = std::make_unique<ScriptsTreeProxyModel>();
+    d->proxyViewModel->setSourceModel(d->viewModel.get());
+
+    setRootNode(d->proxyViewModel.get());
+
+    d->proxyViewModel->setSnapIn(this);
+
+    d->proxyViewModel->setTreeModel(d->userScriptsModel.get(),
+                                    d->userPowerScriptsModel.get(),
+                                    d->machineScriptsModel.get(),
+                                    d->machinePowerScriptsModel.get());
+
+    d->retranslateModels(d->userScriptsModel);
+    d->retranslateModels(d->userPowerScriptsModel);
+
+    d->retranslateModels(d->machineScriptsModel);
+    d->retranslateModels(d->machinePowerScriptsModel);
 }
 
 } // namespace scripts_plugin

@@ -41,6 +41,8 @@ public:
     ScriptItemContainer(const ScriptItemContainer &other);
 
     GroupScriptContainerItem *getScripts() const;
+
+    void retranslateStrings();
 };
 
 } // namespace scripts_plugin

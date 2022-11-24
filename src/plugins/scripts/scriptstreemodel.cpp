@@ -84,18 +84,23 @@ void ScriptsTreeModel::populateModel()
     auto machineSystemSettings = insertItem<ScriptsFolderItem>(machineNamespace);
     machineSystemSettings->setDisplayName(QObject::tr("System settings").toStdString());
     machineSystemSettings->setProperty(ScriptsFolderItem::PARENT_ID, machineUuid);
+    machineSystemSettings->setProperty(ScriptsFolderItem::HELP_MSG, "System settings for computer");
 
     auto machineScripts = insertItem<ScriptsFolderItem>(machineSystemSettings);
     machineScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     machineScripts->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
+    machineScripts->setProperty(ScriptsFolderItem::HELP_MSG, "Scripts for computer");
 
     auto machineOnStartUpScrtips = insertItem<ScriptsFolderItem>(machineScripts);
     machineOnStartUpScrtips->setDisplayName((QObject::tr("On startup").toStdString()));
     machineOnStartUpScrtips->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
+    machineOnStartUpScrtips->setProperty(ScriptsFolderItem::HELP_MSG, "Scripts on computer startup");
 
     auto machineOnShutdownScrtips = insertItem<ScriptsFolderItem>(machineScripts);
     machineOnShutdownScrtips->setDisplayName((QObject::tr("On shutdown").toStdString()));
     machineOnShutdownScrtips->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
+    machineOnShutdownScrtips->setProperty(ScriptsFolderItem::HELP_MSG,
+                                          "Scripts on computer shutdown");
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     auto userNamespace = insertItem<ScriptsFolderItem>(topItem);
@@ -109,17 +114,21 @@ void ScriptsTreeModel::populateModel()
     auto userSystemSetting = insertItem<ScriptsFolderItem>(userNamespace);
     userSystemSetting->setDisplayName(QObject::tr("System settings").toStdString());
     userSystemSetting->setProperty(ScriptsFolderItem::PARENT_ID, userUuid);
+    userSystemSetting->setProperty(ScriptsFolderItem::HELP_MSG, "System settings for user");
 
     auto userScripts = insertItem<ScriptsFolderItem>(userSystemSetting);
     userScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     userScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
+    userScripts->setProperty(ScriptsFolderItem::HELP_MSG, "Scripts for user");
 
     auto userOnStartUpScripts = insertItem<ScriptsFolderItem>(userScripts);
-    userOnStartUpScripts->setDisplayName(QObject::tr("On startup").toStdString());
+    userOnStartUpScripts->setDisplayName(QObject::tr("Logon").toStdString());
     userOnStartUpScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
+    userOnStartUpScripts->setProperty(ScriptsFolderItem::HELP_MSG, "Scripts for user on logon");
 
     auto userOnShutdownScripts = insertItem<ScriptsFolderItem>(userScripts);
-    userOnShutdownScripts->setDisplayName(QObject::tr("On shutdown").toStdString());
+    userOnShutdownScripts->setDisplayName(QObject::tr("Logoff").toStdString());
     userOnShutdownScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
+    userOnShutdownScripts->setProperty(ScriptsFolderItem::HELP_MSG, "Scripts for user on logoff");
 }
 } // namespace scripts_plugin

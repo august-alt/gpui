@@ -29,6 +29,56 @@
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <source>[Local Group Policy]</source>
+        <translation>[Локальная групповая политика]</translation>
+    </message>
+    <message>
+        <source>Group policy</source>
+        <translation>Групповая политика</translation>
+    </message>
+    <message>
+        <source>Machine</source>
+        <translation>Компьютер</translation>
+    </message>
+    <message>
+        <source>Machine level policies</source>
+        <translation>Политика для компьютера</translation>
+    </message>
+    <message>
+        <source>System settings</source>
+        <translation>Настройки системы</translation>
+    </message>
+    <message>
+        <source>Scripts</source>
+        <translation>Скрипты</translation>
+    </message>
+    <message>
+        <source>On startup</source>
+        <translation>На влючении</translation>
+    </message>
+    <message>
+        <source>On shutdown</source>
+        <translation>На выключении</translation>
+    </message>
+    <message>
+        <source>User</source>
+        <translation>Пользователь</translation>
+    </message>
+    <message>
+        <source>User level policies.</source>
+        <translation>Политика для пользователя</translation>
+    </message>
+</context>
+<context>
+    <name>ScriptsContentWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>Форма</translation>
+    </message>
+</context>
+<context>
     <name>ScriptsDialog</name>
     <message>
         <source>Dialog</source>
@@ -88,6 +138,10 @@
     <message>
         <source>Windows PowerShell Logon Scripts for Default Domain Policy</source>
         <translation>Сценарии входа в Windows PowerShell для политики домена по умолчанию</translation>
+    </message>
+    <message>
+        <source>For this GPO, run scripts in the following order:</source>
+        <translation>Запуск скриптов для этого объекта в следующем порядке</translation>
     </message>
 </context>
 <context>

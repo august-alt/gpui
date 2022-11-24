@@ -40,15 +40,30 @@ ScriptsSnapInPrivate::ScriptsSnapInPrivate(ScriptsSnapIn *scriptsSnapIn)
 
 void ScriptsSnapInPrivate::saveData()
 {
-    qWarning() << "Scripts snapin saveData()";
     snapIn->onDataSave();
 }
 
 void ScriptsSnapInPrivate::reloadData()
 {
-    qWarning() << "Scripts snapin reloaData()";
     auto path = policyPath.get();
-    snapIn->onDataLoad(*path, currentLocale);
+
+    snapIn->onDataLoad(*path, localeName);
+}
+
+void ScriptsSnapInPrivate::retranslateModels(std::unique_ptr<ScriptsModel> &models)
+{
+    if (models)
+    {
+        for (auto container : models.get()->topItems())
+        {
+            auto containerItem = dynamic_cast<ScriptItemContainer *>(container);
+
+            if (containerItem)
+            {
+                containerItem->retranslateStrings();
+            }
+        }
+    }
 }
 
 } // namespace scripts_plugin

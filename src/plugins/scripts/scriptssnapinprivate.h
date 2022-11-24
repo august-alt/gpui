@@ -8,6 +8,7 @@
 #include "scriptstreeproxymodel.h"
 
 #include <QObject>
+#include <QTranslator>
 
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
@@ -34,9 +35,14 @@ public:
     std::unique_ptr<ScriptsTreeProxyModel> proxyViewModel = std::make_unique<ScriptsTreeProxyModel>();
     std::unique_ptr<ScriptsModelIo> modelIo               = std::make_unique<ScriptsModelIo>();
 
+    std::vector<std::unique_ptr<QTranslator>> translators{};
+
     ScriptsSnapIn *snapIn;
 
-    std::string currentLocale = "";
+    std::string localeName = "en-US";
+
+public:
+    void retranslateModels(std::unique_ptr<ScriptsModel> &models);
 
 public:
     ScriptsSnapInPrivate(ScriptsSnapIn *scriptsSnapIn);

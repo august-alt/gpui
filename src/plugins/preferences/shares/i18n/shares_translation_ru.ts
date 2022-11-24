@@ -84,7 +84,8 @@ Modifiers:</source>
     <message>
         <location filename="../shareswidget.ui" line="98"/>
         <source>Share name:</source>
-        <translation>Имя шары:</translation>
+        <translation>Имя общего 
+сетевого ресурса:</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="112"/>
@@ -105,21 +106,22 @@ Modifiers:</source>
     <message>
         <location filename="../shareswidget.ui" line="172"/>
         <source>Update all regular shares</source>
-        <translation>Обновление всех регулярных шар</translation>
+        <translation>Обновление всех регулярных
+общих сетевых ресурсов</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="186"/>
         <source>Update all hidden non-administrative
 shares</source>
-        <translation>Обновление всех скрытых административных
-шар</translation>
+        <translation>Обновление всех скрытых
+не административных общих сетевых ресурсов</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="201"/>
         <source>Update all administrative
 drive-letter shares</source>
         <translation>Обновление всех административных
-дисков шар</translation>
+дисков общих сетевых ресурсов</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="214"/>
@@ -131,22 +133,22 @@ drive-letter shares</source>
         <location filename="../shareswidget.ui" line="224"/>
         <location filename="../shareswidget.ui" line="228"/>
         <source>Create</source>
-        <translation>Создание</translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="233"/>
         <source>Replace</source>
-        <translation>Замещение</translation>
+        <translation>Заменить</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="238"/>
         <source>Update</source>
-        <translation>Обновление</translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="243"/>
         <source>Delete</source>
-        <translation>Удаление</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="270"/>

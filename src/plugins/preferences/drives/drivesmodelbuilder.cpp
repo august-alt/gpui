@@ -80,7 +80,12 @@ std::unique_ptr<Drives> DrivesModelBuilder::modelToSchema(std::unique_ptr<Prefer
             auto driveModel  = drivesContainer->getDrives();
             auto commonModel = drivesContainer->getCommon();
 
-            auto drive = createRootElement<Drive_t>("{935D1B74-9CB8-4e3c-9914-7DD559B7A417}");
+            auto drive = Drive_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{935D1B74-9CB8-4e3c-9914-7DD559B7A417}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     driveModel->property<std::string>(DrivesItem::PATH));
 
             auto properties = DriveProperties_t(driveModel->property<std::string>(DrivesItem::PATH),
                                                 driveModel->property<bool>(DrivesItem::PERSISTENT),

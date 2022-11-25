@@ -22,6 +22,7 @@
 #include "ui_iniwidget.h"
 
 #include "common/commonutils.h"
+#include "common/defaultactions.h"
 #include "iniitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
@@ -80,7 +81,8 @@ bool IniWidget::validate()
         return false;
     }
 
-    if (!CommonUtils::validateLineEdit(ui->sectionLineEdit, tr("Please input section value.")))
+    if (ui->actionComboBox->currentIndex() != DefaultActions::DELETE__MODE
+        && !CommonUtils::validateLineEdit(ui->sectionLineEdit, tr("Please input section value.")))
     {
         return false;
     }

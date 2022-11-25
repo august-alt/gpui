@@ -21,6 +21,7 @@
 #ifndef SCRIPTS_CONTENT_WIDGET_H
 #define SCRIPTS_CONTENT_WIDGET_H
 
+#include <scriptssnapin.h>
 #include <QtWidgets>
 
 #include "../../../src/core/common.h"
@@ -50,20 +51,13 @@ public:
     Q_OBJECT
 
 public:
-    explicit ScriptsContentWidget(QWidget *parent                         = nullptr,
-                                  ModelView::SessionModel *newSourceModel = nullptr);
+    explicit ScriptsContentWidget(ScriptsSnapIn *sn, QWidget *parent = nullptr);
     ~ScriptsContentWidget() override;
 
-    void setItem(ModelView::SessionItem *item);
-    void setSelectionModel(QItemSelectionModel *newSelectionModel);
-
-signals:
-    void onAccepted();
+    void setNamespace(bool machineNamespace);
 
 private slots:
-    void on_listView_doubleClicked(const QModelIndex &index);
-
-    void on_buttonBox_accepted();
+    void startDialog(QItemSelection item);
 
 private:
     ScriptsContentWidget(const ScriptsContentWidget &) = delete;            // copy ctor
@@ -71,16 +65,17 @@ private:
     ScriptsContentWidget &operator=(const ScriptsContentWidget &) = delete; // copy assignment
     ScriptsContentWidget &operator=(ScriptsContentWidget &&) = delete;      // move assignment
 
+    void buildModel();
+
 private:
-    ModelView::SessionModel *sourceModel = nullptr;
-
-    std::unique_ptr<ModelView::ViewModel> viewModel;
-    std::unique_ptr<ModelView::ViewModelDelegate> delegate;
-    std::unique_ptr<QDataWidgetMapper> mapper;
-
-    QItemSelectionModel *selectionModel = nullptr;
+    std::unique_ptr<QStringListModel> model = nullptr;
 
     Ui::ScriptsContentWidget *ui{nullptr};
+
+    bool isMachineNamespace = false;
+    bool isStartupScripts   = false;
+
+    ScriptsSnapIn *snapIn;
 };
 
 } // namespace scripts_plugin

@@ -80,63 +80,38 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
 
     if (role == 264)
     {
-        std::function<QDialog *()> dialogCreator = [=]() {
-            auto dialog = new ScriptsDialog();
+        std::function<QWidget *()> widgetCreator = [=]() {
+            auto widget = new ScriptsContentWidget(d->snapIn);
 
             auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
 
             auto name = sessionItem->displayName();
 
-            if (sessionItem->displayName().compare("On startup") == 0
-                || sessionItem->displayName().compare("On shutdown") == 0)
+            auto nameSpace = sessionItem->property<std::string>("NAMESPACE");
+            if (nameSpace.compare("Machine") == 0)
             {
-                bool isStartupScripts = false;
-
-                if (sessionItem->displayName().compare("On startup") == 0)
-                    isStartupScripts = true;
-
-                auto nameSpace = sessionItem->property<std::string>("NAMESPACE");
-                if (nameSpace.compare("Machine") == 0)
-                {
-                    dialog->setModels(d->machineScriptsModel,
-                                      d->machinePowerScriptsModel,
-                                      isStartupScripts);
-                }
-                else
-                {
-                    dialog->setModels(d->userScriptsModel,
-                                      d->userPowerScriptsModel,
-                                      isStartupScripts);
-                }
+                widget->setNamespace(true);
+            }
+            else
+            {
+                widget->setNamespace(false);
             }
 
-            QObject::connect(dialog,
-                             &ScriptsDialog::saveDataSignal,
-                             d->snapIn->d,
-                             &ScriptsSnapInPrivate::saveData);
-
-            QObject::connect(dialog,
-                             &ScriptsDialog::reloaddataSignal,
-                             d->snapIn->d,
-                             &ScriptsSnapInPrivate::reloadData);
-
-            return dialog;
+            return widget;
         };
 
-        return QVariant::fromValue(dialogCreator);
+        return QVariant::fromValue(widgetCreator);
     }
 
     if (role == 257)
     {
-        auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
-
-        auto name = sessionItem->displayName();
-
-        if (sessionItem->displayName().compare("On startup") == 0
-            || sessionItem->displayName().compare("On shutdown") == 0)
+        auto item = this->viewModel->sessionItemFromIndex(proxyIndex);
+        if (item->displayName().compare("Scripts") == 0)
         {
-            return QVariant(static_cast<uint>(2));
+            return QVariant(static_cast<uint>(3));
         }
+
+        return QVariant(static_cast<uint>(2));
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);
@@ -169,4 +144,4 @@ ScriptsSnapIn *ScriptsTreeProxyModel::getSnapIn()
 } // namespace scripts_plugin
 
 Q_DECLARE_METATYPE(std::shared_ptr<void(QWidget *, QItemSelectionModel *, const QModelIndex &)>)
-Q_DECLARE_METATYPE(std::function<QDialog *()>)
+Q_DECLARE_METATYPE(std::function<QWidget *()>)

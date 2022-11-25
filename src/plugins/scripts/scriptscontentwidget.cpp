@@ -33,17 +33,15 @@
 
 namespace scripts_plugin
 {
-ScriptsContentWidget::ScriptsContentWidget(QWidget *parent, ModelView::SessionModel *newSourceModel)
+ScriptsContentWidget::ScriptsContentWidget(ScriptsSnapIn *sn, QWidget *parent)
     : QWidget(parent)
-    , sourceModel(nullptr)
-    , viewModel(nullptr)
-    , delegate(std::make_unique<ModelView::ViewModelDelegate>())
-    , mapper(nullptr)
+    , model(std::make_unique<QStringListModel>())
     , ui(new Ui::ScriptsContentWidget())
+    , snapIn(sn)
 {
     ui->setupUi(this);
 
-    Q_UNUSED(newSourceModel);
+    buildModel();
 }
 
 ScriptsContentWidget::~ScriptsContentWidget()
@@ -51,45 +49,70 @@ ScriptsContentWidget::~ScriptsContentWidget()
     delete ui;
 }
 
-void ScriptsContentWidget::setItem(ModelView::SessionItem *item)
+void ScriptsContentWidget::setNamespace(bool machineNamespace)
 {
-    if (!item)
+    isMachineNamespace = machineNamespace;
+
+    buildModel();
+}
+
+void ScriptsContentWidget::buildModel()
+{
+    model = std::make_unique<QStringListModel>();
+
+    QString startupItem  = "Logon";
+    QString shutdownItem = "Logoff";
+
+    if (isMachineNamespace)
     {
-        qWarning() << "No item!";
+        startupItem  = "Startup";
+        shutdownItem = "Shutdow";
     }
 
-    viewModel = ModelView::Factory::CreateTopItemsViewModel(item->model());
-    viewModel->setRootSessionItem(item);
+    QStringList list;
+    list << startupItem << shutdownItem;
+    model.get()->setStringList(list);
 
-    ui->listView->setModel(viewModel.get());
+    ui->listView->setModel(model.get());
 
-    ui->listView->setItemDelegate(delegate.get());
+    connect(ui->listView->selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+            this,
+            SLOT(startDialog(QItemSelection)));
 }
 
-void ScriptsContentWidget::setSelectionModel(QItemSelectionModel *newSelectionModel)
+void ScriptsContentWidget::startDialog(QItemSelection item)
 {
-    Q_UNUSED(newSelectionModel);
-}
-
-void ScriptsContentWidget::on_listView_doubleClicked(const QModelIndex &index)
-{
-    if (index.isValid())
+    if (!item.indexes().isEmpty())
     {
-        auto item = viewModel->sessionItemFromIndex(index);
-        if (item->model()->modelType().compare("ScriptsModel") == 0)
+        auto displayName = model.get()->data(item.indexes().first()).toString();
+
+        if ((displayName.compare("Logon") == 0) || (displayName.compare("Startup") == 0))
         {
-            ScriptsDialog(item, item, this).exec();
+            isStartupScripts = true;
         }
         else
         {
-            setItem(viewModel->itemFromIndex(index)->item());
+            isStartupScripts = false;
         }
-    }
-}
 
-void ScriptsContentWidget::on_buttonBox_accepted()
-{
-    emit onAccepted();
+        auto dialog = new ScriptsDialog(this);
+
+        if (isMachineNamespace)
+        {
+            dialog->setModels(snapIn->d->machineScriptsModel.get(),
+                              snapIn->d->machinePowerScriptsModel.get(),
+                              isStartupScripts);
+        }
+        else
+        {
+            dialog->setModels(snapIn->d->userScriptsModel.get(),
+                              snapIn->d->userPowerScriptsModel.get(),
+                              isStartupScripts);
+        }
+
+        dialog->exec();
+    }
 }
 
 } // namespace scripts_plugin

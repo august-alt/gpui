@@ -123,17 +123,27 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
-        ui->descriptionTextEdit->setText(
-            model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
-
-        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>()
-            == ItemType::ITEM_TYPE_SCRIPTS_DIALOG)
+        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_SCRIPTS)
         {
-            auto scriptsDialog = model->data(index, PolicyRoles::POLICY_WIDGET)
-                                     .value<std::function<QDialog *()>>();
+            auto scriptsWidgetCtor = model->data(index, PolicyRoles::POLICY_WIDGET)
+                                         .value<std::function<QWidget *()>>();
 
-            auto dialog = scriptsDialog();
-            dialog->exec();
+            auto widget = ui->scrollArea->takeWidget();
+            if (widget)
+            {
+                delete widget;
+            }
+
+            if (scriptsWidgetCtor)
+            {
+                auto scriptsWidget = scriptsWidgetCtor();
+
+                //Тут выбираем и сеттим модель для виджета
+
+                ui->scrollArea->setWidget(scriptsWidget);
+            }
+            ui->stackedWidget->setCurrentIndex(DATA_PAGE_INDEX);
+            return;
         }
 
         if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
@@ -164,6 +174,5 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 } // namespace gpui
 
 Q_DECLARE_METATYPE(std::function<QWidget *()>)
-Q_DECLARE_METATYPE(std::function<QDialog *()>)
 Q_DECLARE_METATYPE(std::shared_ptr<::model::presentation::Presentation>)
 Q_DECLARE_METATYPE(std::shared_ptr<::model::admx::Policy>)

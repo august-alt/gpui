@@ -23,9 +23,9 @@ void ScriptsModelIo::loadPolicies(std::string *path,
                                   ScriptsModel *machinePowerScripts)
 {
     auto machinePathScripts      = *path + "/Machine/scripts.ini";
-    auto machinePathPowerScripts = *path + "/Machine/pscripts.ini";
+    auto machinePathPowerScripts = *path + "/Machine/psscripts.ini";
     auto userPathScripts         = *path + "/User/scripts.ini";
-    auto userPathPowerScripts    = *path + "/User/pscripts.ini";
+    auto userPathPowerScripts    = *path + "/User/psscripts.ini";
 
     loadIniFile(machinePathScripts, machineScripts);
     loadIniFile(machinePathPowerScripts, machinePowerScripts);
@@ -40,9 +40,9 @@ void ScriptsModelIo::savePolicies(std::string *path,
                                   ScriptsModel *machinePowerScripts)
 {
     auto machinePathScripts      = *path + "/Machine/scripts.ini";
-    auto machinePathPowerScripts = *path + "/Machine/pscripts.ini";
+    auto machinePathPowerScripts = *path + "/Machine/psscripts.ini";
     auto userPathScripts         = *path + "/User/scripts.ini";
-    auto userPathPowerScripts    = *path + "/User/pscripts.ini";
+    auto userPathPowerScripts    = *path + "/User/psscripts.ini";
 
     saveIniFile(machinePathScripts, machineScripts);
     saveIniFile(machinePathPowerScripts, machinePowerScripts);

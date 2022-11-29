@@ -20,10 +20,11 @@
 
 #include "scriptstreeproxymodel.h"
 
-#include "../../plugins/administrative_templates/bundle/policyroles.h"
 #include "scriptscontentwidget.h"
 #include "scriptsdialog.h"
 #include "scriptssnapin.h"
+
+#include "../../plugins/administrative_templates/bundle/policyroles.h"
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -79,7 +80,32 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
             viewModelProxy->sessionItemFromIndex(proxyIndex)->property<QUuid>("PARENT_ID"));
     }
 
-    if (role == ::model::bundle::PolicyRoles::ITEM_TYPE)
+    if (role == model::bundle::PolicyRoles::POLICY_WIDGET)
+    {
+        std::function<QWidget *()> widgetCreator = [=]() {
+            auto widget = new ScriptsContentWidget(d->snapIn);
+
+            auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
+
+            auto name = sessionItem->displayName();
+
+            auto nameSpace = sessionItem->property<std::string>("NAMESPACE");
+            if (nameSpace.compare("Machine") == 0)
+            {
+                widget->setNamespace(true);
+            }
+            else
+            {
+                widget->setNamespace(false);
+            }
+
+            return widget;
+        };
+
+        return QVariant::fromValue(widgetCreator);
+    }
+
+    if (role == model::bundle::PolicyRoles::ITEM_TYPE)
     {
         auto item = this->viewModel->sessionItemFromIndex(proxyIndex);
         if (item->displayName().compare("Scripts") == 0)

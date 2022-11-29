@@ -67,8 +67,6 @@ ScriptsSnapIn::~ScriptsSnapIn()
 
 void ScriptsSnapIn::onInitialize(QMainWindow *mainWindow)
 {
-    onRetranslateUI("ru-RU");
-
     auto mWindow = dynamic_cast<gpui::MainWindow *>(mainWindow);
 
     d->proxyViewModel->setSourceModel(d->viewModel.get());

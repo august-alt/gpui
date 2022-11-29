@@ -31,6 +31,8 @@
 
 #include <QDataWidgetMapper>
 #include <QDialog>
+#include <QDialogButtonBox>
+#include <qabstractbutton.h>
 
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
@@ -50,9 +52,6 @@ public:
     Q_OBJECT
 
 public:
-    ScriptsDialog(ModelView::SessionItem *scriptsItem,
-                  ModelView::SessionItem *psScriptsItem,
-                  QWidget *parent = nullptr);
     ScriptsDialog(QWidget *parent = nullptr);
     ~ScriptsDialog();
 
@@ -71,6 +70,8 @@ private slots:
     void on_buttonBox_accepted();
 
     void on_buttonBox_rejected();
+
+    void on_Apply();
 
 signals:
     void saveDataSignal();

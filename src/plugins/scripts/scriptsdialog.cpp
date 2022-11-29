@@ -31,26 +31,16 @@
 
 namespace scripts_plugin
 {
-ScriptsDialog::ScriptsDialog(ModelView::SessionItem *scriptsItem,
-                             ModelView::SessionItem *psScriptsItem,
-                             QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::ScriptsDialog())
-    , isStartUpScripts(false)
-
-{
-    ui->setupUi(this);
-
-    setItem(scriptsItem, ui->scriptsTab);
-    setItem(psScriptsItem, ui->powerShellScriptsTab);
-}
-
 ScriptsDialog::ScriptsDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ScriptsDialog())
     , isStartUpScripts(false)
 {
     ui->setupUi(this);
+
+    QPushButton *applyButton = ui->buttonBox->button(QDialogButtonBox::StandardButton::Apply);
+
+    QObject::connect(applyButton, &QPushButton::clicked, this, &ScriptsDialog::on_Apply);
 }
 
 ScriptsDialog::~ScriptsDialog()
@@ -133,6 +123,11 @@ void ScriptsDialog::on_buttonBox_accepted()
 void ScriptsDialog::on_buttonBox_rejected()
 {
     emit(reloaddataSignal());
+}
+
+void ScriptsDialog::on_Apply()
+{
+    emit(saveDataSignal());
 }
 
 } // namespace scripts_plugin

@@ -44,6 +44,7 @@ public:
 
     virtual void onDataLoad(const std::string &policyPath, const std::string &locale) override;
 
+public slots:
     virtual void onDataSave() override;
 
     virtual void onRetranslateUI(const std::string &locale) override;

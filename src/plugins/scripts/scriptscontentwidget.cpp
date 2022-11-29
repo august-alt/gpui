@@ -111,6 +111,16 @@ void ScriptsContentWidget::startDialog(QItemSelection item)
                               isStartupScripts);
         }
 
+        QObject::connect(dialog,
+                         &ScriptsDialog::saveDataSignal,
+                         snapIn->d,
+                         &ScriptsSnapInPrivate::saveData);
+
+        QObject::connect(dialog,
+                         &ScriptsDialog::reloaddataSignal,
+                         snapIn->d,
+                         &ScriptsSnapInPrivate::reloadData);
+
         dialog->exec();
     }
 }

@@ -324,6 +324,7 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
     if (mainWindow)
     {
         QObject::connect(mainWindow, &MainWindow::admxPathChanged, [&](const QString &admxPath) {
+            qWarning() << "Loading bundle from snap-in: " << admxPath;
             d->admxPath = admxPath.toStdString();
             d->policyBundleLoad();
         });

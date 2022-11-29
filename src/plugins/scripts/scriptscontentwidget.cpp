@@ -66,7 +66,7 @@ void ScriptsContentWidget::buildModel()
     if (isMachineNamespace)
     {
         startupItem  = "Startup";
-        shutdownItem = "Shutdow";
+        shutdownItem = "Shutdown";
     }
 
     QStringList list;

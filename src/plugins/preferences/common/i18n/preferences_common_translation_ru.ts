@@ -117,12 +117,12 @@ context (user policy option)</source>
     <message>
         <location filename="../propertieswidget.ui" line="83"/>
         <source>Run in user&apos;s context:</source>
-        <translation>Запускать в контескте пользователя:</translation>
+        <translation>Запускать в контексте пользователя:</translation>
     </message>
     <message>
         <location filename="../propertieswidget.ui" line="112"/>
         <source>Remove if not applied:</source>
-        <translation>Удалить если не применимо:</translation>
+        <translation>Удалить, если не применимо:</translation>
     </message>
     <message>
         <location filename="../propertieswidget.ui" line="144"/>

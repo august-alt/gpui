@@ -381,6 +381,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     d->searchModel->setSourceModel(d->itemRoleSortModel.get());
     d->searchModel->setFilterRole(Qt::DisplayRole);
     d->searchModel->setFilterFixedString("");
+    d->searchModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     d->searchModel->setRecursiveFilteringEnabled(true);
 
     ui->treeView->setModel(d->searchModel.get());

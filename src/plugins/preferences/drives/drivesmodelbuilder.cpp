@@ -48,12 +48,18 @@ std::unique_ptr<PreferencesModel> DrivesModelBuilder::schemaToModel(std::unique_
             auto sessionItem = model->insertItem<DrivesContainerItem>(model->rootItem());
             sessionItem->setupListeners();
 
+            auto letter = currentProperties.letter();
+            if (letter.size() != 0)
+            {
+                letter.append(":");
+            }
+
             auto drives = sessionItem->getDrives();
             drives->setProperty(DrivesItem::ACTION, actionState);
             drives->setProperty(DrivesItem::PATH, currentProperties.path().c_str());
             drives->setProperty(DrivesItem::PERSISTENT, static_cast<bool>(currentProperties.persistent()));
             drives->setProperty(DrivesItem::LABEL, getOptionalPropertyData(currentProperties.label()).c_str());
-            drives->setProperty(DrivesItem::LETTER, currentProperties.letter().c_str());
+            drives->setProperty(DrivesItem::LETTER, letter.c_str());
             drives->setProperty(DrivesItem::USER_NAME, getOptionalPropertyData(currentProperties.userName()).c_str());
             drives->setProperty(DrivesItem::CPASSWORD, getOptionalPropertyData(currentProperties.cpassword()).c_str());
             drives->setProperty(DrivesItem::USE_LETTER, static_cast<bool>(currentProperties.useLetter()));
@@ -87,10 +93,16 @@ std::unique_ptr<Drives> DrivesModelBuilder::modelToSchema(std::unique_ptr<Prefer
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
                                      driveModel->property<std::string>(DrivesItem::PATH));
 
+            auto letter = driveModel->property<std::string>(DrivesItem::LETTER);
+            if (letter.size() != 0)
+            {
+                letter = letter.substr(0, 1);
+            }
+
             auto properties = DriveProperties_t(driveModel->property<std::string>(DrivesItem::PATH),
                                                 driveModel->property<bool>(DrivesItem::PERSISTENT),
                                                 driveModel->property<bool>(DrivesItem::USE_LETTER),
-                                                driveModel->property<std::string>(DrivesItem::LETTER));
+                                                letter);
             properties.action(getActionCheckboxModel(driveModel->property<int>(DrivesItem::ACTION)));
             properties.path(driveModel->property<std::string>(DrivesItem::PATH));
             properties.label(driveModel->property<std::string>(DrivesItem::LABEL));

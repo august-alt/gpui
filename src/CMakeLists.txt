@@ -7,7 +7,7 @@ if (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
         -Wextra -Wno-long-long -Weffc++ -Werror -Wall -Wextra -pedantic -Wcast-align -Wcast-qual -Wctor-dtor-privacy \
         -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept -Wold-style-cast \
         -Woverloaded-virtual -Wredundant-decls -Wshadow -Wstrict-null-sentinel -Wundef \
-        -Wno-unused -Wno-variadic-macros -Wno-parentheses -fdiagnostics-show-option")
+        -Wno-unused -Wno-variadic-macros -Wno-parentheses -Wnonnull -fdiagnostics-show-option")
   endif()
 endif()
 

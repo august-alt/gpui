@@ -4,27 +4,31 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../shortcutscontaineritem.cpp" line="37"/>
+        <location filename="../shortcutscontaineritem.cpp" line="38"/>
+        <location filename="../shortcutscontaineritem.cpp" line="96"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../shortcutscontaineritem.cpp" line="38"/>
+        <location filename="../shortcutscontaineritem.cpp" line="39"/>
+        <location filename="../shortcutscontaineritem.cpp" line="97"/>
         <source>Order</source>
         <translation>Order</translation>
     </message>
     <message>
-        <location filename="../shortcutscontaineritem.cpp" line="39"/>
+        <location filename="../shortcutscontaineritem.cpp" line="41"/>
+        <location filename="../shortcutscontaineritem.cpp" line="98"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
     <message>
-        <location filename="../shortcutscontaineritem.cpp" line="40"/>
+        <location filename="../shortcutscontaineritem.cpp" line="43"/>
+        <location filename="../shortcutscontaineritem.cpp" line="99"/>
         <source>Target</source>
         <translation>Target</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="92"/>
+        <location filename="../shortcutswidgetslots.cpp" line="123"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -126,8 +130,8 @@
     </message>
     <message>
         <location filename="../shortcutswidget.ui" line="430"/>
-        <source>&lt;Specify full path&gt;</source>
-        <translation></translation>
+        <source>[Specify full path]</source>
+        <translation>[Specify full path]</translation>
     </message>
     <message>
         <location filename="../shortcutswidget.ui" line="435"/>
@@ -239,52 +243,52 @@
 <context>
     <name>preferences::ShortcutsWidget</name>
     <message>
-        <location filename="../shortcutswidget.cpp" line="82"/>
+        <location filename="../shortcutswidget.cpp" line="83"/>
         <source>Please input name value.</source>
         <translation>Please input name value.</translation>
     </message>
     <message>
-        <location filename="../shortcutswidget.cpp" line="87"/>
+        <location filename="../shortcutswidget.cpp" line="88"/>
         <source>Please input target path value.</source>
         <translation>Please input target path value.</translation>
     </message>
     <message>
-        <location filename="../shortcutswidget.cpp" line="97"/>
+        <location filename="../shortcutswidget.cpp" line="98"/>
         <source>General</source>
         <translation>General</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="83"/>
+        <location filename="../shortcutswidgetslots.cpp" line="114"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="84"/>
+        <location filename="../shortcutswidgetslots.cpp" line="115"/>
         <source>File name</source>
         <translation>File name</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="85"/>
+        <location filename="../shortcutswidgetslots.cpp" line="116"/>
         <source>Look in</source>
         <translation>Look in</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="86"/>
+        <location filename="../shortcutswidgetslots.cpp" line="117"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="87"/>
+        <location filename="../shortcutswidgetslots.cpp" line="118"/>
         <source>File type</source>
         <translation>File type</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="96"/>
+        <location filename="../shortcutswidgetslots.cpp" line="126"/>
         <source>Open Directory</source>
         <translation>Open Directory</translation>
     </message>
     <message>
-        <location filename="../shortcutswidgetslots.cpp" line="104"/>
+        <location filename="../shortcutswidgetslots.cpp" line="133"/>
         <source>Open File</source>
         <translation>Open File</translation>
     </message>

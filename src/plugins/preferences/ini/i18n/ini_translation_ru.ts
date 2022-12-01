@@ -42,17 +42,17 @@
     <message>
         <location filename="../iniwidget.ui" line="97"/>
         <source>Section Name</source>
-        <translation>Имя Секции</translation>
+        <translation>Имя секции</translation>
     </message>
     <message>
         <location filename="../iniwidget.ui" line="119"/>
         <source>Property Name</source>
-        <translation>Имя Свойства</translation>
+        <translation>Имя свойства</translation>
     </message>
     <message>
         <location filename="../iniwidget.ui" line="141"/>
         <source>Property Value</source>
-        <translation>Значение Свойства</translation>
+        <translation>Значение свойства</translation>
     </message>
     <message>
         <location filename="../iniwidget.ui" line="158"/>
@@ -108,17 +108,17 @@
     <message>
         <location filename="../iniwidget.cpp" line="78"/>
         <source>Please input path value.</source>
-        <translation>Введите путь.</translation>
+        <translation>Введите путь</translation>
     </message>
     <message>
         <location filename="../iniwidget.cpp" line="83"/>
         <source>Please input section value.</source>
-        <translation>Введите секцию.</translation>
+        <translation>Введите секцию</translation>
     </message>
     <message>
         <location filename="../iniwidget.cpp" line="88"/>
         <source>Please input property value.</source>
-        <translation>Введите занчение свойства.</translation>
+        <translation>Введите значение свойства</translation>
     </message>
     <message>
         <location filename="../iniwidget.cpp" line="98"/>

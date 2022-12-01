@@ -108,17 +108,17 @@
     <message>
         <location filename="../iniwidget.cpp" line="78"/>
         <source>Please input path value.</source>
-        <translation>Please input path value.</translation>
+        <translation>Please input path value</translation>
     </message>
     <message>
         <location filename="../iniwidget.cpp" line="83"/>
         <source>Please input section value.</source>
-        <translation>Please input section value.</translation>
+        <translation>Please input section value</translation>
     </message>
     <message>
         <location filename="../iniwidget.cpp" line="88"/>
         <source>Please input property value.</source>
-        <translation>Please input property value.</translation>
+        <translation>Please input property value</translation>
     </message>
     <message>
         <location filename="../iniwidget.cpp" line="98"/>

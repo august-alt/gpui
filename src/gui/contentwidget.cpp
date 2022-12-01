@@ -123,29 +123,6 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
-        if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_SCRIPTS)
-        {
-            auto scriptsWidgetCtor = model->data(index, PolicyRoles::POLICY_WIDGET)
-                                         .value<std::function<QWidget *()>>();
-
-            auto widget = ui->scrollArea->takeWidget();
-            if (widget)
-            {
-                delete widget;
-            }
-
-            if (scriptsWidgetCtor)
-            {
-                auto scriptsWidget = scriptsWidgetCtor();
-
-                //Тут выбираем и сеттим модель для виджета
-
-                ui->scrollArea->setWidget(scriptsWidget);
-            }
-            ui->stackedWidget->setCurrentIndex(DATA_PAGE_INDEX);
-            return;
-        }
-
         if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
         {
             auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET)

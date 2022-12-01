@@ -24,6 +24,7 @@
 #include "scriptsdialog.h"
 #include "scriptssnapin.h"
 
+#include "../../plugins/administrative_templates/bundle/itemtype.h"
 #include "../../plugins/administrative_templates/bundle/policyroles.h"
 
 #include <mvvm/model/sessionitem.h>
@@ -110,10 +111,10 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
         auto item = this->viewModel->sessionItemFromIndex(proxyIndex);
         if (item->displayName().compare("Scripts") == 0)
         {
-            return QVariant(static_cast<uint>(3));
+            return QVariant(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_POLICY));
         }
 
-        return QVariant(static_cast<uint>(2));
+        return QVariant(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY));
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);

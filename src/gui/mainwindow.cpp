@@ -59,10 +59,10 @@
 
 #include <stack>
 
-//void registerResources()
-//{
-//    Q_INIT_RESOURCE(translations);
-//}
+void registerResources()
+{
+    Q_INIT_RESOURCE(translations);
+}
 
 namespace gpui
 {
@@ -152,9 +152,7 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
         auto parentIndex = QModelIndex();
         auto currentId   = index.data(Qt::UserRole + 12).value<QUuid>();
 
-        auto currentIndex    = findParent(target->model(),
-                                       target->model()->index(0, 0).parent(),
-                                       currentId);
+        auto currentIndex    = findParent(target->model(), target->model()->index(0, 0).parent(), currentId);
         QStandardItem *child = nullptr;
 
         if (!currentIndex.isValid())
@@ -209,7 +207,7 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
 {
-    //    registerResources();
+    registerResources();
 
     d->manager = manager;
 
@@ -238,9 +236,7 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::updateStatusBar);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
-    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex &index) {
-        d->itemName = index.data().toString();
-    });
+    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex &index) { d->itemName = index.data().toString(); });
 
     QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
                                                       : QLocale::system().name().replace("-", "_"));
@@ -338,30 +334,25 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
 
     QStandardItem *visibleRootItem = new QStandardItem();
     visibleRootItem->setData(QIcon::fromTheme("text-x-generic-template"), Qt::DecorationRole);
-    visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY),
-                             model::bundle::ITEM_TYPE);
+    visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY), model::bundle::ITEM_TYPE);
     visibleRootItem->setData(QObject::tr("Local group policies"), model::bundle::EXPLAIN_TEXT);
-    visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both),
-                             model::bundle::POLICY_TYPE);
+    visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both), model::bundle::POLICY_TYPE);
 
     if (d->options.path.startsWith("smb://"))
     {
         QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
         if (domainRegexp.indexIn(d->options.path) != -1)
         {
-            visibleRootItem->setData('[' + domainRegexp.cap() + ']' + d->options.policyName,
-                                     Qt::DisplayRole);
+            visibleRootItem->setData('[' + domainRegexp.cap() + ']' + d->options.policyName, Qt::DisplayRole);
         }
         else
         {
-            visibleRootItem->setData(QObject::tr("[Domain Group Policy]") + d->options.policyName,
-                                     Qt::DisplayRole);
+            visibleRootItem->setData(QObject::tr("[Domain Group Policy]") + d->options.policyName, Qt::DisplayRole);
         }
     }
     else
     {
-        visibleRootItem->setData(QObject::tr("[Local Group Policy]") + d->options.policyName,
-                                 Qt::DisplayRole);
+        visibleRootItem->setData(QObject::tr("[Local Group Policy]") + d->options.policyName, Qt::DisplayRole);
     }
 
     rootItem->appendRow(visibleRootItem);
@@ -448,9 +439,9 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionManual_triggered()
 {
-    const QUrl manual_url = QUrl("https://www.altlinux.org/"
-                                 "%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%"
-                                 "BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
+    const QUrl manual_url = QUrl(
+        "https://www.altlinux.org/"
+        "%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
     QDesktopServices::openUrl(manual_url);
 }
 
@@ -534,8 +525,7 @@ void MainWindow::createLanguageMenu()
 QString MainWindow::isAnyGUID(QString &path)
 {
     QRegExp lastPartOfPath("/\\{([^/]+)\\}/?$");
-    QRegExp regExpGuid(
-        "^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
+    QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
 
     qWarning() << lastPartOfPath.indexIn(path);
 

@@ -84,7 +84,6 @@ private:
     BaseScriptWidget *m_base;
 
 private:
-    void loadIniFile(QString file);
 
     ScriptItemContainer *findRootItem(bool isScripts);
 };

@@ -111,66 +111,13 @@ void ScriptWidgetCommonSlots::onBrowseClicked()
 
     if (!file.isEmpty())
     {
-        loadIniFile(file);
+
     }
 
     delete dialog;
 }
 
 void ScriptWidgetCommonSlots::onOkClicked() {}
-
-void ScriptWidgetCommonSlots::loadIniFile(QString file)
-{
-    auto stringValues = std::make_unique<std::string>();
-
-    try
-    {
-        QFile registryFile(file);
-        registryFile.open(QFile::ReadWrite);
-        stringValues->resize(registryFile.size(), 0);
-        registryFile.read(&stringValues->at(0), registryFile.size());
-        registryFile.close();
-
-        auto iss = std::make_unique<std::istringstream>(*stringValues);
-        std::string pluginName("ini");
-
-        auto reader  = std::make_unique<io::GenericReader>();
-        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile>>(*iss,
-                                                                                    pluginName);
-        if (!iniFile)
-        {
-            qWarning() << "Unable to load registry file contents.";
-            return;
-        }
-
-        m_base->sessionModel->clear();
-
-        auto sections = iniFile->getAllSections();
-
-        for (const auto &section : sections->keys())
-        {
-            auto container = m_base->sessionModel->insertItem<ScriptItemContainer>();
-            container->setProperty(ScriptItemContainer::SECTION_NAME, section);
-            container->setDisplayName(section);
-
-            auto group = container->getScripts();
-
-            for (const auto &script_path : sections.get()->value(section).keys())
-            {
-                auto item = group->insertItem<ScriptItem>(GroupScriptContainerItem::ITEM);
-
-                item->setProperty(ScriptItem::PATH, script_path);
-                item->setProperty(ScriptItem::PARAMETER,
-                                  sections.get()->value(section).value(script_path));
-            }
-        }
-    }
-    catch (std::exception &e)
-    {
-        qWarning() << "Warning: Unable to read file: " << file.toStdString().c_str()
-                   << " description: " << e.what();
-    }
-}
 
 ScriptItemContainer *ScriptWidgetCommonSlots::findRootItem(bool isScripts)
 {

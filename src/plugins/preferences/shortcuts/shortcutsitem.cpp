@@ -30,7 +30,7 @@ ShortcutsItem::ShortcutsItem()
     addProperty(ACTION, 0);
     addProperty(PIDL, "");
     addProperty(SHORTCUT_PATH, "");
-    addProperty(TARGET_TYPE, "");
+    addProperty(TARGET_TYPE, 0);
     addProperty(TARGET_PATH, "");
     addProperty(ARGUMENTS, "");
     addProperty(START_IN, "");
@@ -48,7 +48,7 @@ ShortcutsItem::ShortcutsItem(const ShortcutsItem &other)
     addProperty(ACTION, other.property<int>(ACTION));
     addProperty(PIDL, other.property<std::string>(PIDL));
     addProperty(SHORTCUT_PATH, other.property<std::string>(SHORTCUT_PATH));
-    addProperty(TARGET_TYPE, other.property<std::string>(TARGET_TYPE));
+    addProperty(TARGET_TYPE, other.property<int>(TARGET_TYPE));
     addProperty(TARGET_PATH, other.property<std::string>(TARGET_PATH));
     addProperty(ARGUMENTS, other.property<std::string>(ARGUMENTS));
     addProperty(START_IN, other.property<std::string>(START_IN));

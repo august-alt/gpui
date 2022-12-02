@@ -64,7 +64,7 @@ void ShortcutsWidget::setItem(ModelView::SessionItem *item)
 
     mapper->addMapping(ui->actionComboBox, 0, "currentIndex");
     mapper->addMapping(ui->nameLineEdit, 2);
-    mapper->addMapping(ui->targetTypeComboBox, 3);
+    mapper->addMapping(ui->targetTypeComboBox, 3, "currentIndex");
     mapper->addMapping(ui->targetPathLineEdit, 4);
     mapper->addMapping(ui->argumentsLineEdit, 5);
     mapper->addMapping(ui->startInLineEdit, 6);

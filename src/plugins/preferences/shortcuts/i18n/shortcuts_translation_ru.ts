@@ -111,17 +111,17 @@
     <message>
         <location filename="../shortcutswidget.ui" line="392"/>
         <source>FILESYSTEM</source>
-        <translation>FILESYSTEM</translation>
+        <translation>Объект файловой системы</translation>
     </message>
     <message>
         <location filename="../shortcutswidget.ui" line="397"/>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>URL-адрес</translation>
     </message>
     <message>
         <location filename="../shortcutswidget.ui" line="402"/>
         <source>SHELL</source>
-        <translation>SHELL</translation>
+        <translation>Объект оболочки</translation>
     </message>
     <message>
         <location filename="../shortcutswidget.ui" line="422"/>

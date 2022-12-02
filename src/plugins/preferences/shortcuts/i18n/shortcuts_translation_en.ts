@@ -111,7 +111,7 @@
     <message>
         <location filename="../shortcutswidget.ui" line="392"/>
         <source>FILESYSTEM</source>
-        <translation>FILESYSTEM</translation>
+        <translation>File System Object</translation>
     </message>
     <message>
         <location filename="../shortcutswidget.ui" line="397"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../shortcutswidget.ui" line="402"/>
         <source>SHELL</source>
-        <translation>SHELL</translation>
+        <translation>Shell Object</translation>
     </message>
     <message>
         <location filename="../shortcutswidget.ui" line="422"/>

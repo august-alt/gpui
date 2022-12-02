@@ -28,11 +28,35 @@ namespace scripts_plugin
 class ScriptItem : public ModelView::CompoundItem
 {
 public:
-    static inline const std::string PATH      = "path";
-    static inline const std::string PARAMETER = "parameter";
+    enum PropertyType
+    {
+        PATH      = 0,
+        PARAMETER = 1
+    };
+
+public:
+    //static inline const std::string PATH      = "path";
+    //static inline const std::string PARAMETER = "parameter";
 
     ScriptItem();
     ScriptItem(const ScriptItem &other);
+
+    constexpr static int propertyToInt(PropertyType &type);
+
+    constexpr static const char *propertyToString(const PropertyType &type)
+    {
+        switch (type)
+        {
+        case PATH:
+            return "path";
+        case PARAMETER:
+            return "parameter";
+        default:
+            break;
+        }
+
+        return "";
+    }
 };
 
 } // namespace scripts_plugin

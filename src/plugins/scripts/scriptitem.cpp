@@ -25,15 +25,20 @@ namespace scripts_plugin
 ScriptItem::ScriptItem()
     : ModelView::CompoundItem("ScriptItem")
 {
-    addProperty(ScriptItem::PATH, "");
-    addProperty(ScriptItem::PARAMETER, "");
+    addProperty(propertyToString(PATH), "");
+    addProperty(propertyToString(PARAMETER), "");
 }
 
 ScriptItem::ScriptItem(const ScriptItem &other)
     : ModelView::CompoundItem("ScriptItem")
 {
-    addProperty(ScriptItem::PATH, other.property<std::string>(PATH));
-    addProperty(ScriptItem::PARAMETER, other.property<std::string>(PARAMETER));
+    addProperty(propertyToString(PATH), other.property<std::string>(propertyToString(PATH)));
+    addProperty(propertyToString(PATH), other.property<std::string>(propertyToString(PATH)));
+}
+
+constexpr int ScriptItem::propertyToInt(PropertyType &type)
+{
+    return static_cast<int>(type);
 }
 
 } // namespace scripts_plugin

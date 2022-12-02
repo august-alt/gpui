@@ -22,10 +22,10 @@ void ScriptsModelIo::loadPolicies(std::string *path,
                                   ScriptsModel *machineScripts,
                                   ScriptsModel *machinePowerScripts)
 {
-    auto machinePathScripts      = *path + "/Machine/Scripts/scripts.ini";
-    auto machinePathPowerScripts = *path + "/Machine/Scripts/psscripts.ini";
-    auto userPathScripts         = *path + "/User/Scripts/scripts.ini";
-    auto userPathPowerScripts    = *path + "/User/Scripts/psscripts.ini";
+    auto machinePathScripts      = *path + "/Machine/scripts.ini";
+    auto machinePathPowerScripts = *path + "/Machine/psscripts.ini";
+    auto userPathScripts         = *path + "/User/scripts.ini";
+    auto userPathPowerScripts    = *path + "/User/psscripts.ini";
 
     loadIniFile(machinePathScripts, machineScripts);
     loadIniFile(machinePathPowerScripts, machinePowerScripts);
@@ -39,10 +39,10 @@ void ScriptsModelIo::savePolicies(std::string *path,
                                   ScriptsModel *machineScripts,
                                   ScriptsModel *machinePowerScripts)
 {
-    auto machinePathScripts      = *path + "/Machine/Scripts/scripts.ini";
-    auto machinePathPowerScripts = *path + "/Machine/Scripts/psscripts.ini";
-    auto userPathScripts         = *path + "/User/Scripts/scripts.ini";
-    auto userPathPowerScripts    = *path + "/User/Scripts/psscripts.ini";
+    auto machinePathScripts      = *path + "/Machine/scripts.ini";
+    auto machinePathPowerScripts = *path + "/Machine/psscripts.ini";
+    auto userPathScripts         = *path + "/User/scripts.ini";
+    auto userPathPowerScripts    = *path + "/User/psscripts.ini";
 
     saveIniFile(machinePathScripts, machineScripts);
     saveIniFile(machinePathPowerScripts, machinePowerScripts);
@@ -126,7 +126,7 @@ void ScriptsModelIo::saveIniFile(std::string &path, ScriptsModel *model)
         }
         else
         {
-            writer->save<io::IniFile, io::PolicyFileFormat<io::IniFile>>(path, iniFile.get());
+            writer.get()->save<io::IniFile, io::PolicyFileFormat<io::IniFile>>(path, iniFile.get());
         }
     }
     catch (std::exception &e)

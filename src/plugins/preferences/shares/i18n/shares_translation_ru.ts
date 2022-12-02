@@ -79,7 +79,7 @@
         <source>Action
 Modifiers:</source>
         <translation>Модификаторы 
-Действий:</translation>
+действий:</translation>
     </message>
     <message>
         <location filename="../shareswidget.ui" line="98"/>

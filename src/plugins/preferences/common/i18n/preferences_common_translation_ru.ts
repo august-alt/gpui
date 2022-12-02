@@ -31,7 +31,7 @@ context (user policy option)</source>
     <message>
         <location filename="../commonview.ui" line="57"/>
         <source>Remove this item when it is no longer applied</source>
-        <translation>Удалить элемент если больше не применим</translation>
+        <translation>Удалить элемент, если больше не применим</translation>
     </message>
     <message>
         <location filename="../commonview.ui" line="72"/>

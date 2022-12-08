@@ -23,9 +23,9 @@
 
 #include "policyelement.h"
 
-#include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace model
 {
@@ -79,7 +79,7 @@ public:
     /*!
              * \brief items List of enum items.
              */
-    std::map<std::string, std::unique_ptr<EnumValue>> items{};
+    std::vector<std::pair<std::string, std::unique_ptr<EnumValue>>> items{};
 
     registry::RegistryEntryType getRegistryEntryType() const override
     {

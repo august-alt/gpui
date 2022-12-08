@@ -290,20 +290,23 @@ public:
         {
             if (item.value().decimal().present())
             {
-                this->items[item.displayName()] = std::make_unique<model::admx::DecimalValue>(
-                    item.value().decimal().get().value());
+                this->items.push_back(
+                    std::make_pair(item.displayName(),
+                                   std::make_unique<model::admx::DecimalValue>(item.value().decimal().get().value())));
             }
 
             if (item.value().longDecimal().present())
             {
-                this->items[item.displayName()] = std::make_unique<model::admx::LongDecimalValue>(
-                    item.value().longDecimal().get().value());
+                this->items.push_back(std::make_pair(item.displayName(),
+                                                     std::make_unique<model::admx::LongDecimalValue>(
+                                                         item.value().longDecimal().get().value())));
             }
 
             if (item.value().string().present())
             {
-                this->items[item.displayName()] = std::make_unique<model::admx::StringValue>(
-                    item.value().string().get());
+                this->items.push_back(
+                    std::make_pair(item.displayName(),
+                                   std::make_unique<model::admx::StringValue>(item.value().string().get())));
             }
         }
     }

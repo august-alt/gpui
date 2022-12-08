@@ -357,16 +357,14 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
         onPolFileOpen(d->userRegistryPath,
                       d->userRegistry,
                       d->userRegistrySource,
-                      [&](model::registry::AbstractRegistrySource *source) noexcept {
-                          d->proxyModel->setUserRegistrySource(source);
-                      });
+                      [&](model::registry::AbstractRegistrySource *) noexcept {});
+        d->proxyModel->setUserRegistrySource(d->userRegistrySource.get());
 
         onPolFileOpen(d->machineRegistryPath,
                       d->machineRegistry,
                       d->machineRegistrySource,
-                      [&](model::registry::AbstractRegistrySource *source) noexcept {
-                          d->proxyModel->setMachineRegistrySource(source);
-                      });
+                      [&](model::registry::AbstractRegistrySource *) noexcept {});
+        d->proxyModel->setMachineRegistrySource(d->machineRegistrySource.get());
     }
 }
 

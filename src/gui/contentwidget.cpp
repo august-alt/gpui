@@ -53,7 +53,6 @@ ContentWidget::ContentWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
 }
 

@@ -85,7 +85,7 @@ public:
     {
         if (items.size() > 0)
         {
-            const size_t hash_code = typeid(items.begin()->second).hash_code();
+            const size_t hash_code = typeid(*items.begin()->second.get()).hash_code();
             if (hash_code == typeid(DecimalValue).hash_code())
             {
                 return registry::REG_DWORD;

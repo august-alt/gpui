@@ -454,6 +454,7 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
                                                  model::admx::PolicyType::User);
             copyItem->setData(item.item->data(PolicyRoles::SUPPORTED_ON), PolicyRoles::SUPPORTED_ON);
             copyItem->setData(item.item->data(PolicyRoles::PRESENTATION), PolicyRoles::PRESENTATION);
+            copyItem->setData(item.item->data(PolicyRoles::POLICY), PolicyRoles::POLICY);
             assignParentCategory(item.category, item.item, copyItem);
         }
     }

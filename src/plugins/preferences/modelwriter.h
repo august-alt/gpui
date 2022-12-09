@@ -33,7 +33,7 @@ class ModelWriter
 public:
     ModelWriter();
 
-    void saveModels(const std::string &policyPath,
+    bool saveModels(const std::string &policyPath,
                     const std::string &policyType,
                     std::map<std::string, std::unique_ptr<PreferencesModel>> *map);
 

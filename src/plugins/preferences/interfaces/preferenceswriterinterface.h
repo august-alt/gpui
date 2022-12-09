@@ -36,7 +36,7 @@ public:
 
     virtual std::string getType() const = 0;
 
-    virtual bool write(const std::string path, const std::unique_ptr<PreferencesModel>& model) = 0;
+    virtual bool write(const std::string path, const std::unique_ptr<PreferencesModel> &model) = 0;
 };
 
 } // namespace preferences

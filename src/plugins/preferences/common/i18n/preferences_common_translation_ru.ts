@@ -461,14 +461,18 @@ context (user policy option)</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../basepreferencewriter.cpp" line="52"/>
+        <location filename="../../preferencessnapinprivate.cpp" line="52"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../basepreferencewriter.cpp" line="53"/>
+        <location filename="../../preferencessnapinprivate.cpp" line="53"/>
+        <source>Error writing preferences file!</source>
+        <translation>Ошибка записи файла настроек!</translation>
+    </message>
+    <message>
         <source>Error writing file:</source>
-        <translation>Ошибка записи файла:</translation>
+        <translation type="vanished">Ошибка записи файла:</translation>
     </message>
 </context>
 <context>

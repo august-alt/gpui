@@ -67,7 +67,7 @@ public:
 };
 
 AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
-    : QWidget(parent)
+    : gui::PluginWidgetInterface(parent)
     , ui(new Ui::AdministrativeTemplatesWidget())
     , d(new AdministrativeTemplatesWidgetPrivate())
 {
@@ -109,6 +109,9 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
             }
         }
     });
+
+    connect(this, &AdministrativeTemplatesWidget::acceptPressed, this, &AdministrativeTemplatesWidget::onApplyClicked);
+    connect(this, &AdministrativeTemplatesWidget::rejectPressed, this, &AdministrativeTemplatesWidget::onCancelClicked);
 
     connectDialogBoxSignals();
 }
@@ -294,6 +297,11 @@ void AdministrativeTemplatesWidget::setMachineRegistrySource(model::registry::Ab
 {
     qWarning() << "Test machine registry source";
     d->machineSource = registrySource;
+}
+
+bool AdministrativeTemplatesWidget::hasDataChanged()
+{
+    return d->dataChanged;
 }
 
 } // namespace gpui

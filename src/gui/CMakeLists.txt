@@ -13,6 +13,7 @@ set(HEADERS
     mainwindow.h
     mainwindowsettings.h
     presentationbuilder.h
+    pluginwidgetinterface.h
     treevieweventfilter.h
 )
 
@@ -42,6 +43,7 @@ set(MOC_HEADERS
     listboxdialog.h
     mainwindow.h
     mainwindowsettings.h
+    pluginwidgetinterface.h
     treevieweventfilter.h
 )
 

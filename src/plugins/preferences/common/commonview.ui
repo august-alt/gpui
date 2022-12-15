@@ -29,7 +29,7 @@
         </property>
         <property name="text">
          <string>Stop processing items in this extension if an
-error occurs.</string>
+error occurs</string>
         </property>
        </widget>
       </item>
@@ -42,7 +42,7 @@ error occurs.</string>
         </property>
         <property name="text">
          <string>Run in logged-on user's security
-context (user policy option).</string>
+context (user policy option)</string>
         </property>
        </widget>
       </item>
@@ -54,7 +54,7 @@ context (user policy option).</string>
          </font>
         </property>
         <property name="text">
-         <string>Remove this item when it is no longer applied.</string>
+         <string>Remove this item when it is no longer applied</string>
         </property>
        </widget>
       </item>
@@ -69,7 +69,7 @@ context (user policy option).</string>
          </font>
         </property>
         <property name="text">
-         <string>Apply once and do not reapply.</string>
+         <string>Apply once and do not reapply</string>
         </property>
        </widget>
       </item>
@@ -86,7 +86,7 @@ context (user policy option).</string>
            </font>
           </property>
           <property name="text">
-           <string>Item-level targeting.</string>
+           <string>Item-level targeting</string>
           </property>
          </widget>
         </item>

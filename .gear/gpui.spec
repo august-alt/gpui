@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt4
+Release: alt12
 
 Summary: Group policy editor
 License: GPLv2+
@@ -38,6 +38,8 @@ BuildRequires: desktop-file-utils ImageMagick-tools
 BuildRequires: libqt-mvvm-devel
 
 BuildRequires: xorg-xvfb xvfb-run
+
+Requires: admx-basealt
 
 Source0: %name-%version.tar
 
@@ -109,6 +111,70 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Dec 15 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt12
+- 0.2.17-alt12
+- Fixes:
+  + Fix e2k build.
+
+* Fri Dec 09 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt11
+- 0.2.17-alt11
+- Fixes:
+  + #89597 Fix message box.
+  + #88897 Ask to save changes.
+  + #75885 Add sort to drop down list elements.
+  +        Fix set correct resource for non existent registry.pol files.
+  +        Fix copy policy to copied item.
+  + #76835 Fix policy names.
+  + #88907 Fix google chrome policies handling.
+
+* Tue Dec 06 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt10
+- 0.2.17-alt10
+- Fixes:
+  + #89553 Switch search to be case insensitive.
+  + #89558 Fix translations of shortcuts widget.
+  + #89561 Fix russian translations in properties widget.
+  + #89621 Fix ini file's widget translations.
+  + #89692 Fix translation of shortcuts widget.
+  + #89648 Fix russian translation of shares widget.
+  + #89648 Fix russian translation of common widget.
+
+* Wed Nov 30 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt9
+- 0.2.17-alt9
+- Fixes:
+  + Fix null pointer in ldap library.
+  + Fix invalid drive name.
+
+* Tue Nov 29 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt8
+- 0.2.17-alt8
+- Fixes:
+  + #88602 Fix creation of network share's attributes.
+  + #88794 Fix drive map's xml structure.
+  + #44378 Allow empty section name in ini widget.
+  + #74009 Remove labels in empty widget.
+  + #88711 Modify model builder of network shares to write only required fields.
+  + #88844 Fix save of admx path setting.
+
+* Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt7
+- 0.2.17-alt7
+- Fixes:
+  + #88813 Fix restore dependency on admx-basealt.
+  + #88495 Fix translations in environment variable widget.
+  + #88226 Fix folder creation.
+  + #88143 Fix folder attributes during deletion of folders.
+  + #88586 Fix russian translation of mapped drive context menu.
+
+* Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt6
+- 0.2.17-alt6
+  Features:
+  + Add mapped drives for computers and network shares for user.
+
+* Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt5
+- 0.2.17-alt5
+- Fixes:
+  + #88226 Fix inability to create folders.
+  + #88226 Fix inability to create files.
+  + Restore n option.
+
 * Fri Nov 11 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt4
 - 0.2.17-alt4
 - Features:

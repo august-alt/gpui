@@ -40,6 +40,11 @@ class AbstractRegistrySource;
 }
 } // namespace model
 
+namespace gui
+{
+class PluginWidgetInterface;
+}
+
 namespace gpui
 {
 class ContentWidgetPrivate;
@@ -76,6 +81,9 @@ private:
 
 private slots:
     void onListItemClicked(const QModelIndex &index);
+
+private:
+    void setWidgetSignals(gui::PluginWidgetInterface *pluginWidget);
 
 private:
     ContentWidget(const ContentWidget &) = delete;            // copy ctor

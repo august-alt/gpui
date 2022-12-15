@@ -779,8 +779,11 @@ QVBoxLayout *PresentationBuilder::build(const PresentationBuilderParams &params)
     d->setDataChanged(params.dataChanged);
     d->setStateEnabled(params.stateEnabled);
 
-    QHBoxLayout *captions = createCaptions();
-    layout->addLayout(captions);
+    if (!params.presentation.widgets.empty())
+    {
+        QHBoxLayout *captions = createCaptions();
+        layout->addLayout(captions);
+    }
 
     for (const auto &widget : params.presentation.widgets)
     {

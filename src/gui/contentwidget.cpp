@@ -27,6 +27,8 @@
 #include "../plugins/administrative_templates/bundle/itemtype.h"
 #include "../plugins/administrative_templates/bundle/policyroles.h"
 
+#include "pluginwidgetinterface.h"
+
 using namespace ::model::bundle;
 
 namespace
@@ -53,7 +55,6 @@ ContentWidget::ContentWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->contentListView, &QListView::clicked, this, &ContentWidget::onListItemClicked);
     connect(this, &ContentWidget::modelItemSelected, this, &ContentWidget::onListItemClicked);
 }
 
@@ -128,16 +129,11 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET)
                                     .value<std::function<QWidget *()>>();
 
-            auto widget = ui->scrollArea->takeWidget();
-            if (widget)
-            {
-                delete widget;
-            }
-
-            if (policyWidget)
+            if (deleteWidget && policyWidget)
             {
                 ui->scrollArea->setWidget(policyWidget());
             }
+
             ui->stackedWidget->setCurrentIndex(DATA_PAGE_INDEX);
         }
         else
@@ -145,6 +141,30 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
             ui->contentListView->setRootIndex(index);
             ui->stackedWidget->setCurrentIndex(LIST_PAGE_INDEX);
         }
+    }
+}
+
+void ContentWidget::setWidgetSignals(gui::PluginWidgetInterface *pluginWidget)
+{
+    QMessageBox messageBox(QMessageBox::Question,
+                           QObject::tr("Save settings dialog"),
+                           QObject::tr("Policy settings were modified do you want to save them?"),
+                           QMessageBox::Yes | QMessageBox::No,
+                           this);
+    messageBox.setButtonText(QMessageBox::Yes, tr("Yes"));
+    messageBox.setButtonText(QMessageBox::No, tr("No"));
+    int reply = messageBox.exec();
+
+    switch (reply)
+    {
+    case QMessageBox::Yes:
+        emit pluginWidget->acceptPressed();
+        break;
+    case QMessageBox::No:
+        emit pluginWidget->rejectPressed();
+        break;
+    default:
+        break;
     }
 }
 

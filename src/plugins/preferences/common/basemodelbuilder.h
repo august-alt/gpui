@@ -43,8 +43,8 @@ protected:
     BaseModelBuilder &operator=(const BaseModelBuilder &) = delete; // copy assignment
     BaseModelBuilder &operator=(BaseModelBuilder &&) = delete;      // move assignment
 
-    template<template<typename> typename OptionalType, typename T>
-    T getOptionalPropertyData(const OptionalType<T> &data)
+    template<template<typename, bool> typename OptionalType, typename T, bool fund>
+    T getOptionalPropertyData(const OptionalType<T, fund> &data)
     {
         if (data.present())
         {

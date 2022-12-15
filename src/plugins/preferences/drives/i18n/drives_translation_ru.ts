@@ -229,7 +229,7 @@
     <message>
         <location filename="../driveswidget.ui" line="413"/>
         <source>Reconnect:</source>
-        <translation>Переподключится:</translation>
+        <translation>Переподключиться:</translation>
     </message>
     <message>
         <location filename="../driveswidget.ui" line="433"/>
@@ -262,7 +262,7 @@
     <message>
         <location filename="../drivescontaineritem.cpp" line="38"/>
         <source>Reconnect</source>
-        <translation>Переподключится</translation>
+        <translation>Переподключиться</translation>
     </message>
     <message>
         <location filename="../driveswidgetslots.cpp" line="78"/>
@@ -309,7 +309,7 @@
     <message>
         <location filename="../driveswidgetslots.cpp" line="47"/>
         <source>Delete all, starting at:</source>
-        <translation>Удалить начиная с:</translation>
+        <translation>Удалить, начиная с:</translation>
     </message>
     <message>
         <location filename="../driveswidgetslots.cpp" line="48"/>

@@ -272,6 +272,15 @@ void handlePresentation(const std::shared_ptr<model::presentation::Presentation>
                     auto enumItem = dynamic_cast<model::admx::PolicyEnumElement *>(item.get());
                     if (enumItem)
                     {
+                        if (!dropdownList->noSort)
+                        {
+                            typedef std::pair<std::string, std::unique_ptr<model::admx::EnumValue>> enumType;
+
+                            std::sort(enumItem->items.begin(), enumItem->items.end(), [](enumType &a, enumType &b) {
+                                return a.first < b.first;
+                            });
+                        }
+
                         for (auto &value : enumItem->items)
                         {
                             auto name = findStringById(value.first, policyResources);
@@ -454,6 +463,7 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
                                                  model::admx::PolicyType::User);
             copyItem->setData(item.item->data(PolicyRoles::SUPPORTED_ON), PolicyRoles::SUPPORTED_ON);
             copyItem->setData(item.item->data(PolicyRoles::PRESENTATION), PolicyRoles::PRESENTATION);
+            copyItem->setData(item.item->data(PolicyRoles::POLICY), PolicyRoles::POLICY);
             assignParentCategory(item.category, item.item, copyItem);
         }
     }

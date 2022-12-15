@@ -72,6 +72,10 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
     const QCommandLineOption bundleOption("b",
                                           QObject::tr("The full path of policy bundle to load."),
                                           QObject::tr("path"));
+    const QCommandLineOption nameOption("n",
+                                        QObject::tr("This options left for compatibility with ADMC. "
+                                                    "Currently it does nothing."),
+                                        QObject::tr("name"));
     const QCommandLineOption helpOption(QStringList()
 #ifdef Q_OS_WIN
                                             << QStringLiteral("?")
@@ -83,6 +87,7 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
     d->parser->addOption(pathOption);
     d->parser->addOption(bundleOption);
     d->parser->addOption(helpOption);
+    d->parser->addOption(nameOption);
 
     const QCommandLineOption versionOption = d->parser->addVersionOption();
 

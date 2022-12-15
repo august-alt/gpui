@@ -306,11 +306,8 @@ QString MainWindow::getLanguage() const
 
 void MainWindow::setAdmxPath(const QString &admxPath)
 {
-    if (!d->options.policyBundle.trimmed().isEmpty())
-    {
-        d->options.policyBundle = admxPath;
-        admxPathChanged(admxPath);
-    }
+    d->options.policyBundle = admxPath;
+    admxPathChanged(admxPath);
 }
 
 QString MainWindow::getAdmxPath() const
@@ -384,6 +381,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     d->searchModel->setSourceModel(d->itemRoleSortModel.get());
     d->searchModel->setFilterRole(Qt::DisplayRole);
     d->searchModel->setFilterFixedString("");
+    d->searchModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     d->searchModel->setRecursiveFilteringEnabled(true);
 
     ui->treeView->setModel(d->searchModel.get());

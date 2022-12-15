@@ -233,6 +233,13 @@ void PreferencesTreeModel::populateModel()
     machineShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
     machineShortcutsItems->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
 
+    auto machineDrivesItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
+    machineDrivesItem->setDisplayName(QObject::tr("Drive Maps").toStdString());
+    machineDrivesItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
+    machineDrivesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, drivesTypeIds);
+    machineDrivesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Drive Maps Settings.").toStdString());
+    machineDrivesItem->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
+
     //======================================================================================================================
 
     auto userNamespace = insertItem<FolderItem>(topItem);
@@ -286,6 +293,11 @@ void PreferencesTreeModel::populateModel()
     userShortcutsItems->setDisplayName(QObject::tr("Shortcuts").toStdString());
     userShortcutsItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, shortcutsTypeIds);
     userShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
-}
+
+    auto userSharesItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
+    userSharesItem->setDisplayName(QObject::tr("Network Shares").toStdString());
+    userSharesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, sharesTypeIds);
+    userSharesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network shares settings.").toStdString());
+ }
 
 } // namespace preferences

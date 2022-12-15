@@ -48,12 +48,18 @@ std::unique_ptr<PreferencesModel> DrivesModelBuilder::schemaToModel(std::unique_
             auto sessionItem = model->insertItem<DrivesContainerItem>(model->rootItem());
             sessionItem->setupListeners();
 
+            auto letter = currentProperties.letter();
+            if (letter.size() != 0)
+            {
+                letter.append(":");
+            }
+
             auto drives = sessionItem->getDrives();
             drives->setProperty(DrivesItem::ACTION, actionState);
             drives->setProperty(DrivesItem::PATH, currentProperties.path().c_str());
             drives->setProperty(DrivesItem::PERSISTENT, static_cast<bool>(currentProperties.persistent()));
             drives->setProperty(DrivesItem::LABEL, getOptionalPropertyData(currentProperties.label()).c_str());
-            drives->setProperty(DrivesItem::LETTER, currentProperties.letter().c_str());
+            drives->setProperty(DrivesItem::LETTER, letter.c_str());
             drives->setProperty(DrivesItem::USER_NAME, getOptionalPropertyData(currentProperties.userName()).c_str());
             drives->setProperty(DrivesItem::CPASSWORD, getOptionalPropertyData(currentProperties.cpassword()).c_str());
             drives->setProperty(DrivesItem::USE_LETTER, static_cast<bool>(currentProperties.useLetter()));
@@ -80,19 +86,30 @@ std::unique_ptr<Drives> DrivesModelBuilder::modelToSchema(std::unique_ptr<Prefer
             auto driveModel  = drivesContainer->getDrives();
             auto commonModel = drivesContainer->getCommon();
 
-            auto drive = createRootElement<Drive_t>("{935D1B74-9CB8-4e3c-9914-7DD559B7A417}");
+            auto drive = Drive_t("", "", "");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CLSID),
+                                     "{935D1B74-9CB8-4e3c-9914-7DD559B7A417}");
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::CHANGED), createDateOfChange());
+            commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
+                                     driveModel->property<std::string>(DrivesItem::PATH));
+
+            auto letter = driveModel->property<std::string>(DrivesItem::LETTER);
+            if (letter.size() != 0)
+            {
+                letter = letter.substr(0, 1);
+            }
 
             auto properties = DriveProperties_t(driveModel->property<std::string>(DrivesItem::PATH),
                                                 driveModel->property<bool>(DrivesItem::PERSISTENT),
                                                 driveModel->property<bool>(DrivesItem::USE_LETTER),
-                                                driveModel->property<std::string>(DrivesItem::LETTER));
+                                                letter);
             properties.action(getActionCheckboxModel(driveModel->property<int>(DrivesItem::ACTION)));
             properties.path(driveModel->property<std::string>(DrivesItem::PATH));
             properties.label(driveModel->property<std::string>(DrivesItem::LABEL));
             properties.userName(driveModel->property<std::string>(DrivesItem::USER_NAME));
             properties.cpassword(driveModel->property<std::string>(DrivesItem::CPASSWORD));
-            properties.thisDrive(driveModel->property<std::string>(DrivesItem::THIS_DRIVE));
-            properties.allDrives(driveModel->property<std::string>(DrivesItem::ALL_DRIVES));
+            properties.thisDrive(getDrivesCheckboxModel(driveModel->property<int>(DrivesItem::THIS_DRIVE)));
+            properties.allDrives(getDrivesCheckboxModel(driveModel->property<int>(DrivesItem::ALL_DRIVES)));
 
             drive.Properties().push_back(properties);
             setCommonModelData(drive, commonModel);
@@ -122,6 +139,21 @@ int DrivesModelBuilder::getDrivesCheckboxIndex(const std::string &data)
     }
 
     return 0;
+}
+
+std::string DrivesModelBuilder::getDrivesCheckboxModel(const int index)
+{
+    switch (index)
+    {
+    case 1:
+        return "HIDE";
+    case 2:
+        return "SHOW";
+    default:
+        break;
+    }
+
+    return "NOCHANGE";
 }
 
 } // namespace preferences

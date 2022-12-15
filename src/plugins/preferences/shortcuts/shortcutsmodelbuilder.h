@@ -50,6 +50,10 @@ private:
     std::string encodeLocation(const int targetType);
 
     int decodeLocation(const std::string &type);
+
+    int decodeTargetType(const std::string &type);
+
+    std::string encodeTargetType(const int type);
 };
 } // namespace preferences
 

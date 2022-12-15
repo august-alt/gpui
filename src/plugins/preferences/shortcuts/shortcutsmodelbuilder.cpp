@@ -51,6 +51,14 @@ std::vector<std::string> locations = {
     "%CommonStartUpDir%",
     "%CommonFavoritesDir%",
 };
+
+enum TargetType
+{
+    FILESYSTEM = 0,
+    URL        = 1,
+    SHELL      = 2,
+};
+
 } // namespace
 
 namespace preferences
@@ -85,11 +93,13 @@ std::unique_ptr<PreferencesModel> ShortcutsModelBuilder::schemaToModel(std::uniq
                 shortcutPath = currentProperties.shortcutPath().c_str();
             }
 
+            int targetType = decodeTargetType(currentProperties.targetType());
+
             auto shortcuts = sessionItem->getShortcuts();
             shortcuts->setProperty(ShortcutsItem::ACTION, actionState);
             shortcuts->setProperty(ShortcutsItem::PIDL, getOptionalPropertyData(currentProperties.pidl()).c_str());
             shortcuts->setProperty(ShortcutsItem::SHORTCUT_PATH, shortcutPath);
-            shortcuts->setProperty(ShortcutsItem::TARGET_TYPE, currentProperties.targetType().c_str());
+            shortcuts->setProperty(ShortcutsItem::TARGET_TYPE, targetType);
             shortcuts->setProperty(ShortcutsItem::TARGET_PATH, currentProperties.targetPath().c_str());
             shortcuts->setProperty(ShortcutsItem::LOCATION, index);
             shortcuts->setProperty(ShortcutsItem::ARGUMENTS,
@@ -139,7 +149,9 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
 
             auto shortcutPath = prefix + shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_PATH);
 
-            auto properties = ShortcutsProperties_t(shortcutModel->property<std::string>(ShortcutsItem::TARGET_TYPE),
+            std::string targetType = encodeTargetType(shortcutModel->property<int>(ShortcutsItem::TARGET_TYPE));
+
+            auto properties = ShortcutsProperties_t(targetType,
                                                     shortcutModel->property<std::string>(ShortcutsItem::TARGET_PATH),
                                                     shortcutPath);
             properties.action(getActionCheckboxModel(shortcutModel->property<int>(ShortcutsItem::ACTION)));
@@ -199,6 +211,41 @@ int ShortcutsModelBuilder::decodeLocation(const std::string &type)
     }
 
     return 0;
+}
+
+int ShortcutsModelBuilder::decodeTargetType(const std::string &type)
+{
+    if (type.compare("URL") == 0)
+    {
+        return URL;
+    }
+
+    if (type.compare("SHELL") == 0)
+    {
+        return SHELL;
+    }
+
+    return FILESYSTEM;
+}
+
+std::string ShortcutsModelBuilder::encodeTargetType(const int type)
+{
+    std::string result = "FILESYSTEM";
+
+    switch (type)
+    {
+    case URL:
+        result = "URL";
+        break;
+    case SHELL:
+        result = "SHELL";
+        break;
+    case FILESYSTEM:
+    default:
+        break;
+    }
+
+    return result;
 }
 
 int ShortcutsModelBuilder::decodeWindowMode(const std::string &windowMode)

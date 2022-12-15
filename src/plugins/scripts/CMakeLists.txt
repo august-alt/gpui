@@ -19,7 +19,6 @@ set(HEADERS
     scriptsdialog.h
     scriptsmodel.h
     basescriptswidget.h
-    scriptwidgetcommonslots.h
     addscriptwidget.h
     scriptssnapin.h
     scriptssnapinprivate.h
@@ -41,7 +40,6 @@ set(SOURCES
     scriptsdialog.cpp
     scriptsmodel.cpp
     basescriptswidget.cpp
-    scriptwidgetcommonslots.cpp
     addscriptwidget.cpp
     scriptssnapin.cpp
     scriptssnapinprivate.cpp

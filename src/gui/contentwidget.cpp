@@ -124,6 +124,29 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
+        ui->descriptionTextEdit->setText(
+            model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
+
+        auto widget = ui->scrollArea->takeWidget();
+
+        bool deleteWidget = true;
+
+        auto pluginWidget = dynamic_cast<gui::PluginWidgetInterface *>(widget);
+        if (pluginWidget && pluginWidget->hasDataChanged())
+        {
+            ui->scrollArea->setWidget(pluginWidget);
+            setWidgetSignals(pluginWidget);
+
+            connect(pluginWidget, &gui::PluginWidgetInterface::rejectPressed, [&deleteWidget]() {
+                deleteWidget = false;
+            });
+        }
+
+        if (deleteWidget && widget)
+        {
+            delete widget;
+        }
+
         if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
         {
             auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET)

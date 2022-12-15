@@ -29,9 +29,8 @@ namespace scripts_plugin
 {
 ScriptsWidget::ScriptsWidget(QWidget *parent)
     : QWidget(parent)
-    , BaseScriptWidget()
+    , BaseScriptWidget(parent)
     , ui(new Ui::ScriptsWidget())
-    , commonSlots(std::make_unique<ScriptWidgetCommonSlots>(parent, this))
 {
     ui->setupUi(this);
 }
@@ -48,32 +47,32 @@ void ScriptsWidget::setItem(GroupScriptContainerItem *item, bool isStartUpFlag)
 
 void ScriptsWidget::on_upPushButton_clicked()
 {
-    commonSlots->onUpClicked();
+    BaseScriptWidget::onUpClicked();
 }
 
 void ScriptsWidget::on_downPushButton_clicked()
 {
-    commonSlots->onDownClicked();
+    BaseScriptWidget::onDownClicked();
 }
 
 void ScriptsWidget::on_addPushButton_clicked()
 {
-    commonSlots->onAddClicked(true);
+    BaseScriptWidget::onAddClicked(true);
 }
 
 void ScriptsWidget::on_editPushButton_clicked()
 {
-    commonSlots->onEditClicked();
+    BaseScriptWidget::onEditClicked();
 }
 
 void ScriptsWidget::on_removePushButton_clicked()
 {
-    commonSlots->onDeleteClicked();
+    BaseScriptWidget::onDeleteClicked();
 }
 
 void ScriptsWidget::on_showPushButton_clicked()
 {
-    commonSlots->onBrowseClicked();
+    BaseScriptWidget::onBrowseClicked();
 }
 
 } // namespace scripts_plugin

@@ -22,7 +22,6 @@
 #define MVVM_FOLDERS_SCRIPTS_WIDGET_H
 
 #include "basescriptswidget.h"
-#include "scriptwidgetcommonslots.h"
 
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
@@ -68,8 +67,6 @@ private:
 
 private:
     Ui::ScriptsWidget *ui = nullptr;
-
-    std::unique_ptr<ScriptWidgetCommonSlots> commonSlots;
 };
 
 } // namespace scripts_plugin

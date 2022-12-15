@@ -22,6 +22,7 @@
 #define BASESCRIPTSWIDGET_H
 
 #include "groupscriptcontaineritem.h"
+#include "scriptitemcontainer.h"
 
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
@@ -35,13 +36,21 @@ namespace scripts_plugin
 class BaseScriptWidget
 {
 public:
-    BaseScriptWidget();
+    BaseScriptWidget(QWidget *p);
     virtual ~BaseScriptWidget();
 
     BaseScriptWidget(const BaseScriptWidget &) = delete;            //copy ctor
     BaseScriptWidget(BaseScriptWidget &&)      = delete;            // mode ctor
     BaseScriptWidget &operator=(const BaseScriptWidget &) = delete; //copy assignment
     BaseScriptWidget &operator=(BaseScriptWidget &&) = delete;      //mode assignment
+
+public:
+    void onUpClicked();
+    void onDownClicked();
+    void onAddClicked(bool isScripts);
+    void onEditClicked();
+    void onDeleteClicked();
+    void onBrowseClicked();
 
 public:
     std::unique_ptr<ModelView::ViewModel> model = nullptr;
@@ -85,6 +94,12 @@ public:
                              }
                          });
     }
+
+private:
+    ScriptItemContainer *findRootItem(bool isScripts);
+
+private:
+    QWidget *parent;
 };
 } // namespace scripts_plugin
 

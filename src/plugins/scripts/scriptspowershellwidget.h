@@ -22,7 +22,6 @@
 #define MVVM_FOLDERS_SCRIPTS_POWER_SHELL_WIDGET_H
 
 #include "basescriptswidget.h"
-#include "scriptwidgetcommonslots.h"
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 QT_BEGIN_NAMESPACE
@@ -67,8 +66,6 @@ private:
 
 private:
     Ui::ScriptsPowerShellWidget *ui;
-
-    std::unique_ptr<ScriptWidgetCommonSlots> commonSlots;
 };
 
 } // namespace scripts_plugin

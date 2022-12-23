@@ -140,6 +140,21 @@ void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
         it.next();
     }
 
+    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+    bool loadTranslate = qtTranslator->load(QString("qtbase_").append(QLocale::system().name()),
+                                            QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+
+    if (loadTranslate)
+    {
+//        QCoreApplication::installTranslator(qtTranslator.get());
+        QApplication::instance()->installTranslator(qtTranslator.get());
+        d->translators.push_back(std::move(qtTranslator));
+    }
+    else
+    {
+        qWarning() << "This qtbase not found.";
+    }
+
     d->model     = std::make_unique<PreferencesTreeModel>();
     d->viewModel = std::make_unique<ModelView::TopItemsViewModel>(d->model.get());
     d->proxyViewModel->setSourceModel(d->viewModel.get());

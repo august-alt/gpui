@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>384</width>
-    <height>496</height>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -340,7 +340,23 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QKeySequenceEdit" name="shortkutKeySequenceEdit"/>
+       <widget class="QKeySequenceEdit" name="shortkutKeySequenceEdit">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ghjghj&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="whatsThis">
+         <string comment="fghgh"/>
+        </property>
+        <property name="accessibleName">
+         <string comment="32354"/>
+        </property>
+        <property name="accessibleDescription">
+         <string comment="io;kj.,jk"/>
+        </property>
+        <property name="keySequence">
+         <string/>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>QKeySequenceEdit</name>
+    <message>
+        <source>Press shortcut</source>
+        <translation>Press shortcut</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../shortcutscontaineritem.cpp" line="38"/>

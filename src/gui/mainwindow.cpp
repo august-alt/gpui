@@ -236,7 +236,10 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::updateStatusBar);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
-    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex &index) { d->itemName = index.data().toString(); });
+    connect(d->contentWidget, &ContentWidget::modelItemSelected,
+            [&](const QModelIndex &current) {
+                d->itemName = current.data().toString();
+            });
 
     QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
                                                       : QLocale::system().name().replace("-", "_"));

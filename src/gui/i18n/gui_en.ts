@@ -5,16 +5,19 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../aboutdialog.ui" line="+14"/>
+        <location/>
         <source>About GPUI</source>
         <translation>About GPUI</translation>
     </message>
     <message>
         <location line="+36"/>
+        <location/>
         <source>Copyright (C) 2022 BaseALT Ltd.</source>
         <translation>Copyright (C) 2022 BaseALT Ltd.</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Version 0.2.17</source>
         <translation>Version 0.2.17</translation>
     </message>
@@ -70,6 +73,7 @@ context (user policy option).</translation>
     <name>ContentWidget</name>
     <message>
         <location filename="../contentwidget.ui" line="+14"/>
+        <location/>
         <source>Form</source>
         <translation>Form</translation>
     </message>
@@ -95,6 +99,7 @@ context (user policy option).</translation>
     </message>
     <message>
         <location line="+58"/>
+        <location/>
         <source>Help:</source>
         <translation>Help:</translation>
     </message>
@@ -722,36 +727,45 @@ context (user policy option).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Local group policies templates</translation>
     </message>
     <message>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+7"/>
         <source>Machine</source>
-        <translation type="vanished">Machine</translation>
+        <translation>Machine</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>Machine level policies</source>
-        <translation type="vanished">Machine level policies</translation>
+        <translation>Machine level policies</translation>
     </message>
     <message>
+        <location line="+5"/>
+        <location line="+13"/>
         <source>Administrative Templates</source>
-        <translation type="vanished">Administrative Templates</translation>
+        <translation>Administrative Templates</translation>
     </message>
     <message>
+        <location line="-11"/>
         <source>Machine administrative templates</source>
-        <translation type="vanished">Machine administrative templates</translation>
+        <translation>Machine administrative templates</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>User</source>
-        <translation type="vanished">User</translation>
+        <translation>User</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>User level policies</source>
-        <translation type="vanished">User level policies</translation>
+        <translation>User level policies</translation>
     </message>
     <message>
+        <location line="+7"/>
         <source>User administrative templates</source>
-        <translation type="vanished">User administrative templates</translation>
+        <translation>User administrative templates</translation>
     </message>
     <message>
         <source>Error</source>
@@ -762,12 +776,13 @@ context (user policy option).</translation>
         <translation type="vanished">Error writing file:</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location filename="../mainwindow.cpp" line="+12"/>
         <source>[Domain Group Policy]</source>
         <translation>[Domain Group Policy]</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="-31"/>
         <source>[Local Group Policy]</source>
         <translation>[Local Group Policy]</translation>
     </message>

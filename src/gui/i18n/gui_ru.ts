@@ -5,16 +5,19 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../aboutdialog.ui" line="+14"/>
+        <location/>
         <source>About GPUI</source>
         <translation>О приложении GPUI</translation>
     </message>
     <message>
         <location line="+36"/>
+        <location/>
         <source>Copyright (C) 2022 BaseALT Ltd.</source>
         <translation>Авторские права: ООО «Базальт СПО», 2022.</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Version 0.2.17</source>
         <translation>Версия 0.2.17</translation>
     </message>
@@ -68,6 +71,7 @@ context (user policy option).</source>
     <name>ContentWidget</name>
     <message>
         <location filename="../contentwidget.ui" line="+14"/>
+        <location/>
         <source>Form</source>
         <translation>Форма</translation>
     </message>
@@ -93,6 +97,7 @@ context (user policy option).</source>
     </message>
     <message>
         <location line="+58"/>
+        <location/>
         <source>Help:</source>
         <translation>Помощь:</translation>
     </message>
@@ -720,36 +725,45 @@ context (user policy option).</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Шаблон локальных групповых политик</translation>
     </message>
     <message>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+7"/>
         <source>Machine</source>
-        <translation type="vanished">Компьютер</translation>
+        <translation>Компьютер</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>Machine level policies</source>
-        <translation type="vanished">Политики настройки компьютера</translation>
+        <translation>Политики настройки компьютера</translation>
     </message>
     <message>
+        <location line="+5"/>
+        <location line="+13"/>
         <source>Administrative Templates</source>
-        <translation type="vanished">Административные шаблоны</translation>
+        <translation>Административные шаблоны</translation>
     </message>
     <message>
+        <location line="-11"/>
         <source>Machine administrative templates</source>
-        <translation type="vanished">Административные шаблоны компьютера</translation>
+        <translation>Административные шаблоны компьютера</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>User</source>
-        <translation type="vanished">Пользователь</translation>
+        <translation>Пользователь</translation>
     </message>
     <message>
+        <location line="+2"/>
         <source>User level policies</source>
-        <translation type="vanished">Политики настройки пользователей</translation>
+        <translation>Политики настройки пользователей</translation>
     </message>
     <message>
+        <location line="+7"/>
         <source>User administrative templates</source>
-        <translation type="vanished">Пользовательские административные шаблоны</translation>
+        <translation>Пользовательские административные шаблоны</translation>
     </message>
     <message>
         <source>Error</source>
@@ -760,12 +774,13 @@ context (user policy option).</source>
         <translation type="vanished">Ошибка записи файла:</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location filename="../mainwindow.cpp" line="+12"/>
         <source>[Domain Group Policy]</source>
         <translation>[Доменная групповая политика]</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="-31"/>
         <source>[Local Group Policy]</source>
         <translation>[Локальная групповая политика]</translation>
     </message>

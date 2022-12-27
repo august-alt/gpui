@@ -89,7 +89,8 @@ private:
     void connectDialogBoxSignals();
     void onDataChanged();
 
-    void onApplyClicked();
+    void onApplyClickedExternal();
+    void onApplyClickedInternal();
     void onCancelClicked();
 };
 

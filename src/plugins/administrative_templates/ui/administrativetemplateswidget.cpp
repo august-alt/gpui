@@ -113,7 +113,10 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
         }
     });
 
-    connect(this, &AdministrativeTemplatesWidget::acceptPressed, this, &AdministrativeTemplatesWidget::onApplyClicked);
+    connect(this,
+            &AdministrativeTemplatesWidget::acceptPressed,
+            this,
+            &AdministrativeTemplatesWidget::onApplyClickedExternal);
     connect(this, &AdministrativeTemplatesWidget::rejectPressed, this, &AdministrativeTemplatesWidget::onCancelClicked);
 
     connectDialogBoxSignals();
@@ -262,7 +265,7 @@ void AdministrativeTemplatesWidget::onDataChanged()
     {
     case QMessageBox::Yes:
         emit ui->okPushButton->clicked();
-        onApplyClicked();
+        onApplyClickedInternal();
         break;
     case QMessageBox::No:
         onCancelClicked();
@@ -272,13 +275,19 @@ void AdministrativeTemplatesWidget::onDataChanged()
     }
 }
 
+void AdministrativeTemplatesWidget::onApplyClickedExternal()
+{
+    emit ui->okPushButton->clicked();
+    onApplyClickedInternal();
+}
+
 void AdministrativeTemplatesWidget::connectDialogBoxSignals()
 {
-    connect(ui->okPushButton, &QPushButton::clicked, this, &AdministrativeTemplatesWidget::onApplyClicked);
+    connect(ui->okPushButton, &QPushButton::clicked, this, &AdministrativeTemplatesWidget::onApplyClickedInternal);
     connect(ui->cancelPushButton, &QPushButton::clicked, this, &AdministrativeTemplatesWidget::onCancelClicked);
 }
 
-void AdministrativeTemplatesWidget::onApplyClicked()
+void AdministrativeTemplatesWidget::onApplyClickedInternal()
 {
     d->dataChanged = false;
     d->manager->setupPolicyState(d->policyState);

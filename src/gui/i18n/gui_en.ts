@@ -711,7 +711,7 @@ context (user policy option).</translation>
         <translation>Policy settings were modified do you want to save them?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+100"/>
+        <location filename="../presentationbuilder.cpp" line="+102"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
@@ -834,6 +834,38 @@ context (user policy option).</translation>
         <location line="+28"/>
         <source>Open Directory</source>
         <translation>Open Directory</translation>
+    </message>
+    <message>
+        <location filename="../altspinbox.cpp" line="+76"/>
+        <location line="+7"/>
+        <source>Information message</source>
+        <translation>Information message</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+7"/>
+        <source>Value: </source>
+        <translation>Value: </translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source> is greater than maximum allowed value of: </source>
+        <translation> is greater than maximum allowed value of: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Maximum allowed value has been set.</source>
+        <translation>. Maximum allowed value has been set.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source> is less than minimum allowed value of: </source>
+        <translation> is less than minimum allowed value of: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Minimum allowed value has been set.</source>
+        <translation>. Minimum allowed value has been set.</translation>
     </message>
 </context>
 <context>

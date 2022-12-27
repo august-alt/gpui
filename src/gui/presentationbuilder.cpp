@@ -49,6 +49,8 @@
 
 #include "listboxdialog.h"
 
+#include "altspinbox.h"
+
 #include <QVBoxLayout>
 
 #include <QCheckBox>
@@ -558,7 +560,7 @@ private:
     {
         if (spin)
         {
-            QSpinBox *spinBox = new QSpinBox();
+            AltSpinBox *spinBox = new AltSpinBox();
             spinBox->setMinimum(0);
             spinBox->setMaximum(std::numeric_limits<int>::max());
             spinBox->setSingleStep(step);

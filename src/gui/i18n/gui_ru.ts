@@ -709,7 +709,7 @@ context (user policy option).</source>
         <translation>Настройки политки были изменены, хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+100"/>
+        <location filename="../presentationbuilder.cpp" line="+102"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -832,6 +832,38 @@ context (user policy option).</source>
         <location line="+28"/>
         <source>Open Directory</source>
         <translation>Открыть папку</translation>
+    </message>
+    <message>
+        <location filename="../altspinbox.cpp" line="+76"/>
+        <location line="+7"/>
+        <source>Information message</source>
+        <translation>Информация</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+7"/>
+        <source>Value: </source>
+        <translation>Значение: </translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source> is greater than maximum allowed value of: </source>
+        <translation> больше максимально возможного значения: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Maximum allowed value has been set.</source>
+        <translation>. Максимально возможное значение было установлено.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source> is less than minimum allowed value of: </source>
+        <translation> меньше чем минимально возможное значение: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Minimum allowed value has been set.</source>
+        <translation>. Минимально возможное значение было установлено.</translation>
     </message>
 </context>
 <context>

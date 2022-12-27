@@ -64,6 +64,9 @@ public:
         = AdministrativeTemplatesWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
     AdministrativeTemplatesWidget::PolicyWidgetState initialState
         = AdministrativeTemplatesWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
+
+    model::registry::PolicyStateManager::PolicyState policyState
+        = model::registry::PolicyStateManager::STATE_NOT_CONFIGURED;
 };
 
 AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
@@ -81,7 +84,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
             qWarning() << "Setting state not configured" << d->manager.get();
             if (d->manager)
             {
-                d->manager->setupPolicyState(model::registry::PolicyStateManager::STATE_NOT_CONFIGURED);
+                d->policyState = model::registry::PolicyStateManager::STATE_NOT_CONFIGURED;
             }
         }
     });
@@ -93,7 +96,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
             qWarning() << "Setting state enabled" << d->manager.get();
             if (d->manager)
             {
-                d->manager->setupPolicyState(model::registry::PolicyStateManager::STATE_ENABLED);
+                d->policyState = model::registry::PolicyStateManager::STATE_ENABLED;
             }
         }
     });
@@ -105,7 +108,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
             qWarning() << "Setting state disabled" << d->manager.get();
             if (d->manager)
             {
-                d->manager->setupPolicyState(model::registry::PolicyStateManager::STATE_DISABLED);
+                d->policyState = model::registry::PolicyStateManager::STATE_DISABLED;
             }
         }
     });
@@ -278,6 +281,7 @@ void AdministrativeTemplatesWidget::connectDialogBoxSignals()
 void AdministrativeTemplatesWidget::onApplyClicked()
 {
     d->dataChanged = false;
+    d->manager->setupPolicyState(d->policyState);
     savePolicyChanges();
 }
 

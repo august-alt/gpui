@@ -38,10 +38,15 @@ protected:
     QValidator::State validate(QString &text, int &pos) const override;
 
 signals:
-    void fixToValidRange(const QString &wrongInput) const;
+    void fixStringInput(const QString &wrongInput) const;
+    void fixToValidRange(const int currentValue, const int boundValue) const;
+
+private slots:
+    void onFixStringInput(const QString &wrongInput);
+    void onFixToValidRange(const int currentValue, const int boundValue);
 
 private:
-    void openMessageBox(const QString &wrongInput);
+    void openMessageBox(const QString &value, bool isMaximum);
 };
 
 } // namespace gui

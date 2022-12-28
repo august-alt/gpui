@@ -726,7 +726,7 @@ context (user policy option).</translation>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../mainwindow.cpp" line="+330"/>
         <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Local group policies templates</translation>
@@ -836,19 +836,19 @@ context (user policy option).</translation>
         <translation>Open Directory</translation>
     </message>
     <message>
-        <location filename="../altspinbox.cpp" line="+76"/>
-        <location line="+7"/>
+        <location filename="../altspinbox.cpp" line="+94"/>
+        <location line="+10"/>
         <source>Information message</source>
         <translation>Information message</translation>
     </message>
     <message>
-        <location line="-6"/>
-        <location line="+7"/>
+        <location line="-9"/>
+        <location line="+10"/>
         <source>Value: </source>
         <translation>Value: </translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-9"/>
         <source> is greater than maximum allowed value of: </source>
         <translation> is greater than maximum allowed value of: </translation>
     </message>
@@ -858,7 +858,7 @@ context (user policy option).</translation>
         <translation>. Maximum allowed value has been set.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source> is less than minimum allowed value of: </source>
         <translation> is less than minimum allowed value of: </translation>
     </message>

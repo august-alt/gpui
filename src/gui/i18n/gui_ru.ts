@@ -724,7 +724,7 @@ context (user policy option).</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../mainwindow.cpp" line="+330"/>
         <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Шаблон локальных групповых политик</translation>
@@ -834,19 +834,19 @@ context (user policy option).</source>
         <translation>Открыть папку</translation>
     </message>
     <message>
-        <location filename="../altspinbox.cpp" line="+76"/>
-        <location line="+7"/>
+        <location filename="../altspinbox.cpp" line="+94"/>
+        <location line="+10"/>
         <source>Information message</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location line="-6"/>
-        <location line="+7"/>
+        <location line="-9"/>
+        <location line="+10"/>
         <source>Value: </source>
         <translation>Значение: </translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-9"/>
         <source> is greater than maximum allowed value of: </source>
         <translation> больше максимально возможного значения: </translation>
     </message>
@@ -856,7 +856,7 @@ context (user policy option).</source>
         <translation>. Максимально возможное значение было установлено.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source> is less than minimum allowed value of: </source>
         <translation> меньше чем минимально возможное значение: </translation>
     </message>

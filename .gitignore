@@ -82,3 +82,4 @@ docs/
 # Generated files
 src/plugins/preferences/schemas/*.cpp
 src/plugins/preferences/schemas/*.h
+*.translations.qrc

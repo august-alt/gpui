@@ -24,62 +24,45 @@
 #include "device/devicecontaineritem.h"
 #include "drives/drivescontaineritem.h"
 #include "files/filescontaineritem.h"
-#include "folders/foldercontaineritem.h"
 #include "folder_options/folderoptionscontaineritem.h"
 #include "folder_options/folderoptionsitem.h"
 #include "folder_options/openwithitem.h"
+#include "folders/foldercontaineritem.h"
 #include "ini/inicontaineritem.h"
+#include "local_users_and_groups/groupmemberitem.h"
+#include "local_users_and_groups/groupmemberscontaineritem.h"
 #include "local_users_and_groups/localgroupcontaineritem.h"
 #include "local_users_and_groups/localgroupitem.h"
 #include "local_users_and_groups/localuseritem.h"
-#include "local_users_and_groups/groupmemberitem.h"
-#include "local_users_and_groups/groupmemberscontaineritem.h"
-#include "network_options/networkcontaineritem.h"
 #include "network_options/dialupitem.h"
+#include "network_options/networkcontaineritem.h"
 #include "network_options/vpnitem.h"
 #include "power_options/powercontaineritem.h"
 #include "power_options/poweroptionsitem.h"
 #include "power_options/powerplanitem.h"
 #include "power_options/powerschemeitem.h"
-#include "registry/registrycontaineritem.h"
-#include "printers/printercontaineritem.h"
 #include "printers/localprinteritem.h"
+#include "printers/printercontaineritem.h"
 #include "printers/sharedprinteritem.h"
 #include "printers/tcpprinteritem.h"
+#include "registry/registrycontaineritem.h"
 #include "shares/sharescontaineritem.h"
 #include "shortcuts/shortcutscontaineritem.h"
 #include "variables/variablescontaineritem.h"
 
 namespace preferences
 {
-
 PreferencesModel::PreferencesModel()
     : ::ModelView::SessionModel("PreferencesModel")
 {
-    registerItem<DataSourceContainerItem>();
     registerItem<DrivesContainerItem>();
-    registerItem<DeviceContainerItem>();
     registerItem<FilesContainerItem>();
     registerItem<FolderContainerItem>();
-    registerItem<FolderOptionsContainerItem<FolderOptionsItem>>();
-    registerItem<FolderOptionsContainerItem<OpenWithItem>>();
     registerItem<IniContainerItem>();
     registerItem<RegistryContainerItem>();
     registerItem<SharesContainerItem>();
     registerItem<ShortcutsContainerItem>();
     registerItem<VariablesContainerItem>();
-    registerItem<LocalGroupContainerItem<LocalGroupItem>>();
-    registerItem<LocalGroupContainerItem<LocalUserItem>>();
-    registerItem<GroupMemberItem>();
-    registerItem<GroupMembersContainerItem>();
-    registerItem<NetworkContainerItem<DialUpItem>>();
-    registerItem<NetworkContainerItem<VpnItem>>();
-    registerItem<PowerContainerItem<PowerOptionsItem>>();
-    registerItem<PowerContainerItem<PowerPlanItem>>();
-    registerItem<PowerContainerItem<PowerSchemeItem>>();
-    registerItem<PrinterContainerItem<LocalPrinterItem>>();
-    registerItem<PrinterContainerItem<SharedPrinterItem>>();
-    registerItem<PrinterContainerItem<TcpPrinterItem>>();
 }
 
-}
+} // namespace preferences

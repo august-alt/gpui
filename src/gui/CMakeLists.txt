@@ -70,7 +70,7 @@ add_definitions(
     -DGPUI_GUI_LIBRARY
 )
 
-add_translation_resource(RESOURCES_SRC ${QM_FILES})
+add_translation_resource(RESOURCES_SRC "gui" ${QM_FILES})
 
 qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 

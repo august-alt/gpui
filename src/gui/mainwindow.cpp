@@ -59,11 +59,6 @@
 
 #include <stack>
 
-void registerResources()
-{
-    Q_INIT_RESOURCE(translations);
-}
-
 namespace gpui
 {
 class MainWindowPrivate
@@ -207,8 +202,6 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
 {
-    registerResources();
-
     d->manager = manager;
 
     d->options = options;

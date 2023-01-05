@@ -18,8 +18,8 @@
     <message>
         <location line="+10"/>
         <location/>
-        <source>Version 0.2.17</source>
-        <translation>Версия 0.2.17</translation>
+        <source>Version</source>
+        <translation>Версия</translation>
     </message>
     <message>
         <source>Version 0.2.0</source>

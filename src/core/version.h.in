@@ -18,29 +18,19 @@
 **
 ***********************************************************************************************************************/
 
-#include "aboutdialog.h"
-#include "../core/version.h"
+#ifndef VERSION_H
+#define VERSION_H
 
-#include "ui_aboutdialog.h"
+#define GPUI_VERSION_MAJOR ${GPUI_VERSION_MAJOR}
+#define GPUI_VERSION_MINOR ${GPUI_VERSION_MINOR}
+#define GPUI_VERSION_PATCH ${GPUI_VERSION_PATCH}
 
-namespace gpui
+inline QString getApplicationVersion()
 {
-AboutDialog::AboutDialog(QWidget* parent)
-    : QDialog(parent)
-    , ui(new Ui::AboutDialog())
-{
-    ui->setupUi(this);
-
-    QString text = ui->versionLabel->text();
-
-    text = text.append(getApplicationVersion());
-
-    ui->versionLabel->setText(text);
+return QString("%1.%2.%3")
+                          .arg(GPUI_VERSION_MAJOR)
+                          .arg(GPUI_VERSION_MINOR)
+                          .arg(GPUI_VERSION_PATCH);
 }
 
-AboutDialog::~AboutDialog()
-{
-    delete ui;
-}
-
-}
+#endif //VERSION_H

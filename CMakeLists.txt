@@ -2,8 +2,16 @@ cmake_minimum_required(VERSION 2.8)
 
 project(GPUI)
 
-set(GPUI_VERSION_MAJOR 0)
-set(GPUI_VERSION_MINOR 1)
+execute_process(
+    COMMAND
+    bash -c "grep 'Version:' .gear/gpui.spec | awk -F ':' '{ print $2 }' | tr -d [:space:]"
+    OUTPUT_VARIABLE GPUI_GEAR_VERSION
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+string(REPLACE "." ";" GEAR_VERSION_LIST ${GPUI_GEAR_VERSION})
+list(GET GEAR_VERSION_LIST 0 GPUI_VERSION_MAJOR)
+list(GET GEAR_VERSION_LIST 1 GPUI_VERSION_MINOR)
+list(GET GEAR_VERSION_LIST 2 GPUI_VERSION_PATCH)
 
 set(CMAKE_MODULE_PATH ${GPUI_SOURCE_DIR}/cmake)
 

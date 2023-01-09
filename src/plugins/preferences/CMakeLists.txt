@@ -173,6 +173,7 @@ set(HEADERS
     shares/sharescontaineritem.h
     shares/shareswidget.h
 
+    shortcuts/keysequenceencoder.h
     shortcuts/shortcutsitem.h
     shortcuts/shortcutspreferencereader.h
     shortcuts/shortcutspreferencewriter.h
@@ -349,6 +350,7 @@ set(SOURCES
     shares/shareswidget.cpp
     shares/shareswidgetslots.cpp
 
+    shortcuts/keysequenceencoder.cpp
     shortcuts/shortcutsitem.cpp
     shortcuts/shortcutspreferencereader.cpp
     shortcuts/shortcutspreferencewriter.cpp

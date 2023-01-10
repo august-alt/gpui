@@ -318,6 +318,7 @@ void PreferencesTreeModel::populateModel()
     userSharesItem->setDisplayName(QObject::tr("Network Shares").toStdString());
     userSharesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, sharesTypeIds);
     userSharesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network shares settings.").toStdString());
-}
+
+ }
 
 } // namespace preferences

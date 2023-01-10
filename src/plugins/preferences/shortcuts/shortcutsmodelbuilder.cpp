@@ -25,6 +25,8 @@
 
 #include "common/commonitem.h"
 
+#include "keysequenceencoder.h"
+
 namespace
 {
 enum WindowMode
@@ -161,6 +163,7 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
             properties.window(encodeWindowMode(shortcutModel->property<int>(ShortcutsItem::WINDOW)));
             properties.comment(shortcutModel->property<std::string>(ShortcutsItem::COMMENT));
             properties.iconPath(shortcutModel->property<std::string>(ShortcutsItem::ICON_PATH));
+            properties.shortcutKey(encodeShortcutKey(shortcutModel->property<std::string>(ShortcutsItem::SHORTCUT_KEY)));
 
             setCommonModelData(shortcut, commonModel);
             shortcut.Properties().push_back(properties);
@@ -172,18 +175,22 @@ std::unique_ptr<Shortcuts> ShortcutsModelBuilder::modelToSchema(std::unique_ptr<
     return shortcuts;
 }
 
-std::string ShortcutsModelBuilder::decodeShortcutKey(unsigned char shortcutKey)
+std::string ShortcutsModelBuilder::decodeShortcutKey(uint32_t shortcutKey)
 {
-    Q_UNUSED(shortcutKey);
+    KeySequenceEncoder encoder;
 
-    return "";
+    QKeySequence sequence = encoder.decode(shortcutKey);
+
+    return sequence.toString().toStdString();
 }
 
-unsigned char ShortcutsModelBuilder::encodeShortcutKey(std::string shortcutKey)
+uint32_t ShortcutsModelBuilder::encodeShortcutKey(std::string shortcutKey)
 {
-    Q_UNUSED(shortcutKey);
+    QString code = QString::fromStdString(shortcutKey);
 
-    return 0;
+    KeySequenceEncoder encoder;
+
+    return encoder.encode(QKeySequence(code));
 }
 
 std::string ShortcutsModelBuilder::encodeLocation(const int targetType)

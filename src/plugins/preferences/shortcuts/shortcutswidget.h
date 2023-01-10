@@ -81,6 +81,8 @@ private slots:
 private:
     QString openFileOrFolder(bool folderMode);
 
+    void updateCurrentSequence(const QKeySequence &sequence);
+
 private:
     ShortcutsWidget(const ShortcutsWidget &) = delete;            // copy ctor
     ShortcutsWidget(ShortcutsWidget &&)      = delete;            // move ctor

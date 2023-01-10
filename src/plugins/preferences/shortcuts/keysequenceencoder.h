@@ -25,17 +25,16 @@
 
 namespace preferences
 {
-
 class KeySequenceEncoder
 {
 public:
     KeySequenceEncoder();
 
-    int32_t encode(const QKeySequence& sequence);
+    uint32_t encode(const QKeySequence &sequence);
 
-    QKeySequence decode(const int32_t sequence);
+    QKeySequence decode(const uint32_t sequence);
 };
 
-}
+} // namespace preferences
 
 #endif //GPUI_KEY_SEQUENCE_ENCODER_H

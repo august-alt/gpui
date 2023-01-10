@@ -39,9 +39,9 @@ public:
     std::unique_ptr<Shortcuts> modelToSchema(std::unique_ptr<PreferencesModel> &model);
 
 private:
-    std::string decodeShortcutKey(unsigned char shortcutKey);
+    std::string decodeShortcutKey(uint32_t shortcutKey);
 
-    unsigned char encodeShortcutKey(std::string shortcutKey);
+    uint32_t encodeShortcutKey(std::string shortcutKey);
 
     int decodeWindowMode(const std::string &windowMode);
 

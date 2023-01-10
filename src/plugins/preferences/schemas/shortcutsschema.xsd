@@ -6,7 +6,7 @@
     <xs:attribute name="targetType" type="xs:string" use="required" />
     <xs:attribute name="action" type="xs:string" use="optional" />
     <xs:attribute name="comment" type="xs:string" use="optional" />
-    <xs:attribute name="shortcutKey" type="xs:unsignedByte" use="optional" />
+    <xs:attribute name="shortcutKey" type="xs:unsignedShort" use="optional" />
     <xs:attribute name="startIn" type="xs:string" use="optional" />
     <xs:attribute name="arguments" type="xs:string" use="optional" />
     <xs:attribute name="iconIndex" type="xs:unsignedByte" use="optional" />

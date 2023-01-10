@@ -84,6 +84,8 @@ int main(int argc, char **argv)
         break;
     }
 
+    QCoreApplication::removeTranslator(qtTranslator2.get());
+
     gpui::MainWindow window(options, snapInManager.get());
     window.show();
 

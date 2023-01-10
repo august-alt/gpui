@@ -140,6 +140,15 @@ void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
         it.next();
     }
 
+    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
+    if (qtTranslator->load(QString("qtbase_%2").arg(language),
+                           QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+    {
+        QCoreApplication::installTranslator(qtTranslator.get());
+        d->translators.push_back(std::move(qtTranslator));
+    }
+
+
     d->model     = std::make_unique<PreferencesTreeModel>();
     d->viewModel = std::make_unique<ModelView::TopItemsViewModel>(d->model.get());
     d->proxyViewModel->setSourceModel(d->viewModel.get());

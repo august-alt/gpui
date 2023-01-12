@@ -33,6 +33,7 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QMessageBox>
 
 #include "../../../src/plugins/storage/smb/smbdirectory.h"
 
@@ -40,7 +41,7 @@ namespace preferences
 {
 ModelWriter::ModelWriter() {}
 
-void ModelWriter::saveModels(const std::string &policyPath,
+bool ModelWriter::saveModels(const std::string &policyPath,
                              const std::string &policyType,
                              std::map<std::string, std::unique_ptr<PreferencesModel>> *map)
 {
@@ -77,6 +78,8 @@ void ModelWriter::saveModels(const std::string &policyPath,
 
     auto fileIt = fileNames.begin();
 
+    bool writeSuccessful = true;
+
     for (const auto &writerPair : writers)
     {
         auto &writer = writerPair.second;
@@ -91,7 +94,10 @@ void ModelWriter::saveModels(const std::string &policyPath,
             auto modelPair = map->find(writerPair.second->getType());
             if (modelPair != map->end())
             {
-                writer->write(fullPath, modelPair->second);
+                if (!writer->write(fullPath, modelPair->second))
+                {
+                    writeSuccessful = false;
+                }
 
                 qWarning() << "Saving file: " << fullPath.c_str();
             }
@@ -99,10 +105,13 @@ void ModelWriter::saveModels(const std::string &policyPath,
         catch (std::exception &ex)
         {
             qWarning() << ex.what();
+            writeSuccessful = false;
         }
 
         ++fileIt;
     }
+
+    return writeSuccessful;
 }
 
 void ModelWriter::createDirectory(const std::string &directoryName)

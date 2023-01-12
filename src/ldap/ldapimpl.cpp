@@ -62,6 +62,12 @@ QString LDAPImpl::getDisplayNameGPO(const QString &guid)
 
 const QHash<QString, AdObject> LDAPImpl::search(const QString &base, const SearchScope scope, const QString &filter, const QList<QString> &attributes, const bool get_sacl)
 {
+    QHash<QString, AdObject> result;
+
+    if(!d->adInterface->is_connected()) {
+        return result;
+    }
+
     return d->adInterface.get()->search(base, scope, filter, attributes);
 }
 

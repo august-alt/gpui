@@ -22,6 +22,7 @@
 #include "ui_iniwidget.h"
 
 #include "common/commonutils.h"
+#include "common/defaultactions.h"
 #include "iniitem.h"
 
 #include <mvvm/factories/viewmodelfactory.h>
@@ -75,17 +76,18 @@ void IniWidget::setItem(ModelView::SessionItem *item)
 
 bool IniWidget::validate()
 {
-    if (!CommonUtils::validateLineEdit(ui->pathLineEdit, tr("Please input path value.")))
+    if (!CommonUtils::validateLineEdit(ui->pathLineEdit, tr("Please input path value")))
     {
         return false;
     }
 
-    if (!CommonUtils::validateLineEdit(ui->sectionLineEdit, tr("Please input section value.")))
+    if (ui->actionComboBox->currentIndex() != DefaultActions::DELETE__MODE
+        && !CommonUtils::validateLineEdit(ui->sectionLineEdit, tr("Please input section value")))
     {
         return false;
     }
 
-    if (!CommonUtils::validateLineEdit(ui->propertyLineEdit, tr("Please input property value.")))
+    if (!CommonUtils::validateLineEdit(ui->propertyLineEdit, tr("Please input name of the property")))
     {
         return false;
     }

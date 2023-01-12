@@ -112,8 +112,7 @@ void DrivesWidget::disableLetterWidgets(const QString &text, int index)
 
 void DrivesWidget::setThisDriveCheckBox(const int index)
 {
-    auto button = ui->thisButtonGroup->button(index); //->setChecked(true);
-    qWarning() << button;
+    ui->thisButtonGroup->button(index)->setChecked(true);
 }
 
 void DrivesWidget::setAllDrivesCheckBox(const int index)

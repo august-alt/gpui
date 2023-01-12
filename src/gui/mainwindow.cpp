@@ -59,11 +59,6 @@
 
 #include <stack>
 
-void registerResources()
-{
-    Q_INIT_RESOURCE(translations);
-}
-
 namespace gpui
 {
 class MainWindowPrivate
@@ -207,8 +202,6 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
 {
-    registerResources();
-
     d->manager = manager;
 
     d->options = options;
@@ -236,7 +229,9 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     connect(ui->actionOpenPolicyDirectory, &QAction::triggered, this, &MainWindow::onDirectoryOpen);
     connect(ui->actionSaveRegistrySource, &QAction::triggered, this, &MainWindow::updateStatusBar);
     connect(ui->treeView, &QTreeView::clicked, d->contentWidget, &ContentWidget::modelItemSelected);
-    connect(ui->treeView, &QTreeView::clicked, [&](const QModelIndex &index) { d->itemName = index.data().toString(); });
+    connect(d->contentWidget, &ContentWidget::modelItemSelected, [&](const QModelIndex &current) {
+        d->itemName = current.data().toString();
+    });
 
     QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
                                                       : QLocale::system().name().replace("-", "_"));
@@ -306,11 +301,8 @@ QString MainWindow::getLanguage() const
 
 void MainWindow::setAdmxPath(const QString &admxPath)
 {
-    if (!d->options.policyBundle.trimmed().isEmpty())
-    {
-        d->options.policyBundle = admxPath;
-        admxPathChanged(admxPath);
-    }
+    d->options.policyBundle = admxPath;
+    admxPathChanged(admxPath);
 }
 
 QString MainWindow::getAdmxPath() const
@@ -384,6 +376,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     d->searchModel->setSourceModel(d->itemRoleSortModel.get());
     d->searchModel->setFilterRole(Qt::DisplayRole);
     d->searchModel->setFilterFixedString("");
+    d->searchModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     d->searchModel->setRecursiveFilteringEnabled(true);
 
     ui->treeView->setModel(d->searchModel.get());

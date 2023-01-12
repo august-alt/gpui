@@ -31,7 +31,7 @@ context (user policy option)</source>
     <message>
         <location filename="../commonview.ui" line="57"/>
         <source>Remove this item when it is no longer applied</source>
-        <translation>Удалить элемент если больше не применим</translation>
+        <translation>Удалить элемент, если больше не применим</translation>
     </message>
     <message>
         <location filename="../commonview.ui" line="72"/>
@@ -117,12 +117,12 @@ context (user policy option)</source>
     <message>
         <location filename="../propertieswidget.ui" line="83"/>
         <source>Run in user&apos;s context:</source>
-        <translation>Запускать в контескте пользователя:</translation>
+        <translation>Запускать в контексте пользователя:</translation>
     </message>
     <message>
         <location filename="../propertieswidget.ui" line="112"/>
         <source>Remove if not applied:</source>
-        <translation>Удалить если не применимо:</translation>
+        <translation>Удалить, если не применимо:</translation>
     </message>
     <message>
         <location filename="../propertieswidget.ui" line="144"/>
@@ -173,12 +173,12 @@ context (user policy option)</source>
     <message>
         <location filename="../preferencestreemodel.cpp" line="110"/>
         <source>Mapped Drive</source>
-        <translation></translation>
+        <translation>Сетевой диск</translation>
     </message>
     <message>
         <location filename="../preferencestreemodel.cpp" line="112"/>
         <source>Environment Variable</source>
-        <translation>Переменные Окружения</translation>
+        <translation>Переменные окружения</translation>
     </message>
     <message>
         <location filename="../preferencestreemodel.cpp" line="114"/>
@@ -461,14 +461,18 @@ context (user policy option)</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../basepreferencewriter.cpp" line="52"/>
+        <location filename="../../preferencessnapinprivate.cpp" line="52"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../basepreferencewriter.cpp" line="53"/>
+        <location filename="../../preferencessnapinprivate.cpp" line="53"/>
+        <source>Error writing preferences file!</source>
+        <translation>Ошибка записи файла настроек!</translation>
+    </message>
+    <message>
         <source>Error writing file:</source>
-        <translation>Ошибка записи файла:</translation>
+        <translation type="vanished">Ошибка записи файла:</translation>
     </message>
 </context>
 <context>

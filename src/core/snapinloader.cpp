@@ -68,13 +68,15 @@ void SnapInLoader::loadSnapIns(const QDir &snapInDirectory)
 
 void SnapInLoader::loadDefaultSnapIns()
 {
-    loadSnapIns(QDir("/usr/lib/gpui/plugins/"));
-    loadSnapIns(QDir("/usr/lib64/gpui/plugins/"));
-
     QString customPluginDir = qgetenv("GPUI_PLUGIN_DIRECTORY");
     if (!customPluginDir.isEmpty())
     {
         loadSnapIns(QDir(customPluginDir));
+    }
+    else
+    {
+        loadSnapIns(QDir("/usr/lib/gpui/plugins/"));
+        loadSnapIns(QDir("/usr/lib64/gpui/plugins/"));
     }
 }
 

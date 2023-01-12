@@ -18,53 +18,53 @@
     <message>
         <location line="+10"/>
         <location/>
-        <source>Version 0.2.17</source>
-        <translation>Версия 0.2.17</translation>
+        <source>Version </source>
+        <translation>Версия </translation>
     </message>
     <message>
         <source>Version 0.2.0</source>
-        <translation>Версия 0.2.0</translation>
+        <translation type="vanished">Версия 0.2.0</translation>
     </message>
 </context>
 <context>
     <name>CommonWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation>Опции:</translation>
+        <translation type="vanished">Опции:</translation>
     </message>
     <message>
         <source>Stop processing items in this extension if an
 error occurs.</source>
-        <translation>Остановить обработку элементов в этом расширении если произошла ошибка.</translation>
+        <translation type="vanished">Остановить обработку элементов в этом расширении если произошла ошибка.</translation>
     </message>
     <message>
         <source>Run in logged-on user&apos;s security
 context (user policy option).</source>
-        <translation>Запускать в контексте текущего пользователя.</translation>
+        <translation type="vanished">Запускать в контексте текущего пользователя.</translation>
     </message>
     <message>
         <source>Remove this item when it is no longer applied.</source>
-        <translation>Удалить этот элемент если больше не приминим.</translation>
+        <translation type="vanished">Удалить этот элемент если больше не приминим.</translation>
     </message>
     <message>
         <source>Apply once and do not reapply.</source>
-        <translation>Применить только один раз.</translation>
+        <translation type="vanished">Применить только один раз.</translation>
     </message>
     <message>
         <source>Item-level targeting.</source>
-        <translation>Выбор определённых элементов.</translation>
+        <translation type="vanished">Выбор определённых элементов.</translation>
     </message>
     <message>
         <source>Targetting...</source>
-        <translation>Выбор...</translation>
+        <translation type="vanished">Выбор...</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Описание:</translation>
+        <translation type="vanished">Описание:</translation>
     </message>
 </context>
 <context>
@@ -81,19 +81,19 @@ context (user policy option).</source>
     </message>
     <message>
         <source>Policy State</source>
-        <translation>Состояние политики</translation>
+        <translation type="vanished">Состояние политики</translation>
     </message>
     <message>
         <source>Not Configured</source>
-        <translation>Не настроено</translation>
+        <translation type="vanished">Не настроено</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Включено</translation>
+        <translation type="vanished">Включено</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Выключено</translation>
+        <translation type="vanished">Выключено</translation>
     </message>
     <message>
         <location line="+58"/>
@@ -103,267 +103,267 @@ context (user policy option).</source>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>От&amp;мена</translation>
+        <translation type="vanished">От&amp;мена</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="vanished">&amp;OK</translation>
     </message>
     <message>
         <source>Supported on:</source>
-        <translation>Поддерживается на:</translation>
+        <translation type="vanished">Поддерживается на:</translation>
     </message>
 </context>
 <context>
     <name>DrivesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Hide/Show this drive</source>
-        <translation>Спрятать/Показать этот диск</translation>
+        <translation type="vanished">Спрятать/Показать этот диск</translation>
     </message>
     <message>
         <source>No change</source>
-        <translation>Без изменений</translation>
+        <translation type="vanished">Без изменений</translation>
     </message>
     <message>
         <source>Hide this drive</source>
-        <translation>Спрятать этот диск</translation>
+        <translation type="vanished">Спрятать этот диск</translation>
     </message>
     <message>
         <source>Show this drive</source>
-        <translation>Показать этот диск</translation>
+        <translation type="vanished">Показать этот диск</translation>
     </message>
     <message>
         <source>Hide/Show all drive</source>
-        <translation>Скрыть/Показать все диски</translation>
+        <translation type="vanished">Скрыть/Показать все диски</translation>
     </message>
     <message>
         <source>Hide all drive</source>
-        <translation>Скрыть все диски</translation>
+        <translation type="vanished">Скрыть все диски</translation>
     </message>
     <message>
         <source>Show all drive</source>
-        <translation>Показать все диски</translation>
+        <translation type="vanished">Показать все диски</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Действие:</translation>
+        <translation type="vanished">Действие:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Создать</translation>
+        <translation type="vanished">Создать</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation type="vanished">Обновить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>Reconnect:</source>
-        <translation>Переподключится:</translation>
+        <translation type="vanished">Переподключится:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Расположение:</translation>
+        <translation type="vanished">Расположение:</translation>
     </message>
     <message>
         <source>Label as:</source>
-        <translation>Название:</translation>
+        <translation type="vanished">Название:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>DriveLetter</source>
-        <translation>Буква диска</translation>
+        <translation type="vanished">Буква диска</translation>
     </message>
     <message>
         <source>Existing:</source>
-        <translation>Cуществующий:</translation>
+        <translation type="vanished">Cуществующий:</translation>
     </message>
     <message>
         <source>Use first available, starting at:</source>
-        <translation>Использовать первый свободный:</translation>
+        <translation type="vanished">Использовать первый свободный:</translation>
     </message>
 </context>
 <context>
     <name>FilesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Действие:</translation>
+        <translation type="vanished">Действие:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Создать</translation>
+        <translation type="vanished">Создать</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation type="vanished">Обновить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>Source file(s):</source>
-        <translation>Исходные файлы:</translation>
+        <translation type="vanished">Исходные файлы:</translation>
     </message>
     <message>
         <source>Placeholder</source>
-        <translation>Заглушка</translation>
+        <translation type="vanished">Заглушка</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Destination:</source>
-        <translation>Назначение:</translation>
+        <translation type="vanished">Назначение:</translation>
     </message>
     <message>
         <source>Supress errors on individual file actions</source>
-        <translation>Игнорировать ошибки</translation>
+        <translation type="vanished">Игнорировать ошибки</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Атрибуты</translation>
+        <translation type="vanished">Атрибуты</translation>
     </message>
     <message>
         <source>Read-only</source>
-        <translation>Только для чтения</translation>
+        <translation type="vanished">Только для чтения</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>Скрытый</translation>
+        <translation type="vanished">Скрытый</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>Архивный</translation>
+        <translation type="vanished">Архивный</translation>
     </message>
 </context>
 <context>
     <name>FoldersWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Действие:</translation>
+        <translation type="vanished">Действие:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Создать</translation>
+        <translation type="vanished">Создать</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation type="vanished">Обновить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation>Путь:</translation>
+        <translation type="vanished">Путь:</translation>
     </message>
     <message>
         <source>Placeholder</source>
-        <translation>Заглушка</translation>
+        <translation type="vanished">Заглушка</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Атрибуты</translation>
+        <translation type="vanished">Атрибуты</translation>
     </message>
     <message>
         <source>Read-only</source>
-        <translation>Только для чтения</translation>
+        <translation type="vanished">Только для чтения</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>Скрытый</translation>
+        <translation type="vanished">Скрытый</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>Архивный</translation>
+        <translation type="vanished">Архивный</translation>
     </message>
     <message>
         <source>Delete this folder (if emptied)</source>
-        <translation>Удалить эту папку (если она пустая)</translation>
+        <translation type="vanished">Удалить эту папку (если она пустая)</translation>
     </message>
     <message>
         <source>Recrusively delete subfolders (if emptied)</source>
-        <translation>Рекрсивно удалить подпапки (если они пустые)</translation>
+        <translation type="vanished">Рекрсивно удалить подпапки (если они пустые)</translation>
     </message>
     <message>
         <source>Delete all files in the filder(s)</source>
-        <translation>Удалить все файлы в папках</translation>
+        <translation type="vanished">Удалить все файлы в папках</translation>
     </message>
     <message>
         <source>Allow deletion of read-only files/folders</source>
-        <translation>Разрешить удаление папок только для чтения</translation>
+        <translation type="vanished">Разрешить удаление папок только для чтения</translation>
     </message>
     <message>
         <source>Ignore errors for files/folders cannot be deleted</source>
-        <translation>Игнорировать ошибки удаления файлов и папок</translation>
+        <translation type="vanished">Игнорировать ошибки удаления файлов и папок</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
     <name>IniWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Действие:</translation>
+        <translation type="vanished">Действие:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Создать</translation>
+        <translation type="vanished">Создать</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation type="vanished">Обновить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>File path</source>
-        <translation>Путь к файлу</translation>
+        <translation type="vanished">Путь к файлу</translation>
     </message>
     <message>
         <source>Section Name</source>
-        <translation>Название секции</translation>
+        <translation type="vanished">Название секции</translation>
     </message>
     <message>
         <source>Property Name</source>
-        <translation>Название свойства</translation>
+        <translation type="vanished">Название свойства</translation>
     </message>
     <message>
         <source>Property Value</source>
-        <translation>Значение свойства</translation>
+        <translation type="vanished">Значение свойства</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
@@ -640,15 +640,15 @@ context (user policy option).</source>
     <name>PreferencesDialog</name>
     <message>
         <source>Preferences dialog</source>
-        <translation>Диалог настроек</translation>
+        <translation type="vanished">Диалог настроек</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Общие</translation>
+        <translation type="vanished">Общие</translation>
     </message>
 </context>
 <context>
@@ -670,38 +670,46 @@ context (user policy option).</source>
         <translation>Полный путь к набору ADMX файлов.</translation>
     </message>
     <message>
-        <source>The name of a policy to display.</source>
-        <translation>Имя политики для отображения.</translation>
+        <location line="+3"/>
+        <source>This options left for compatibility with ADMC. Currently it does nothing.</source>
+        <translation>Опция оставлена для совместимости с ADMC. Она ничего не делает.</translation>
     </message>
     <message>
+        <source>The name of a policy to display.</source>
+        <translation type="vanished">Имя политики для отображения.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>name</source>
         <translation>имя</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Displays help on commandline options.</source>
         <translation>Показать описание опций коммандной строки.</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+33"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
         <source>Bad policy name: </source>
-        <translation>Ошибочное название политики: </translation>
+        <translation type="vanished">Ошибочное название политики: </translation>
     </message>
     <message>
+        <location filename="../contentwidget.cpp" line="+169"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Policy settings were modified do you want to save them?</source>
         <translation>Настройки политки были изменены, хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+100"/>
+        <location filename="../presentationbuilder.cpp" line="+102"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -716,7 +724,7 @@ context (user policy option).</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../mainwindow.cpp" line="+330"/>
         <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Шаблон локальных групповых политик</translation>
@@ -759,11 +767,11 @@ context (user policy option).</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation type="vanished">Ошибка</translation>
     </message>
     <message>
         <source>Error writing file:</source>
-        <translation>Ошибка записи файла:</translation>
+        <translation type="vanished">Ошибка записи файла:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+12"/>
@@ -777,13 +785,13 @@ context (user policy option).</source>
         <translation>[Локальная групповая политика]</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+62"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
     <message>
         <source>Error reading file:</source>
-        <translation>Ошибка чтения файла:</translation>
+        <translation type="vanished">Ошибка чтения файла:</translation>
     </message>
     <message>
         <location filename="../filedialogutils.cpp" line="+37"/>
@@ -825,260 +833,172 @@ context (user policy option).</source>
         <source>Open Directory</source>
         <translation>Открыть папку</translation>
     </message>
+    <message>
+        <location filename="../altspinbox.cpp" line="+94"/>
+        <location line="+10"/>
+        <source>Information message</source>
+        <translation>Информация</translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <location line="+10"/>
+        <source>Value: </source>
+        <translation>Значение: </translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <source> is greater than maximum allowed value of: </source>
+        <translation> больше максимально возможного значения: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Maximum allowed value has been set.</source>
+        <translation>. Максимально возможное значение было установлено.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source> is less than minimum allowed value of: </source>
+        <translation> меньше чем минимально возможное значение: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Minimum allowed value has been set.</source>
+        <translation>. Минимально возможное значение было установлено.</translation>
+    </message>
 </context>
 <context>
     <name>SharesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Действие:</translation>
+        <translation type="vanished">Действие:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Создать</translation>
+        <translation type="vanished">Создать</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation type="vanished">Обновить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>Share name:</source>
-        <translation>Название общей папки:</translation>
+        <translation type="vanished">Название общей папки:</translation>
     </message>
     <message>
         <source>Folder path:</source>
-        <translation>Путь к папке:</translation>
+        <translation type="vanished">Путь к папке:</translation>
     </message>
     <message>
         <source>Comment:</source>
-        <translation>Коментарий:</translation>
+        <translation type="vanished">Коментарий:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Action
 Modifiers:</source>
-        <translation>Модификаторы 
+        <translation type="vanished">Модификаторы 
 действий:</translation>
     </message>
     <message>
         <source>Update all regular shares</source>
-        <translation>Обновить все обычные общие
+        <translation type="vanished">Обновить все обычные общие
 папки</translation>
     </message>
     <message>
         <source>Update all hidden non-administrative
 shares</source>
-        <translation>Обновить все скрытые не административные
+        <translation type="vanished">Обновить все скрытые не административные
 общие папки</translation>
     </message>
     <message>
         <source>Update all administrative
 drive-letter shares</source>
-        <translation>Обновить все
+        <translation type="vanished">Обновить все
 административные буквы дисков</translation>
     </message>
     <message>
         <source>User limit:</source>
-        <translation>Пользовательский лимит:</translation>
+        <translation type="vanished">Пользовательский лимит:</translation>
     </message>
     <message>
         <source>No change</source>
-        <translation>Без изменений</translation>
+        <translation type="vanished">Без изменений</translation>
     </message>
     <message>
         <source>Maximum allowed</source>
-        <translation>Максимально возможный</translation>
+        <translation type="vanished">Максимально возможный</translation>
     </message>
     <message>
         <source>Alow this number of users:</source>
-        <translation>Максимум пользователей:</translation>
+        <translation type="vanished">Максимум пользователей:</translation>
     </message>
     <message>
         <source>Access-based
 Enumeration:</source>
-        <translation>Перечисление на
+        <translation type="vanished">Перечисление на
 основе прав доступа:</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Включить</translation>
+        <translation type="vanished">Включить</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Отключить</translation>
+        <translation type="vanished">Отключить</translation>
     </message>
 </context>
 <context>
     <name>ShortcutsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Действие:</translation>
+        <translation type="vanished">Действие:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Создать</translation>
+        <translation type="vanished">Создать</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation>Заменить</translation>
+        <translation type="vanished">Заменить</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation type="vanished">Обновить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <source>Target type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FILESYSTEM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SHELL</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Расположение:</translation>
-    </message>
-    <message>
-        <source>&lt;Specify full path&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Desktop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start Menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Programs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>StartUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explorer Favorites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explorer Links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Send To</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quick Launch ToolBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>My Network Places</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All Users Desktop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All Users Start Menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All Users Programs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All Users StartUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All Users Explorer Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Расположение:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Имя:</translation>
-    </message>
-    <message>
-        <source>Target path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arguments:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icon file path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icon index:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start in:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shortcut key:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Run:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Normal Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Minimized</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Имя:</translation>
     </message>
     <message>
         <source>Comment:</source>
-        <translation>Комментарий:</translation>
+        <translation type="vanished">Комментарий:</translation>
     </message>
 </context>
 <context>
@@ -1100,78 +1020,80 @@ Enumeration:</source>
     <name>VariablesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Подробности</translation>
+        <translation type="vanished">Подробности</translation>
     </message>
     <message>
         <source>Placeholder</source>
-        <translation>Заглушка</translation>
+        <translation type="vanished">Заглушка</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation>Значение:</translation>
+        <translation type="vanished">Значение:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Имя:</translation>
+        <translation type="vanished">Имя:</translation>
     </message>
     <message>
         <source>or</source>
-        <translation>или</translation>
+        <translation type="vanished">или</translation>
     </message>
     <message>
         <source>PATH</source>
-        <translation>ПУТЬ</translation>
+        <translation type="vanished">ПУТЬ</translation>
     </message>
     <message>
         <source>Partial</source>
-        <translation>Частичный</translation>
+        <translation type="vanished">Частичный</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Действие:</translation>
+        <translation type="vanished">Действие:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Создать</translation>
+        <translation type="vanished">Создать</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation type="vanished">Обновить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>Variable Type</source>
-        <translation>Тип переменной</translation>
+        <translation type="vanished">Тип переменной</translation>
     </message>
     <message>
         <source>User Variable</source>
-        <translation>Пользовательская ппеременная</translation>
+        <translation type="vanished">Пользовательская ппеременная</translation>
     </message>
     <message>
         <source>System Variable</source>
-        <translation>Системная переменная</translation>
+        <translation type="vanished">Системная переменная</translation>
     </message>
 </context>
 <context>
     <name>gpui::ContentWidget</name>
     <message>
+        <location filename="../contentwidget.cpp" line="+3"/>
         <source>Yes</source>
         <translation>Да</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>No</source>
         <translation>Нет</translation>
     </message>
     <message>
         <source>Policy: </source>
-        <translation>Политика: </translation>
+        <translation type="vanished">Политика: </translation>
     </message>
 </context>
 <context>
@@ -1245,7 +1167,7 @@ Enumeration:</source>
     </message>
     <message>
         <source>BaseALT Ltd.</source>
-        <translation>ООО «Базальт СПО».</translation>
+        <translation type="vanished">ООО «Базальт СПО».</translation>
     </message>
 </context>
 </TS>

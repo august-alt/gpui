@@ -1,6 +1,6 @@
-function(add_translation_resource out_file)
+function(add_translation_resource out_file prefix)
     set(qm_files ${ARGN})
-    set(resource ${CMAKE_CURRENT_SOURCE_DIR}/translations.qrc)
+    set(resource ${CMAKE_CURRENT_SOURCE_DIR}/${prefix}.translations.qrc)
 
     file(WRITE ${resource} "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource prefix=\"/\">\n")
     foreach(LANG ${qm_files})

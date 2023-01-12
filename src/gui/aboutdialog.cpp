@@ -19,23 +19,28 @@
 ***********************************************************************************************************************/
 
 #include "aboutdialog.h"
+#include "../core/version.h"
 
 #include "ui_aboutdialog.h"
 
 namespace gpui
 {
-
 AboutDialog::AboutDialog(QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::AboutDialog())
 {
     ui->setupUi(this);
+
+    QString text = ui->versionLabel->text();
+
+    text = text.append(getApplicationVersion());
+
+    ui->versionLabel->setText(text);
 }
 
 AboutDialog::~AboutDialog()
 {
     delete ui;
 }
-
 
 }

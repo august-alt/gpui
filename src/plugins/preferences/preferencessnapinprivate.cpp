@@ -35,8 +35,25 @@ void PreferencesSnapInPrivate::onDataSave()
 {
     auto modelWriter = std::make_unique<ModelWriter>();
 
-    modelWriter->saveModels(this->policyPath, "Machine", this->machinePreferencesModels.get());
-    modelWriter->saveModels(this->policyPath, "User", this->userPreferencesModels.get());
+    bool writeSuccessful = true;
+
+    if (!modelWriter->saveModels(this->policyPath, "Machine", this->machinePreferencesModels.get()))
+    {
+        writeSuccessful = false;
+    }
+    if (!modelWriter->saveModels(this->policyPath, "User", this->userPreferencesModels.get()))
+    {
+        writeSuccessful = false;
+    }
+
+    if (!writeSuccessful)
+    {
+        QMessageBox messageBox(QMessageBox::Critical,
+                               QObject::tr("Error"),
+                               QObject::tr("Error writing preferences file!"),
+                               QMessageBox::Ok);
+        messageBox.exec();
+    }
 }
 
 void PreferencesSnapInPrivate::retranslateModels(std::unique_ptr<PreferencesSnapInPrivate::PreferencesModelMap> &models)

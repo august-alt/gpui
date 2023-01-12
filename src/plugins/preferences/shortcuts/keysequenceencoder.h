@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,27 +18,23 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PREFERENCE_WRITER_INTERFACE_H
-#define GPUI_PREFERENCE_WRITER_INTERFACE_H
+#ifndef GPUI_KEY_SEQUENCE_ENCODER_H
+#define GPUI_KEY_SEQUENCE_ENCODER_H
 
-#include <memory>
-#include <string>
-
-#include "common/preferencesmodel.h"
+#include <QKeySequence>
 
 namespace preferences
 {
-class PreferenceWriterInterface
+class KeySequenceEncoder
 {
 public:
-    PreferenceWriterInterface()          = default;
-    virtual ~PreferenceWriterInterface() = default;
+    KeySequenceEncoder();
 
-    virtual std::string getType() const = 0;
+    uint32_t encode(const QKeySequence &sequence);
 
-    virtual bool write(const std::string path, const std::unique_ptr<PreferencesModel> &model) = 0;
+    QKeySequence decode(const uint32_t sequence);
 };
 
 } // namespace preferences
 
-#endif //GPUI_PREFERENCE_WRITER_INTERFACE_H
+#endif //GPUI_KEY_SEQUENCE_ENCODER_H

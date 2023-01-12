@@ -134,14 +134,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="archive">
+           <widget class="QCheckBox" name="hidden">
             <property name="text">
              <string>Hidden</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="hidden">
+           <widget class="QCheckBox" name="archive">
             <property name="text">
              <string>Archive</string>
             </property>

@@ -460,14 +460,18 @@ context (user policy option)</translation>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../basepreferencewriter.cpp" line="52"/>
+        <location filename="../../preferencessnapinprivate.cpp" line="52"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../basepreferencewriter.cpp" line="53"/>
+        <location filename="../../preferencessnapinprivate.cpp" line="53"/>
+        <source>Error writing preferences file!</source>
+        <translation>Error writing preferences file!</translation>
+    </message>
+    <message>
         <source>Error writing file:</source>
-        <translation>Error writing file:</translation>
+        <translation type="vanished">Error writing file:</translation>
     </message>
 </context>
 <context>

@@ -2,7 +2,7 @@ find_package(Qt5 COMPONENTS Core LinguistTools REQUIRED)
 
 find_package(MVVM REQUIRED)
 
-find_package(GPUI COMPONENTS core io REQUIRED)
+find_package(GPUI COMPONENTS core io gui REQUIRED)
 include_directories(${PREFERENCES_EDITOR_INCLUDE_DIRS})
 
 set(PLUGIN_NAME administrative-templates-plugin)
@@ -101,7 +101,7 @@ set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRE
 
 qt5_add_translation(QM_FILES ${TS_FILES})
 
-add_translation_resource(RESOURCES_SRC ${QM_FILES})
+add_translation_resource(RESOURCES_SRC "administrative" ${QM_FILES})
 
 qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 

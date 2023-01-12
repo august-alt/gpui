@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,27 +18,19 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PREFERENCE_WRITER_INTERFACE_H
-#define GPUI_PREFERENCE_WRITER_INTERFACE_H
+#ifndef VERSION_H
+#define VERSION_H
 
-#include <memory>
-#include <string>
+#define GPUI_VERSION_MAJOR ${GPUI_VERSION_MAJOR}
+#define GPUI_VERSION_MINOR ${GPUI_VERSION_MINOR}
+#define GPUI_VERSION_PATCH ${GPUI_VERSION_PATCH}
 
-#include "common/preferencesmodel.h"
-
-namespace preferences
+inline QString getApplicationVersion()
 {
-class PreferenceWriterInterface
-{
-public:
-    PreferenceWriterInterface()          = default;
-    virtual ~PreferenceWriterInterface() = default;
+return QString("%1.%2.%3")
+                          .arg(GPUI_VERSION_MAJOR)
+                          .arg(GPUI_VERSION_MINOR)
+                          .arg(GPUI_VERSION_PATCH);
+}
 
-    virtual std::string getType() const = 0;
-
-    virtual bool write(const std::string path, const std::unique_ptr<PreferencesModel> &model) = 0;
-};
-
-} // namespace preferences
-
-#endif //GPUI_PREFERENCE_WRITER_INTERFACE_H
+#endif //VERSION_H

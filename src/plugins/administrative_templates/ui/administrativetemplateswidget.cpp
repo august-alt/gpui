@@ -64,10 +64,13 @@ public:
         = AdministrativeTemplatesWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
     AdministrativeTemplatesWidget::PolicyWidgetState initialState
         = AdministrativeTemplatesWidget::PolicyWidgetState::STATE_NOT_CONFIGURED;
+
+    model::registry::PolicyStateManager::PolicyState policyState
+        = model::registry::PolicyStateManager::STATE_NOT_CONFIGURED;
 };
 
 AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
-    : QWidget(parent)
+    : gui::PluginWidgetInterface(parent)
     , ui(new Ui::AdministrativeTemplatesWidget())
     , d(new AdministrativeTemplatesWidgetPrivate())
 {
@@ -81,7 +84,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
             qWarning() << "Setting state not configured" << d->manager.get();
             if (d->manager)
             {
-                d->manager->setupPolicyState(model::registry::PolicyStateManager::STATE_NOT_CONFIGURED);
+                d->policyState = model::registry::PolicyStateManager::STATE_NOT_CONFIGURED;
             }
         }
     });
@@ -93,7 +96,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
             qWarning() << "Setting state enabled" << d->manager.get();
             if (d->manager)
             {
-                d->manager->setupPolicyState(model::registry::PolicyStateManager::STATE_ENABLED);
+                d->policyState = model::registry::PolicyStateManager::STATE_ENABLED;
             }
         }
     });
@@ -105,10 +108,16 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
             qWarning() << "Setting state disabled" << d->manager.get();
             if (d->manager)
             {
-                d->manager->setupPolicyState(model::registry::PolicyStateManager::STATE_DISABLED);
+                d->policyState = model::registry::PolicyStateManager::STATE_DISABLED;
             }
         }
     });
+
+    connect(this,
+            &AdministrativeTemplatesWidget::acceptPressed,
+            this,
+            &AdministrativeTemplatesWidget::onApplyClickedExternal);
+    connect(this, &AdministrativeTemplatesWidget::rejectPressed, this, &AdministrativeTemplatesWidget::onCancelClicked);
 
     connectDialogBoxSignals();
 }
@@ -256,7 +265,7 @@ void AdministrativeTemplatesWidget::onDataChanged()
     {
     case QMessageBox::Yes:
         emit ui->okPushButton->clicked();
-        onApplyClicked();
+        onApplyClickedInternal();
         break;
     case QMessageBox::No:
         onCancelClicked();
@@ -266,15 +275,22 @@ void AdministrativeTemplatesWidget::onDataChanged()
     }
 }
 
+void AdministrativeTemplatesWidget::onApplyClickedExternal()
+{
+    emit ui->okPushButton->clicked();
+    onApplyClickedInternal();
+}
+
 void AdministrativeTemplatesWidget::connectDialogBoxSignals()
 {
-    connect(ui->okPushButton, &QPushButton::clicked, this, &AdministrativeTemplatesWidget::onApplyClicked);
+    connect(ui->okPushButton, &QPushButton::clicked, this, &AdministrativeTemplatesWidget::onApplyClickedInternal);
     connect(ui->cancelPushButton, &QPushButton::clicked, this, &AdministrativeTemplatesWidget::onCancelClicked);
 }
 
-void AdministrativeTemplatesWidget::onApplyClicked()
+void AdministrativeTemplatesWidget::onApplyClickedInternal()
 {
     d->dataChanged = false;
+    d->manager->setupPolicyState(d->policyState);
     savePolicyChanges();
 }
 
@@ -294,6 +310,11 @@ void AdministrativeTemplatesWidget::setMachineRegistrySource(model::registry::Ab
 {
     qWarning() << "Test machine registry source";
     d->machineSource = registrySource;
+}
+
+bool AdministrativeTemplatesWidget::hasDataChanged()
+{
+    return d->dataChanged;
 }
 
 } // namespace gpui

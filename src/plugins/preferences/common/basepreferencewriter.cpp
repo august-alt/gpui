@@ -47,13 +47,7 @@ bool preferences::BasePreferenceWriter::write(const std::string path,
 
     bool ifShowError = false;
 
-    auto showMessageFunction = [&path]() {
-        QMessageBox messageBox(QMessageBox::Critical,
-                               QObject::tr("Error"),
-                               QObject::tr("Error writing file:") + "\n" + qPrintable(path.c_str()),
-                               QMessageBox::Ok);
-        messageBox.exec();
-    };
+    auto showMessageFunction = [&path]() { Q_UNUSED(path); };
 
     try
     {
@@ -63,7 +57,7 @@ bool preferences::BasePreferenceWriter::write(const std::string path,
             ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
             if (!ifShowError)
             {
-                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+                result = ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
             }
             if (ifShowError && oss->str().size() > 0)
             {
@@ -77,7 +71,7 @@ bool preferences::BasePreferenceWriter::write(const std::string path,
             ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
             if (!ifShowError)
             {
-                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+                result = ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
             }
             if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
             {

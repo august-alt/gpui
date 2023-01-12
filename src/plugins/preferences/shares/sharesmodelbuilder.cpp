@@ -24,6 +24,7 @@
 #include "sharesitem.h"
 
 #include "common/commonitem.h"
+#include "common/defaultactions.h"
 
 namespace preferences
 {
@@ -86,20 +87,28 @@ std::unique_ptr<NetworkShareSettings> SharesModelBuilder::modelToSchema(std::uni
             commonModel->setProperty(CommonItem::propertyToString(CommonItem::NAME),
                                      sharesModel->property<std::string>(SharesItem::NAME));
 
+            int actionIndex = sharesModel->property<int>(SharesItem::ACTION);
+
             auto properties = ShareProperties_t(sharesModel->property<std::string>(SharesItem::NAME));
-            properties.comment(sharesModel->property<std::string>(SharesItem::COMMENT));
-            properties.path(sharesModel->property<std::string>(SharesItem::PATH));
-            properties.action(getActionCheckboxModel(sharesModel->property<int>(SharesItem::ACTION)));
-            properties.allRegular(sharesModel->property<bool>(SharesItem::ALL_REGULAR));
-            properties.allHidden(sharesModel->property<bool>(SharesItem::ALL_HIDDEN));
-            properties.allAdminDrive(sharesModel->property<bool>(SharesItem::ALL_ADMIN_DRIVE));
-            properties.limitUsers(sharesModel->property<std::string>(SharesItem::LIMIT_USERS));
-            auto userLimit = sharesModel->property<int>(SharesItem::USER_LIMIT);
-            if (userLimit > 0)
+            properties.action(getActionCheckboxModel(actionIndex));
+            if (actionIndex != DefaultActions::CREATE__MODE && actionIndex != DefaultActions::REPLACE_MODE)
             {
-                properties.userLimit(userLimit);
+                properties.allRegular(sharesModel->property<bool>(SharesItem::ALL_REGULAR));
+                properties.allHidden(sharesModel->property<bool>(SharesItem::ALL_HIDDEN));
+                properties.allAdminDrive(sharesModel->property<bool>(SharesItem::ALL_ADMIN_DRIVE));
             }
-            properties.abe(sharesModel->property<std::string>(SharesItem::ACCESS_BASED_ENUMERATION));
+            if (actionIndex != DefaultActions::DELETE__MODE)
+            {
+                properties.comment(sharesModel->property<std::string>(SharesItem::COMMENT));
+                properties.path(sharesModel->property<std::string>(SharesItem::PATH));
+                properties.limitUsers(sharesModel->property<std::string>(SharesItem::LIMIT_USERS));
+                auto userLimit = sharesModel->property<int>(SharesItem::USER_LIMIT);
+                if (userLimit > 0)
+                {
+                    properties.userLimit(userLimit);
+                }
+                properties.abe(sharesModel->property<std::string>(SharesItem::ACCESS_BASED_ENUMERATION));
+            }
 
             setCommonModelData(share, commonModel);
             share.Properties().push_back(properties);

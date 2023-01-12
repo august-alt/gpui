@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,27 +18,34 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PREFERENCE_WRITER_INTERFACE_H
-#define GPUI_PREFERENCE_WRITER_INTERFACE_H
+#ifndef GPUI_PLUGIN_WIDGET_INTERFACE_H
+#define GPUI_PLUGIN_WIDGET_INTERFACE_H
 
-#include <memory>
-#include <string>
+#include "gui.h"
 
-#include "common/preferencesmodel.h"
+#include <QWidget>
 
-namespace preferences
+namespace gui
 {
-class PreferenceWriterInterface
+class GPUI_GUI_EXPORT PluginWidgetInterface : public QWidget
 {
 public:
-    PreferenceWriterInterface()          = default;
-    virtual ~PreferenceWriterInterface() = default;
+    Q_OBJECT
 
-    virtual std::string getType() const = 0;
+public:
+    explicit PluginWidgetInterface(QWidget *parent = nullptr)
+        : QWidget(parent)
+    {}
 
-    virtual bool write(const std::string path, const std::unique_ptr<PreferencesModel> &model) = 0;
+    virtual ~PluginWidgetInterface() = default;
+
+    virtual bool hasDataChanged() = 0;
+
+signals:
+    void acceptPressed();
+    void rejectPressed();
 };
 
-} // namespace preferences
+} // namespace gui
 
-#endif //GPUI_PREFERENCE_WRITER_INTERFACE_H
+#endif //GPUI_PLUGIN_WIDGET_INTERFACE_H

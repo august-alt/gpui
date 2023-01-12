@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,27 +18,37 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_PREFERENCE_WRITER_INTERFACE_H
-#define GPUI_PREFERENCE_WRITER_INTERFACE_H
+#ifndef GPUI_ALT_SPIN_BOX_H
+#define GPUI_ALT_SPIN_BOX_H
 
-#include <memory>
-#include <string>
+#include "gui.h"
 
-#include "common/preferencesmodel.h"
+#include <QSpinBox>
 
-namespace preferences
+namespace gui
 {
-class PreferenceWriterInterface
+class GPUI_GUI_EXPORT AltSpinBox final : public QSpinBox
 {
+    Q_OBJECT
 public:
-    PreferenceWriterInterface()          = default;
-    virtual ~PreferenceWriterInterface() = default;
+    AltSpinBox(QWidget *parent = nullptr);
 
-    virtual std::string getType() const = 0;
+protected:
+    void fixup(QString &input) const override;
+    QValidator::State validate(QString &text, int &pos) const override;
 
-    virtual bool write(const std::string path, const std::unique_ptr<PreferencesModel> &model) = 0;
+signals:
+    void fixStringInput(const QString &wrongInput) const;
+    void fixToValidRange(const int currentValue, const int boundValue) const;
+
+private slots:
+    void onFixStringInput(const QString &wrongInput);
+    void onFixToValidRange(const int currentValue, const int boundValue);
+
+private:
+    void openMessageBox(const QString &value, bool isMaximum);
 };
 
-} // namespace preferences
+} // namespace gui
 
-#endif //GPUI_PREFERENCE_WRITER_INTERFACE_H
+#endif //GPUI_ALT_SPIN_BOX_H

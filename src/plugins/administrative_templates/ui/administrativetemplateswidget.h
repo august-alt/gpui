@@ -23,6 +23,8 @@
 
 #include <QtWidgets>
 
+#include "../gui/pluginwidgetinterface.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -44,7 +46,7 @@ namespace gpui
 {
 class AdministrativeTemplatesWidgetPrivate;
 
-class AdministrativeTemplatesWidget : public QWidget
+class AdministrativeTemplatesWidget : public gui::PluginWidgetInterface
 {
     Q_OBJECT
 public:
@@ -57,12 +59,14 @@ public:
 
 public:
     explicit AdministrativeTemplatesWidget(QWidget *parent = nullptr);
-    ~AdministrativeTemplatesWidget();
+    ~AdministrativeTemplatesWidget() override;
 
     void setModelIndex(const QModelIndex &index);
 
     void setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource);
     void setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource);
+
+    virtual bool hasDataChanged() override final;
 
 signals:
     void savePolicyChanges();
@@ -85,7 +89,8 @@ private:
     void connectDialogBoxSignals();
     void onDataChanged();
 
-    void onApplyClicked();
+    void onApplyClickedExternal();
+    void onApplyClickedInternal();
     void onCancelClicked();
 };
 

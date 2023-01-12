@@ -24,7 +24,7 @@
 #include "../core/snapindetailsfactory.h"
 #include "../core/snapinloader.h"
 #include "../core/snapinmanager.h"
-
+#include "../core/version.h"
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     app.setOrganizationName(QCoreApplication::translate("main", "BaseALT Ltd."));
     app.setOrganizationDomain("basealt.ru");
     app.setApplicationName("GPUI");
-    app.setApplicationVersion("0.2.17");
+    app.setApplicationVersion(getApplicationVersion());
 
     gpui::CommandLineParser parser(app);
     gpui::CommandLineOptions options{};
@@ -83,6 +83,8 @@ int main(int argc, char **argv)
     default:
         break;
     }
+
+    QCoreApplication::removeTranslator(qtTranslator2.get());
 
     gpui::MainWindow window(options, snapInManager.get());
     window.show();

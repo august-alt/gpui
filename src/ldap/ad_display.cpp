@@ -154,7 +154,7 @@ QString attribute_display_values(const QString &attribute, const QList<QByteArra
 
 QString object_sid_display_value(const QByteArray &sid_bytes)
 {
-    std::unique_ptr<dom_sid> sid;
+    std::unique_ptr<dom_sid> sid = std::make_unique<dom_sid>();
     memcpy(sid.get(), sid_bytes.data(), sizeof(dom_sid));
 
     TALLOC_CTX *tmp_ctx = talloc_new(NULL);

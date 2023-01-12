@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.1" language="en_US">
 <context>
     <name>AddScriptWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translatorcomment>Форма</translatorcomment>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Script Name:</source>
-        <translation>Имя сценария:</translation>
+        <translation>Script Name:</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Обзор...</translation>
+        <translation>Browse...</translation>
     </message>
     <message>
         <source>Script Parameters:</source>
-        <translation>Параметры сценария:</translation>
+        <translation>Script Parameters:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -25,166 +26,183 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Cancel</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>[Local Group Policy]</source>
-        <translation>[Локальная групповая политика]</translation>
+        <translation>[Local Group Policy]</translation>
     </message>
     <message>
         <source>Group policy</source>
-        <translation>Групповая политика</translation>
+        <translation>Group policy</translation>
     </message>
     <message>
         <source>Machine</source>
-        <translation>Компьютер</translation>
+        <translatorcomment>Machine</translatorcomment>
+        <translation>Machine</translation>
     </message>
     <message>
         <source>Machine level policies</source>
-        <translation>Политика для компьютера</translation>
+        <translation>Machine level policies</translation>
     </message>
     <message>
         <source>System settings</source>
-        <translation>Настройки системы</translation>
+        <translation>System settings</translation>
     </message>
     <message>
         <source>Scripts</source>
-        <translation>Скрипты</translation>
+        <translation>Scripts</translation>
     </message>
     <message>
         <source>On startup</source>
-        <translation>На влючении</translation>
+        <translation>On startup</translation>
     </message>
     <message>
         <source>On shutdown</source>
-        <translation>На выключении</translation>
+        <translation>On shutdown</translation>
     </message>
     <message>
         <source>User</source>
-        <translation>Пользователь</translation>
+        <translation>User</translation>
     </message>
     <message>
         <source>User level policies.</source>
-        <translation>Политика для пользователя</translation>
+        <translation>User level policies.</translation>
+    </message>
+    <message>
+        <source>Logon</source>
+        <translation>Logon</translation>
+    </message>
+    <message>
+        <source>Logoff</source>
+        <translation>Logoff</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>Startup</translation>
+    </message>
+    <message>
+        <source>Shutdown</source>
+        <translation>Shutdown</translation>
     </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Form</translation>
     </message>
 </context>
 <context>
     <name>ScriptsDialog</name>
     <message>
         <source>Dialog</source>
-        <translation>Диалог</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>Scripts</source>
-        <translation>Сценарий</translation>
+        <translation>Scripts</translation>
     </message>
     <message>
         <source>PowerShell Scripts</source>
-        <translation>Скрипты PowerShell</translation>
+        <translation>PowerShell Scripts</translation>
     </message>
 </context>
 <context>
     <name>ScriptsPowerShellWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Not configured</source>
-        <translation>Не настроено</translation>
+        <translation>Not configured</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation>Вверх</translation>
+        <translation>Up</translation>
     </message>
     <message>
         <source>Show files</source>
-        <translation>Показать файлы</translation>
+        <translation>Show files</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Изменить</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Powershell scrips require at least Windows 7 or Windows Server 2008 R2</source>
-        <translation>Для сценариев Powershell требуется как минимум Windows 7 или Windows Server 2008 R2</translation>
+        <translation>Powershell scrips require at least Windows 7 or Windows Server 2008 R2</translation>
     </message>
     <message>
         <source>For this GPO, run scripts in the following opder:</source>
-        <translation>Для этого объекта групповой политики, запустите сценарии в следующем порядке:</translation>
+        <translation>For this GPO, run scripts in the following opder:</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Вниз</translation>
+        <translation>Down</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation>Add</translation>
     </message>
     <message>
         <source>Windows PowerShell Logon Scripts for Default Domain Policy</source>
-        <translation>Сценарии входа в Windows PowerShell для политики домена по умолчанию</translation>
+        <translation>Windows PowerShell Logon Scripts for Default Domain Policy</translation>
     </message>
     <message>
         <source>For this GPO, run scripts in the following order:</source>
-        <translation>Запуск скриптов для этого объекта в следующем порядке</translation>
+        <translation>For this GPO, run scripts in the following order:</translation>
     </message>
 </context>
 <context>
     <name>ScriptsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Logon scripts for Default Domain Policy</source>
-        <translation>Сценарии входа в систему для политики домена по умолчанию</translation>
+        <translation>Logon scripts for Default Domain Policy</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation>Вверх</translation>
+        <translation>Up</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Вниз</translation>
+        <translation>Down</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation>Add</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Изменить</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <source>To view the script filess stored in this Group Policy Object, press the button below</source>
-        <translation type="obsolete">Чтобы просмотреть файлы сценариев, хранящиеся в этом объекте групповой политики, нажмите кнопку ниже</translation>
+        <translation type="vanished">To view the script files stored in this Group Policy Object, press the button below</translation>
     </message>
     <message>
         <source>To view the script files stored in this Group Policy Object, press the button below</source>
-        <translation>Чтобы просмотреть файлы сценариев, хранящиеся в этом объекте групповой политики, нажмите кнопку ниже</translation>
+        <translation>To view the script files stored in this Group Policy Object, press the button below</translation>
     </message>
     <message>
         <source>Show files</source>
-        <translation>Показать файлы</translation>
+        <translation>Show files</translation>
     </message>
 </context>
 </TS>

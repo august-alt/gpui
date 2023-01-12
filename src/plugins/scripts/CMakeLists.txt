@@ -56,15 +56,20 @@ set(UIFORMS
     addscriptwidget.ui
 )
 
+set(TS_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/i18n/scripts_plugin_ru.ts
+    ${CMAKE_CURRENT_SOURCE_DIR}/i18n/scripts_plugin_en.ts
+)
+
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 set(PLUGIN_NAME scripts-plugin)
 
-file(GLOB_RECURSE TS_FILES ${CMAKE_CURRENT_SOURCE_DIR} *.ts)
+#file(GLOB_RECURSE TS_FILES ${CMAKE_CURRENT_SOURCE_DIR} *.ts)
 
 add_translation(QM_FILES "${TS_FILES}")
 
-add_translation_resource(RESOURCES_SRC "${QM_FILES}")
+add_translation_resource(RESOURCES_SRC "scripts_plugin" "${QM_FILES}")
 
 qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
 

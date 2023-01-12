@@ -40,12 +40,6 @@
 #include <QDebug>
 #include <QFile>
 
-inline void initMyResource()
-{
-    Q_INIT_RESOURCE(translations);
-    qWarning() << "Initializing script resources!";
-}
-
 namespace scripts_plugin
 {
 ScriptsSnapIn::ScriptsSnapIn()
@@ -57,7 +51,6 @@ ScriptsSnapIn::ScriptsSnapIn()
                      "Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru")
     , d(new ScriptsSnapInPrivate(this))
 {
-    initMyResource();
 }
 
 ScriptsSnapIn::~ScriptsSnapIn()
@@ -116,6 +109,8 @@ void ScriptsSnapIn::onDataSave()
 
 void ScriptsSnapIn::onRetranslateUI(const std::string &locale)
 {
+    qWarning() << "onRetranslateUI runs";
+
     for (const auto &translator : d->translators)
     {
         QCoreApplication::removeTranslator(translator.get());

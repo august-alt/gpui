@@ -21,6 +21,8 @@
 #include "shortcutswidget.h"
 #include "ui_shortcutswidget.h"
 
+#include "shortcutsitem.h"
+
 namespace preferences
 {
 enum ViewMode
@@ -141,6 +143,18 @@ QString ShortcutsWidget::openFileOrFolder(bool folderMode)
     return "";
 }
 
+void ShortcutsWidget::updateCurrentSequence(const QKeySequence &sequence)
+{
+    if (!m_item)
+    {
+        qWarning() << "No item found exiting!";
+
+        return;
+    }
+
+    m_item->setProperty<std::string>("shortcutKey", sequence.toString().toStdString());
+}
+
 void ShortcutsWidget::on_shortkutKeySequenceEdit_editingFinished()
 {
     auto keySequence = ui->shortkutKeySequenceEdit->keySequence();
@@ -151,6 +165,8 @@ void ShortcutsWidget::on_shortkutKeySequenceEdit_editingFinished()
         QKeySequence shortcut(value);
         ui->shortkutKeySequenceEdit->setKeySequence(shortcut);
     }
+
+    updateCurrentSequence(ui->shortkutKeySequenceEdit->keySequence());
 }
 
 } // namespace preferences

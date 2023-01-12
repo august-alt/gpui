@@ -53,6 +53,8 @@ void ShortcutsWidget::setItem(ModelView::SessionItem *item)
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
 
+    m_item = dynamic_cast<preferences::ShortcutsItem *>(item);
+
     mapper = std::make_unique<QDataWidgetMapper>();
 
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -68,7 +70,6 @@ void ShortcutsWidget::setItem(ModelView::SessionItem *item)
     mapper->addMapping(ui->targetPathLineEdit, 4);
     mapper->addMapping(ui->argumentsLineEdit, 5);
     mapper->addMapping(ui->startInLineEdit, 6);
-    //    mapper->addMapping(ui->shortkutKeySequenceEdit, 7);
     mapper->addMapping(ui->runComboBox, 8, "currentIndex");
     mapper->addMapping(ui->commentLineEdit, 9);
     mapper->addMapping(ui->iconFilePathLineEdit, 10);
@@ -76,6 +77,9 @@ void ShortcutsWidget::setItem(ModelView::SessionItem *item)
     mapper->addMapping(ui->locationComboBox, 12, "currentIndex");
 
     mapper->setCurrentModelIndex(view_model->index(0, 1));
+
+    QString keyCode = QString::fromStdString(item->property<std::string>(ShortcutsItem::SHORTCUT_KEY));
+    ui->shortkutKeySequenceEdit->setKeySequence(QKeySequence(keyCode));
 }
 
 bool ShortcutsWidget::validate()

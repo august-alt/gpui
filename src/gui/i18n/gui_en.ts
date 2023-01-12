@@ -18,55 +18,55 @@
     <message>
         <location line="+10"/>
         <location/>
-        <source>Version 0.2.17</source>
-        <translation>Version 0.2.17</translation>
+        <source>Version </source>
+        <translation>Version </translation>
     </message>
     <message>
         <source>Version 0.2.0</source>
-        <translation>Version 0.2.0</translation>
+        <translation type="vanished">Version 0.2.0</translation>
     </message>
 </context>
 <context>
     <name>CommonWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation>Options:</translation>
+        <translation type="vanished">Options:</translation>
     </message>
     <message>
         <source>Stop processing items in this extension if an
 error occurs.</source>
-        <translation>Stop processing items in this extension if an
+        <translation type="vanished">Stop processing items in this extension if an
 error occurs.</translation>
     </message>
     <message>
         <source>Run in logged-on user&apos;s security
 context (user policy option).</source>
-        <translation>Run in logged-on user&apos;s security
+        <translation type="vanished">Run in logged-on user&apos;s security
 context (user policy option).</translation>
     </message>
     <message>
         <source>Remove this item when it is no longer applied.</source>
-        <translation>Remove this item when it is no longer applied.</translation>
+        <translation type="vanished">Remove this item when it is no longer applied.</translation>
     </message>
     <message>
         <source>Apply once and do not reapply.</source>
-        <translation>Apply once and do not reapply.</translation>
+        <translation type="vanished">Apply once and do not reapply.</translation>
     </message>
     <message>
         <source>Item-level targeting.</source>
-        <translation>Item-level targeting.</translation>
+        <translation type="vanished">Item-level targeting.</translation>
     </message>
     <message>
         <source>Targetting...</source>
-        <translation>Targetting...</translation>
+        <translation type="vanished">Targetting...</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Description:</translation>
+        <translation type="vanished">Description:</translation>
     </message>
 </context>
 <context>
@@ -83,19 +83,19 @@ context (user policy option).</translation>
     </message>
     <message>
         <source>Policy State</source>
-        <translation>Policy State</translation>
+        <translation type="vanished">Policy State</translation>
     </message>
     <message>
         <source>Not Configured</source>
-        <translation>Not Configured</translation>
+        <translation type="vanished">Not Configured</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation type="vanished">Enabled</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation type="vanished">Disabled</translation>
     </message>
     <message>
         <location line="+58"/>
@@ -105,267 +105,267 @@ context (user policy option).</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancel</translation>
+        <translation type="vanished">&amp;Cancel</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="vanished">&amp;OK</translation>
     </message>
     <message>
         <source>Supported on:</source>
-        <translation>Supported on:</translation>
+        <translation type="vanished">Supported on:</translation>
     </message>
 </context>
 <context>
     <name>DrivesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Hide/Show this drive</source>
-        <translation>Hide/Show this drive</translation>
+        <translation type="vanished">Hide/Show this drive</translation>
     </message>
     <message>
         <source>No change</source>
-        <translation>No change</translation>
+        <translation type="vanished">No change</translation>
     </message>
     <message>
         <source>Hide this drive</source>
-        <translation>Hide this drive</translation>
+        <translation type="vanished">Hide this drive</translation>
     </message>
     <message>
         <source>Show this drive</source>
-        <translation>Show this drive</translation>
+        <translation type="vanished">Show this drive</translation>
     </message>
     <message>
         <source>Hide/Show all drive</source>
-        <translation>Hide/Show all drive</translation>
+        <translation type="vanished">Hide/Show all drive</translation>
     </message>
     <message>
         <source>Hide all drive</source>
-        <translation>Hide all drive</translation>
+        <translation type="vanished">Hide all drive</translation>
     </message>
     <message>
         <source>Show all drive</source>
-        <translation>Show all drive</translation>
+        <translation type="vanished">Show all drive</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Action:</translation>
+        <translation type="vanished">Action:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation type="vanished">Create</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation type="vanished">Update</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>Reconnect:</source>
-        <translation>Reconnect:</translation>
+        <translation type="vanished">Reconnect:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Location:</translation>
+        <translation type="vanished">Location:</translation>
     </message>
     <message>
         <source>Label as:</source>
-        <translation>Label as:</translation>
+        <translation type="vanished">Label as:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>DriveLetter</source>
-        <translation>Drive letter</translation>
+        <translation type="vanished">Drive letter</translation>
     </message>
     <message>
         <source>Existing:</source>
-        <translation>Existing:</translation>
+        <translation type="vanished">Existing:</translation>
     </message>
     <message>
         <source>Use first available, starting at:</source>
-        <translation>Use first available, starting at:</translation>
+        <translation type="vanished">Use first available, starting at:</translation>
     </message>
 </context>
 <context>
     <name>FilesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Action:</translation>
+        <translation type="vanished">Action:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation type="vanished">Create</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation type="vanished">Update</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>Source file(s):</source>
-        <translation>Source file(s):</translation>
+        <translation type="vanished">Source file(s):</translation>
     </message>
     <message>
         <source>Placeholder</source>
-        <translation>Placeholder</translation>
+        <translation type="vanished">Placeholder</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Destination:</source>
-        <translation>Destination:</translation>
+        <translation type="vanished">Destination:</translation>
     </message>
     <message>
         <source>Supress errors on individual file actions</source>
-        <translation>Supress errors on individual file actions</translation>
+        <translation type="vanished">Supress errors on individual file actions</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Attributes</translation>
+        <translation type="vanished">Attributes</translation>
     </message>
     <message>
         <source>Read-only</source>
-        <translation>Read-only</translation>
+        <translation type="vanished">Read-only</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>Hidden</translation>
+        <translation type="vanished">Hidden</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>Archive</translation>
+        <translation type="vanished">Archive</translation>
     </message>
 </context>
 <context>
     <name>FoldersWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Action:</translation>
+        <translation type="vanished">Action:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation type="vanished">Create</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation type="vanished">Update</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation>Path:</translation>
+        <translation type="vanished">Path:</translation>
     </message>
     <message>
         <source>Placeholder</source>
-        <translation>Placeholder</translation>
+        <translation type="vanished">Placeholder</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Attributes</translation>
+        <translation type="vanished">Attributes</translation>
     </message>
     <message>
         <source>Read-only</source>
-        <translation>Read-only</translation>
+        <translation type="vanished">Read-only</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>Hidden</translation>
+        <translation type="vanished">Hidden</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>Archive</translation>
+        <translation type="vanished">Archive</translation>
     </message>
     <message>
         <source>Delete this folder (if emptied)</source>
-        <translation>Delete this folder (if emptied)</translation>
+        <translation type="vanished">Delete this folder (if emptied)</translation>
     </message>
     <message>
         <source>Recrusively delete subfolders (if emptied)</source>
-        <translation>Recrusively delete subfolders (if emptied)</translation>
+        <translation type="vanished">Recrusively delete subfolders (if emptied)</translation>
     </message>
     <message>
         <source>Delete all files in the filder(s)</source>
-        <translation>Delete all files in the filder(s)</translation>
+        <translation type="vanished">Delete all files in the filder(s)</translation>
     </message>
     <message>
         <source>Allow deletion of read-only files/folders</source>
-        <translation>Allow deletion of read-only files/folders</translation>
+        <translation type="vanished">Allow deletion of read-only files/folders</translation>
     </message>
     <message>
         <source>Ignore errors for files/folders cannot be deleted</source>
-        <translation>Ignore errors for files/folders cannot be deleted</translation>
+        <translation type="vanished">Ignore errors for files/folders cannot be deleted</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
     <name>IniWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Action:</translation>
+        <translation type="vanished">Action:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation type="vanished">Create</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation type="vanished">Update</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>File path</source>
-        <translation>File path</translation>
+        <translation type="vanished">File path</translation>
     </message>
     <message>
         <source>Section Name</source>
-        <translation>Section Name</translation>
+        <translation type="vanished">Section Name</translation>
     </message>
     <message>
         <source>Property Name</source>
-        <translation>Property Name</translation>
+        <translation type="vanished">Property Name</translation>
     </message>
     <message>
         <source>Property Value</source>
-        <translation>Property Value</translation>
+        <translation type="vanished">Property Value</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
@@ -642,15 +642,15 @@ context (user policy option).</translation>
     <name>PreferencesDialog</name>
     <message>
         <source>Preferences dialog</source>
-        <translation>Preferences dialog</translation>
+        <translation type="vanished">Preferences dialog</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation type="vanished">General</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Common</translation>
+        <translation type="vanished">Common</translation>
     </message>
 </context>
 <context>
@@ -672,38 +672,46 @@ context (user policy option).</translation>
         <translation>The full path of policy bundle to load.</translation>
     </message>
     <message>
-        <source>The name of a policy to display.</source>
-        <translation>The name of a policy to display.</translation>
+        <location line="+3"/>
+        <source>This options left for compatibility with ADMC. Currently it does nothing.</source>
+        <translation>This options left for compatibility with ADMC. Currently it does nothing.</translation>
     </message>
     <message>
+        <source>The name of a policy to display.</source>
+        <translation type="vanished">The name of a policy to display.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>name</source>
         <translation>name</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Displays help on commandline options.</source>
         <translation>Displays help on commandline options.</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+33"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
         <translation>Bad policy path: </translation>
     </message>
     <message>
         <source>Bad policy name: </source>
-        <translation>Bad policy name: </translation>
+        <translation type="vanished">Bad policy name: </translation>
     </message>
     <message>
+        <location filename="../contentwidget.cpp" line="+169"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Policy settings were modified do you want to save them?</source>
         <translation>Policy settings were modified do you want to save them?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+100"/>
+        <location filename="../presentationbuilder.cpp" line="+102"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
@@ -718,7 +726,7 @@ context (user policy option).</translation>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../mainwindow.cpp" line="+330"/>
         <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
         <source>Local group policies</source>
         <translation>Local group policies templates</translation>
@@ -761,11 +769,11 @@ context (user policy option).</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
     <message>
         <source>Error writing file:</source>
-        <translation>Error writing file:</translation>
+        <translation type="vanished">Error writing file:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+12"/>
@@ -779,13 +787,13 @@ context (user policy option).</translation>
         <translation>[Local Group Policy]</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+62"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
     <message>
         <source>Error reading file:</source>
-        <translation>Error reading file:</translation>
+        <translation type="vanished">Error reading file:</translation>
     </message>
     <message>
         <location filename="../filedialogutils.cpp" line="+37"/>
@@ -827,259 +835,291 @@ context (user policy option).</translation>
         <source>Open Directory</source>
         <translation>Open Directory</translation>
     </message>
+    <message>
+        <location filename="../altspinbox.cpp" line="+94"/>
+        <location line="+10"/>
+        <source>Information message</source>
+        <translation>Information message</translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <location line="+10"/>
+        <source>Value: </source>
+        <translation>Value: </translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <source> is greater than maximum allowed value of: </source>
+        <translation> is greater than maximum allowed value of: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Maximum allowed value has been set.</source>
+        <translation>. Maximum allowed value has been set.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source> is less than minimum allowed value of: </source>
+        <translation> is less than minimum allowed value of: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>. Minimum allowed value has been set.</source>
+        <translation>. Minimum allowed value has been set.</translation>
+    </message>
 </context>
 <context>
     <name>SharesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Action:</translation>
+        <translation type="vanished">Action:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation type="vanished">Create</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation type="vanished">Update</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>Share name:</source>
-        <translation>Share name:</translation>
+        <translation type="vanished">Share name:</translation>
     </message>
     <message>
         <source>Folder path:</source>
-        <translation>Folder path:</translation>
+        <translation type="vanished">Folder path:</translation>
     </message>
     <message>
         <source>Comment:</source>
-        <translation>Comment:</translation>
+        <translation type="vanished">Comment:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Action
 Modifiers:</source>
-        <translation>Action
+        <translation type="vanished">Action
 Modifiers:</translation>
     </message>
     <message>
         <source>Update all regular shares</source>
-        <translation>Update all regular shares</translation>
+        <translation type="vanished">Update all regular shares</translation>
     </message>
     <message>
         <source>Update all hidden non-administrative
 shares</source>
-        <translation>Update all hidden non-administrative
+        <translation type="vanished">Update all hidden non-administrative
 shares</translation>
     </message>
     <message>
         <source>Update all administrative
 drive-letter shares</source>
-        <translation>Update all administrative
+        <translation type="vanished">Update all administrative
 drive-letter shares</translation>
     </message>
     <message>
         <source>User limit:</source>
-        <translation>User limit:</translation>
+        <translation type="vanished">User limit:</translation>
     </message>
     <message>
         <source>No change</source>
-        <translation>No change</translation>
+        <translation type="vanished">No change</translation>
     </message>
     <message>
         <source>Maximum allowed</source>
-        <translation>Maximum allowed</translation>
+        <translation type="vanished">Maximum allowed</translation>
     </message>
     <message>
         <source>Alow this number of users:</source>
-        <translation>Alow this number of users:</translation>
+        <translation type="vanished">Alow this number of users:</translation>
     </message>
     <message>
         <source>Access-based
 Enumeration:</source>
-        <translation>Access-based
+        <translation type="vanished">Access-based
 Enumeration:</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Enable</translation>
+        <translation type="vanished">Enable</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Disable</translation>
+        <translation type="vanished">Disable</translation>
     </message>
 </context>
 <context>
     <name>ShortcutsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Action:</translation>
+        <translation type="vanished">Action:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation type="vanished">Create</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation>Replace</translation>
+        <translation type="vanished">Replace</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation type="vanished">Update</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Target type:</source>
-        <translation>Target type:</translation>
+        <translation type="vanished">Target type:</translation>
     </message>
     <message>
         <source>FILESYSTEM</source>
-        <translation>FILESYSTEM</translation>
+        <translation type="vanished">FILESYSTEM</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="vanished">URL</translation>
     </message>
     <message>
         <source>SHELL</source>
-        <translation>SHELL</translation>
+        <translation type="vanished">SHELL</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Location:</translation>
+        <translation type="vanished">Location:</translation>
     </message>
     <message>
         <source>&lt;Specify full path&gt;</source>
-        <translation>&lt;Specify full path&gt;</translation>
+        <translation type="vanished">&lt;Specify full path&gt;</translation>
     </message>
     <message>
         <source>Desktop</source>
-        <translation>Desktop</translation>
+        <translation type="vanished">Desktop</translation>
     </message>
     <message>
         <source>Start Menu</source>
-        <translation>Start Menu</translation>
+        <translation type="vanished">Start Menu</translation>
     </message>
     <message>
         <source>Programs</source>
-        <translation>Programs</translation>
+        <translation type="vanished">Programs</translation>
     </message>
     <message>
         <source>StartUp</source>
-        <translation>StartUp</translation>
+        <translation type="vanished">StartUp</translation>
     </message>
     <message>
         <source>Explorer Favorites</source>
-        <translation>Explorer Favorites</translation>
+        <translation type="vanished">Explorer Favorites</translation>
     </message>
     <message>
         <source>Explorer Links</source>
-        <translation>Explorer Links</translation>
+        <translation type="vanished">Explorer Links</translation>
     </message>
     <message>
         <source>Send To</source>
-        <translation>Send To</translation>
+        <translation type="vanished">Send To</translation>
     </message>
     <message>
         <source>Recent</source>
-        <translation>Recent</translation>
+        <translation type="vanished">Recent</translation>
     </message>
     <message>
         <source>Quick Launch ToolBar</source>
-        <translation>Quick Launch ToolBar</translation>
+        <translation type="vanished">Quick Launch ToolBar</translation>
     </message>
     <message>
         <source>My Network Places</source>
-        <translation>My Network Places</translation>
+        <translation type="vanished">My Network Places</translation>
     </message>
     <message>
         <source>All Users Desktop</source>
-        <translation>All Users Desktop</translation>
+        <translation type="vanished">All Users Desktop</translation>
     </message>
     <message>
         <source>All Users Start Menu</source>
-        <translation>All Users Start Menu</translation>
+        <translation type="vanished">All Users Start Menu</translation>
     </message>
     <message>
         <source>All Users Programs</source>
-        <translation>All Users Programs</translation>
+        <translation type="vanished">All Users Programs</translation>
     </message>
     <message>
         <source>All Users StartUp</source>
-        <translation>All Users StartUp</translation>
+        <translation type="vanished">All Users StartUp</translation>
     </message>
     <message>
         <source>All Users Explorer Favorites</source>
-        <translation>All Users Explorer Favorites</translation>
+        <translation type="vanished">All Users Explorer Favorites</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Name:</translation>
+        <translation type="vanished">Name:</translation>
     </message>
     <message>
         <source>Target path:</source>
-        <translation>Target path:</translation>
+        <translation type="vanished">Target path:</translation>
     </message>
     <message>
         <source>Arguments:</source>
-        <translation>Arguments:</translation>
+        <translation type="vanished">Arguments:</translation>
     </message>
     <message>
         <source>Icon file path:</source>
-        <translation>Icon file path:</translation>
+        <translation type="vanished">Icon file path:</translation>
     </message>
     <message>
         <source>Icon index:</source>
-        <translation>Icon index:</translation>
+        <translation type="vanished">Icon index:</translation>
     </message>
     <message>
         <source>Start in:</source>
-        <translation>Start in:</translation>
+        <translation type="vanished">Start in:</translation>
     </message>
     <message>
         <source>Shortcut key:</source>
-        <translation>Shortcut key:</translation>
+        <translation type="vanished">Shortcut key:</translation>
     </message>
     <message>
         <source>Run:</source>
-        <translation>Run:</translation>
+        <translation type="vanished">Run:</translation>
     </message>
     <message>
         <source>Normal Window</source>
-        <translation>Normal Window</translation>
+        <translation type="vanished">Normal Window</translation>
     </message>
     <message>
         <source>Minimized</source>
-        <translation>Minimized</translation>
+        <translation type="vanished">Minimized</translation>
     </message>
     <message>
         <source>Maximized</source>
-        <translation>Maximized</translation>
+        <translation type="vanished">Maximized</translation>
     </message>
     <message>
         <source>Comment:</source>
-        <translation>Comment:</translation>
+        <translation type="vanished">Comment:</translation>
     </message>
 </context>
 <context>
@@ -1101,78 +1141,80 @@ Enumeration:</translation>
     <name>VariablesWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Details</translation>
+        <translation type="vanished">Details</translation>
     </message>
     <message>
         <source>Placeholder</source>
-        <translation>Placeholder</translation>
+        <translation type="vanished">Placeholder</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation>Value:</translation>
+        <translation type="vanished">Value:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Name:</translation>
+        <translation type="vanished">Name:</translation>
     </message>
     <message>
         <source>or</source>
-        <translation>or</translation>
+        <translation type="vanished">or</translation>
     </message>
     <message>
         <source>PATH</source>
-        <translation>PATH</translation>
+        <translation type="vanished">PATH</translation>
     </message>
     <message>
         <source>Partial</source>
-        <translation>Partial</translation>
+        <translation type="vanished">Partial</translation>
     </message>
     <message>
         <source>Action:</source>
-        <translation>Action:</translation>
+        <translation type="vanished">Action:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation type="vanished">Create</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation type="vanished">Update</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>Variable Type</source>
-        <translation>Variable Type</translation>
+        <translation type="vanished">Variable Type</translation>
     </message>
     <message>
         <source>User Variable</source>
-        <translation>User Variable</translation>
+        <translation type="vanished">User Variable</translation>
     </message>
     <message>
         <source>System Variable</source>
-        <translation>System Variable</translation>
+        <translation type="vanished">System Variable</translation>
     </message>
 </context>
 <context>
     <name>gpui::ContentWidget</name>
     <message>
+        <location filename="../contentwidget.cpp" line="+3"/>
         <source>Yes</source>
         <translation>Yes</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
         <source>Policy: </source>
-        <translation>Policy: </translation>
+        <translation type="vanished">Policy: </translation>
     </message>
 </context>
 <context>
@@ -1230,7 +1272,7 @@ Enumeration:</translation>
     <name>main</name>
     <message>
         <source>BaseALT Ltd.</source>
-        <translation>BaseALT Ltd.</translation>
+        <translation type="vanished">BaseALT Ltd.</translation>
     </message>
 </context>
 </TS>

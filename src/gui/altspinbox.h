@@ -18,29 +18,37 @@
 **
 ***********************************************************************************************************************/
 
-#include "aboutdialog.h"
-#include "../core/version.h"
+#ifndef GPUI_ALT_SPIN_BOX_H
+#define GPUI_ALT_SPIN_BOX_H
 
-#include "ui_aboutdialog.h"
+#include "gui.h"
 
-namespace gpui
+#include <QSpinBox>
+
+namespace gui
 {
-AboutDialog::AboutDialog(QWidget* parent)
-    : QDialog(parent)
-    , ui(new Ui::AboutDialog())
+class GPUI_GUI_EXPORT AltSpinBox final : public QSpinBox
 {
-    ui->setupUi(this);
+    Q_OBJECT
+public:
+    AltSpinBox(QWidget *parent = nullptr);
 
-    QString text = ui->versionLabel->text();
+protected:
+    void fixup(QString &input) const override;
+    QValidator::State validate(QString &text, int &pos) const override;
 
-    text = text.append(getApplicationVersion());
+signals:
+    void fixStringInput(const QString &wrongInput) const;
+    void fixToValidRange(const int currentValue, const int boundValue) const;
 
-    ui->versionLabel->setText(text);
-}
+private slots:
+    void onFixStringInput(const QString &wrongInput);
+    void onFixToValidRange(const int currentValue, const int boundValue);
 
-AboutDialog::~AboutDialog()
-{
-    delete ui;
-}
+private:
+    void openMessageBox(const QString &value, bool isMaximum);
+};
 
-}
+} // namespace gui
+
+#endif //GPUI_ALT_SPIN_BOX_H

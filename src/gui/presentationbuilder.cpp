@@ -49,6 +49,8 @@
 
 #include "listboxdialog.h"
 
+#include "altspinbox.h"
+
 #include <QVBoxLayout>
 
 #include <QCheckBox>
@@ -172,7 +174,7 @@ public:
                 comboBox->setCurrentIndex(index);
             }
 
-            comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() {
+            comboBox->connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=]() {
                 *m_dataChanged = true;
             });
 
@@ -231,7 +233,7 @@ public:
                 comboBox->setCurrentIndex(index);
             }
 
-            comboBox->connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() {
+            comboBox->connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=]() {
                 *m_dataChanged = true;
             });
 
@@ -558,7 +560,7 @@ private:
     {
         if (spin)
         {
-            QSpinBox *spinBox = new QSpinBox();
+            AltSpinBox *spinBox = new AltSpinBox();
             spinBox->setMinimum(0);
             spinBox->setMaximum(std::numeric_limits<int>::max());
             spinBox->setSingleStep(step);
@@ -585,7 +587,9 @@ private:
                     spinBox->setMaximum(longDecimal->maxValue);
                 }
 
-                spinBox->connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [=]() { *m_dataChanged = true; });
+                spinBox->connect(spinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=]() {
+                    *m_dataChanged = true;
+                });
 
                 // TODO: Implement correct type on save.
                 m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, spinBox, this]() {

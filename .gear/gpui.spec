@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt12
+Release: alt16
 
 Summary: Group policy editor
 License: GPLv2+
@@ -111,6 +111,35 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Jan 10 2023 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt16
+- 0.2.17-alt16
+- Fixes:
+  + #91098 Fix translations for shortcuts widget.
+  + #88126 Implement shortcuts key sequence encoding.
+
+* Wed Dec 28 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt15
+- 0.2.17-alt15
+- Fixes:
+  + #91635 Fix e2k preferences build.
+  + #91629 Fix translations on e2kv4.
+  + #75874 Change spinbox behaviour to mimic windows behaviour.
+  + #89621 Fix typo in ini widget.
+  + #91060 Fix OK and Cancel buttons to work in a message box.
+
+* Mon Dec 26 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt14
+- 0.2.17-alt14
+- Fixes:
+  + #91097 Fix names of hidden and archive fields in folder widget.
+  + #91237 Remove sorting in table header.
+  + #90987 Fix status bar message.
+  + #91312 Add translation to '-n' command line option.
+  + #91047 Fix segmentation fault in the absence of kerberos tickets.
+
+* Thu Dec 15 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt13
+- 0.2.17-alt13
+- Fixes:
+  + Fix presentation builder to allow build on e2k.
+
 * Thu Dec 15 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt12
 - 0.2.17-alt12
 - Fixes:

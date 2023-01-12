@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,29 +18,23 @@
 **
 ***********************************************************************************************************************/
 
-#include "aboutdialog.h"
-#include "../core/version.h"
+#ifndef GPUI_KEY_SEQUENCE_ENCODER_H
+#define GPUI_KEY_SEQUENCE_ENCODER_H
 
-#include "ui_aboutdialog.h"
+#include <QKeySequence>
 
-namespace gpui
+namespace preferences
 {
-AboutDialog::AboutDialog(QWidget* parent)
-    : QDialog(parent)
-    , ui(new Ui::AboutDialog())
+class KeySequenceEncoder
 {
-    ui->setupUi(this);
+public:
+    KeySequenceEncoder();
 
-    QString text = ui->versionLabel->text();
+    uint32_t encode(const QKeySequence &sequence);
 
-    text = text.append(getApplicationVersion());
+    QKeySequence decode(const uint32_t sequence);
+};
 
-    ui->versionLabel->setText(text);
-}
+} // namespace preferences
 
-AboutDialog::~AboutDialog()
-{
-    delete ui;
-}
-
-}
+#endif //GPUI_KEY_SEQUENCE_ENCODER_H

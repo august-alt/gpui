@@ -173,6 +173,7 @@ set(HEADERS
     shares/sharescontaineritem.h
     shares/shareswidget.h
 
+    shortcuts/keysequenceencoder.h
     shortcuts/shortcutsitem.h
     shortcuts/shortcutspreferencereader.h
     shortcuts/shortcutspreferencewriter.h
@@ -349,6 +350,7 @@ set(SOURCES
     shares/shareswidget.cpp
     shares/shareswidgetslots.cpp
 
+    shortcuts/keysequenceencoder.cpp
     shortcuts/shortcutsitem.cpp
     shortcuts/shortcutspreferencereader.cpp
     shortcuts/shortcutspreferencewriter.cpp
@@ -466,7 +468,7 @@ set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_CURRE
 
 add_translation(QM_FILES ${TS_FILES})
 
-add_translation_resource(RESOURCES_SRC ${QM_FILES})
+add_translation_resource(RESOURCES_SRC "preferences" ${QM_FILES})
 
 qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 

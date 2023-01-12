@@ -76,18 +76,18 @@ void IniWidget::setItem(ModelView::SessionItem *item)
 
 bool IniWidget::validate()
 {
-    if (!CommonUtils::validateLineEdit(ui->pathLineEdit, tr("Please input path value.")))
+    if (!CommonUtils::validateLineEdit(ui->pathLineEdit, tr("Please input path value")))
     {
         return false;
     }
 
     if (ui->actionComboBox->currentIndex() != DefaultActions::DELETE__MODE
-        && !CommonUtils::validateLineEdit(ui->sectionLineEdit, tr("Please input section value.")))
+        && !CommonUtils::validateLineEdit(ui->sectionLineEdit, tr("Please input section value")))
     {
         return false;
     }
 
-    if (!CommonUtils::validateLineEdit(ui->propertyLineEdit, tr("Please input property value.")))
+    if (!CommonUtils::validateLineEdit(ui->propertyLineEdit, tr("Please input name of the property")))
     {
         return false;
     }

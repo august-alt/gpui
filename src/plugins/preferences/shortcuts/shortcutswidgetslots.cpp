@@ -155,9 +155,19 @@ void ShortcutsWidget::updateCurrentSequence(const QKeySequence &sequence)
     m_item->setProperty<std::string>("shortcutKey", sequence.toString().toStdString());
 }
 
+void ShortcutsWidget::setDefaultPlaceholderText()
+{
+    auto lineEdit = ui->shortkutKeySequenceEdit->findChild<QLineEdit *>();
+    if (lineEdit)
+    {
+        lineEdit->setPlaceholderText(tr("Press shortcut"));
+    }
+}
+
 void ShortcutsWidget::on_shortkutKeySequenceEdit_editingFinished()
 {
     auto keySequence = ui->shortkutKeySequenceEdit->keySequence();
+    setDefaultPlaceholderText();
 
     if (!keySequence.isEmpty())
     {

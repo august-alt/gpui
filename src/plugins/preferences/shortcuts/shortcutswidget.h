@@ -82,6 +82,7 @@ private:
     QString openFileOrFolder(bool folderMode);
 
     void updateCurrentSequence(const QKeySequence &sequence);
+    void setDefaultPlaceholderText();
 
 private:
     ShortcutsWidget(const ShortcutsWidget &) = delete;            // copy ctor

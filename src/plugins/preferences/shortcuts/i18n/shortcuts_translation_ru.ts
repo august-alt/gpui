@@ -32,6 +32,11 @@
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
+    <message>
+        <location filename="../shortcutswidgetslots.cpp" line="163"/>
+        <source>Press shortcut</source>
+        <translation>Нажмите комбинацию клавиш</translation>
+    </message>
 </context>
 <context>
     <name>ShortcutsWidget</name>
@@ -291,11 +296,6 @@
         <location filename="../shortcutswidgetslots.cpp" line="135"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
-    </message>
-    <message>
-        <location filename="../shortcutswidgetslots.cpp" line="163"/>
-        <source>Press shortcut</source>
-        <translation type="unfinished">Нажмите комбинацию клавиш</translation>
     </message>
 </context>
 </TS>

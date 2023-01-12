@@ -160,7 +160,7 @@ void ShortcutsWidget::setDefaultPlaceholderText()
     auto lineEdit = ui->shortkutKeySequenceEdit->findChild<QLineEdit *>();
     if (lineEdit)
     {
-        lineEdit->setPlaceholderText(tr("Press shortcut"));
+        lineEdit->setPlaceholderText(QObject::tr("Press shortcut"));
     }
 }
 

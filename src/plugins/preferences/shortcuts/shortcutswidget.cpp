@@ -41,6 +41,7 @@ ShortcutsWidget::ShortcutsWidget(QWidget *parent, ShortcutsItem *item)
     ui->setupUi(this);
 
     on_actionComboBox_currentIndexChanged(ui->actionComboBox->currentIndex());
+    setDefaultPlaceholderText();
 }
 
 ShortcutsWidget::~ShortcutsWidget()
@@ -80,6 +81,7 @@ void ShortcutsWidget::setItem(ModelView::SessionItem *item)
 
     QString keyCode = QString::fromStdString(item->property<std::string>(ShortcutsItem::SHORTCUT_KEY));
     ui->shortkutKeySequenceEdit->setKeySequence(QKeySequence(keyCode));
+    setDefaultPlaceholderText();
 }
 
 bool ShortcutsWidget::validate()

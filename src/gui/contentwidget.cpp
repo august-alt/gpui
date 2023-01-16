@@ -99,10 +99,8 @@ void ContentWidget::setSelectionModel(QItemSelectionModel *selectionModel)
 
                 auto modelIndex = selected.first().indexes().first();
 
-                ui->descriptionTextEdit->setText(
-                    modelIndex.data(PolicyRoles::EXPLAIN_TEXT).toString());
-                if (modelIndex.data(PolicyRoles::ITEM_TYPE).value<uint>()
-                    != ItemType::ITEM_TYPE_POLICY)
+                ui->descriptionTextEdit->setText(modelIndex.data(PolicyRoles::EXPLAIN_TEXT).toString());
+                if (modelIndex.data(PolicyRoles::ITEM_TYPE).value<uint>() != ItemType::ITEM_TYPE_POLICY)
                 {
                     ui->contentListView->setRootIndex(modelIndex);
                 }
@@ -124,8 +122,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
     if (model)
     {
-        ui->descriptionTextEdit->setText(
-            model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
+        ui->descriptionTextEdit->setText(model->data(index, PolicyRoles::EXPLAIN_TEXT).value<QString>());
 
         auto widget = ui->scrollArea->takeWidget();
 
@@ -149,8 +146,7 @@ void ContentWidget::onListItemClicked(const QModelIndex &index)
 
         if (model->data(index, PolicyRoles::ITEM_TYPE).value<uint>() == ItemType::ITEM_TYPE_POLICY)
         {
-            auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET)
-                                    .value<std::function<QWidget *()>>();
+            auto policyWidget = model->data(index, PolicyRoles::POLICY_WIDGET).value<std::function<QWidget *()>>();
 
             if (deleteWidget && policyWidget)
             {

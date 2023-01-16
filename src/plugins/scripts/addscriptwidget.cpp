@@ -78,7 +78,7 @@ void AddScriptWidget::setDeletingFlag(bool flag)
 
 void AddScriptWidget::on_okPushButton_clicked()
 {
-    if (ui->nameLineEdit->text().isEmpty() || ui->paramLineEdit->text().isEmpty())
+    if (ui->nameLineEdit->text().isEmpty())
     {
         if (deletingFlag)
         {
@@ -96,8 +96,6 @@ void AddScriptWidget::on_okPushButton_clicked()
 
 void AddScriptWidget::on_cancelPushButton_clicked()
 {
-    qWarning() << "button CANCEL clicked!";
-
     this->close();
 }
 

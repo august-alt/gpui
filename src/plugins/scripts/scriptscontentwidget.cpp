@@ -35,7 +35,7 @@ namespace scripts_plugin
 {
 ScriptsContentWidget::ScriptsContentWidget(ScriptsSnapIn *sn, QWidget *parent)
     : QWidget(parent)
-    , model(std::make_unique<QStringListModel>())
+    , model(std::make_unique<QStandardItemModel>())
     , ui(new Ui::ScriptsContentWidget())
     , snapIn(sn)
 {
@@ -58,7 +58,7 @@ void ScriptsContentWidget::setNamespace(bool machineNamespace)
 
 void ScriptsContentWidget::buildModel()
 {
-    model = std::make_unique<QStringListModel>();
+    model = std::make_unique<QStandardItemModel>();
 
     QString startupItem  = "Logon";
     QString shutdownItem = "Logoff";
@@ -69,9 +69,16 @@ void ScriptsContentWidget::buildModel()
         shutdownItem = "Shutdown";
     }
 
-    QStringList list;
-    list << startupItem << shutdownItem;
-    model.get()->setStringList(list);
+    QStandardItem *first  = new QStandardItem();
+    QStandardItem *second = new QStandardItem();
+
+    first->setData(QVariant(startupItem), Qt::DisplayRole);
+    second->setData(QVariant(shutdownItem), Qt::DisplayRole);
+    first->setData(QVariant(true));
+    second->setData(QVariant(false));
+
+    model.get()->appendRow(first);
+    model.get()->appendRow(second);
 
     ui->listView->setModel(model.get());
 
@@ -85,9 +92,9 @@ void ScriptsContentWidget::startDialog(QItemSelection item)
 {
     if (!item.indexes().isEmpty())
     {
-        auto displayName = model.get()->data(item.indexes().first()).toString();
+        auto isStartupItem = model.get()->data(item.indexes().first(), isStartupRole);
 
-        if ((displayName.compare("Logon") == 0) || (displayName.compare("Startup") == 0))
+        if (isStartupItem.toBool())
         {
             isStartupScripts = true;
         }

@@ -68,7 +68,7 @@ private:
     void buildModel();
 
 private:
-    std::unique_ptr<QStringListModel> model = nullptr;
+    std::unique_ptr<QStandardItemModel> model = nullptr;
 
     Ui::ScriptsContentWidget *ui{nullptr};
 
@@ -76,6 +76,8 @@ private:
     bool isStartupScripts   = false;
 
     ScriptsSnapIn *snapIn;
+
+    static inline int isStartupRole = Qt::UserRole + 1;
 };
 
 } // namespace scripts_plugin

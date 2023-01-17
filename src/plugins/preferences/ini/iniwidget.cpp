@@ -87,7 +87,8 @@ bool IniWidget::validate()
         return false;
     }
 
-    if (!CommonUtils::validateLineEdit(ui->propertyLineEdit, tr("Please input name of the property")))
+    if (ui->actionComboBox->currentIndex() != DefaultActions::DELETE__MODE
+        && !CommonUtils::validateLineEdit(ui->propertyLineEdit, tr("Please input name of the property")))
     {
         return false;
     }

@@ -49,6 +49,7 @@ public:
     ~TableDetailsWidget() override;
 
     void setModel(ModelView::SessionModel *model);
+    void setModelType(int newModelType);
 
 signals:
     void okPressed();
@@ -78,6 +79,8 @@ private:
     std::unique_ptr<QDataWidgetMapper> mapper;
 
     std::map<std::string, QString> itemTypes;
+
+    int modelType;
 };
 
 } // namespace preferences

@@ -21,6 +21,8 @@
 #include "tabledetailswidget.h"
 #include "ui_tabledetailswidget.h"
 
+#include "common/commonitem.h"
+
 #include "common/preferencesdialog.h"
 #include "interfaces/containeriteminterface.h"
 #include "shortcuts/shortcutscontaineritem.h"
@@ -42,6 +44,7 @@ TableDetailsWidget::TableDetailsWidget(QWidget *parent)
     , delegate(std::make_unique<ModelView::ViewModelDelegate>())
     , mapper(nullptr)
     , itemTypes()
+    , modelType(0)
 {
     ui->setupUi(this);
 
@@ -64,6 +67,11 @@ void TableDetailsWidget::setModel(ModelView::SessionModel *model)
     setupConnections();
 
     ui->treeView->setCurrentIndex(view_model->index(0, 0));
+}
+
+void TableDetailsWidget::setModelType(int newModelType)
+{
+    modelType = newModelType;
 }
 
 void TableDetailsWidget::onItemTypeChange(const std::map<std::string, QString> &newItemTypes)
@@ -124,6 +132,9 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
             {
                 containerItemInterface->setupListeners();
             }
+
+            newItem->children()[newItem->childrenCount() - 2]->setProperty<bool>(CommonItem::propertyToString(CommonItem::USER_CONTEXT), modelType == 1);
+
             auto preferencesDialog = new PreferencesDialog(newItem, this);
             connect(preferencesDialog, &QDialog::rejected, [&]() {
                 view_model->sessionModel()->removeItem(newItem->parent(), newItem->tagRow());

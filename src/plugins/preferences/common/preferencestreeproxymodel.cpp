@@ -108,6 +108,7 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
 
         std::function<QWidget *()> widgetCreator = [=]() {
             auto contentWidget = new TableDetailsWidget();
+            contentWidget->setModelType(isMachineModel ? 0 : 1);
 
             auto item = viewModel->sessionItemFromIndex(proxyIndex);
 

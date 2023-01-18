@@ -56,11 +56,11 @@
     </message>
     <message>
         <source>On startup</source>
-        <translation>На влючении</translation>
+        <translation>При запуске</translation>
     </message>
     <message>
         <source>On shutdown</source>
-        <translation>На выключении</translation>
+        <translation>При выключении</translation>
     </message>
     <message>
         <source>User</source>
@@ -72,19 +72,19 @@
     </message>
     <message>
         <source>Logon</source>
-        <translation>При входе в систему</translation>
+        <translation>Вход в систему</translation>
     </message>
     <message>
         <source>Logoff</source>
-        <translation>При выходе из системы</translation>
+        <translation>Выход из системы</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation>При загрузке компьютера</translation>
+        <translation>Запуск</translation>
     </message>
     <message>
         <source>Shutdown</source>
-        <translation>При выключении компьютера</translation>
+        <translation>Завершение работы</translation>
     </message>
 </context>
 <context>

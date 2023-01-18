@@ -35,9 +35,6 @@ public:
     };
 
 public:
-    //static inline const std::string PATH      = "path";
-    //static inline const std::string PARAMETER = "parameter";
-
     ScriptItem();
     ScriptItem(const ScriptItem &other);
 

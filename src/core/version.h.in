@@ -21,16 +21,13 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define GPUI_VERSION_MAJOR ${GPUI_VERSION_MAJOR}
-#define GPUI_VERSION_MINOR ${GPUI_VERSION_MINOR}
-#define GPUI_VERSION_PATCH ${GPUI_VERSION_PATCH}
+const int GPUI_VERSION_MAJOR = ${GPUI_VERSION_MAJOR};
+const int GPUI_VERSION_MINOR = ${GPUI_VERSION_MINOR};
+const int GPUI_VERSION_PATCH = ${GPUI_VERSION_PATCH};
 
 inline QString getApplicationVersion()
 {
-return QString("%1.%2.%3")
-                          .arg(GPUI_VERSION_MAJOR)
-                          .arg(GPUI_VERSION_MINOR)
-                          .arg(GPUI_VERSION_PATCH);
+    return QString("%1.%2.%3").arg(GPUI_VERSION_MAJOR).arg(GPUI_VERSION_MINOR).arg(GPUI_VERSION_PATCH);
 }
 
 #endif //VERSION_H

@@ -26,4 +26,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: gpui-${{ matrix.alt-version.artifact }}-${{ matrix.architecture }}
-          path: RPM/
+          path: /home/builder2/RPM/RPMS/x86_64/

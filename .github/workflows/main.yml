@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - run: docker build . --file Dockerfile --tag build-environment --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --build-arg DISTR=${{ matrix.alt-version.dist }} --build-arg ARCH=${{ matrix.architecture  }}
 
@@ -23,7 +23,7 @@ jobs:
       - if: ${{ matrix.architecture == 'amd64' }}
         run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: gpui-${{ matrix.alt-version.artifact }}-${{ matrix.architecture }}
-          path: RPMS/
+          path: RPM/

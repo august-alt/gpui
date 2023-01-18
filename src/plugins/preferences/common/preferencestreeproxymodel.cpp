@@ -31,6 +31,8 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
+#include "modeltype.h"
+
 #include "preferencessnapinprivate.h"
 
 #include <QIcon>
@@ -108,7 +110,7 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
 
         std::function<QWidget *()> widgetCreator = [=]() {
             auto contentWidget = new TableDetailsWidget();
-            contentWidget->setModelType(isMachineModel ? 0 : 1);
+            contentWidget->setModelType(isMachineModel ? ModelType::MACHINE : ModelType::USER);
 
             auto item = viewModel->sessionItemFromIndex(proxyIndex);
 

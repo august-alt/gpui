@@ -69,7 +69,7 @@ void TableDetailsWidget::setModel(ModelView::SessionModel *model)
     ui->treeView->setCurrentIndex(view_model->index(0, 0));
 }
 
-void TableDetailsWidget::setModelType(int newModelType)
+void TableDetailsWidget::setModelType(ModelType newModelType)
 {
     modelType = newModelType;
 }
@@ -133,7 +133,9 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
                 containerItemInterface->setupListeners();
             }
 
-            newItem->children()[newItem->childrenCount() - 2]->setProperty<bool>(CommonItem::propertyToString(CommonItem::USER_CONTEXT), modelType == 1);
+            newItem->children()[newItem->childrenCount() - 2]->setProperty<bool>(CommonItem::propertyToString(
+                                                                                     CommonItem::USER_CONTEXT),
+                                                                                 modelType == ModelType::USER);
 
             auto preferencesDialog = new PreferencesDialog(newItem, this);
             connect(preferencesDialog, &QDialog::rejected, [&]() {

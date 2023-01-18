@@ -23,6 +23,7 @@ set(HEADERS
     common/commonutils.h
     common/commonview.h
     common/defaultactions.h
+    common/modeltype.h
     common/preferencecategoryitem.h
     common/preferencesdialog.h
     common/preferencesmodel.h

@@ -58,7 +58,7 @@ void BaseScriptWidget::onAddClicked(bool isScripts)
     auto addWidget = new AddScriptWidget(parent);
 
     addWidget->setDeletingFlag(true);
-    addWidget->setWindowTitle("Add script");
+    addWidget->setWindowTitle(QObject::tr("Add script"));
     addWidget->setItem(newItem);
     addWidget->setModal(true);
 
@@ -72,7 +72,7 @@ void BaseScriptWidget::onEditClicked()
     {
         auto addWidget = new AddScriptWidget(parent);
 
-        addWidget->setWindowTitle("Edit script");
+        addWidget->setWindowTitle(QObject::tr("Edit script"));
 
         addWidget->setItem(this->selectedItem->item()->parent());
         addWidget->setModal(true);

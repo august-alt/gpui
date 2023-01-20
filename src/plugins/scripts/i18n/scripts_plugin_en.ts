@@ -88,6 +88,14 @@
         <source>Shutdown</source>
         <translation>Shutdown</translation>
     </message>
+    <message>
+        <source>Add script</source>
+        <translation>Add script</translation>
+    </message>
+    <message>
+        <source>Edit script</source>
+        <translation>Edit script</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>
@@ -203,6 +211,25 @@
     <message>
         <source>Show files</source>
         <translation>Show files</translation>
+    </message>
+</context>
+<context>
+    <name>scripts_plugin::ScriptsContentWidget</name>
+    <message>
+        <source>Logon</source>
+        <translation>Logon</translation>
+    </message>
+    <message>
+        <source>Logoff</source>
+        <translation>Logoff</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>Startup</translation>
+    </message>
+    <message>
+        <source>Shutdown</source>
+        <translation>Shutdown</translation>
     </message>
 </context>
 </TS>

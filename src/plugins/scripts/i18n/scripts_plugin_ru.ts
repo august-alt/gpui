@@ -86,6 +86,14 @@
         <source>Shutdown</source>
         <translation>Завершение работы</translation>
     </message>
+    <message>
+        <source>Add script</source>
+        <translation>Добавить скрипт</translation>
+    </message>
+    <message>
+        <source>Edit script</source>
+        <translation>Редактировать скрипт</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>
@@ -201,6 +209,25 @@
     <message>
         <source>Show files</source>
         <translation>Показать файлы</translation>
+    </message>
+</context>
+<context>
+    <name>scripts_plugin::ScriptsContentWidget</name>
+    <message>
+        <source>Logon</source>
+        <translation>Вход в систему</translation>
+    </message>
+    <message>
+        <source>Logoff</source>
+        <translation>Выход из системы</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>Запуск</translation>
+    </message>
+    <message>
+        <source>Shutdown</source>
+        <translation>Завершение работы</translation>
     </message>
 </context>
 </TS>

@@ -60,13 +60,13 @@ void ScriptsContentWidget::buildModel()
 {
     model = std::make_unique<QStandardItemModel>();
 
-    QString startupItem  = "Logon";
-    QString shutdownItem = "Logoff";
+    QString startupItem  = tr("Logon");
+    QString shutdownItem = tr("Logoff");
 
     if (isMachineNamespace)
     {
-        startupItem  = "Startup";
-        shutdownItem = "Shutdown";
+        startupItem  = tr("Startup");
+        shutdownItem = tr("Shutdown");
     }
 
     QStandardItem *first  = new QStandardItem();

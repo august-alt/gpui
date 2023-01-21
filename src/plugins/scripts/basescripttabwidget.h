@@ -33,16 +33,16 @@
 
 namespace scripts_plugin
 {
-class BaseScriptWidget
+class BaseScriptTabWidget
 {
 public:
-    BaseScriptWidget(QWidget *p);
-    virtual ~BaseScriptWidget();
+    BaseScriptTabWidget(QWidget *p);
+    virtual ~BaseScriptTabWidget();
 
-    BaseScriptWidget(const BaseScriptWidget &) = delete;            //copy ctor
-    BaseScriptWidget(BaseScriptWidget &&)      = delete;            // mode ctor
-    BaseScriptWidget &operator=(const BaseScriptWidget &) = delete; //copy assignment
-    BaseScriptWidget &operator=(BaseScriptWidget &&) = delete;      //mode assignment
+    BaseScriptTabWidget(const BaseScriptTabWidget &) = delete;            //copy ctor
+    BaseScriptTabWidget(BaseScriptTabWidget &&)      = delete;            // mode ctor
+    BaseScriptTabWidget &operator=(const BaseScriptTabWidget &) = delete; //copy assignment
+    BaseScriptTabWidget &operator=(BaseScriptTabWidget &&) = delete;      //mode assignment
 
 public:
     void onUpClicked();

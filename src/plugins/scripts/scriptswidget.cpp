@@ -29,7 +29,7 @@ namespace scripts_plugin
 {
 ScriptsWidget::ScriptsWidget(QWidget *parent)
     : QWidget(parent)
-    , BaseScriptWidget(parent)
+    , BaseScriptTabWidget(parent)
     , ui(new Ui::ScriptsWidget())
 {
     ui->setupUi(this);
@@ -42,37 +42,37 @@ ScriptsWidget::~ScriptsWidget()
 
 void ScriptsWidget::setItem(GroupScriptContainerItem *item, bool isStartUpFlag)
 {
-    BaseScriptWidget::setItem(ui, item, isStartUpFlag);
+    BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
 }
 
 void ScriptsWidget::on_upPushButton_clicked()
 {
-    BaseScriptWidget::onUpClicked();
+    BaseScriptTabWidget::onUpClicked();
 }
 
 void ScriptsWidget::on_downPushButton_clicked()
 {
-    BaseScriptWidget::onDownClicked();
+    BaseScriptTabWidget::onDownClicked();
 }
 
 void ScriptsWidget::on_addPushButton_clicked()
 {
-    BaseScriptWidget::onAddClicked(true);
+    BaseScriptTabWidget::onAddClicked(true);
 }
 
 void ScriptsWidget::on_editPushButton_clicked()
 {
-    BaseScriptWidget::onEditClicked();
+    BaseScriptTabWidget::onEditClicked();
 }
 
 void ScriptsWidget::on_removePushButton_clicked()
 {
-    BaseScriptWidget::onDeleteClicked();
+    BaseScriptTabWidget::onDeleteClicked();
 }
 
 void ScriptsWidget::on_showPushButton_clicked()
 {
-    BaseScriptWidget::onBrowseClicked();
+    BaseScriptTabWidget::onBrowseClicked();
 }
 
 } // namespace scripts_plugin

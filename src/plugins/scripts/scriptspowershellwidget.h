@@ -21,7 +21,7 @@
 #ifndef MVVM_FOLDERS_SCRIPTS_POWER_SHELL_WIDGET_H
 #define MVVM_FOLDERS_SCRIPTS_POWER_SHELL_WIDGET_H
 
-#include "basescriptswidget.h"
+#include "basescripttabwidget.h"
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 QT_BEGIN_NAMESPACE
@@ -35,7 +35,7 @@ namespace scripts_plugin
 {
 class GroupScriptContainerItem;
 
-class ScriptsPowerShellWidget : public QWidget, public BaseScriptWidget
+class ScriptsPowerShellWidget : public QWidget, public BaseScriptTabWidget
 {
 public:
     Q_OBJECT

@@ -29,7 +29,7 @@ namespace scripts_plugin
 {
 ScriptsPowerShellWidget::ScriptsPowerShellWidget(QWidget *parent)
     : QWidget(parent)
-    , BaseScriptWidget(parent)
+    , BaseScriptTabWidget(parent)
     , ui(new Ui::ScriptsPowerShellWidget())
 {
     ui->setupUi(this);
@@ -42,37 +42,37 @@ ScriptsPowerShellWidget::~ScriptsPowerShellWidget()
 
 void ScriptsPowerShellWidget::setItem(GroupScriptContainerItem *item, bool isStartUpFlag)
 {
-    BaseScriptWidget::setItem(ui, item, isStartUpFlag);
+    BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
 }
 
 void ScriptsPowerShellWidget::on_upPushButton_clicked()
 {
-    BaseScriptWidget::onUpClicked();
+    BaseScriptTabWidget::onUpClicked();
 }
 
 void ScriptsPowerShellWidget::on_downPushButton_clicked()
 {
-    BaseScriptWidget::onDownClicked();
+    BaseScriptTabWidget::onDownClicked();
 }
 
 void ScriptsPowerShellWidget::on_addPushButton_clicked()
 {
-    BaseScriptWidget::onAddClicked(false);
+    BaseScriptTabWidget::onAddClicked(false);
 }
 
 void ScriptsPowerShellWidget::on_editPushButton_clicked()
 {
-    BaseScriptWidget::onEditClicked();
+    BaseScriptTabWidget::onEditClicked();
 }
 
 void ScriptsPowerShellWidget::on_removePushButton_clicked()
 {
-    BaseScriptWidget::onDeleteClicked();
+    BaseScriptTabWidget::onDeleteClicked();
 }
 
 void ScriptsPowerShellWidget::on_showPushButton_clicked()
 {
-    BaseScriptWidget::onBrowseClicked();
+    BaseScriptTabWidget::onBrowseClicked();
 }
 
 } // namespace scripts_plugin

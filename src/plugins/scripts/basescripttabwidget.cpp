@@ -18,7 +18,7 @@
 **
 ***********************************************************************************************************************/
 
-#include "basescriptswidget.h"
+#include "basescripttabwidget.h"
 #include "addscriptwidget.h"
 #include "scriptitem.h"
 
@@ -30,21 +30,21 @@
 
 namespace scripts_plugin
 {
-BaseScriptWidget::BaseScriptWidget(QWidget *p)
+BaseScriptTabWidget::BaseScriptTabWidget(QWidget *p)
     : parent(p)
 {}
 
-void BaseScriptWidget::onUpClicked()
+void BaseScriptTabWidget::onUpClicked()
 {
     ModelView::Utils::MoveUp(this->selectedItem->item()->parent());
 }
 
-void BaseScriptWidget::onDownClicked()
+void BaseScriptTabWidget::onDownClicked()
 {
     ModelView::Utils::MoveDown(this->selectedItem->item()->parent());
 }
 
-void BaseScriptWidget::onAddClicked(bool isScripts)
+void BaseScriptTabWidget::onAddClicked(bool isScripts)
 {
     auto root = findRootItem(isScripts);
 
@@ -65,7 +65,7 @@ void BaseScriptWidget::onAddClicked(bool isScripts)
     addWidget->show();
 }
 
-void BaseScriptWidget::onEditClicked()
+void BaseScriptTabWidget::onEditClicked()
 {
     auto *item = this->selectedItem;
     if (item != nullptr)
@@ -81,7 +81,7 @@ void BaseScriptWidget::onEditClicked()
     }
 }
 
-void BaseScriptWidget::onDeleteClicked()
+void BaseScriptTabWidget::onDeleteClicked()
 {
     if (this->selectedItem && this->selectedItem->item()->parent())
     {
@@ -96,7 +96,7 @@ void BaseScriptWidget::onDeleteClicked()
     }
 }
 
-void BaseScriptWidget::onBrowseClicked()
+void BaseScriptTabWidget::onBrowseClicked()
 {
     auto dialog  = new gpui::FileDialogUtils;
     QString file = dialog->getOpenFileName();
@@ -107,7 +107,7 @@ void BaseScriptWidget::onBrowseClicked()
     delete dialog;
 }
 
-ScriptItemContainer *BaseScriptWidget::findRootItem(bool isScripts)
+ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
 {
     std::string sectionName = "Shutdown";
 
@@ -154,6 +154,6 @@ ScriptItemContainer *BaseScriptWidget::findRootItem(bool isScripts)
     return nullptr;
 }
 
-BaseScriptWidget::~BaseScriptWidget() {}
+BaseScriptTabWidget::~BaseScriptTabWidget() {}
 
 } // namespace scripts_plugin

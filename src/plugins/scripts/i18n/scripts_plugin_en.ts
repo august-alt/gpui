@@ -96,6 +96,22 @@
         <source>Edit script</source>
         <translation>Edit script</translation>
     </message>
+    <message>
+        <source>System settings for computer</source>
+        <translation>System settings for computer</translation>
+    </message>
+    <message>
+        <source>Scripts for computer</source>
+        <translation>Scripts for computer</translation>
+    </message>
+    <message>
+        <source>System settings for user</source>
+        <translation>System settings for user</translation>
+    </message>
+    <message>
+        <source>Scripts for user</source>
+        <translation>Scripts for user</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>

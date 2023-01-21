@@ -84,12 +84,14 @@ void ScriptsTreeModel::populateModel()
     auto machineSystemSettings = insertItem<ScriptsFolderItem>(machineNamespace);
     machineSystemSettings->setDisplayName(QObject::tr("System settings").toStdString());
     machineSystemSettings->setProperty(ScriptsFolderItem::PARENT_ID, machineUuid);
-    machineSystemSettings->setProperty(ScriptsFolderItem::HELP_MSG, "System settings for computer");
+    machineSystemSettings->setProperty(ScriptsFolderItem::HELP_MSG,
+                                       QObject::tr("System settings for computer").toStdString());
 
     auto machineScripts = insertItem<ScriptsFolderItem>(machineSystemSettings);
     machineScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     machineScripts->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
-    machineScripts->setProperty(ScriptsFolderItem::HELP_MSG, "Scripts for computer");
+    machineScripts->setProperty(ScriptsFolderItem::HELP_MSG,
+                                QObject::tr("Scripts for computer").toStdString());
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     auto userNamespace = insertItem<ScriptsFolderItem>(topItem);
@@ -103,11 +105,13 @@ void ScriptsTreeModel::populateModel()
     auto userSystemSetting = insertItem<ScriptsFolderItem>(userNamespace);
     userSystemSetting->setDisplayName(QObject::tr("System settings").toStdString());
     userSystemSetting->setProperty(ScriptsFolderItem::PARENT_ID, userUuid);
-    userSystemSetting->setProperty(ScriptsFolderItem::HELP_MSG, "System settings for user");
+    userSystemSetting->setProperty(ScriptsFolderItem::HELP_MSG,
+                                   QObject::tr("System settings for user").toStdString());
 
     auto userScripts = insertItem<ScriptsFolderItem>(userSystemSetting);
     userScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     userScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
-    userScripts->setProperty(ScriptsFolderItem::HELP_MSG, "Scripts for user");
+    userScripts->setProperty(ScriptsFolderItem::HELP_MSG,
+                             QObject::tr("Scripts for user").toStdString());
 }
 } // namespace scripts_plugin

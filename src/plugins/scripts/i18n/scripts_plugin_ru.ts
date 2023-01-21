@@ -94,6 +94,22 @@
         <source>Edit script</source>
         <translation>Редактировать скрипт</translation>
     </message>
+    <message>
+        <source>System settings for computer</source>
+        <translation>Настройки системы для компьютера</translation>
+    </message>
+    <message>
+        <source>Scripts for computer</source>
+        <translation>Скрипты для компютера</translation>
+    </message>
+    <message>
+        <source>System settings for user</source>
+        <translation>Системные настройки для пользователя</translation>
+    </message>
+    <message>
+        <source>Scripts for user</source>
+        <translation>Скрипты для пользователя</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>

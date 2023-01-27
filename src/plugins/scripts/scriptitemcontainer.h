@@ -37,6 +37,8 @@ public:
 
     static inline const std::string SCRIPTS = "scripts";
 
+    static inline const std::string INI_FILE_PATH = "ini_file_path";
+
     ScriptItemContainer();
     ScriptItemContainer(const ScriptItemContainer &other);
 

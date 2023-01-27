@@ -56,23 +56,26 @@ public:
     std::unique_ptr<ModelView::ViewModel> model = nullptr;
     ModelView::SessionModel *sessionModel       = nullptr;
     ModelView::SessionItem *rootItem            = nullptr;
+    ScriptItemContainer *scriptsItemContainer   = nullptr;
 
     ModelView::ViewItem *selectedItem = nullptr;
 
     bool isStartUpScripts = false;
 
     template<typename TUi>
-    void setItem(TUi *ui, GroupScriptContainerItem *item, bool startUpScriptsFlag)
+    void setItem(TUi *ui, ScriptItemContainer *item, bool startUpScriptsFlag)
     {
         isStartUpScripts = startUpScriptsFlag;
 
-        rootItem = item;
+        scriptsItemContainer = item;
 
-        sessionModel = item->model();
+        rootItem = item->getScripts();
 
-        model = ModelView::Factory::CreatePropertyTableViewModel(item->model());
+        sessionModel = rootItem->model();
 
-        model->setRootSessionItem(item);
+        model = ModelView::Factory::CreatePropertyTableViewModel(rootItem->model());
+
+        model->setRootSessionItem(rootItem);
 
         ui->treeView->setModel(model.get());
 

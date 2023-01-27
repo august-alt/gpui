@@ -44,7 +44,7 @@ public:
     explicit ScriptsWidget(QWidget *parent = nullptr);
     ~ScriptsWidget();
 
-    void setItem(GroupScriptContainerItem *item, bool isStartUpFlag);
+    void setItem(ScriptItemContainer *item, bool isStartUpFlag);
 
 private slots:
     void on_upPushButton_clicked();

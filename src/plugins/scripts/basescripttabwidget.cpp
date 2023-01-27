@@ -27,6 +27,7 @@
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/viewitem.h>
 #include <QDebug>
+#include <QDesktopServices>
 
 namespace scripts_plugin
 {
@@ -98,13 +99,11 @@ void BaseScriptTabWidget::onDeleteClicked()
 
 void BaseScriptTabWidget::onBrowseClicked()
 {
-    auto dialog  = new gpui::FileDialogUtils;
-    QString file = dialog->getOpenFileName();
+    auto path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
 
-    if (!file.isEmpty())
-    {}
+    path.erase(path.find_last_of("//"));
 
-    delete dialog;
+    QDesktopServices::openUrl(QUrl(QString::fromStdString(path), QUrl::TolerantMode));
 }
 
 ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)

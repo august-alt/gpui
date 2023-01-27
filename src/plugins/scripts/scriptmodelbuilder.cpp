@@ -31,7 +31,9 @@ namespace scripts_plugin
 {
 ScriptModelBuilder::ScriptModelBuilder() {}
 
-void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile)
+void ScriptModelBuilder::iniToModel(ScriptsModel *model,
+                                    io::IniFile *iniFile,
+                                    std::string &file_path)
 {
     auto sections = iniFile->getAllSections();
 
@@ -43,6 +45,7 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile)
     {
         auto container = model->insertItem<ScriptItemContainer>();
         container->setProperty(ScriptItemContainer::SECTION_NAME, section);
+        container->setProperty(ScriptItemContainer::INI_FILE_PATH, file_path);
         auto group = container->getScripts();
 
         std::string iniCommandPath;

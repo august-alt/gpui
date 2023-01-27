@@ -33,7 +33,7 @@ class ScriptModelBuilder
 public:
     ScriptModelBuilder();
 
-    void iniToModel(ScriptsModel *model, io::IniFile *iniFile);
+    void iniToModel(ScriptsModel *model, io::IniFile *iniFile, std::string &file_path);
 
     std::unique_ptr<io::IniFile> modelToIni(ScriptsModel *model);
 };

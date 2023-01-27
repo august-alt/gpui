@@ -109,7 +109,7 @@ void ScriptsDialog::setItem(ModelView::SessionItem *scriptsItem, TWidget &widget
 
     if (container)
     {
-        widget->setItem(container->getScripts(), isStartUpScripts);
+        widget->setItem(container, isStartUpScripts);
     }
 }
 

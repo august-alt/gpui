@@ -89,7 +89,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
 
         ScriptModelBuilder builder;
 
-        builder.iniToModel(model, iniFile.get());
+        builder.iniToModel(model, iniFile.get(), path);
     }
     catch (std::exception &e)
     {

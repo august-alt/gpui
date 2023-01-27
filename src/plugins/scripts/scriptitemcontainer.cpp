@@ -31,6 +31,8 @@ ScriptItemContainer::ScriptItemContainer()
 {
     addProperty(SECTION_NAME, "");
 
+    addProperty(INI_FILE_PATH, "");
+
     addProperty<GroupScriptContainerItem>(SCRIPTS)->setVisible(false);
 }
 
@@ -38,6 +40,8 @@ ScriptItemContainer::ScriptItemContainer(const ScriptItemContainer &other)
     : ModelView::CompoundItem()
 {
     addProperty(SECTION_NAME, other.property<std::string>(SECTION_NAME));
+
+    addProperty(INI_FILE_PATH, other.INI_FILE_PATH);
 
     addProperty(SCRIPTS, other.SCRIPTS);
 }

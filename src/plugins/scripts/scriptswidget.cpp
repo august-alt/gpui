@@ -40,7 +40,7 @@ ScriptsWidget::~ScriptsWidget()
     delete ui;
 }
 
-void ScriptsWidget::setItem(GroupScriptContainerItem *item, bool isStartUpFlag)
+void ScriptsWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag)
 {
     BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
 }

@@ -40,7 +40,7 @@ ScriptsPowerShellWidget::~ScriptsPowerShellWidget()
     delete ui;
 }
 
-void ScriptsPowerShellWidget::setItem(GroupScriptContainerItem *item, bool isStartUpFlag)
+void ScriptsPowerShellWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag)
 {
     BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
 }

@@ -21,6 +21,7 @@
 #include "addscriptwidget.h"
 #include "ui_addscriptwidget.h"
 
+#include <gui/filedialogutils.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -52,7 +53,7 @@ AddScriptWidget::~AddScriptWidget()
 
 void AddScriptWidget::setItem(ModelView::SessionItem *item)
 {
-    m_item                              = item;
+    m_item          = item;
     ScriptItem *var = dynamic_cast<ScriptItem *>(item);
 
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
@@ -97,6 +98,19 @@ void AddScriptWidget::on_okPushButton_clicked()
 void AddScriptWidget::on_cancelPushButton_clicked()
 {
     this->close();
+}
+
+void AddScriptWidget::on_browsePushButton_clicked()
+{
+    auto dialog  = new gpui::FileDialogUtils;
+    QString file = dialog->getOpenFileName();
+
+    if (!file.isEmpty())
+    {
+        ui->nameLineEdit->setText(file);
+    }
+
+    delete dialog;
 }
 
 } // namespace scripts_plugin

@@ -59,6 +59,8 @@ private slots:
 
     void on_cancelPushButton_clicked();
 
+    void on_browsePushButton_clicked();
+
 private:
     AddScriptWidget(const AddScriptWidget &) = delete;            // copy ctor
     AddScriptWidget(AddScriptWidget &&)      = delete;            // move ctor

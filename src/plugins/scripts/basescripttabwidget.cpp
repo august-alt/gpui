@@ -37,12 +37,20 @@ BaseScriptTabWidget::BaseScriptTabWidget(QWidget *p)
 
 void BaseScriptTabWidget::onUpClicked()
 {
-    ModelView::Utils::MoveUp(this->selectedItem->item()->parent());
+    auto *item = this->selectedItem;
+    if (item != nullptr)
+    {
+        ModelView::Utils::MoveUp(this->selectedItem->item()->parent());
+    }
 }
 
 void BaseScriptTabWidget::onDownClicked()
 {
-    ModelView::Utils::MoveDown(this->selectedItem->item()->parent());
+    auto *item = this->selectedItem;
+    if (item != nullptr)
+    {
+        ModelView::Utils::MoveDown(this->selectedItem->item()->parent());
+    }
 }
 
 void BaseScriptTabWidget::onAddClicked(bool isScripts)
@@ -84,16 +92,20 @@ void BaseScriptTabWidget::onEditClicked()
 
 void BaseScriptTabWidget::onDeleteClicked()
 {
-    if (this->selectedItem && this->selectedItem->item()->parent())
+    auto *item = this->selectedItem;
+    if (item != nullptr)
     {
-        auto parentItem = this->selectedItem->item()->parent();
+        if (this->selectedItem && this->selectedItem->item()->parent())
+        {
+            auto parentItem = this->selectedItem->item()->parent();
 
-        this->sessionModel->removeItem(parentItem->parent(), parentItem->tagRow());
-    }
-    else
-    {
-        qWarning() << "Selected item: " << this->selectedItem
-                   << " Parent: " << this->selectedItem->item()->parent();
+            this->sessionModel->removeItem(parentItem->parent(), parentItem->tagRow());
+        }
+        else
+        {
+            qWarning() << "Selected item: " << this->selectedItem
+                       << " Parent: " << this->selectedItem->item()->parent();
+        }
     }
 }
 

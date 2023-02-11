@@ -63,10 +63,6 @@ void ScriptsSnapIn::onInitialize(QMainWindow *mainWindow)
     auto mWindow = dynamic_cast<gpui::MainWindow *>(mainWindow);
 
     d->proxyViewModel->setSourceModel(d->viewModel.get());
-    d->proxyViewModel->setTreeModel(d->userScriptsModel.get(),
-                                    d->userPowerScriptsModel.get(),
-                                    d->machineScriptsModel.get(),
-                                    d->machinePowerScriptsModel.get());
 
     d->proxyViewModel->setSnapIn(this);
 
@@ -154,11 +150,6 @@ void ScriptsSnapIn::onRetranslateUI(const std::string &locale)
     setRootNode(d->proxyViewModel.get());
 
     d->proxyViewModel->setSnapIn(this);
-
-    d->proxyViewModel->setTreeModel(d->userScriptsModel.get(),
-                                    d->userPowerScriptsModel.get(),
-                                    d->machineScriptsModel.get(),
-                                    d->machinePowerScriptsModel.get());
 
     d->retranslateModels(d->userScriptsModel);
     d->retranslateModels(d->userPowerScriptsModel);

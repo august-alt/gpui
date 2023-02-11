@@ -63,14 +63,7 @@ public:
 
     QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
 
-    void setTreeModel(ScriptsModel *userScripts,
-                      ScriptsModel *userPowerScripts,
-                      ScriptsModel *machineScripts,
-                      ScriptsModel *machinePowerScripst);
-
     void setSnapIn(ScriptsSnapIn *scriptsSnapIn);
-
-    ScriptsSnapIn *getSnapIn();
 
 private:
     ModelView::SessionModel *sessionModel = nullptr;

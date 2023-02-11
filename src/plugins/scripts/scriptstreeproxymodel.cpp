@@ -120,28 +120,12 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
     return QIdentityProxyModel::data(proxyIndex, role);
 }
 
-void ScriptsTreeProxyModel::setTreeModel(ScriptsModel *userScripts,
-                                         ScriptsModel *userPowerScripts,
-                                         ScriptsModel *machineScripts,
-                                         ScriptsModel *machinePowerScripst)
-{
-    d->userScriptsModel         = userScripts;
-    d->userPowerScriptsModel    = userPowerScripts;
-    d->machineScriptsModel      = machineScripts;
-    d->machinePowerScriptsModel = machinePowerScripst;
-}
-
 void ScriptsTreeProxyModel::setSnapIn(ScriptsSnapIn *scriptsSnapIn)
 {
     if (scriptsSnapIn != nullptr)
     {
         d->snapIn = scriptsSnapIn;
     }
-}
-
-ScriptsSnapIn *ScriptsTreeProxyModel::getSnapIn()
-{
-    return d->snapIn;
 }
 
 } // namespace scripts_plugin

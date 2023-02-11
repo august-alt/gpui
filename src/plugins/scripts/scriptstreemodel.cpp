@@ -16,6 +16,7 @@ public:
     static inline const std::string PARENT_ID = "PARENT_ID";
     static inline const std::string NAMESPACE = "NAMESPACE";
     static inline const std::string HELP_MSG  = "HELP_MSG";
+    static inline const std::string CATEGORY  = "CATEGORY";
 
 public:
     ScriptsFolderItem()
@@ -25,6 +26,7 @@ public:
         addProperty(PARENT_ID, QUuid::createUuid());
         addProperty(NAMESPACE, "");
         addProperty(HELP_MSG, "");
+        addProperty<bool>(CATEGORY, false);
     }
 
     template<typename T>
@@ -71,6 +73,7 @@ void ScriptsTreeModel::populateModel()
     auto topUuid = QUuid("{123e4567-e89b-12d3-a456-426652340003}");
     topItem->setProperty(ScriptsFolderItem::NODE_ID, topUuid);
     topItem->setProperty(ScriptsFolderItem::HELP_MSG, QObject::tr("Group policy").toStdString());
+    topItem->setProperty(ScriptsFolderItem::CATEGORY, true);
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     auto machineNamespace = insertItem<ScriptsFolderItem>(topItem);
@@ -80,18 +83,21 @@ void ScriptsTreeModel::populateModel()
     machineNamespace->setProperty(ScriptsFolderItem::PARENT_ID, topUuid);
     machineNamespace->setProperty(ScriptsFolderItem::HELP_MSG,
                                   QObject::tr("Machine level policies").toStdString());
+    machineNamespace->setProperty(ScriptsFolderItem::CATEGORY, true);
 
     auto machineSystemSettings = insertItem<ScriptsFolderItem>(machineNamespace);
     machineSystemSettings->setDisplayName(QObject::tr("System settings").toStdString());
     machineSystemSettings->setProperty(ScriptsFolderItem::PARENT_ID, machineUuid);
     machineSystemSettings->setProperty(ScriptsFolderItem::HELP_MSG,
                                        QObject::tr("System settings for computer").toStdString());
+    machineSystemSettings->setProperty(ScriptsFolderItem::CATEGORY, true);
 
     auto machineScripts = insertItem<ScriptsFolderItem>(machineSystemSettings);
     machineScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     machineScripts->setProperty(ScriptsFolderItem::NAMESPACE, "Machine");
     machineScripts->setProperty(ScriptsFolderItem::HELP_MSG,
                                 QObject::tr("Scripts for computer").toStdString());
+    machineScripts->setProperty(ScriptsFolderItem::CATEGORY, false);
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     auto userNamespace = insertItem<ScriptsFolderItem>(topItem);
@@ -101,17 +107,20 @@ void ScriptsTreeModel::populateModel()
     userNamespace->setProperty(ScriptsFolderItem::PARENT_ID, topUuid);
     userNamespace->setProperty(ScriptsFolderItem::HELP_MSG,
                                QObject::tr("User level policies.").toStdString());
+    userNamespace->setProperty(ScriptsFolderItem::CATEGORY, true);
 
     auto userSystemSetting = insertItem<ScriptsFolderItem>(userNamespace);
     userSystemSetting->setDisplayName(QObject::tr("System settings").toStdString());
     userSystemSetting->setProperty(ScriptsFolderItem::PARENT_ID, userUuid);
     userSystemSetting->setProperty(ScriptsFolderItem::HELP_MSG,
                                    QObject::tr("System settings for user").toStdString());
+    userSystemSetting->setProperty(ScriptsFolderItem::CATEGORY, true);
 
     auto userScripts = insertItem<ScriptsFolderItem>(userSystemSetting);
     userScripts->setDisplayName(QObject::tr("Scripts").toStdString());
     userScripts->setProperty(ScriptsFolderItem::NAMESPACE, "User");
     userScripts->setProperty(ScriptsFolderItem::HELP_MSG,
                              QObject::tr("Scripts for user").toStdString());
+    userScripts->setProperty(ScriptsFolderItem::CATEGORY, false);
 }
 } // namespace scripts_plugin

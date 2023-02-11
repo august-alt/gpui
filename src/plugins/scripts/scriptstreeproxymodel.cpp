@@ -108,13 +108,13 @@ QVariant ScriptsTreeProxyModel::data(const QModelIndex &proxyIndex, int role) co
 
     if (role == model::bundle::PolicyRoles::ITEM_TYPE)
     {
-        auto item = this->viewModel->sessionItemFromIndex(proxyIndex);
-        if (item->displayName().compare("Scripts") == 0)
+        auto sessionItem = this->viewModel->sessionItemFromIndex(proxyIndex);
+        if (sessionItem->property<bool>("CATEGORY"))
         {
-            return QVariant(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_POLICY));
+            return QVariant(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY));
         }
 
-        return QVariant(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY));
+        return QVariant(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_POLICY));
     }
 
     return QIdentityProxyModel::data(proxyIndex, role);

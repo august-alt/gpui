@@ -39,8 +39,8 @@ AddScriptWidget::AddScriptWidget(QWidget *parent)
     : QDialog(parent)
     , m_item(nullptr)
     , view_model(nullptr)
-    , delegate(std::make_unique<ModelView::ViewModelDelegate>())
-    , mapper(std::make_unique<QDataWidgetMapper>())
+    , delegate(new ModelView::ViewModelDelegate())
+    , mapper(new QDataWidgetMapper())
     , ui(new Ui::AddScriptWidget())
 {
     ui->setupUi(this);
@@ -54,7 +54,6 @@ AddScriptWidget::~AddScriptWidget()
 void AddScriptWidget::setItem(ModelView::SessionItem *item)
 {
     m_item          = item;
-    ScriptItem *var = dynamic_cast<ScriptItem *>(item);
 
     view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
     view_model->setRootSessionItem(item);
@@ -102,7 +101,7 @@ void AddScriptWidget::on_cancelPushButton_clicked()
 
 void AddScriptWidget::on_browsePushButton_clicked()
 {
-    auto dialog  = new gpui::FileDialogUtils;
+    auto dialog  = new gpui::FileDialogUtils();
     QString file = dialog->getOpenFileName();
 
     if (!file.isEmpty())

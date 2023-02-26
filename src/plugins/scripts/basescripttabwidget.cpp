@@ -113,8 +113,6 @@ void BaseScriptTabWidget::onBrowseClicked()
 {
     auto path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
 
-    path.erase(path.find_last_of("//"));
-
     QDesktopServices::openUrl(QUrl(QString::fromStdString(path), QUrl::TolerantMode));
 }
 

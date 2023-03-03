@@ -52,6 +52,7 @@ std::unique_ptr<PreferencesModel> FilesModelBuilder::schemaToModel(std::unique_p
             files->setProperty(FilesItem::READONLY, static_cast<bool>(getOptionalPropertyData(properties.readOnly())));
             files->setProperty(FilesItem::ARCHIVE, static_cast<bool>(getOptionalPropertyData(properties.archive())));
             files->setProperty(FilesItem::HIDDEN, static_cast<bool>(getOptionalPropertyData(properties.hidden())));
+            files->setProperty(FilesItem::EXECUTABLE, static_cast<bool>(getOptionalPropertyData(properties.executable())));
 
             auto common = sessionItem->getCommon();
             setCommonItemData(common, filesSchema);
@@ -89,6 +90,7 @@ std::unique_ptr<Files> FilesModelBuilder::modelToSchema(std::unique_ptr<Preferen
                 properties.readOnly(driveModel->property<bool>(FilesItem::READONLY));
                 properties.archive(driveModel->property<bool>(FilesItem::ARCHIVE));
                 properties.hidden(driveModel->property<bool>(FilesItem::HIDDEN));
+                properties.executable(driveModel->property<bool>(FilesItem::EXECUTABLE));
             }
 
             if (driveModel->property<int>(FilesItem::ACTION) != DefaultActions::CREATE__MODE)

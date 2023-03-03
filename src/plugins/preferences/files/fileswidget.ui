@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>383</width>
-    <height>358</height>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -165,6 +165,13 @@
        <widget class="QCheckBox" name="archive">
         <property name="text">
          <string>Archive</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="executable">
+        <property name="text">
+         <string>Executable</string>
         </property>
        </widget>
       </item>

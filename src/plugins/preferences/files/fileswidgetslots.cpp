@@ -27,7 +27,6 @@ using namespace gpui;
 
 namespace preferences
 {
-
 enum ViewMode
 {
     CREATE__MODE = 0,
@@ -59,6 +58,7 @@ void FilesWidget::on_actionComboBox_currentIndexChanged(int index)
 
     ui->archive->setDisabled(deleteMode);
     ui->hidden->setDisabled(deleteMode);
+    ui->executable->setDisabled(deleteMode);
     ui->readOnly->setDisabled(deleteMode);
     ui->sourceLineEdit->setDisabled(deleteMode);
     ui->sourceToolButton->setDisabled(deleteMode);

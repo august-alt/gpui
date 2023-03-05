@@ -77,9 +77,12 @@ bool IniFormat::write(std::ostream &output, IniFile *file)
 
             while (keyIterator != section_iterator->constEnd())
             {
-                qDebug() << keyIterator->c_str() << "=" << section_iterator->value(*keyIterator).c_str() << "\n";
-                pt.add(section_iterator.key() + "." + (*keyIterator), section_iterator->value(*keyIterator));
+                qDebug() << section_iterator.key().c_str() << "." << keyIterator.key().c_str()
+                         << keyIterator.value().c_str() << "\n";
+                pt.add(section_iterator.key() + "." + keyIterator.key(), keyIterator.value());
+                ++keyIterator;
             }
+            ++section_iterator;
         }
 
         boost::property_tree::ini_parser::write_ini(output, pt);

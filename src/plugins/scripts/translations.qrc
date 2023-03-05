@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+  <file>scripts_en.qm</file>
+  <file>scripts_ru.qm</file>
+ </qresource>
+</RCC>

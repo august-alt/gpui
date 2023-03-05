@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.17
-Release: alt18
+Version: 0.2.18
+Release: alt1
 
 Summary: Group policy editor
 License: GPLv2+
@@ -111,6 +111,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Jan 19 2023 Vladimir Rubanov <august@altlinux.org> 0.2.18-alt1
+- 0.2.18-alt1
+- Features:
+  + Implement scripts module.
+
 * Thu Jan 19 2023 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt18
 - 0.2.17-alt18
 - Fixes:

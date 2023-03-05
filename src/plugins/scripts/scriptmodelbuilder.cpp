@@ -25,7 +25,7 @@
 
 #include "../../io/genericwriter.h"
 
-#include <regex>
+#include <QRegularExpression>
 
 namespace scripts_plugin
 {
@@ -39,7 +39,7 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model,
 
     model->clear();
 
-    static const auto reg = std::regex("^\\d+");
+    static const auto reg = QRegularExpression("^\\d+");
 
     for (const auto &section : sections->keys())
     {
@@ -51,12 +51,13 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model,
         std::string iniCommandPath;
         std::string iniCommandParam;
 
-        for (const auto &path : sections.get()->value(section).keys())
+        for (const auto &path : sections->value(section).keys())
         {
-            std::string value       = std::regex_replace(path, reg, "");
-            std::string secondValue = std::regex_replace(sections.get()->value(section).value(path),
-                                                         reg,
-                                                         "");
+            // Standard regular expressions fail build on i586.
+            // So they are replaced with QRegularExpression.
+            std::string value       = QString::fromStdString(path).replace(reg, "").toStdString();
+            std::string secondValue = QString::fromStdString(sections.get()->value(section).value(path)).replace(reg, "").toStdString();
+
             if (value.compare("CmdLine") == 0)
             {
                 iniCommandPath = secondValue;

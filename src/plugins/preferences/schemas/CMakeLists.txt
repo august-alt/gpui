@@ -1,4 +1,4 @@
-cmake_policy(SET CMP0071 OLD)
+cmake_policy(SET CMP0071 NEW)
 
 set(XSD_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/datasourcesschema.xsd"

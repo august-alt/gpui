@@ -69,6 +69,7 @@ void FilesWidget::setItem(ModelView::SessionItem *item)
     mapper->addMapping(ui->readOnly, 4);
     mapper->addMapping(ui->archive, 5);
     mapper->addMapping(ui->hidden, 6);
+    mapper->addMapping(ui->executable, 7);
 
     mapper->setCurrentModelIndex(view_model->index(0, 1));
 }

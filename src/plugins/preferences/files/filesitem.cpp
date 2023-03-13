@@ -32,6 +32,7 @@ FilesItem::FilesItem()
     addProperty(READONLY, false);
     addProperty(ARCHIVE, false);
     addProperty(HIDDEN, false);
+    addProperty(EXECUTABLE, false);
 }
 
 FilesItem::FilesItem(const FilesItem &other)
@@ -44,6 +45,7 @@ FilesItem::FilesItem(const FilesItem &other)
     addProperty(READONLY, other.property<bool>(READONLY));
     addProperty(ARCHIVE, other.property<bool>(ARCHIVE));
     addProperty(HIDDEN, other.property<bool>(HIDDEN));
+    addProperty(EXECUTABLE, other.property<bool>(EXECUTABLE));
 }
 
 } // namespace preferences

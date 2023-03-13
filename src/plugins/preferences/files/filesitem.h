@@ -25,7 +25,6 @@
 
 namespace preferences
 {
-
 //! Drives item representation for editor.
 
 class FilesItem : public ModelView::CompoundItem
@@ -38,6 +37,7 @@ public:
     static inline const std::string READONLY = "readonly";
     static inline const std::string ARCHIVE = "archive";
     static inline const std::string HIDDEN = "hidden";
+    static inline const std::string EXECUTABLE = "executable";
 
     FilesItem();
     FilesItem(const FilesItem &other);

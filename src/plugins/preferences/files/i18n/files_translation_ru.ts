@@ -81,6 +81,12 @@
         <source>Archive</source>
         <translation>Архивный</translation>
     </message>
+    <message>
+        <location filename="../fileswidget.ui" line="174"/>
+        <source>Executable</source>
+        <translation>Исполняемый</translation>
+    </message>
+
 </context>
 <context>
     <name>QObject</name>

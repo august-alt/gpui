@@ -7,6 +7,7 @@
             <xs:attribute name="readOnly" type="xs:integer" use="optional" />
             <xs:attribute name="archive" type="xs:integer" use="optional" />
             <xs:attribute name="hidden" type="xs:integer" use="optional" />
+            <xs:attribute name="executable" type="xs:integer" use="optional" />
             <xs:attribute name="suppress" type="xs:integer" use="optional" />
             <xs:attribute name="disabled" type="xs:integer" use="optional" />
     </xs:complexType>

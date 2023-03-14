@@ -58,13 +58,20 @@ ScriptsSnapIn::~ScriptsSnapIn()
     delete d;
 }
 
-void ScriptsSnapIn::onInitialize(QMainWindow *mainWindow)
+void ScriptsSnapIn::onInitialize(QMainWindow *window)
 {
-    auto mWindow = dynamic_cast<gpui::MainWindow *>(mainWindow);
+    auto mainWindow = dynamic_cast<gpui::MainWindow *>(window);
+
+    if (mainWindow)
+    {
+        d->localeName = mainWindow->getLanguage().toStdString();
+    }
 
     d->proxyViewModel->setSourceModel(d->viewModel.get());
 
     d->proxyViewModel->setSnapIn(this);
+
+    onRetranslateUI(d->localeName);
 
     setRootNode(d->proxyViewModel.get());
 
@@ -117,7 +124,7 @@ void ScriptsSnapIn::onRetranslateUI(const std::string &locale)
 
     qWarning() << "Language: " << language;
 
-    QDirIterator it(":/", QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+    QDirIterator it(":/", QDirIterator::Subdirectories);
     while (it.hasNext())
     {
         qWarning() << "Resource name: " << it.fileName();

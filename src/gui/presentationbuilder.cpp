@@ -114,10 +114,10 @@ class PresentationBuilderPrivate : public PresentationWidgetVisitor
 public:
     struct ElementInfo
     {
-        std::string key;
-        std::string value;
-        RegistryEntryType type;
-        PolicyElement *element;
+        std::string key = "";
+        std::string value = "";
+        RegistryEntryType type = RegistryEntryType::REG_NONE;
+        PolicyElement *element = nullptr;
     };
 
 public:
@@ -258,167 +258,177 @@ public:
 
         QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(widget.label));
 
-        auto onClicked = [&]() {
+        PolicyListElement* listElement = nullptr;
+
+        ElementInfo elementInfo;
+
+        if (m_policy && m_source)
+        {
+             elementInfo = findElementInfo();
+
+            if (listElement = dynamic_cast<PolicyListElement *>(elementInfo.element))
+            {
+                qWarning() << "List element: " << listElement->id.c_str() << "\n"
+                           << "key: " << listElement->key.c_str() << "\n"
+                           << "valueName: " << listElement->valueName.c_str() << "\n"
+                           << "valuePrefix: " << listElement->valuePrefix.c_str() << "\n"
+                           << "additive: " << listElement->additive << "\n"
+                           << "expandable: " << listElement->expandable << "\n"
+                           << "explicitValue" << listElement->explicitValue << "\n";
+            }
+            else
+            {
+                qWarning() << "Unsupported policy element type.";
+            }
+        }
+
+        auto onClicked = [&, elementInfo, listElement]() {
             gpui::ListBoxDialog *listBox = new gpui::ListBoxDialog(QString::fromStdString(widget.label));
             listBox->setAttribute(Qt::WA_DeleteOnClose);
 
-            if (m_policy && m_source)
+            if (!listElement || elementInfo.type == REG_NONE)
             {
-                const ElementInfo elementInfo = findElementInfo();
+                qWarning() << "Unable to get valid policy listElement or elementInfo is not initialized.";
+                return;
+            }
 
-                if (auto listElement = dynamic_cast<PolicyListElement *>(elementInfo.element))
+            RegistryEntryType registryEntryType = listElement->expandable ? RegistryEntryType::REG_EXPAND_SZ
+                                                                          : RegistryEntryType::REG_SZ;
+
+            if (listElement->explicitValue)
+            {
                 {
-                    qWarning() << "List element: " << listElement->id.c_str() << "\n"
-                               << "key: " << listElement->key.c_str() << "\n"
-                               << "valueName: " << listElement->valueName.c_str() << "\n"
-                               << "valuePrefix: " << listElement->valuePrefix.c_str() << "\n"
-                               << "additive: " << listElement->additive << "\n"
-                               << "expandable: " << listElement->expandable << "\n"
-                               << "explicitValue" << listElement->explicitValue << "\n";
-
-                    RegistryEntryType registryEntryType = listElement->expandable ? RegistryEntryType::REG_EXPAND_SZ
-                                                                                  : RegistryEntryType::REG_SZ;
-
-                    if (listElement->explicitValue)
+                    QMap<std::string, QString> items;
+                    // Create two column widget.
+                    auto valueNames = m_source->getValueNames(listElement->key);
+                    for (const auto &valueName : valueNames)
                     {
-                        {
-                            QMap<std::string, QString> items;
-                            // Create two column widget.
-                            auto valueNames = m_source->getValueNames(listElement->key);
-                            for (const auto &valueName : valueNames)
-                            {
-                                items[valueName] = m_source->getValue(listElement->key, valueName).toString();
-                            }
-                            listBox->setItems(items);
-                        }
-
-                        listBox->connect(listBox,
-                                         &gpui::ListBoxDialog::itemsEditingFinished,
-                                         [=](QMap<std::string, QString> currentItems) {
-                                             if (!(*m_stateEnabled))
-                                             {
-                                                 return;
-                                             }
-                                             qWarning() << "Items debug: " << currentItems.values();
-                                             // clean-up registry values.
-                                             auto valueNames = m_source->getValueNames(listElement->key);
-                                             for (const auto &valueName : valueNames)
-                                             {
-                                                 m_source->clearValue(listElement->key, valueName);
-                                             }
-                                             // set-up current values.
-                                             for (const auto &valueName : currentItems.keys())
-                                             {
-                                                 auto value = currentItems.value(valueName);
-                                                 if (!value.trimmed().isEmpty())
-                                                 {
-                                                     m_source->setValue(elementInfo.key,
-                                                                        valueName,
-                                                                        registryEntryType,
-                                                                        value);
-                                                 }
-                                             }
-                                             *m_dataChanged = true;
-                                         });
+                        items[valueName] = m_source->getValue(listElement->key, valueName).toString();
                     }
-                    else
+                    listBox->setItems(items);
+                }
+
+                listBox->connect(listBox,
+                                 &gpui::ListBoxDialog::itemsEditingFinished,
+                                 [=](QMap<std::string, QString> currentItems) {
+                    if (!(*m_stateEnabled))
                     {
-                        // Create one column widget.
-                        QStringList items;
-
-                        if (listElement->valuePrefix.size() > 0)
-                        {
-                            // If there is a prefix then use prefix to load values.
-                            {
-                                auto valueNames = m_source->getValueNames(listElement->key);
-                                size_t index    = 1;
-                                auto valueName  = listElement->valuePrefix + std::to_string(index);
-                                while (m_source->isValuePresent(listElement->key, valueName))
-                                {
-                                    items.append(m_source->getValue(listElement->key, valueName).toString());
-                                    valueName = listElement->valuePrefix + std::to_string(++index);
-                                }
-                            }
-
-                            listBox->connect(listBox,
-                                             &gpui::ListBoxDialog::itemsEditingFinished,
-                                             [=](QMap<std::string, QString> currentItems) {
-                                                 if (!(*m_stateEnabled))
-                                                 {
-                                                     return;
-                                                 }
-                                                 qWarning() << "Items debug: " << currentItems.values();
-                                                 size_t index = 1;
-                                                 // clean-up registry values.
-                                                 auto registryValueName = listElement->valuePrefix
-                                                                          + std::to_string(index);
-                                                 while (m_source->isValuePresent(listElement->key, registryValueName))
-                                                 {
-                                                     m_source->clearValue(listElement->key, registryValueName);
-                                                     registryValueName = listElement->valuePrefix
-                                                                         + std::to_string(++index);
-                                                 }
-                                                 // set-up current values.
-                                                 for (const auto &item : currentItems.values())
-                                                 {
-                                                     if (!item.trimmed().isEmpty())
-                                                     {
-                                                         auto valueName = listElement->valueName
-                                                                          + std::to_string(index);
-                                                         m_source->setValue(elementInfo.key,
-                                                                            valueName,
-                                                                            registryEntryType,
-                                                                            item);
-                                                     }
-                                                 }
-                                                 *m_dataChanged = true;
-                                             });
-                        }
-                        else
-                        {
-                            auto valueNames = m_source->getValueNames(listElement->key);
-                            for (const auto &valueName : valueNames)
-                            {
-                                items.append(m_source->getValue(listElement->key, valueName).toString());
-                            }
-
-                            listBox->connect(listBox,
-                                             &gpui::ListBoxDialog::itemsEditingFinished,
-                                             [=](QMap<std::string, QString> currentItems) {
-                                                 if (!(*m_stateEnabled))
-                                                 {
-                                                     return;
-                                                 }
-                                                 qWarning() << "Items debug: " << currentItems.values();
-                                                 // clean-up registry values.
-                                                 auto registryValueNames = m_source->getValueNames(listElement->key);
-                                                 for (const auto &valueName : registryValueNames)
-                                                 {
-                                                     m_source->clearValue(listElement->key, valueName);
-                                                 }
-                                                 // set-up current values.
-                                                 for (const auto &item : currentItems.values())
-                                                 {
-                                                     if (!item.trimmed().isEmpty())
-                                                     {
-                                                         m_source->setValue(elementInfo.key,
-                                                                            item.toStdString(),
-                                                                            registryEntryType,
-                                                                            item);
-                                                     }
-                                                 }
-                                                 *m_dataChanged = true;
-                                             });
-                        }
-
-                        qWarning() << "Items debug: " << items;
-                        listBox->setItems(items);
+                        return;
                     }
+                    qWarning() << "Items debug: " << currentItems.values();
+                    // clean-up registry values.
+                    auto valueNames = m_source->getValueNames(listElement->key);
+                    for (const auto &valueName : valueNames)
+                    {
+                        m_source->clearValue(listElement->key, valueName);
+                    }
+                    // set-up current values.
+                    for (const auto &valueName : currentItems.keys())
+                    {
+                        auto value = currentItems.value(valueName);
+                        if (!value.trimmed().isEmpty())
+                        {
+                            m_source->setValue(elementInfo.key,
+                                               valueName,
+                                               registryEntryType,
+                                               value);
+                        }
+                    }
+                    *m_dataChanged = true;
+                });
+            }
+            else
+            {
+                // Create one column widget.
+                QStringList items;
+
+                if (listElement->valuePrefix.size() > 0)
+                {
+                    // If there is a prefix then use prefix to load values.
+                    {
+                        auto valueNames = m_source->getValueNames(listElement->key);
+                        size_t index    = 1;
+                        auto valueName  = listElement->valuePrefix + std::to_string(index);
+                        while (m_source->isValuePresent(listElement->key, valueName))
+                        {
+                            items.append(m_source->getValue(listElement->key, valueName).toString());
+                            valueName = listElement->valuePrefix + std::to_string(++index);
+                        }
+                    }
+
+                    listBox->connect(listBox,
+                                     &gpui::ListBoxDialog::itemsEditingFinished,
+                                     [=](QMap<std::string, QString> currentItems) {
+                        if (!(*m_stateEnabled))
+                        {
+                            return;
+                        }
+                        qWarning() << "Items debug: " << currentItems.values();
+                        size_t index = 1;
+                        // clean-up registry values.
+                        auto registryValueName = listElement->valuePrefix
+                                + std::to_string(index);
+                        while (m_source->isValuePresent(listElement->key, registryValueName))
+                        {
+                            m_source->clearValue(listElement->key, registryValueName);
+                            registryValueName = listElement->valuePrefix
+                                    + std::to_string(++index);
+                        }
+                        // set-up current values.
+                        for (const auto &item : currentItems.values())
+                        {
+                            if (!item.trimmed().isEmpty())
+                            {
+                                auto valueName = listElement->valueName
+                                        + std::to_string(index);
+                                m_source->setValue(elementInfo.key,
+                                                   valueName,
+                                                   registryEntryType,
+                                                   item);
+                            }
+                        }
+                        *m_dataChanged = true;
+                    });
                 }
                 else
                 {
-                    qWarning() << "Unsupported policy element type.";
+                    auto valueNames = m_source->getValueNames(listElement->key);
+                    for (const auto &valueName : valueNames)
+                    {
+                        items.append(m_source->getValue(listElement->key, valueName).toString());
+                    }
+
+                    listBox->connect(listBox,
+                                     &gpui::ListBoxDialog::itemsEditingFinished,
+                                     [=](QMap<std::string, QString> currentItems) {
+                        if (!(*m_stateEnabled))
+                        {
+                            return;
+                        }
+                        qWarning() << "Items debug: " << currentItems.values();
+                        // clean-up registry values.
+                        auto registryValueNames = m_source->getValueNames(listElement->key);
+                        for (const auto &valueName : registryValueNames)
+                        {
+                            m_source->clearValue(listElement->key, valueName);
+                        }
+                        // set-up current values.
+                        for (const auto &item : currentItems.values())
+                        {
+                            if (!item.trimmed().isEmpty())
+                            {
+                                m_source->setValue(elementInfo.key,
+                                                   item.toStdString(),
+                                                   registryEntryType,
+                                                   item);
+                            }
+                        }
+                        *m_dataChanged = true;
+                    });
                 }
+
+                qWarning() << "Items debug: " << items;
+                listBox->setItems(items);
             }
 
             listBox->show();

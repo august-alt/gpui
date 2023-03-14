@@ -77,7 +77,7 @@
     <message>
         <location filename="../folderswidget.ui" line="191"/>
         <source>Recrusively delete subfolders (if emptied)</source>
-        <translation>Recrusively delete subfolders (if emptied)</translation>
+        <translation>Recursively delete subfolders (if emptied)</translation>
     </message>
     <message>
         <location filename="../folderswidget.ui" line="206"/>

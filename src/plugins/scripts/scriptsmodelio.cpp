@@ -79,8 +79,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
         std::string pluginName("ini");
 
         auto reader  = std::make_unique<io::GenericReader>();
-        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile>>(*iss,
-                                                                                    pluginName);
+        auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile>>(*iss, pluginName);
         if (!iniFile)
         {
             qWarning() << "Unable to load registry file contents.";
@@ -93,8 +92,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
     }
     catch (std::exception &e)
     {
-        qWarning() << "Warning: Unable to read file: " << path.c_str()
-                   << " description: " << e.what();
+        qWarning() << "Warning: Unable to read file: " << path.c_str() << " description: " << e.what();
     }
 }
 
@@ -114,14 +112,26 @@ void ScriptsModelIo::saveIniFile(std::string &path, ScriptsModel *model)
         {
             std::stringstream fileContent;
 
-            writer->save<io::IniFile, io::PolicyFileFormat<io::IniFile>>(fileContent,
-                                                                         "ini",
-                                                                         iniFile.get());
+            writer->save<io::IniFile, io::PolicyFileFormat<io::IniFile>>(fileContent, "ini", iniFile.get());
 
             gpui::smb::SmbFile smbLocationItemFile(filePath);
 
-            smbLocationItemFile.open(QFile::ReadWrite);
-            smbLocationItemFile.write(fileContent.str().c_str(), fileContent.str().size());
+            qWarning() << "Script file path: " << filePath;
+
+            bool openResult = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!openResult)
+            {
+                qWarning() << "Unable to open file for writing trying to create new file.";
+                openResult = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (openResult && fileContent.str().size() > 0)
+            {
+                smbLocationItemFile.write(&fileContent.str().at(0), fileContent.str().size());
+            }
+            else
+            {
+                qWarning() << "Unable to open new file!";
+            }
             smbLocationItemFile.close();
         }
         else

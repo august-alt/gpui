@@ -31,9 +31,7 @@ namespace scripts_plugin
 {
 ScriptModelBuilder::ScriptModelBuilder() {}
 
-void ScriptModelBuilder::iniToModel(ScriptsModel *model,
-                                    io::IniFile *iniFile,
-                                    std::string &file_path)
+void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, std::string &file_path)
 {
     auto sections = iniFile->getAllSections();
 
@@ -56,7 +54,7 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model,
             // Standard regular expressions fail build on i586.
             // So they are replaced with QRegularExpression.
             std::string value       = QString::fromStdString(path).replace(reg, "").toStdString();
-            std::string secondValue = QString::fromStdString(sections.get()->value(section).value(path)).replace(reg, "").toStdString();
+            std::string secondValue = QString::fromStdString(sections.get()->value(section).value(path)).toStdString();
 
             if (value.compare("CmdLine") == 0)
             {
@@ -70,10 +68,8 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model,
 
                 auto item = group->insertItem<ScriptItem>(GroupScriptContainerItem::ITEM);
 
-                item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::PATH),
-                                  iniCommandPath);
-                item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::PARAMETER),
-                                  iniCommandParam);
+                item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::PATH), iniCommandPath);
+                item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::PARAMETER), iniCommandParam);
             }
         }
     }
@@ -97,8 +93,7 @@ std::unique_ptr<io::IniFile> ScriptModelBuilder::modelToIni(ScriptsModel *model)
                 std::string cmdLine   = std::to_string(numberOfCommand) + "CmdLine";
                 std::string paramLine = std::to_string(numberOfCommand) + "Parameters";
 
-                auto path = item->property<std::string>(
-                    ScriptItem::propertyToString(ScriptItem::PropertyType::PATH));
+                auto path  = item->property<std::string>(ScriptItem::propertyToString(ScriptItem::PropertyType::PATH));
                 auto param = item->property<std::string>(
                     ScriptItem::propertyToString(ScriptItem::PropertyType::PARAMETER));
 

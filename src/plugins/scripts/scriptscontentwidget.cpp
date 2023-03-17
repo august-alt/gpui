@@ -41,6 +41,8 @@ ScriptsContentWidget::ScriptsContentWidget(ScriptsSnapIn *sn, QWidget *parent)
 {
     ui->setupUi(this);
 
+    connect(ui->listView, &QListView::clicked, this, &ScriptsContentWidget::startDialog);
+
     buildModel();
 }
 
@@ -81,55 +83,39 @@ void ScriptsContentWidget::buildModel()
     model.get()->appendRow(second);
 
     ui->listView->setModel(model.get());
-
-    connect(ui->listView->selectionModel(),
-            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-            this,
-            SLOT(startDialog(QItemSelection)));
 }
 
-void ScriptsContentWidget::startDialog(QItemSelection item)
+void ScriptsContentWidget::startDialog(const QModelIndex &index)
 {
-    if (!item.indexes().isEmpty())
+    auto isStartupItem = index.data(isStartupRole);
+
+    if (isStartupItem.toBool())
     {
-        auto isStartupItem = model.get()->data(item.indexes().first(), isStartupRole);
-
-        if (isStartupItem.toBool())
-        {
-            isStartupScripts = true;
-        }
-        else
-        {
-            isStartupScripts = false;
-        }
-
-        auto dialog = new ScriptsDialog(this);
-
-        if (isMachineNamespace)
-        {
-            dialog->setModels(snapIn->d->machineScriptsModel.get(),
-                              snapIn->d->machinePowerScriptsModel.get(),
-                              isStartupScripts);
-        }
-        else
-        {
-            dialog->setModels(snapIn->d->userScriptsModel.get(),
-                              snapIn->d->userPowerScriptsModel.get(),
-                              isStartupScripts);
-        }
-
-        QObject::connect(dialog,
-                         &ScriptsDialog::saveDataSignal,
-                         snapIn->d,
-                         &ScriptsSnapInPrivate::saveData);
-
-        QObject::connect(dialog,
-                         &ScriptsDialog::reloaddataSignal,
-                         snapIn->d,
-                         &ScriptsSnapInPrivate::reloadData);
-
-        dialog->exec();
+        isStartupScripts = true;
     }
+    else
+    {
+        isStartupScripts = false;
+    }
+
+    auto dialog = new ScriptsDialog(this);
+
+    if (isMachineNamespace)
+    {
+        dialog->setModels(snapIn->d->machineScriptsModel.get(),
+                          snapIn->d->machinePowerScriptsModel.get(),
+                          isStartupScripts);
+    }
+    else
+    {
+        dialog->setModels(snapIn->d->userScriptsModel.get(), snapIn->d->userPowerScriptsModel.get(), isStartupScripts);
+    }
+
+    QObject::connect(dialog, &ScriptsDialog::saveDataSignal, snapIn->d, &ScriptsSnapInPrivate::saveData);
+
+    QObject::connect(dialog, &ScriptsDialog::reloaddataSignal, snapIn->d, &ScriptsSnapInPrivate::reloadData);
+
+    dialog->exec();
 }
 
 } // namespace scripts_plugin

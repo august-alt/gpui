@@ -57,7 +57,7 @@ public:
     void setNamespace(bool machineNamespace);
 
 private slots:
-    void startDialog(QItemSelection item);
+    void startDialog(const QModelIndex &index);
 
 private:
     ScriptsContentWidget(const ScriptsContentWidget &) = delete;            // copy ctor

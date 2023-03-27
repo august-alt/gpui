@@ -42,6 +42,12 @@ ShortcutsWidget::ShortcutsWidget(QWidget *parent, ShortcutsItem *item)
 
     on_actionComboBox_currentIndexChanged(ui->actionComboBox->currentIndex());
     setDefaultPlaceholderText();
+
+    auto lineEdit = ui->shortkutKeySequenceEdit->findChild<QLineEdit *>();
+    if (lineEdit)
+    {
+        lineEdit->setClearButtonEnabled(true);
+    }
 }
 
 ShortcutsWidget::~ShortcutsWidget()

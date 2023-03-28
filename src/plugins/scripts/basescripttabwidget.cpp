@@ -100,6 +100,8 @@ void BaseScriptTabWidget::onDeleteClicked()
             auto parentItem = this->selectedItem->item()->parent();
 
             this->sessionModel->removeItem(parentItem->parent(), parentItem->tagRow());
+
+            this->selectedItem = nullptr;
         }
         else
         {
@@ -149,9 +151,7 @@ ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
 
         if (section)
         {
-            if (sectionName.compare(
-                    section->property<std::string>(ScriptItemContainer::SECTION_NAME))
-                == 0)
+            if (sectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
             {
                 return section;
             }

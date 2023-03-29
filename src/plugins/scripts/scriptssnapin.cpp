@@ -50,8 +50,7 @@ ScriptsSnapIn::ScriptsSnapIn()
                      "GPL-2.0",
                      "Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru")
     , d(new ScriptsSnapInPrivate(this))
-{
-}
+{}
 
 ScriptsSnapIn::~ScriptsSnapIn()
 {
@@ -94,7 +93,7 @@ void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string 
 
     d->policyPath = std::make_unique<std::string>(policyPath);
 
-    d->modelIo.get()->loadPolicies(d->policyPath.get(),
+    d->modelIo.get()->loadPolicies(*d->policyPath,
                                    d->userScriptsModel.get(),
                                    d->userPowerScriptsModel.get(),
                                    d->machineScriptsModel.get(),
@@ -103,7 +102,7 @@ void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string 
 
 void ScriptsSnapIn::onDataSave()
 {
-    d->modelIo.get()->savePolicies(d->policyPath.get(),
+    d->modelIo.get()->savePolicies(*d->policyPath,
                                    d->userScriptsModel.get(),
                                    d->userPowerScriptsModel.get(),
                                    d->machineScriptsModel.get(),

@@ -16,38 +16,60 @@ namespace scripts_plugin
 {
 ScriptsModelIo::ScriptsModelIo() {}
 
-void ScriptsModelIo::loadPolicies(std::string *path,
-                                  ScriptsModel *userScripts,
-                                  ScriptsModel *userPowerScripts,
-                                  ScriptsModel *machineScripts,
-                                  ScriptsModel *machinePowerScripts)
+std::string ScriptsModelIo::correctPath(const std::string &path)
 {
-    auto machinePathScripts      = *path + "Machine/scripts.ini";
-    auto machinePathPowerScripts = *path + "Machine/psscripts.ini";
-    auto userPathScripts         = *path + "User/scripts.ini";
-    auto userPathPowerScripts    = *path + "User/psscripts.ini";
+    std::string newPath = path;
 
-    loadIniFile(machinePathScripts, machineScripts);
-    loadIniFile(machinePathPowerScripts, machinePowerScripts);
-    loadIniFile(userPathScripts, userScripts);
-    loadIniFile(userPathPowerScripts, userPowerScripts);
+    if (*newPath.end() != '/' && *newPath.end() != '\\')
+    {
+        newPath.append("/");
+    }
+
+    return newPath;
 }
 
-void ScriptsModelIo::savePolicies(std::string *path,
+void ScriptsModelIo::loadPolicies(const std::string &path,
                                   ScriptsModel *userScripts,
                                   ScriptsModel *userPowerScripts,
                                   ScriptsModel *machineScripts,
                                   ScriptsModel *machinePowerScripts)
 {
-    auto machinePathScripts      = *path + "Machine/scripts.ini";
-    auto machinePathPowerScripts = *path + "Machine/psscripts.ini";
-    auto userPathScripts         = *path + "User/scripts.ini";
-    auto userPathPowerScripts    = *path + "User/psscripts.ini";
+    if (!path.empty())
+    {
+        std::string newPath = correctPath(path);
 
-    saveIniFile(machinePathScripts, machineScripts);
-    saveIniFile(machinePathPowerScripts, machinePowerScripts);
-    saveIniFile(userPathScripts, userScripts);
-    saveIniFile(userPathPowerScripts, userPowerScripts);
+        auto machinePathScripts      = newPath + "Machine/scripts.ini";
+        auto machinePathPowerScripts = newPath + "Machine/psscripts.ini";
+        auto userPathScripts         = newPath + "User/scripts.ini";
+        auto userPathPowerScripts    = newPath + "User/psscripts.ini";
+
+        loadIniFile(machinePathScripts, machineScripts);
+        loadIniFile(machinePathPowerScripts, machinePowerScripts);
+        loadIniFile(userPathScripts, userScripts);
+        loadIniFile(userPathPowerScripts, userPowerScripts);
+    }
+}
+
+void ScriptsModelIo::savePolicies(const std::string &path,
+                                  ScriptsModel *userScripts,
+                                  ScriptsModel *userPowerScripts,
+                                  ScriptsModel *machineScripts,
+                                  ScriptsModel *machinePowerScripts)
+{
+    if (!path.empty())
+    {
+        std::string newPath = correctPath(path);
+
+        auto machinePathScripts      = newPath + "Machine/scripts.ini";
+        auto machinePathPowerScripts = newPath + "Machine/psscripts.ini";
+        auto userPathScripts         = newPath + "User/scripts.ini";
+        auto userPathPowerScripts    = newPath + "User/psscripts.ini";
+
+        saveIniFile(machinePathScripts, machineScripts);
+        saveIniFile(machinePathPowerScripts, machinePowerScripts);
+        saveIniFile(userPathScripts, userScripts);
+        saveIniFile(userPathPowerScripts, userPowerScripts);
+    }
 }
 
 void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)

@@ -13,7 +13,7 @@
         <location line="+36"/>
         <location/>
         <source>Copyright (C) 2022 BaseALT Ltd.</source>
-        <translation>Copyright (C) 2022 BaseALT Ltd.</translation>
+        <translation>Copyright (C) 2022-2023 BaseALT Ltd.</translation>
     </message>
     <message>
         <location line="+10"/>

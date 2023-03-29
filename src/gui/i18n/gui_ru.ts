@@ -13,7 +13,7 @@
         <location line="+36"/>
         <location/>
         <source>Copyright (C) 2022 BaseALT Ltd.</source>
-        <translation>Авторские права: ООО «Базальт СПО», 2022.</translation>
+        <translation>Авторские права: ООО «Базальт СПО», 2022-2023.</translation>
     </message>
     <message>
         <location line="+10"/>

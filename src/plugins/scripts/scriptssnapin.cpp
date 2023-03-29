@@ -93,6 +93,11 @@ void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string 
 
     d->policyPath = std::make_unique<std::string>(policyPath);
 
+    if (policyPath.back() != '\\' && policyPath.back() != '/')
+    {
+        d->policyPath->append("/");
+    }
+
     d->modelIo.get()->loadPolicies(*d->policyPath,
                                    d->userScriptsModel.get(),
                                    d->userPowerScriptsModel.get(),

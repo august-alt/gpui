@@ -86,38 +86,46 @@
         <source>Executable</source>
         <translation>Исполняемый</translation>
     </message>
-
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../filescontaineritem.cpp" line="34"/>
+        <location filename="../filescontaineritem.cpp" line="35"/>
+        <location filename="../filescontaineritem.cpp" line="99"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../filescontaineritem.cpp" line="35"/>
+        <location filename="../filescontaineritem.cpp" line="36"/>
+        <location filename="../filescontaineritem.cpp" line="100"/>
         <source>Order</source>
         <translation>Порядок</translation>
     </message>
     <message>
-        <location filename="../filescontaineritem.cpp" line="36"/>
+        <location filename="../filescontaineritem.cpp" line="38"/>
+        <location filename="../filescontaineritem.cpp" line="101"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="../filescontaineritem.cpp" line="37"/>
+        <location filename="../filescontaineritem.cpp" line="40"/>
+        <location filename="../filescontaineritem.cpp" line="102"/>
         <source>Source</source>
         <translation>Источник</translation>
     </message>
     <message>
-        <location filename="../filescontaineritem.cpp" line="38"/>
+        <location filename="../filescontaineritem.cpp" line="41"/>
+        <location filename="../filescontaineritem.cpp" line="103"/>
         <source>Target</source>
         <translation>Цель</translation>
     </message>
     <message>
         <location filename="../fileswidgetslots.cpp" line="79"/>
         <location filename="../fileswidgetslots.cpp" line="86"/>
+        <source>All files (*)</source>
+        <translation>Все файлы (*)</translation>
+    </message>
+    <message>
         <location filename="../fileswidgetslots.cpp" line="90"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
@@ -126,17 +134,17 @@
 <context>
     <name>preferences::FilesWidget</name>
     <message>
-        <location filename="../fileswidget.cpp" line="78"/>
+        <location filename="../fileswidget.cpp" line="79"/>
         <source>Please enter source file(s) value.</source>
         <translation>Пожалуйста, введите источник файла(ов).</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="83"/>
+        <location filename="../fileswidget.cpp" line="84"/>
         <source>Please enter destination file(s) value.</source>
         <translation>Пожалуйста, введите место назначения файла(ов).</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="93"/>
+        <location filename="../fileswidget.cpp" line="94"/>
         <source>General</source>
         <translation>Основные настройки</translation>
     </message>

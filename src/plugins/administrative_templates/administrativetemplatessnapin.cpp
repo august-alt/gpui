@@ -375,36 +375,6 @@ void AdministrativeTemplatesSnapIn::onDataSave()
 
 void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {
-    for (const auto &translator : d->translators)
-    {
-        QCoreApplication::removeTranslator(translator.get());
-    }
-    d->translators.clear();
-
-    QString language = QString::fromStdString(locale).split("-")[0];
-
-    QDirIterator it(":/", QDirIterator::Subdirectories);
-    while (it.hasNext())
-    {
-        if (!it.fileInfo().isFile())
-        {
-            it.hasNext();
-        }
-
-        if (it.fileName().endsWith(language + ".qm"))
-        {
-            std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-            bool loadResult                           = qtTranslator->load(it.fileName(), ":/");
-            if (loadResult)
-            {
-                QCoreApplication::installTranslator(qtTranslator.get());
-                d->translators.push_back(std::move(qtTranslator));
-            }
-        }
-
-        it.next();
-    }
-
     d->localeName = locale;
     d->policyBundleLoad();
     setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));

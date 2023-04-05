@@ -103,6 +103,8 @@ private:
 
     QString isAnyGUID(const QString &path);
 
+    void loadAndInstallTranslations(QString &language);
+
 private:
     MainWindow(const MainWindow &) = delete;            // copy ctor
     MainWindow(MainWindow &&)      = delete;            // move ctor

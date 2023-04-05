@@ -33,6 +33,8 @@
 #include "../core/isnapin.h"
 #include "../core/isnapinmanager.h"
 
+#include "../core/translatorstorage.h"
+
 #include "../plugins/administrative_templates/bundle/itemtype.h"
 #include "../plugins/administrative_templates/bundle/policybundle.h"
 #include "../plugins/administrative_templates/bundle/policyroles.h"
@@ -235,10 +237,9 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
 
     QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
                                                       : QLocale::system().name().replace("-", "_"));
-    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    qtTranslator->load(locale, "gui", "_", ":/");
-    QCoreApplication::installTranslator(qtTranslator.get());
-    d->translators.push_back(std::move(qtTranslator));
+    QString language = locale.name().split("_").at(0);
+    loadAndInstallTranslations(language);
+
     d->localeName = locale.name().replace("_", "-");
     d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
@@ -446,19 +447,12 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::onLanguageChanged(QAction *action)
 {
-    for (const auto &translator : d->translators)
-    {
-        qApp->removeTranslator(translator.get());
-    }
-    d->translators.clear();
+    auto translatorStorage = TranslatorStorage::instance();
+
+    translatorStorage->clearAndUnistallTranslators();
 
     QString language = action->data().toString();
-
-    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    bool loadResult                           = qtTranslator->load("gui_" + language + ".qm", ":/");
-    QCoreApplication::installTranslator(qtTranslator.get());
-    d->translators.push_back(std::move(qtTranslator));
-    qWarning() << "Load language " << language << loadResult;
+    loadAndInstallTranslations(language);
 
     QLocale locale(language);
 
@@ -541,6 +535,16 @@ QString MainWindow::isAnyGUID(QString &path)
     {
         return QString();
     }
+}
+
+void MainWindow::loadAndInstallTranslations(QString &language)
+{
+    auto translatorStorage = TranslatorStorage::instance();
+
+    translatorStorage->loadAndInstallTranslators(language);
+
+    translatorStorage->loadAndInstallQtTranslations(language, QString("qtbase_%2").arg(language));
+    translatorStorage->loadAndInstallQtTranslations(language, "qt_");
 }
 
 } // namespace gpui

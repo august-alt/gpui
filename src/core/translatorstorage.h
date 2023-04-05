@@ -10,21 +10,29 @@ class GPUI_CORE_EXPORT TranslatorStorage
 {
 public:
     /**
-    * Loads a list of translation files from resources that end with the name of the language from the current directory
+    * Loads and install a list of translation files from resources that end with the name of the language from the current directory
     */
 
     bool loadAndInstallTranslators(const QString &language);
 
     /**
-    * Loads a list of translation files from resources that end with the name of the language from the specified directory
+    * Loads and installs a list of translation files from resources that end with the name of the language from the specified directory
     */
     bool loadAndInstallTranslators(const QString &language, const QString &path);
+
+    /**
+    * Loads and installs a list of translation qt files from resources that begins with prefix and end with the name of the language in current directory
+    */
+    bool loadAndInstallQtTranslations(const QString &language, const QString &prefix);
 
     /**
     * Removes and uninstalls all translations
     */
     void clearAndUnistallTranslators();
 
+    /**
+    * Returns the instance of TranslatorStorage class
+    */
     static TranslatorStorage *instance();
 
 private:

@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDirIterator>
+#include <QLibraryInfo>
 
 TranslatorStorage::TranslatorStorage()
     : d(std::make_unique<TranslatorStoragePrivate>())
@@ -15,8 +16,6 @@ bool TranslatorStorage::loadAndInstallTranslators(const QString &language)
 
 bool TranslatorStorage::loadAndInstallTranslators(const QString &language, const QString &path)
 {
-    clearAndUnistallTranslators();
-
     auto languageToLoad = language.split("-").at(0);
 
     bool loadResult = false;
@@ -45,6 +44,12 @@ bool TranslatorStorage::loadAndInstallTranslators(const QString &language, const
     }
 
     return loadResult;
+}
+
+bool TranslatorStorage::loadAndInstallQtTranslations(const QString &language, const QString &prefix)
+{
+    return loadAndInstallTranslators(QString(prefix).arg(language),
+                                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 }
 
 void TranslatorStorage::clearAndUnistallTranslators()

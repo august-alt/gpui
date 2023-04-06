@@ -53,18 +53,18 @@ int main(int argc, char **argv)
     app.setApplicationName("GPUI");
     app.setApplicationVersion(getApplicationVersion());
 
+    QLocale locale;
+    QString language = locale.system().name().split("_").at(0);
+    TranslatorStorage translatorStorage;
+
+    translatorStorage.loadTranslators(language);
+    translatorStorage.loadQtTranslations(language, "qt_");
+
     gpui::CommandLineParser parser(app);
     gpui::CommandLineOptions options{};
     QString errorMessage{};
 
     gpui::CommandLineParser::CommandLineParseResult parserResult = parser.parseCommandLine(&options, &errorMessage);
-
-    QLocale locale;
-    QString language = locale.system().name().split("_").at(0);
-    auto translatorStorage = TranslatorStorage::instance();
-
-    translatorStorage->loadTranslators(language);
-    translatorStorage->loadQtTranslations(language, "qt_");
 
     switch (parserResult)
     {
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
         break;
     }
 
-    gpui::MainWindow window(options, snapInManager.get());
+    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();
 
     return app.exec();

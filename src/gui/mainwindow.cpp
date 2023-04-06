@@ -199,10 +199,11 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
     }
 }
 
-MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent)
+MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, TranslatorStorage *trStorage, QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
+    , translatorStorage(trStorage)
 {
     d->manager = manager;
 
@@ -447,8 +448,6 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::onLanguageChanged(QAction *action)
 {
-    auto translatorStorage = TranslatorStorage::instance();
-
     translatorStorage->clearTranslators();
 
     QString language = action->data().toString();
@@ -539,8 +538,6 @@ QString MainWindow::isAnyGUID(QString &path)
 
 void MainWindow::loadAndInstallTranslations(QString &language)
 {
-    auto translatorStorage = TranslatorStorage::instance();
-
     translatorStorage->loadTranslators(language);
 
     translatorStorage->loadQtTranslations(language, QString("qtbase_%2").arg(language));

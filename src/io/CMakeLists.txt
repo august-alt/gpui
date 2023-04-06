@@ -16,7 +16,7 @@ set(HEADERS
     registryfileformat.inl
 )
 
-set(SOURCES
+set(SOURCES    
     inifile.cpp
     io.cpp
     policydefinitionsfile.cpp
@@ -28,5 +28,5 @@ add_definitions(
     -DGPUI_IO_LIBRARY
 )
 
-add_gpui_library(gpui-io ${SOURCES} ${HEADERS})
+add_gpui_library(gpui-io ${SOURCES})
 target_link_libraries(gpui-io Qt5::Core)

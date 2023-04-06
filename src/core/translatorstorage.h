@@ -18,8 +18,8 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef TRANSLATORSTORAGE_H
-#define TRANSLATORSTORAGE_H
+#ifndef GPUI_TRANSLATOR_STORAGE_H
+#define GPUI_TRANSLATOR_STORAGE_H
 
 #include "core.h"
 
@@ -36,6 +36,7 @@ class GPUI_CORE_EXPORT TranslatorStorage
 {
 public:
     TranslatorStorage();
+    ~TranslatorStorage();
 
     /**
     * @brief loads and install a list of translation files from resources that end with the name of the language from the current directory
@@ -77,8 +78,6 @@ public:
 private:
     std::unique_ptr<TranslatorStoragePrivate> d;
 
-    QString m_errorString;
-
 private:
     TranslatorStorage(const TranslatorStorage &) = delete;
     TranslatorStorage(TranslatorStorage &&)      = delete;
@@ -86,15 +85,4 @@ private:
     TranslatorStorage &operator=(TranslatorStorage &&) = delete;
 };
 
-class TranslatorStoragePrivate
-{
-public:
-    TranslatorStoragePrivate()
-        : translators(std::vector<std::unique_ptr<QTranslator>>())
-    {}
-    ~TranslatorStoragePrivate() = default;
-
-    std::vector<std::unique_ptr<QTranslator>> translators;
-};
-
-#endif // TRANSLATORSTORAGE_H
+#endif // GPUI_TRANSLATOR_STORAGE_H

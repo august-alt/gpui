@@ -57,7 +57,7 @@ class GPUI_GUI_EXPORT MainWindow : public QMainWindow
     Q_OBJECT
 public:
     // construction and destruction
-    MainWindow(CommandLineOptions &options, ISnapInManager *manager, TranslatorStorage *trStorage, QWidget *parent = 0);
+    MainWindow(CommandLineOptions &options, ISnapInManager *manager, TranslatorStorage *translatorStorage, QWidget *parent = 0);
     ~MainWindow();
 
     void setLanguage(const QString &language);
@@ -83,8 +83,6 @@ private:
 
     Ui::MainWindow *ui;
 
-    TranslatorStorage *translatorStorage;
-
 private slots:
     void onDirectoryOpen();
 
@@ -106,7 +104,7 @@ private:
 
     QString isAnyGUID(const QString &path);
 
-    void loadAndInstallTranslations(QString &language);
+    void loadTranslations(QString &language);
 
 private:
     MainWindow(const MainWindow &) = delete;            // copy ctor

@@ -25,9 +25,18 @@
 #include <QDirIterator>
 #include <QLibraryInfo>
 
+class TranslatorStoragePrivate
+{
+public:
+    std::vector<std::unique_ptr<QTranslator>> translators = {};
+    QString m_errorString = {};
+};
+
 TranslatorStorage::TranslatorStorage()
-    : d(std::make_unique<TranslatorStoragePrivate>())
-    , m_errorString("")
+    : d(new TranslatorStoragePrivate())
+{}
+
+TranslatorStorage::~TranslatorStorage()
 {}
 
 bool TranslatorStorage::loadTranslators(const QString &language)
@@ -38,8 +47,6 @@ bool TranslatorStorage::loadTranslators(const QString &language)
 bool TranslatorStorage::loadTranslators(const QString &language, const QString &path)
 {
     auto languageToLoad = language.split("-").at(0);
-
-    bool loadResult = false;
 
     QDirIterator it(path, QDirIterator::Subdirectories);
     while (it.hasNext())
@@ -58,7 +65,6 @@ bool TranslatorStorage::loadTranslators(const QString &language, const QString &
 
             if (currentLoadResult)
             {
-                loadResult = true;
                 QCoreApplication::installTranslator(translator.get());
                 d->translators.push_back(std::move(translator));
             }
@@ -74,7 +80,7 @@ bool TranslatorStorage::loadTranslators(const QString &language, const QString &
         it.next();
     }
 
-    return loadResult;
+    return true;
 }
 
 bool TranslatorStorage::loadQtTranslations(const QString &language, const QString &prefix)
@@ -95,10 +101,10 @@ void TranslatorStorage::clearTranslators()
 
 void TranslatorStorage::setErrorString(const QString &error)
 {
-    m_errorString = error;
+    d->m_errorString = error;
 }
 
 QString TranslatorStorage::getErrorString() const
 {
-    return m_errorString;
+    return d->m_errorString;
 }

@@ -63,8 +63,8 @@ int main(int argc, char **argv)
     QString language = locale.system().name().split("_").at(0);
     auto translatorStorage = TranslatorStorage::instance();
 
-    translatorStorage->loadAndInstallTranslators(language);
-    translatorStorage->loadAndInstallQtTranslations(language, "qt_");
+    translatorStorage->loadTranslators(language);
+    translatorStorage->loadQtTranslations(language, "qt_");
 
     switch (parserResult)
     {

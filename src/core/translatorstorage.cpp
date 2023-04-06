@@ -1,3 +1,23 @@
+/***********************************************************************************************************************
+**
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**
+***********************************************************************************************************************/
+
 #include "translatorstorage.h"
 
 #include <QCoreApplication>
@@ -7,14 +27,15 @@
 
 TranslatorStorage::TranslatorStorage()
     : d(std::make_unique<TranslatorStoragePrivate>())
+    , m_errorString("")
 {}
 
-bool TranslatorStorage::loadAndInstallTranslators(const QString &language)
+bool TranslatorStorage::loadTranslators(const QString &language)
 {
-    return loadAndInstallTranslators(language, ":/");
+    return loadTranslators(language, ":/");
 }
 
-bool TranslatorStorage::loadAndInstallTranslators(const QString &language, const QString &path)
+bool TranslatorStorage::loadTranslators(const QString &language, const QString &path)
 {
     auto languageToLoad = language.split("-").at(0);
 
@@ -23,20 +44,30 @@ bool TranslatorStorage::loadAndInstallTranslators(const QString &language, const
     QDirIterator it(path, QDirIterator::Subdirectories);
     while (it.hasNext())
     {
+        QString currentFilename = it.fileName();
+
         if (!it.fileInfo().isFile())
         {
             it.next();
         }
 
-        if (it.fileName().endsWith(languageToLoad + ".qm"))
+        if (currentFilename.endsWith(languageToLoad + ".qm"))
         {
             std::unique_ptr<QTranslator> translator = std::make_unique<QTranslator>();
-            loadResult                              = translator->load(it.fileName(), path);
+            bool currentLoadResult                  = translator->load(it.fileName(), path);
 
-            if (loadResult)
+            if (currentLoadResult)
             {
+                loadResult = true;
                 QCoreApplication::installTranslator(translator.get());
                 d->translators.push_back(std::move(translator));
+            }
+
+            else
+            {
+                setErrorString("WARNING! Can't load translate from file: " + currentFilename);
+
+                return false;
             }
         }
 
@@ -46,13 +77,13 @@ bool TranslatorStorage::loadAndInstallTranslators(const QString &language, const
     return loadResult;
 }
 
-bool TranslatorStorage::loadAndInstallQtTranslations(const QString &language, const QString &prefix)
+bool TranslatorStorage::loadQtTranslations(const QString &language, const QString &prefix)
 {
-    return loadAndInstallTranslators(QString(prefix).arg(language),
-                                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    return loadTranslators(QString(prefix + "%1").arg(language),
+                           QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 }
 
-void TranslatorStorage::clearAndUnistallTranslators()
+void TranslatorStorage::clearTranslators()
 {
     for (const auto &translator : d->translators)
     {
@@ -62,9 +93,12 @@ void TranslatorStorage::clearAndUnistallTranslators()
     d->translators.clear();
 }
 
-TranslatorStorage *TranslatorStorage::instance()
+void TranslatorStorage::setErrorString(const QString &error)
 {
-    static TranslatorStorage storage;
+    m_errorString = error;
+}
 
-    return &storage;
+QString TranslatorStorage::getErrorString() const
+{
+    return m_errorString;
 }

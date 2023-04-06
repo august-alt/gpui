@@ -449,7 +449,7 @@ void MainWindow::onLanguageChanged(QAction *action)
 {
     auto translatorStorage = TranslatorStorage::instance();
 
-    translatorStorage->clearAndUnistallTranslators();
+    translatorStorage->clearTranslators();
 
     QString language = action->data().toString();
     loadAndInstallTranslations(language);
@@ -541,10 +541,10 @@ void MainWindow::loadAndInstallTranslations(QString &language)
 {
     auto translatorStorage = TranslatorStorage::instance();
 
-    translatorStorage->loadAndInstallTranslators(language);
+    translatorStorage->loadTranslators(language);
 
-    translatorStorage->loadAndInstallQtTranslations(language, QString("qtbase_%2").arg(language));
-    translatorStorage->loadAndInstallQtTranslations(language, "qt_");
+    translatorStorage->loadQtTranslations(language, QString("qtbase_%2").arg(language));
+    translatorStorage->loadQtTranslations(language, "qt_");
 }
 
 } // namespace gpui

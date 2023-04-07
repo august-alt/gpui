@@ -110,45 +110,6 @@ void PreferencesSnapIn::onDataSave()
 
 void PreferencesSnapIn::onRetranslateUI(const std::string &locale)
 {
-    for (const auto &translator : d->translators)
-    {
-        QCoreApplication::removeTranslator(translator.get());
-    }
-    d->translators.clear();
-
-    QString language = QString::fromStdString(locale).split("-")[0];
-
-    QDirIterator it(":/", QDirIterator::Subdirectories);
-    while (it.hasNext())
-    {
-        if (!it.fileInfo().isFile())
-        {
-            it.hasNext();
-        }
-
-        if (it.fileName().endsWith(language + ".qm"))
-        {
-            std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-            bool loadResult                           = qtTranslator->load(it.fileName(), ":/");
-            if (loadResult)
-            {
-                QCoreApplication::installTranslator(qtTranslator.get());
-                d->translators.push_back(std::move(qtTranslator));
-            }
-        }
-
-        it.next();
-    }
-
-    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    if (qtTranslator->load(QString("qtbase_%2").arg(language),
-                           QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-    {
-        QCoreApplication::installTranslator(qtTranslator.get());
-        d->translators.push_back(std::move(qtTranslator));
-    }
-
-
     d->model     = std::make_unique<PreferencesTreeModel>();
     d->viewModel = std::make_unique<ModelView::TopItemsViewModel>(d->model.get());
     d->proxyViewModel->setSourceModel(d->viewModel.get());

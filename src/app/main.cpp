@@ -24,6 +24,7 @@
 #include "../core/snapindetailsfactory.h"
 #include "../core/snapinloader.h"
 #include "../core/snapinmanager.h"
+#include "../core/translatorstorage.h"
 #include "../core/version.h"
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
@@ -52,20 +53,18 @@ int main(int argc, char **argv)
     app.setApplicationName("GPUI");
     app.setApplicationVersion(getApplicationVersion());
 
+    QLocale locale;
+    QString language = locale.system().name().split("_").at(0);
+    TranslatorStorage translatorStorage;
+
+    translatorStorage.loadTranslators(language);
+    translatorStorage.loadQtTranslations(language, "qt_");
+
     gpui::CommandLineParser parser(app);
     gpui::CommandLineOptions options{};
     QString errorMessage{};
 
     gpui::CommandLineParser::CommandLineParseResult parserResult = parser.parseCommandLine(&options, &errorMessage);
-
-    QLocale locale;
-    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    qtTranslator->load(locale, "gui", "_", ":/");
-    std::unique_ptr<QTranslator> qtTranslator2 = std::make_unique<QTranslator>();
-    qtTranslator2->load(QString("qt_").append(QLocale::system().name()),
-                        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    QCoreApplication::installTranslator(qtTranslator.get());
-    QCoreApplication::installTranslator(qtTranslator2.get());
 
     switch (parserResult)
     {
@@ -84,9 +83,7 @@ int main(int argc, char **argv)
         break;
     }
 
-    QCoreApplication::removeTranslator(qtTranslator2.get());
-
-    gpui::MainWindow window(options, snapInManager.get());
+    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();
 
     return app.exec();

@@ -33,6 +33,8 @@
 #include "../core/isnapin.h"
 #include "../core/isnapinmanager.h"
 
+#include "../core/translatorstorage.h"
+
 #include "../plugins/administrative_templates/bundle/itemtype.h"
 #include "../plugins/administrative_templates/bundle/policybundle.h"
 #include "../plugins/administrative_templates/bundle/policyroles.h"
@@ -85,6 +87,8 @@ public:
     std::unique_ptr<TreeViewEventFilter> eventFilter = nullptr;
 
     std::unique_ptr<ldap::LDAPContract> ldapImpl = nullptr;
+
+    TranslatorStorage *translatorStorage = nullptr;
 
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
@@ -147,7 +151,9 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
         auto parentIndex = QModelIndex();
         auto currentId   = index.data(Qt::UserRole + 12).value<QUuid>();
 
-        auto currentIndex    = findParent(target->model(), target->model()->index(0, 0).parent(), currentId);
+        auto currentIndex    = findParent(target->model(),
+                                       target->model()->index(0, 0).parent(),
+                                       currentId);
         QStandardItem *child = nullptr;
 
         if (!currentIndex.isValid())
@@ -197,7 +203,10 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
     }
 }
 
-MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWidget *parent)
+MainWindow::MainWindow(CommandLineOptions &options,
+                       ISnapInManager *manager,
+                       TranslatorStorage *translatorStorage,
+                       QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
     , ui(new Ui::MainWindow())
@@ -205,6 +214,8 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
     d->manager = manager;
 
     d->options = options;
+
+    d->translatorStorage = translatorStorage;
 
     ui->setupUi(this);
 
@@ -235,10 +246,9 @@ MainWindow::MainWindow(CommandLineOptions &options, ISnapInManager *manager, QWi
 
     QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
                                                       : QLocale::system().name().replace("-", "_"));
-    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    qtTranslator->load(locale, "gui", "_", ":/");
-    QCoreApplication::installTranslator(qtTranslator.get());
-    d->translators.push_back(std::move(qtTranslator));
+    QString language = locale.name().split("_").at(0);
+    loadTranslations(language);
+
     d->localeName = locale.name().replace("_", "-");
     d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
@@ -326,25 +336,30 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
 
     QStandardItem *visibleRootItem = new QStandardItem();
     visibleRootItem->setData(QIcon::fromTheme("text-x-generic-template"), Qt::DecorationRole);
-    visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY), model::bundle::ITEM_TYPE);
+    visibleRootItem->setData(static_cast<uint>(model::bundle::ItemType::ITEM_TYPE_CATEGORY),
+                             model::bundle::ITEM_TYPE);
     visibleRootItem->setData(QObject::tr("Local group policies"), model::bundle::EXPLAIN_TEXT);
-    visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both), model::bundle::POLICY_TYPE);
+    visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both),
+                             model::bundle::POLICY_TYPE);
 
     if (d->options.path.startsWith("smb://"))
     {
         QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
         if (domainRegexp.indexIn(d->options.path) != -1)
         {
-            visibleRootItem->setData('[' + domainRegexp.cap() + ']' + d->options.policyName, Qt::DisplayRole);
+            visibleRootItem->setData('[' + domainRegexp.cap() + ']' + d->options.policyName,
+                                     Qt::DisplayRole);
         }
         else
         {
-            visibleRootItem->setData(QObject::tr("[Domain Group Policy]") + d->options.policyName, Qt::DisplayRole);
+            visibleRootItem->setData(QObject::tr("[Domain Group Policy]") + d->options.policyName,
+                                     Qt::DisplayRole);
         }
     }
     else
     {
-        visibleRootItem->setData(QObject::tr("[Local Group Policy]") + d->options.policyName, Qt::DisplayRole);
+        visibleRootItem->setData(QObject::tr("[Local Group Policy]") + d->options.policyName,
+                                 Qt::DisplayRole);
     }
 
     rootItem->appendRow(visibleRootItem);
@@ -432,9 +447,9 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionManual_triggered()
 {
-    const QUrl manual_url = QUrl(
-        "https://www.altlinux.org/"
-        "%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
+    const QUrl manual_url = QUrl("https://www.altlinux.org/"
+                                 "%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%"
+                                 "BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI");
     QDesktopServices::openUrl(manual_url);
 }
 
@@ -446,19 +461,10 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::onLanguageChanged(QAction *action)
 {
-    for (const auto &translator : d->translators)
-    {
-        qApp->removeTranslator(translator.get());
-    }
-    d->translators.clear();
+    d->translatorStorage->clearTranslators();
 
     QString language = action->data().toString();
-
-    std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    bool loadResult                           = qtTranslator->load("gui_" + language + ".qm", ":/");
-    QCoreApplication::installTranslator(qtTranslator.get());
-    d->translators.push_back(std::move(qtTranslator));
-    qWarning() << "Load language " << language << loadResult;
+    loadTranslations(language);
 
     QLocale locale(language);
 
@@ -518,7 +524,8 @@ void MainWindow::createLanguageMenu()
 QString MainWindow::isAnyGUID(QString &path)
 {
     QRegExp lastPartOfPath("/\\{([^/]+)\\}/?$");
-    QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
+    QRegExp regExpGuid(
+        "^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
 
     qWarning() << lastPartOfPath.indexIn(path);
 
@@ -541,6 +548,16 @@ QString MainWindow::isAnyGUID(QString &path)
     {
         return QString();
     }
+}
+
+void MainWindow::loadTranslations(QString &language)
+{
+    d->translatorStorage->clearTranslators();
+
+    d->translatorStorage->loadTranslators(language);
+
+    d->translatorStorage->loadQtTranslations(language, QString("qtbase_%2").arg(language));
+    d->translatorStorage->loadQtTranslations(language, "qt_");
 }
 
 } // namespace gpui

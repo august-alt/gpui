@@ -116,43 +116,6 @@ void ScriptsSnapIn::onDataSave()
 
 void ScriptsSnapIn::onRetranslateUI(const std::string &locale)
 {
-    qWarning() << "onRetranslateUI runs";
-
-    for (const auto &translator : d->translators)
-    {
-        QCoreApplication::removeTranslator(translator.get());
-    }
-    d->translators.clear();
-
-    QString language = QString::fromStdString(locale).split("-")[0];
-
-    qWarning() << "Language: " << language;
-
-    QDirIterator it(":/", QDirIterator::Subdirectories);
-    while (it.hasNext())
-    {
-        qWarning() << "Resource name: " << it.fileName();
-
-        if (!it.fileInfo().isFile())
-        {
-            it.hasNext();
-        }
-
-        if (it.fileName().endsWith(language + ".qm"))
-        {
-            std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-            bool loadResult                           = qtTranslator->load(it.fileName(), ":/");
-            if (loadResult)
-            {
-                qWarning() << "Tr: " << it.fileName();
-                QCoreApplication::installTranslator(qtTranslator.get());
-                d->translators.push_back(std::move(qtTranslator));
-            }
-        }
-
-        it.next();
-    }
-
     d->treeModel      = std::make_unique<ScriptsTreeModel>();
     d->viewModel      = ModelView::Factory::CreateTopItemsViewModel(d->treeModel.get());
     d->proxyViewModel = std::make_unique<ScriptsTreeProxyModel>();

@@ -44,7 +44,7 @@ configure_file(
 # export the GPUI package
 export(PACKAGE GPUI)
 
-option(GPUI_BUILD_TESTS "Build the gpui tests." OFF)
+option(GPUI_BUILD_TESTS "Build the gpui tests." ON)
 
 add_subdirectory(src)
 

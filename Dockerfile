@@ -48,6 +48,7 @@ RUN apt-get update \
     libqt-mvvm-devel \
     xorg-xvfb \
     xvfb-run \
+    libgtest-devel \
     sudo \
     && export CURRENT_PWD=`pwd` \
     && groupadd --gid $GROUP_ID builder2 \

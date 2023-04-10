@@ -26,6 +26,7 @@ BuildRequires: libuuid-devel
 BuildRequires: glib2-devel
 BuildRequires: libpcre-devel
 BuildRequires: libkrb5-devel
+BuildRequires: libgtest-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen

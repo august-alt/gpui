@@ -41,6 +41,7 @@ RUN apt-get update \
     libpcre-devel \
     libkrb5-devel \
     libxerces-c-devel \
+    libgtest-devel \
     xsd \
     boost-devel-headers \
     desktop-file-utils \

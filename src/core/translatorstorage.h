@@ -65,18 +65,19 @@ public:
     void clearTranslators();
 
     /**
-    * @brief sets a control error string that might be reused in a different context
-    * @param error string
-    */
-    void setErrorString(const QString &error);
-
-    /**
     * @brief gets a control error string that might be reused in a different context
     */
     QString getErrorString() const;
 
 private:
     std::unique_ptr<TranslatorStoragePrivate> d;
+
+private:
+    /**
+    * @brief sets a control error string that might be reused in a different context
+    * @param error string
+    */
+    void setErrorString(const QString &error);
 
 private:
     TranslatorStorage(const TranslatorStorage &) = delete;

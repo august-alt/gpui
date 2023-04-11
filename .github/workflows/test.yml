@@ -27,13 +27,13 @@ jobs:
         apt-get install -y cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel \
         qt5-tools-devel libsmbclient-devel libsmbclient samba-devel libldap-devel libsasl2-devel libsmbclient-devel \
         libuuid-devel glib2-devel libpcre-devel libkrb5-devel libgtest-devel qt5-base-common doxygen libxerces-c-devel \
-        xsd boost-devel-headers desktop-file-utils ImageMagick-tools libqt-mvvm-devel xorg-xvfb xvfb-run rpm-build
+        xsd boost-devel-headers desktop-file-utils ImageMagick-tools libqt-mvvm-devel xorg-xvfb xvfb-run rpm-build ctest
 
     - name: Test
       env:
         QT_QPA_PLATFORM: offscreen
       run: |
         mkdir build && cd build
-        cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_MAKE_PROGRAM=`which make` -DCMAKE_BUILD_TYPE:STRING=Debug -DGPUI_BUILD_TESTS:BOOL=ON ..
+        cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_MAKE_PROGRAM=`which make` -DCMAKE_CTEST_COMMAND=`which ctest` -DCMAKE_BUILD_TYPE:STRING=Debug -DGPUI_BUILD_TESTS:BOOL=ON ..
         make -j4
         make test

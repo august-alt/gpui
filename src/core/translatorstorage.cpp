@@ -46,38 +46,28 @@ bool TranslatorStorage::loadTranslators(const QString &language)
 
 bool TranslatorStorage::loadTranslators(const QString &language, const QString &path)
 {
-    auto languageToLoad = language.split("-").at(0);
+    QString languageToLoad = language.split("-").at(0);
 
-    QDirIterator it(path, QDirIterator::Subdirectories);
-    while (it.hasNext())
+    QDir dir(path);
+
+    for (auto &entry : dir.entryList())
     {
-        QString currentFilename = it.fileName();
-
-        if (!it.fileInfo().isFile())
-        {
-            it.next();
-        }
-
-        if (currentFilename.endsWith(languageToLoad + ".qm"))
+        if (entry.endsWith(languageToLoad + ".qm"))
         {
             std::unique_ptr<QTranslator> translator = std::make_unique<QTranslator>();
-            bool currentLoadResult                  = translator->load(it.fileName(), path);
 
-            if (currentLoadResult)
+            if (translator->load(entry, path))
             {
                 QCoreApplication::installTranslator(translator.get());
                 d->translators.push_back(std::move(translator));
             }
-
             else
             {
-                setErrorString("WARNING! Can't load translate from file: " + currentFilename);
+                setErrorString("WARNING! Can't load translate from file: " + entry);
 
                 return false;
             }
         }
-
-        it.next();
     }
 
     return true;
@@ -85,8 +75,7 @@ bool TranslatorStorage::loadTranslators(const QString &language, const QString &
 
 bool TranslatorStorage::loadQtTranslations(const QString &language, const QString &prefix)
 {
-    return loadTranslators(QString(prefix + "%1").arg(language),
-                           QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    return loadTranslators(QString(prefix + "%1").arg(language), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 }
 
 void TranslatorStorage::clearTranslators()

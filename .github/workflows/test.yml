@@ -1,4 +1,4 @@
-name: Ubuntu Linux Test Coverage
+name: Linux Test Coverage
 
 on:
   workflow_run:
@@ -9,7 +9,13 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-20.04
+    container: alt:p10
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
 
     steps:
     - name: Get sources
@@ -18,21 +24,12 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake qt5-default qttools5-dev libx11-xcb1 lcov
+        sudo apt-get install -y cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel \
+        qt5-tools-devel libsmbclient-devel libsmbclient samba-devel libldap-devel libsasl2-devel libsmbclient-devel \
+        libuuid-devel glib2-devel libpcre-devel libkrb5-devel libgtest-devel qt5-base-common doxygen libxerces-c-devel \
+        xsd boost-devel-headers desktop-file-utils ImageMagick-tools libqt-mvvm-devel xorg-xvfb xvfb-run
 
-    - name: Install Gtest
-      run: |
-        sudo apt-get install -y libgtest-dev
-        cd /usr/src/gtest
-        sudo cmake CMakeLists.txt
-        sudo make
-        sudo cp ./lib/*.a /usr/lib
-
-    - name: Install GMock
-      run: |
-        sudo apt-get install -y libgmock-dev
-
-    - name: Collect Coverage
+    - name: Test
       env:
         QT_QPA_PLATFORM: offscreen
       run: |

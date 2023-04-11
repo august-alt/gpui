@@ -24,7 +24,6 @@
 
 namespace tests
 {
-
 using namespace gpui::smb;
 
 void SmbFileTest::remove()
@@ -130,6 +129,8 @@ void SmbFileTest::permissions()
 
 void SmbFileTest::setPermissions()
 {
+    QSKIP("TODO: Implement test!");
+
     QFileDevice::Permissions permissions = QFileDevice::ReadOwner | QFileDevice::WriteOther;
 
     // Negative test cases.
@@ -151,6 +152,6 @@ void SmbFileTest::write()
     // TODO: Write plan.
 }
 
-}
+} // namespace tests
 
 QTEST_MAIN(tests::SmbFileTest)

@@ -21,12 +21,12 @@
 #include "policybundletest.h"
 
 #include "../../../../src/io/policydefinitionsfile.h"
-#include "../../../../src/model/bundle/policybundle.h"
+#include "../../../../src/plugins/administrative_templates/bundle/policybundle.h"
 
 using namespace io;
 using namespace model::admx;
 
-namespace tests {
-}
+namespace tests
+{}
 
 QTEST_MAIN(tests::PolciyBundleTest)

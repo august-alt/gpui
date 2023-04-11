@@ -21,20 +21,20 @@
 #include "admltest.h"
 
 #include "../../../../src/io/policyresourcesfile.h"
-#include "../../../../src/model/presentation/policyresources.h"
-#include "../../../../src/model/presentation/presentationwidget.h"
-#include "../../../../src/model/presentation/presentation.h"
+#include "../../../../src/plugins/administrative_templates/presentation/policyresources.h"
+#include "../../../../src/plugins/administrative_templates/presentation/presentation.h"
+#include "../../../../src/plugins/administrative_templates/presentation/presentationwidget.h"
 #include "../../../../src/plugins/adml/admlformat.h"
 
 #include "../../../../src/gui/presentationbuilder.h"
 
-#include "../../../../src/model/admx/policy.h"
-#include "../../../../src/model/admx/policyelement.h"
+#include "../../../../src/plugins/administrative_templates/admx/policy.h"
+#include "../../../../src/plugins/administrative_templates/admx/policyelement.h"
 
-#include "../../../../src/model/commands/commandgroup.h"
+#include "../../../../src/plugins/administrative_templates/commands/commandgroup.h"
 
-#include "../../../../src/model/registry/registry.h"
-#include "../../../../src/model/registry/polregistrysource.h"
+#include "../../../../src/plugins/administrative_templates/registry/polregistrysource.h"
+#include "../../../../src/plugins/administrative_templates/registry/registry.h"
 
 #include <fstream>
 
@@ -45,15 +45,15 @@ const std::string dataPath = "../../../data/";
 using namespace io;
 using namespace model::presentation;
 
-namespace tests {
-
+namespace tests
+{
 void AdmlTest::read()
 {
     gpui::AdmlFormat format;
 
     std::ifstream file;
 
-    file.open (dataPath + "example.adml", std::ifstream::in);
+    file.open(dataPath + "example.adml", std::ifstream::in);
 
     if (file.good())
     {
@@ -61,17 +61,16 @@ void AdmlTest::read()
 
         format.read(file, policies.get());
 
-
         auto policyResource = policies->get(0);
-        if (policyResource) {
+        if (policyResource)
+        {
             if (policyResource->presentationTable.size() > 0)
             {
                 Presentation presentation = *policyResource->presentationTable.begin()->second;
 
-                auto policy = std::make_unique<model::admx::Policy>();
-                auto registry = std::make_shared<model::registry::Registry>();
+                auto policy            = std::make_unique<model::admx::Policy>();
+                auto registry          = std::make_shared<model::registry::Registry>();
                 auto polRegistrySource = std::make_unique<model::registry::PolRegistrySource>(registry);
-                auto group = std::make_unique<model::command::CommandGroup>();
             }
         }
     }
@@ -79,6 +78,6 @@ void AdmlTest::read()
     file.close();
 }
 
-}
+} // namespace tests
 
 QTEST_MAIN(tests::AdmlTest)

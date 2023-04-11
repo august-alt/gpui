@@ -21,24 +21,24 @@
 #include "poltest.h"
 
 #include "../../../../src/io/registryfile.h"
-#include "../../../../src/model/registry/registry.h"
-#include "../../../../src/model/registry/registryentry.h"
+#include "../../../../src/plugins/administrative_templates/registry/registry.h"
+#include "../../../../src/plugins/administrative_templates/registry/registryentry.h"
 #include "../../../../src/plugins/pol/polformat.h"
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 const std::string dataPath = "../../../data/";
 
-namespace tests {
-
+namespace tests
+{
 void PolTest::read()
 {
     gpui::PolFormat format;
 
     std::ifstream file;
 
-    file.open (dataPath + "example.pol", std::ifstream::in);
+    file.open(dataPath + "example.pol", std::ifstream::in);
 
     if (file.good())
     {
@@ -46,9 +46,10 @@ void PolTest::read()
 
         format.read(file, registry.get());
 
-        for (auto& entry : registry->getRegistry()->registryEntries)
+        for (auto &entry : registry->getRegistry()->registryEntries)
         {
-            if (entry) {
+            if (entry)
+            {
                 std::cout << "Key name " << entry->key.toStdString() << std::endl;
                 std::cout << "Value name " << entry->value.toStdString() << std::endl;
                 std::cout << "Type " << entry->type << std::endl;
@@ -59,6 +60,6 @@ void PolTest::read()
     file.close();
 }
 
-}
+} // namespace tests
 
 QTEST_MAIN(tests::PolTest)

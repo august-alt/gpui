@@ -21,8 +21,8 @@
 #include "admxtest.h"
 
 #include "../../../../src/io/policydefinitionsfile.h"
-#include "../../../../src/model/admx/policy.h"
-#include "../../../../src/model/admx/policyelement.h"
+#include "../../../../src/plugins/administrative_templates/admx/policy.h"
+#include "../../../../src/plugins/administrative_templates/admx/policyelement.h"
 #include "../../../../src/plugins/admx/admxformat.h"
 
 #include <fstream>
@@ -32,17 +32,18 @@ const std::string dataPath = "../../../data/";
 using namespace io;
 using namespace model::admx;
 
-namespace tests {
-
+namespace tests
+{
 void AdmxTest::read()
 {
     gpui::AdmxFormat format;
 
     std::ifstream file;
 
-    file.open (dataPath + "example.admx", std::ifstream::in);
+    file.open(dataPath + "example.admx", std::ifstream::in);
 
-    if (file.good()) {
+    if (file.good())
+    {
         std::unique_ptr<io::PolicyDefinitionsFile> policies = std::make_unique<io::PolicyDefinitionsFile>();
 
         format.read(file, policies.get());
@@ -51,6 +52,6 @@ void AdmxTest::read()
     file.close();
 }
 
-}
+} // namespace tests
 
 QTEST_MAIN(tests::AdmxTest)

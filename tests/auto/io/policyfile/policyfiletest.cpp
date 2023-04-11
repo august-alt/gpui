@@ -21,14 +21,14 @@
 #include "policyfiletest.h"
 
 #include "../../../../src/io/policydefinitionsfile.h"
-#include "../../../../src/model/admx/policydefinitions.h"
-#include "../../../../src/model/admx/policyelement.h"
+#include "../../../../src/plugins/administrative_templates/admx/policydefinitions.h"
+#include "../../../../src/plugins/administrative_templates/admx/policyelement.h"
 
 using namespace io;
 using namespace model::admx;
 
-namespace tests {
-
+namespace tests
+{
 void PolciyFileTest::getPolicy()
 {
     PolicyDefinitionsFile file;
@@ -58,11 +58,10 @@ void PolciyFileTest::policyDefinitionsCount()
     file.addPolicyDefinitions(policy);
     QVERIFY(file.policyDefinitionsCount() == 1);
 
-
     file.removePolicyDefinitions(policy);
     QVERIFY(file.policyDefinitionsCount() == 0);
 }
 
-}
+} // namespace tests
 
 QTEST_MAIN(tests::PolciyFileTest)

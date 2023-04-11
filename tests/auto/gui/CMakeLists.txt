@@ -1,4 +1,4 @@
-find_package(GPUI COMPONENTS gui model REQUIRED)
+find_package(GPUI COMPONENTS gui io REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
 find_package(Qt5 COMPONENTS Core Gui Test REQUIRED)

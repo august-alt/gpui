@@ -34,6 +34,6 @@ jobs:
         QT_QPA_PLATFORM: offscreen
       run: |
         mkdir build && cd build
-        cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DGPUI_BUILD_TESTS:BOOL=ON ..
+        cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_MAKE_PROGRAM=`which make` -DCMAKE_BUILD_TYPE:STRING=Debug -DGPUI_BUILD_TESTS:BOOL=ON ..
         make -j4
         make test

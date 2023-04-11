@@ -1,0 +1,43 @@
+name: Ubuntu Linux Test Coverage
+
+on:
+  workflow_run:
+    workflows: ["GPUI CI"]
+    types:
+      - completed
+
+jobs:
+  coverage:
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    - name: Get sources
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake qt5-default qttools5-dev libx11-xcb1 lcov
+
+    - name: Install Gtest
+      run: |
+        sudo apt-get install -y libgtest-dev
+        cd /usr/src/gtest
+        sudo cmake CMakeLists.txt
+        sudo make
+        sudo cp ./lib/*.a /usr/lib
+
+    - name: Install GMock
+      run: |
+        sudo apt-get install -y libgmock-dev
+
+    - name: Collect Coverage
+      env:
+        QT_QPA_PLATFORM: offscreen
+      run: |
+        cd $GITHUB_WORKSPACE
+        mkdir build && cd build
+        cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DGPUI_BUILD_TESTS:BOOL=ON ..
+        make -j4
+        make test

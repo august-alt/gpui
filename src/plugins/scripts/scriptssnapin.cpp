@@ -91,14 +91,14 @@ void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string 
         return;
     }
 
-    d->policyPath = std::make_unique<std::string>(policyPath);
+    d->policyPath = policyPath;
 
     if (policyPath.back() != '\\' && policyPath.back() != '/')
     {
-        d->policyPath->append("/");
+        d->policyPath.append("/");
     }
 
-    d->modelIo.get()->loadPolicies(*d->policyPath,
+    d->modelIo.get()->loadPolicies(d->policyPath,
                                    d->userScriptsModel.get(),
                                    d->userPowerScriptsModel.get(),
                                    d->machineScriptsModel.get(),
@@ -107,7 +107,7 @@ void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string 
 
 void ScriptsSnapIn::onDataSave()
 {
-    d->modelIo.get()->savePolicies(*d->policyPath,
+    d->modelIo.get()->savePolicies(d->policyPath,
                                    d->userScriptsModel.get(),
                                    d->userPowerScriptsModel.get(),
                                    d->machineScriptsModel.get(),

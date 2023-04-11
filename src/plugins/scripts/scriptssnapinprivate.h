@@ -24,7 +24,7 @@ public:
     Q_OBJECT
 
 public:
-    std::unique_ptr<std::string> policyPath                = nullptr;
+    std::string policyPath                = "";
     std::unique_ptr<ScriptsModel> userScriptsModel         = std::make_unique<ScriptsModel>();
     std::unique_ptr<ScriptsModel> userPowerScriptsModel    = std::make_unique<ScriptsModel>();
     std::unique_ptr<ScriptsModel> machineScriptsModel      = std::make_unique<ScriptsModel>();

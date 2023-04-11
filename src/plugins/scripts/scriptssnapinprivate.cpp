@@ -45,9 +45,7 @@ void ScriptsSnapInPrivate::saveData()
 
 void ScriptsSnapInPrivate::reloadData()
 {
-    auto path = policyPath.get();
-
-    snapIn->onDataLoad(*path, localeName);
+    snapIn->onDataLoad(policyPath, localeName);
 }
 
 void ScriptsSnapInPrivate::retranslateModels(std::unique_ptr<ScriptsModel> &models)

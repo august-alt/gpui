@@ -5,3 +5,4 @@ find_package(Qt5 COMPONENTS Core Gui Test REQUIRED)
 set(QT_USE_QTTEST TRUE)
 
 add_subdirectory(presentationbuilder)
+add_subdirectory(templatefilter)

@@ -23,8 +23,8 @@
 
 #include "gui.h"
 
-#include <QtWidgets>
 #include "../core/translatorstorage.h"
+#include <QtWidgets>
 
 #include "../ldap/ldapcontract.h"
 #include "../ldap/ldapimpl.h"
@@ -57,7 +57,10 @@ class GPUI_GUI_EXPORT MainWindow : public QMainWindow
     Q_OBJECT
 public:
     // construction and destruction
-    MainWindow(CommandLineOptions &options, ISnapInManager *manager, TranslatorStorage *translatorStorage, QWidget *parent = 0);
+    MainWindow(CommandLineOptions &options,
+               ISnapInManager *manager,
+               TranslatorStorage *translatorStorage,
+               QWidget *parent = 0);
     ~MainWindow();
 
     void setLanguage(const QString &language);
@@ -90,6 +93,8 @@ private slots:
     void on_actionAbout_triggered();
 
     void onLanguageChanged(QAction *action);
+
+    void updateFilterModel();
 
 private:
     void onIniFileOpen(const QString &path);

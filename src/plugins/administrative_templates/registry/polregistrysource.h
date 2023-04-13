@@ -61,7 +61,7 @@ public:
 
 private:
     template<typename T>
-    void updateValue(const std::string &key, const std::string &valueName, const T &data);
+    void updateValue(const std::string &key, const std::string &valueName, RegistryEntryType type, const T &data);
 
     template<typename T>
     void createValue(const std::string &key, const std::string &valueName, RegistryEntryType type, const T &data);

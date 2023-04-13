@@ -92,25 +92,25 @@ void PolRegistrySource::setValue(const std::string &key,
         switch (registryEntryType)
         {
         case REG_BINARY:
-            updateValue(key, valueName, data.value<QString>());
+            updateValue(key, valueName, registryEntryType, data.value<QString>());
             break;
         case REG_DWORD:
-            updateValue(key, valueName, data.value<uint32_t>());
+            updateValue(key, valueName, registryEntryType, data.value<uint32_t>());
             break;
         case REG_DWORD_BIG_ENDIAN:
-            updateValue(key, valueName, data.value<uint32_t>());
+            updateValue(key, valueName, registryEntryType, data.value<uint32_t>());
             break;
         case REG_EXPAND_SZ:
-            updateValue(key, valueName, data.value<QString>());
+            updateValue(key, valueName, registryEntryType, data.value<QString>());
             break;
         case REG_MULTI_SZ:
-            updateValue(key, valueName, data.value<QStringList>());
+            updateValue(key, valueName, registryEntryType, data.value<QStringList>());
             break;
         case REG_QWORD:
-            updateValue(key, valueName, data.value<uint64_t>());
+            updateValue(key, valueName, registryEntryType, data.value<uint64_t>());
             break;
         case REG_SZ:
-            updateValue(key, valueName, data.value<QString>());
+            updateValue(key, valueName, registryEntryType, data.value<QString>());
             break;
         default:
             break;
@@ -247,13 +247,23 @@ bool PolRegistrySource::ifValueStartsWith(const std::string &key, const std::str
 }
 
 template<typename T>
-void PolRegistrySource::updateValue(const std::string &key, const std::string &valueName, const T &data)
+void PolRegistrySource::updateValue(const std::string &key,
+                                    const std::string &valueName,
+                                    RegistryEntryType registryEntryType,
+                                    const T &data)
 {
     for (const auto &entry : d->registry->registryEntries)
     {
         if (entry->key.compare(key.c_str()) == 0 && entry->value.compare(valueName.c_str()) == 0)
         {
-            static_cast<RegistryEntry<T> *>(entry.get())->data = data;
+            if (entry->type == registryEntryType)
+            {
+                static_cast<RegistryEntry<T> *>(entry.get())->data = data;
+            }
+            else
+            {
+                qWarning() << "Attempt to assign value of different type to: " << key.c_str() << valueName.c_str();
+            }
         }
     }
 }

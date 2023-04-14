@@ -47,7 +47,7 @@
       </size>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select options below to enable and change or disabletypes of global filters that will be applied to the Administrative Templates nodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>Select options below to enable and change or disable types of global filters that will be applied to the Administrative Templates nodes.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -98,7 +98,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="managedLabel">
         <property name="text">
-         <string>Menaged:</string>
+         <string>Managed:</string>
         </property>
         <property name="buddy">
          <cstring>managedComboBox</cstring>
@@ -176,7 +176,7 @@
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="displayLabel">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the type of policy settings to display.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Select the type of policy settings to display.</string>
         </property>
        </widget>
       </item>
@@ -396,14 +396,17 @@
         <property name="editable">
          <bool>true</bool>
         </property>
+        <property name="currentText">
+         <string>Include settings that match any of the selected platforms.</string>
+        </property>
         <item>
          <property name="text">
-          <string>Indude settings that match any of the selected platforms.</string>
+          <string>Include settings that match any of the selected platforms.</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Indude settings that match all of the selected platforms.</string>
+          <string>Include settings that match all of the selected platforms.</string>
          </property>
         </item>
        </widget>
@@ -417,7 +420,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the desired platform and application filter(s):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Select the desired platform and application filter(s):</string>
         </property>
         <property name="buddy">
          <cstring>platformComboBox</cstring>

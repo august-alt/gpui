@@ -66,6 +66,8 @@ set(HEADERS
     registry/registrysourcetype.h
     ui/administrativetemplateswidget.h
     ui/administrativetemplatesproxymodel.h
+    ui/filteroptionsdialog.h
+    ui/filteroptionswidget.h
 )
 
 set(SOURCES
@@ -80,10 +82,14 @@ set(SOURCES
     registry/polregistrysource.cpp
     ui/administrativetemplateswidget.cpp
     ui/administrativetemplatesproxymodel.cpp
+    ui/filteroptionsdialog.cpp
+    ui/filteroptionswidget.cpp
 )
 
 set(UI_FORMS
     ui/administrativetemplateswidget.ui
+    ui/filteroptionswidget.ui
+    ui/filteroptionsdialog.ui
 )
 
 set(SOURCES ${SOURCES} ${HEADERS} ${UI_FORMS})

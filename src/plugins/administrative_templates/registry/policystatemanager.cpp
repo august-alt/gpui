@@ -126,6 +126,13 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
         }
     }
 
+    if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
+    {
+        auto defaultEnabledValue = std::make_unique<model::admx::RegistryValue<uint32_t>>(1);
+
+        return checkValueState(d->policy.key, d->policy.valueName, defaultEnabledValue.get());
+    }
+
     size_t enabledKeys = 0;
     for (const auto& listEntry : d->policy.enabledList)
     {
@@ -137,6 +144,7 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
             }
         }
     }
+
 
     return enabledKeys > 0 && enabledKeys == d->policy.enabledList.size();
 }
@@ -161,6 +169,13 @@ bool PolicyStateManager::determineIfPolicyDisabled() const
                 disabledKeys++;
             }
         }
+    }
+
+    if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
+    {
+        auto defaultDisabledValue = std::make_unique<model::admx::RegistryValue<uint32_t>>(0);
+
+        return checkValueState(d->policy.key, d->policy.valueName, defaultDisabledValue.get());
     }
 
     if (d->policy.disabledList.size() > 0 && disabledKeys != 0)
@@ -205,6 +220,14 @@ void PolicyStateManager::setPolicyStateEnabled()
         setValueState(d->policy.key, d->policy.valueName, d->policy.enabledValue.get());
     }
 
+    if (d->policy.valueName.size() > 0
+        && !d->policy.enabledValue
+        && d->policy.enabledList.size() == 0
+        && d->policy.elements.size() == 0)
+    {
+        d->source.setValue(d->policy.key, d->policy.valueName, RegistryEntryType::REG_DWORD, 1);
+    }
+
     if (d->policy.enabledList.size() > 0)
     {
         for (const auto& listEntry : d->policy.enabledList)
@@ -222,6 +245,7 @@ void PolicyStateManager::setPolicyStateEnabled()
         if (!d->source.isValuePresent(key, element->valueName))
         {
             // TODO: Implement.
+            d->source.setValue(key, element->valueName, element->getRegistryEntryType(), 0);
         }
     }
 }
@@ -231,6 +255,14 @@ void PolicyStateManager::setPolicyStateDisabled()
     if (d->policy.disabledValue)
     {
        setValueState(d->policy.key, d->policy.valueName, d->policy.disabledValue.get());
+    }
+
+    if (d->policy.valueName.size() > 0
+        && !d->policy.enabledValue
+        && d->policy.enabledList.size() == 0
+        && d->policy.elements.size() == 0)
+    {
+        d->source.setValue(d->policy.key, d->policy.valueName, RegistryEntryType::REG_DWORD, 0);
     }
 
     if (d->policy.disabledList.size() > 0)
@@ -278,6 +310,11 @@ void PolicyStateManager::setPolicyStateNotConfigured()
     }
 
     if (d->policy.enabledValue)
+    {
+        d->source.clearValue(d->policy.key, d->policy.valueName);
+    }
+
+    if (d->source.getValue(d->policy.key, d->policy.valueName).isValid())
     {
         d->source.clearValue(d->policy.key, d->policy.valueName);
     }

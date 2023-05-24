@@ -30,8 +30,8 @@ namespace model
 namespace registry
 {
 /*!
-         * \brief The AbstractRegistryEntry class Represents base of registry entry.
-         */
+ * \brief The AbstractRegistryEntry class Represents base of registry entry.
+ */
 class AbstractRegistryEntry
 {
 public:

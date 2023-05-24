@@ -128,9 +128,8 @@ bool PolicyStateManager::determineIfPolicyEnabled() const
 
     if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
     {
-        auto defaultEnabledValue = std::make_unique<model::admx::RegistryValue<uint32_t>>(1);
-
-        return checkValueState(d->policy.key, d->policy.valueName, defaultEnabledValue.get());
+        auto defaultEnabledValue = model::admx::RegistryValue<uint32_t>(1);
+        return checkValueState(d->policy.key, d->policy.valueName, &defaultEnabledValue);
     }
 
     size_t enabledKeys = 0;
@@ -173,9 +172,8 @@ bool PolicyStateManager::determineIfPolicyDisabled() const
 
     if (d->source.isValuePresent(d->policy.key, d->policy.valueName))
     {
-        auto defaultDisabledValue = std::make_unique<model::admx::RegistryValue<uint32_t>>(0);
-
-        return checkValueState(d->policy.key, d->policy.valueName, defaultDisabledValue.get());
+        auto defaultEnabledValue = model::admx::RegistryValue<uint32_t>(0);
+        return checkValueState(d->policy.key, d->policy.valueName, &defaultEnabledValue);
     }
 
     if (d->policy.disabledList.size() > 0 && disabledKeys != 0)
@@ -222,8 +220,8 @@ void PolicyStateManager::setPolicyStateEnabled()
 
     if (d->policy.valueName.size() > 0
         && !d->policy.enabledValue
-        && d->policy.enabledList.size() == 0
-        && d->policy.elements.size() == 0)
+        && d->policy.enabledList.empty()
+        && d->policy.elements.empty())
     {
         d->source.setValue(d->policy.key, d->policy.valueName, RegistryEntryType::REG_DWORD, 1);
     }
@@ -258,9 +256,9 @@ void PolicyStateManager::setPolicyStateDisabled()
     }
 
     if (d->policy.valueName.size() > 0
-        && !d->policy.enabledValue
-        && d->policy.enabledList.size() == 0
-        && d->policy.elements.size() == 0)
+        && !d->policy.disabledValue
+        && d->policy.enabledList.empty()
+        && d->policy.elements.empty())
     {
         d->source.setValue(d->policy.key, d->policy.valueName, RegistryEntryType::REG_DWORD, 0);
     }

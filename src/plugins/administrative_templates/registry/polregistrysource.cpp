@@ -224,7 +224,8 @@ void PolRegistrySource::clearValue(const std::string &key, const std::string &va
     std::string delVals("**delvals." + valueName);
 
     auto entryMatch = [&key, &valueName, &delValue, &delVals](const auto &entry) {
-        bool checkValue = (entry->value.compare(valueName.c_str()) == 0 || entry->value.compare(delValue.c_str()) == 0
+        bool checkValue = (entry->value.compare(valueName.c_str()) == 0
+                           || entry->value.compare(delValue.c_str()) == 0
                            || entry->value.compare(delVals.c_str()) == 0);
 
         return entry->key.compare(key.c_str()) == 0 && checkValue;

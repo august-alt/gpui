@@ -35,8 +35,8 @@ class PolRegistrySourcePrivate;
 class Registry;
 
 /*!
-         * \brief The PolRegistrySource class
-         */
+ * \brief The PolRegistrySource class
+ */
 class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT PolRegistrySource : public AbstractRegistrySource
 {
 public:

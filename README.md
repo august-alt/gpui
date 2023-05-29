@@ -5,7 +5,7 @@
 
 GPUI — is an open source utility for group policy management on ALT-Linux.
 
-![Screenshot](https://github.com/mchernigin/gpui/assets/59616661/a44fd0af-b657-47a3-8afd-0daa73808349)
+![Screenshot](https://github.com/mchernigin/gpui/assets/59616661/951b3715-96f0-4c8f-b044-33ab4b94a75f)
 
 ## Building and installation
 

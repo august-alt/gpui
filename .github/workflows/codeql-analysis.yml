@@ -1,12 +1,12 @@
 name: "CodeQL"
 
-on: [ push, pull_request ]
+on: [ push ]
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    container: alt:p9
+    container: alt:p10
 
     permissions:
       actions: read
@@ -27,14 +27,16 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    - name: Update software
-      run:  apt-get update
-
-    - name: Install software
-      run:  apt-get install -y git cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel qt5-base-common doxygen libxerces-c-devel xsd rpm-build
+    - name: Install dependencies
+      run: |
+        apt-get update &&
+        apt-get install -y boost-devel-headers cmake cmake-modules desktop-file-utils doxygen gcc-c++ glib2-devel \
+        ImageMagick-tools libkrb5-devel libldap-devel libpcre-devel libqt-mvvm-devel libsasl2-devel libsmbclient \
+        libsmbclient-devel libuuid-devel libxerces-c-devel make qt5-base-common qt5-base-devel qt5-declarative-devel \
+        qt5-tools-devel rpm-macros-cmake samba-devel xorg-xvfb xsd xvfb-run
 
     - name: Configure cmake
-      run:  mkdir build && cd build && cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_MAKE_PROGRAM=`which make` ..
+      run:  mkdir build && cd build && cmake ..
 
     - name: Make software
       run:  cd build && make -j `nproc`

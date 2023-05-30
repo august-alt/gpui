@@ -1,6 +1,6 @@
 name: "CodeQL"
 
-on: [ push ]
+# on: [ push ]
 
 jobs:
   analyze:

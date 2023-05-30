@@ -68,13 +68,15 @@ private:
     PolicyBundlePrivate *d;
 
     void rearrangeTreeItems();
-    void assignParentCategory(const std::string &rawCategory, QStandardItem *machineItem, QStandardItem *userItem);
+    void assignParentCategory(const std::string &rawCategory, QStandardItem *machineItem, QStandardItem *userItem,
+                              const std::string &fileName);
 
     QStandardItem *createItem(const QString &displayName,
                               const QString &iconName,
                               const QString &explainText,
                               const uint itemType,
-                              const model::admx::PolicyType policyType);
+                              const model::admx::PolicyType policyType,
+                              const bool alreadyInserted);
 
     void assignSupportedOn();
 

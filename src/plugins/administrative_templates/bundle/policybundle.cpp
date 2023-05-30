@@ -51,12 +51,14 @@ struct CategoryStorage
     QStandardItem *machineItem     = nullptr;
     QStandardItem *userItem        = nullptr;
     model::admx::Category category = {};
+    std::string fileName           = {};
 };
 
 struct PolicyStorage
 {
     model::admx::PolicyType type = model::admx::PolicyType::Machine;
     std::string category         = {};
+    std::string fileName         = {};
     QStandardItem *item          = nullptr;
 };
 
@@ -91,7 +93,7 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                                 "text-x-generic-template",
                                                 QObject::tr("Local group policies"),
                                                 ItemType::ITEM_TYPE_CATEGORY,
-                                                model::admx::PolicyType::Both);
+                                                model::admx::PolicyType::Both, false);
     visibleRootItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 12);
 
     rootItem->appendRow(visibleRootItem);
@@ -100,27 +102,27 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                             "computer",
                                             QObject::tr("Machine level policies"),
                                             ItemType::ITEM_TYPE_CATEGORY,
-                                            model::admx::PolicyType::Machine);
+                                            model::admx::PolicyType::Machine, false);
     machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 13);
     machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), Qt::UserRole + 12);
     d->rootMachineItem = createItem(QObject::tr("Administrative Templates"),
                                     "folder",
                                     QObject::tr("Machine administrative templates"),
                                     ItemType::ITEM_TYPE_CATEGORY,
-                                    model::admx::PolicyType::Machine);
+                                    model::admx::PolicyType::Machine, false);
     machineItem->appendRow(d->rootMachineItem);
     QStandardItem *userItem = createItem(QObject::tr("User"),
                                          "user-home",
                                          QObject::tr("User level policies"),
                                          ItemType::ITEM_TYPE_CATEGORY,
-                                         model::admx::PolicyType::User);
+                                         model::admx::PolicyType::User, false);
     userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 13);
     userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), Qt::UserRole + 12);
     d->rootUserItem = createItem(QObject::tr("Administrative Templates"),
                                  "folder",
                                  QObject::tr("User administrative templates"),
                                  ItemType::ITEM_TYPE_CATEGORY,
-                                 model::admx::PolicyType::User);
+                                 model::admx::PolicyType::User, false);
     userItem->appendRow(d->rootUserItem);
 
     visibleRootItem->appendRow(machineItem);
@@ -309,29 +311,40 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
         return false;
     }
 
+    std::string fileName = admxFileName.fileName().toStdString();
+
     for (auto &definition : policyDefinitions->getAllPolicyDefinitions())
     {
         for (auto &category : definition->categories)
         {
+            auto categoryName = category->name + "." + fileName;
+
             QString displayName = QString::fromStdString(findStringById(category->displayName, policyResources));
             QString explainText = QString::fromStdString(findStringById(category->explainText, policyResources));
 
-            d->categoryItemMap[category->name].machineItem = createItem(displayName,
+            d->categoryItemMap[categoryName].machineItem = createItem(displayName,
                                                                         "folder",
                                                                         explainText,
                                                                         ItemType::ITEM_TYPE_CATEGORY,
-                                                                        model::admx::PolicyType::Machine);
-            d->categoryItemMap[category->name].userItem    = createItem(displayName,
+                                                                        model::admx::PolicyType::Machine, false);
+            d->categoryItemMap[categoryName].userItem    = createItem(displayName,
                                                                      "folder",
                                                                      explainText,
                                                                      ItemType::ITEM_TYPE_CATEGORY,
-                                                                     model::admx::PolicyType::User);
-            d->categoryItemMap[category->name].category    = *category;
+                                                                     model::admx::PolicyType::User, false);
+            d->categoryItemMap[categoryName].category    = *category;
+            d->categoryItemMap[categoryName].fileName    = fileName;
+
+            d->categoryItemMap[category->name].category = *category;
+            d->categoryItemMap[category->name].fileName    = fileName;
+
+            d->categoryItemMap[category->name].machineItem = d->categoryItemMap[categoryName].machineItem;
+            d->categoryItemMap[category->name].userItem = d->categoryItemMap[categoryName].userItem;
 
             if (category->parentCategory.size() == 0)
             {
-                d->rootUserItem->appendRow(d->categoryItemMap[category->name].userItem);
-                d->rootMachineItem->appendRow(d->categoryItemMap[category->name].machineItem);
+                d->rootUserItem->appendRow(d->categoryItemMap[categoryName].userItem);
+                d->rootMachineItem->appendRow(d->categoryItemMap[categoryName].machineItem);
             }
         }
 
@@ -352,12 +365,13 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
                                          "text-x-generic",
                                          explainText,
                                          ItemType::ITEM_TYPE_POLICY,
-                                         policy->policyType);
+                                         policy->policyType, false);
 
             PolicyStorage container;
             container.category = policy->parentCategory;
             container.item     = policyItem;
             container.type     = policy->policyType;
+            container.fileName = admxFileName.fileName().toStdString();
 
             policyItem->setData(QString::fromStdString(policy->supportedOn), PolicyRoles::SUPPORTED_ON);
 
@@ -382,7 +396,8 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
 
 void model::bundle::PolicyBundle::assignParentCategory(const std::string &rawCategory,
                                                        QStandardItem *machineItem,
-                                                       QStandardItem *userItem)
+                                                       QStandardItem *userItem,
+                                                       const std::string &fileName)
 {
     std::string parentCategory      = rawCategory;
     std::string::size_type position = parentCategory.find(':');
@@ -391,29 +406,67 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string &rawCat
         parentCategory = parentCategory.substr(position + 1);
     }
 
-    auto search = d->categoryItemMap.find(parentCategory);
+    std::string parentCategoryWithFilename = parentCategory + "." + fileName;
+
+    auto search = d->categoryItemMap.find(parentCategoryWithFilename);
     if (search != d->categoryItemMap.end())
     {
         if (machineItem)
         {
-            search->second.machineItem->appendRow(machineItem);
+            if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
+            {
+                search->second.machineItem->appendRow(machineItem);
+                machineItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
+            }
         }
         if (userItem)
         {
-            search->second.userItem->appendRow(userItem);
+            if (!userItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
+            {
+                search->second.userItem->appendRow(userItem);
+                userItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
+            }
+        }
+    }
+    else if ((search = d->categoryItemMap.find(parentCategory)) != d->categoryItemMap.end())
+    {
+        if (machineItem)
+        {
+            if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
+            {
+                search->second.machineItem->appendRow(machineItem);
+                machineItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
+            }
+        }
+        if (userItem)
+        {
+            if (!userItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
+            {
+                search->second.userItem->appendRow(userItem);
+                userItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
+            }
         }
     }
     else if (rawCategory.size() > 0)
     {
-        qWarning() << "Unable to find parent category: " << rawCategory.c_str();
+        qWarning() << "Unable to find parent category: " << rawCategory.c_str() << fileName.c_str();
         if (machineItem)
         {
-            d->rootMachineItem->appendRow(machineItem);
+
+            if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
+            {
+                d->rootMachineItem->appendRow(machineItem);
+                machineItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
+            }
         }
 
         if (userItem)
         {
-            d->rootUserItem->appendRow(userItem);
+            if (!userItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
+            {
+                d->rootUserItem->appendRow(userItem);
+                userItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
+            }
         }
     }
 }
@@ -422,7 +475,8 @@ QStandardItem *PolicyBundle::createItem(const QString &displayName,
                                         const QString &iconName,
                                         const QString &explainText,
                                         const uint itemType,
-                                        const model::admx::PolicyType policyType)
+                                        const model::admx::PolicyType policyType,
+                                        const bool alreadyInserted)
 {
     QStandardItem *categoryItem = new QStandardItem(displayName.trimmed());
     categoryItem->setIcon(QIcon::fromTheme(iconName));
@@ -430,6 +484,7 @@ QStandardItem *PolicyBundle::createItem(const QString &displayName,
     categoryItem->setData(explainText, PolicyRoles::EXPLAIN_TEXT);
     categoryItem->setData(itemType, PolicyRoles::ITEM_TYPE);
     categoryItem->setData(static_cast<uint32_t>(policyType), PolicyRoles::POLICY_TYPE);
+    categoryItem->setData(alreadyInserted, PolicyRoles::POLICY_WIDGET + 1);
 
     d->items.push_back(categoryItem);
 
@@ -440,18 +495,19 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
 {
     for (const auto &entry : d->categoryItemMap)
     {
-        assignParentCategory(entry.second.category.parentCategory, entry.second.machineItem, entry.second.userItem);
+        assignParentCategory(entry.second.category.parentCategory, entry.second.machineItem, entry.second.userItem,
+                             entry.second.fileName);
     }
 
     for (const auto &item : d->unassignedItems)
     {
         if (item.type == model::admx::PolicyType::User)
         {
-            assignParentCategory(item.category, nullptr, item.item);
+            assignParentCategory(item.category, nullptr, item.item, item.fileName);
         }
         else if (item.type == model::admx::PolicyType::Machine)
         {
-            assignParentCategory(item.category, item.item, nullptr);
+            assignParentCategory(item.category, item.item, nullptr, item.fileName);
         }
         else
         {
@@ -460,11 +516,11 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
                                                  "text-x-generic",
                                                  item.item->data(PolicyRoles::EXPLAIN_TEXT).value<QString>(),
                                                  ItemType::ITEM_TYPE_POLICY,
-                                                 model::admx::PolicyType::User);
+                                                 model::admx::PolicyType::User, true);
             copyItem->setData(item.item->data(PolicyRoles::SUPPORTED_ON), PolicyRoles::SUPPORTED_ON);
             copyItem->setData(item.item->data(PolicyRoles::PRESENTATION), PolicyRoles::PRESENTATION);
             copyItem->setData(item.item->data(PolicyRoles::POLICY), PolicyRoles::POLICY);
-            assignParentCategory(item.category, item.item, copyItem);
+            assignParentCategory(item.category, item.item, copyItem, item.fileName);
         }
     }
 }

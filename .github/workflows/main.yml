@@ -25,7 +25,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build
+      - name: Build and push container
         uses: docker/build-push-action@v4
         with:
           tags: ghcr.io/${{ github.repository }}:${{ github.run_number }}
@@ -37,3 +37,13 @@ jobs:
             ARCH=${{ matrix.architecture }}
             USER_ID=1001
             GROUP_ID=121
+
+      - if: ${{ matrix.architecture == 'i386' }}
+        run: |
+          docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app \
+          ghcr.io/${{ github.repository }}:${{ github.run_number }} --platform linux/i386
+
+      - if: ${{ matrix.architecture == 'amd64' }}
+        run: |
+          docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app \
+          ghcr.io/${{ github.repository }}:${{ github.run_number }}

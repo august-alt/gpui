@@ -32,14 +32,14 @@ jobs:
         apt-get update &&
         apt-get install -y boost-devel-headers cmake cmake-modules desktop-file-utils doxygen gcc-c++ glib2-devel \
         ImageMagick-tools libkrb5-devel libldap-devel libpcre-devel libqt-mvvm-devel libsasl2-devel libsmbclient \
-        libsmbclient-devel libuuid-devel libxerces-c-devel make qt5-base-common qt5-base-devel qt5-declarative-devel \
-        qt5-tools-devel rpm-macros-cmake samba-devel xorg-xvfb xsd xvfb-run
+        libsmbclient-devel libuuid-devel libxerces-c-devel ninja-build qt5-base-common qt5-base-devel \
+        qt5-declarative-devel qt5-tools-devel rpm-macros-cmake samba-devel xorg-xvfb xsd xvfb-run
 
     - name: Configure cmake
-      run:  mkdir build && cd build && cmake ..
+      run:  cmake -G Ninja -B build .
 
-    - name: Make software
-      run:  cd build && make -j `nproc`
+    - name: Build
+      run:  cmake --build ./build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

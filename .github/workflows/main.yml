@@ -26,5 +26,5 @@ jobs:
           build-args: |
             DISTR=${{ matrix.alt-version.dist }}
             ARCH=${{ matrix.architecture }}
-            USER_ID=$(id -u)
-            GROUP_ID=$(id -g)
+            USER_ID=1001
+            GROUP_ID=121

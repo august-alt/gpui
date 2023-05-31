@@ -3,7 +3,7 @@ name: Aboba
 on: [ push ]
 
 jobs:
-  build-container:
+  gpui-build-container:
     name: Aboba
     runs-on: ubuntu-latest
     strategy:

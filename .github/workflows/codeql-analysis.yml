@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  analyze:
+  gpui-analyze:
     name: Analyze
     runs-on: ubuntu-latest
     container: alt:p10

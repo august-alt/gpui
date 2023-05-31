@@ -1,14 +1,9 @@
 name: Linux Test Coverage
 
-on:
-  workflow_run:
-    workflows:
-      - Aboba
-    types:
-      - completed
+on: ["push"]
 
 jobs:
-  test:
+  gpui-test:
     runs-on: ubuntu-20.04
     container: ghcr.io/${{ github.repository }}:latest
     steps:

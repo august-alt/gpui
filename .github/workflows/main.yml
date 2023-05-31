@@ -1,14 +1,9 @@
 name: GPUI CI
 
-on:
-  workflow_run:
-    workflows: ["Aboba"]
-    types:
-      - completed
+on: ["push"]
 
 jobs:
-  build:
-    name: Build GPUI inside container
+  gpui-build:
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -2,7 +2,7 @@ name: GPUI CI
 
 on:
   workflow_run:
-    workflows: ["Build container"]
+    workflows: ["Aboba"]
     types:
       - completed
 

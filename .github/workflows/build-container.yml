@@ -1,10 +1,10 @@
-name: Build container
+name: Aboba
 
 on: [ push ]
 
 jobs:
   build-container:
-    name: Build container
+    name: Aboba
     runs-on: ubuntu-latest
     strategy:
       matrix:

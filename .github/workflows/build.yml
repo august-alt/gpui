@@ -1,6 +1,6 @@
-name: GPUI CI
+name: gpui-build
 
-on: ["push"]
+on: [ push ]
 
 jobs:
   gpui-build:

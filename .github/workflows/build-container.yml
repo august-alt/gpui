@@ -1,10 +1,9 @@
-name: Aboba
+name: gpui-build-container
 
 on: [ push ]
 
 jobs:
   gpui-build-container:
-    name: Aboba
     runs-on: ubuntu-latest
     strategy:
       matrix:

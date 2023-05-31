@@ -1,13 +1,9 @@
-name: publish-api-doc
+name: gpui-publish-api-doc
 
-on:
-  workflow_run:
-    workflows: ["GPUI CI"]
-    types:
-      - completed
+on: [ push ]
 
 jobs:
-  api-doc:
+  gpui-publish-api-doc:
     runs-on: ubuntu-latest
 
     steps:

@@ -1,14 +1,9 @@
-name: CodeQL
+name: gpui-codeql-analysis
 
-on:
-  workflow_run:
-    workflows: ["GPUI CI"]
-    types:
-      - completed
+on: [ push ]
 
 jobs:
-  gpui-analyze:
-    name: Analyze
+  gpui-codeql-analysis:
     runs-on: ubuntu-latest
     container: alt:p10
 

@@ -1,6 +1,6 @@
-name: Linux Test Coverage
+name: gpui-test
 
-on: ["push"]
+on: [ push ]
 
 jobs:
   gpui-test:

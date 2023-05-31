@@ -50,6 +50,7 @@ RUN apt-get update \
     xorg-xvfb \
     xvfb-run \
     sudo \
+    ctest \
     && export CURRENT_PWD=`pwd` \
     && groupadd --gid $GROUP_ID builder2 \
     && useradd --uid $USER_ID --gid $GROUP_ID -ms /bin/bash builder2 \

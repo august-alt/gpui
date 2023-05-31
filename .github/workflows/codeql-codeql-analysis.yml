@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update &&
+          apt-get update
           apt-get install -y boost-devel-headers cmake cmake-modules desktop-file-utils doxygen gcc-c++ glib2-devel \
           ImageMagick-tools libkrb5-devel libldap-devel libpcre-devel libqt-mvvm-devel libsasl2-devel libsmbclient \
           libsmbclient-devel libuuid-devel libxerces-c-devel make qt5-base-common qt5-base-devel qt5-declarative-devel \

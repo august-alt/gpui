@@ -1,0 +1,41 @@
+name: Build container
+
+on: [ push ]
+
+jobs:
+  build-container:
+    name: Build container
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        alt-version: [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        architecture: [ amd64 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.github_token }}
+          logout: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push container
+        uses: docker/build-push-action@v4
+        with:
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.run_number }}
+            ghcr.io/${{ github.repository }}:latest
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            DISTR=${{ matrix.alt-version.dist }}
+            ARCH=${{ matrix.architecture }}
+            USER_ID=1001
+            GROUP_ID=121

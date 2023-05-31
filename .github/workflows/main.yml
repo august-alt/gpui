@@ -4,8 +4,8 @@ on: [ push ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     name: Build software using docker
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         alt-version: [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
@@ -28,7 +28,9 @@ jobs:
       - name: Build and push container
         uses: docker/build-push-action@v4
         with:
-          tags: ghcr.io/${{ github.repository }}:${{ github.run_number }}
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.run_number }}
+            ghcr.io/${{ github.repository }}:latest
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -47,3 +49,8 @@ jobs:
         run: |
           docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app \
           ghcr.io/${{ github.repository }}:${{ github.run_number }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: gpui-${{ matrix.alt-version.artifact }}-${{ matrix.architecture }}
+          path: /home/builder2/RPM/RPMS/x86_64/

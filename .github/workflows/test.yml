@@ -1,6 +1,10 @@
 name: gpui-test
 
-on: [ push ]
+on:
+  workflow_run:
+    workflows: [ gpui-build-container ]
+    types:
+      - completed
 
 jobs:
   gpui-test:

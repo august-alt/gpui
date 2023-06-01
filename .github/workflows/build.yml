@@ -19,11 +19,11 @@ on:
 jobs:
   gpui-build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        alt-version: [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64 ]
+
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - if: ${{ inputs.architecture == 'i386' }}
         run: |
           docker pull ghcr.io/${{ github.repository }}:latest --platform linux/i386
@@ -36,7 +36,8 @@ jobs:
           docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app \
           ghcr.io/${{ github.repository }}:latest
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload fresh RPM packages
+        uses: actions/upload-artifact@v3
         with:
           name: gpui-${{ inputs.artifact }}-${{ inputs.architecture }}
           path: /home/builder2/RPM/RPMS/x86_64/

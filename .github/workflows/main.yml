@@ -1,0 +1,55 @@
+name: gpui-ci
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    types: [ opened, synchronize, ready_for_review ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gpui-build-container:
+    uses: ./.github/workflows/build-container.yml
+    secrets: inherit
+    strategy:
+      matrix:
+        alt-version:  [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        architecture: [ amd64 ]
+    with:
+      alt-version:  ${{ matrix.alt-version }}
+      architecture: ${{ matrix.architecture }}
+
+  gpui-build:
+    uses: ./.github/workflows/build.yml
+    needs: [ gpui-build-container ]
+    secrets: inherit
+    strategy:
+      matrix:
+        alt-version:  [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        architecture: [ amd64 ]
+    with:
+      alt-version:  ${{ matrix.alt-version }}
+      architecture: ${{ matrix.architecture }}
+
+  gpui-test:
+    uses: ./.github/workflows/test.yml
+    needs: [ gpui-build-container ]
+    secrets: inherit
+    strategy:
+      matrix:
+        alt-version:  [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        architecture: [ amd64 ]
+    with:
+      alt-version:  ${{ matrix.alt-version }}
+      architecture: ${{ matrix.architecture }}
+
+  gpui-publish-api-docs:
+    uses: ./.github/workflows/publish-api-docs.yml
+
+  gpui-codeql-analysis:
+    uses: ./.github/workflows/codeql-analysis.yml

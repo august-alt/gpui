@@ -1,10 +1,16 @@
 name: gpui-build
 
 on:
-  workflow_run:
-    workflows: [ gpui-build-container ]
-    types:
-      - completed
+  workflow_call:
+    inputs:
+      alt-version:
+        description: "ALT Linux version"
+        type: string
+        required: true
+      architecture:
+        description: "Architecture"
+        type: string
+        required: true
 
 jobs:
   gpui-build:

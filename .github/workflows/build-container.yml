@@ -1,14 +1,20 @@
 name: gpui-build-container
 
-on: [ push ]
+on:
+  workflow_call:
+    inputs:
+      alt-version:
+        description: "ALT Linux version"
+        type: string
+        required: true
+      architecture:
+        description: "Architecture"
+        type: string
+        required: true
 
 jobs:
   gpui-build-container:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        alt-version: [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64 ]
 
     steps:
       - name: Checkout
@@ -35,7 +41,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            DISTR=${{ matrix.alt-version.dist }}
-            ARCH=${{ matrix.architecture }}
+            DISTR=${{ inputs.alt-version.dist }}
+            ARCH=${{ inputs.architecture }}
             USER_ID=1001
             GROUP_ID=121

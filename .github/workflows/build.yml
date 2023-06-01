@@ -33,7 +33,7 @@ jobs:
 
       - name: Extract packages
         run: |
-          docker cp gpui-build-${{ inputs.architecture }}:/home/builder2/RPM/RPMS/x86_64 "$(pwd)/packages"
+          docker cp gpui-build-${{ inputs.architecture }}:/home/builder2/RPM/RPMS/ "$(pwd)/packages"
 
       - name: Upload fresh RPM packages
         uses: actions/upload-artifact@v3

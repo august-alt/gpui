@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64 ]
+        architecture: [ amd64, i386 ]
     with:
       distr: ${{ matrix.os.distr }}
       artifact: ${{ matrix.os.artifact }}
@@ -32,7 +32,7 @@ jobs:
     strategy:
       matrix:
         os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64 ]
+        architecture: [ amd64, i386 ]
     with:
       distr: ${{ matrix.os.distr }}
       artifact: ${{ matrix.os.artifact }}
@@ -45,7 +45,7 @@ jobs:
     strategy:
       matrix:
         os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64 ]
+        architecture: [ amd64, i386 ]
     with:
       distr: ${{ matrix.os.distr }}
       artifact: ${{ matrix.os.artifact }}

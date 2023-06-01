@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   workflow_call:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
     types: [ opened, synchronize, ready_for_review ]
 
@@ -18,10 +18,11 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        alt-version:  [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
         architecture: [ amd64 ]
     with:
-      alt-version:  ${{ matrix.alt-version }}
+      distr: ${{ matrix.os.distr }}
+      artifact: ${{ matrix.os.artifact }}
       architecture: ${{ matrix.architecture }}
 
   gpui-build:
@@ -30,10 +31,11 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        alt-version:  [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
         architecture: [ amd64 ]
     with:
-      alt-version:  ${{ matrix.alt-version }}
+      distr: ${{ matrix.os.distr }}
+      artifact: ${{ matrix.os.artifact }}
       architecture: ${{ matrix.architecture }}
 
   gpui-test:
@@ -42,14 +44,17 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        alt-version:  [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
+        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
         architecture: [ amd64 ]
     with:
-      alt-version:  ${{ matrix.alt-version }}
+      distr: ${{ matrix.os.distr }}
+      artifact: ${{ matrix.os.artifact }}
       architecture: ${{ matrix.architecture }}
-
-  gpui-publish-api-docs:
-    uses: ./.github/workflows/publish-api-docs.yml
 
   gpui-codeql-analysis:
     uses: ./.github/workflows/codeql-analysis.yml
+    needs: [ gpui-build-container ]
+
+  gpui-publish-api-docs:
+    uses: ./.github/workflows/publish-api-docs.yml
+    needs: [ gpui-build, gpui-test, gpui-codeql-analysis ]

@@ -3,8 +3,12 @@ name: gpui-build
 on:
   workflow_call:
     inputs:
-      alt-version:
-        description: "ALT Linux version"
+      distr:
+        description: "Linux distribution"
+        type: string
+        required: true
+      artifact:
+        description: "Artifact"
         type: string
         required: true
       architecture:
@@ -20,13 +24,13 @@ jobs:
         alt-version: [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
         architecture: [ amd64 ]
     steps:
-      - if: ${{ matrix.architecture == 'i386' }}
+      - if: ${{ inputs.architecture == 'i386' }}
         run: |
           docker pull ghcr.io/${{ github.repository }}:latest --platform linux/i386
           docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app \
           ghcr.io/${{ github.repository }}:latest --platform linux/i386
 
-      - if: ${{ matrix.architecture == 'amd64' }}
+      - if: ${{ inputs.architecture == 'amd64' }}
         run: |
           docker pull ghcr.io/${{ github.repository }}:latest
           docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app \
@@ -34,5 +38,5 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: gpui-${{ matrix.alt-version.artifact }}-${{ matrix.architecture }}
+          name: gpui-${{ inputs.artifact }}-${{ inputs.architecture }}
           path: /home/builder2/RPM/RPMS/x86_64/

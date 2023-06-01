@@ -3,8 +3,12 @@ name: gpui-build-container
 on:
   workflow_call:
     inputs:
-      alt-version:
-        description: "ALT Linux version"
+      distr:
+        description: "Linux distribution"
+        type: string
+        required: true
+      artifact:
+        description: "Artifact"
         type: string
         required: true
       architecture:
@@ -41,7 +45,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            DISTR=${{ inputs.alt-version.dist }}
+            DISTR=${{ inputs.distr }}
             ARCH=${{ inputs.architecture }}
             USER_ID=1001
             GROUP_ID=121

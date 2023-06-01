@@ -3,8 +3,12 @@ name: gpui-test
 on:
   workflow_call:
     inputs:
-      alt-version:
-        description: "ALT Linux version"
+      distr:
+        description: "Linux distribution"
+        type: string
+        required: true
+      artifact:
+        description: "Artifact"
         type: string
         required: true
       architecture:

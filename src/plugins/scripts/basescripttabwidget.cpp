@@ -53,9 +53,9 @@ void BaseScriptTabWidget::onDownClicked()
     }
 }
 
-void BaseScriptTabWidget::onAddClicked(bool isScripts)
+void BaseScriptTabWidget::onAddClicked()
 {
-    auto root = findRootItem(isScripts);
+    auto root = findRootItem();
 
     if (root == nullptr)
     {
@@ -120,27 +120,15 @@ void BaseScriptTabWidget::onBrowseClicked()
     QDesktopServices::openUrl(QUrl(dirName, QUrl::TolerantMode));
 }
 
-ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
+ScriptItemContainer *BaseScriptTabWidget::findRootItem()
 {
-    std::string sectionName = "Shutdown";
+    std::string machineSectionName = "Shutdown";
+    std::string userSectionName    = "Logoff";
 
-    if (isScripts)
+    if (this->isStartUpScripts)
     {
-        if (this->isStartUpScripts)
-        {
-            sectionName = "Logon";
-        }
-        else
-        {
-            sectionName = "Logoff";
-        }
-    }
-    else
-    {
-        if (this->isStartUpScripts)
-        {
-            sectionName = "Startup";
-        }
+        machineSectionName = "Startup";
+        userSectionName    = "Logon";
     }
 
     if (!this->sessionModel)
@@ -159,14 +147,19 @@ ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
 
         if (section)
         {
-            if (sectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
+            if (machineSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
+            {
+                return section;
+            }
+
+            if (userSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
             {
                 return section;
             }
         }
     }
 
-    qWarning() << "Section:" << sectionName.c_str() << " not found!!";
+    qWarning() << "Section:" << userSectionName.c_str() << " or " << machineSectionName.c_str() << " not found!!";
 
     return nullptr;
 }

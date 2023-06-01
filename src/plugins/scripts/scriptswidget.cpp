@@ -57,7 +57,7 @@ void ScriptsWidget::on_downPushButton_clicked()
 
 void ScriptsWidget::on_addPushButton_clicked()
 {
-    BaseScriptTabWidget::onAddClicked(true);
+    BaseScriptTabWidget::onAddClicked();
 }
 
 void ScriptsWidget::on_editPushButton_clicked()

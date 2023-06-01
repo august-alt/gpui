@@ -88,10 +88,17 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, s
         }
     }
 
-    makeSectionIfNotFound("Logon", file_path, sections, model);
-    makeSectionIfNotFound("Logoff", file_path, sections, model);
-    makeSectionIfNotFound("Startup", file_path, sections, model);
-    makeSectionIfNotFound("Shutdown", file_path, sections, model);
+    QString filePath = QString::fromStdString(file_path);
+    if (filePath.toLower().contains("user"))
+    {
+        makeSectionIfNotFound("Logon", file_path, sections, model);
+        makeSectionIfNotFound("Logoff", file_path, sections, model);
+    }
+    else
+    {
+        makeSectionIfNotFound("Startup", file_path, sections, model);
+        makeSectionIfNotFound("Shutdown", file_path, sections, model);
+    }
 }
 
 std::unique_ptr<io::IniFile> ScriptModelBuilder::modelToIni(ScriptsModel *model)

@@ -104,11 +104,15 @@ void ScriptsContentWidget::startDialog(const QModelIndex &index)
     {
         dialog->setModels(snapIn->d->machineScriptsModel.get(),
                           snapIn->d->machinePowerScriptsModel.get(),
-                          isStartupScripts);
+                          isStartupScripts,
+                          !isMachineNamespace);
     }
     else
     {
-        dialog->setModels(snapIn->d->userScriptsModel.get(), snapIn->d->userPowerScriptsModel.get(), isStartupScripts);
+        dialog->setModels(snapIn->d->userScriptsModel.get(),
+                          snapIn->d->userPowerScriptsModel.get(),
+                          isStartupScripts,
+                          !isMachineNamespace);
     }
 
     QObject::connect(dialog, &ScriptsDialog::saveDataSignal, snapIn->d, &ScriptsSnapInPrivate::saveData);

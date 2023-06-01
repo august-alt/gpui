@@ -36,6 +36,12 @@ public:
     void iniToModel(ScriptsModel *model, io::IniFile *iniFile, std::string &file_path);
 
     std::unique_ptr<io::IniFile> modelToIni(ScriptsModel *model);
+
+private:
+    void makeSectionIfNotFound(const std::string &sectionName,
+                               const std::string &file_path,
+                               std::shared_ptr<io::IniFile::sections> sections,
+                               ScriptsModel *model);
 };
 } // namespace scripts_plugin
 

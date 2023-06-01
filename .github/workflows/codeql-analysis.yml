@@ -4,18 +4,13 @@ on: [ workflow_call, workflow_dispatch ]
 
 jobs:
   gpui-codeql-analysis:
-    runs-on: ubuntu-latest
-    container: alt:p10
+    runs-on: ubuntu-20.04
+    container: ghcr.io/${{ github.repository }}:latest
 
     permissions:
       actions: read
       contents: read
       security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'cpp' ]
 
     steps:
       - name: Checkout repository
@@ -24,15 +19,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: ${{ matrix.language }}
-
-      - name: Install dependencies
-        run: |
-          apt-get update
-          apt-get install -y boost-devel-headers cmake cmake-modules desktop-file-utils doxygen gcc-c++ glib2-devel \
-          ImageMagick-tools libkrb5-devel libldap-devel libpcre-devel libqt-mvvm-devel libsasl2-devel libsmbclient \
-          libsmbclient-devel libuuid-devel libxerces-c-devel make qt5-base-common qt5-base-devel qt5-declarative-devel \
-          qt5-tools-devel rpm-macros-cmake samba-devel xorg-xvfb xsd xvfb-run
+          languages: cpp
 
       - name: Configure cmake
         run:  cmake -B build .

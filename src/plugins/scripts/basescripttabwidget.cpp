@@ -115,7 +115,9 @@ void BaseScriptTabWidget::onBrowseClicked()
 {
     auto path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
 
-    QDesktopServices::openUrl(QUrl(QString::fromStdString(path), QUrl::TolerantMode));
+    QString dirName = QFileInfo(QString::fromStdString(path)).absolutePath();
+
+    QDesktopServices::openUrl(QUrl(dirName, QUrl::TolerantMode));
 }
 
 ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
@@ -139,6 +141,12 @@ ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
         {
             sectionName = "Startup";
         }
+    }
+
+    if (!this->sessionModel)
+    {
+        qCritical() << "Section model is NULL!";
+        return nullptr;
     }
 
     auto containers = this->sessionModel->topItems();

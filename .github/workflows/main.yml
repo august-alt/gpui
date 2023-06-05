@@ -22,7 +22,6 @@ jobs:
         architecture: [ amd64, i386 ]
     with:
       distr: ${{ matrix.os.distr }}
-      artifact: ${{ matrix.os.artifact }}
       architecture: ${{ matrix.architecture }}
 
   gpui-build:
@@ -33,8 +32,8 @@ jobs:
       matrix:
         os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
         architecture: [ amd64, i386 ]
+      fail-fast: false
     with:
-      distr: ${{ matrix.os.distr }}
       artifact: ${{ matrix.os.artifact }}
       architecture: ${{ matrix.architecture }}
 
@@ -44,17 +43,16 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64, i386 ]
+        architecture: [ amd64 ]
     with:
-      distr: ${{ matrix.os.distr }}
-      artifact: ${{ matrix.os.artifact }}
       architecture: ${{ matrix.architecture }}
 
   gpui-codeql-analysis:
     uses: ./.github/workflows/codeql-analysis.yml
     needs: [ gpui-build-container ]
+    secrets: inherit
 
   gpui-publish-api-docs:
     uses: ./.github/workflows/publish-api-docs.yml
     needs: [ gpui-build, gpui-test, gpui-codeql-analysis ]
+    secrets: inherit

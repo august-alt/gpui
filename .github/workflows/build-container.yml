@@ -7,10 +7,6 @@ on:
         description: "Linux distribution"
         type: string
         required: true
-      artifact:
-        description: "Artifact"
-        type: string
-        required: true
       architecture:
         description: "Architecture"
         type: string
@@ -32,18 +28,22 @@ jobs:
           password: ${{ secrets.github_token }}
           logout: false
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and push container
+      - name: Build and push container to the registry
         uses: docker/build-push-action@v4
         with:
           tags: |
-            ghcr.io/${{ github.repository }}:${{ github.run_number }}
-            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:${{ github.run_number }}
+            ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          platforms: ${{ inputs.architecture }}
           build-args: |
             DISTR=${{ inputs.distr }}
             ARCH=${{ inputs.architecture }}

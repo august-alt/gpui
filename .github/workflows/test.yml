@@ -3,14 +3,6 @@ name: gpui-test
 on:
   workflow_call:
     inputs:
-      distr:
-        description: "Linux distribution"
-        type: string
-        required: true
-      artifact:
-        description: "Artifact"
-        type: string
-        required: true
       architecture:
         description: "Architecture"
         type: string
@@ -19,7 +11,7 @@ on:
 jobs:
   gpui-test:
     runs-on: ubuntu-20.04
-    container: ghcr.io/${{ github.repository }}:latest
+    container: ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
 
     steps:
       - name: Checkout

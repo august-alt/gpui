@@ -3,10 +3,6 @@ name: gpui-build
 on:
   workflow_call:
     inputs:
-      distr:
-        description: "Linux distribution"
-        type: string
-        required: true
       artifact:
         description: "Artifact"
         type: string
@@ -21,22 +17,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Build
-        run: |
-          docker pull ghcr.io/${{ github.repository }}:latest
-          docker run --privileged=true --name gpui-build-${{ inputs.architecture }} -i --log-driver=none \
-          -a stdin -a stdout -a stderr -v "$(pwd)":/app ghcr.io/${{ github.repository }}:latest \
-          --platform linux/${{ inputs.architecture }}
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
 
-      - name: Extract packages
-        run: |
-          docker cp gpui-build-${{ inputs.architecture }}:/home/builder2/RPM/RPMS/ "$(pwd)/packages"
+    - name: Build GPUI packages
+      run: |
+        docker pull --platform linux/${{ inputs.architecture }} \
+          ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+        docker run --privileged=true --name gpui-build-${{ inputs.architecture }} -i --log-driver=none \
+        -a stdin -a stdout -a stderr -v "$(pwd)":/app --platform linux/${{ inputs.architecture }} \
+        ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
 
-      - name: Upload fresh RPM packages
-        uses: actions/upload-artifact@v3
-        with:
-          name: gpui-${{ inputs.artifact }}-${{ inputs.architecture }}
-          path: ${{ github.workspace }}/packages
+    - name: Extract fresh packages
+      run: |
+        docker cp gpui-build-${{ inputs.architecture }}:/home/builder2/RPM/RPMS/ "$(pwd)/packages"
+
+    - name: Upload fresh RPM packages
+      uses: actions/upload-artifact@v3
+      with:
+        name: gpui-${{ inputs.artifact }}-${{ inputs.architecture }}
+        path: ${{ github.workspace }}/packages

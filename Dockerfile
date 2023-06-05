@@ -67,13 +67,6 @@ RUN apt-get update \
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY script/build.sh /build.sh
 
-ARG ARCH
-
-RUN if [ "$ARCH" = "i386" ]; then \
-       sed -i 's/gear-hsh/i586 gear-hsh/g' /build.sh; \
-       sed -i 's/x86_64/i686/g' /build.sh; \
-    fi
-
 USER builder2
 WORKDIR /home/builder2
 

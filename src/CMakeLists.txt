@@ -8,6 +8,9 @@ if (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
         -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept -Wold-style-cast \
         -Woverloaded-virtual -Wredundant-decls -Wshadow -Wstrict-null-sentinel -Wundef \
         -Wno-unused -Wno-variadic-macros -Wno-parentheses -Wnonnull -fdiagnostics-show-option")
+        if(CMAKE_SIZEOF_VOID_P LESS_EQUAL 4)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=i586")
+    endif()
   endif()
 endif()
 

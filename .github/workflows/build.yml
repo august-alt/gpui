@@ -25,11 +25,10 @@ jobs:
 
     - name: Build GPUI packages
       run: |
-        docker pull --platform linux/${{ inputs.architecture }} \
-          ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+        docker pull --platform linux/${{ inputs.architecture }} ghcr.io/${{ github.repository }}:latest
         docker run --privileged=true --name gpui-build-${{ inputs.architecture }} -i --log-driver=none \
         -a stdin -a stdout -a stderr -v "$(pwd)":/app --platform linux/${{ inputs.architecture }} \
-        ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+        ghcr.io/${{ github.repository }}:latest
 
     - name: Extract fresh packages
       run: |

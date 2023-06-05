@@ -38,8 +38,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           tags: |
-            ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:${{ github.run_number }}
-            ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.run_number }}
+            ghcr.io/${{ github.repository }}:latest
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max

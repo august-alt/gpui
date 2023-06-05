@@ -113,9 +113,16 @@ void BaseScriptTabWidget::onDeleteClicked()
 
 void BaseScriptTabWidget::onBrowseClicked()
 {
+    if (!scriptsItemContainer)
+    {
+        return;
+    }
+
     auto path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
 
     QString dirName = QFileInfo(QString::fromStdString(path)).absolutePath();
+
+    qWarning() << dirName;
 
     QDesktopServices::openUrl(QUrl(dirName, QUrl::TolerantMode));
 }

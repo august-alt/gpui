@@ -1,11 +1,17 @@
 name: gpui-codeql-analysis
 
-on: [ workflow_call, workflow_dispatch ]
+on:
+  workflow_call:
+    inputs:
+      architecture:
+        description: "Architecture"
+        type: string
+        required: true
 
 jobs:
   gpui-codeql-analysis:
     runs-on: ubuntu-20.04
-    container: ghcr.io/${{ github.repository }}:latest
+    container: ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
 
     permissions:
       actions: read

@@ -41,16 +41,15 @@ jobs:
     uses: ./.github/workflows/test.yml
     needs: [ gpui-build-container ]
     secrets: inherit
-    strategy:
-      matrix:
-        architecture: [ amd64 ]
     with:
-      architecture: ${{ matrix.architecture }}
+      architecture: "amd64"
 
   gpui-codeql-analysis:
     uses: ./.github/workflows/codeql-analysis.yml
     needs: [ gpui-build-container ]
     secrets: inherit
+    with:
+      architecture: "amd64"
 
   gpui-publish-api-docs:
     uses: ./.github/workflows/publish-api-docs.yml

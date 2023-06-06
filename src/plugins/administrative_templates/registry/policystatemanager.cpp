@@ -243,7 +243,6 @@ void PolicyStateManager::setPolicyStateEnabled()
         if (!d->source.isValuePresent(key, element->valueName))
         {
             // TODO: Implement.
-            d->source.setValue(key, element->valueName, element->getRegistryEntryType(), 0);
         }
     }
 }

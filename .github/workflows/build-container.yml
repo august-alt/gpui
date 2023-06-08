@@ -46,8 +46,8 @@ jobs:
             ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:${{ github.run_number }}
             ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
           push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-image
+          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-image
           platforms: ${{ inputs.architecture }}
           build-args: |
             DISTR=${{ inputs.distr }}

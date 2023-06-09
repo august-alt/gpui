@@ -1,43 +1,40 @@
-name: "CodeQL"
+name: gpui-codeql-analysis
 
-on: [ push, pull_request ]
+on:
+  workflow_call:
+    inputs:
+      architecture:
+        description: "Architecture"
+        type: string
+        required: true
 
 jobs:
-  analyze:
-    name: Analyze
-    runs-on: ubuntu-latest
-    container: alt:p9
+  gpui-codeql-analysis:
+    runs-on: ubuntu-20.04
+    container: ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
 
     permissions:
       actions: read
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'cpp' ]
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: ${{ matrix.language }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: cpp
 
-    - name: Update software
-      run:  apt-get update
+      - name: Configure cmake
+        run:  cmake -B build .
 
-    - name: Install software
-      run:  apt-get install -y git cmake rpm-macros-cmake cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel qt5-base-common doxygen libxerces-c-devel xsd rpm-build
+      - name: Build
+        run: |
+          cd build
+          make -j `nproc`
+          make test
 
-    - name: Configure cmake
-      run:  mkdir build && cd build && cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_MAKE_PROGRAM=`which make` ..
-
-    - name: Make software
-      run:  cd build && make -j `nproc`
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2

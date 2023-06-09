@@ -1,0 +1,39 @@
+name: gpui-build
+
+on:
+  workflow_call:
+    inputs:
+      artifact:
+        description: "Artifact"
+        type: string
+        required: true
+      architecture:
+        description: "Architecture"
+        type: string
+        required: true
+
+jobs:
+  gpui-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Build GPUI packages
+      run: |
+        docker pull --platform linux/${{ inputs.architecture }} \
+          ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+        docker run --privileged=true --name gpui-build-${{ inputs.architecture }} -i --log-driver=none \
+        -a stdin -a stdout -a stderr -v "$(pwd)":/app --platform linux/${{ inputs.architecture }} \
+        ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+
+    - name: Extract fresh packages
+      run: |
+        docker cp gpui-build-${{ inputs.architecture }}:/home/builder2/RPM/RPMS/ "$(pwd)/packages"
+
+    - name: Upload fresh RPM packages
+      uses: actions/upload-artifact@v3
+      with:
+        name: gpui-${{ inputs.artifact }}-${{ inputs.architecture }}
+        path: ${{ github.workspace }}/packages

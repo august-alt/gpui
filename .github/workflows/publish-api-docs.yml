@@ -1,42 +1,38 @@
-name: publish-api-doc
+name: gpui-publish-api-doc
 
-on:
-  push:
-    branches:
-      - master
+on: [ workflow_call, workflow_dispatch ]
 
 jobs:
-  api-doc:
+  gpui-publish-api-doc:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Git Checkout
-      uses: actions/checkout@v2
+      - name: Git Checkout
+        uses: actions/checkout@v3
 
-    - name: Create clean documentation branch
-      run:  git checkout -b documentation
+      - name: Create clean documentation branch
+        run:  git checkout -b documentation
 
-    - name: Install doxygen
-      run:  sudo apt-get install doxygen
+      - name: Install doxygen
+        run:  sudo apt-get install doxygen
 
-    - name: Generate autodocs for gpui editor
-      run:  doxygen
+      - name: Generate autodocs for gpui editor
+        run:  doxygen
 
-    - name: Add generated autodocs to Git repo in the documentation branch
-      run:  |
-        git config --global user.email "gpui-github-bot@basealt.ru"
-        git config --global user.name  "$GITHUB_WORKFLOW GitHub action"
-        git add -f docs
-        git commit -am "docs: add auto-generated developer documentation"
+      - name: Add generated autodocs to Git repo in the documentation branch
+        run:  |
+          git config --global user.email "gpui-github-bot@basealt.ru"
+          git config --global user.name  "$GITHUB_WORKFLOW GitHub action"
+          git add -f docs
+          git commit -am "docs: add auto-generated developer documentation"
 
-    - name: Publish autodocs as GitHub pages
-      run:  git push -f origin documentation:documentation
+      - name: Publish autodocs as GitHub pages
+        run:  git push -f origin documentation:documentation
 
-    - name: Result URLs
-      run:  |
-        REPO_OWNER=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)
-        REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)
-        echo "Documentation on a github.io:  https://$REPO_OWNER.github.io/$REPO_NAME/docs"
-        echo ""
-        echo "Documentation branch: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/documentation" 
-
+      - name: Result URLs
+        run:  |
+          REPO_OWNER=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)
+          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)
+          echo "Documentation on a github.io:  https://$REPO_OWNER.github.io/$REPO_NAME/docs"
+          echo ""
+          echo "Documentation branch: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/documentation"

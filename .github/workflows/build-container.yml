@@ -1,0 +1,38 @@
+name: gpui-build-container
+
+on:
+  workflow_call:
+    inputs:
+      distr:
+        description: "Linux distribution"
+        type: string
+        required: true
+      architecture:
+        description: "Architecture"
+        type: string
+        required: true
+
+jobs:
+  gpui-build-container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        run: |
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.github_token }}
+
+      - name: Build container
+        run: |
+          docker buildx build -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:${{ github.run_number }} \
+          -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest \
+          --cache-from type=gha,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-image \
+          --cache-to type=gha,mode=max,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-image \
+          --build-arg DISTR=${{ inputs.distr }} --build-arg ARCH=${{ inputs.architecture }} \
+          --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --platform ${{ inputs.architecture }} .
+
+      - name: Push container
+        run: |
+          docker push -a ghcr.io/${{ github.repository }}-${{ inputs.architecture }}

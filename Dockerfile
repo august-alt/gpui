@@ -50,6 +50,7 @@ RUN apt-get update \
     xorg-xvfb \
     xvfb-run \
     sudo \
+    ctest \
     && export CURRENT_PWD=`pwd` \
     && groupadd --gid $GROUP_ID builder2 \
     && useradd --uid $USER_ID --gid $GROUP_ID -ms /bin/bash builder2 \
@@ -69,8 +70,7 @@ COPY script/build.sh /build.sh
 ARG ARCH
 
 RUN if [ "$ARCH" = "i386" ]; then \
-       sed -i 's/gear-hsh/i586 gear-hsh/g' /build.sh; \
-       sed -i 's/x86_64/i686/g' /build.sh; \
+        sed -i 's/gear-rpm -ba/gear-rpm -ba --target=i386/g' build.sh; \
     fi
 
 USER builder2

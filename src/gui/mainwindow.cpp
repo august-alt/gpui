@@ -273,6 +273,11 @@ MainWindow::MainWindow(CommandLineOptions &options,
         d->options.policyBundle = "/usr/share/PolicyDefinitions";
     }
 
+    if (d->options.path.isEmpty())
+    {
+        d->options.path = QDir::currentPath();
+    }
+
     for (auto &snapIn : manager->getSnapIns())
     {
         qWarning() << "Loading model from: " << snapIn->getDisplayName();

@@ -1,29 +1,57 @@
-name: GPUI CI
+name: gpui-ci
 
-on: [ push, pull_request ]
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    branches: [ master ]
+  pull_request:
+    types: [ opened, synchronize, ready_for_review ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Build software using docker
+  gpui-build-container:
+    uses: ./.github/workflows/build-container.yml
+    secrets: inherit
     strategy:
       matrix:
-        alt-version: [ { dist: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64 ]
+        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
+        architecture: [ amd64, i386 ]
+    with:
+      distr: ${{ matrix.os.distr }}
+      architecture: ${{ matrix.architecture }}
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  gpui-build:
+    uses: ./.github/workflows/build.yml
+    needs: [ gpui-build-container ]
+    secrets: inherit
+    strategy:
+      matrix:
+        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
+        architecture: [ amd64, i386 ]
+      fail-fast: false
+    with:
+      artifact: ${{ matrix.os.artifact }}
+      architecture: ${{ matrix.architecture }}
 
-      - run: docker build . --file Dockerfile --tag build-environment --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --build-arg DISTR=${{ matrix.alt-version.dist }} --build-arg ARCH=${{ matrix.architecture  }}
+  gpui-test:
+    uses: ./.github/workflows/test.yml
+    needs: [ gpui-build-container ]
+    secrets: inherit
+    with:
+      architecture: "amd64"
 
-      - if: ${{ matrix.architecture == 'i386' }}
-        run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment --platform linux/i386
+  gpui-codeql-analysis:
+    uses: ./.github/workflows/codeql-analysis.yml
+    needs: [ gpui-build-container ]
+    secrets: inherit
+    with:
+      architecture: "amd64"
 
-      - if: ${{ matrix.architecture == 'amd64' }}
-        run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: gpui-${{ matrix.alt-version.artifact }}-${{ matrix.architecture }}
-          path: /home/builder2/RPM/RPMS/x86_64/
+  gpui-publish-api-docs:
+    uses: ./.github/workflows/publish-api-docs.yml
+    needs: [ gpui-build, gpui-test, gpui-codeql-analysis ]
+    secrets: inherit

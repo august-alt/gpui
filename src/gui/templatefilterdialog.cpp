@@ -40,7 +40,7 @@ class TemplateFilterDialogPrivate
 public:
     TemplateFilterDialogPrivate() {}
 
-    Ui::TemplateFilterDialog *ui = nullptr;
+    Ui::FilterOptionsWidget *ui = nullptr;
 
     QHash<QWidget *, QVariant> originalState = {};
 
@@ -57,7 +57,7 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
     : QDialog(parent)
     , d(new TemplateFilterDialogPrivate())
 {
-    d->ui = new Ui::TemplateFilterDialog();
+    d->ui = new Ui::FilterOptionsWidget();
     d->ui->setupUi(this);
 }
 
@@ -72,15 +72,15 @@ TemplateFilter TemplateFilterDialog::getFilter() const
 {
     TemplateFilter out;
 
-    out.keywordEnabled = d->ui->keywordGroupBox->isChecked();
-    out.titleEnabled   = d->ui->titleCheck->isChecked();
-    out.helpEnabled    = d->ui->helpCheck->isChecked();
-    out.commentEnabled = d->ui->commentCheck->isChecked();
-    out.keywordText    = d->ui->keywordEdit->text();
-    out.keywordType    = static_cast<KeywordFilterType>(d->ui->keywordCombo->currentIndex());
+    out.keywordEnabled = d->ui->kwordCheckBox->isChecked();
+    out.titleEnabled   = d->ui->titleCheckBox->isChecked();
+    out.helpEnabled    = d->ui->helpTextCheckBox->isChecked();
+    out.commentEnabled = d->ui->commentCheckBox->isChecked();
+    out.keywordText    = d->ui->filterWordLineEdit->text();
+    out.keywordType    = static_cast<KeywordFilterType>(d->ui->filterWordComboBox->currentIndex());
 
     out.configured = [&]() {
-        const FilterComboValue configuredState = static_cast<FilterComboValue>(d->ui->configuredCombo->currentIndex());
+        const FilterComboValue configuredState = static_cast<FilterComboValue>(d->ui->filterWordComboBox->currentIndex());
 
         switch (configuredState)
         {
@@ -146,12 +146,12 @@ void TemplateFilterDialog::open()
 void TemplateFilterDialog::accept()
 {
     const bool keywordWithinIsValid = [&]() {
-        if (d->ui->keywordGroupBox->isChecked())
+        if (d->ui->kwordCheckBox->isChecked())
         {
             const QList<bool> keyword_enabled_list = {
-                d->ui->titleCheck->isChecked(),
-                d->ui->helpCheck->isChecked(),
-                d->ui->commentCheck->isChecked(),
+                d->ui->titleCheckBox->isChecked(),
+                d->ui->helpTextCheckBox->isChecked(),
+                d->ui->commentCheckBox->isChecked(),
             };
 
             const bool any_keyword_enabled = keyword_enabled_list.contains(true);
@@ -218,15 +218,15 @@ void TemplateFilterDialog::reject()
 QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
 {
     const QList<QWidget *> out = {
-        ui->managedCombo,
-        ui->configuredCombo,
-        ui->commentedCombo,
-        ui->keywordGroupBox,
-        ui->keywordEdit,
-        ui->keywordCombo,
-        ui->titleCheck,
-        ui->helpCheck,
-        ui->commentCheck,
+        ui->managedComboBox,
+        ui->configComboBox,
+        ui->commentComboBox,
+        ui->kwordCheckBox,
+        ui->filterWordLineEdit,
+        ui->filterWordComboBox,
+        ui->titleCheckBox,
+        ui->helpTextCheckBox,
+        ui->commentCheckBox
     };
 
     return out;

@@ -71,11 +71,11 @@ TemplateFilter TemplateFilterDialog::getFilter() const
 {
     TemplateFilter out;
 
-    out.keywordEnabled = d->ui->keywordGroupBox->isChecked();
+    out.keywordEnabled = d->ui->keywordCheck->isChecked();
     out.titleEnabled   = d->ui->titleCheck->isChecked();
     out.helpEnabled    = d->ui->helpCheck->isChecked();
     out.commentEnabled = d->ui->commentCheck->isChecked();
-    out.keywordText    = d->ui->keywordEdit->text();
+    out.keywordText    = d->ui->keywordField->text();
     out.keywordType    = static_cast<KeywordFilterType>(d->ui->keywordCombo->currentIndex());
 
     out.configured = [&]() {
@@ -145,7 +145,7 @@ void TemplateFilterDialog::open()
 void TemplateFilterDialog::accept()
 {
     const bool keywordWithinIsValid = [&]() {
-        if (d->ui->keywordGroupBox->isChecked())
+        if (d->ui->keywordCheck->isChecked())
         {
             const QList<bool> keyword_enabled_list = {
                 d->ui->titleCheck->isChecked(),
@@ -220,8 +220,8 @@ QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
         ui->managedCombo,
         ui->configuredCombo,
         ui->commentedCombo,
-        ui->keywordGroupBox,
-        ui->keywordEdit,
+        ui->keywordCheck,
+        ui->keywordField,
         ui->keywordCombo,
         ui->titleCheck,
         ui->helpCheck,

@@ -221,13 +221,6 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
 
     const bool configuredMatch = d->filter.configured.contains(state);
 
-    // Don't filter non-template types, so that the rest of
-    // the tree appears fully
-    if (!itemIsTemplate)
-    {
-        return true;
-    }
-
     if (d->filter.keywordEnabled && !keywordMatch)
     {
         return false;

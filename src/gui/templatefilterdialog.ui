@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>668</width>
-    <height>677</height>
+    <height>721</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -136,11 +136,17 @@
       </item>
       <item row="2" column="3">
        <widget class="QCheckBox" name="commentCheck">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Comment</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
         </property>
        </widget>
       </item>

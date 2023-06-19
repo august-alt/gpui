@@ -16,9 +16,6 @@ set(HEADERS
     presentationbuilder.h
     pluginwidgetinterface.h
     treevieweventfilter.h
-    templatefilter.h
-    templatefilterdialog.h
-    templatefiltermodel.h
 )
 
 set(SOURCES
@@ -31,19 +28,14 @@ set(SOURCES
     listboxdialog.cpp
     mainwindow.cpp
     mainwindowsettings.cpp
-    presentationbuilder.cpp
     treevieweventfilter.cpp
-    templatefilterdialog.cpp
-    templatefiltermodel.cpp
-    ../plugins/administrative_templates/registry/policystatemanager.cpp
 )
 
 set(UI_FORMS
     aboutdialog.ui
     contentwidget.ui
     listboxdialog.ui
-    mainwindow.ui
-    templatefilterdialog.ui
+    mainwindow.ui    
 )
 
 set(MOC_HEADERS
@@ -55,9 +47,6 @@ set(MOC_HEADERS
     mainwindowsettings.h
     pluginwidgetinterface.h
     treevieweventfilter.h
-    templatefilter.h
-    templatefilterdialog.h
-    templatefiltermodel.h
 )
 
 set(TS_FILES

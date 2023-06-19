@@ -133,14 +133,6 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
         return true;
     }
 
-    // TODO: remove magic number "1"
-    const bool itemIsTemplate = [&]() {
-        const uint item_type = index.data(PolicyRoles::ITEM_TYPE).value<uint>();
-        const bool out       = (item_type == 1);
-
-        return out;
-    }();
-
     // TODO: implement comment filter (comment data not
     // stored in model yet)
     const bool commentMatch = true;
@@ -220,13 +212,6 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
     }();
 
     const bool configuredMatch = d->filter.configured.contains(state);
-
-    // Don't filter non-template types, so that the rest of
-    // the tree appears fully
-    if (!itemIsTemplate)
-    {
-        return true;
-    }
 
     if (d->filter.keywordEnabled && !keywordMatch)
     {

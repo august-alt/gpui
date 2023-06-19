@@ -18,44 +18,44 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_TEMPLATEFILTERDIALOG_H
-#define GPUI_TEMPLATEFILTERDIALOG_H
+#ifndef GPUI_TEMPLATEFILTER_H
+#define GPUI_TEMPLATEFILTER_H
 
-#include "gui.h"
+#include "../plugins/administrative_templates/registry/policystatemanager.h"
 
-#include <QtWidgets>
+#include <QMetaType>
+#include <QSet>
 
 namespace gpui
 {
-class TemplateFilterDialogPrivate;
-class TemplateFilter;
-
-class GPUI_GUI_EXPORT TemplateFilterDialog final : public QDialog
+enum KeywordFilterType
 {
-    Q_OBJECT
-
-public:
-    TemplateFilterDialog(QWidget *parent = 0);
-    ~TemplateFilterDialog();
-
-    TemplateFilter getFilter() const;
-
-public slots:
-    void open() override;
-    void accept() override;
-    void reject() override;
-
-private:
-    TemplateFilterDialogPrivate *const d;
-
-private slots:
-
-private:
-    TemplateFilterDialog(const TemplateFilterDialog &) = delete;            // copy ctor
-    TemplateFilterDialog(TemplateFilterDialog &&)      = delete;            // move ctor
-    TemplateFilterDialog &operator=(const TemplateFilterDialog &) = delete; // copy assignment
-    TemplateFilterDialog &operator=(TemplateFilterDialog &&) = delete;      // move assignment
+    KeywordFilterType_ANY,
+    KeywordFilterType_EXACT,
+    KeywordFilterType_ALL,
 };
+
+/*!
+ * \class TemplateFilter
+ * \brief The TemplateFilter class
+ *
+ * \ingroup gpui
+ */
+class TemplateFilter final
+{
+public:
+    bool keywordEnabled           = false;
+    bool titleEnabled             = false;
+    bool helpEnabled              = false;
+    bool commentEnabled           = false;
+    KeywordFilterType keywordType = KeywordFilterType_ANY;
+    QString keywordText           = "";
+
+    QSet<model::registry::PolicyStateManager::PolicyState> configured{};
+};
+
 } // namespace gpui
 
-#endif // GPUI_TEMPLATEFILTERDIALOG_H
+Q_DECLARE_METATYPE(gpui::TemplateFilter)
+
+#endif // GPUI_TEMPLATEFILTER_H

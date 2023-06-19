@@ -64,8 +64,12 @@ set(HEADERS
     registry/registryentry.h
     registry/registryentrytype.h
     registry/registrysourcetype.h
-    ui/administrativetemplateswidget.h
     ui/administrativetemplatesproxymodel.h
+    ui/administrativetemplateswidget.h
+    ui/presentationbuilder.h
+    ui/templatefilterdialog.h
+    ui/templatefilter.h
+    ui/templatefiltermodel.h
 )
 
 set(SOURCES
@@ -78,12 +82,16 @@ set(SOURCES
     registry/abstractregistrysource.cpp
     registry/policystatemanager.cpp
     registry/polregistrysource.cpp
-    ui/administrativetemplateswidget.cpp
     ui/administrativetemplatesproxymodel.cpp
+    ui/administrativetemplateswidget.cpp
+    ui/presentationbuilder.cpp
+    ui/templatefilterdialog.cpp
+    ui/templatefiltermodel.cpp
 )
 
 set(UI_FORMS
     ui/administrativetemplateswidget.ui
+    ui/templatefilterdialog.ui
 )
 
 set(SOURCES ${SOURCES} ${HEADERS} ${UI_FORMS})
@@ -107,5 +115,5 @@ qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 
 add_gpui_plugin(${PLUGIN_NAME} ${SOURCES} ${LIB_RESOURCES})
 target_link_libraries(${PLUGIN_NAME} Qt5::Core)
-target_link_libraries(${PLUGIN_NAME} ${GPUI_CORE_LIBRARY} ${GPUI_IO_LIBRARY})
+target_link_libraries(${PLUGIN_NAME} ${GPUI_CORE_LIBRARY} ${GPUI_GUI_LIBRARY} ${GPUI_IO_LIBRARY})
 target_link_libraries(${PLUGIN_NAME} smb-storage-static)

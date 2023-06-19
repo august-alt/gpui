@@ -50,6 +50,10 @@
 
 #include "ui/administrativetemplatesproxymodel.h"
 
+#include "ui/templatefilter.h"
+#include "ui/templatefiltermodel.h"
+#include "ui/templatefilterdialog.h"
+
 #include <QAction>
 #include <QApplication>
 #include <QDebug>
@@ -157,11 +161,18 @@ public:
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource{};
     QString machineRegistryPath{};
 
+    TemplateFilterDialog *filterDialog              = nullptr;
+    std::unique_ptr<TemplateFilterModel> filterModel = nullptr;
+
     std::vector<std::unique_ptr<QTranslator>> translators{};
 
     std::string admxPath   = "/usr/share/PolicyDefinitions/";
     std::string localeName = "en-US";
     std::string policyPath = "";
+
+    QAction actionEditFilter {"&Edit filter"};
+    QAction actionEnableFilter {"Enable &filter"};
+    std::unique_ptr<QMenu> filterMenu = nullptr;
 
     QAction *fileAction{};
 
@@ -228,6 +239,18 @@ public:
         auto bundle = std::make_unique<model::bundle::PolicyBundle>();
         model       = bundle->loadFolder(admxPath, localeName);
         proxyModel->setSourceModel(model.get());
+        filterModel = std::make_unique<gpui::TemplateFilterModel>(nullptr);
+        filterModel->setSourceModel(proxyModel.get());
+    }
+
+    void updateFilter()
+    {
+        if (filterModel != nullptr)
+        {
+            const gpui::TemplateFilter filter = filterDialog->getFilter();
+            const bool filterEnabled    = actionEnableFilter.isChecked();
+            filterModel->setFilter(filter, filterEnabled);
+        }
     }
 
 private:
@@ -309,6 +332,27 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
         d->localeName = mainWindow->getLanguage().toStdString();
         qWarning() << "Setting default settings for administrative templates snap-in: " << d->admxPath.c_str()
                    << d->localeName.c_str();
+
+        d->filterDialog = new gpui::TemplateFilterDialog();
+
+        d->filterMenu = std::make_unique<QMenu>("&Filter");
+
+        d->filterMenu->addAction(&d->actionEditFilter);
+        d->filterMenu->addAction(&d->actionEnableFilter);
+
+        d->actionEnableFilter.setCheckable(true);
+
+        mainWindow->menuBar()->addMenu(d->filterMenu.get());
+
+        QObject::connect(&d->actionEditFilter, &QAction::triggered, d->filterDialog, &QDialog::open);
+        QObject::connect(d->filterDialog, &QDialog::accepted, [&](){
+            d->updateFilter();
+        });
+        QObject::connect(d->filterDialog, &QDialog::accepted, mainWindow, &MainWindow::updateFilterModel);
+        QObject::connect(&d->actionEnableFilter, &QAction::toggled, [&](){
+            d->updateFilter();
+        });
+        QObject::connect(&d->actionEnableFilter, &QAction::toggled, mainWindow, &MainWindow::updateFilterModel);
     }
 
     d->proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
@@ -319,7 +363,7 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
         d->onDataSave();
     });
 
-    setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
+    setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
 
     if (mainWindow)
     {
@@ -359,12 +403,14 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
                       d->userRegistrySource,
                       [&](model::registry::AbstractRegistrySource *) noexcept {});
         d->proxyModel->setUserRegistrySource(d->userRegistrySource.get());
+        d->filterModel->setUserRegistrySource(d->userRegistrySource.get());
 
         onPolFileOpen(d->machineRegistryPath,
                       d->machineRegistry,
                       d->machineRegistrySource,
                       [&](model::registry::AbstractRegistrySource *) noexcept {});
         d->proxyModel->setMachineRegistrySource(d->machineRegistrySource.get());
+        d->filterModel->setMachineRegistrySource(d->machineRegistrySource.get());
     }
 }
 
@@ -377,7 +423,7 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {
     d->localeName = locale;
     d->policyBundleLoad();
-    setRootNode(static_cast<QAbstractItemModel *>(d->proxyModel.get()));
+    setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
 }
 
 } // namespace gpui

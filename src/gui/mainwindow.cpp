@@ -61,9 +61,9 @@
 
 #include <stack>
 
-#include "templatefilter.h"
-#include "templatefilterdialog.h"
-#include "templatefiltermodel.h"
+//#include "templatefilter.h"
+//#include "templatefilterdialog.h"
+//#include "templatefiltermodel.h"
 
 namespace gpui
 {
@@ -93,9 +93,6 @@ public:
     std::unique_ptr<ldap::LDAPContract> ldapImpl = nullptr;
 
     TranslatorStorage *translatorStorage = nullptr;
-
-    TemplateFilterDialog *filter_dialog              = nullptr;
-    std::unique_ptr<TemplateFilterModel> filterModel = nullptr;
 
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
@@ -222,7 +219,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     d->translatorStorage = translatorStorage;
 
-    d->filter_dialog = new TemplateFilterDialog(this);
+//    d->filter_dialog = new TemplateFilterDialog(this);
 
     ui->setupUi(this);
 
@@ -251,9 +248,9 @@ MainWindow::MainWindow(CommandLineOptions &options,
         d->itemName = current.data().toString();
     });
 
-    connect(ui->actionEditFilter, &QAction::triggered, d->filter_dialog, &QDialog::open);
-    connect(d->filter_dialog, &QDialog::accepted, this, &MainWindow::updateFilterModel);
-    connect(ui->actionEnableFilter, &QAction::toggled, this, &MainWindow::updateFilterModel);
+//    connect(ui->actionEditFilter, &QAction::triggered, d->filter_dialog, &QDialog::open);
+//    connect(d->filter_dialog, &QDialog::accepted, this, &MainWindow::updateFilterModel);
+//    connect(ui->actionEnableFilter, &QAction::toggled, this, &MainWindow::updateFilterModel);
 
     QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
                                                       : QLocale::system().name().replace("-", "_"));
@@ -405,20 +402,17 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     d->searchModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     d->searchModel->setRecursiveFilteringEnabled(true);
 
-    d->filterModel = std::make_unique<TemplateFilterModel>(this);
-    d->filterModel->setSourceModel(d->searchModel.get());
-
-    ui->treeView->setModel(d->filterModel.get());
+    ui->treeView->setModel(d->searchModel.get());
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    d->contentWidget->setModel(d->filterModel.get());
+    d->contentWidget->setModel(d->searchModel.get());
 
     d->contentWidget->setSelectionModel(ui->treeView->selectionModel());
 
-    ui->treeView->expand(d->filterModel->index(0, 0));
+    ui->treeView->expand(d->searchModel->index(0, 0));
     ui->treeView->setColumnHidden(1, true);
 
-    d->contentWidget->modelItemSelected(d->filterModel->index(0, 0));
+    d->contentWidget->modelItemSelected(d->searchModel->index(0, 0));
 }
 
 void MainWindow::onDirectoryOpen()
@@ -575,12 +569,7 @@ void MainWindow::loadTranslations(QString &language)
 
 void MainWindow::updateFilterModel()
 {
-    if (d->filterModel != nullptr)
-    {
-        const TemplateFilter filter = d->filter_dialog->getFilter();
-        const bool filterEnabled    = ui->actionEnableFilter->isChecked();
-        d->filterModel->setFilter(filter, filterEnabled);
-    }
+    loadPolicyModel(d->manager);
 }
 
 } // namespace gpui

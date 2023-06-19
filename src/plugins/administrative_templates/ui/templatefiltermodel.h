@@ -21,8 +21,7 @@
 #ifndef GPUI_TEMPLATEFILTERMODEL_H
 #define GPUI_TEMPLATEFILTERMODEL_H
 
-#include "../plugins/administrative_templates/registry/policystatemanager.h"
-#include "gui.h"
+#include "registry/policystatemanager.h"
 
 #include <QSortFilterProxyModel>
 
@@ -45,7 +44,7 @@ class TemplateFilter;
  *
  * \ingroup gpui
  */
-class GPUI_GUI_EXPORT TemplateFilterModel final : public QSortFilterProxyModel
+class TemplateFilterModel final : public QSortFilterProxyModel
 {
 public:
     TemplateFilterModel(QObject *parent);

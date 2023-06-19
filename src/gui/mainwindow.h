@@ -75,6 +75,8 @@ signals:
 public slots:
     void updateStatusBar();
 
+    void updateFilterModel();
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 
@@ -93,8 +95,6 @@ private slots:
     void on_actionAbout_triggered();
 
     void onLanguageChanged(QAction *action);
-
-    void updateFilterModel();
 
 private:
     void onIniFileOpen(const QString &path);

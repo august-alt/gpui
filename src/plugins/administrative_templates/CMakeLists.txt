@@ -67,6 +67,7 @@ set(HEADERS
     ui/administrativetemplatesproxymodel.h
     ui/administrativetemplateswidget.h
     ui/presentationbuilder.h
+    ui/platformmodel.h
     ui/templatefilterdialog.h
     ui/templatefilter.h
     ui/templatefiltermodel.h
@@ -85,6 +86,7 @@ set(SOURCES
     ui/administrativetemplatesproxymodel.cpp
     ui/administrativetemplateswidget.cpp
     ui/presentationbuilder.cpp
+    ui/platformmodel.cpp
     ui/templatefilterdialog.cpp
     ui/templatefiltermodel.cpp
 )

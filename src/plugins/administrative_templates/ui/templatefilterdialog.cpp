@@ -23,6 +23,8 @@
 
 #include "templatefilter.h"
 
+#include "platformmodel.h"
+
 using namespace model;
 using namespace model::registry;
 
@@ -71,15 +73,16 @@ TemplateFilter TemplateFilterDialog::getFilter() const
 {
     TemplateFilter out;
 
-    out.keywordEnabled = d->ui->keywordGroupBox->isChecked();
-    out.titleEnabled   = d->ui->titleCheck->isChecked();
-    out.helpEnabled    = d->ui->helpCheck->isChecked();
-    out.commentEnabled = d->ui->commentCheck->isChecked();
-    out.keywordText    = d->ui->keywordEdit->text();
-    out.keywordType    = static_cast<KeywordFilterType>(d->ui->keywordCombo->currentIndex());
+    out.keywordEnabled = d->ui->keywordCheckBox->isChecked();
+    out.titleEnabled   = d->ui->titleCheckBox->isChecked();
+    out.helpEnabled    = d->ui->helpCheckBox->isChecked();
+    out.commentEnabled = d->ui->commentCheckBox->isChecked();
+    out.keywordText    = d->ui->keywordLineEdit->text();
+    out.keywordType    = static_cast<KeywordFilterType>(d->ui->keywordComboBox->currentIndex());
 
     out.configured = [&]() {
-        const FilterComboValue configuredState = static_cast<FilterComboValue>(d->ui->configuredCombo->currentIndex());
+        const FilterComboValue configuredState = static_cast<FilterComboValue>(
+            d->ui->configuredComboBox->currentIndex());
 
         switch (configuredState)
         {
@@ -106,6 +109,14 @@ TemplateFilter TemplateFilterDialog::getFilter() const
     // boxes. Not sure what kind of data that will be yet
 
     return out;
+}
+
+void TemplateFilterDialog::setPlatformModel(PlatformModel *platformModel)
+{
+    if (platformModel)
+    {
+        d->ui->platformTreeView->setModel(platformModel);
+    }
 }
 
 // Save state when opening, to restore it later if
@@ -145,12 +156,12 @@ void TemplateFilterDialog::open()
 void TemplateFilterDialog::accept()
 {
     const bool keywordWithinIsValid = [&]() {
-        if (d->ui->keywordGroupBox->isChecked())
+        if (d->ui->keywordCheckBox->isChecked())
         {
             const QList<bool> keyword_enabled_list = {
-                d->ui->titleCheck->isChecked(),
-                d->ui->helpCheck->isChecked(),
-                d->ui->commentCheck->isChecked(),
+                d->ui->titleCheckBox->isChecked(),
+                d->ui->helpCheckBox->isChecked(),
+                d->ui->commentCheckBox->isChecked(),
             };
 
             const bool any_keyword_enabled = keyword_enabled_list.contains(true);
@@ -217,15 +228,15 @@ void TemplateFilterDialog::reject()
 QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
 {
     const QList<QWidget *> out = {
-        ui->managedCombo,
-        ui->configuredCombo,
-        ui->commentedCombo,
-        ui->keywordGroupBox,
-        ui->keywordEdit,
-        ui->keywordCombo,
-        ui->titleCheck,
-        ui->helpCheck,
-        ui->commentCheck,
+        ui->managedComboBox,
+        ui->configuredComboBox,
+        ui->commentedComboBox,
+        ui->keywordCheckBox,
+        ui->keywordLineEdit,
+        ui->keywordComboBox,
+        ui->titleCheckBox,
+        ui->helpCheckBox,
+        ui->commentCheckBox,
     };
 
     return out;

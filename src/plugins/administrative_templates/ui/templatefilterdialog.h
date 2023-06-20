@@ -27,6 +27,7 @@ namespace gpui
 {
 class TemplateFilterDialogPrivate;
 class TemplateFilter;
+class PlatformModel;
 
 class TemplateFilterDialog final : public QDialog
 {
@@ -37,6 +38,7 @@ public:
     ~TemplateFilterDialog();
 
     TemplateFilter getFilter() const;
+    void setPlatformModel(PlatformModel *platformModel);
 
 public slots:
     void open() override;

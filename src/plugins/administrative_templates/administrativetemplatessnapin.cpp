@@ -51,8 +51,10 @@
 #include "ui/administrativetemplatesproxymodel.h"
 
 #include "ui/templatefilter.h"
-#include "ui/templatefiltermodel.h"
 #include "ui/templatefilterdialog.h"
+#include "ui/templatefiltermodel.h"
+
+#include "ui/platformmodel.h"
 
 #include <QAction>
 #include <QApplication>
@@ -161,7 +163,7 @@ public:
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource{};
     QString machineRegistryPath{};
 
-    TemplateFilterDialog *filterDialog              = nullptr;
+    TemplateFilterDialog *filterDialog               = nullptr;
     std::unique_ptr<TemplateFilterModel> filterModel = nullptr;
 
     std::vector<std::unique_ptr<QTranslator>> translators{};
@@ -170,8 +172,8 @@ public:
     std::string localeName = "en-US";
     std::string policyPath = "";
 
-    QAction actionEditFilter {"&Edit filter"};
-    QAction actionEnableFilter {"Enable &filter"};
+    QAction actionEditFilter{"&Edit filter"};
+    QAction actionEnableFilter{"Enable &filter"};
     std::unique_ptr<QMenu> filterMenu = nullptr;
 
     QAction *fileAction{};
@@ -248,7 +250,7 @@ public:
         if (filterModel != nullptr)
         {
             const gpui::TemplateFilter filter = filterDialog->getFilter();
-            const bool filterEnabled    = actionEnableFilter.isChecked();
+            const bool filterEnabled          = actionEnableFilter.isChecked();
             filterModel->setFilter(filter, filterEnabled);
         }
     }
@@ -342,17 +344,20 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
 
         d->actionEnableFilter.setCheckable(true);
 
-        mainWindow->menuBar()->addMenu(d->filterMenu.get());
+        QMenu *viewMenu = mainWindow->menuBar()->findChild<QMenu *>("menu_View");
 
-        QObject::connect(&d->actionEditFilter, &QAction::triggered, d->filterDialog, &QDialog::open);
-        QObject::connect(d->filterDialog, &QDialog::accepted, [&](){
-            d->updateFilter();
-        });
-        QObject::connect(d->filterDialog, &QDialog::accepted, mainWindow, &MainWindow::updateFilterModel);
-        QObject::connect(&d->actionEnableFilter, &QAction::toggled, [&](){
-            d->updateFilter();
-        });
-        QObject::connect(&d->actionEnableFilter, &QAction::toggled, mainWindow, &MainWindow::updateFilterModel);
+        if (viewMenu)
+        {
+            viewMenu->addMenu(d->filterMenu.get());
+
+            QObject::connect(d->filterDialog, &QDialog::accepted, [&]() { d->updateFilter(); });
+            QObject::connect(d->filterDialog, &QDialog::accepted, mainWindow, &MainWindow::updateFilterModel);
+
+            QObject::connect(&d->actionEditFilter, &QAction::triggered, d->filterDialog, &QDialog::open);
+
+            QObject::connect(&d->actionEnableFilter, &QAction::toggled, [&]() { d->updateFilter(); });
+            QObject::connect(&d->actionEnableFilter, &QAction::toggled, mainWindow, &MainWindow::updateFilterModel);
+        }
     }
 
     d->proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();

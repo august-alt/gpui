@@ -26,7 +26,7 @@
 #include "../../../../src/plugins/administrative_templates/presentation/presentationwidget.h"
 #include "../../../../src/plugins/adml/admlformat.h"
 
-#include "../../../../src/gui/presentationbuilder.h"
+#include "../../../../src/plugins/administrative_templates/ui/presentationbuilder.h"
 
 #include "../../../../src/plugins/administrative_templates/admx/policy.h"
 #include "../../../../src/plugins/administrative_templates/admx/policyelement.h"

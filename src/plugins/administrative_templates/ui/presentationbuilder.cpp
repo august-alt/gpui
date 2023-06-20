@@ -47,9 +47,9 @@
 #include "../plugins/administrative_templates/admx/policylistelement.h"
 #include "../plugins/administrative_templates/admx/policylongdecimalelement.h"
 
-#include "listboxdialog.h"
+#include "../gui/listboxdialog.h"
 
-#include "altspinbox.h"
+#include "../gui/altspinbox.h"
 
 #include <QVBoxLayout>
 
@@ -74,7 +74,7 @@ using namespace model::admx;
 using namespace model::registry;
 using namespace model::command;
 
-namespace gui
+namespace gpui
 {
 template<typename TLayoutItem>
 QLayoutItem *createAndAttachLabel(QWidget *buddy, const QString &text)
@@ -570,7 +570,7 @@ private:
     {
         if (spin)
         {
-            AltSpinBox *spinBox = new AltSpinBox();
+            ::gui::AltSpinBox *spinBox = new ::gui::AltSpinBox();
             spinBox->setMinimum(0);
             spinBox->setMaximum(std::numeric_limits<int>::max());
             spinBox->setSingleStep(step);
@@ -781,9 +781,9 @@ private:
     }
 };
 
-PresentationBuilderPrivate *PresentationBuilder::d = new PresentationBuilderPrivate();
+PresentationBuilderPrivate *gpui::PresentationBuilder::d = new PresentationBuilderPrivate();
 
-QVBoxLayout *PresentationBuilder::build(const PresentationBuilderParams &params)
+QVBoxLayout *::gpui::PresentationBuilder::build(const ::gpui::PresentationBuilderParams &params)
 {
     QVBoxLayout *layout = new QVBoxLayout();
     d->setLayout(layout);

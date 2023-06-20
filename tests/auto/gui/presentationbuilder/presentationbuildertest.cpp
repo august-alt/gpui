@@ -32,7 +32,7 @@
 #include "../../../../src/plugins/administrative_templates/presentation/text.h"
 #include "../../../../src/plugins/administrative_templates/presentation/textbox.h"
 
-#include "../../../../src/gui/presentationbuilder.h"
+#include "../../../../src/plugins/administrative_templates/ui/presentationbuilder.h"
 
 #include "../../../../src/plugins/administrative_templates/admx/policy.h"
 #include "../../../../src/plugins/administrative_templates/admx/policyelement.h"
@@ -48,7 +48,6 @@
 
 namespace tests
 {
-using namespace gui;
 using namespace model::presentation;
 
 void PresentationBuilderTest::build()

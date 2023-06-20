@@ -26,7 +26,7 @@
 
 #include <QDataWidgetMapper>
 
-#include "../gui/presentationbuilder.h"
+#include "presentationbuilder.h"
 
 #include "../presentation/presentation.h"
 #include "../registry/abstractregistrysource.h"
@@ -240,7 +240,7 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                 ui->okPushButton->disconnect();
                 ui->cancelPushButton->disconnect();
 
-                auto layout = ::gui::PresentationBuilder::build(
+                auto layout = PresentationBuilder::build(
                     {*presentation, *policy, *source, *ui->okPushButton, d->dataChanged, d->stateEnabled});
                 connectDialogBoxSignals();
 

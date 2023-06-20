@@ -557,4 +557,9 @@ void MainWindow::loadTranslations(QString &language)
     d->translatorStorage->loadQtTranslations(language, "qt_");
 }
 
+void MainWindow::updateFilterModel()
+{
+    loadPolicyModel(d->manager);
+}
+
 } // namespace gpui

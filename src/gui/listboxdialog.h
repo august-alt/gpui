@@ -33,7 +33,7 @@ namespace Ui { class ListBoxDialog; }
 QT_END_NAMESPACE
 
 namespace gpui {
-    class ListBoxDialog : public QDialog
+    class GPUI_GUI_EXPORT ListBoxDialog : public QDialog
     {
         Q_OBJECT
     public:

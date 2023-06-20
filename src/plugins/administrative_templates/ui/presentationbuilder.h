@@ -21,8 +21,6 @@
 #ifndef GPUI_PRESENTATIONBUILDER_H
 #define GPUI_PRESENTATIONBUILDER_H
 
-#include "gui.h"
-
 #include <QWidget>
 #include <QDialogButtonBox>
 
@@ -43,9 +41,9 @@ namespace model {
     }
 }
 
-namespace gui
+namespace gpui
 {
-    struct GPUI_GUI_EXPORT PresentationBuilderParams final
+    struct PresentationBuilderParams final
     {
         const model::presentation::Presentation& presentation;
         const model::admx::Policy& policy;
@@ -63,7 +61,7 @@ namespace gui
      *
      * \ingroup gui
      */
-    class GPUI_GUI_EXPORT PresentationBuilder
+    class PresentationBuilder
     {
     public:
         /*!

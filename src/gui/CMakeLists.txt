@@ -28,7 +28,6 @@ set(SOURCES
     listboxdialog.cpp
     mainwindow.cpp
     mainwindowsettings.cpp
-    presentationbuilder.cpp
     treevieweventfilter.cpp
 )
 
@@ -36,7 +35,7 @@ set(UI_FORMS
     aboutdialog.ui
     contentwidget.ui
     listboxdialog.ui
-    mainwindow.ui
+    mainwindow.ui    
 )
 
 set(MOC_HEADERS

@@ -61,10 +61,6 @@
 
 #include <stack>
 
-//#include "templatefilter.h"
-//#include "templatefilterdialog.h"
-//#include "templatefiltermodel.h"
-
 namespace gpui
 {
 class MainWindowPrivate
@@ -219,8 +215,6 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     d->translatorStorage = translatorStorage;
 
-//    d->filter_dialog = new TemplateFilterDialog(this);
-
     ui->setupUi(this);
 
     ui->treeView->installEventFilter(d->eventFilter.get());
@@ -247,10 +241,6 @@ MainWindow::MainWindow(CommandLineOptions &options,
     connect(d->contentWidget, &ContentWidget::modelItemSelected, [&](const QModelIndex &current) {
         d->itemName = current.data().toString();
     });
-
-//    connect(ui->actionEditFilter, &QAction::triggered, d->filter_dialog, &QDialog::open);
-//    connect(d->filter_dialog, &QDialog::accepted, this, &MainWindow::updateFilterModel);
-//    connect(ui->actionEnableFilter, &QAction::toggled, this, &MainWindow::updateFilterModel);
 
     QLocale locale(!d->localeName.trimmed().isEmpty() ? d->localeName.replace("-", "_")
                                                       : QLocale::system().name().replace("-", "_"));

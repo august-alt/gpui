@@ -110,8 +110,6 @@
      <string>&amp;View</string>
     </property>
     <addaction name="actionLanguage"/>
-    <addaction name="actionEditFilter"/>
-    <addaction name="actionEnableFilter"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -310,19 +308,6 @@
   <action name="actionManual">
    <property name="text">
     <string>&amp;Manual</string>
-   </property>
-  </action>
-  <action name="actionEditFilter">
-   <property name="text">
-    <string>&amp;Edit filter</string>
-   </property>
-  </action>
-  <action name="actionEnableFilter">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Enable filter</string>
    </property>
   </action>
  </widget>

@@ -22,9 +22,10 @@
 
 #include "ui_contentwidget.h"
 
+#include "../plugins/administrative_templates/admx/policy.h"
+#include "../plugins/administrative_templates/admx/policyelement.h"
 #include "../plugins/administrative_templates/bundle/itemtype.h"
 #include "../plugins/administrative_templates/bundle/policyroles.h"
-#include "../plugins/administrative_templates/admx/policy.h"
 #include "../plugins/administrative_templates/presentation/presentation.h"
 
 #include "pluginwidgetinterface.h"

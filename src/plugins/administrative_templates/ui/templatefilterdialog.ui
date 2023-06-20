@@ -10,17 +10,28 @@
     <height>546</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>598</width>
+    <height>546</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>598</width>
+    <height>546</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Template Filters Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
-   <item row="1" column="0" colspan="3">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0" colspan="3">
     <widget class="QFrame" name="selectFrame">
      <property name="frameShape">
@@ -33,7 +44,7 @@
       <item row="0" column="0" colspan="3">
        <widget class="QLabel" name="displayLabel">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the type of policy settings to display.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Select the type of policy settings to display.</string>
         </property>
        </widget>
       </item>
@@ -210,6 +221,131 @@
      </layout>
     </widget>
    </item>
+   <item row="4" column="0" colspan="3">
+    <widget class="QFrame" name="requireFrame">
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="platformCheckBox">
+        <property name="text">
+         <string>Enable Requirements Filters</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QFrame" name="requireGroup">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item row="2" column="0" rowspan="3">
+          <widget class="QTreeView" name="platformTreeView">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="platformLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Select the desired platform and application filter(s):</string>
+           </property>
+           <property name="buddy">
+            <cstring>platformComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QComboBox" name="platformComboBox">
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Include settings that match any of the selected platforms.</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Include settings that match all of the selected platforms.</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="selectPushButton">
+           <property name="text">
+            <string>Select All</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QPushButton" name="clearPushButton">
+           <property name="text">
+            <string>Clear All</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+     <zorder>requireGroup</zorder>
+     <zorder>platformCheckBox</zorder>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="cancelPushButton">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="0" colspan="3">
     <widget class="QFrame" name="kwordFrame">
      <property name="frameShape">
@@ -218,132 +354,152 @@
      <property name="frameShadow">
       <enum>QFrame::Sunken</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <property name="leftMargin">
-       <number>6</number>
-      </property>
-      <property name="topMargin">
-       <number>6</number>
-      </property>
-      <property name="rightMargin">
-       <number>6</number>
-      </property>
-      <property name="bottomMargin">
-       <number>6</number>
-      </property>
-      <item row="0" column="0" colspan="3">
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
        <widget class="QCheckBox" name="keywordCheckBox">
         <property name="text">
          <string>Enable Keyword Filters</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="keywordLabel">
-        <property name="text">
-         <string>Filter for word(s):</string>
-        </property>
-        <property name="buddy">
-         <cstring>keywordLineEdit</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" colspan="3">
-       <widget class="QLineEdit" name="keywordLineEdit"/>
-      </item>
-      <item row="1" column="4">
-       <widget class="QComboBox" name="keywordComboBox">
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <item>
-         <property name="text">
-          <string>Any</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Yes</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>No</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="withinLabel">
-        <property name="text">
-         <string>Within:</string>
-        </property>
-        <property name="buddy">
-         <cstring>titleCheckBox</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="titleCheckBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>130</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>130</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Policy Settings Title</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QCheckBox" name="helpCheckBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Help Text</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QCheckBox" name="commentCheckBox">
+       <widget class="QFrame" name="keywordFrame">
         <property name="enabled">
          <bool>false</bool>
         </property>
-        <property name="text">
-         <string>Comment</string>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
         </property>
-        <property name="checked">
-         <bool>false</bool>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
         </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="horizontalSpacing">
+          <number>5</number>
+         </property>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="titleCheckBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>130</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>130</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Policy Settings Title</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="keywordLabel">
+           <property name="text">
+            <string>Filter for word(s):</string>
+           </property>
+           <property name="buddy">
+            <cstring>keywordLineEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="withinLabel">
+           <property name="text">
+            <string>Within:</string>
+           </property>
+           <property name="buddy">
+            <cstring>titleCheckBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QComboBox" name="keywordComboBox">
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Any</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Yes</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>No</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QCheckBox" name="commentCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Comment</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="3">
+          <widget class="QLineEdit" name="keywordLineEdit"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="helpCheckBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Help Text</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
+     <zorder>keywordFrame</zorder>
+     <zorder>keywordCheckBox</zorder>
     </widget>
    </item>
    <item row="5" column="0">
@@ -380,124 +536,10 @@
       </size>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select options below to enable and change or disable types of global filters that will be applied to the Administrative Templates nodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>Select options below to enable and change or disable types of global filters that will be applied to the Administrative Templates nodes.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QFrame" name="requireFrame">
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <property name="leftMargin">
-       <number>6</number>
-      </property>
-      <property name="topMargin">
-       <number>6</number>
-      </property>
-      <property name="rightMargin">
-       <number>6</number>
-      </property>
-      <property name="bottomMargin">
-       <number>6</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="requireCheckBox">
-        <property name="text">
-         <string>Enable Requirements Filters</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QComboBox" name="platformComboBox">
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <item>
-         <property name="text">
-          <string>Include settings that match any of the selected platforms.</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Include settings that match all of the selected platforms.</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="platformLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the desired platform and application filter(s):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="buddy">
-         <cstring>platformComboBox</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" rowspan="4">
-       <widget class="QTreeView" name="platformTreeView">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0" colspan="2">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>558</width>
-          <height>13</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="1">
-       <widget class="QPushButton" name="clearPushButton">
-        <property name="text">
-         <string>Clear All</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="selectPushButton">
-        <property name="text">
-         <string>Select All</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="cancelPushButton">
-     <property name="text">
-      <string>Cancel</string>
      </property>
     </widget>
    </item>
@@ -520,11 +562,9 @@
   <tabstop>titleCheckBox</tabstop>
   <tabstop>helpCheckBox</tabstop>
   <tabstop>commentCheckBox</tabstop>
-  <tabstop>requireCheckBox</tabstop>
+  <tabstop>platformCheckBox</tabstop>
   <tabstop>platformComboBox</tabstop>
   <tabstop>platformTreeView</tabstop>
-  <tabstop>selectPushButton</tabstop>
-  <tabstop>clearPushButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -557,6 +597,38 @@
     <hint type="destinationlabel">
      <x>298</x>
      <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>keywordCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>keywordFrame</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>platformCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>requireGroup</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>116</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>297</x>
+     <y>385</y>
     </hint>
    </hints>
   </connection>

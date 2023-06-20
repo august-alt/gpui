@@ -20,10 +20,13 @@
 
 #include "platformmodel.h"
 
-#include <QScopedPointer>
+#include <memory>
+
 #include <QSet>
 #include <QStack>
 #include <QString>
+
+#include "bundle/policyroles.h"
 
 namespace gpui
 {
@@ -32,6 +35,14 @@ class PlatformModelPrivate
 public:
     QStandardItemModel *sourceModel = nullptr;
     QSet<QString> uniqueItems{};
+
+    PlatformModelPrivate() {}
+    ~PlatformModelPrivate() {}
+
+    PlatformModelPrivate(const PlatformModelPrivate &) = delete;            // copy ctor
+    PlatformModelPrivate(PlatformModelPrivate &&)      = delete;            // move ctor
+    PlatformModelPrivate &operator=(const PlatformModelPrivate &) = delete; // copy assignment
+    PlatformModelPrivate &operator=(PlatformModelPrivate &&) = delete;      // move assignment
 };
 
 PlatformModel::PlatformModel(QStandardItemModel *sourceModel)
@@ -39,6 +50,11 @@ PlatformModel::PlatformModel(QStandardItemModel *sourceModel)
     , d(new PlatformModelPrivate())
 {
     setSourceData(sourceModel);
+}
+
+PlatformModel::~PlatformModel()
+{
+    delete d;
 }
 
 void PlatformModel::setSourceData(QStandardItemModel *sourceModel)
@@ -57,7 +73,7 @@ void PlatformModel::populateModel(QStandardItemModel *sourceModel)
 
     clear();
 
-    QScopedPointer<QStack<QModelIndex>> stack;
+    std::unique_ptr<QStack<QModelIndex>> stack = std::make_unique<QStack<QModelIndex>>();
     stack->push(sourceModel->invisibleRootItem()->index());
 
     while (!stack->empty())
@@ -65,7 +81,12 @@ void PlatformModel::populateModel(QStandardItemModel *sourceModel)
         auto current = stack->top();
         stack->pop();
 
-        d->uniqueItems.insert(current.data().value<QString>());
+        auto supportedOn = current.data(model::bundle::PolicyRoles::SUPPORTED_ON).value<QString>().trimmed();
+
+        if (!supportedOn.isEmpty())
+        {
+            d->uniqueItems.insert(supportedOn);
+        }
 
         for (int row = 0; row < sourceModel->rowCount(current); ++row)
         {
@@ -84,7 +105,10 @@ void PlatformModel::populateModel(QStandardItemModel *sourceModel)
 
     for (const auto &uniqueItem : d->uniqueItems)
     {
-        insertRow(rowCount(), new QStandardItem(uniqueItem));
+        auto listElement = new QStandardItem(uniqueItem);
+        listElement->setCheckable(true);
+
+        insertRow(rowCount(), listElement);
     }
 }
 

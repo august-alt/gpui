@@ -49,6 +49,8 @@ private:
     TemplateFilterDialogPrivate *const d;
 
 private slots:
+    void on_selectPushButton_clicked();
+    void on_clearPushButton_clicked();
 
 private:
     TemplateFilterDialog(const TemplateFilterDialog &) = delete;            // copy ctor

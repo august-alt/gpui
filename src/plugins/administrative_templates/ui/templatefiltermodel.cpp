@@ -178,6 +178,35 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
         return false;
     };
 
+    auto checkPlatformMatch = [&](const QString &string) {
+        switch (d->filter.platformType)
+        {
+        case PlatformFilterType_ANY: {
+            for (const QString &keyword : d->filter.selectedPlatforms)
+            {
+                return string.contains(keyword);
+            }
+
+            return false;
+        }
+        case PlatformFilterType_ALL: {
+            for (const QString &keyword : d->filter.selectedPlatforms)
+            {
+                if (!string.contains(keyword))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        default:
+            return false;
+        }
+
+        return false;
+    };
+
     const bool helpMatch = [&]() {
         const QString helpText = index.data(PolicyRoles::EXPLAIN_TEXT).value<QString>();
         const bool out         = checkKeywordMatch(helpText);
@@ -210,6 +239,11 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
             return false;
         }
     }();
+
+    if (d->filter.platformEnabled && !checkPlatformMatch(index.data(PolicyRoles::SUPPORTED_ON).value<QString>()))
+    {
+        return false;
+    }
 
     const bool configuredMatch = d->filter.configured.contains(state);
 

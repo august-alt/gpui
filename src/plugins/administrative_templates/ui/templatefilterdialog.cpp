@@ -73,12 +73,35 @@ TemplateFilter TemplateFilterDialog::getFilter() const
 {
     TemplateFilter out;
 
-    out.keywordEnabled = d->ui->keywordCheckBox->isChecked();
-    out.titleEnabled   = d->ui->titleCheckBox->isChecked();
-    out.helpEnabled    = d->ui->helpCheckBox->isChecked();
-    out.commentEnabled = d->ui->commentCheckBox->isChecked();
-    out.keywordText    = d->ui->keywordLineEdit->text();
-    out.keywordType    = static_cast<KeywordFilterType>(d->ui->keywordComboBox->currentIndex());
+    out.keywordEnabled  = d->ui->keywordCheckBox->isChecked();
+    out.titleEnabled    = d->ui->titleCheckBox->isChecked();
+    out.helpEnabled     = d->ui->helpCheckBox->isChecked();
+    out.commentEnabled  = d->ui->commentCheckBox->isChecked();
+    out.platformEnabled = d->ui->platformCheckBox->isChecked();
+    out.keywordText     = d->ui->keywordLineEdit->text();
+    out.keywordType     = static_cast<KeywordFilterType>(d->ui->keywordComboBox->currentIndex());
+    out.platformType    = static_cast<PlatformFilterType>(d->ui->platformComboBox->currentIndex());
+
+    out.selectedPlatforms = [&]() {
+        QSet<QString> platforms;
+
+        auto sourceModel = d->ui->platformTreeView->model();
+
+        auto current = sourceModel->index(0, 1);
+
+        for (int row = 0; row < sourceModel->rowCount(current); ++row)
+        {
+            QModelIndex index = sourceModel->index(row, 0, current);
+
+            auto state = index.data(Qt::CheckStateRole).value<Qt::CheckState>();
+            if (state == Qt::Checked)
+            {
+                platforms.insert(index.data().value<QString>());
+            }
+        }
+
+        return platforms;
+    }();
 
     out.configured = [&]() {
         const FilterComboValue configuredState = static_cast<FilterComboValue>(
@@ -221,6 +244,34 @@ void TemplateFilterDialog::reject()
     }
 
     QDialog::reject();
+}
+
+void TemplateFilterDialog::on_selectPushButton_clicked()
+{
+    auto sourceModel = d->ui->platformTreeView->model();
+
+    auto current = sourceModel->index(0, 1);
+
+    for (int row = 0; row < sourceModel->rowCount(current); ++row)
+    {
+        QModelIndex index = sourceModel->index(row, 0, current);
+
+        sourceModel->setData(index, Qt::Checked, Qt::CheckStateRole);
+    }
+}
+
+void TemplateFilterDialog::on_clearPushButton_clicked()
+{
+    auto sourceModel = d->ui->platformTreeView->model();
+
+    auto current = sourceModel->index(0, 1);
+
+    for (int row = 0; row < sourceModel->rowCount(current); ++row)
+    {
+        QModelIndex index = sourceModel->index(row, 0, current);
+
+        sourceModel->setData(index, Qt::Unchecked, Qt::CheckStateRole);
+    }
 }
 
 // NOTE: add any new widgets you add to this list so that

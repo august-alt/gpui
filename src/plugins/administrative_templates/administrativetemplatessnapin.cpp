@@ -166,14 +166,16 @@ public:
     TemplateFilterDialog *filterDialog               = nullptr;
     std::unique_ptr<TemplateFilterModel> filterModel = nullptr;
 
+    std::unique_ptr<PlatformModel> platformModel = nullptr;
+
     std::vector<std::unique_ptr<QTranslator>> translators{};
 
     std::string admxPath   = "/usr/share/PolicyDefinitions/";
     std::string localeName = "en-US";
     std::string policyPath = "";
 
-    QAction actionEditFilter{"&Edit filter"};
-    QAction actionEnableFilter{"Enable &filter"};
+    QAction actionEditFilter{};
+    QAction actionEnableFilter{};
     std::unique_ptr<QMenu> filterMenu = nullptr;
 
     QAction *fileAction{};
@@ -337,7 +339,10 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
 
         d->filterDialog = new gpui::TemplateFilterDialog();
 
-        d->filterMenu = std::make_unique<QMenu>("&Filter");
+        d->actionEnableFilter.setText(QObject::tr("Enable &filter"));
+        d->actionEditFilter.setText(QObject::tr("&Edit filter"));
+
+        d->filterMenu = std::make_unique<QMenu>(QObject::tr("&Filter"));
 
         d->filterMenu->addAction(&d->actionEditFilter);
         d->filterMenu->addAction(&d->actionEnableFilter);
@@ -363,6 +368,8 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
     d->proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
 
     d->policyBundleLoad();
+    d->platformModel = std::make_unique<PlatformModel>(d->model.get());
+    d->filterDialog->setPlatformModel(d->platformModel.get());
 
     QObject::connect(d->proxyModel.get(), &AdministrativeTemplatesProxyModel::savePolicyChanges, [&]() {
         d->onDataSave();

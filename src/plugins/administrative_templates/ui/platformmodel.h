@@ -51,7 +51,7 @@ private:
     PlatformModel &operator=(PlatformModel &&) = delete;      // move assignment
 
 private:
-    QScopedPointer<PlatformModelPrivate> d;
+    PlatformModelPrivate *d;
 };
 
 } // namespace gpui

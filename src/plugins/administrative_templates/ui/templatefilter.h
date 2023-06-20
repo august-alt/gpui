@@ -35,6 +35,12 @@ enum KeywordFilterType
     KeywordFilterType_ALL,
 };
 
+enum PlatformFilterType
+{
+    PlatformFilterType_ANY,
+    PlatformFilterType_ALL
+};
+
 /*!
  * \class TemplateFilter
  * \brief The TemplateFilter class
@@ -48,10 +54,14 @@ public:
     bool titleEnabled             = false;
     bool helpEnabled              = false;
     bool commentEnabled           = false;
+    bool platformEnabled          = false;
     KeywordFilterType keywordType = KeywordFilterType_ANY;
     QString keywordText           = "";
 
     QSet<model::registry::PolicyStateManager::PolicyState> configured{};
+
+    PlatformFilterType platformType = PlatformFilterType_ANY;
+    QSet<QString> selectedPlatforms{};
 };
 
 } // namespace gpui

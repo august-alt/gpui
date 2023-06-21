@@ -24,6 +24,7 @@
 #include <cstddef>
 #include <exception>
 #include <string>
+#include <cstdint>
 
 namespace preg {
 

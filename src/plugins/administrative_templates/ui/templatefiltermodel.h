@@ -47,7 +47,7 @@ class TemplateFilter;
 class TemplateFilterModel final : public QSortFilterProxyModel
 {
 public:
-    TemplateFilterModel(QObject *parent);
+    TemplateFilterModel(QObject *parent = nullptr);
     ~TemplateFilterModel();
 
     void setFilter(const TemplateFilter &filter, const bool enabled);

@@ -243,8 +243,8 @@ public:
         auto bundle = std::make_unique<model::bundle::PolicyBundle>();
         model       = bundle->loadFolder(admxPath, localeName);
         proxyModel->setSourceModel(model.get());
-        filterModel = std::make_unique<gpui::TemplateFilterModel>(nullptr);
         filterModel->setSourceModel(proxyModel.get());
+        platformModel->setSourceData(model.get());
     }
 
     void updateFilter()
@@ -365,10 +365,11 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
         }
     }
 
-    d->proxyModel = std::make_unique<AdministrativeTemplatesProxyModel>();
+    d->filterModel   = std::make_unique<gpui::TemplateFilterModel>();
+    d->proxyModel    = std::make_unique<AdministrativeTemplatesProxyModel>();
+    d->platformModel = std::make_unique<PlatformModel>();
 
     d->policyBundleLoad();
-    d->platformModel = std::make_unique<PlatformModel>(d->model.get());
     d->filterDialog->setPlatformModel(d->platformModel.get());
 
     QObject::connect(d->proxyModel.get(), &AdministrativeTemplatesProxyModel::savePolicyChanges, [&]() {

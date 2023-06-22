@@ -125,6 +125,8 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
 AdministrativeTemplatesWidget::~AdministrativeTemplatesWidget()
 {
     delete ui;
+
+    delete d;
 }
 
 void AdministrativeTemplatesWidget::setPolicyWidgetState(AdministrativeTemplatesWidget::PolicyWidgetState state)

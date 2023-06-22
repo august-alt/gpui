@@ -73,13 +73,12 @@ void PlatformModel::populateModel(QStandardItemModel *sourceModel)
 
     clear();
 
-    std::unique_ptr<QStack<QModelIndex>> stack = std::make_unique<QStack<QModelIndex>>();
+    auto stack = std::make_unique<QStack<QModelIndex>>();
     stack->push(sourceModel->invisibleRootItem()->index());
 
     while (!stack->empty())
     {
-        auto current = stack->top();
-        stack->pop();
+        auto current = stack->pop();
 
         auto supportedOn = current.data(model::bundle::PolicyRoles::SUPPORTED_ON).value<QString>().trimmed();
 

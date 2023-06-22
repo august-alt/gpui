@@ -110,30 +110,23 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
         return true;
     }
 
-    auto checkPlatformMatch = [&](const QString &string) {
-        const QSet<QString> platformList = d->filter.selectedPlatforms;
+    const auto supportedPlatforms    = index.data(PolicyRoles::SUPPORTED_ON).value<QString>();
+    const QSet<QString> platformList = d->filter.selectedPlatforms;
+    bool platformMatch               = false;
+    switch (d->filter.platformType)
+    {
+    case PlatformFilterType_ANY:
+        platformMatch = std::any_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
+            return supportedPlatforms.contains(platform);
+        });
+        break;
+    case PlatformFilterType_ALL:
+        platformMatch = std::all_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
+            return supportedPlatforms.contains(platform);
+        });
+        break;
+    }
 
-        switch (d->filter.platformType)
-        {
-        case PlatformFilterType_ANY: {
-            return std::any_of(platformList.begin(), platformList.end(), [&string](QString platform) {
-                return string.contains(platform);
-            });
-        }
-        case PlatformFilterType_ALL: {
-            return std::all_of(platformList.begin(), platformList.end(), [&string](QString platform) {
-                return string.contains(platform);
-            });
-        }
-        default:
-            return false;
-        }
-    };
-
-    auto supportedPlatrofms = index.data(PolicyRoles::SUPPORTED_ON).value<QString>();
-    bool platformMatch      = !d->filter.platformEnabled || checkPlatformMatch(supportedPlatrofms);
-
-    // TODO: repeats checkKeywordMatch()
     auto checkKeywordMatch = [&](const QString &string) {
         const QList<QString> keywordList = d->filter.keywordText.split(" ");
 
@@ -163,13 +156,13 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
     // TODO: implement comment filter (comment data not stored in model yet)
     const bool commentMatch = true;
 
-    bool keywordHasMatch = d->filter.titleEnabled && titleMatch || d->filter.helpEnabled && helpMatch
-                           || d->filter.commentEnabled && commentMatch;
-    bool keywordMatch = !d->filter.keywordEnabled || keywordHasMatch;
+    const bool keywordMatch = d->filter.titleEnabled && titleMatch || d->filter.helpEnabled && helpMatch
+                              || d->filter.commentEnabled && commentMatch;
 
-    bool configuredMatch = !d->filter.configured.contains(state);
+    const bool configuredMatch = d->filter.configured.contains(state);
 
-    return platformMatch && keywordMatch && configuredMatch;
+    return (!d->filter.platformEnabled || platformMatch) && (!d->filter.keywordEnabled || keywordMatch)
+           && configuredMatch;
 }
 
 void TemplateFilterModel::setUserRegistrySource(AbstractRegistrySource *registrySource)

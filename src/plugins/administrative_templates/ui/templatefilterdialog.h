@@ -53,6 +53,8 @@ private slots:
     void on_clearPushButton_clicked();
 
 private:
+    void setAllCheckState(Qt::CheckState);
+
     TemplateFilterDialog(const TemplateFilterDialog &) = delete;            // copy ctor
     TemplateFilterDialog(TemplateFilterDialog &&)      = delete;            // move ctor
     TemplateFilterDialog &operator=(const TemplateFilterDialog &) = delete; // copy assignment

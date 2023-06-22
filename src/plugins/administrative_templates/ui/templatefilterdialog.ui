@@ -50,6 +50,9 @@
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="managedLabel">
+        <property name="visible">
+         <bool>false</bool>
+        </property>
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -73,6 +76,9 @@
       </item>
       <item row="1" column="4">
        <widget class="QLabel" name="commentLabel">
+        <property name="visible">
+         <bool>false</bool>
+        </property>
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -86,6 +92,9 @@
       </item>
       <item row="2" column="0">
        <widget class="QComboBox" name="managedComboBox">
+        <property name="visible">
+         <bool>false</bool>
+        </property>
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -183,6 +192,9 @@
       </item>
       <item row="2" column="4">
        <widget class="QComboBox" name="commentedComboBox">
+        <property name="visible">
+         <bool>false</bool>
+        </property>
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -200,6 +212,12 @@
         </property>
         <property name="editable">
          <bool>false</bool>
+        </property>
+        <property name="duplicatesEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
         </property>
         <item>
          <property name="text">

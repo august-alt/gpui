@@ -25,6 +25,8 @@
 
 #include "platformmodel.h"
 
+#include <algorithm>
+
 using namespace model;
 using namespace model::registry;
 
@@ -82,51 +84,42 @@ TemplateFilter TemplateFilterDialog::getFilter() const
     out.keywordType     = static_cast<KeywordFilterType>(d->ui->keywordComboBox->currentIndex());
     out.platformType    = static_cast<PlatformFilterType>(d->ui->platformComboBox->currentIndex());
 
-    out.selectedPlatforms = [&]() {
-        QSet<QString> platforms;
-
-        auto sourceModel = d->ui->platformTreeView->model();
-
-        auto current = sourceModel->index(0, 1);
-
-        for (int row = 0; row < sourceModel->rowCount(current); ++row)
+    const auto sourceModel = d->ui->platformTreeView->model();
+    const auto current     = sourceModel->index(0, 1);
+    for (int row = 0; row < sourceModel->rowCount(current); ++row)
+    {
+        const QModelIndex index = sourceModel->index(row, 0, current);
+        const auto state        = index.data(Qt::CheckStateRole).value<Qt::CheckState>();
+        if (state == Qt::Checked)
         {
-            QModelIndex index = sourceModel->index(row, 0, current);
-
-            auto state = index.data(Qt::CheckStateRole).value<Qt::CheckState>();
-            if (state == Qt::Checked)
-            {
-                platforms.insert(index.data().value<QString>());
-            }
+            out.selectedPlatforms.insert(index.data().value<QString>());
         }
+    }
 
-        return platforms;
-    }();
-
-    out.configured = [&]() {
-        const FilterComboValue configuredState = static_cast<FilterComboValue>(
-            d->ui->configuredComboBox->currentIndex());
-
-        switch (configuredState)
-        {
-        case FilterComboValue_ANY:
-            return QSet<PolicyStateManager::PolicyState>({
-                PolicyStateManager::STATE_NOT_CONFIGURED,
-                PolicyStateManager::STATE_ENABLED,
-                PolicyStateManager::STATE_DISABLED,
-            });
-        case FilterComboValue_YES:
-            return QSet<PolicyStateManager::PolicyState>({
-                PolicyStateManager::STATE_ENABLED,
-                PolicyStateManager::STATE_DISABLED,
-            });
-        case FilterComboValue_NO:
-            return QSet<PolicyStateManager::PolicyState>({
-                PolicyStateManager::STATE_NOT_CONFIGURED,
-            });
-        }
-        return QSet<PolicyStateManager::PolicyState>();
-    }();
+    switch (d->ui->configuredComboBox->currentIndex())
+    {
+    // NOTE: cases order is dictated by FilterComboValue declaration
+    case FilterComboValue_ANY:
+        out.configured = QSet<PolicyStateManager::PolicyState>({
+            PolicyStateManager::STATE_NOT_CONFIGURED,
+            PolicyStateManager::STATE_ENABLED,
+            PolicyStateManager::STATE_DISABLED,
+        });
+        break;
+    case FilterComboValue_YES:
+        out.configured = QSet<PolicyStateManager::PolicyState>({
+            PolicyStateManager::STATE_ENABLED,
+            PolicyStateManager::STATE_DISABLED,
+        });
+        break;
+    case FilterComboValue_NO:
+        out.configured = QSet<PolicyStateManager::PolicyState>({
+            PolicyStateManager::STATE_NOT_CONFIGURED,
+        });
+        break;
+    default:
+        out.configured = QSet<PolicyStateManager::PolicyState>();
+    }
 
     // TODO: save filters from managed and comment combo
     // boxes. Not sure what kind of data that will be yet
@@ -178,24 +171,16 @@ void TemplateFilterDialog::open()
 
 void TemplateFilterDialog::accept()
 {
-    const bool keywordWithinIsValid = [&]() {
-        if (d->ui->keywordCheckBox->isChecked())
-        {
-            const QList<bool> keyword_enabled_list = {
-                d->ui->titleCheckBox->isChecked(),
-                d->ui->helpCheckBox->isChecked(),
-                d->ui->commentCheckBox->isChecked(),
-            };
-
-            const bool any_keyword_enabled = keyword_enabled_list.contains(true);
-
-            return any_keyword_enabled;
-        }
-        else
-        {
-            return true;
-        }
-    }();
+    bool keywordWithinIsValid = true;
+    if (d->ui->keywordCheckBox->isChecked())
+    {
+        const QList<bool> keyword_enabled_list = {
+            d->ui->titleCheckBox->isChecked(),
+            d->ui->helpCheckBox->isChecked(),
+            d->ui->commentCheckBox->isChecked(),
+        };
+        keywordWithinIsValid = keyword_enabled_list.contains(true);
+    }
 
     if (keywordWithinIsValid)
     {
@@ -246,32 +231,26 @@ void TemplateFilterDialog::reject()
     QDialog::reject();
 }
 
-void TemplateFilterDialog::on_selectPushButton_clicked()
+void TemplateFilterDialog::setAllCheckState(Qt::CheckState state)
 {
     auto sourceModel = d->ui->platformTreeView->model();
-
-    auto current = sourceModel->index(0, 1);
+    auto current     = sourceModel->index(0, 1);
 
     for (int row = 0; row < sourceModel->rowCount(current); ++row)
     {
         QModelIndex index = sourceModel->index(row, 0, current);
-
-        sourceModel->setData(index, Qt::Checked, Qt::CheckStateRole);
+        sourceModel->setData(index, state, Qt::CheckStateRole);
     }
+}
+
+void TemplateFilterDialog::on_selectPushButton_clicked()
+{
+    setAllCheckState(Qt::Checked);
 }
 
 void TemplateFilterDialog::on_clearPushButton_clicked()
 {
-    auto sourceModel = d->ui->platformTreeView->model();
-
-    auto current = sourceModel->index(0, 1);
-
-    for (int row = 0; row < sourceModel->rowCount(current); ++row)
-    {
-        QModelIndex index = sourceModel->index(row, 0, current);
-
-        sourceModel->setData(index, Qt::Unchecked, Qt::CheckStateRole);
-    }
+    setAllCheckState(Qt::Unchecked);
 }
 
 // NOTE: add any new widgets you add to this list so that

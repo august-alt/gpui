@@ -88,40 +88,17 @@ void TemplateFilterModel::setFilter(const TemplateFilter &filter, const bool ena
 bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-
-    // TODO: this is very convoluted, also duplicating
-    // part of ContentWidget::onListItemClicked()
-    const PolicyStateManager::PolicyState state = [&]() {
-        const QAbstractItemModel *model = index.model();
-        auto policy                     = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
-
-        if (policy == nullptr)
+    const auto policy       = index.model()->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
+    auto state              = PolicyStateManager::STATE_NOT_CONFIGURED;
+    if (policy != nullptr)
+    {
+        const auto source = (policy->policyType == PolicyType::Machine ? d->machineSource : d->userSource);
+        if (source != nullptr)
         {
-            return PolicyStateManager::STATE_NOT_CONFIGURED;
+            const auto manager = std::make_unique<PolicyStateManager>(*source, *policy);
+            state              = manager->determinePolicyState();
         }
-
-        const auto source = [&]() {
-            if (policy->policyType == PolicyType::Machine)
-            {
-                return d->machineSource;
-            }
-            else
-            {
-                return d->userSource;
-            }
-        }();
-
-        if (source == nullptr)
-        {
-            return PolicyStateManager::STATE_NOT_CONFIGURED;
-        }
-
-        const auto manager = std::make_unique<PolicyStateManager>(*source, *policy);
-
-        const PolicyStateManager::PolicyState curremtPolicyState = manager->determinePolicyState();
-
-        return curremtPolicyState;
-    }();
+    }
 
     return filterAcceptsRow(index, state);
 }
@@ -133,131 +110,59 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
         return true;
     }
 
-    // TODO: implement comment filter (comment data not
-    // stored in model yet)
-    const bool commentMatch = true;
+    const auto supportedPlatforms    = index.data(PolicyRoles::SUPPORTED_ON).value<QString>();
+    const QSet<QString> platformList = d->filter.selectedPlatforms;
+    bool platformMatch               = false;
+    switch (d->filter.platformType)
+    {
+    case PlatformFilterType_ANY:
+        platformMatch = std::any_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
+            return supportedPlatforms.contains(platform);
+        });
+        break;
+    case PlatformFilterType_ALL:
+        platformMatch = std::all_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
+            return supportedPlatforms.contains(platform);
+        });
+        break;
+    }
 
     auto checkKeywordMatch = [&](const QString &string) {
         const QList<QString> keywordList = d->filter.keywordText.split(" ");
 
         switch (d->filter.keywordType)
         {
-        case KeywordFilterType_ANY: {
-            for (const QString &keyword : keywordList)
-            {
-                const bool match = string.contains(keyword);
-
-                if (match)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-        case KeywordFilterType_EXACT: {
-            const bool out = (string.contains(d->filter.keywordText));
-
-            return out;
-        }
-        case KeywordFilterType_ALL: {
-            for (const QString &keyword : keywordList)
-            {
-                const bool match = string.contains(keyword);
-
-                if (!match)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        }
-
-        return false;
-    };
-
-    auto checkPlatformMatch = [&](const QString &string) {
-        switch (d->filter.platformType)
-        {
-        case PlatformFilterType_ANY: {
-            for (const QString &keyword : d->filter.selectedPlatforms)
-            {
+        case KeywordFilterType_ANY:
+            return std::any_of(keywordList.begin(), keywordList.end(), [&string](QString keyword) {
                 return string.contains(keyword);
-            }
-
-            return false;
-        }
-        case PlatformFilterType_ALL: {
-            for (const QString &keyword : d->filter.selectedPlatforms)
-            {
-                if (!string.contains(keyword))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
+            });
+        case KeywordFilterType_ALL:
+            return std::all_of(keywordList.begin(), keywordList.end(), [&string](QString keyword) {
+                return string.contains(keyword);
+            });
+        case KeywordFilterType_EXACT:
+            return string.contains(d->filter.keywordText);
         default:
             return false;
         }
-
-        return false;
     };
 
-    const bool helpMatch = [&]() {
-        const QString helpText = index.data(PolicyRoles::EXPLAIN_TEXT).value<QString>();
-        const bool out         = checkKeywordMatch(helpText);
+    const QString titleText = index.data(Qt::DisplayRole).value<QString>();
+    const bool titleMatch   = checkKeywordMatch(titleText);
 
-        return out;
-    }();
+    const QString helpText = index.data(PolicyRoles::EXPLAIN_TEXT).value<QString>();
+    const bool helpMatch   = checkKeywordMatch(helpText);
 
-    const bool titleMatch = [&]() {
-        const QString titleText = index.data(Qt::DisplayRole).value<QString>();
-        const bool out          = checkKeywordMatch(titleText);
+    // TODO: implement comment filter (comment data not stored in model yet)
+    const bool commentMatch = true;
 
-        return out;
-    }();
-
-    const bool keywordMatch = [&]() {
-        if (d->filter.titleEnabled && titleMatch)
-        {
-            return true;
-        }
-        else if (d->filter.helpEnabled && helpMatch)
-        {
-            return true;
-        }
-        else if (d->filter.commentEnabled && commentMatch)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }();
-
-    if (d->filter.platformEnabled && !checkPlatformMatch(index.data(PolicyRoles::SUPPORTED_ON).value<QString>()))
-    {
-        return false;
-    }
+    const bool keywordMatch = (d->filter.titleEnabled && titleMatch) || (d->filter.helpEnabled && helpMatch)
+                              || (d->filter.commentEnabled && commentMatch);
 
     const bool configuredMatch = d->filter.configured.contains(state);
 
-    if (d->filter.keywordEnabled && !keywordMatch)
-    {
-        return false;
-    }
-
-    if (!configuredMatch)
-    {
-        return false;
-    }
-
-    return true;
+    return (!d->filter.platformEnabled || platformMatch) && (!d->filter.keywordEnabled || keywordMatch)
+           && configuredMatch;
 }
 
 void TemplateFilterModel::setUserRegistrySource(AbstractRegistrySource *registrySource)

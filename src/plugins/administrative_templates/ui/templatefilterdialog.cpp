@@ -62,6 +62,8 @@ TemplateFilterDialog::TemplateFilterDialog(QWidget *parent)
 {
     d->ui = new Ui::TemplateFilterDialog();
     d->ui->setupUi(this);
+
+    d->ui->commentCheckBox->setVisible(false);
 }
 
 TemplateFilterDialog::~TemplateFilterDialog()
@@ -258,9 +260,7 @@ void TemplateFilterDialog::on_clearPushButton_clicked()
 QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
 {
     const QList<QWidget *> out = {
-        ui->managedComboBox,
         ui->configuredComboBox,
-        ui->commentedComboBox,
         ui->keywordCheckBox,
         ui->keywordLineEdit,
         ui->keywordComboBox,

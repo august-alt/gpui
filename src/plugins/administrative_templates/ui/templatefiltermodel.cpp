@@ -156,8 +156,8 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
     // TODO: implement comment filter (comment data not stored in model yet)
     const bool commentMatch = true;
 
-    const bool keywordMatch = d->filter.titleEnabled && titleMatch || d->filter.helpEnabled && helpMatch
-                              || d->filter.commentEnabled && commentMatch;
+    const bool keywordMatch = (d->filter.titleEnabled && titleMatch) || (d->filter.helpEnabled && helpMatch)
+                              || (d->filter.commentEnabled && commentMatch);
 
     const bool configuredMatch = d->filter.configured.contains(state);
 

@@ -21,6 +21,7 @@
 #ifndef GPUI_SUPPORTEDDEFINITION_H
 #define GPUI_SUPPORTEDDEFINITION_H
 
+#include <vector>
 #include <string>
 
 namespace model
@@ -44,6 +45,16 @@ public:
      * string table of the .adml file.
      */
     std::string displayName{};
+
+    /*!
+     * \brief or_
+     */
+    std::vector<std::string> or_{};
+
+    /*!
+     * \brief and_
+     */
+    std::vector<std::string> and_{};
 
     virtual ~SupportedDefinition() = default;
 };

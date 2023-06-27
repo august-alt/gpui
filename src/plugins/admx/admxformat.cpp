@@ -443,6 +443,32 @@ public:
     {
         this->displayName = category.displayName();
         this->name        = category.name();
+
+        if (category.or_().present())
+        {
+            for (auto& rangeElement : category.or_()->range())
+            {
+                this->or_.push_back(rangeElement.ref());
+            }
+
+            for (auto& rangeElement : category.or_()->reference())
+            {
+                this->or_.push_back(rangeElement.ref());
+            }
+        }
+
+        if (category.and_().present())
+        {
+            for (auto& rangeElement : category.and_()->range())
+            {
+                this->or_.push_back(rangeElement.ref());
+            }
+
+            for (auto& rangeElement : category.and_()->reference())
+            {
+                this->or_.push_back(rangeElement.ref());
+            }
+        }
     }
 
     static std::shared_ptr<model::admx::SupportedDefinition> create(const SupportedOnDefinition &element)

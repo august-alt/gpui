@@ -36,6 +36,8 @@ enum PolicyRoles
     POLICY        = Qt::UserRole + 6,
     POLICY_TYPE   = Qt::UserRole + 7,
     POLICY_WIDGET = Qt::UserRole + 8,
+    CURRENT_UUID  = Qt::UserRole + 12,
+    PARENT_UUID   = Qt::UserRole + 13,
 };
 }
 } // namespace model

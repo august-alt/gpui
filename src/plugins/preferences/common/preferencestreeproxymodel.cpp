@@ -82,14 +82,14 @@ QVariant PreferencesTreeProxyModel::data(const QModelIndex &proxyIndex, int role
         return folder;
     }
 
-    if (role == Qt::UserRole + 12)
+    if (role == model::bundle::CURRENT_UUID)
     {
         auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
         auto item      = viewModel->sessionItemFromIndex(proxyIndex);
         return QVariant::fromValue(item->property<QUuid>("NODE_ID"));
     }
 
-    if (role == Qt::UserRole + 13)
+    if (role == model::bundle::PARENT_UUID)
     {
         auto viewModel = static_cast<const ModelView::ViewModel *>(proxyIndex.model());
         return QVariant::fromValue(viewModel->sessionItemFromIndex(proxyIndex)->property<QUuid>("PARENT_ID"));

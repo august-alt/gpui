@@ -94,7 +94,7 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                                 QObject::tr("Local group policies"),
                                                 ItemType::ITEM_TYPE_CATEGORY,
                                                 model::admx::PolicyType::Both, false);
-    visibleRootItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 12);
+    visibleRootItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::CURRENT_UUID);
 
     rootItem->appendRow(visibleRootItem);
 
@@ -103,8 +103,8 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                             QObject::tr("Machine level policies"),
                                             ItemType::ITEM_TYPE_CATEGORY,
                                             model::admx::PolicyType::Machine, false);
-    machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 13);
-    machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), Qt::UserRole + 12);
+    machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
+    machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), model::bundle::CURRENT_UUID);
     d->rootMachineItem = createItem(QObject::tr("Administrative Templates"),
                                     "folder",
                                     QObject::tr("Machine administrative templates"),
@@ -116,8 +116,8 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                          QObject::tr("User level policies"),
                                          ItemType::ITEM_TYPE_CATEGORY,
                                          model::admx::PolicyType::User, false);
-    userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), Qt::UserRole + 13);
-    userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), Qt::UserRole + 12);
+    userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
+    userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), model::bundle::CURRENT_UUID);
     d->rootUserItem = createItem(QObject::tr("Administrative Templates"),
                                  "folder",
                                  QObject::tr("User administrative templates"),

@@ -112,7 +112,7 @@ QModelIndex findParent(QAbstractItemModel *model, const QModelIndex &parent, con
         auto current = stack->top();
         stack->pop();
 
-        auto currentId = current.data(Qt::UserRole + 12).value<QUuid>();
+        auto currentId = current.data(model::bundle::CURRENT_UUID).value<QUuid>();
         if (currentId == id)
         {
             return current;
@@ -121,7 +121,7 @@ QModelIndex findParent(QAbstractItemModel *model, const QModelIndex &parent, con
         for (int row = 0; row < model->rowCount(current); ++row)
         {
             QModelIndex index = model->index(row, 0, current);
-            auto indexId      = index.data(Qt::UserRole + 12).value<QUuid>();
+            auto indexId      = index.data(model::bundle::CURRENT_UUID).value<QUuid>();
             if (indexId == id)
             {
                 return index;
@@ -147,9 +147,9 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
     {
         QModelIndex index = model->index(rowIndex, 0, parent);
 
-        auto parentId    = index.data(Qt::UserRole + 13).value<QUuid>();
+        auto parentId    = index.data(model::bundle::PARENT_UUID).value<QUuid>();
         auto parentIndex = QModelIndex();
-        auto currentId   = index.data(Qt::UserRole + 12).value<QUuid>();
+        auto currentId   = index.data(model::bundle::CURRENT_UUID).value<QUuid>();
 
         auto currentIndex    = findParent(target->model(), target->model()->index(0, 0).parent(), currentId);
         QStandardItem *child = nullptr;
@@ -176,8 +176,8 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
             child->setData(index.data(model::bundle::POLICY), model::bundle::POLICY);
             child->setData(index.data(model::bundle::POLICY_TYPE), model::bundle::POLICY_TYPE);
             child->setData(index.data(model::bundle::POLICY_WIDGET), model::bundle::POLICY_WIDGET);
-            child->setData(index.data(Qt::UserRole + 12), Qt::UserRole + 12);
-            child->setData(index.data(Qt::UserRole + 13), Qt::UserRole + 13);
+            child->setData(index.data(model::bundle::CURRENT_UUID), model::bundle::CURRENT_UUID);
+            child->setData(index.data(model::bundle::PARENT_UUID), model::bundle::PARENT_UUID);
 
             if (parentIndex.isValid())
             {

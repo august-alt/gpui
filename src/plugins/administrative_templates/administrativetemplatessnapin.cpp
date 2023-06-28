@@ -240,11 +240,12 @@ public:
 
     void policyBundleLoad()
     {
-        auto bundle = std::make_unique<model::bundle::PolicyBundle>();
-        model       = bundle->loadFolder(admxPath, localeName);
+        auto bundle   = std::make_unique<model::bundle::PolicyBundle>();
+        model         = bundle->loadFolder(admxPath, localeName);
+        auto products = bundle->getProducts();
         proxyModel->setSourceModel(model.get());
         filterModel->setSourceModel(proxyModel.get());
-        platformModel->setSourceData(model.get());
+        platformModel->setSourceData(model.get(), products);
     }
 
     void updateFilter()

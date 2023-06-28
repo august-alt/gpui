@@ -29,6 +29,7 @@
 #include "../admx/policydefinitions.h"
 #include "../admx/policyelement.h"
 #include "../admx/policyenumelement.h"
+#include "../admx/supportedon.h"
 #include "../bundle/itemtype.h"
 #include "../presentation/dropdownlist.h"
 #include "../presentation/policyresources.h"
@@ -37,8 +38,10 @@
 
 #include "policyroles.h"
 
+#include <QDebug>
 #include <QDir>
 #include <QStandardItemModel>
+#include <QDebug>
 
 #include <fstream>
 
@@ -65,14 +68,15 @@ struct PolicyStorage
 class PolicyBundlePrivate
 {
 public:
-    std::unique_ptr<QStandardItemModel> treeModel          = nullptr;
-    std::map<std::string, CategoryStorage> categoryItemMap = {};
-    std::vector<PolicyStorage> unassignedItems             = {};
-    QStandardItem *rootMachineItem                         = nullptr;
-    QStandardItem *rootUserItem                            = nullptr;
-    std::vector<QStandardItem *> items                     = {};
-    std::map<std::string, std::string> supportedOnMap      = {};
-    QStringList languageDirectoryPaths                     = {};
+    std::unique_ptr<QStandardItemModel> treeModel                        = nullptr;
+    std::map<std::string, CategoryStorage> categoryItemMap               = {};
+    std::vector<PolicyStorage> unassignedItems                           = {};
+    QStandardItem *rootMachineItem                                       = nullptr;
+    QStandardItem *rootUserItem                                          = nullptr;
+    std::vector<QStandardItem *> items                                   = {};
+    std::map<std::string, std::string> supportedOnMap                    = {};
+    QStringList languageDirectoryPaths                                   = {};
+    std::vector<std::shared_ptr<model::admx::SupportedProduct>> products = {};
 };
 
 PolicyBundle::PolicyBundle()
@@ -93,7 +97,8 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                                 "text-x-generic-template",
                                                 QObject::tr("Local group policies"),
                                                 ItemType::ITEM_TYPE_CATEGORY,
-                                                model::admx::PolicyType::Both, false);
+                                                model::admx::PolicyType::Both,
+                                                false);
     visibleRootItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::CURRENT_UUID);
 
     rootItem->appendRow(visibleRootItem);
@@ -102,27 +107,31 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
                                             "computer",
                                             QObject::tr("Machine level policies"),
                                             ItemType::ITEM_TYPE_CATEGORY,
-                                            model::admx::PolicyType::Machine, false);
+                                            model::admx::PolicyType::Machine,
+                                            false);
     machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
     machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), model::bundle::CURRENT_UUID);
     d->rootMachineItem = createItem(QObject::tr("Administrative Templates"),
                                     "folder",
                                     QObject::tr("Machine administrative templates"),
                                     ItemType::ITEM_TYPE_CATEGORY,
-                                    model::admx::PolicyType::Machine, false);
+                                    model::admx::PolicyType::Machine,
+                                    false);
     machineItem->appendRow(d->rootMachineItem);
     QStandardItem *userItem = createItem(QObject::tr("User"),
                                          "user-home",
                                          QObject::tr("User level policies"),
                                          ItemType::ITEM_TYPE_CATEGORY,
-                                         model::admx::PolicyType::User, false);
+                                         model::admx::PolicyType::User,
+                                         false);
     userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
     userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), model::bundle::CURRENT_UUID);
     d->rootUserItem = createItem(QObject::tr("Administrative Templates"),
                                  "folder",
                                  QObject::tr("User administrative templates"),
                                  ItemType::ITEM_TYPE_CATEGORY,
-                                 model::admx::PolicyType::User, false);
+                                 model::admx::PolicyType::User,
+                                 false);
     userItem->appendRow(d->rootUserItem);
 
     visibleRootItem->appendRow(machineItem);
@@ -158,6 +167,11 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
     removeEmptyItems();
 
     return std::move(d->treeModel);
+}
+
+std::vector<std::shared_ptr<model::admx::SupportedProduct>> PolicyBundle::getProducts()
+{
+    return d->products;
 }
 
 template<typename TPolicies, typename TFormat>
@@ -323,23 +337,22 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
             QString explainText = QString::fromStdString(findStringById(category->explainText, policyResources));
 
             d->categoryItemMap[categoryName].machineItem = createItem(displayName,
-                                                                        "folder",
-                                                                        explainText,
-                                                                        ItemType::ITEM_TYPE_CATEGORY,
-                                                                        model::admx::PolicyType::Machine, false);
+                                                                      "folder",
+                                                                      explainText,
+                                                                      ItemType::ITEM_TYPE_CATEGORY,
+                                                                      model::admx::PolicyType::Machine,
+                                                                      false);
             d->categoryItemMap[categoryName].userItem    = createItem(displayName,
-                                                                     "folder",
-                                                                     explainText,
-                                                                     ItemType::ITEM_TYPE_CATEGORY,
-                                                                     model::admx::PolicyType::User, false);
+                                                                   "folder",
+                                                                   explainText,
+                                                                   ItemType::ITEM_TYPE_CATEGORY,
+                                                                   model::admx::PolicyType::User,
+                                                                   false);
             d->categoryItemMap[categoryName].category    = *category;
             d->categoryItemMap[categoryName].fileName    = fileName;
 
-            d->categoryItemMap[category->name].category = *category;
-            d->categoryItemMap[category->name].fileName    = fileName;
-
             d->categoryItemMap[category->name].machineItem = d->categoryItemMap[categoryName].machineItem;
-            d->categoryItemMap[category->name].userItem = d->categoryItemMap[categoryName].userItem;
+            d->categoryItemMap[category->name].userItem    = d->categoryItemMap[categoryName].userItem;
 
             if (category->parentCategory.size() == 0)
             {
@@ -353,34 +366,23 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
             for (auto &supportedOn : definition->supportedOn->definitions)
             {
                 d->supportedOnMap[supportedOn->name] = findStringById(supportedOn->displayName, policyResources);
-
-//                qWarning() << "Supported on: " << supportedOn->name.c_str()
-//                           << d->supportedOnMap[supportedOn->name].c_str();
-
-//                for (auto& or_ : supportedOn->or_)
-//                {
-//                    qWarning() << "Or: " << or_.c_str() << or_.substr(9, or_.size() - 9).c_str();
-//                }
-
-//                for (auto& and_ : supportedOn->and_)
-//                {
-//                    qWarning() << "And: " << and_.c_str() << and_.substr(9, and_.size() - 9).c_str();
-//                }
             }
 
             for (auto &product : definition->supportedOn->products)
             {
-                qWarning() << findStringById(product->displayName, policyResources).c_str();
+                product->displayName = findStringById(product->displayName, policyResources);
 
                 for (auto &majorVersion : product->majorVersion)
                 {
-                    qWarning() << "\t" << findStringById(majorVersion.displayName, policyResources).c_str();
+                    majorVersion.displayName = findStringById(majorVersion.displayName, policyResources);
 
                     for (auto &minorVersion : majorVersion.minorVersion)
                     {
-                        qWarning() << "\t\t" << findStringById(minorVersion.displayName, policyResources).c_str();
+                        minorVersion.displayName = findStringById(minorVersion.displayName, policyResources);
                     }
                 }
+
+                d->products.push_back(product);
             }
         }
 
@@ -393,7 +395,8 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
                                          "text-x-generic",
                                          explainText,
                                          ItemType::ITEM_TYPE_POLICY,
-                                         policy->policyType, false);
+                                         policy->policyType,
+                                         false);
 
             PolicyStorage container;
             container.category = policy->parentCategory;
@@ -480,7 +483,6 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string &rawCat
         qWarning() << "Unable to find parent category: " << rawCategory.c_str() << fileName.c_str();
         if (machineItem)
         {
-
             if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
             {
                 d->rootMachineItem->appendRow(machineItem);
@@ -523,7 +525,9 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
 {
     for (const auto &entry : d->categoryItemMap)
     {
-        assignParentCategory(entry.second.category.parentCategory, entry.second.machineItem, entry.second.userItem,
+        assignParentCategory(entry.second.category.parentCategory,
+                             entry.second.machineItem,
+                             entry.second.userItem,
                              entry.second.fileName);
     }
 
@@ -544,7 +548,8 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
                                                  "text-x-generic",
                                                  item.item->data(PolicyRoles::EXPLAIN_TEXT).value<QString>(),
                                                  ItemType::ITEM_TYPE_POLICY,
-                                                 model::admx::PolicyType::User, true);
+                                                 model::admx::PolicyType::User,
+                                                 true);
             copyItem->setData(item.item->data(PolicyRoles::SUPPORTED_ON), PolicyRoles::SUPPORTED_ON);
             copyItem->setData(item.item->data(PolicyRoles::PRESENTATION), PolicyRoles::PRESENTATION);
             copyItem->setData(item.item->data(PolicyRoles::POLICY), PolicyRoles::POLICY);
@@ -560,24 +565,16 @@ void PolicyBundle::assignSupportedOn()
         if (item->data(PolicyRoles::ITEM_TYPE).value<uint>() == 1)
         {
             QStringList supportedRaw = item->data(PolicyRoles::SUPPORTED_ON).value<QString>().split(':');
-            QString *toFind          = nullptr;
-            if (supportedRaw.size() > 1)
-            {
-                toFind = &supportedRaw[1];
-            }
-            else
-            {
-                toFind = &supportedRaw[0];
-            }
+            QString &toFind          = supportedRaw.back();
 
-            auto search = d->supportedOnMap.find(toFind->toStdString());
+            auto search = d->supportedOnMap.find(toFind.toStdString());
             if (search != d->supportedOnMap.end())
             {
                 item->setData(QString::fromStdString(search->second), PolicyRoles::SUPPORTED_ON);
             }
             else
             {
-                qWarning() << "Not found support for: " << *toFind;
+                qWarning() << "Not found support for: " << toFind;
             }
         }
     }

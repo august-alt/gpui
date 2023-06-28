@@ -24,6 +24,7 @@
 #include "../administrativetemplates.h"
 
 #include "../admx/policytype.h"
+#include "../admx/supportedproduct.h"
 
 #include <memory>
 #include <string>
@@ -53,6 +54,7 @@ public:
     ~PolicyBundle();
 
     std::unique_ptr<QStandardItemModel> loadFolder(const std::string &path, const std::string &language);
+    std::vector<std::shared_ptr<model::admx::SupportedProduct>> getProducts();
 
 private:
     PolicyBundle(const PolicyBundle &) = delete;            // copy ctor

@@ -26,6 +26,8 @@
 #include <QStack>
 #include <QString>
 
+#include <QDebug>
+
 #include "bundle/policyroles.h"
 
 namespace gpui
@@ -34,7 +36,7 @@ class PlatformModelPrivate
 {
 public:
     QStandardItemModel *sourceModel = nullptr;
-    QSet<QString> uniqueItems{};
+    std::vector<std::shared_ptr<model::admx::SupportedProduct>> items{};
 
     PlatformModelPrivate() {}
     ~PlatformModelPrivate() {}
@@ -49,7 +51,7 @@ PlatformModel::PlatformModel(QStandardItemModel *sourceModel)
     : QStandardItemModel()
     , d(new PlatformModelPrivate())
 {
-    setSourceData(sourceModel);
+    setSourceData(sourceModel, {});
 }
 
 PlatformModel::~PlatformModel()
@@ -57,57 +59,52 @@ PlatformModel::~PlatformModel()
     delete d;
 }
 
-void PlatformModel::setSourceData(QStandardItemModel *sourceModel)
+void PlatformModel::setSourceData(QStandardItemModel *sourceModel,
+                                  std::vector<std::shared_ptr<model::admx::SupportedProduct>> products)
 {
     if (sourceModel && (sourceModel != d->sourceModel))
     {
         d->sourceModel = sourceModel;
 
-        populateModel(d->sourceModel);
+        populateModel(d->sourceModel, products);
     }
 }
 
-void PlatformModel::populateModel(QStandardItemModel *sourceModel)
+void PlatformModel::populateModel(QStandardItemModel *sourceModel,
+                                  std::vector<std::shared_ptr<model::admx::SupportedProduct>> products)
 {
-    d->uniqueItems.clear();
-
+    (void) sourceModel;
     clear();
 
-    auto stack = std::make_unique<QStack<QModelIndex>>();
-    stack->push(sourceModel->invisibleRootItem()->index());
+    d->items = products;
 
-    while (!stack->empty())
+    for (const auto &product : d->items)
     {
-        auto current = stack->pop();
+        auto productElement = new QStandardItem(QString::fromStdString(product->displayName));
+        productElement->setEditable(false);
+        productElement->setCheckable(true);
 
-        auto supportedOn = current.data(model::bundle::PolicyRoles::SUPPORTED_ON).value<QString>().trimmed();
-
-        if (!supportedOn.isEmpty())
+        int majorVersionIdx = 0;
+        for (const auto &majorVersion : product->majorVersion)
         {
-            d->uniqueItems.insert(supportedOn);
-        }
+            auto majorVersionElement = new QStandardItem(QString::fromStdString(majorVersion.displayName));
+            majorVersionElement->setEditable(false);
+            majorVersionElement->setCheckable(true);
 
-        for (int row = 0; row < sourceModel->rowCount(current); ++row)
-        {
-            QModelIndex index = sourceModel->index(row, 0, current);
-
-            if (sourceModel->hasChildren(index))
+            int minorVersionIdx = 0;
+            for (const auto &minorVersion : majorVersion.minorVersion)
             {
-                for (int childRow = 0; childRow < sourceModel->rowCount(index); ++childRow)
-                {
-                    QModelIndex childIndex = sourceModel->index(childRow, 0, index);
-                    stack->push(childIndex);
-                }
+                auto minorVersionElement = new QStandardItem(QString::fromStdString(minorVersion.displayName));
+                minorVersionElement->setEditable(false);
+                minorVersionElement->setCheckable(true);
+
+                majorVersionElement->setChild(minorVersionIdx++, 0, minorVersionElement);
             }
+
+            productElement->setChild(majorVersionIdx++, 0, majorVersionElement);
         }
-    }
 
-    for (const auto &uniqueItem : d->uniqueItems)
-    {
-        auto listElement = new QStandardItem(uniqueItem);
-        listElement->setCheckable(true);
-
-        insertRow(rowCount(), listElement);
+        insertRow(rowCount(), productElement);
     }
 }
 

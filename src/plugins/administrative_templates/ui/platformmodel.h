@@ -23,6 +23,8 @@
 
 #include <QStandardItemModel>
 
+#include "../admx/supportedproduct.h"
+
 namespace gpui
 {
 class PlatformModelPrivate;
@@ -39,10 +41,12 @@ public:
     PlatformModel(QStandardItemModel *sourceModel = nullptr);
     ~PlatformModel();
 
-    void setSourceData(QStandardItemModel *sourceModel);
+    void setSourceData(QStandardItemModel *sourceModel,
+                       std::vector<std::shared_ptr<model::admx::SupportedProduct>> products);
 
 private:
-    void populateModel(QStandardItemModel *sourceModel);
+    void populateModel(QStandardItemModel *sourceModel,
+                       std::vector<std::shared_ptr<model::admx::SupportedProduct>> products);
 
 private:
     PlatformModel(const PlatformModel &) = delete;            // copy ctor

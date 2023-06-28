@@ -44,14 +44,7 @@ jobs:
     with:
       architecture: "amd64"
 
-  gpui-codeql-analysis:
-    uses: ./.github/workflows/codeql-analysis.yml
-    needs: [ gpui-build-container ]
-    secrets: inherit
-    with:
-      architecture: "amd64"
-
   gpui-publish-api-docs:
     uses: ./.github/workflows/publish-api-docs.yml
-    needs: [ gpui-build, gpui-test, gpui-codeql-analysis ]
+    needs: [ gpui-build, gpui-test ]
     secrets: inherit

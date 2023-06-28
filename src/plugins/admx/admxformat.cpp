@@ -461,12 +461,12 @@ public:
         {
             for (auto& rangeElement : category.and_()->range())
             {
-                this->or_.push_back(rangeElement.ref());
+                this->and_.push_back(rangeElement.ref());
             }
 
             for (auto& rangeElement : category.and_()->reference())
             {
-                this->or_.push_back(rangeElement.ref());
+                this->and_.push_back(rangeElement.ref());
             }
         }
     }
@@ -488,6 +488,28 @@ public:
     {
         this->displayName = category.displayName();
         this->name        = category.name();
+
+        for (auto& catregoryMajorVersion : category.majorVersion())
+        {
+            model::admx::MajorVersion currentMajorVersion;
+
+            currentMajorVersion.name = catregoryMajorVersion.name();
+            currentMajorVersion.displayName = catregoryMajorVersion.displayName();
+            currentMajorVersion.versionIndex = catregoryMajorVersion.versionIndex();
+
+            for (auto& categoryMinorVersion : catregoryMajorVersion.minorVersion())
+            {
+                model::admx::MinorVersion currentMinorVersion;
+
+                currentMinorVersion.name = categoryMinorVersion.name();
+                currentMinorVersion.displayName = categoryMinorVersion.displayName();
+                currentMinorVersion.versionIndex = categoryMinorVersion.versionIndex();
+
+                currentMajorVersion.minorVersion.push_back(currentMinorVersion);
+            }
+
+            this->majorVersion.push_back(currentMajorVersion);
+        }
     }
 
     static std::shared_ptr<model::admx::SupportedProduct> create(const SupportedProduct &element)

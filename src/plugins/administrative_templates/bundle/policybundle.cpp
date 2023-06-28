@@ -354,28 +354,37 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
             {
                 d->supportedOnMap[supportedOn->name] = findStringById(supportedOn->displayName, policyResources);
 
+                qWarning() << "Supported on: " << supportedOn->name.c_str()
+                           << d->supportedOnMap[supportedOn->name].c_str();
+
                 for (auto& or_ : supportedOn->or_)
                 {
-                    qWarning() << or_.c_str() << ("$(string." + or_.substr(9, or_.size() - 9) + ")").c_str();
+                    qWarning() << "Or: " << or_.c_str() << or_.substr(9, or_.size() - 9).c_str();
                 }
 
                 for (auto& and_ : supportedOn->and_)
                 {
-                    qWarning() << and_.c_str() << ("$(string." + and_.substr(9, and_.size() - 9) + ")").c_str();
+                    qWarning() << "And: " << and_.c_str() << and_.substr(9, and_.size() - 9).c_str();
                 }
             }
 
             for (auto &product : definition->supportedOn->products)
             {
-                qWarning() << "Name of the product: " << findStringById(product->displayName, policyResources).c_str() << product->name.c_str();
+                qWarning() << "Name of the product: "
+                           << findStringById(product->displayName, policyResources).c_str()
+                           << product->name.c_str();
                 for (auto &productVersion : product->majorVersion)
                 {
-                    qWarning() << "Version of the product: " << productVersion.displayName.c_str()
-                               << productVersion.name.c_str() << productVersion.versionIndex;
+                    qWarning() << "Version of the product: "
+                               << findStringById(productVersion.displayName, policyResources).c_str()
+                               << productVersion.name.c_str()
+                               << productVersion.versionIndex;
                     for (auto &minorVersion : productVersion.minorVersion)
                     {
-                        qWarning() << "Minor version of the product: " << minorVersion.displayName.c_str()
-                                   << minorVersion.name.c_str() << minorVersion.versionIndex;
+                        qWarning() << "Minor version of the product: "
+                                   << findStringById(minorVersion.displayName, policyResources).c_str()
+                                   << minorVersion.name.c_str()
+                                   << minorVersion.versionIndex;
                     }
                 }
             }

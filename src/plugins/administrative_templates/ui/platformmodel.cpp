@@ -47,57 +47,60 @@ public:
     PlatformModelPrivate &operator=(PlatformModelPrivate &&) = delete;      // move assignment
 };
 
-PlatformModel::PlatformModel(QStandardItemModel *sourceModel)
+class PlatformItem : public QStandardItem
+{
+public:
+    PlatformItem(const QString &name);
+};
+
+PlatformItem::PlatformItem(const QString &name)
+{
+    setText(name);
+    setEditable(false);
+    setCheckable(true);
+}
+
+PlatformModel::PlatformModel()
     : QStandardItemModel()
     , d(new PlatformModelPrivate())
-{
-    setSourceData(sourceModel, {});
-}
+{}
 
 PlatformModel::~PlatformModel()
 {
     delete d;
 }
 
-void PlatformModel::setSourceData(QStandardItemModel *sourceModel,
-                                  std::vector<std::shared_ptr<model::admx::SupportedProduct>> products)
+// NOTE: allows recursively select children using checkbox
+bool PlatformModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (sourceModel && (sourceModel != d->sourceModel))
+    QStandardItem *item = itemFromIndex(index);
+    for (int i = 0; i < item->rowCount(); i++)
     {
-        d->sourceModel = sourceModel;
-
-        populateModel(d->sourceModel, products);
+        QStandardItem *childItem = item->child(i);
+        setData(childItem->index(), value, role);
     }
+    return QStandardItemModel::setData(index, value, role);
 }
 
-void PlatformModel::populateModel(QStandardItemModel *sourceModel,
-                                  std::vector<std::shared_ptr<model::admx::SupportedProduct>> products)
+void PlatformModel::populateModel(std::vector<std::shared_ptr<model::admx::SupportedProduct>> products)
 {
-    (void) sourceModel;
     clear();
 
     d->items = products;
 
     for (const auto &product : d->items)
     {
-        auto productElement = new QStandardItem(QString::fromStdString(product->displayName));
-        productElement->setEditable(false);
-        productElement->setCheckable(true);
+        auto productElement = new PlatformItem(QString::fromStdString(product->displayName));
 
         int majorVersionIdx = 0;
         for (const auto &majorVersion : product->majorVersion)
         {
-            auto majorVersionElement = new QStandardItem(QString::fromStdString(majorVersion.displayName));
-            majorVersionElement->setEditable(false);
-            majorVersionElement->setCheckable(true);
+            auto majorVersionElement = new PlatformItem(QString::fromStdString(majorVersion.displayName));
 
             int minorVersionIdx = 0;
             for (const auto &minorVersion : majorVersion.minorVersion)
             {
-                auto minorVersionElement = new QStandardItem(QString::fromStdString(minorVersion.displayName));
-                minorVersionElement->setEditable(false);
-                minorVersionElement->setCheckable(true);
-
+                auto minorVersionElement = new PlatformItem(QString::fromStdString(minorVersion.displayName));
                 majorVersionElement->setChild(minorVersionIdx++, 0, minorVersionElement);
             }
 

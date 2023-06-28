@@ -38,15 +38,10 @@ class PlatformModelPrivate;
 class PlatformModel final : public QStandardItemModel
 {
 public:
-    PlatformModel(QStandardItemModel *sourceModel = nullptr);
+    PlatformModel();
     ~PlatformModel();
 
-    void setSourceData(QStandardItemModel *sourceModel,
-                       std::vector<std::shared_ptr<model::admx::SupportedProduct>> products);
-
-private:
-    void populateModel(QStandardItemModel *sourceModel,
-                       std::vector<std::shared_ptr<model::admx::SupportedProduct>> products);
+    void populateModel(std::vector<std::shared_ptr<model::admx::SupportedProduct>> products);
 
 private:
     PlatformModel(const PlatformModel &) = delete;            // copy ctor
@@ -56,6 +51,7 @@ private:
 
 private:
     PlatformModelPrivate *d;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 };
 
 } // namespace gpui

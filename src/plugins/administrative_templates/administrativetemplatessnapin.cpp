@@ -245,7 +245,7 @@ public:
         auto products = bundle->getProducts();
         proxyModel->setSourceModel(model.get());
         filterModel->setSourceModel(proxyModel.get());
-        platformModel->setSourceData(model.get(), products);
+        platformModel->populateModel(products);
     }
 
     void updateFilter()

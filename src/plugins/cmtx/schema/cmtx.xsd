@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.microsoft.com/GroupPolicy/CommentDefinitions">
+  <xs:element name="policyComments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="policyNamespaces">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="using">
+                <xs:complexType>
+                  <xs:attribute name="prefix" type="xs:string" use="required" />
+                  <xs:attribute name="namespace" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="comments">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="admTemplate">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="comment" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="policyRef" type="xs:string" use="required" />
+                        <xs:attribute name="commentText" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="resources">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="string" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="minRequiredRevision" type="xs:decimal" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="stringTable" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="string" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="id" type="xs:string" use="required" />
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="revision" type="xs:decimal" use="required" />
+      <xs:attribute name="schemaVersion" type="xs:decimal" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xsd:schema>

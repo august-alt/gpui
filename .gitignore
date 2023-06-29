@@ -82,5 +82,9 @@ docs/
 # Generated files
 src/plugins/preferences/schemas/*.cpp
 src/plugins/preferences/schemas/*.h
+src/plugins/cmtl/schema/*.cpp
+src/plugins/cmtl/schema/*.h
+src/plugins/cmtx/schema/*.cpp
+src/plugins/cmtx/schema/*.h
 *.translations.qrc
 src/core/version.h

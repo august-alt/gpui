@@ -60,7 +60,7 @@ RUN apt-get update \
     && usermod -aG sudo builder2 \
     && echo "root ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers \
     && echo "builder2 ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers \
-    && hasher-useradd builder2 \
+    && hasher-useradd builder2 || : \
     && mkdir /app \
     && chown root:builder2 /app
 

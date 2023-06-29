@@ -87,16 +87,23 @@ TemplateFilter TemplateFilterDialog::getFilter() const
     out.platformType    = static_cast<PlatformFilterType>(d->ui->platformComboBox->currentIndex());
 
     const auto sourceModel = d->ui->platformTreeView->model();
-    const auto current     = sourceModel->index(0, 1);
-    for (int row = 0; row < sourceModel->rowCount(current); ++row)
-    {
-        const QModelIndex index = sourceModel->index(row, 0, current);
-        const auto state        = index.data(Qt::CheckStateRole).value<Qt::CheckState>();
-        if (state == Qt::Checked)
+
+    std::function<void(const QModelIndex &)> addPlatforms = [&](const QModelIndex &index) {
+        for (int row = 0; row < sourceModel->rowCount(index); ++row)
         {
-            out.selectedPlatforms.insert(index.data().value<QString>());
+            const QModelIndex child = sourceModel->index(row, 0, index);
+
+            const bool isLeaf = (sourceModel->rowCount(child) == 0);
+            const auto state  = child.data(Qt::CheckStateRole).value<Qt::CheckState>();
+            if (isLeaf && state == Qt::Checked)
+            {
+                out.selectedPlatforms.insert(child.data().value<QString>());
+            }
+
+            addPlatforms(child);
         }
-    }
+    };
+    addPlatforms(sourceModel->index(0, 1));
 
     switch (d->ui->configuredComboBox->currentIndex())
     {

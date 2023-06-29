@@ -70,24 +70,22 @@ PlatformModel::~PlatformModel()
 // NOTE: allows recursively select children using checkbox
 bool PlatformModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    auto item = static_cast<PlatformItem *>(itemFromIndex(index));
+    auto item = itemFromIndex(index);
 
-    // NOTE: comparing with Unchecked because effect was not applied yet
-    bool isItemBeingChecked = (item->checkState() == Qt::CheckState::Unchecked);
-
-    if (isItemBeingChecked)
+    // (un)check all children on item (un)check
+    for (int i = 0; i < item->rowCount(); i++)
     {
-        for (int i = 0; i < item->rowCount(); i++)
-        {
-            QStandardItem *childItem = item->child(i);
-            setData(childItem->index(), value, role);
-        }
+        QStandardItem *childItem = item->child(i);
+        setData(childItem->index(), value, role);
     }
-    else
+
+    // uncheck all parent if item was unchecked
+    bool isItemBeingUnchecked = (item->checkState() == Qt::CheckState::Checked); // effect was not applied yet
+    if (!isItemBeingUnchecked)
     {
-        if (item->parent() && item->parent()->checkState() == Qt::CheckState::Checked)
+        for (auto parent = item->parent(); parent; parent = parent->parent())
         {
-            setData(item->parent()->index(), value, role);
+            QStandardItemModel::setData(parent->index(), value, role);
         }
     }
 

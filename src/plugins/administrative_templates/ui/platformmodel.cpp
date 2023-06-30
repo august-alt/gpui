@@ -19,6 +19,7 @@
 ***********************************************************************************************************************/
 
 #include "platformmodel.h"
+#include "bundle/policyroles.h"
 #include "qnamespace.h"
 
 #include <memory>
@@ -47,12 +48,14 @@ public:
 class PlatformItem : public QStandardItem
 {
 public:
-    PlatformItem(const QString &name);
+    PlatformItem(std::string sort_key, std::string display);
 };
 
-PlatformItem::PlatformItem(const QString &name)
+PlatformItem::PlatformItem(std::string sort_key, std::string display)
 {
-    setText(name);
+    setData(QString::fromStdString(sort_key));
+    setText(QString::fromStdString(display));
+
     setEditable(false);
     setCheckable(true);
 }
@@ -81,7 +84,7 @@ bool PlatformModel::setData(const QModelIndex &index, const QVariant &value, int
 
     // uncheck all parent if item was unchecked
     bool isItemBeingUnchecked = (item->checkState() == Qt::CheckState::Checked); // effect was not applied yet
-    if (!isItemBeingUnchecked)
+    if (isItemBeingUnchecked && role == Qt::CheckStateRole)
     {
         for (auto parent = item->parent(); parent; parent = parent->parent())
         {
@@ -100,17 +103,18 @@ void PlatformModel::populateModel(std::vector<std::shared_ptr<model::admx::Suppo
 
     for (const auto &product : d->items)
     {
-        auto productElement = new PlatformItem(QString::fromStdString(product->displayName));
+        auto productElement = new PlatformItem(product->name, product->displayName);
 
         int majorVersionIdx = 0;
         for (const auto &majorVersion : product->majorVersion)
         {
-            auto majorVersionElement = new PlatformItem(QString::fromStdString(majorVersion.displayName));
+            auto majorVersionElement = new PlatformItem(majorVersion.name, majorVersion.displayName);
 
             int minorVersionIdx = 0;
             for (const auto &minorVersion : majorVersion.minorVersion)
             {
-                auto minorVersionElement = new PlatformItem(QString::fromStdString(minorVersion.displayName));
+                auto minorVersionElement = new PlatformItem(minorVersion.name, minorVersion.displayName);
+
                 majorVersionElement->setChild(minorVersionIdx++, 0, minorVersionElement);
             }
 

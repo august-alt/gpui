@@ -26,6 +26,7 @@
 #include "platformmodel.h"
 
 #include <algorithm>
+#include <utility>
 
 using namespace model;
 using namespace model::registry;
@@ -97,7 +98,9 @@ TemplateFilter TemplateFilterDialog::getFilter() const
             const auto state  = child.data(Qt::CheckStateRole).value<Qt::CheckState>();
             if (isLeaf && state == Qt::Checked)
             {
-                out.selectedPlatforms.insert(child.data().value<QString>());
+                auto sort_key = child.data(PLATFORM_ROLE_SORT).value<QString>();
+                auto display_name = child.data().value<QString>();
+                out.selectedPlatforms.insert(std::make_pair(sort_key, display_name));
             }
 
             addPlatforms(child);

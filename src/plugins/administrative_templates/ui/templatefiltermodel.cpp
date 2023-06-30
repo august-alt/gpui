@@ -27,6 +27,7 @@
 #include "../plugins/administrative_templates/bundle/policyroles.h"
 #include "../plugins/administrative_templates/registry/abstractregistrysource.h"
 #include "../plugins/administrative_templates/registry/policystatemanager.h"
+#include "ui/platformmodel.h"
 
 #include <QDebug>
 
@@ -60,7 +61,6 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     d->filter.commentEnabled = false;
     d->filter.keywordType    = KeywordFilterType_ANY;
     d->filter.keywordText    = QString();
-    ;
 
     d->filter.configured = QSet<PolicyStateManager::PolicyState>();
 
@@ -110,20 +110,22 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
         return true;
     }
 
-    const auto supportedPlatforms    = index.data(PolicyRoles::SUPPORTED_ON).value<QString>();
-    const QSet<QString> platformList = d->filter.selectedPlatforms;
-    bool platformMatch               = false;
+    const auto supportedOnText   = index.data(PolicyRoles::SUPPORTED_ON).value<QString>();
+    QSet<std::pair<QString, QString>> selectedPlatforms = d->filter.selectedPlatforms;
+
+    // TODO: filter using selectedPlatforms
+    bool platformMatch = false;
     switch (d->filter.platformType)
     {
     case PlatformFilterType_ANY:
-        platformMatch = std::any_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
-            return supportedPlatforms.contains(platform);
-        });
+        platformMatch = std::any_of(selectedPlatforms.begin(),
+                                    selectedPlatforms.end(),
+                                    [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
         break;
     case PlatformFilterType_ALL:
-        platformMatch = std::all_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
-            return supportedPlatforms.contains(platform);
-        });
+        platformMatch = std::all_of(selectedPlatforms.begin(),
+                                    selectedPlatforms.end(),
+                                    [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
         break;
     }
 

@@ -27,6 +27,11 @@
 
 namespace gpui
 {
+enum PlatformRole
+{
+    PLATFORM_ROLE_SORT = Qt::UserRole + 1,
+};
+
 class PlatformModelPrivate;
 
 /*!

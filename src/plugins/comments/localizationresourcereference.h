@@ -37,7 +37,7 @@ public:
     /*!
      * \brief minRequiredRevision  Minimal version of required revision of a policy.
      */
-    std::string minRequiredRevision;
+    std::string minRequiredRevision{};
 
     /*!
      * \brief fallbackCulture  Language to fallback to.
@@ -47,7 +47,7 @@ public:
     /*!
      * \brief stringTable Table of the strings.
      */
-    std::vector<std::string> stringTable;
+    std::vector<std::string> stringTable{};
 };
 
 }

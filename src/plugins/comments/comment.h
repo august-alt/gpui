@@ -35,12 +35,12 @@ public:
     /*!
      * \brief policyRef String reference to target policy.
      */
-    std::string policyRef;
+    std::string policyRef{};
 
     /*!
      * \brief commentText Text of the comment.
      */
-    std::string commentText;
+    std::string commentText{};
 };
 
 }

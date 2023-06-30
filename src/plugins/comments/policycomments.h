@@ -20,21 +20,21 @@ public:
     /*!
      * \brief revision The revision number.
      */
-    uint32_t revision;
+    uint32_t revision{0};
 
     /*!
      * \brief schemaVersion The version number of the applicable schema.
      */
-    uint32_t schemaVersion;
+    uint32_t schemaVersion{0};
     /*!
      * \brief comments  List of comments.
      */
-    std::vector<Comment> comments;
+    std::vector<Comment> comments{};
 
     /*!
      * \brief resources Resources.
      */
-    std::unique_ptr<LocalizationResourceReference> resources;
+    std::unique_ptr<LocalizationResourceReference> resources{nullptr};
 };
 
 }

@@ -7,9 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(PLUGIN_NAME
-    "comments"
-)
+set(PLUGIN_NAME comments-plugin)
 
 set(HEADERS
     comment.h

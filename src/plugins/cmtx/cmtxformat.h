@@ -24,19 +24,19 @@
 #include "../../../src/core/common.h"
 
 #include "../../../src/io/policyfileformat.h"
-#include "../../../src/io/policyresourcesfile.h"
+#include "../../../src/io/policycommentsfile.h"
 
 namespace gpui
 {
 
-class GPUI_SYMBOL_EXPORT CmtxFormat : public io::PolicyFileFormat<io::PolicyResourcesFile>
+class GPUI_SYMBOL_EXPORT CmtxFormat : public io::PolicyFileFormat<io::PolicyCommentsFile>
 {
 public:
     CmtxFormat();
 
-    bool read(std::istream &input, io::PolicyResourcesFile *file);
+    bool read(std::istream &input, io::PolicyCommentsFile *file);
 
-    bool write(std::ostream &output, io::PolicyResourcesFile *file);
+    bool write(std::ostream &output, io::PolicyCommentsFile *file);
 };
 
 }

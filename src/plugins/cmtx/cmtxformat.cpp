@@ -59,12 +59,12 @@ public:
 
 
 CmtxFormat::CmtxFormat()
-    : io::PolicyFileFormat<io::PolicyResourcesFile>("cmtx")
+    : io::PolicyFileFormat<io::PolicyCommentsFile>("cmtx")
 {
 
 }
 
-bool CmtxFormat::read(std::istream &input, io::PolicyResourcesFile *file)
+bool CmtxFormat::read(std::istream &input, io::PolicyCommentsFile *file)
 {
     auto operation = [&]() {
         std::unique_ptr<::GroupPolicy::CommentDefinitions::PolicyComments> policyComments
@@ -73,7 +73,7 @@ bool CmtxFormat::read(std::istream &input, io::PolicyResourcesFile *file)
                                                                 | ::xsd::cxx::tree::flags::keep_dom
                                                                 | ::xsd::cxx::tree::flags::own_dom);
 
-//        file->add(XsdCommentsAdapter::create(*policyComments));
+        file->addPolicyComments(XsdCommentsAdapter::create(*policyComments));
     };
 
     auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };
@@ -81,7 +81,7 @@ bool CmtxFormat::read(std::istream &input, io::PolicyResourcesFile *file)
     return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
-bool CmtxFormat::write(std::ostream &output, io::PolicyResourcesFile *file)
+bool CmtxFormat::write(std::ostream &output, io::PolicyCommentsFile *file)
 {
     (void)(output);
     (void)(file);

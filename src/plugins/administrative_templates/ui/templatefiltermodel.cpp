@@ -29,6 +29,9 @@
 #include "../plugins/administrative_templates/registry/policystatemanager.h"
 #include "ui/platformmodel.h"
 
+#include "admx/supporteddefinition.h"
+
+#include <unordered_map>
 #include <QDebug>
 
 using namespace model::registry;
@@ -46,6 +49,8 @@ public:
     // main window
     AbstractRegistrySource *userSource    = nullptr;
     AbstractRegistrySource *machineSource = nullptr;
+
+    std::unordered_map<std::string, std::shared_ptr<model::admx::SupportedDefinition>> supportedOnDefinitions{};
 
     TemplateFilter filter{};
     bool enabled = false;
@@ -103,30 +108,48 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
     return filterAcceptsRow(index, state);
 }
 
+bool TemplateFilterModel::filterPlatform(const QModelIndex &index) const
+{
+    if (!d->filter.platformEnabled)
+    {
+        return true;
+    }
+
+    const std::string &supportedOnText = index.data(PolicyRoles::SUPPORTED_ON).value<QString>().toStdString();
+    if (supportedOnText.empty())
+    {
+        return true;
+    }
+
+    static const uint PREFIX_SIZE          = 9;
+    const std::string supportedOnReference = supportedOnText.substr(PREFIX_SIZE,
+                                                                    supportedOnText.size() - PREFIX_SIZE - 1);
+    auto supportedOn = d->supportedOnDefinitions[supportedOnReference];
+
+    const QSet<QString> selectedPlatforms = d->filter.selectedPlatforms;
+
+    bool platformMatch = false;
+    switch (d->filter.platformType)
+    {
+    case PlatformFilterType_ANY:
+        // platformMatch = std::any_of(selectedPlatforms.begin(),
+        //                             selectedPlatforms.end(),
+        //                             [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
+        break;
+    case PlatformFilterType_ALL:
+        // platformMatch = std::all_of(selectedPlatforms.begin(),
+        //                             selectedPlatforms.end(),
+        //                             [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
+        break;
+    }
+    return true;
+}
+
 bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const PolicyStateManager::PolicyState state) const
 {
     if (!d->enabled)
     {
         return true;
-    }
-
-    const auto supportedOnText   = index.data(PolicyRoles::SUPPORTED_ON).value<QString>();
-    QSet<std::pair<QString, QString>> selectedPlatforms = d->filter.selectedPlatforms;
-
-    // TODO: filter using selectedPlatforms
-    bool platformMatch = false;
-    switch (d->filter.platformType)
-    {
-    case PlatformFilterType_ANY:
-        platformMatch = std::any_of(selectedPlatforms.begin(),
-                                    selectedPlatforms.end(),
-                                    [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
-        break;
-    case PlatformFilterType_ALL:
-        platformMatch = std::all_of(selectedPlatforms.begin(),
-                                    selectedPlatforms.end(),
-                                    [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
-        break;
     }
 
     auto checkKeywordMatch = [&](const QString &string) {
@@ -163,7 +186,7 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
 
     const bool configuredMatch = d->filter.configured.contains(state);
 
-    return (!d->filter.platformEnabled || platformMatch) && (!d->filter.keywordEnabled || keywordMatch)
+    return filterPlatform(index) && (!d->filter.keywordEnabled || keywordMatch)
            && configuredMatch;
 }
 

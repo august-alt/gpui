@@ -25,9 +25,11 @@
 
 #include "../admx/policytype.h"
 #include "../admx/supportedproduct.h"
+#include "../admx/supporteddefinition.h"
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 class QFileInfo;
 class QString;
@@ -55,6 +57,7 @@ public:
 
     std::unique_ptr<QStandardItemModel> loadFolder(const std::string &path, const std::string &language);
     std::vector<std::shared_ptr<model::admx::SupportedProduct>> getProducts();
+    std::unordered_map<std::string, std::shared_ptr<admx::SupportedDefinition>> getSupportedOnDefenitions();
 
 private:
     PolicyBundle(const PolicyBundle &) = delete;            // copy ctor
@@ -70,7 +73,9 @@ private:
     PolicyBundlePrivate *d;
 
     void rearrangeTreeItems();
-    void assignParentCategory(const std::string &rawCategory, QStandardItem *machineItem, QStandardItem *userItem,
+    void assignParentCategory(const std::string &rawCategory,
+                              QStandardItem *machineItem,
+                              QStandardItem *userItem,
                               const std::string &fileName);
 
     QStandardItem *createItem(const QString &displayName,

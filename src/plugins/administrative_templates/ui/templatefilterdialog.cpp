@@ -99,8 +99,7 @@ TemplateFilter TemplateFilterDialog::getFilter() const
             if (isLeaf && state == Qt::Checked)
             {
                 auto sort_key = child.data(PLATFORM_ROLE_SORT).value<QString>();
-                auto display_name = child.data().value<QString>();
-                out.selectedPlatforms.insert(std::make_pair(sort_key, display_name));
+                out.selectedPlatforms.insert(sort_key);
             }
 
             addPlatforms(child);

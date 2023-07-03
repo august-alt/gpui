@@ -64,6 +64,8 @@ private:
     TemplateFilterModel &operator=(const TemplateFilterModel &) = delete; // copy assignment
     TemplateFilterModel &operator=(TemplateFilterModel &&) = delete;      // move assignment
 
+    bool filterPlatform(const QModelIndex &index) const;
+
 private:
     TemplateFilterModelPrivate *d;
 };

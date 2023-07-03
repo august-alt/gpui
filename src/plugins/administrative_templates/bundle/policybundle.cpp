@@ -41,9 +41,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QStandardItemModel>
-#include <QDebug>
 
 #include <fstream>
+#include <unordered_map>
 
 namespace model
 {
@@ -68,15 +68,15 @@ struct PolicyStorage
 class PolicyBundlePrivate
 {
 public:
-    std::unique_ptr<QStandardItemModel> treeModel                        = nullptr;
-    std::map<std::string, CategoryStorage> categoryItemMap               = {};
-    std::vector<PolicyStorage> unassignedItems                           = {};
-    QStandardItem *rootMachineItem                                       = nullptr;
-    QStandardItem *rootUserItem                                          = nullptr;
-    std::vector<QStandardItem *> items                                   = {};
-    std::map<std::string, std::string> supportedOnMap                    = {};
-    QStringList languageDirectoryPaths                                   = {};
-    std::vector<std::shared_ptr<model::admx::SupportedProduct>> products = {};
+    std::unique_ptr<QStandardItemModel> treeModel                                                      = nullptr;
+    std::map<std::string, CategoryStorage> categoryItemMap                                             = {};
+    std::vector<PolicyStorage> unassignedItems                                                         = {};
+    QStandardItem *rootMachineItem                                                                     = nullptr;
+    QStandardItem *rootUserItem                                                                        = nullptr;
+    std::vector<QStandardItem *> items                                                                 = {};
+    std::unordered_map<std::string, std::shared_ptr<admx::SupportedDefinition>> supportedOnDefinitions = {};
+    QStringList languageDirectoryPaths                                                                 = {};
+    std::vector<std::shared_ptr<model::admx::SupportedProduct>> products                               = {};
 };
 
 PolicyBundle::PolicyBundle()
@@ -172,6 +172,11 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
 std::vector<std::shared_ptr<model::admx::SupportedProduct>> PolicyBundle::getProducts()
 {
     return d->products;
+}
+
+std::unordered_map<std::string, std::shared_ptr<admx::SupportedDefinition>> PolicyBundle::getSupportedOnDefenitions()
+{
+    return d->supportedOnDefinitions;
 }
 
 template<typename TPolicies, typename TFormat>
@@ -365,7 +370,17 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
         {
             for (auto &supportedOn : definition->supportedOn->definitions)
             {
-                d->supportedOnMap[supportedOn->name] = findStringById(supportedOn->displayName, policyResources);
+                d->supportedOnDefinitions[supportedOn->name] = supportedOn;
+
+                // qWarning() << supportedOn->name.c_str();
+                // qWarning() << "\tOR:";
+                // for (const auto &or_element : supportedOn->or_)
+                //     qWarning() << "\t\t" << or_element.itemReference.c_str() << "[" << *or_element.minVersionIndex
+                //                << "to" << *or_element.maxVersionIndex << "]";
+                // qWarning() << "\tAND:";
+                // for (const auto &and_element : supportedOn->and_)
+                //     qWarning() << "\t\t" << and_element.itemReference.c_str() << "[" << *and_element.minVersionIndex
+                //                << "to" << *and_element.maxVersionIndex << "]";
             }
 
             for (auto &product : definition->supportedOn->products)
@@ -567,10 +582,10 @@ void PolicyBundle::assignSupportedOn()
             QStringList supportedRaw = item->data(PolicyRoles::SUPPORTED_ON).value<QString>().split(':');
             QString &toFind          = supportedRaw.back();
 
-            auto search = d->supportedOnMap.find(toFind.toStdString());
-            if (search != d->supportedOnMap.end())
+            auto search = d->supportedOnDefinitions.find(toFind.toStdString());
+            if (search != d->supportedOnDefinitions.end())
             {
-                item->setData(QString::fromStdString(search->second), PolicyRoles::SUPPORTED_ON);
+                item->setData(QString::fromStdString(search->second->displayName), PolicyRoles::SUPPORTED_ON);
             }
             else
             {

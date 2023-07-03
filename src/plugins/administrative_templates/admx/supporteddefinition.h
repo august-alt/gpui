@@ -24,6 +24,8 @@
 #include <vector>
 #include <string>
 
+#include "supportedonrange.h"
+
 namespace model
 {
 namespace admx
@@ -49,12 +51,12 @@ public:
     /*!
      * \brief or_
      */
-    std::vector<std::string> or_{};
+    std::vector<SupportedOnRange> or_{};
 
     /*!
      * \brief and_
      */
-    std::vector<std::string> and_{};
+    std::vector<SupportedOnRange> and_{};
 
     virtual ~SupportedDefinition() = default;
 };

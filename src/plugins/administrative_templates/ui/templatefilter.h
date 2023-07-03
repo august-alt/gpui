@@ -61,7 +61,7 @@ public:
     QSet<model::registry::PolicyStateManager::PolicyState> configured{};
 
     PlatformFilterType platformType = PlatformFilterType_ANY;
-    QSet<std::pair<QString, QString>> selectedPlatforms{};
+    QSet<QString> selectedPlatforms{};
 };
 
 } // namespace gpui

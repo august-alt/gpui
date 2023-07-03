@@ -446,27 +446,43 @@ public:
 
         if (category.or_().present())
         {
-            for (auto& rangeElement : category.or_()->range())
+            for (auto &rangeElement : category.or_()->range())
             {
-                this->or_.push_back(rangeElement.ref());
+                uint32_t minVersion = -1;
+                uint32_t maxVersion = -1;
+                assign_if_exists(minVersion, rangeElement.minVersionIndex());
+                assign_if_exists(maxVersion, rangeElement.maxVersionIndex());
+
+                this->or_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
             }
 
-            for (auto& rangeElement : category.or_()->reference())
+            for (auto &rangeElement : category.or_()->reference())
             {
-                this->or_.push_back(rangeElement.ref());
+                uint32_t minVersion = -1;
+                uint32_t maxVersion = -1;
+
+                this->or_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
             }
         }
 
         if (category.and_().present())
         {
-            for (auto& rangeElement : category.and_()->range())
+            for (auto &rangeElement : category.and_()->range())
             {
-                this->and_.push_back(rangeElement.ref());
+                uint32_t minVersion = -1;
+                uint32_t maxVersion = -1;
+                assign_if_exists(minVersion, rangeElement.minVersionIndex());
+                assign_if_exists(maxVersion, rangeElement.maxVersionIndex());
+
+                this->and_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
             }
 
-            for (auto& rangeElement : category.and_()->reference())
+            for (auto &rangeElement : category.and_()->reference())
             {
-                this->and_.push_back(rangeElement.ref());
+                uint32_t minVersion = -1;
+                uint32_t maxVersion = -1;
+
+                this->and_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
             }
         }
     }
@@ -489,20 +505,20 @@ public:
         this->displayName = category.displayName();
         this->name        = category.name();
 
-        for (auto& catregoryMajorVersion : category.majorVersion())
+        for (auto &catregoryMajorVersion : category.majorVersion())
         {
             model::admx::MajorVersion currentMajorVersion;
 
-            currentMajorVersion.name = catregoryMajorVersion.name();
-            currentMajorVersion.displayName = catregoryMajorVersion.displayName();
+            currentMajorVersion.name         = catregoryMajorVersion.name();
+            currentMajorVersion.displayName  = catregoryMajorVersion.displayName();
             currentMajorVersion.versionIndex = catregoryMajorVersion.versionIndex();
 
-            for (auto& categoryMinorVersion : catregoryMajorVersion.minorVersion())
+            for (auto &categoryMinorVersion : catregoryMajorVersion.minorVersion())
             {
                 model::admx::MinorVersion currentMinorVersion;
 
-                currentMinorVersion.name = categoryMinorVersion.name();
-                currentMinorVersion.displayName = categoryMinorVersion.displayName();
+                currentMinorVersion.name         = categoryMinorVersion.name();
+                currentMinorVersion.displayName  = categoryMinorVersion.displayName();
                 currentMinorVersion.versionIndex = categoryMinorVersion.versionIndex();
 
                 currentMajorVersion.minorVersion.push_back(currentMinorVersion);

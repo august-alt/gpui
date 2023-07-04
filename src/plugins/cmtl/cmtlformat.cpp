@@ -21,7 +21,7 @@
 
 #include "schema/cmtl.h"
 
-#include "../comments/commentdefinitionresources.h"
+#include "../comments/model/commentdefinitionresources.h"
 
 #include "../common/exceptionhandler.h"
 

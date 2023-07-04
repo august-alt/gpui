@@ -21,7 +21,7 @@
 
 #include "schema/cmtx.h"
 
-#include "../comments/policycomments.h"
+#include "../comments/model/policycomments.h"
 
 #include "../common/exceptionhandler.h"
 

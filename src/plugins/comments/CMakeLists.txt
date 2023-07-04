@@ -10,12 +10,12 @@ set(CMAKE_AUTOUIC ON)
 set(PLUGIN_NAME comments-plugin)
 
 set(HEADERS
-    comment.h
-    commentdefinitionresources.h
-    localizationresourcereference.h
-    policycomments.h
-    policynamespace.h
-    policynamespaceassociation.h
+    model/comment.h
+    model/commentdefinitionresources.h
+    model/localizationresourcereference.h
+    model/policycomments.h
+    model/policynamespace.h
+    model/policynamespaceassociation.h
 )
 
 set(SOURCES

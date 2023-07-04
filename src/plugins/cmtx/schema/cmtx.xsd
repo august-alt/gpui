@@ -6,7 +6,7 @@
         <xs:element name="policyNamespaces">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="using">
+              <xs:element name="using"  minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:attribute name="prefix" type="xs:string" use="required" />
                   <xs:attribute name="namespace" type="xs:string" use="required" />
@@ -36,15 +36,6 @@
         <xs:element name="resources">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="string" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute name="minRequiredRevision" type="xs:decimal" use="required" />
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="stringTable" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
@@ -61,6 +52,7 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
+            <xs:attribute name="minRequiredRevision" type="xs:decimal" use="required" />
           </xs:complexType>
         </xs:element>
       </xs:sequence>

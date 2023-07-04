@@ -5,6 +5,7 @@ set(HEADERS
     genericfile.inl
     genericreader.h
     genericreader.inl
+    commentresourcesfile.h
     inifile.h
     io.h
     policycommentsfile.h
@@ -18,6 +19,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    commentresourcesfile.cpp
     inifile.cpp
     io.cpp
     policycommentsfile.cpp

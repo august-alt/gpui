@@ -41,7 +41,7 @@ public:
 
         for (const auto& stringResource : comments.resources().stringTable().string())
         {
-            this->stringTable.push_back(stringResource);
+            this->stringTable.push_back(std::make_pair(stringResource.id(), stringResource));
         }
     }
 
@@ -51,6 +51,30 @@ public:
     }
 };
 
+class CommentDefinitionResourcesXsdAdapter : public ::GroupPolicy::CommentDefinitions::CommentDefinitionResources
+{
+private:
+    typedef ::comments::CommentDefinitionResources CommentDefinitionResources;
+
+public:
+    static std::unique_ptr<::GroupPolicy::CommentDefinitions::CommentDefinitionResources> create(const CommentDefinitionResources &comments)
+    {
+        ::GroupPolicy::CommentDefinitions::StringTable stringTable;
+
+        for (const auto& stringResource : comments.stringTable)
+        {
+            ::GroupPolicy::CommentDefinitions::String string(stringResource.first, stringResource.second);
+
+            stringTable.string().push_back(string);
+        }
+
+        ::GroupPolicy::CommentDefinitions::Resources resources(stringTable);
+
+        return std::make_unique<::GroupPolicy::CommentDefinitions::CommentDefinitionResources>(resources,
+                                                                                               comments.revision,
+                                                                                               comments.schemaVersion);
+    }
+};
 
 CmtlFormat::CmtlFormat()
     : io::PolicyFileFormat<io::CommentResourcesFile>("cmtl")
@@ -78,14 +102,16 @@ bool CmtlFormat::read(std::istream &input, io::CommentResourcesFile *file)
 bool CmtlFormat::write(std::ostream &output, io::CommentResourcesFile *file)
 {
     auto operation = [&]() -> void {
-        std::vector<std::shared_ptr<comments::CommentDefinitionResources>> policyCommentss
+        std::vector<std::shared_ptr<comments::CommentDefinitionResources>> policyComments
             = file->getAllPolicyCommentResources();
 
-        std::unique_ptr<::GroupPolicy::CommentDefinitions::CommentDefinitionResources> outputComments;
+        for (const auto& policyComment : policyComments)
+        {
+            std::unique_ptr<::GroupPolicy::CommentDefinitions::CommentDefinitionResources> outputComments
+                = CommentDefinitionResourcesXsdAdapter::create(*policyComment);
 
-        // TODO: Adapt comments to xsd format.
-
-        ::GroupPolicy::CommentDefinitions::commentDefinitionResources(output, *outputComments);
+            ::GroupPolicy::CommentDefinitions::commentDefinitionResources(output, *outputComments);
+        }
     };
 
     auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };

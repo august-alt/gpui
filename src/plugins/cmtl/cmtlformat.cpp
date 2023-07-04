@@ -19,28 +19,78 @@
 ***********************************************************************************************************************/
 #include "cmtlformat.h"
 
+#include "schema/cmtl.h"
+
+#include "../comments/commentdefinitionresources.h"
+
+#include "../common/exceptionhandler.h"
+
 namespace gpui
 {
+class XsdCommentDefinitionResourcesAdapater : public comments::CommentDefinitionResources
+{
+private:
+    typedef ::GroupPolicy::CommentDefinitions::CommentDefinitionResources CommentDefinitionResources;
+
+public:
+    XsdCommentDefinitionResourcesAdapater(const CommentDefinitionResources &comments)
+        : comments::CommentDefinitionResources()
+    {
+        this->revision = comments.revision();
+        this->schemaVersion = comments.schemaVersion();
+
+        for (const auto& stringResource : comments.resources().stringTable().string())
+        {
+            this->stringTable.push_back(stringResource);
+        }
+    }
+
+    static std::unique_ptr<comments::CommentDefinitionResources> create(const CommentDefinitionResources &comments)
+    {
+        return std::make_unique<XsdCommentDefinitionResourcesAdapater>(comments);
+    }
+};
+
+
 CmtlFormat::CmtlFormat()
-    : io::PolicyFileFormat<io::PolicyResourcesFile>("cmtl")
+    : io::PolicyFileFormat<io::CommentResourcesFile>("cmtl")
 {
 
 }
 
-bool CmtlFormat::read(std::istream &input, io::PolicyResourcesFile *file)
+bool CmtlFormat::read(std::istream &input, io::CommentResourcesFile *file)
 {
-    (void)(input);
-    (void)(file);
+    auto operation = [&]() {
+        std::unique_ptr<::GroupPolicy::CommentDefinitions::CommentDefinitionResources> policyComments
+            = ::GroupPolicy::CommentDefinitions::commentDefinitionResources(input,
+                                                                            ::xsd::cxx::tree::flags::dont_validate
+                                                                            | ::xsd::cxx::tree::flags::keep_dom
+                                                                            | ::xsd::cxx::tree::flags::own_dom);
 
-    return false;
+        file->addPolicyCommentResources(XsdCommentDefinitionResourcesAdapater::create(*policyComments));
+    };
+
+    auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };
+
+    return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
-bool CmtlFormat::write(std::ostream &output, io::PolicyResourcesFile *file)
+bool CmtlFormat::write(std::ostream &output, io::CommentResourcesFile *file)
 {
-    (void)(output);
-    (void)(file);
+    auto operation = [&]() -> void {
+        std::vector<std::shared_ptr<comments::CommentDefinitionResources>> policyCommentss
+            = file->getAllPolicyCommentResources();
 
-    return false;
+        std::unique_ptr<::GroupPolicy::CommentDefinitions::CommentDefinitionResources> outputComments;
+
+        // TODO: Adapt comments to xsd format.
+
+        ::GroupPolicy::CommentDefinitions::commentDefinitionResources(output, *outputComments);
+    };
+
+    auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };
+
+    return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
 }

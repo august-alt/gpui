@@ -24,7 +24,7 @@
 #include "../../../src/core/common.h"
 
 #include "../../../src/io/policyfileformat.h"
-#include "../../../src/io/policyresourcesfile.h"
+#include "../../../src/io/commentresourcesfile.h"
 
 namespace gpui
 {

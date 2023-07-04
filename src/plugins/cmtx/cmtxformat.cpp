@@ -40,6 +40,15 @@ public:
         this->schemaVersion = commentsResources.schemaVersion();
         this->resources = std::make_unique<comments::LocalizationResourceReference>();
 
+        for (const auto& using_ : commentsResources.policyNamespaces().using_())
+        {
+            comments::PolicyNamespaceAssociation usingAdapted;
+            usingAdapted.namespace_ = using_.namespace_();
+            usingAdapted.prefix = using_.prefix();
+
+            this->policyNamespaces.using_.push_back(usingAdapted);
+        }
+
         for (const auto& comment : commentsResources.comments().admTemplate().comment())
         {
             comments::Comment currentCommnent;
@@ -49,6 +58,15 @@ public:
 
             this->comments.push_back(currentCommnent);
         }
+
+        this->resources->minRequiredRevision = commentsResources.resources().minRequiredRevision();
+        if (commentsResources.resources().stringTable().present())
+        {
+            for (const auto& stringResource : commentsResources.resources().stringTable()->string())
+            {
+                this->resources->stringTable.push_back(stringResource);
+            }
+        }
     }
 
     static std::unique_ptr<comments::PolicyComments> create(const PolicyComments &comments)
@@ -56,7 +74,6 @@ public:
         return std::make_unique<XsdCommentsAdapter>(comments);
     }
 };
-
 
 CmtxFormat::CmtxFormat()
     : io::PolicyFileFormat<io::PolicyCommentsFile>("cmtx")
@@ -83,10 +100,19 @@ bool CmtxFormat::read(std::istream &input, io::PolicyCommentsFile *file)
 
 bool CmtxFormat::write(std::ostream &output, io::PolicyCommentsFile *file)
 {
-    (void)(output);
-    (void)(file);
+    auto operation = [&]() -> void {
+        std::vector<std::shared_ptr<comments::PolicyComments>> policyCommentss = file->getAllPolicyComments();
 
-    return false;
+        std::unique_ptr<::GroupPolicy::CommentDefinitions::PolicyComments> outputComments;
+
+        // TODO: Adapt comments to xsd format.
+
+        ::GroupPolicy::CommentDefinitions::policyComments(output, *outputComments);
+    };
+
+    auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };
+
+    return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
 }

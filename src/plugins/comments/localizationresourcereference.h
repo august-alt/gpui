@@ -35,7 +35,14 @@ class LocalizationResourceReference
 {
 public:
     /*!
-     * \brief minRequiredRevision  Minimal version of required revision of a policy.
+     * \brief minRequiredRevision  Minimum required version, defined with major.minor components (for example, "1.0").
+     *  For standalone CMTX files with no localized content, the minRequiredVersion attribute is compared
+     *  to the revision attribute of the CMTX <policyComments> root element. Both have equal major components,
+     *  and the minor component of the revision attribute is greater than or equal to the minor component
+     *  of the minRequiredVersion attribute. For CMTX files with language-specific CMTL files, the minRequiredVersion
+     *  attribute is compared to the revision attribute of the CMTL <commentDefinitionResources> root element.
+     *  Both have equal major components, and the minor component of the revision attribute is greater than or equal
+     *  to the minor component of the minRequiredVersion attribute.
      */
     std::string minRequiredRevision{};
 

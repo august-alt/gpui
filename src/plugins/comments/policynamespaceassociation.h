@@ -18,51 +18,31 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_POLICY_COMMENTS_H
-#define GPUI_POLICY_COMMENTS_H
+#ifndef GPUI_POLICY_NAMESPACE_ASSOCIATION_H
+#define GPUI_POLICY_NAMESPACE_ASSOCIATION_H
 
-#include "comment.h"
-#include "localizationresourcereference.h"
-#include "policynamespace.h"
-
-#include <memory>
-#include <vector>
-
+#include <string>
 
 namespace comments
 {
 
 /*!
- * \brief The PolicyComments class This outermost (document) element may not be contained by any other elements.
+ * \brief The PolicyNamespaceAssociation class A reference to a namespace used in the CMTX file.
  */
-class PolicyComments
+class PolicyNamespaceAssociation
 {
 public:
-    /**
-     * @brief policyNamespaces  Root element for <using> elements.
+    /*!
+     * \brief prefix An alias string used to refer to a namespace within the CMTX file.
      */
-    PolicyNamespace policyNamespaces{};
+    std::string prefix{};
 
     /*!
-     * \brief revision The revision number.
+     * \brief namespace_ A namespace defined in an ADMX file.
      */
-    uint32_t revision{0};
-
-    /*!
-     * \brief schemaVersion The version number of the applicable schema.
-     */
-    uint32_t schemaVersion{0};
-    /*!
-     * \brief comments  List of comments.
-     */
-    std::vector<Comment> comments{};
-
-    /*!
-     * \brief resources Resources.
-     */
-    std::unique_ptr<LocalizationResourceReference> resources{nullptr};
+    std::string namespace_{};
 };
 
 }
 
-#endif  //_POLICYCOMMENTS_H
+#endif//GPUI_POLICY_NAMESPACE_ASSOCIATION_H

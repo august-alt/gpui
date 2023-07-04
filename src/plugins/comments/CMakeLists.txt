@@ -14,6 +14,8 @@ set(HEADERS
     commentdefinitionresources.h
     localizationresourcereference.h
     policycomments.h
+    policynamespace.h
+    policynamespaceassociation.h
 )
 
 set(SOURCES

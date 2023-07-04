@@ -38,20 +38,20 @@ public:
     /*!
      * \brief revision  The revision number.
      */
-    uint32_t revision;
+    uint32_t revision{};
     /*!
      * \brief schemaVersion  The version number of the applicable schema.
      */
-    uint32_t schemaVersion;
+    uint32_t schemaVersion{};
     /*!
      * \brief stringTable Table of the strings.
      */
-    std::vector<std::string> stringTable;
+    std::vector<std::string> stringTable{};
 
     /*!
      * \brief presentationTable List of pointers to presentation elements.
      */
-    std::vector<Presentation*> presentationTable;
+    std::vector<Presentation*> presentationTable{};
 };
 
 }

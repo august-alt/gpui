@@ -29,14 +29,14 @@
 namespace gpui
 {
 
-class GPUI_SYMBOL_EXPORT CmtlFormat : public io::PolicyFileFormat<io::PolicyResourcesFile>
+class GPUI_SYMBOL_EXPORT CmtlFormat : public io::PolicyFileFormat<io::CommentResourcesFile>
 {
 public:
     CmtlFormat();
 
-    bool read(std::istream &input, io::PolicyResourcesFile *file) override;
+    bool read(std::istream &input, io::CommentResourcesFile *file) override;
 
-    bool write(std::ostream &output, io::PolicyResourcesFile *file) override;
+    bool write(std::ostream &output, io::CommentResourcesFile *file) override;
 };
 
 }

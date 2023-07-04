@@ -9,6 +9,8 @@ set(CMAKE_AUTOUIC ON)
 
 set(PLUGIN_NAME comments-plugin)
 
+include_directories("${CMAKE_SOURCE_DIR}/src/core")
+
 set(HEADERS
     model/comment.h
     model/commentdefinitionresources.h
@@ -16,9 +18,12 @@ set(HEADERS
     model/policycomments.h
     model/policynamespace.h
     model/policynamespaceassociation.h
+    commentssnapin.h
 )
 
 set(SOURCES
+    commentsplugin.cpp
+    commentssnapin.cpp
 )
 
 set(UI_FORMS

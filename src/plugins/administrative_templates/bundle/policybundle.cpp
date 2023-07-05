@@ -73,6 +73,7 @@ public:
     QStandardItem *rootMachineItem                                       = nullptr;
     QStandardItem *rootUserItem                                          = nullptr;
     std::vector<QStandardItem *> items                                   = {};
+    std::map<std::string, std::string> supportedOnMap                    = {};
     admx::SupportedDefinitions supportedOnDefinitions                    = {};
     QStringList languageDirectoryPaths                                   = {};
     std::vector<std::shared_ptr<model::admx::SupportedProduct>> products = {};
@@ -369,6 +370,7 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
         {
             for (auto &supportedOn : definition->supportedOn->definitions)
             {
+                d->supportedOnMap[supportedOn->name] = findStringById(supportedOn->displayName, policyResources);
                 d->supportedOnDefinitions[supportedOn->name] = supportedOn;
             }
 

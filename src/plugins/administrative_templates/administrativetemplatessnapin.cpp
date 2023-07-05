@@ -244,13 +244,13 @@ public:
         model       = bundle->loadFolder(admxPath, localeName);
         proxyModel->setSourceModel(model.get());
 
-        auto products = bundle->getProducts();
-        platformModel->populateModel(products);
-
         auto supportedOnDefinitions = bundle->getSupportedOnDefenitions();
-        filterModel->setSupportedOnDefenitions(supportedOnDefinitions);
+        filterModel->setSupportedOnDefenitions(std::move(supportedOnDefinitions));
         filterModel->setSourceModel(proxyModel.get());
         filterModel->setPlatformModel(platformModel.get());
+
+        auto products = bundle->getProducts();
+        platformModel->populateModel(products);
     }
 
     void updateFilter()

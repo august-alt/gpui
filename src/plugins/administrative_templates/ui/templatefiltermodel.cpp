@@ -90,7 +90,6 @@ void TemplateFilterModel::setFilter(const TemplateFilter &filter, const bool ena
 
 void TemplateFilterModel::setSupportedOnDefenitions(const SupportedDefinitions &supportedOnDefinitions)
 {
-    // TODO: too big for copy
     d->supportedOnDefinitions = supportedOnDefinitions;
 }
 
@@ -129,7 +128,13 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
 
     const bool configuredMatch = d->filter.configured.contains(state);
 
-    return filterPlatform(index) && filterKeyword(index) && configuredMatch;
+    qWarning() << "===================================================";
+    const bool matchPlatform = filterPlatform(index);
+    const bool matchKeyword = filterKeyword(index);
+    qWarning() << "MATCH PLATFORM:" << matchPlatform;
+    qWarning() << "MATCH KEYWORD:" << matchKeyword;
+
+    return matchPlatform && matchKeyword && configuredMatch;
 }
 
 uint32_t TemplateFilterModel::getPlatformIndex(QString platform, QString parentReference) const
@@ -146,23 +151,30 @@ uint32_t TemplateFilterModel::getPlatformIndex(QString platform, QString parentR
             printTree(child, depth + 1);
         }
     };
-    // printTree(d->platformModel->index(0, 1), 1);
+    static bool uno = true;
+    if (uno)
+    {
+        uno = false;
+        printTree(d->platformModel->index(0, 1), 1);
+    }
 
-    return 0;
+    return 3;
 }
 
-bool TemplateFilterModel::filterPlatform(const QModelIndex &index) const
+bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
 {
     if (!d->filter.platformEnabled)
     {
         return true;
     }
 
-    const std::string &supportedOnText = index.data(PolicyRoles::SUPPORTED_ON).value<QString>().toStdString();
+    const std::string &supportedOnText = platformIndex.data(PolicyRoles::SUPPORTED_ON).value<QString>().toStdString();
     if (supportedOnText.empty())
     {
-        return true;
+        qWarning() << "SUPPORTED ON TEXT EMPTY";
+        return false;
     }
+    qWarning() << "SUPPORTED ON TEXT:" << supportedOnText.c_str();
 
     const unsigned substrStart                       = 9;
     const unsigned subsrtLenght                      = supportedOnText.size() - substrStart - 1;
@@ -170,14 +182,21 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &index) const
     std::shared_ptr<SupportedDefinition> supportedOn = d->supportedOnDefinitions[supportedOnReference];
     if (!supportedOn)
     {
-        qWarning() << supportedOnReference.c_str() << "does not have a definition";
+        // NOTE: return true if item has not filtered child, otherwise return false
+        for (int i = 0; i < d->platformModel->rowCount(platformIndex); ++i)
+        {
+            if (filterPlatform(d->platformModel->index(i, 0, platformIndex)))
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
-    const auto matchSinglePlatform = [&supportedOn, this](QString platform) {
+    const auto matchSinglePlatform = [&](QString platform) {
         const auto isPlatformWithinRange = [&](SupportedOnRange range) {
             uint32_t version = getPlatformIndex(platform, QString::fromStdString(range.itemReference));
-            return true;
             return (range.minVersionIndex <= version && version <= range.maxVersionIndex);
         };
 
@@ -241,7 +260,6 @@ bool TemplateFilterModel::filterKeyword(const QModelIndex &index) const
     // TODO: implement comment filter (comment data not stored in model yet)
     const bool commentMatch = true;
 
-    // TODO: incorrect logic
     const bool keywordMatch = (d->filter.titleEnabled && titleMatch) || (d->filter.helpEnabled && helpMatch)
                               || (d->filter.commentEnabled && commentMatch);
     return keywordMatch;

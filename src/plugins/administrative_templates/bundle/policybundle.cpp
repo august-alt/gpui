@@ -370,16 +370,6 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
             for (auto &supportedOn : definition->supportedOn->definitions)
             {
                 d->supportedOnDefinitions[supportedOn->name] = supportedOn;
-
-                // qWarning() << supportedOn->name.c_str();
-                // qWarning() << "\tOR:";
-                // for (const auto &or_element : supportedOn->or_)
-                //     qWarning() << "\t\t" << or_element.itemReference.c_str() << "[" << *or_element.minVersionIndex
-                //                << "to" << *or_element.maxVersionIndex << "]";
-                // qWarning() << "\tAND:";
-                // for (const auto &and_element : supportedOn->and_)
-                //     qWarning() << "\t\t" << and_element.itemReference.c_str() << "[" << *and_element.minVersionIndex
-                //                << "to" << *and_element.maxVersionIndex << "]";
             }
 
             for (auto &product : definition->supportedOn->products)

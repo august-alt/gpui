@@ -94,9 +94,8 @@ TemplateFilter TemplateFilterDialog::getFilter() const
         {
             const QModelIndex child = sourceModel->index(row, 0, index);
 
-            const bool isLeaf = (sourceModel->rowCount(child) == 0);
             const auto state  = child.data(Qt::CheckStateRole).value<Qt::CheckState>();
-            if (isLeaf && state == Qt::Checked)
+            if (state == Qt::Checked)
             {
                 auto sort_key = child.data(PLATFORM_ROLE_SORT).value<QString>();
                 out.selectedPlatforms.insert(sort_key);
@@ -111,25 +110,25 @@ TemplateFilter TemplateFilterDialog::getFilter() const
     {
     // NOTE: cases order is dictated by FilterComboValue declaration
     case FilterComboValue_ANY:
-        out.configured = QSet<PolicyStateManager::PolicyState>({
+        out.configured = {
             PolicyStateManager::STATE_NOT_CONFIGURED,
             PolicyStateManager::STATE_ENABLED,
             PolicyStateManager::STATE_DISABLED,
-        });
+        };
         break;
     case FilterComboValue_YES:
-        out.configured = QSet<PolicyStateManager::PolicyState>({
+        out.configured = {
             PolicyStateManager::STATE_ENABLED,
             PolicyStateManager::STATE_DISABLED,
-        });
+        };
         break;
     case FilterComboValue_NO:
-        out.configured = QSet<PolicyStateManager::PolicyState>({
+        out.configured = {
             PolicyStateManager::STATE_NOT_CONFIGURED,
-        });
+        };
         break;
     default:
-        out.configured = QSet<PolicyStateManager::PolicyState>();
+        out.configured = {};
     }
 
     // TODO: save filters from managed and comment combo

@@ -146,7 +146,7 @@ uint32_t TemplateFilterModel::getPlatformIndex(QString platform, QString parentR
             printTree(child, depth + 1);
         }
     };
-    printTree(d->platformModel->index(0, 1), 1);
+    // printTree(d->platformModel->index(0, 1), 1);
 
     return 0;
 }
@@ -175,18 +175,19 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &index) const
     }
 
     const auto matchSinglePlatform = [&supportedOn, this](QString platform) {
-        const auto isPlayformWithinRange = [&](SupportedOnRange range) {
+        const auto isPlatformWithinRange = [&](SupportedOnRange range) {
             uint32_t version = getPlatformIndex(platform, QString::fromStdString(range.itemReference));
+            return true;
             return (range.minVersionIndex <= version && version <= range.maxVersionIndex);
         };
 
         if (!supportedOn->or_.empty())
         {
-            return std::any_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlayformWithinRange);
+            return std::any_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlatformWithinRange);
         }
         if (!supportedOn->and_.empty())
         {
-            return std::all_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlayformWithinRange);
+            return std::all_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlatformWithinRange);
         }
 
         return false;
@@ -208,7 +209,7 @@ bool TemplateFilterModel::filterKeyword(const QModelIndex &index) const
 {
     if (!d->filter.keywordEnabled)
     {
-        return false;
+        return true;
     }
 
     auto checkKeywordMatch = [&](const QString &string) {
@@ -240,6 +241,7 @@ bool TemplateFilterModel::filterKeyword(const QModelIndex &index) const
     // TODO: implement comment filter (comment data not stored in model yet)
     const bool commentMatch = true;
 
+    // TODO: incorrect logic
     const bool keywordMatch = (d->filter.titleEnabled && titleMatch) || (d->filter.helpEnabled && helpMatch)
                               || (d->filter.commentEnabled && commentMatch);
     return keywordMatch;

@@ -87,7 +87,6 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 
 %_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_libdir/gpui/plugins/libpreferences-plugin.so
-%_libdir/gpui/plugins/libcomments-plugin.so
 
 %_libdir/gpui/plugins/libadml-plugin.so
 %_libdir/gpui/plugins/libadmx-plugin.so

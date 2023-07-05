@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,39 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../core/plugin.h"
+#ifndef GPUI_COMMENTS_MODEL_H
+#define GPUI_COMMENTS_MODEL_H
 
-#include "cmtlformat.h"
+#include <QStandardItemModel>
 
-namespace gpui
+#include <memory>
+
+namespace comments
 {
-class CmtlPlugin : public Plugin
+
+class CommentsModel : public QStandardItemModel
 {
 public:
-    CmtlPlugin()
-        : Plugin("cmtl")
+    enum CommentsModelRoles
     {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::CommentResourcesFile>).name(), CmtlFormat);
-    }
-};
-} // namespace gpui
+        COMMENT_TEXT_ROLE   = Qt::DisplayRole,
+        ITEM_REFERENCE_ROLE = Qt::UserRole + 1,
+    };
 
-GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)
+public:
+    CommentsModel(QObject* parent = nullptr);
+
+    void load(const QString& path);
+
+    QModelIndex indexFromItemReference(const QString &itemRef);
+
+private:
+    CommentsModel(const CommentsModel&)            = delete;   // copy ctor
+    CommentsModel(CommentsModel&&)                 = delete;   // move ctor
+    CommentsModel& operator=(const CommentsModel&) = delete;   // copy assignment
+    CommentsModel& operator=(CommentsModel&&)      = delete;   // move assignment
+};
+
+}
+
+#endif  //GPUI_COMMENTS_MODEL_H

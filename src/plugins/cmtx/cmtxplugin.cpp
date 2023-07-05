@@ -20,6 +20,8 @@
 
 #include "../../core/plugin.h"
 
+#include "cmtxformat.h"
+
 namespace gpui
 {
 class CmtxPlugin : public Plugin
@@ -27,7 +29,9 @@ class CmtxPlugin : public Plugin
 public:
     CmtxPlugin()
         : Plugin("cmtx")
-    {}
+    {
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::PolicyCommentsFile>).name(), CmtxFormat);
+    }
 };
 } // namespace gpui
 

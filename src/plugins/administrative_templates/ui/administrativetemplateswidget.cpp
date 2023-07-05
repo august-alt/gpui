@@ -39,6 +39,8 @@
 #include "../admx/policyelement.h"
 #include "../admx/policytype.h"
 
+#include "../comments/commentsmodel.h"
+
 using namespace model::bundle;
 using namespace model::admx;
 
@@ -52,6 +54,9 @@ class AdministrativeTemplatesWidgetPrivate
 public:
     model::registry::AbstractRegistrySource *userSource    = nullptr;
     model::registry::AbstractRegistrySource *machineSource = nullptr;
+
+    comments::CommentsModel* userCommentsModel = nullptr;
+    comments::CommentsModel* machineCommentsModel = nullptr;
 
     std::unique_ptr<model::registry::PolicyStateManager> manager = nullptr;
 
@@ -191,6 +196,7 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
             auto presentation = model->data(index, PolicyRoles::PRESENTATION).value<PresentationPtr>();
             auto policy       = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
             model::registry::AbstractRegistrySource *source = d->userSource;
+            comments::CommentsModel* commentsModel = d->userCommentsModel;
 
             if (policy && d->machineSource)
             {
@@ -198,6 +204,7 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                     == PolicyType::Machine)
                 {
                     source = d->machineSource;
+                    commentsModel = d->machineCommentsModel;
                 }
 
                 auto policyType = static_cast<PolicyType>(model->data(index, PolicyRoles::POLICY_TYPE).toUInt());
@@ -208,6 +215,20 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                                  : (policyType == PolicyType::User
                                         ? "User"
                                         : (policyType == PolicyType::Both ? "Both" : "Error ")));
+            }
+
+            if (commentsModel && policy)
+            {
+                auto commentIndex = commentsModel->indexFromItemReference(QString::fromStdString(policy->name));
+
+                if (commentIndex.isValid())
+                {
+                    ui->commentTextEdit->setText(commentIndex.data().value<QString>());
+                }
+                else
+                {
+                    qWarning() << "Policy name: " << policy->name.c_str() << "comment not found!";
+                }
             }
 
             if (source && policy)
@@ -312,6 +333,16 @@ void AdministrativeTemplatesWidget::setMachineRegistrySource(model::registry::Ab
 {
     qWarning() << "Test machine registry source";
     d->machineSource = registrySource;
+}
+
+void AdministrativeTemplatesWidget::setUserCommentModel(comments::CommentsModel *userCommentsModel)
+{
+    d->userCommentsModel = userCommentsModel;
+}
+
+void AdministrativeTemplatesWidget::setMachineCommentModel(comments::CommentsModel *machineCommentsModel)
+{
+    d->machineCommentsModel = machineCommentsModel;
 }
 
 bool AdministrativeTemplatesWidget::hasDataChanged()

@@ -31,7 +31,6 @@
 
 #include "admx/supporteddefinition.h"
 
-#include <unordered_map>
 #include <QDebug>
 
 using namespace model::registry;
@@ -50,7 +49,9 @@ public:
     AbstractRegistrySource *userSource    = nullptr;
     AbstractRegistrySource *machineSource = nullptr;
 
-    std::unordered_map<std::string, std::shared_ptr<model::admx::SupportedDefinition>> supportedOnDefinitions{};
+    SupportedDefinitions supportedOnDefinitions{};
+
+    PlatformModel *platformModel = nullptr;
 
     TemplateFilter filter{};
     bool enabled = false;
@@ -87,14 +88,25 @@ void TemplateFilterModel::setFilter(const TemplateFilter &filter, const bool ena
     invalidateFilter();
 }
 
+void TemplateFilterModel::setSupportedOnDefenitions(const SupportedDefinitions &supportedOnDefinitions)
+{
+    // TODO: too big for copy
+    d->supportedOnDefinitions = supportedOnDefinitions;
+}
+
+void TemplateFilterModel::setPlatformModel(PlatformModel *model)
+{
+    d->platformModel = model;
+}
+
 // NOTE: filterAcceptsRow() is split in 2 parts because the
 // code to get policy state is too hard to mock so we avoid
 // testing it.
 bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    const auto policy       = index.model()->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
     auto state              = PolicyStateManager::STATE_NOT_CONFIGURED;
+    const auto policy       = index.model()->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
     if (policy != nullptr)
     {
         const auto source = (policy->policyType == PolicyType::Machine ? d->machineSource : d->userSource);
@@ -106,6 +118,37 @@ bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sou
     }
 
     return filterAcceptsRow(index, state);
+}
+
+bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const PolicyStateManager::PolicyState state) const
+{
+    if (!d->enabled)
+    {
+        return true;
+    }
+
+    const bool configuredMatch = d->filter.configured.contains(state);
+
+    return filterPlatform(index) && filterKeyword(index) && configuredMatch;
+}
+
+uint32_t TemplateFilterModel::getPlatformIndex(QString platform, QString parentReference) const
+{
+    qWarning() << "Searching for index of" << platform << "as child of" << parentReference << "in a tree:";
+
+    std::function<void(const QModelIndex &, int depth)> printTree = [&](const QModelIndex &index, int depth) {
+        for (int row = 0; row < d->platformModel->rowCount(index); ++row)
+        {
+            const QModelIndex child = d->platformModel->index(row, 0, index);
+
+            qWarning() << std::string(depth, '\t').c_str() << child.data(PLATFORM_ROLE_SORT).value<QString>();
+
+            printTree(child, depth + 1);
+        }
+    };
+    printTree(d->platformModel->index(0, 1), 1);
+
+    return 0;
 }
 
 bool TemplateFilterModel::filterPlatform(const QModelIndex &index) const
@@ -121,35 +164,51 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &index) const
         return true;
     }
 
-    static const uint PREFIX_SIZE          = 9;
-    const std::string supportedOnReference = supportedOnText.substr(PREFIX_SIZE,
-                                                                    supportedOnText.size() - PREFIX_SIZE - 1);
-    auto supportedOn = d->supportedOnDefinitions[supportedOnReference];
+    const unsigned substrStart                       = 9;
+    const unsigned subsrtLenght                      = supportedOnText.size() - substrStart - 1;
+    const std::string supportedOnReference           = supportedOnText.substr(substrStart, subsrtLenght);
+    std::shared_ptr<SupportedDefinition> supportedOn = d->supportedOnDefinitions[supportedOnReference];
+    if (!supportedOn)
+    {
+        qWarning() << supportedOnReference.c_str() << "does not have a definition";
+        return false;
+    }
 
-    const QSet<QString> selectedPlatforms = d->filter.selectedPlatforms;
+    const auto matchSinglePlatform = [&supportedOn, this](QString platform) {
+        const auto isPlayformWithinRange = [&](SupportedOnRange range) {
+            uint32_t version = getPlatformIndex(platform, QString::fromStdString(range.itemReference));
+            return (range.minVersionIndex <= version && version <= range.maxVersionIndex);
+        };
 
-    bool platformMatch = false;
+        if (!supportedOn->or_.empty())
+        {
+            return std::any_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlayformWithinRange);
+        }
+        if (!supportedOn->and_.empty())
+        {
+            return std::all_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlayformWithinRange);
+        }
+
+        return false;
+    };
+
+    const QSet<QString> &selectedPlatforms = d->filter.selectedPlatforms;
     switch (d->filter.platformType)
     {
     case PlatformFilterType_ANY:
-        // platformMatch = std::any_of(selectedPlatforms.begin(),
-        //                             selectedPlatforms.end(),
-        //                             [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
-        break;
+        return std::any_of(selectedPlatforms.begin(), selectedPlatforms.end(), matchSinglePlatform);
     case PlatformFilterType_ALL:
-        // platformMatch = std::all_of(selectedPlatforms.begin(),
-        //                             selectedPlatforms.end(),
-        //                             [&supportedOnText](QString platform) { return supportedOnText.contains(platform); });
-        break;
+        return std::all_of(selectedPlatforms.begin(), selectedPlatforms.end(), matchSinglePlatform);
+    default:
+        return false;
     }
-    return true;
 }
 
-bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const PolicyStateManager::PolicyState state) const
+bool TemplateFilterModel::filterKeyword(const QModelIndex &index) const
 {
-    if (!d->enabled)
+    if (!d->filter.keywordEnabled)
     {
-        return true;
+        return false;
     }
 
     auto checkKeywordMatch = [&](const QString &string) {
@@ -183,11 +242,7 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
 
     const bool keywordMatch = (d->filter.titleEnabled && titleMatch) || (d->filter.helpEnabled && helpMatch)
                               || (d->filter.commentEnabled && commentMatch);
-
-    const bool configuredMatch = d->filter.configured.contains(state);
-
-    return filterPlatform(index) && (!d->filter.keywordEnabled || keywordMatch)
-           && configuredMatch;
+    return keywordMatch;
 }
 
 void TemplateFilterModel::setUserRegistrySource(AbstractRegistrySource *registrySource)

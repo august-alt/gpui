@@ -444,12 +444,14 @@ public:
         this->displayName = category.displayName();
         this->name        = category.name();
 
+        const uint32_t defaultMinVersion = 0;
+        const uint32_t defaultMaxVersion = UINT32_MAX;
         if (category.or_().present())
         {
             for (auto &rangeElement : category.or_()->range())
             {
-                uint32_t minVersion = -1;
-                uint32_t maxVersion = -1;
+                uint32_t minVersion = defaultMinVersion;
+                uint32_t maxVersion = defaultMaxVersion;
                 assign_if_exists(minVersion, rangeElement.minVersionIndex());
                 assign_if_exists(maxVersion, rangeElement.maxVersionIndex());
 
@@ -458,10 +460,7 @@ public:
 
             for (auto &rangeElement : category.or_()->reference())
             {
-                uint32_t minVersion = -1;
-                uint32_t maxVersion = -1;
-
-                this->or_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
+                this->or_.emplace_back(rangeElement.ref(), defaultMinVersion, defaultMaxVersion);
             }
         }
 
@@ -469,8 +468,8 @@ public:
         {
             for (auto &rangeElement : category.and_()->range())
             {
-                uint32_t minVersion = -1;
-                uint32_t maxVersion = -1;
+                uint32_t minVersion = defaultMinVersion;
+                uint32_t maxVersion = defaultMaxVersion;
                 assign_if_exists(minVersion, rangeElement.minVersionIndex());
                 assign_if_exists(maxVersion, rangeElement.maxVersionIndex());
 
@@ -479,10 +478,7 @@ public:
 
             for (auto &rangeElement : category.and_()->reference())
             {
-                uint32_t minVersion = -1;
-                uint32_t maxVersion = -1;
-
-                this->and_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
+                this->and_.emplace_back(rangeElement.ref(), defaultMinVersion, defaultMaxVersion);
             }
         }
     }

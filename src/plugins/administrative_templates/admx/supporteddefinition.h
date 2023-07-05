@@ -21,8 +21,9 @@
 #ifndef GPUI_SUPPORTEDDEFINITION_H
 #define GPUI_SUPPORTEDDEFINITION_H
 
-#include <vector>
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 #include "supportedonrange.h"
 
@@ -60,6 +61,11 @@ public:
 
     virtual ~SupportedDefinition() = default;
 };
+
+/*!
+ * \brief Maps definition name to object
+ */
+using SupportedDefinitions = std::unordered_map<std::string, std::shared_ptr<SupportedDefinition>>;
 } // namespace admx
 } // namespace model
 

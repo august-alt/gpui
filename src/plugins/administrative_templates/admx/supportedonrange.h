@@ -19,17 +19,17 @@ public:
     /*!
      * \brief Minimum supported version.
      */
-    std::unique_ptr<uint32_t> minVersionIndex{};
+    uint32_t minVersionIndex{};
 
     /*!
      * \brief Maximum supported version.
      */
-    std::unique_ptr<uint32_t> maxVersionIndex{};
+    uint32_t maxVersionIndex{};
 
     SupportedOnRange(const std::string &reference, uint32_t minVersion, uint32_t maxVersion)
         : itemReference(reference)
-        , minVersionIndex(new uint32_t(minVersion))
-        , maxVersionIndex(new uint32_t(maxVersion))
+        , minVersionIndex(minVersion)
+        , maxVersionIndex(maxVersion)
     {}
 };
 

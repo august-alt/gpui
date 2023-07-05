@@ -22,6 +22,7 @@
 #include "bundle/policyroles.h"
 #include "qnamespace.h"
 
+#include <iostream>
 #include <memory>
 
 #include <QDebug>

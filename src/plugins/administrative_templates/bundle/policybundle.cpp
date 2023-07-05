@@ -43,7 +43,6 @@
 #include <QStandardItemModel>
 
 #include <fstream>
-#include <unordered_map>
 
 namespace model
 {
@@ -68,15 +67,15 @@ struct PolicyStorage
 class PolicyBundlePrivate
 {
 public:
-    std::unique_ptr<QStandardItemModel> treeModel                                                      = nullptr;
-    std::map<std::string, CategoryStorage> categoryItemMap                                             = {};
-    std::vector<PolicyStorage> unassignedItems                                                         = {};
-    QStandardItem *rootMachineItem                                                                     = nullptr;
-    QStandardItem *rootUserItem                                                                        = nullptr;
-    std::vector<QStandardItem *> items                                                                 = {};
-    std::unordered_map<std::string, std::shared_ptr<admx::SupportedDefinition>> supportedOnDefinitions = {};
-    QStringList languageDirectoryPaths                                                                 = {};
-    std::vector<std::shared_ptr<model::admx::SupportedProduct>> products                               = {};
+    std::unique_ptr<QStandardItemModel> treeModel                        = nullptr;
+    std::map<std::string, CategoryStorage> categoryItemMap               = {};
+    std::vector<PolicyStorage> unassignedItems                           = {};
+    QStandardItem *rootMachineItem                                       = nullptr;
+    QStandardItem *rootUserItem                                          = nullptr;
+    std::vector<QStandardItem *> items                                   = {};
+    admx::SupportedDefinitions supportedOnDefinitions                    = {};
+    QStringList languageDirectoryPaths                                   = {};
+    std::vector<std::shared_ptr<model::admx::SupportedProduct>> products = {};
 };
 
 PolicyBundle::PolicyBundle()
@@ -174,7 +173,7 @@ std::vector<std::shared_ptr<model::admx::SupportedProduct>> PolicyBundle::getPro
     return d->products;
 }
 
-std::unordered_map<std::string, std::shared_ptr<admx::SupportedDefinition>> PolicyBundle::getSupportedOnDefenitions()
+admx::SupportedDefinitions PolicyBundle::getSupportedOnDefenitions()
 {
     return d->supportedOnDefinitions;
 }

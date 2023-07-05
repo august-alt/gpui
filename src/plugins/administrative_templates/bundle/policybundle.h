@@ -24,12 +24,11 @@
 #include "../administrativetemplates.h"
 
 #include "../admx/policytype.h"
-#include "../admx/supportedproduct.h"
 #include "../admx/supporteddefinition.h"
+#include "../admx/supportedproduct.h"
 
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 class QFileInfo;
 class QString;
@@ -57,7 +56,7 @@ public:
 
     std::unique_ptr<QStandardItemModel> loadFolder(const std::string &path, const std::string &language);
     std::vector<std::shared_ptr<model::admx::SupportedProduct>> getProducts();
-    std::unordered_map<std::string, std::shared_ptr<admx::SupportedDefinition>> getSupportedOnDefenitions();
+    admx::SupportedDefinitions getSupportedOnDefenitions();
 
 private:
     PolicyBundle(const PolicyBundle &) = delete;            // copy ctor

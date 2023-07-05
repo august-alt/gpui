@@ -43,6 +43,12 @@ set(HEADERS
     bundle/policyroles.h
     commands/command.h
     commands/commandgroup.h
+    comments/comment.h
+    comments/commentdefinitionresources.h
+    comments/localizationresourcereference.h
+    comments/policycomments.h
+    comments/policynamespace.h
+    comments/policynamespaceassociation.h
     presentation/checkbox.h
     presentation/combobox.h
     presentation/decimaltextbox.h

@@ -75,6 +75,43 @@ public:
     }
 };
 
+class CommentsXsdAdapter : public ::GroupPolicy::CommentDefinitions::PolicyComments
+{
+private:
+    typedef ::comments::PolicyComments PolicyComments;
+
+public:
+    static std::unique_ptr<::GroupPolicy::CommentDefinitions::PolicyComments> create(const PolicyComments &input)
+    {
+        auto policyNamespaces = ::std::make_unique<::GroupPolicy::CommentDefinitions::PolicyNamespaces>();
+        auto admTemplate = ::std::make_unique<::GroupPolicy::CommentDefinitions::AdmTemplate>();
+        auto comments  = ::std::make_unique<::GroupPolicy::CommentDefinitions::Comments>(std::move(admTemplate));
+
+        for (const auto& comment : input.comments)
+        {
+            ::GroupPolicy::CommentDefinitions::Comment commentAdapted(comment.policyRef, comment.commentText);
+
+            comments->admTemplate().comment().push_back(commentAdapted);
+        }
+
+        auto resources = ::std::make_unique<::GroupPolicy::CommentDefinitions::Resources>(
+                    input.resources->minRequiredRevision);
+
+        for (const auto& resource : input.resources->stringTable)
+        {
+            ::GroupPolicy::CommentDefinitions::String resourceString(resource.first, resource.second);
+
+            resources->stringTable()->string().push_back(resourceString);
+        }
+
+        return std::make_unique<::GroupPolicy::CommentDefinitions::PolicyComments>(std::move(policyNamespaces),
+                                                                                   std::move(comments),
+                                                                                   std::move(resources),
+                                                                                   input.revision,
+                                                                                   input.schemaVersion);
+    }
+};
+
 CmtxFormat::CmtxFormat()
     : io::PolicyFileFormat<io::PolicyCommentsFile>("cmtx")
 {
@@ -101,13 +138,15 @@ bool CmtxFormat::read(std::istream &input, io::PolicyCommentsFile *file)
 bool CmtxFormat::write(std::ostream &output, io::PolicyCommentsFile *file)
 {
     auto operation = [&]() -> void {
-        std::vector<std::shared_ptr<comments::PolicyComments>> policyCommentss = file->getAllPolicyComments();
+        std::vector<std::shared_ptr<comments::PolicyComments>> policyComments = file->getAllPolicyComments();
 
-        std::unique_ptr<::GroupPolicy::CommentDefinitions::PolicyComments> outputComments;
+        for (const auto& policyComment : policyComments)
+        {
+            std::unique_ptr<::GroupPolicy::CommentDefinitions::PolicyComments> outputComments
+                = CommentsXsdAdapter::create(*policyComment);
 
-        // TODO: Adapt comments to xsd format.
-
-        ::GroupPolicy::CommentDefinitions::policyComments(output, *outputComments);
+            ::GroupPolicy::CommentDefinitions::policyComments(output, *outputComments);
+        }
     };
 
     auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };

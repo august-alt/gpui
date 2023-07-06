@@ -46,12 +46,12 @@ public:
     /*!
      * \brief revision The revision number.
      */
-    uint32_t revision{0};
+    double revision{0};
 
     /*!
      * \brief schemaVersion The version number of the applicable schema.
      */
-    uint32_t schemaVersion{0};
+    double schemaVersion{0};
     /*!
      * \brief comments  List of comments.
      */

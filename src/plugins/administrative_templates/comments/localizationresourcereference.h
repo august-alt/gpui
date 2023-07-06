@@ -44,7 +44,7 @@ public:
      *  Both have equal major components, and the minor component of the revision attribute is greater than or equal
      *  to the minor component of the minRequiredVersion attribute.
      */
-    std::string minRequiredRevision{};
+    double minRequiredRevision{};
 
     /*!
      * \brief fallbackCulture  Language to fallback to.

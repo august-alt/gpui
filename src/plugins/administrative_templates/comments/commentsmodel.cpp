@@ -26,6 +26,7 @@
 #include "../io/policycommentsfile.h"
 
 #include "policycomments.h"
+#include "commentdefinitionresources.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -81,6 +82,15 @@ CommentsModel::CommentsModel(QObject *parent)
 {
 }
 
+std::string constructResourceRef(const std::string& id)
+{
+    if (id.length() < 12 || id.compare(0, 11, "$(resource.") != 0)
+    {
+        return id;
+    }
+    return id.substr(11, id.length() - 12);
+}
+
 void CommentsModel::load(const QString &cmtxFileName)
 {
     auto commentDefinitions
@@ -91,12 +101,18 @@ void CommentsModel::load(const QString &cmtxFileName)
         return;
     }
 
+    bool noCMTL = false;
     QString cmtlFileName = constructCMTLFileName(cmtxFileName);
     auto commentTranslations
         = loadPolicies<io::CommentResourcesFile, io::PolicyFileFormat<io::CommentResourcesFile>>("cmtl", cmtlFileName);
     if (!commentTranslations.get())
     {
         qWarning() << "File not found: " << cmtlFileName;
+        noCMTL = true;
+    }
+    else if (commentTranslations->commentResourcesCount() == 0)
+    {
+        noCMTL = true;
     }
 
     if (commentDefinitions->policyCommentsCount() == 0)
@@ -107,7 +123,20 @@ void CommentsModel::load(const QString &cmtxFileName)
 
     for (const auto& comment : commentDefinitions->getPolicyComments(0)->comments)
     {
-        QStandardItem* item = new QStandardItem(QString::fromStdString(comment.commentText));
+        auto resourceRef = constructResourceRef(comment.commentText);
+        auto stringTable = noCMTL
+                ? commentDefinitions->getPolicyComments(0)->resources->stringTable
+                : commentTranslations->getCommentResources(0)->stringTable;
+
+        for (const auto& resource : stringTable)
+        {
+            if (resource.first.compare(resourceRef) == 0)
+            {
+                resourceRef = resource.second;
+            }
+        }
+
+        QStandardItem* item = new QStandardItem(QString::fromStdString(resourceRef));
         item->setData(QString::fromStdString(comment.policyRef), CommentsModel::ITEM_REFERENCE_ROLE);
 
         qWarning() << comment.commentText.c_str() << comment.policyRef.c_str();

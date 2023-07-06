@@ -54,7 +54,7 @@ public:
     /*!
      * \brief stringTable Table of the strings.
      */
-    std::vector<std::string> stringTable{};
+    std::vector<std::pair<std::string, std::string> > stringTable{};
 };
 
 }

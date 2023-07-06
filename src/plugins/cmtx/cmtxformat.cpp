@@ -64,7 +64,7 @@ public:
         {
             for (const auto& stringResource : commentsResources.resources().stringTable()->string())
             {
-                this->resources->stringTable.push_back(stringResource);
+                this->resources->stringTable.push_back(std::make_pair(stringResource.id(), stringResource));
             }
         }
     }

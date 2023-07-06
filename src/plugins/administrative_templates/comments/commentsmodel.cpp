@@ -91,6 +91,16 @@ std::string constructResourceRef(const std::string& id)
     return id.substr(11, id.length() - 12);
 }
 
+std::string constructPolicyRef(const std::string& id)
+{
+    if (id.length() < 3 || id.compare(0, 2, "ns") != 0)
+    {
+        return id;
+    }
+
+    return id.substr(4);
+}
+
 void CommentsModel::load(const QString &cmtxFileName)
 {
     auto commentDefinitions
@@ -137,7 +147,8 @@ void CommentsModel::load(const QString &cmtxFileName)
         }
 
         QStandardItem* item = new QStandardItem(QString::fromStdString(resourceRef));
-        item->setData(QString::fromStdString(comment.policyRef), CommentsModel::ITEM_REFERENCE_ROLE);
+        auto policyRef = constructPolicyRef(comment.policyRef);
+        item->setData(QString::fromStdString(policyRef), CommentsModel::ITEM_REFERENCE_ROLE);
 
         qWarning() << comment.commentText.c_str() << comment.policyRef.c_str();
 
@@ -153,7 +164,7 @@ QModelIndex CommentsModel::indexFromItemReference(const QString &itemRef)
     {
         QModelIndex index = this->index(row, 0, current);
 
-        if (index.data(CommentsModel::ITEM_REFERENCE_ROLE).value<QString>().contains(itemRef))
+        if (index.data(CommentsModel::ITEM_REFERENCE_ROLE).value<QString>().compare(itemRef) == 0)
         {
             return index;
         }

@@ -148,7 +148,11 @@ bool CmtxFormat::write(std::ostream &output, io::PolicyCommentsFile *file)
             std::unique_ptr<::GroupPolicy::CommentDefinitions::PolicyComments> outputComments
                 = CommentsXsdAdapter::create(*policyComment);
 
-            ::GroupPolicy::CommentDefinitions::policyComments(output, *outputComments);
+            ::xml_schema::NamespaceInfomap map;
+            map[""].name = "http://www.microsoft.com/GroupPolicy/CommentDefinitions";
+            map[""].schema = "http://www.w3.org/2001/XMLSchema";
+
+            ::GroupPolicy::CommentDefinitions::policyComments(output, *outputComments, map);
         }
     };
 

@@ -28,8 +28,11 @@
 #include "policycomments.h"
 #include "commentdefinitionresources.h"
 
+#include "../plugins/storage/smb/smbfile.h"
+
 #include <QDebug>
 #include <QFileInfo>
+#include <QMessageBox>
 
 #include <fstream>
 
@@ -69,12 +72,85 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
     return policies;
 }
 
-template<typename TPolicies, typename TFormat>
-void savePolicies(const QString &pluginName, const QFileInfo &policyFileName, std::unique_ptr<TPolicies>& comments)
+template<typename TFileFormat, typename TComment>
+void savePolicies(const QString &pluginName, const QString &fileName, std::shared_ptr<TComment>& comments)
 {
-    (void)(pluginName);
-    (void)(policyFileName);
-    (void)(comments);
+    std::unique_ptr<TFileFormat> fileData = std::make_unique<TFileFormat>();
+    fileData->add(comments);
+
+    io::PolicyFileFormat<TFileFormat> *format = gpui::PluginStorage::instance()->createPluginClass<io::PolicyFileFormat<TFileFormat>>(pluginName);
+
+    if (!format)
+    {
+        qWarning() << "Format supporting: " << pluginName << " not found.";
+
+        return;
+    }
+
+    auto oss = std::make_unique<std::ostringstream>();
+
+    if (!format->write(*oss, fileData.get()))
+    {
+        qWarning() << fileName << " " << format->getErrorString().c_str();
+    }
+
+    oss->flush();
+
+    qWarning() << "Current string values." << oss->str().c_str();
+
+    bool ifShowError = false;
+
+    auto showMessageFunction = [&fileName]() {
+        QMessageBox messageBox(QMessageBox::Critical,
+                               QObject::tr("Error"),
+                               QObject::tr("Error writing file:") + "\n" + fileName,
+                               QMessageBox::Ok);
+        messageBox.exec();
+    };
+
+    try
+    {
+        if (fileName.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(fileName);
+            ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && oss->str().size() > 0)
+            {
+                smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
+            }
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(fileName);
+            ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
+            {
+                registryFile.write(&oss->str().at(0), oss->str().size());
+            }
+            registryFile.close();
+        }
+    }
+    catch (std::exception &e)
+    {
+        ifShowError = true;
+        showMessageFunction();
+    }
+
+    if (!ifShowError)
+    {
+        showMessageFunction();
+    }
+
+    delete format;
 }
 
 QString constructCMTLFileName(const QFileInfo &fileName)
@@ -171,7 +247,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 {
     qWarning() << "Imitating write of cmtx and cmtl to: " << path;
 
-    std::unique_ptr<comments::PolicyComments> commentDefinitions = std::make_unique<comments::PolicyComments>();
+    std::shared_ptr<comments::PolicyComments> commentDefinitions = std::make_shared<comments::PolicyComments>();
 
     QSet<QString> namespaces;
     QVector<QPair<QString, QString> > comments;
@@ -195,6 +271,8 @@ void CommentsModel::save(const QString &path, const QString& localeName)
                                                                 namespace_.toStdString());
     }
 
+    commentDefinitions->resources = std::make_unique<LocalizationResourceReference>();
+
     for (const auto& comment : comments)
     {
         comments::Comment currentComment;
@@ -206,23 +284,23 @@ void CommentsModel::save(const QString &path, const QString& localeName)
         commentDefinitions->resources->stringTable.emplace_back(currentComment.policyRef, comment.second.toStdString());
     }
 
-    if (localeName != "")
+    if (localeName != "en-US")
     {
         auto cmtlFileName = path + "comments.cmtl";
 
-        std::unique_ptr<comments::CommentDefinitionResources> commentResources = std::make_unique<comments::CommentDefinitionResources>();
+        std::shared_ptr<comments::CommentDefinitionResources> commentResources = std::make_shared<comments::CommentDefinitionResources>();
 
         for (const auto& comment : comments)
         {
             commentResources->stringTable.emplace_back("_" + comment.first.toStdString(), comment.second.toStdString());
         }
 
-        savePolicies<comments::CommentDefinitionResources, io::PolicyFileFormat<io::CommentResourcesFile>>("cmtx", cmtlFileName, commentResources);
+        savePolicies<io::CommentResourcesFile, comments::CommentDefinitionResources>("cmtl", cmtlFileName, commentResources);
     }
 
     auto cmtxFileName = path + "comments.cmtx";
 
-    savePolicies<comments::PolicyComments, io::PolicyFileFormat<io::PolicyCommentsFile>>("cmtx", cmtxFileName, commentDefinitions);
+    savePolicies<io::PolicyCommentsFile, comments::PolicyComments>("cmtx", cmtxFileName, commentDefinitions);
 
     // TODO: Construct string table.
     // TODO: Construct resources table.

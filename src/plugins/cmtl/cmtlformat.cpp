@@ -91,7 +91,7 @@ bool CmtlFormat::read(std::istream &input, io::CommentResourcesFile *file)
                                                                             | ::xsd::cxx::tree::flags::keep_dom
                                                                             | ::xsd::cxx::tree::flags::own_dom);
 
-        file->addPolicyCommentResources(XsdCommentDefinitionResourcesAdapater::create(*policyComments));
+        file->add(XsdCommentDefinitionResourcesAdapater::create(*policyComments));
     };
 
     auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };

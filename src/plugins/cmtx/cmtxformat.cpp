@@ -94,8 +94,11 @@ public:
             comments->admTemplate().comment().push_back(commentAdapted);
         }
 
+        auto stringTableResources = ::std::make_unique<::GroupPolicy::CommentDefinitions::StringTable>();
+
         auto resources = ::std::make_unique<::GroupPolicy::CommentDefinitions::Resources>(
                     input.resources->minRequiredRevision);
+        resources->stringTable(std::move(stringTableResources));
 
         for (const auto& resource : input.resources->stringTable)
         {
@@ -127,7 +130,7 @@ bool CmtxFormat::read(std::istream &input, io::PolicyCommentsFile *file)
                                                                 | ::xsd::cxx::tree::flags::keep_dom
                                                                 | ::xsd::cxx::tree::flags::own_dom);
 
-        file->addPolicyComments(XsdCommentsAdapter::create(*policyComments));
+        file->add(XsdCommentsAdapter::create(*policyComments));
     };
 
     auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };

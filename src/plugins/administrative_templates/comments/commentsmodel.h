@@ -35,14 +35,18 @@ public:
     {
         COMMENT_TEXT_ROLE   = Qt::DisplayRole,
         ITEM_REFERENCE_ROLE = Qt::UserRole + 1,
+        ITEM_NAMESPACE_ROLE = Qt::UserRole + 2,
     };
 
 public:
     CommentsModel(QObject* parent = nullptr);
 
     void load(const QString& path);
+    void save(const QString &path, const QString &localeName);
 
     QModelIndex indexFromItemReference(const QString &itemRef);
+
+    bool setComment(const QString& comment, const QString& policyName, const QString& namespace_);
 
 private:
     CommentsModel(const CommentsModel&)            = delete;   // copy ctor

@@ -162,10 +162,12 @@ public:
     std::shared_ptr<model::registry::Registry> userRegistry{};
     std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource{};
     QString userRegistryPath{};
+    QString userCommentsPath{};
 
     std::shared_ptr<model::registry::Registry> machineRegistry{};
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource{};
     QString machineRegistryPath{};
+    QString machineCommentsPath{};
 
     TemplateFilterDialog *filterDialog               = nullptr;
     std::unique_ptr<TemplateFilterModel> filterModel = nullptr;
@@ -218,6 +220,26 @@ public:
         else
         {
             qWarning() << "Unable to save user registry path is empty!";
+        }
+
+        if (!userCommentsPath.isEmpty())
+        {
+            qWarning() << "Saving user comments to: " << userRegistryPath;
+            userCommentsModel->save(userRegistryPath, QString::fromStdString(localeName));
+        }
+        else
+        {
+            qWarning() << "Unable to save user comments path is empty!";
+        }
+
+        if (!machineCommentsPath.isEmpty())
+        {
+            qWarning() << "Saving machine comments to: " << machineCommentsPath;
+            machineCommentsModel->save(machineCommentsPath, QString::fromStdString(localeName));
+        }
+        else
+        {
+            qWarning() << "Unable to save machine comments path is empty!";
         }
     }
 
@@ -419,6 +441,9 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
 
         d->userRegistryPath    = QString::fromStdString(policyPath) + "/User/Registry.pol";
         d->machineRegistryPath = QString::fromStdString(policyPath) + "/Machine/Registry.pol";
+
+        d->userCommentsPath = QString::fromStdString(policyPath) + "/User/";
+        d->machineCommentsPath = QString::fromStdString(policyPath) + "/Machine/";
 
         onPolFileOpen(d->userRegistryPath,
                       d->userRegistry,

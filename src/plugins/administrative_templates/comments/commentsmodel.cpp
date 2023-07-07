@@ -69,6 +69,14 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
     return policies;
 }
 
+template<typename TPolicies, typename TFormat>
+void savePolicies(const QString &pluginName, const QFileInfo &policyFileName, std::unique_ptr<TPolicies>& comments)
+{
+    (void)(pluginName);
+    (void)(policyFileName);
+    (void)(comments);
+}
+
 QString constructCMTLFileName(const QFileInfo &fileName)
 {
     QString admlFileName = fileName.fileName();
@@ -146,14 +154,79 @@ void CommentsModel::load(const QString &cmtxFileName)
             }
         }
 
+        std::string namespace_{};
+
         QStandardItem* item = new QStandardItem(QString::fromStdString(resourceRef));
         auto policyRef = constructPolicyRef(comment.policyRef);
         item->setData(QString::fromStdString(policyRef), CommentsModel::ITEM_REFERENCE_ROLE);
+        item->setData(QString::fromStdString(namespace_), CommentsModel::ITEM_NAMESPACE_ROLE);
 
         qWarning() << comment.commentText.c_str() << comment.policyRef.c_str();
 
         this->appendRow(item);
     }
+}
+
+void CommentsModel::save(const QString &path, const QString& localeName)
+{
+    qWarning() << "Imitating write of cmtx and cmtl to: " << path;
+
+    std::unique_ptr<comments::PolicyComments> commentDefinitions = std::make_unique<comments::PolicyComments>();
+
+    QSet<QString> namespaces;
+    QVector<QPair<QString, QString> > comments;
+
+    auto current = invisibleRootItem()->index();
+
+    for (int row = 0; row < this->rowCount(current); ++row)
+    {
+        QModelIndex index = this->index(row, 0, current);
+
+        namespaces.insert(index.data(CommentsModel::ITEM_NAMESPACE_ROLE).value<QString>());
+        comments.append(QPair<QString, QString>(index.data(CommentsModel::ITEM_REFERENCE_ROLE).value<QString>(),
+                        index.data().value<QString>()));
+    }
+
+    int namespaceIndex = 0;
+
+    for (const auto& namespace_ : namespaces)
+    {
+        commentDefinitions->policyNamespaces.using_.emplace_back("ns" + std::to_string(namespaceIndex),
+                                                                namespace_.toStdString());
+    }
+
+    for (const auto& comment : comments)
+    {
+        comments::Comment currentComment;
+        currentComment.policyRef = "_" + comment.first.toStdString();
+        currentComment.commentText = comment.second.toStdString();
+
+        commentDefinitions->comments.push_back(currentComment);
+
+        commentDefinitions->resources->stringTable.emplace_back(currentComment.policyRef, comment.second.toStdString());
+    }
+
+    if (localeName != "")
+    {
+        auto cmtlFileName = path + "comments.cmtl";
+
+        std::unique_ptr<comments::CommentDefinitionResources> commentResources = std::make_unique<comments::CommentDefinitionResources>();
+
+        for (const auto& comment : comments)
+        {
+            commentResources->stringTable.emplace_back("_" + comment.first.toStdString(), comment.second.toStdString());
+        }
+
+        savePolicies<comments::CommentDefinitionResources, io::PolicyFileFormat<io::CommentResourcesFile>>("cmtx", cmtlFileName, commentResources);
+    }
+
+    auto cmtxFileName = path + "comments.cmtx";
+
+    savePolicies<comments::PolicyComments, io::PolicyFileFormat<io::PolicyCommentsFile>>("cmtx", cmtxFileName, commentDefinitions);
+
+    // TODO: Construct string table.
+    // TODO: Construct resources table.
+    // TODO: Construct namespaces table.
 }
 
 QModelIndex CommentsModel::indexFromItemReference(const QString &itemRef)
@@ -171,6 +244,43 @@ QModelIndex CommentsModel::indexFromItemReference(const QString &itemRef)
     }
 
     return QModelIndex();
+}
+
+bool CommentsModel::setComment(const QString &comment, const QString& policyName, const QString &namespace_)
+{
+    auto current = invisibleRootItem()->index();
+    bool commentFound = false;
+
+    for (int row = 0; row < this->rowCount(current); ++row)
+    {
+        QModelIndex index = this->index(row, 0, current);
+
+        auto itemReference = index.data(CommentsModel::ITEM_REFERENCE_ROLE).value<QString>();
+        auto itemNamespace = index.data(CommentsModel::ITEM_NAMESPACE_ROLE).value<QString>();
+
+        if (itemReference.compare(policyName) == 0
+            && itemNamespace.compare(namespace_) == 0)
+        {
+            qWarning() << "Changing comment in model: " << index << comment;
+
+            setData(index, comment);
+            commentFound = true;
+            break;
+        }
+    }
+
+    if (!commentFound)
+    {
+        QStandardItem* item = new QStandardItem(comment);
+        item->setData(policyName, CommentsModel::ITEM_REFERENCE_ROLE);
+        item->setData(namespace_, CommentsModel::ITEM_NAMESPACE_ROLE);
+
+        appendRow(item);
+
+        qWarning() << "Appending comment to model: " <<  item;
+    }
+
+    return true;
 }
 
 }

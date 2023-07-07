@@ -267,6 +267,15 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                     {*presentation, *policy, *source, *ui->okPushButton, d->dataChanged, d->stateEnabled});
                 connectDialogBoxSignals();
 
+                auto gui = this->ui;
+
+                QObject::connect(ui->okPushButton, &QPushButton::clicked, [commentsModel, gui, policy]() -> void
+                {
+                    auto commentText = gui->commentTextEdit->toPlainText();
+                    commentsModel->setComment(commentText, QString::fromStdString(policy->name),
+                                              QString::fromStdString(policy->namespace_));
+                });
+
                 ui->contentScrollArea->widget()->setLayout(layout);
             }
         }

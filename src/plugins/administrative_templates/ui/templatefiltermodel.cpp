@@ -128,37 +128,42 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
 
     const bool configuredMatch = d->filter.configured.contains(state);
 
-    qWarning() << "===================================================";
-    const bool matchPlatform = filterPlatform(index);
-    const bool matchKeyword = filterKeyword(index);
-    qWarning() << "MATCH PLATFORM:" << matchPlatform;
-    qWarning() << "MATCH KEYWORD:" << matchKeyword;
-
-    return matchPlatform && matchKeyword && configuredMatch;
+    return filterPlatform(index) && filterKeyword(index) && configuredMatch;
 }
 
-uint32_t TemplateFilterModel::getPlatformIndex(QString platform, QString parentReference) const
+int TemplateFilterModel::getPlatformIndex(QString platform, QString parentReference) const
 {
-    qWarning() << "Searching for index of" << platform << "as child of" << parentReference << "in a tree:";
-
-    std::function<void(const QModelIndex &, int depth)> printTree = [&](const QModelIndex &index, int depth) {
-        for (int row = 0; row < d->platformModel->rowCount(index); ++row)
+    std::function<QModelIndex(const QModelIndex &root, const QString &reference, bool returnDeep)> searchTree =
+        [&](const QModelIndex &root, const QString &reference, bool returnDeep) -> QModelIndex {
+        if (root.data(PLATFORM_ROLE_SORT).value<QString>() == reference)
         {
-            const QModelIndex child = d->platformModel->index(row, 0, index);
-
-            qWarning() << std::string(depth, '\t').c_str() << child.data(PLATFORM_ROLE_SORT).value<QString>();
-
-            printTree(child, depth + 1);
+            return root;
         }
+
+        for (int row = 0; row < d->platformModel->rowCount(root); ++row)
+        {
+            const QModelIndex child = d->platformModel->index(row, 0, root);
+            const QModelIndex index = searchTree(child, reference, returnDeep);
+            if (index.isValid())
+            {
+                return (returnDeep ? index : child);
+            }
+        }
+
+        return QModelIndex();
     };
-    static bool uno = true;
-    if (uno)
+    const QModelIndex parentIndex = searchTree(d->platformModel->invisibleRootItem()->index(), parentReference, true);
+    if (!parentIndex.isValid())
     {
-        uno = false;
-        printTree(d->platformModel->index(0, 1), 1);
+        return -1;
+    }
+    const QModelIndex platformIndex = searchTree(parentIndex, platform, false);
+    if (!platformIndex.isValid())
+    {
+        return -1;
     }
 
-    return 3;
+    return platformIndex.row();
 }
 
 bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
@@ -171,14 +176,12 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
     const std::string &supportedOnText = platformIndex.data(PolicyRoles::SUPPORTED_ON).value<QString>().toStdString();
     if (supportedOnText.empty())
     {
-        qWarning() << "SUPPORTED ON TEXT EMPTY";
         return false;
     }
-    qWarning() << "SUPPORTED ON TEXT:" << supportedOnText.c_str();
 
-    const unsigned substrStart                       = 9;
-    const unsigned subsrtLenght                      = supportedOnText.size() - substrStart - 1;
-    const std::string supportedOnReference           = supportedOnText.substr(substrStart, subsrtLenght);
+    const unsigned substrStart             = 9; // NOTE: length of "$(string."
+    const unsigned subsrtLenght            = supportedOnText.size() - substrStart - 1;
+    const std::string supportedOnReference = supportedOnText.substr(substrStart, subsrtLenght);
     std::shared_ptr<SupportedDefinition> supportedOn = d->supportedOnDefinitions[supportedOnReference];
     if (!supportedOn)
     {
@@ -196,8 +199,15 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
 
     const auto matchSinglePlatform = [&](QString platform) {
         const auto isPlatformWithinRange = [&](SupportedOnRange range) {
-            uint32_t version = getPlatformIndex(platform, QString::fromStdString(range.itemReference));
-            return (range.minVersionIndex <= version && version <= range.maxVersionIndex);
+            QString parentReference = QString::fromStdString(range.itemReference).split(':').last();
+            int version             = getPlatformIndex(platform, parentReference);
+            if (version == -1)
+            {
+                return false;
+            }
+
+            return (range.minVersionIndex <= static_cast<uint32_t>(version)
+                    && static_cast<uint32_t>(version) <= range.maxVersionIndex);
         };
 
         if (!supportedOn->or_.empty())

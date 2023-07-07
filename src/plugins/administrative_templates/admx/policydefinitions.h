@@ -25,6 +25,7 @@
 #include "policy.h"
 #include "resources.h"
 #include "supportedon.h"
+#include "../comments/policynamespace.h"
 
 #include <memory>
 #include <vector>
@@ -55,7 +56,7 @@ public:
     /*!
      * \brief policyNamespaces Contains mappings of .admx files to unique namespaces.
      */
-    int policyNamespaces = 0;
+    comments::PolicyNamespace policyNamespaces{};
 
     /*!
      * \brief supersededAdm Reference to the file name for an .adm file.

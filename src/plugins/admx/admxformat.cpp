@@ -482,7 +482,15 @@ public:
         this->revision      = definitions.revision();
         this->schemaVersion = definitions.schemaVersion();
 
-        // TODO: Implement namsepaces.
+        auto& target = definitions.policyNamespaces().target();
+
+        this->policyNamespaces.target.prefix = target.prefix();
+        this->policyNamespaces.target.namespace_ = target.namespace_();
+
+        for (const auto& using_ : definitions.policyNamespaces().using_())
+        {
+            this->policyNamespaces.using_.emplace_back(using_.prefix(), using_.namespace_());
+        }
 
         for (const auto &adm : definitions.supersededAdm())
         {

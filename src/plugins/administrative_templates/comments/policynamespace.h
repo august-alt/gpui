@@ -36,6 +36,13 @@ class PolicyNamespace
 {
 public:
     /*!
+     * \brief target A PolicyNamespaceAssociation to reference an .admx file. A target element should be unique
+     * for each .admx file. The Group Policy Object Editor will report a duplicate namespace error if it reads
+     * more than one .admx file with the same target namespace.
+     */
+    PolicyNamespaceAssociation target{};
+
+    /*!
      * \brief usingNamespace A set of PolicyNamespaceAssociation types referenced by an .admx file.
      */
     std::vector<PolicyNamespaceAssociation> using_{};

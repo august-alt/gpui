@@ -33,7 +33,7 @@ class PolicyNamespaceAssociation
 {
 public:
     /*!
-     * \brief prefix An alias string used to refer to a namespace within the CMTX file.
+     * \brief prefix An alias string used to refer to a namespace within the CMTX/ADMX file.
      */
     std::string prefix{};
 
@@ -41,6 +41,23 @@ public:
      * \brief namespace_ A namespace defined in an ADMX file.
      */
     std::string namespace_{};
+
+    /*!
+     * \brief PolicyNamespaceAssociation
+     */
+    PolicyNamespaceAssociation() noexcept
+    {}
+
+    /*!
+     * \brief PolicyNamespaceAssociation
+     * \param currentPrefix An alias string used to refer to a namespace within the CMTX/ADMX file.
+     * \param currentNamespace A namespace defined in an ADMX file.
+     */
+    PolicyNamespaceAssociation(const std::string& currentPrefix,
+                               const std::string& currentNamespace)
+        : prefix(currentPrefix)
+        , namespace_(currentNamespace)
+    {}
 };
 
 }

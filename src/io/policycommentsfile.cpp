@@ -53,7 +53,7 @@ PolicyCommentsFile::~PolicyCommentsFile()
  * \brief PolicyCommentsFile::addPolicyComments Adds policy comments to the file.
  * \param policyComments Policy comments to add.
  */
-void PolicyCommentsFile::addPolicyComments(std::shared_ptr<PolicyComments> policyComments)
+void PolicyCommentsFile::add(std::shared_ptr<PolicyComments> policyComments)
 {
     d->policyComments.emplace_back(policyComments);
 }
@@ -62,7 +62,7 @@ void PolicyCommentsFile::addPolicyComments(std::shared_ptr<PolicyComments> polic
  * \brief PolicyCommentsFile::removePolicyComments Removes policy comments from the file.
  * \param policyComments Policy comments to remove.
  */
-void PolicyCommentsFile::removePolicyComments(std::shared_ptr<PolicyComments> policyComments)
+void PolicyCommentsFile::remove(std::shared_ptr<PolicyComments> policyComments)
 {
     d->policyComments.erase(std::remove_if(d->policyComments.begin(),
                                               d->policyComments.end(),

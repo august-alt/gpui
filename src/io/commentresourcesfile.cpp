@@ -50,19 +50,19 @@ CommentResourcesFile::~CommentResourcesFile()
 }
 
 /*!
- * \brief CommentResourcesFile::addPolicyCommentResources Adds comment resources to the file.
+ * \brief CommentResourcesFile::add Adds comment resources to the file.
  * \param policyComments Policy comment to add.
  */
-void CommentResourcesFile::addPolicyCommentResources(std::shared_ptr<CommentDefinitionResources> policyComments)
+void CommentResourcesFile::add(std::shared_ptr<CommentDefinitionResources> policyComments)
 {
     d->commentResources.emplace_back(policyComments);
 }
 
 /*!
- * \brief CommentResourcesFile::removePolicyCommentResources Removes comment resources from the file.
+ * \brief CommentResourcesFile::remove Removes comment resources from the file.
  * \param policyDefinitions  Policy comment to remove.
  */
-void CommentResourcesFile::removePolicyCommentResources(std::shared_ptr<CommentDefinitionResources> policyComments)
+void CommentResourcesFile::remove(std::shared_ptr<CommentDefinitionResources> policyComments)
 {
     d->commentResources.erase(std::remove_if(d->commentResources.begin(),
                                               d->commentResources.end(),

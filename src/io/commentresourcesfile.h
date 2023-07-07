@@ -42,9 +42,9 @@ namespace io {
 
         ~CommentResourcesFile();
 
-        void addPolicyCommentResources(std::shared_ptr<comments::CommentDefinitionResources> policyComments);
+        void add(std::shared_ptr<comments::CommentDefinitionResources> policyComments);
 
-        void removePolicyCommentResources(std::shared_ptr<comments::CommentDefinitionResources> policyComments);
+        void remove(std::shared_ptr<comments::CommentDefinitionResources> policyComments);
 
         std::vector<std::shared_ptr<comments::CommentDefinitionResources>> getAllPolicyCommentResources();
 

@@ -29,15 +29,16 @@ namespace bundle
 {
 enum PolicyRoles
 {
-    ITEM_TYPE     = Qt::UserRole + 1,
-    EXPLAIN_TEXT  = Qt::UserRole + 2,
-    SUPPORTED_ON  = Qt::UserRole + 4,
-    PRESENTATION  = Qt::UserRole + 5,
-    POLICY        = Qt::UserRole + 6,
-    POLICY_TYPE   = Qt::UserRole + 7,
-    POLICY_WIDGET = Qt::UserRole + 8,
-    CURRENT_UUID  = Qt::UserRole + 12,
-    PARENT_UUID   = Qt::UserRole + 13,
+    ITEM_TYPE         = Qt::UserRole + 1,
+    EXPLAIN_TEXT      = Qt::UserRole + 2,
+    SUPPORTED_ON_TEXT = Qt::UserRole + 3,
+    SUPPORTED_ON      = Qt::UserRole + 4,
+    PRESENTATION      = Qt::UserRole + 5,
+    POLICY            = Qt::UserRole + 6,
+    POLICY_TYPE       = Qt::UserRole + 7,
+    POLICY_WIDGET     = Qt::UserRole + 8,
+    CURRENT_UUID      = Qt::UserRole + 12,
+    PARENT_UUID       = Qt::UserRole + 13,
 };
 }
 } // namespace model

@@ -411,6 +411,8 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
             container.fileName = admxFileName.fileName().toStdString();
 
             policyItem->setData(QString::fromStdString(policy->supportedOn), PolicyRoles::SUPPORTED_ON);
+            policyItem->setData(QString::fromStdString(d->supportedOnMap[policy->supportedOn]),
+                                PolicyRoles::SUPPORTED_ON_TEXT);
 
             if (policy->presentation)
             {
@@ -570,13 +572,12 @@ void PolicyBundle::assignSupportedOn()
     {
         if (item->data(PolicyRoles::ITEM_TYPE).value<uint>() == 1)
         {
-            QStringList supportedRaw = item->data(PolicyRoles::SUPPORTED_ON).value<QString>().split(':');
-            QString &toFind          = supportedRaw.back();
+            QString toFind = item->data(PolicyRoles::SUPPORTED_ON).value<QString>().split(':').back();
 
-            auto search = d->supportedOnDefinitions.find(toFind.toStdString());
-            if (search != d->supportedOnDefinitions.end())
+            auto search = d->supportedOnMap.find(toFind.toStdString());
+            if (search != d->supportedOnMap.end())
             {
-                item->setData(QString::fromStdString(search->second->displayName), PolicyRoles::SUPPORTED_ON);
+                item->setData(QString::fromStdString(search->second), PolicyRoles::SUPPORTED_ON_TEXT);
             }
             else
             {

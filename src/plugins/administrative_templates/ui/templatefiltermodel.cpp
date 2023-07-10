@@ -173,15 +173,13 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
         return true;
     }
 
-    const std::string &supportedOnText = platformIndex.data(PolicyRoles::SUPPORTED_ON).value<QString>().toStdString();
-    if (supportedOnText.empty())
+    const QString &supportedOnFull = platformIndex.data(PolicyRoles::SUPPORTED_ON).value<QString>();
+    if (supportedOnFull.isEmpty())
     {
         return false;
     }
 
-    const unsigned substrStart             = 9; // NOTE: length of "$(string."
-    const unsigned subsrtLenght            = supportedOnText.size() - substrStart - 1;
-    const std::string supportedOnReference = supportedOnText.substr(substrStart, subsrtLenght);
+    const std::string supportedOnReference           = supportedOnFull.split(':').last().toStdString();
     std::shared_ptr<SupportedDefinition> supportedOn = d->supportedOnDefinitions[supportedOnReference];
     if (!supportedOn)
     {

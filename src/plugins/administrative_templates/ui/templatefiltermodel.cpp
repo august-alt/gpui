@@ -214,7 +214,7 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
         }
         if (!supportedOn->and_.empty())
         {
-            return std::all_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlatformWithinRange);
+            return std::all_of(supportedOn->and_.begin(), supportedOn->and_.end(), isPlatformWithinRange);
         }
 
         return false;

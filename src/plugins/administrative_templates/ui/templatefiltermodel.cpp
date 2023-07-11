@@ -134,44 +134,24 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
 int TemplateFilterModel::getPlatformIndex(QString platform, QString parentReference) const
 {
     static std::unordered_map<QString, QModelIndex> mapPlatformToNode;
-
-    std::function<QModelIndex(const QModelIndex &root, const QString &reference)> searchTree =
-        [&](const QModelIndex &root, const QString &reference) -> QModelIndex {
-        if (mapPlatformToNode.find(reference) != mapPlatformToNode.end())
-        {
-            return mapPlatformToNode[reference];
-        }
-
-        if (root.data(PLATFORM_ROLE_SORT).value<QString>() == reference)
-        {
-            mapPlatformToNode[reference] = root;
-            return root;
-        }
-
-        for (int row = 0; row < d->platformModel->rowCount(root); ++row)
-        {
-            const QModelIndex child             = d->platformModel->index(row, 0, root);
-            const QModelIndex childSearchResult = searchTree(child, reference);
-            if (childSearchResult.isValid())
-            {
-                mapPlatformToNode[reference] = childSearchResult;
-                return childSearchResult;
-            }
-        }
-
-        return QModelIndex();
-    };
-
-    const QModelIndex parentIndex = searchTree(d->platformModel->invisibleRootItem()->index(), parentReference);
-    if (!parentIndex.isValid())
+    static bool cachedPlatformToNode = false;
+    if (!cachedPlatformToNode)
     {
-        return -1;
+        std::function<void(const QModelIndex &root)> buildCache = [&](const QModelIndex &root) {
+            const QString &rootReference     = root.data(PLATFORM_ROLE_SORT).value<QString>();
+            mapPlatformToNode[rootReference] = root;
+            for (int row = 0; row < d->platformModel->rowCount(root); ++row)
+            {
+                buildCache(d->platformModel->index(row, 0, root));
+            }
+        };
+        buildCache(d->platformModel->invisibleRootItem()->index());
+        cachedPlatformToNode = true;
     }
 
-    QModelIndex platformIndex = searchTree(d->platformModel->invisibleRootItem()->index(), platform);
-    // NOTE(mchernigin): this check is not necessary: platformIndex in contrast to parentIndex, should always be valid,
-    // but I'm not confident enough, so it's here
-    if (!platformIndex.isValid())
+    const QModelIndex &parentIndex = mapPlatformToNode[parentReference];
+    QModelIndex platformIndex      = mapPlatformToNode[platform];
+    if (!parentIndex.isValid() || !platformIndex.isValid())
     {
         return -1;
     }
@@ -205,8 +185,8 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
     const std::string supportedOnReference           = supportedOnFull.split(':').last().toStdString();
     std::shared_ptr<SupportedDefinition> supportedOn = d->supportedOnDefinitions[supportedOnReference];
 
-    // NOTE(mchernigin): supportedOn will be nullptr if current item is a folder. In this case it should be
-    // filtered only if all of it's children are filtered. `if` bellow checks exactly that.
+    // NOTE(mchernigin): supportedOn will be nullptr if current item is a folder. In this case it should be filtered out
+    // only if all of it's children are filtered out. `if` bellow checks exactly that.
     //
     // For now, filterPlatform is called multiple times for all items which are contained in some
     // folder. Once from filterAcceptRow and on each filterPlatform call on its parent. There is room for optimization

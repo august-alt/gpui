@@ -131,44 +131,6 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
     return filterPlatform(index) && filterKeyword(index) && configuredMatch;
 }
 
-int TemplateFilterModel::getPlatformIndex(QString platform, QString parentReference) const
-{
-    static std::unordered_map<QString, QModelIndex> mapPlatformToNode;
-    static bool cachedPlatformToNode = false;
-    if (!cachedPlatformToNode)
-    {
-        std::function<void(const QModelIndex &root)> buildCache = [&](const QModelIndex &root) {
-            const QString &rootReference     = root.data(PLATFORM_ROLE_SORT).value<QString>();
-            mapPlatformToNode[rootReference] = root;
-            for (int row = 0; row < d->platformModel->rowCount(root); ++row)
-            {
-                buildCache(d->platformModel->index(row, 0, root));
-            }
-        };
-        buildCache(d->platformModel->invisibleRootItem()->index());
-        cachedPlatformToNode = true;
-    }
-
-    const QModelIndex &parentIndex = mapPlatformToNode[parentReference];
-    QModelIndex platformIndex      = mapPlatformToNode[platform];
-    if (!parentIndex.isValid() || !platformIndex.isValid())
-    {
-        return -1;
-    }
-
-    while (platformIndex.parent() != parentIndex)
-    {
-        if (platformIndex == d->platformModel->invisibleRootItem()->index())
-        {
-            return -1;
-        }
-
-        platformIndex = platformIndex.parent();
-    }
-
-    return platformIndex.row();
-}
-
 bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
 {
     if (!d->filter.platformEnabled)
@@ -206,7 +168,7 @@ bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
     const auto matchSinglePlatform = [&](QString platform) {
         const auto isPlatformWithinRange = [&](SupportedOnRange range) {
             QString parentReference = QString::fromStdString(range.itemReference).split(':').last();
-            int version             = getPlatformIndex(platform, parentReference);
+            int version             = d->platformModel->getPlatformIndex(platform, parentReference);
             if (version == -1)
             {
                 return false;

@@ -24,6 +24,7 @@
 
 #include <iostream>
 #include <memory>
+#include <unordered_map>
 
 #include <QDebug>
 #include <QSet>
@@ -124,6 +125,48 @@ void PlatformModel::populateModel(std::vector<std::shared_ptr<model::admx::Suppo
 
         insertRow(rowCount(), productElement);
     }
+}
+
+int PlatformModel::getPlatformIndex(QString platform, QString parentReference) const
+{
+    static std::unordered_map<QString, QModelIndex> mapPlatformToNode;
+    static bool cachedPlatformToNode = false;
+    if (!cachedPlatformToNode)
+    {
+        std::function<void(const QModelIndex &root)> buildCache = [&](const QModelIndex &root) {
+            const QString &rootReference     = root.data(PLATFORM_ROLE_SORT).value<QString>();
+            mapPlatformToNode[rootReference] = root;
+            for (int row = 0; row < rowCount(root); ++row)
+            {
+                buildCache(index(row, 0, root));
+            }
+        };
+        buildCache(invisibleRootItem()->index());
+        cachedPlatformToNode = true;
+    }
+
+    const QModelIndex &parentIndex = mapPlatformToNode[parentReference];
+    QModelIndex platformIndex      = mapPlatformToNode[platform];
+    if (!parentIndex.isValid() || !platformIndex.isValid())
+    {
+        return -1;
+    }
+
+    if (platformIndex == invisibleRootItem()->index())
+    {
+        return -1;
+    }
+    while (platformIndex.parent() != parentIndex)
+    {
+        if (platformIndex == invisibleRootItem()->index())
+        {
+            return -1;
+        }
+
+        platformIndex = platformIndex.parent();
+    }
+
+    return platformIndex.row();
 }
 
 } // namespace gpui

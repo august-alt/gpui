@@ -47,6 +47,7 @@ public:
     ~PlatformModel();
 
     void populateModel(std::vector<std::shared_ptr<model::admx::SupportedProduct>> products);
+    int getPlatformIndex(QString platform, QString parentReference) const;
 
 private:
     PlatformModel(const PlatformModel &) = delete;            // copy ctor

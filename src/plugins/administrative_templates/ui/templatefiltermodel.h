@@ -70,7 +70,6 @@ private:
     TemplateFilterModel &operator=(const TemplateFilterModel &) = delete; // copy assignment
     TemplateFilterModel &operator=(TemplateFilterModel &&) = delete;      // move assignment
 
-    int getPlatformIndex(QString platform, QString parentReference) const;
     bool filterPlatform(const QModelIndex &index) const;
     bool filterKeyword(const QModelIndex &index) const;
 

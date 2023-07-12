@@ -281,7 +281,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
         commentDefinitions->comments.push_back(currentComment);
 
-        commentDefinitions->resources->stringTable.emplace_back(currentComment.policyRef, comment.second.toStdString());
+        commentDefinitions->resources->stringTable.emplace_back(comment.second.toStdString(), currentComment.policyRef);
     }
 
     if (localeName != "en-US")

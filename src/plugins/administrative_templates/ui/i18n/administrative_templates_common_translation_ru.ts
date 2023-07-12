@@ -240,6 +240,21 @@
         <translation>Включить фильтр ключевых слов</translation>
     </message>
     <message>
+        <location filename="../templatefilterdialog.ui" line="382"/>
+        <source>Match any word</source>
+        <translation>Содержит любое слово</translation>
+    </message>
+    <message>
+        <location filename="../templatefilterdialog.ui" line="387"/>
+        <source>Match all words</source>
+        <translation>Содержит все слова</translation>
+    </message>
+    <message>
+        <location filename="../templatefilterdialog.ui" line="392"/>
+        <source>Match exact</source>
+        <translation>Полностью совпадает</translation>
+    </message>
+    <message>
         <location filename="../templatefilterdialog.ui" line="416"/>
         <source>Policy Settings Title</source>
         <translation>Заголовка</translation>

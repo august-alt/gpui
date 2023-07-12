@@ -377,19 +377,22 @@
            <property name="editable">
             <bool>false</bool>
            </property>
+           <property name="currentText">
+            <string>Match any word</string>
+           </property>
            <item>
             <property name="text">
-             <string>Any</string>
+             <string>Match any word</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Yes</string>
+             <string>Match all words</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>No</string>
+             <string>Match exact</string>
             </property>
            </item>
           </widget>

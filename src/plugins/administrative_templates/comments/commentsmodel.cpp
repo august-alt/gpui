@@ -215,6 +215,13 @@ void CommentsModel::load(const QString &cmtxFileName)
         return;
     }
 
+    QMap<QString, QString> namespaces;
+
+    for (const auto& policyNamespace : commentDefinitions->getPolicyComments(0)->policyNamespaces.using_)
+    {
+        namespaces.insert(QString::fromStdString(policyNamespace.prefix), QString::fromStdString(policyNamespace.namespace_));
+    }
+
     for (const auto& comment : commentDefinitions->getPolicyComments(0)->comments)
     {
         auto resourceRef = constructResourceRef(comment.commentText);
@@ -230,12 +237,14 @@ void CommentsModel::load(const QString &cmtxFileName)
             }
         }
 
-        std::string namespace_{};
+        auto key = QString::fromStdString(comment.policyRef).split(":").first();
+
+        QString namespace_ = namespaces[key];
 
         QStandardItem* item = new QStandardItem(QString::fromStdString(resourceRef));
         auto policyRef = constructPolicyRef(comment.policyRef);
         item->setData(QString::fromStdString(policyRef), CommentsModel::ITEM_REFERENCE_ROLE);
-        item->setData(QString::fromStdString(namespace_), CommentsModel::ITEM_NAMESPACE_ROLE);
+        item->setData(namespace_, CommentsModel::ITEM_NAMESPACE_ROLE);
 
         qWarning() << comment.commentText.c_str() << comment.policyRef.c_str();
 
@@ -269,6 +278,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
     {
         commentDefinitions->policyNamespaces.using_.emplace_back("ns" + std::to_string(namespaceIndex),
                                                                 namespace_.toStdString());
+        namespaceIndex++;
     }
 
     commentDefinitions->resources = std::make_unique<LocalizationResourceReference>();

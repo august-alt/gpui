@@ -87,6 +87,13 @@ public:
         auto admTemplate = ::std::make_unique<::GroupPolicy::CommentDefinitions::AdmTemplate>();
         auto comments  = ::std::make_unique<::GroupPolicy::CommentDefinitions::Comments>(std::move(admTemplate));
 
+        for (const auto& policyNamespace : input.policyNamespaces.using_)
+        {
+            ::GroupPolicy::CommentDefinitions::Using using_(policyNamespace.prefix, policyNamespace.namespace_);
+
+            policyNamespaces->using_().push_back(using_);
+        }
+
         for (const auto& comment : input.comments)
         {
             ::GroupPolicy::CommentDefinitions::Comment commentAdapted(comment.policyRef, comment.commentText);

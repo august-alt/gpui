@@ -20,6 +20,7 @@
 
 #include "mainwindow.h"
 #include "mainwindowsettings.h"
+#include "qnamespace.h"
 #include "ui_mainwindow.h"
 
 #include "aboutdialog.h"
@@ -223,6 +224,8 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     d->settings = std::make_unique<MainWindowSettings>(this, ui);
     d->settings->restoreSettings();
+
+    setAttribute(Qt::WA_DeleteOnClose);
 
     createLanguageMenu();
 

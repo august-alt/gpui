@@ -305,7 +305,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
         for (const auto& comment : comments)
         {
-            commentResources->stringTable.emplace_back("_" + comment.first.toStdString(), comment.second.toStdString());
+            commentResources->stringTable.emplace_back(comment.second.toStdString(), "ns0_" + comment.first.toStdString());
         }
 
         savePolicies<io::CommentResourcesFile, comments::CommentDefinitionResources>("cmtl", cmtlFileName, commentResources);

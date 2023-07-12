@@ -237,6 +237,7 @@ void CommentsModel::load(const QString &cmtxFileName)
             }
         }
 
+        // TODO: Check if key is still exists.
         auto key = QString::fromStdString(comment.policyRef).split(":").first();
 
         QString namespace_ = namespaces[key];
@@ -285,13 +286,15 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
     for (const auto& comment : comments)
     {
+        std::string resourceName = "ns0_" + comment.first.toStdString();
+
         comments::Comment currentComment;
-        currentComment.policyRef = "_" + comment.first.toStdString();
-        currentComment.commentText = comment.second.toStdString();
+        currentComment.policyRef = "ns0:" + comment.first.toStdString();
+        currentComment.commentText = "$(resource." + resourceName + ")";
 
         commentDefinitions->comments.push_back(currentComment);
 
-        commentDefinitions->resources->stringTable.emplace_back(comment.second.toStdString(), currentComment.policyRef);
+        commentDefinitions->resources->stringTable.emplace_back(comment.second.toStdString(), resourceName);
     }
 
     if (localeName != "en-US")

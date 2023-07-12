@@ -345,10 +345,9 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
 
         d->filterDialog = new gpui::TemplateFilterDialog();
 
-        d->actionEnableFilter.setText(QObject::tr("Enable &filter"));
-        d->actionEditFilter.setText(QObject::tr("&Edit filter"));
+        d->filterMenu = std::make_unique<QMenu>();
 
-        d->filterMenu = std::make_unique<QMenu>(QObject::tr("&Filter"));
+        retranslateMenuItems();
 
         d->filterMenu->addAction(&d->actionEditFilter);
         d->filterMenu->addAction(&d->actionEnableFilter);
@@ -438,10 +437,19 @@ void AdministrativeTemplatesSnapIn::onDataSave()
     d->onDataSave();
 }
 
+void AdministrativeTemplatesSnapIn::retranslateMenuItems()
+{
+    d->actionEnableFilter.setText(QObject::tr("Enable &filter"));
+    d->actionEditFilter.setText(QObject::tr("&Edit filter"));
+    d->filterMenu->menuAction()->setText(QObject::tr("&Filter"));
+}
+
 void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {
     d->localeName = locale;
     d->policyBundleLoad();
+    retranslateMenuItems();
+    d->filterDialog->onLanguageChanged();
     setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
 }
 

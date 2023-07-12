@@ -94,7 +94,7 @@ TemplateFilter TemplateFilterDialog::getFilter() const
         {
             const QModelIndex child = sourceModel->index(row, 0, index);
 
-            const auto state  = child.data(Qt::CheckStateRole).value<Qt::CheckState>();
+            const auto state = child.data(Qt::CheckStateRole).value<Qt::CheckState>();
             if (state == Qt::Checked)
             {
                 auto sort_key = child.data(PLATFORM_ROLE_SORT).value<QString>();
@@ -278,6 +278,11 @@ QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
     };
 
     return out;
+}
+
+void TemplateFilterDialog::onLanguageChanged()
+{
+    d->ui->retranslateUi(this);
 }
 
 } // namespace gpui

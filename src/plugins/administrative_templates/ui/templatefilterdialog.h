@@ -39,6 +39,7 @@ public:
 
     TemplateFilter getFilter() const;
     void setPlatformModel(PlatformModel *platformModel);
+    void onLanguageChanged();
 
 public slots:
     void open() override;

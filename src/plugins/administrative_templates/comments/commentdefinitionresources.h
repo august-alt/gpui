@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,42 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../core/plugin.h"
+#ifndef GPUI_COMMENT_DEFINITION_RESOURCES_H
+#define GPUI_COMMENT_DEFINITION_RESOURCES_H
 
-#include "cmtlformat.h"
+#include <string>
+#include <vector>
 
-namespace gpui
+class Presentation;
+
+namespace comments
 {
-class CmtlPlugin : public Plugin
+
+/*!
+ * \brief The CommentDefinitionResources class
+ */
+class CommentDefinitionResources
 {
 public:
-    CmtlPlugin()
-        : Plugin("cmtl")
-    {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::CommentResourcesFile>).name(), CmtlFormat);
-    }
-};
-} // namespace gpui
+    /*!
+     * \brief revision  The revision number.
+     */
+    uint32_t revision{};
+    /*!
+     * \brief schemaVersion  The version number of the applicable schema.
+     */
+    uint32_t schemaVersion{};
+    /*!
+     * \brief stringTable Table of the strings.
+     */
+    std::vector<std::pair<std::string, std::string>> stringTable{};
 
-GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)
+    /*!
+     * \brief presentationTable List of pointers to presentation elements.
+     */
+    std::vector<Presentation*> presentationTable{};
+};
+
+}
+
+#endif//GPUI_COMMENT_DEFINITION_RESOURCES_H

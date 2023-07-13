@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,31 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../core/plugin.h"
+#ifndef GPUI_COMMENT_H
+#define GPUI_COMMENT_H
 
-#include "cmtlformat.h"
+#include <string>
 
-namespace gpui
+namespace comments
 {
-class CmtlPlugin : public Plugin
+
+/*!
+ * \brief The Comment class Single comment.
+ */
+class Comment
 {
 public:
-    CmtlPlugin()
-        : Plugin("cmtl")
-    {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::CommentResourcesFile>).name(), CmtlFormat);
-    }
-};
-} // namespace gpui
+    /*!
+     * \brief policyRef String reference to target policy.
+     */
+    std::string policyRef{};
 
-GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)
+    /*!
+     * \brief commentText Text of the comment.
+     */
+    std::string commentText{};
+};
+
+}
+
+#endif//GPUI_COMMENT_H

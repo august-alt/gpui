@@ -56,12 +56,16 @@
 
 #include "ui/platformmodel.h"
 
+#include "comments/commentsmodel.h"
+
 #include <QAction>
 #include <QApplication>
 #include <QDebug>
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QMessageBox>
+
+using namespace comments;
 
 namespace gpui
 {
@@ -158,15 +162,20 @@ public:
     std::shared_ptr<model::registry::Registry> userRegistry{};
     std::unique_ptr<model::registry::AbstractRegistrySource> userRegistrySource{};
     QString userRegistryPath{};
+    QString userCommentsPath{};
 
     std::shared_ptr<model::registry::Registry> machineRegistry{};
     std::unique_ptr<model::registry::AbstractRegistrySource> machineRegistrySource{};
     QString machineRegistryPath{};
+    QString machineCommentsPath{};
 
     TemplateFilterDialog *filterDialog               = nullptr;
     std::unique_ptr<TemplateFilterModel> filterModel = nullptr;
 
     std::unique_ptr<PlatformModel> platformModel = nullptr;
+
+    std::unique_ptr<CommentsModel> machineCommentsModel = nullptr;
+    std::unique_ptr<CommentsModel> userCommentsModel = nullptr;
 
     std::vector<std::unique_ptr<QTranslator>> translators{};
 
@@ -211,6 +220,26 @@ public:
         else
         {
             qWarning() << "Unable to save user registry path is empty!";
+        }
+
+        if (!userCommentsPath.isEmpty())
+        {
+            qWarning() << "Saving user comments to: " << userRegistryPath;
+            userCommentsModel->save(userRegistryPath, QString::fromStdString(localeName));
+        }
+        else
+        {
+            qWarning() << "Unable to save user comments path is empty!";
+        }
+
+        if (!machineCommentsPath.isEmpty())
+        {
+            qWarning() << "Saving machine comments to: " << machineCommentsPath;
+            machineCommentsModel->save(machineCommentsPath, QString::fromStdString(localeName));
+        }
+        else
+        {
+            qWarning() << "Unable to save machine comments path is empty!";
         }
     }
 
@@ -368,6 +397,8 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
     d->filterModel   = std::make_unique<gpui::TemplateFilterModel>();
     d->proxyModel    = std::make_unique<AdministrativeTemplatesProxyModel>();
     d->platformModel = std::make_unique<PlatformModel>();
+    d->machineCommentsModel = std::make_unique<CommentsModel>();
+    d->userCommentsModel = std::make_unique<CommentsModel>();
 
     d->policyBundleLoad();
     d->filterDialog->setPlatformModel(d->platformModel.get());
@@ -411,6 +442,9 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
         d->userRegistryPath    = QString::fromStdString(policyPath) + "/User/Registry.pol";
         d->machineRegistryPath = QString::fromStdString(policyPath) + "/Machine/Registry.pol";
 
+        d->userCommentsPath = QString::fromStdString(policyPath) + "/User/";
+        d->machineCommentsPath = QString::fromStdString(policyPath) + "/Machine/";
+
         onPolFileOpen(d->userRegistryPath,
                       d->userRegistry,
                       d->userRegistrySource,
@@ -424,6 +458,12 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
                       [&](model::registry::AbstractRegistrySource *) noexcept {});
         d->proxyModel->setMachineRegistrySource(d->machineRegistrySource.get());
         d->filterModel->setMachineRegistrySource(d->machineRegistrySource.get());
+
+        d->machineCommentsModel->load(QString::fromStdString(policyPath) + "/Machine/comment.cmtx");
+        d->userCommentsModel->load(QString::fromStdString(policyPath) + "/User/comment.cmtx");
+
+        d->proxyModel->setMachineCommentModel(d->machineCommentsModel.get());
+        d->proxyModel->setUserCommentModel(d->userCommentsModel.get());
     }
 }
 

@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,36 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../core/plugin.h"
+#ifndef GPUI_POLICY_NAMESPACE_H
+#define GPUI_POLICY_NAMESPACE_H
 
-#include "cmtlformat.h"
+#include "policynamespaceassociation.h"
 
-namespace gpui
+#include <memory>
+#include <vector>
+
+namespace comments
 {
-class CmtlPlugin : public Plugin
+
+/*!
+ * \brief The PolicyNamespace class Root element for <using> elements.
+ */
+class PolicyNamespace
 {
 public:
-    CmtlPlugin()
-        : Plugin("cmtl")
-    {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::CommentResourcesFile>).name(), CmtlFormat);
-    }
-};
-} // namespace gpui
+    /*!
+     * \brief target A PolicyNamespaceAssociation to reference an .admx file. A target element should be unique
+     * for each .admx file. The Group Policy Object Editor will report a duplicate namespace error if it reads
+     * more than one .admx file with the same target namespace.
+     */
+    PolicyNamespaceAssociation target{};
 
-GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)
+    /*!
+     * \brief usingNamespace A set of PolicyNamespaceAssociation types referenced by an .admx file.
+     */
+    std::vector<PolicyNamespaceAssociation> using_{};
+};
+
+}
+
+#endif  //GPUI_POLICY_NAMESPACE_H

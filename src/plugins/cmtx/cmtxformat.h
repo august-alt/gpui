@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,27 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../core/plugin.h"
+#ifndef GPUI_CMTX_FORMAT_H
+#define GPUI_CMTX_FORMAT_H
 
-#include "cmtlformat.h"
+#include "../../../src/core/common.h"
+
+#include "../../../src/io/policyfileformat.h"
+#include "../../../src/io/policycommentsfile.h"
 
 namespace gpui
 {
-class CmtlPlugin : public Plugin
+
+class GPUI_SYMBOL_EXPORT CmtxFormat : public io::PolicyFileFormat<io::PolicyCommentsFile>
 {
 public:
-    CmtlPlugin()
-        : Plugin("cmtl")
-    {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::CommentResourcesFile>).name(), CmtlFormat);
-    }
-};
-} // namespace gpui
+    CmtxFormat();
 
-GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)
+    bool read(std::istream &input, io::PolicyCommentsFile *file);
+
+    bool write(std::ostream &output, io::PolicyCommentsFile *file);
+};
+
+}
+
+#endif//GPUI_CMTX_FORMAT_H

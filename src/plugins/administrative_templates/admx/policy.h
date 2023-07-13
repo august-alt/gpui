@@ -47,6 +47,11 @@ public:
     std::string name{};
 
     /*!
+     * \brief namespace Namespace of the policy.
+     */
+    std::string namespace_{};
+
+    /*!
      * \brief displayName The reference to the policy setting title text string located in the string
      * table of the .adml file.
      */

@@ -42,6 +42,11 @@ class AbstractRegistrySource;
 }
 } // namespace model
 
+namespace comments
+{
+class CommentsModel;
+}
+
 namespace gpui
 {
 class AdministrativeTemplatesWidgetPrivate;
@@ -65,6 +70,9 @@ public:
 
     void setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource);
     void setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource);
+
+    void setUserCommentModel(comments::CommentsModel* userCommentsModel);
+    void setMachineCommentModel(comments::CommentsModel* machineCommentsModel);
 
     virtual bool hasDataChanged() override final;
 

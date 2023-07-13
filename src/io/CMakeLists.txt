@@ -5,8 +5,10 @@ set(HEADERS
     genericfile.inl
     genericreader.h
     genericreader.inl
+    commentresourcesfile.h
     inifile.h
     io.h
+    policycommentsfile.h
     policydefinitionsfile.h
     policyresourcesfile.h
     policyfileformat.h
@@ -16,9 +18,11 @@ set(HEADERS
     registryfileformat.inl
 )
 
-set(SOURCES    
+set(SOURCES
+    commentresourcesfile.cpp
     inifile.cpp
     io.cpp
+    policycommentsfile.cpp
     policydefinitionsfile.cpp
     policyresourcesfile.cpp
     registryfile.cpp
@@ -27,6 +31,8 @@ set(SOURCES
 add_definitions(
     -DGPUI_IO_LIBRARY
 )
+
+set(SOURCES ${SOURCES} ${HEADERS})
 
 add_gpui_library(gpui-io ${SOURCES})
 target_link_libraries(gpui-io Qt5::Core)

@@ -358,6 +358,8 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
 
         for (auto &policy : definition->policies)
         {
+            policy->namespace_ = definition->policyNamespaces.target.namespace_;
+
             QString displayName = QString::fromStdString(findStringById(policy->displayName, policyResources));
             QString explainText = QString::fromStdString(findStringById(policy->explainText, policyResources));
 

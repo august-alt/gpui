@@ -32,6 +32,9 @@ class AdministrativeTemplatesProxyModelPrivate
 public:
     model::registry::AbstractRegistrySource *userSource    = nullptr;
     model::registry::AbstractRegistrySource *machineSource = nullptr;
+
+    comments::CommentsModel *userCommentsModel = nullptr;
+    comments::CommentsModel *machineCommentsModel = nullptr;
 };
 
 AdministrativeTemplatesProxyModel::AdministrativeTemplatesProxyModel()
@@ -53,6 +56,8 @@ QVariant AdministrativeTemplatesProxyModel::data(const QModelIndex &proxyIndex, 
 
             contentWidget->setMachineRegistrySource(d->machineSource);
             contentWidget->setUserRegistrySource(d->userSource);
+            contentWidget->setMachineCommentModel(d->machineCommentsModel);
+            contentWidget->setUserCommentModel(d->userCommentsModel);
 
             contentWidget->setModelIndex(proxyIndex);
 
@@ -77,6 +82,16 @@ void AdministrativeTemplatesProxyModel::setUserRegistrySource(model::registry::A
 void AdministrativeTemplatesProxyModel::setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource)
 {
     d->machineSource = registrySource;
+}
+
+void AdministrativeTemplatesProxyModel::setUserCommentModel(comments::CommentsModel *userCommentModel)
+{
+    d->userCommentsModel = userCommentModel;
+}
+
+void AdministrativeTemplatesProxyModel::setMachineCommentModel(comments::CommentsModel *machineCommentModel)
+{
+    d->machineCommentsModel = machineCommentModel;
 }
 
 } // namespace gpui

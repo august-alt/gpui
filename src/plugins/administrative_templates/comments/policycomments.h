@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,51 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../core/plugin.h"
+#ifndef GPUI_POLICY_COMMENTS_H
+#define GPUI_POLICY_COMMENTS_H
 
-#include "cmtlformat.h"
+#include "comment.h"
+#include "localizationresourcereference.h"
+#include "policynamespace.h"
 
-namespace gpui
+#include <memory>
+#include <vector>
+
+
+namespace comments
 {
-class CmtlPlugin : public Plugin
+
+/*!
+ * \brief The PolicyComments class This outermost (document) element may not be contained by any other elements.
+ */
+class PolicyComments
 {
 public:
-    CmtlPlugin()
-        : Plugin("cmtl")
-    {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::CommentResourcesFile>).name(), CmtlFormat);
-    }
-};
-} // namespace gpui
+    /**
+     * @brief policyNamespaces  Root element for <using> elements.
+     */
+    PolicyNamespace policyNamespaces{};
 
-GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)
+    /*!
+     * \brief revision The revision number.
+     */
+    double revision{0};
+
+    /*!
+     * \brief schemaVersion The version number of the applicable schema.
+     */
+    double schemaVersion{0};
+    /*!
+     * \brief comments  List of comments.
+     */
+    std::vector<Comment> comments{};
+
+    /*!
+     * \brief resources Resources.
+     */
+    std::unique_ptr<LocalizationResourceReference> resources{nullptr};
+};
+
+}
+
+#endif  //_POLICYCOMMENTS_H

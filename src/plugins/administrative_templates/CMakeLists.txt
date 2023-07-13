@@ -43,6 +43,13 @@ set(HEADERS
     bundle/policyroles.h
     commands/command.h
     commands/commandgroup.h
+    comments/comment.h
+    comments/commentsmodel.h
+    comments/commentdefinitionresources.h
+    comments/localizationresourcereference.h
+    comments/policycomments.h
+    comments/policynamespace.h
+    comments/policynamespaceassociation.h
     presentation/checkbox.h
     presentation/combobox.h
     presentation/decimaltextbox.h
@@ -79,6 +86,7 @@ set(SOURCES
     bundle/policybundle.cpp
     commands/command.cpp
     commands/commandgroup.cpp
+    comments/commentsmodel.cpp
     presentation/presentationwidget.cpp
     registry/abstractregistrysource.cpp
     registry/policystatemanager.cpp

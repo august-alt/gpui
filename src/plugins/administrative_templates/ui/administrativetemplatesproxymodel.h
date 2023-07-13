@@ -23,6 +23,11 @@
 
 #include <QIdentityProxyModel>
 
+namespace comments
+{
+class CommentsModel;
+}
+
 namespace model
 {
 namespace registry
@@ -47,6 +52,9 @@ public:
 
     void setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource);
     void setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource);
+
+    void setUserCommentModel(comments::CommentsModel* userCommentModel);
+    void setMachineCommentModel(comments::CommentsModel* machineCommentModel);
 
 signals:
     void savePolicyChanges();

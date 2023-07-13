@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,27 @@
 **
 ***********************************************************************************************************************/
 
-#include "../../core/plugin.h"
+#ifndef GPUI_CMTL_FORMAT_H
+#define GPUI_CMTL_FORMAT_H
 
-#include "cmtlformat.h"
+#include "../../../src/core/common.h"
+
+#include "../../../src/io/policyfileformat.h"
+#include "../../../src/io/commentresourcesfile.h"
 
 namespace gpui
 {
-class CmtlPlugin : public Plugin
+
+class GPUI_SYMBOL_EXPORT CmtlFormat : public io::PolicyFileFormat<io::CommentResourcesFile>
 {
 public:
-    CmtlPlugin()
-        : Plugin("cmtl")
-    {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::CommentResourcesFile>).name(), CmtlFormat);
-    }
-};
-} // namespace gpui
+    CmtlFormat();
 
-GPUI_EXPORT_PLUGIN(cmtl, gpui::CmtlPlugin)
+    bool read(std::istream &input, io::CommentResourcesFile *file) override;
+
+    bool write(std::ostream &output, io::CommentResourcesFile *file) override;
+};
+
+}
+
+#endif//GPUI_CMTL_FORMAT_H

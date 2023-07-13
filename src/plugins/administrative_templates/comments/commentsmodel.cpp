@@ -39,6 +39,13 @@
 namespace comments
 {
 
+struct CommentWithNamespace
+{
+    QString first{};
+    QString second{};
+    QString namespace_{};
+};
+
 template<typename TPolicies, typename TFormat>
 std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileInfo &policyFileName)
 {
@@ -237,7 +244,6 @@ void CommentsModel::load(const QString &cmtxFileName)
             }
         }
 
-        // TODO: Check if key is still exists.
         auto key = QString::fromStdString(comment.policyRef).split(":").first();
 
         QString namespace_ = namespaces[key];
@@ -260,7 +266,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
     std::shared_ptr<comments::PolicyComments> commentDefinitions = std::make_shared<comments::PolicyComments>();
 
     QSet<QString> namespaces;
-    QVector<QPair<QString, QString> > comments;
+    QVector<CommentWithNamespace> comments;
 
     auto current = invisibleRootItem()->index();
 
@@ -269,8 +275,11 @@ void CommentsModel::save(const QString &path, const QString& localeName)
         QModelIndex index = this->index(row, 0, current);
 
         namespaces.insert(index.data(CommentsModel::ITEM_NAMESPACE_ROLE).value<QString>());
-        comments.append(QPair<QString, QString>(index.data(CommentsModel::ITEM_REFERENCE_ROLE).value<QString>(),
-                        index.data().value<QString>()));
+        comments.append({
+                            index.data(CommentsModel::ITEM_REFERENCE_ROLE).value<QString>(),
+                            index.data().value<QString>(),
+                            index.data(CommentsModel::ITEM_NAMESPACE_ROLE).value<QString>()
+                        });
     }
 
     int namespaceIndex = 0;
@@ -286,10 +295,22 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
     for (const auto& comment : comments)
     {
-        std::string resourceName = "ns0_" + comment.first.toStdString();
+        namespaceIndex = 0;
+
+        for (const auto& currentNamespace : commentDefinitions->policyNamespaces.using_)
+        {
+            if (comment.namespace_.compare(currentNamespace.namespace_.c_str()) == 0)
+            {
+                break;
+            }
+
+            namespaceIndex++;
+        }
+
+        std::string resourceName = "ns" + std::to_string(namespaceIndex) + "_" + comment.first.toStdString();
 
         comments::Comment currentComment;
-        currentComment.policyRef = "ns0:" + comment.first.toStdString();
+        currentComment.policyRef = "ns" + std::to_string(namespaceIndex) + ":" + comment.first.toStdString();
         currentComment.commentText = "$(resource." + resourceName + ")";
 
         commentDefinitions->comments.push_back(currentComment);
@@ -301,23 +322,35 @@ void CommentsModel::save(const QString &path, const QString& localeName)
     {
         auto cmtlFileName = path + "comments.cmtl";
 
-        std::shared_ptr<comments::CommentDefinitionResources> commentResources = std::make_shared<comments::CommentDefinitionResources>();
+        std::shared_ptr<comments::CommentDefinitionResources> commentResources
+                = std::make_shared<comments::CommentDefinitionResources>();
 
         for (const auto& comment : comments)
         {
-            commentResources->stringTable.emplace_back(comment.second.toStdString(), "ns0_" + comment.first.toStdString());
+            namespaceIndex = 0;
+
+            for (const auto& currentNamespace : commentDefinitions->policyNamespaces.using_)
+            {
+                if (comment.namespace_.compare(currentNamespace.namespace_.c_str()) == 0)
+                {
+                    break;
+                }
+
+                namespaceIndex++;
+            }
+
+            commentResources->stringTable.emplace_back(comment.second.toStdString(),
+                                                       "ns" + std::to_string(namespaceIndex)
+                                                       + "_" + comment.first.toStdString());
         }
 
-        savePolicies<io::CommentResourcesFile, comments::CommentDefinitionResources>("cmtl", cmtlFileName, commentResources);
+        savePolicies<io::CommentResourcesFile, comments::CommentDefinitionResources>("cmtl", cmtlFileName,
+                                                                                     commentResources);
     }
 
     auto cmtxFileName = path + "comments.cmtx";
 
     savePolicies<io::PolicyCommentsFile, comments::PolicyComments>("cmtx", cmtxFileName, commentDefinitions);
-
-    // TODO: Construct string table.
-    // TODO: Construct resources table.
-    // TODO: Construct namespaces table.
 }
 
 QModelIndex CommentsModel::indexFromItemReference(const QString &itemRef)

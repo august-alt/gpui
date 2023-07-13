@@ -55,6 +55,7 @@ private slots:
 
 private:
     void setAllCheckState(Qt::CheckState);
+    void clear();
 
     TemplateFilterDialog(const TemplateFilterDialog &) = delete;            // copy ctor
     TemplateFilterDialog(TemplateFilterDialog &&)      = delete;            // move ctor

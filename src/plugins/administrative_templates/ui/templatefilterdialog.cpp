@@ -275,6 +275,7 @@ QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
         ui->titleCheckBox,
         ui->helpCheckBox,
         ui->commentCheckBox,
+        ui->platformCheckBox,
     };
 
     return out;
@@ -283,6 +284,37 @@ QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
 void TemplateFilterDialog::onLanguageChanged()
 {
     d->ui->retranslateUi(this);
+    clear();
+}
+
+void TemplateFilterDialog::clear()
+{
+    const QList<QWidget *> widgetList = d->getWidgetList();
+
+    for (QWidget *widget : widgetList)
+    {
+        QComboBox *combo    = qobject_cast<QComboBox *>(widget);
+        QCheckBox *check    = qobject_cast<QCheckBox *>(widget);
+        QGroupBox *groupbox = qobject_cast<QGroupBox *>(widget);
+        QLineEdit *lineedit = qobject_cast<QLineEdit *>(widget);
+
+        if (combo)
+        {
+            combo->setCurrentIndex(0);
+        }
+        else if (check)
+        {
+            check->setChecked(Qt::Unchecked);
+        }
+        else if (groupbox)
+        {
+            groupbox->setChecked(Qt::Unchecked);
+        }
+        else if (lineedit)
+        {
+            lineedit->setText("");
+        }
+    }
 }
 
 } // namespace gpui

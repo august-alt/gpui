@@ -450,6 +450,7 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
     d->policyBundleLoad();
     retranslateMenuItems();
     d->filterDialog->onLanguageChanged();
+    d->updateFilter();
     setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
 }
 

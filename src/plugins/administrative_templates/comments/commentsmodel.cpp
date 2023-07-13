@@ -298,6 +298,8 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
     commentDefinitions->resources = std::make_unique<LocalizationResourceReference>();
 
+    bool enableLocalizedComments = localeName != "en-US";
+
     for (const auto& comment : comments)
     {
         namespaceIndex = 0;
@@ -320,10 +322,13 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
         commentDefinitions->comments.push_back(currentComment);
 
-        commentDefinitions->resources->stringTable.emplace_back(comment.second.toStdString(), resourceName);
+        commentDefinitions->resources->stringTable.emplace_back((enableLocalizedComments
+                                                                ? ""
+                                                                : comment.second.toStdString()),
+                                                                resourceName);
     }
 
-    if (localeName != "en-US")
+    if (enableLocalizedComments)
     {
         auto cmtlFileName = path + "comment.cmtl";
 

@@ -325,7 +325,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
     if (localeName != "en-US")
     {
-        auto cmtlFileName = path + "comments.cmtl";
+        auto cmtlFileName = path + "comment.cmtl";
 
         std::shared_ptr<comments::CommentDefinitionResources> commentResources
                 = std::make_shared<comments::CommentDefinitionResources>();
@@ -353,7 +353,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
                                                                                      commentResources);
     }
 
-    auto cmtxFileName = path + "comments.cmtx";
+    auto cmtxFileName = path + "comment.cmtx";
 
     savePolicies<io::PolicyCommentsFile, comments::PolicyComments>("cmtx", cmtxFileName, commentDefinitions);
 }

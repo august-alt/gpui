@@ -103,7 +103,7 @@ void savePolicies(const QString &pluginName, const QString &fileName, std::share
 
     oss->flush();
 
-    qWarning() << "Current string values." << oss->str().c_str();
+    qWarning() << "Current string values:\n" << oss->str().c_str();
 
     bool ifShowError = false;
 
@@ -280,6 +280,11 @@ void CommentsModel::save(const QString &path, const QString& localeName)
                             index.data().value<QString>(),
                             index.data(CommentsModel::ITEM_NAMESPACE_ROLE).value<QString>()
                         });
+    }
+
+    if (comments.empty())
+    {
+        return;
     }
 
     int namespaceIndex = 0;

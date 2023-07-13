@@ -268,6 +268,10 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                 connect(ui->okPushButton, &QPushButton::clicked, [commentsModel, gui, policy]() -> void
                 {
                     auto commentText = gui->commentTextEdit->toPlainText();
+                    if (commentText.trimmed().isEmpty())
+                    {
+                        return;
+                    }
                     commentsModel->setComment(commentText, QString::fromStdString(policy->name),
                                               QString::fromStdString(policy->namespace_));
                 });

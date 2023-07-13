@@ -263,18 +263,18 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                 ui->okPushButton->disconnect();
                 ui->cancelPushButton->disconnect();
 
-                auto layout = PresentationBuilder::build(
-                    {*presentation, *policy, *source, *ui->okPushButton, d->dataChanged, d->stateEnabled});
-                connectDialogBoxSignals();
-
                 auto gui = this->ui;
 
-                QObject::connect(ui->okPushButton, &QPushButton::clicked, [commentsModel, gui, policy]() -> void
+                connect(ui->okPushButton, &QPushButton::clicked, [commentsModel, gui, policy]() -> void
                 {
                     auto commentText = gui->commentTextEdit->toPlainText();
                     commentsModel->setComment(commentText, QString::fromStdString(policy->name),
                                               QString::fromStdString(policy->namespace_));
                 });
+
+                auto layout = PresentationBuilder::build(
+                    {*presentation, *policy, *source, *ui->okPushButton, d->dataChanged, d->stateEnabled});
+                connectDialogBoxSignals();
 
                 ui->contentScrollArea->widget()->setLayout(layout);
             }

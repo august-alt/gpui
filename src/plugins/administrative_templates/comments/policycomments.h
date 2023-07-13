@@ -46,12 +46,12 @@ public:
     /*!
      * \brief revision The revision number.
      */
-    double revision{0};
+    std::string revision{"1.0"};
 
     /*!
      * \brief schemaVersion The version number of the applicable schema.
      */
-    double schemaVersion{0};
+    std::string schemaVersion{"1.0"};
     /*!
      * \brief comments  List of comments.
      */

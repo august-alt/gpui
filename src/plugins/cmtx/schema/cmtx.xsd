@@ -52,12 +52,12 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute name="minRequiredRevision" type="xs:decimal" use="required" />
+            <xs:attribute name="minRequiredRevision" type="xs:string" use="required" />
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      <xs:attribute name="revision" type="xs:decimal" use="required" />
-      <xs:attribute name="schemaVersion" type="xs:decimal" use="required" />
+      <xs:attribute name="revision" type="xs:string" use="required" />
+      <xs:attribute name="schemaVersion" type="xs:string" use="required" />
     </xs:complexType>
   </xs:element>
 </xsd:schema>

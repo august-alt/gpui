@@ -243,6 +243,11 @@ bool TemplateFilterModel::filterKeyword(const QModelIndex &index) const
     return keywordMatch;
 }
 
+void TemplateFilterModel::onLanguageChanged()
+{
+    d->platformModel->buildPlatformMap();
+}
+
 void TemplateFilterModel::setUserRegistrySource(AbstractRegistrySource *registrySource)
 {
     d->userSource = registrySource;

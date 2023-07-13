@@ -64,6 +64,8 @@ public:
 
     bool filterAcceptsRow(const QModelIndex &index, const model::registry::PolicyStateManager::PolicyState state) const;
 
+    void onLanguageChanged();
+
 private:
     TemplateFilterModel(const TemplateFilterModel &) = delete;            // copy ctor
     TemplateFilterModel(TemplateFilterModel &&)      = delete;            // move ctor

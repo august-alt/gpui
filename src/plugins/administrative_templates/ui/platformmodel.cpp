@@ -37,6 +37,7 @@ class PlatformModelPrivate
 public:
     QStandardItemModel *sourceModel = nullptr;
     std::vector<std::shared_ptr<model::admx::SupportedProduct>> items{};
+    std::unordered_map<QString, QModelIndex> mapPlatformToNode{};
 
     PlatformModelPrivate() {}
     ~PlatformModelPrivate() {}
@@ -125,37 +126,32 @@ void PlatformModel::populateModel(std::vector<std::shared_ptr<model::admx::Suppo
 
         insertRow(rowCount(), productElement);
     }
+
+    buildPlatformMap();
+}
+
+void PlatformModel::buildPlatformMap()
+{
+    std::function<void(const QModelIndex &root)> buildCache = [&](const QModelIndex &root) {
+        const QString &rootReference        = root.data(PLATFORM_ROLE_SORT).value<QString>();
+        d->mapPlatformToNode[rootReference] = root;
+        for (int row = 0; row < rowCount(root); ++row)
+        {
+            buildCache(index(row, 0, root));
+        }
+    };
+    buildCache(invisibleRootItem()->index());
 }
 
 int PlatformModel::getPlatformIndex(QString platform, QString parentReference) const
 {
-    static std::unordered_map<QString, QModelIndex> mapPlatformToNode;
-    static bool cachedPlatformToNode = false;
-    if (!cachedPlatformToNode)
-    {
-        std::function<void(const QModelIndex &root)> buildCache = [&](const QModelIndex &root) {
-            const QString &rootReference     = root.data(PLATFORM_ROLE_SORT).value<QString>();
-            mapPlatformToNode[rootReference] = root;
-            for (int row = 0; row < rowCount(root); ++row)
-            {
-                buildCache(index(row, 0, root));
-            }
-        };
-        buildCache(invisibleRootItem()->index());
-        cachedPlatformToNode = true;
-    }
-
-    const QModelIndex &parentIndex = mapPlatformToNode[parentReference];
-    QModelIndex platformIndex      = mapPlatformToNode[platform];
+    const QModelIndex &parentIndex = d->mapPlatformToNode[parentReference];
+    QModelIndex platformIndex      = d->mapPlatformToNode[platform];
     if (!parentIndex.isValid() || !platformIndex.isValid())
     {
         return -1;
     }
 
-    if (platformIndex == invisibleRootItem()->index())
-    {
-        return -1;
-    }
     while (platformIndex.parent() != parentIndex)
     {
         if (platformIndex == invisibleRootItem()->index())

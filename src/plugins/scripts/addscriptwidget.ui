@@ -75,6 +75,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>okPushButton</tabstop>
+  <tabstop>nameLineEdit</tabstop>
+  <tabstop>paramLineEdit</tabstop>
+  <tabstop>browsePushButton</tabstop>
+  <tabstop>cancelPushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

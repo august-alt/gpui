@@ -21,7 +21,7 @@ std::string ScriptsModelIo::correctPath(const std::string &path)
 {
     std::string newPath = path;
 
-    if (*newPath.end() != '/' && *newPath.end() != '\\')
+    if (*newPath.rbegin() != '/' && *newPath.rbegin() != '\\')
     {
         newPath.append("/");
     }
@@ -60,6 +60,9 @@ void ScriptsModelIo::savePolicies(const std::string &path,
     if (!path.empty())
     {
         std::string newPath = correctPath(path);
+
+        createDirectory(newPath + "Machine/Scripts/");
+        createDirectory(newPath + "User/Scripts/");
 
         createDirectory(newPath + "Machine/Scripts/Startup");
         createDirectory(newPath + "Machine/Scripts/Shutdown");

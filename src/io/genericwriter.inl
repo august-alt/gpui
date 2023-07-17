@@ -26,9 +26,9 @@ bool GenericWriter::save(const std::string &filename, TData *fileData)
 
     std::ofstream file;
 
-    file.open(filename, std::ofstream::out);
+    file.open(filename, std::ios::out);
 
-    if(file.good())
+    if (file.is_open())
     {
         if(!format->write(file, fileData))
         {
@@ -36,6 +36,10 @@ bool GenericWriter::save(const std::string &filename, TData *fileData)
 
             return false;
         }
+    }
+    else
+    {
+        qWarning() << "Unable to open a file: " << filename.c_str();
     }
 
     file.close();

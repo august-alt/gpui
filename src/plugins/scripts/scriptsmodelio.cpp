@@ -4,6 +4,7 @@
 #include "../../io/inifile.h"
 #include "../../plugins/storage/smb/smbclient.h"
 #include "../../plugins/storage/smb/smbfile.h"
+#include "../../plugins/storage/smb/smbdirectory.h"
 #include "groupscriptcontaineritem.h"
 #include "scriptitem.h"
 #include "scriptitemcontainer.h"
@@ -38,10 +39,10 @@ void ScriptsModelIo::loadPolicies(const std::string &path,
     {
         std::string newPath = correctPath(path);
 
-        auto machinePathScripts      = newPath + "Machine/scripts.ini";
-        auto machinePathPowerScripts = newPath + "Machine/psscripts.ini";
-        auto userPathScripts         = newPath + "User/scripts.ini";
-        auto userPathPowerScripts    = newPath + "User/psscripts.ini";
+        auto machinePathScripts      = newPath + "Machine/Scripts/scripts.ini";
+        auto machinePathPowerScripts = newPath + "Machine/Scripts/psscripts.ini";
+        auto userPathScripts         = newPath + "User/Scripts/scripts.ini";
+        auto userPathPowerScripts    = newPath + "User/Scripts/psscripts.ini";
 
         loadIniFile(machinePathScripts, machineScripts);
         loadIniFile(machinePathPowerScripts, machinePowerScripts);
@@ -60,10 +61,15 @@ void ScriptsModelIo::savePolicies(const std::string &path,
     {
         std::string newPath = correctPath(path);
 
-        auto machinePathScripts      = newPath + "Machine/scripts.ini";
-        auto machinePathPowerScripts = newPath + "Machine/psscripts.ini";
-        auto userPathScripts         = newPath + "User/scripts.ini";
-        auto userPathPowerScripts    = newPath + "User/psscripts.ini";
+        createDirectory(newPath + "Machine/Scripts/Startup");
+        createDirectory(newPath + "Machine/Scripts/Shutdown");
+        createDirectory(newPath + "User/Scripts/Logon");
+        createDirectory(newPath + "User/Scripts/Logoff");
+
+        auto machinePathScripts      = newPath + "Machine/Scripts/scripts.ini";
+        auto machinePathPowerScripts = newPath + "Machine/Scripts/psscripts.ini";
+        auto userPathScripts         = newPath + "User/Scripts/scripts.ini";
+        auto userPathPowerScripts    = newPath + "User/Scripts/psscripts.ini";
 
         saveIniFile(machinePathScripts, machineScripts);
         saveIniFile(machinePathPowerScripts, machinePowerScripts);
@@ -165,6 +171,30 @@ void ScriptsModelIo::saveIniFile(std::string &path, ScriptsModel *model)
     {
         qWarning() << "Warning: Unable to write file: " << filePath.toStdString().c_str()
                    << " description: " << e.what();
+    }
+}
+
+void ScriptsModelIo::createDirectory(const std::string &directoryName)
+{
+    const QString path = QString::fromStdString(directoryName);
+
+    if (path.startsWith("smb://"))
+    {
+        gpui::smb::SmbDirectory dir(path);
+
+        if (!dir.exists())
+        {
+            dir.mkdir(path);
+        }
+    }
+    else
+    {
+        QDir dir(path);
+
+        if (!dir.exists())
+        {
+            dir.mkdir(path);
+        }
     }
 }
 

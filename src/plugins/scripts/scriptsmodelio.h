@@ -29,6 +29,8 @@ private:
     void saveIniFile(std::string &path, ScriptsModel *model);
 
     std::string correctPath(const std::string &path);
+
+    void createDirectory(const std::string &directoryName);
 };
 } // namespace scripts_plugin
 

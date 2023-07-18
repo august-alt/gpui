@@ -21,6 +21,16 @@
        <string>Not configured</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>Run PowerShell scripts first</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Run PowerShell scripts last</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="9" column="0" colspan="2">

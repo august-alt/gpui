@@ -185,6 +185,14 @@
         <source>For this GPO, run scripts in the following order:</source>
         <translation>For this GPO, run scripts in the following order:</translation>
     </message>
+    <message>
+        <source>Run PowerShell scripts first</source>
+        <translation>Run PowerShell scripts first</translation>
+    </message>
+    <message>
+        <source>Run PowerShell scripts last</source>
+        <translation>Run PowerShell scripts last</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsWidget</name>

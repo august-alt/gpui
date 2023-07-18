@@ -20,6 +20,8 @@
 
 #include "iniformat.h"
 
+#include <codecvt>
+
 #include <QDebug>
 
 #include <boost/property_tree/ptree.hpp>
@@ -38,8 +40,24 @@ IniFormat::IniFormat()
 bool IniFormat::read(std::istream &input, IniFile *file)
 {
     try {
+        std::string string_input(std::istreambuf_iterator<char>(input), {});
+        std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff,
+            std::codecvt_mode::little_endian>, char16_t> convertor;
+
+        auto utf8 = convertor.to_bytes(reinterpret_cast<const char16_t*>(string_input.c_str()));
+
+        // Strip BOM
+        if (utf8[0] == '\xef'
+         && utf8[1] == '\xbb'
+         && utf8[2] == '\xbf')
+        {
+           utf8 = utf8.substr(3);
+        }
+
+        std::istringstream utf8stream(utf8);
+
         boost::property_tree::ptree pt;
-        boost::property_tree::ini_parser::read_ini(input, pt);
+        boost::property_tree::ini_parser::read_ini(utf8stream, pt);
 
         for (auto& section : pt)
         {
@@ -85,7 +103,18 @@ bool IniFormat::write(std::ostream &output, IniFile *file)
             ++section_iterator;
         }
 
-        boost::property_tree::ini_parser::write_ini(output, pt);
+        std::stringstream string_output;
+
+        boost::property_tree::ini_parser::write_ini(string_output, pt);
+
+        std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff,
+                std::codecvt_mode::little_endian>, char16_t> convert;
+
+        auto utf16le = convert.from_bytes(string_output.str());
+
+        // Add BOM
+        output.write("\xff\xfe", 2);
+        output.write(reinterpret_cast<const char*>(utf16le.data()), utf16le.size() * 2);
     }
     catch (std::exception& e)
     {

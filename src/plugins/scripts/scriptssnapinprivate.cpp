@@ -16,18 +16,18 @@ ScriptsSnapInPrivate::ScriptsSnapInPrivate(ScriptsSnapIn *scriptsSnapIn)
     userLogoffItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Logoff");
 
     auto userStartUpItemContainer = userPowerScriptsModel.get()->insertItem<ScriptItemContainer>();
-    userStartUpItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Startup");
+    userStartUpItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Logon");
 
     auto userShutdownItemContainer = userPowerScriptsModel.get()->insertItem<ScriptItemContainer>();
-    userShutdownItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Shutdown");
+    userShutdownItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Logoff");
 
     //--------------------------------------------------------------------------------------
     //----machine scripts models
     auto machineLogonItemContainer = machineScriptsModel.get()->insertItem<ScriptItemContainer>();
-    machineLogonItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Logon");
+    machineLogonItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Startup");
 
     auto machineLogoffItemContainer = machineScriptsModel.get()->insertItem<ScriptItemContainer>();
-    machineLogoffItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Logoff");
+    machineLogoffItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Shutdown");
 
     auto machineStartUpItemContainer = machinePowerScriptsModel.get()
                                            ->insertItem<ScriptItemContainer>();

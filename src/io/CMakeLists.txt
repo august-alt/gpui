@@ -5,6 +5,8 @@ set(HEADERS
     genericfile.inl
     genericreader.h
     genericreader.inl
+    genericwriter.h
+    genericwriter.inl
     commentresourcesfile.h
     inifile.h
     io.h

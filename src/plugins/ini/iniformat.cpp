@@ -41,6 +41,8 @@ bool IniFormat::read(std::istream &input, IniFile *file)
 {
     try {
         // TODO: Check validity of conversion to wide characters.
+        // Research Boost lexical_cast and Boost Iostreams Filters.
+        // Maybe they are better way of doing conversion.
         auto wide_input = reinterpret_cast<std::basic_streambuf<wchar_t>*>(input.rdbuf());
 
         std::istreambuf_iterator<wchar_t> eos;

@@ -28,7 +28,7 @@ bool GenericWriter::save(const std::string &filename, TData *fileData)
 
     file.open(filename, std::ios::out);
 
-    if (file.is_open())
+    if (file.good())
     {
         if(!format->write(file, fileData))
         {

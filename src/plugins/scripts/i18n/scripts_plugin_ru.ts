@@ -68,7 +68,7 @@
     </message>
     <message>
         <source>User level policies.</source>
-        <translation>Политика для пользователя</translation>
+        <translation>Политика для пользователя.</translation>
     </message>
     <message>
         <source>Logon</source>
@@ -181,7 +181,15 @@
     </message>
     <message>
         <source>For this GPO, run scripts in the following order:</source>
-        <translation>Запуск скриптов для этого объекта в следующем порядке</translation>
+        <translation>Запуск скриптов для этого объекта в следующем порядке:</translation>
+    </message>
+    <message>
+        <source>Run PowerShell scripts first</source>
+        <translation>Запускать скрипты PowerShell первыми</translation>
+    </message>
+    <message>
+        <source>Run PowerShell scripts last</source>
+        <translation>Запускать скрипты PowerShell последними</translation>
     </message>
 </context>
 <context>

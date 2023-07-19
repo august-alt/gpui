@@ -57,7 +57,7 @@ void ScriptsPowerShellWidget::on_downPushButton_clicked()
 
 void ScriptsPowerShellWidget::on_addPushButton_clicked()
 {
-    BaseScriptTabWidget::onAddClicked(false);
+    BaseScriptTabWidget::onAddClicked();
 }
 
 void ScriptsPowerShellWidget::on_editPushButton_clicked()

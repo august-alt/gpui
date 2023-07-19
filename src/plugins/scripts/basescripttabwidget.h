@@ -47,7 +47,7 @@ public:
 public:
     void onUpClicked();
     void onDownClicked();
-    void onAddClicked(bool isScripts);
+    void onAddClicked();
     void onEditClicked();
     void onDeleteClicked();
     void onBrowseClicked();
@@ -99,7 +99,7 @@ public:
     }
 
 private:
-    ScriptItemContainer *findRootItem(bool isScripts);
+    ScriptItemContainer *findRootItem();
 
 private:
     QWidget *parent;

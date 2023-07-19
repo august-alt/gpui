@@ -53,9 +53,9 @@ void BaseScriptTabWidget::onDownClicked()
     }
 }
 
-void BaseScriptTabWidget::onAddClicked(bool isScripts)
+void BaseScriptTabWidget::onAddClicked()
 {
-    auto root = findRootItem(isScripts);
+    auto root = findRootItem();
 
     if (root == nullptr)
     {
@@ -113,32 +113,35 @@ void BaseScriptTabWidget::onDeleteClicked()
 
 void BaseScriptTabWidget::onBrowseClicked()
 {
+    if (!scriptsItemContainer)
+    {
+        return;
+    }
+
     auto path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
 
-    QDesktopServices::openUrl(QUrl(QString::fromStdString(path), QUrl::TolerantMode));
+    QString dirName = QFileInfo(QString::fromStdString(path)).absolutePath();
+
+    qWarning() << dirName;
+
+    QDesktopServices::openUrl(QUrl(dirName, QUrl::TolerantMode));
 }
 
-ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
+ScriptItemContainer *BaseScriptTabWidget::findRootItem()
 {
-    std::string sectionName = "Shutdown";
+    std::string machineSectionName = "Shutdown";
+    std::string userSectionName    = "Logoff";
 
-    if (isScripts)
+    if (this->isStartUpScripts)
     {
-        if (this->isStartUpScripts)
-        {
-            sectionName = "Logon";
-        }
-        else
-        {
-            sectionName = "Logoff";
-        }
+        machineSectionName = "Startup";
+        userSectionName    = "Logon";
     }
-    else
+
+    if (!this->sessionModel)
     {
-        if (this->isStartUpScripts)
-        {
-            sectionName = "Startup";
-        }
+        qCritical() << "Section model is NULL!";
+        return nullptr;
     }
 
     auto containers = this->sessionModel->topItems();
@@ -151,14 +154,19 @@ ScriptItemContainer *BaseScriptTabWidget::findRootItem(bool isScripts)
 
         if (section)
         {
-            if (sectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
+            if (machineSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
+            {
+                return section;
+            }
+
+            if (userSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
             {
                 return section;
             }
         }
     }
 
-    qWarning() << "Section:" << sectionName.c_str() << " not found!!";
+    qWarning() << "Section:" << userSectionName.c_str() << " or " << machineSectionName.c_str() << " not found!!";
 
     return nullptr;
 }

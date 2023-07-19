@@ -16,9 +16,22 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="11" column="0">
     <widget class="QComboBox" name="runComboBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <item>
       <property name="text">
        <string>Not configured</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Run PowerShell scripts first</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Run PowerShell scripts last</string>
       </property>
      </item>
     </widget>

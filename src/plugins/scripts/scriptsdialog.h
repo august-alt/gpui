@@ -55,7 +55,7 @@ public:
     ScriptsDialog(QWidget *parent = nullptr);
     ~ScriptsDialog();
 
-    void setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel, bool isOnStartUp);
+    void setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel, bool isOnStartUp, bool isUser);
 
 private:
     template<typename TWidget>

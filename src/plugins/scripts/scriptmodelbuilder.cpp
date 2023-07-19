@@ -31,6 +31,20 @@ namespace scripts_plugin
 {
 ScriptModelBuilder::ScriptModelBuilder() {}
 
+void scripts_plugin::ScriptModelBuilder::makeSectionIfNotFound(const std::string &sectionName,
+                                                               const std::string &file_path,
+                                                               std::shared_ptr<io::IniFile::sections> sections,
+                                                               ScriptsModel *model)
+{
+    auto found = sections->find(sectionName);
+    if (found == sections->end())
+    {
+        auto container = model->insertItem<ScriptItemContainer>();
+        container->setProperty(ScriptItemContainer::SECTION_NAME, sectionName);
+        container->setProperty(ScriptItemContainer::INI_FILE_PATH, file_path);
+    }
+}
+
 void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, std::string &file_path)
 {
     auto sections = iniFile->getAllSections();
@@ -72,6 +86,18 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, s
                 item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::PARAMETER), iniCommandParam);
             }
         }
+    }
+
+    QString filePath = QString::fromStdString(file_path);
+    if (filePath.toLower().contains("user"))
+    {
+        makeSectionIfNotFound("Logon", file_path, sections, model);
+        makeSectionIfNotFound("Logoff", file_path, sections, model);
+    }
+    else
+    {
+        makeSectionIfNotFound("Startup", file_path, sections, model);
+        makeSectionIfNotFound("Shutdown", file_path, sections, model);
     }
 }
 

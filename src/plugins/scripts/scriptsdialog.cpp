@@ -48,9 +48,7 @@ ScriptsDialog::~ScriptsDialog()
     delete ui;
 }
 
-void ScriptsDialog::setModels(ScriptsModel *scriptsModel,
-                              ScriptsModel *powerScriptsModel,
-                              bool isOnStartUp)
+void ScriptsDialog::setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel, bool isOnStartUp, bool isUser)
 {
     ScriptItemContainer *scriptsItem      = nullptr;
     ScriptItemContainer *powerScriptsItem = nullptr;
@@ -59,13 +57,29 @@ void ScriptsDialog::setModels(ScriptsModel *scriptsModel,
 
     if (isOnStartUp)
     {
-        scriptsItem      = findItemContainer(scriptsModel, "Logon");
-        powerScriptsItem = findItemContainer(powerScriptsModel, "Startup");
+        if (!isUser)
+        {
+            scriptsItem      = findItemContainer(scriptsModel, "Startup");
+            powerScriptsItem = findItemContainer(powerScriptsModel, "Startup");
+        }
+        else
+        {
+            scriptsItem      = findItemContainer(scriptsModel, "Logon");
+            powerScriptsItem = findItemContainer(powerScriptsModel, "Logon");
+        }
     }
     else
     {
-        scriptsItem      = findItemContainer(scriptsModel, "Logoff");
-        powerScriptsItem = findItemContainer(powerScriptsModel, "Shutdown");
+        if (!isUser)
+        {
+            scriptsItem      = findItemContainer(scriptsModel, "Shutdown");
+            powerScriptsItem = findItemContainer(powerScriptsModel, "Shutdown");
+        }
+        else
+        {
+            scriptsItem      = findItemContainer(scriptsModel, "Logoff");
+            powerScriptsItem = findItemContainer(powerScriptsModel, "Logoff");
+        }
     }
 
     if (scriptsItem != nullptr)
@@ -87,8 +101,7 @@ ScriptItemContainer *ScriptsDialog::findItemContainer(ScriptsModel *model, std::
 
         if (item)
         {
-            auto containerSectionName = item->property<std::string>(
-                ScriptItemContainer::SECTION_NAME);
+            auto containerSectionName = item->property<std::string>(ScriptItemContainer::SECTION_NAME);
 
             if (containerSectionName.compare(section) == 0)
             {

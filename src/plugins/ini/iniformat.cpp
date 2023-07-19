@@ -40,21 +40,28 @@ IniFormat::IniFormat()
 bool IniFormat::read(std::istream &input, IniFile *file)
 {
     try {
-        std::string string_input(std::istreambuf_iterator<char>(input), {});
+        // TODO: Check validity of conversion to wide characters.
+        auto wide_input = reinterpret_cast<std::basic_streambuf<wchar_t>*>(input.rdbuf());
+
+        std::istreambuf_iterator<wchar_t> eos;
+        std::wstring string_input(std::istreambuf_iterator<wchar_t>(wide_input), eos);
+
         std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff,
             std::codecvt_mode::little_endian>, char16_t> convertor;
 
-        auto utf8 = convertor.to_bytes(reinterpret_cast<const char16_t*>(string_input.c_str()));
+        auto utf8 = convertor.to_bytes(reinterpret_cast<const char16_t*>(string_input.data()));
+
+        std::string utf_string{};
 
         // Strip BOM
         if (utf8[0] == '\xef'
          && utf8[1] == '\xbb'
          && utf8[2] == '\xbf')
         {
-           utf8 = utf8.substr(3);
+           utf_string = utf8.substr(3, utf8.size() - 3);
         }
 
-        std::istringstream utf8stream(utf8);
+        std::istringstream utf8stream(utf_string);
 
         boost::property_tree::ptree pt;
         boost::property_tree::ini_parser::read_ini(utf8stream, pt);

@@ -20,18 +20,30 @@
 
 #include "platformmodel.h"
 #include "bundle/policyroles.h"
-#include "qnamespace.h"
+
+#include <qnamespace.h>
 
 #include <iostream>
 #include <memory>
 #include <unordered_map>
+#include <functional>
 
 #include <QDebug>
 #include <QSet>
 #include <QString>
 
+template<>
+struct std::hash<QString>
+{
+    std::size_t operator()(QString const& s) const noexcept
+    {
+        return qHash(s);
+    }
+};
+
 namespace gpui
 {
+
 class PlatformModelPrivate
 {
 public:

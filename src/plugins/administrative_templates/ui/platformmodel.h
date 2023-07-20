@@ -25,6 +25,8 @@
 
 #include "../admx/supportedproduct.h"
 
+#include <memory>
+
 namespace gpui
 {
 enum PlatformRole

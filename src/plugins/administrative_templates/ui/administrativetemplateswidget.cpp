@@ -191,7 +191,7 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
             setPolicyWidgetState(STATE_NOT_CONFIGURED);
 
             ui->notConfiguredRadioButton->setChecked(true);
-            ui->supportedOnTextEdit->setText(model->data(index, PolicyRoles::SUPPORTED_ON).value<QString>());
+            ui->supportedOnTextEdit->setText(model->data(index, PolicyRoles::SUPPORTED_ON_TEXT).value<QString>());
 
             auto presentation = model->data(index, PolicyRoles::PRESENTATION).value<PresentationPtr>();
             auto policy       = model->data(index, PolicyRoles::POLICY).value<PolicyPtr>();

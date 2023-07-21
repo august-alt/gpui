@@ -22,6 +22,10 @@
 #define GPUI_SUPPORTEDDEFINITION_H
 
 #include <string>
+#include <unordered_map>
+#include <vector>
+
+#include "supportedonrange.h"
 
 namespace model
 {
@@ -45,8 +49,23 @@ public:
      */
     std::string displayName{};
 
+    /*!
+     * \brief or_
+     */
+    std::vector<SupportedOnRange> or_{};
+
+    /*!
+     * \brief and_
+     */
+    std::vector<SupportedOnRange> and_{};
+
     virtual ~SupportedDefinition() = default;
 };
+
+/*!
+ * \brief Maps definition name to object
+ */
+using SupportedDefinitions = std::unordered_map<std::string, std::shared_ptr<SupportedDefinition>>;
 } // namespace admx
 } // namespace model
 

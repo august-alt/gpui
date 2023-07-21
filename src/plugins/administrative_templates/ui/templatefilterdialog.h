@@ -39,6 +39,7 @@ public:
 
     TemplateFilter getFilter() const;
     void setPlatformModel(PlatformModel *platformModel);
+    void onLanguageChanged();
 
 public slots:
     void open() override;
@@ -54,6 +55,7 @@ private slots:
 
 private:
     void setAllCheckState(Qt::CheckState);
+    void clear();
 
     TemplateFilterDialog(const TemplateFilterDialog &) = delete;            // copy ctor
     TemplateFilterDialog(TemplateFilterDialog &&)      = delete;            // move ctor

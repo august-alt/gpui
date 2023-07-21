@@ -27,6 +27,9 @@
 #include "../plugins/administrative_templates/bundle/policyroles.h"
 #include "../plugins/administrative_templates/registry/abstractregistrysource.h"
 #include "../plugins/administrative_templates/registry/policystatemanager.h"
+#include "ui/platformmodel.h"
+
+#include "admx/supporteddefinition.h"
 
 #include <QDebug>
 
@@ -46,6 +49,10 @@ public:
     AbstractRegistrySource *userSource    = nullptr;
     AbstractRegistrySource *machineSource = nullptr;
 
+    SupportedDefinitions supportedOnDefinitions{};
+
+    PlatformModel *platformModel = nullptr;
+
     TemplateFilter filter{};
     bool enabled = false;
 };
@@ -60,7 +67,6 @@ TemplateFilterModel::TemplateFilterModel(QObject *parent)
     d->filter.commentEnabled = false;
     d->filter.keywordType    = KeywordFilterType_ANY;
     d->filter.keywordText    = QString();
-    ;
 
     d->filter.configured = QSet<PolicyStateManager::PolicyState>();
 
@@ -82,14 +88,24 @@ void TemplateFilterModel::setFilter(const TemplateFilter &filter, const bool ena
     invalidateFilter();
 }
 
+void TemplateFilterModel::setSupportedOnDefenitions(const SupportedDefinitions &supportedOnDefinitions)
+{
+    d->supportedOnDefinitions = supportedOnDefinitions;
+}
+
+void TemplateFilterModel::setPlatformModel(PlatformModel *model)
+{
+    d->platformModel = model;
+}
+
 // NOTE: filterAcceptsRow() is split in 2 parts because the
 // code to get policy state is too hard to mock so we avoid
 // testing it.
 bool TemplateFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    const auto policy       = index.model()->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
     auto state              = PolicyStateManager::STATE_NOT_CONFIGURED;
+    const auto policy       = index.model()->data(index, PolicyRoles::POLICY).value<PolicyPtr>();
     if (policy != nullptr)
     {
         const auto source = (policy->policyType == PolicyType::Machine ? d->machineSource : d->userSource);
@@ -110,21 +126,87 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
         return true;
     }
 
-    const auto supportedPlatforms    = index.data(PolicyRoles::SUPPORTED_ON).value<QString>();
-    const QSet<QString> platformList = d->filter.selectedPlatforms;
-    bool platformMatch               = false;
+    const bool configuredMatch = d->filter.configured.contains(state);
+
+    return filterPlatform(index) && filterKeyword(index) && configuredMatch;
+}
+
+bool TemplateFilterModel::filterPlatform(const QModelIndex &platformIndex) const
+{
+    if (!d->filter.platformEnabled)
+    {
+        return true;
+    }
+
+    const QString &supportedOnFull = platformIndex.data(PolicyRoles::SUPPORTED_ON).value<QString>();
+    if (supportedOnFull.isEmpty())
+    {
+        return false;
+    }
+
+    const std::string supportedOnReference           = supportedOnFull.split(':').last().toStdString();
+    std::shared_ptr<SupportedDefinition> supportedOn = d->supportedOnDefinitions[supportedOnReference];
+
+    // NOTE(mchernigin): supportedOn will be nullptr if current item is a folder. In this case it should be filtered out
+    // only if all of it's children are filtered out. `if` bellow checks exactly that.
+    //
+    // For now, filterPlatform is called multiple times for all items which are contained in some
+    // folder. Once from filterAcceptRow and on each filterPlatform call on its parent. There is room for optimization
+    if (!supportedOn)
+    {
+        for (int i = 0; i < d->platformModel->rowCount(platformIndex); ++i)
+        {
+            if (filterPlatform(d->platformModel->index(i, 0, platformIndex)))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    const auto matchSinglePlatform = [&](QString platform) {
+        const auto isPlatformWithinRange = [&](SupportedOnRange range) {
+            QString parentReference = QString::fromStdString(range.itemReference).split(':').last();
+            int version             = d->platformModel->getPlatformIndex(platform, parentReference);
+            if (version == -1)
+            {
+                return false;
+            }
+
+            return (range.minVersionIndex <= static_cast<uint32_t>(version)
+                    && static_cast<uint32_t>(version) <= range.maxVersionIndex);
+        };
+
+        if (!supportedOn->or_.empty())
+        {
+            return std::any_of(supportedOn->or_.begin(), supportedOn->or_.end(), isPlatformWithinRange);
+        }
+        if (!supportedOn->and_.empty())
+        {
+            return std::all_of(supportedOn->and_.begin(), supportedOn->and_.end(), isPlatformWithinRange);
+        }
+
+        return false;
+    };
+
+    const QSet<QString> &selectedPlatforms = d->filter.selectedPlatforms;
     switch (d->filter.platformType)
     {
     case PlatformFilterType_ANY:
-        platformMatch = std::any_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
-            return supportedPlatforms.contains(platform);
-        });
-        break;
+        return std::any_of(selectedPlatforms.begin(), selectedPlatforms.end(), matchSinglePlatform);
     case PlatformFilterType_ALL:
-        platformMatch = std::all_of(platformList.begin(), platformList.end(), [&supportedPlatforms](QString platform) {
-            return supportedPlatforms.contains(platform);
-        });
-        break;
+        return std::all_of(selectedPlatforms.begin(), selectedPlatforms.end(), matchSinglePlatform);
+    default:
+        return false;
+    }
+}
+
+bool TemplateFilterModel::filterKeyword(const QModelIndex &index) const
+{
+    if (!d->filter.keywordEnabled)
+    {
+        return true;
     }
 
     auto checkKeywordMatch = [&](const QString &string) {
@@ -158,11 +240,12 @@ bool TemplateFilterModel::filterAcceptsRow(const QModelIndex &index, const Polic
 
     const bool keywordMatch = (d->filter.titleEnabled && titleMatch) || (d->filter.helpEnabled && helpMatch)
                               || (d->filter.commentEnabled && commentMatch);
+    return keywordMatch;
+}
 
-    const bool configuredMatch = d->filter.configured.contains(state);
-
-    return (!d->filter.platformEnabled || platformMatch) && (!d->filter.keywordEnabled || keywordMatch)
-           && configuredMatch;
+void TemplateFilterModel::onLanguageChanged()
+{
+    d->platformModel->buildPlatformMap();
 }
 
 void TemplateFilterModel::setUserRegistrySource(AbstractRegistrySource *registrySource)

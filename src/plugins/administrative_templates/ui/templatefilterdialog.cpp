@@ -26,6 +26,7 @@
 #include "platformmodel.h"
 
 #include <algorithm>
+#include <utility>
 
 using namespace model;
 using namespace model::registry;
@@ -87,40 +88,47 @@ TemplateFilter TemplateFilterDialog::getFilter() const
     out.platformType    = static_cast<PlatformFilterType>(d->ui->platformComboBox->currentIndex());
 
     const auto sourceModel = d->ui->platformTreeView->model();
-    const auto current     = sourceModel->index(0, 1);
-    for (int row = 0; row < sourceModel->rowCount(current); ++row)
-    {
-        const QModelIndex index = sourceModel->index(row, 0, current);
-        const auto state        = index.data(Qt::CheckStateRole).value<Qt::CheckState>();
-        if (state == Qt::Checked)
+
+    std::function<void(const QModelIndex &)> addPlatforms = [&](const QModelIndex &index) {
+        for (int row = 0; row < sourceModel->rowCount(index); ++row)
         {
-            out.selectedPlatforms.insert(index.data().value<QString>());
+            const QModelIndex child = sourceModel->index(row, 0, index);
+
+            const auto state = child.data(Qt::CheckStateRole).value<Qt::CheckState>();
+            if (state == Qt::Checked)
+            {
+                auto sort_key = child.data(PLATFORM_ROLE_SORT).value<QString>();
+                out.selectedPlatforms.insert(sort_key);
+            }
+
+            addPlatforms(child);
         }
-    }
+    };
+    addPlatforms(sourceModel->index(0, 1));
 
     switch (d->ui->configuredComboBox->currentIndex())
     {
     // NOTE: cases order is dictated by FilterComboValue declaration
     case FilterComboValue_ANY:
-        out.configured = QSet<PolicyStateManager::PolicyState>({
+        out.configured = {
             PolicyStateManager::STATE_NOT_CONFIGURED,
             PolicyStateManager::STATE_ENABLED,
             PolicyStateManager::STATE_DISABLED,
-        });
+        };
         break;
     case FilterComboValue_YES:
-        out.configured = QSet<PolicyStateManager::PolicyState>({
+        out.configured = {
             PolicyStateManager::STATE_ENABLED,
             PolicyStateManager::STATE_DISABLED,
-        });
+        };
         break;
     case FilterComboValue_NO:
-        out.configured = QSet<PolicyStateManager::PolicyState>({
+        out.configured = {
             PolicyStateManager::STATE_NOT_CONFIGURED,
-        });
+        };
         break;
     default:
-        out.configured = QSet<PolicyStateManager::PolicyState>();
+        out.configured = {};
     }
 
     // TODO: save filters from managed and comment combo
@@ -267,9 +275,46 @@ QList<QWidget *> TemplateFilterDialogPrivate::getWidgetList() const
         ui->titleCheckBox,
         ui->helpCheckBox,
         ui->commentCheckBox,
+        ui->platformCheckBox,
     };
 
     return out;
+}
+
+void TemplateFilterDialog::onLanguageChanged()
+{
+    d->ui->retranslateUi(this);
+    clear();
+}
+
+void TemplateFilterDialog::clear()
+{
+    const QList<QWidget *> widgetList = d->getWidgetList();
+
+    for (QWidget *widget : widgetList)
+    {
+        QComboBox *combo    = qobject_cast<QComboBox *>(widget);
+        QCheckBox *check    = qobject_cast<QCheckBox *>(widget);
+        QGroupBox *groupbox = qobject_cast<QGroupBox *>(widget);
+        QLineEdit *lineedit = qobject_cast<QLineEdit *>(widget);
+
+        if (combo)
+        {
+            combo->setCurrentIndex(0);
+        }
+        else if (check)
+        {
+            check->setChecked(Qt::Unchecked);
+        }
+        else if (groupbox)
+        {
+            groupbox->setChecked(Qt::Unchecked);
+        }
+        else if (lineedit)
+        {
+            lineedit->setText("");
+        }
+    }
 }
 
 } // namespace gpui

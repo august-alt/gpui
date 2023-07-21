@@ -23,8 +23,17 @@
 
 #include <QStandardItemModel>
 
+#include "../admx/supportedproduct.h"
+
+#include <memory>
+
 namespace gpui
 {
+enum PlatformRole
+{
+    PLATFORM_ROLE_SORT = Qt::UserRole + 1,
+};
+
 class PlatformModelPrivate;
 
 /*!
@@ -36,13 +45,12 @@ class PlatformModelPrivate;
 class PlatformModel final : public QStandardItemModel
 {
 public:
-    PlatformModel(QStandardItemModel *sourceModel = nullptr);
+    PlatformModel();
     ~PlatformModel();
 
-    void setSourceData(QStandardItemModel *sourceModel);
-
-private:
-    void populateModel(QStandardItemModel *sourceModel);
+    void populateModel(std::vector<std::shared_ptr<model::admx::SupportedProduct>> products);
+    void buildPlatformMap();
+    int getPlatformIndex(QString platform, QString parentReference) const;
 
 private:
     PlatformModel(const PlatformModel &) = delete;            // copy ctor
@@ -52,6 +60,8 @@ private:
 
 private:
     PlatformModelPrivate *d;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    Qt::CheckState getItemCheckStateBasedOnChildren(const QStandardItem *parent) const;
 };
 
 } // namespace gpui

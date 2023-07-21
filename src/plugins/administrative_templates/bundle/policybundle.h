@@ -24,6 +24,8 @@
 #include "../administrativetemplates.h"
 
 #include "../admx/policytype.h"
+#include "../admx/supporteddefinition.h"
+#include "../admx/supportedproduct.h"
 
 #include <memory>
 #include <string>
@@ -53,6 +55,8 @@ public:
     ~PolicyBundle();
 
     std::unique_ptr<QStandardItemModel> loadFolder(const std::string &path, const std::string &language);
+    std::vector<std::shared_ptr<model::admx::SupportedProduct>> getProducts();
+    admx::SupportedDefinitions getSupportedOnDefenitions();
 
 private:
     PolicyBundle(const PolicyBundle &) = delete;            // copy ctor
@@ -68,7 +72,9 @@ private:
     PolicyBundlePrivate *d;
 
     void rearrangeTreeItems();
-    void assignParentCategory(const std::string &rawCategory, QStandardItem *machineItem, QStandardItem *userItem,
+    void assignParentCategory(const std::string &rawCategory,
+                              QStandardItem *machineItem,
+                              QStandardItem *userItem,
                               const std::string &fileName);
 
     QStandardItem *createItem(const QString &displayName,

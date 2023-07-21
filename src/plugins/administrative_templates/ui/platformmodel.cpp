@@ -19,14 +19,26 @@
 ***********************************************************************************************************************/
 
 #include "platformmodel.h"
+#include "bundle/policyroles.h"
 
+#include <qnamespace.h>
+
+#include <functional>
+#include <iostream>
 #include <memory>
+#include <unordered_map>
 
+#include <QDebug>
 #include <QSet>
-#include <QStack>
 #include <QString>
 
-#include "bundle/policyroles.h"
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+template<>
+struct std::hash<QString>
+{
+    std::size_t operator()(QString const &s) const noexcept { return qHash(s); }
+};
+#endif
 
 namespace gpui
 {
@@ -34,7 +46,8 @@ class PlatformModelPrivate
 {
 public:
     QStandardItemModel *sourceModel = nullptr;
-    QSet<QString> uniqueItems{};
+    std::vector<std::shared_ptr<model::admx::SupportedProduct>> items{};
+    std::unordered_map<QString, QModelIndex> mapPlatformToNode{};
 
     PlatformModelPrivate() {}
     ~PlatformModelPrivate() {}
@@ -45,70 +58,140 @@ public:
     PlatformModelPrivate &operator=(PlatformModelPrivate &&) = delete;      // move assignment
 };
 
-PlatformModel::PlatformModel(QStandardItemModel *sourceModel)
+class PlatformItem : public QStandardItem
+{
+public:
+    PlatformItem(std::string sort_key, std::string display);
+};
+
+PlatformItem::PlatformItem(std::string sort_key, std::string display)
+{
+    setData(QString::fromStdString(sort_key));
+    setText(QString::fromStdString(display));
+
+    setEditable(false);
+    setCheckable(true);
+}
+
+PlatformModel::PlatformModel()
     : QStandardItemModel()
     , d(new PlatformModelPrivate())
-{
-    setSourceData(sourceModel);
-}
+{}
 
 PlatformModel::~PlatformModel()
 {
     delete d;
 }
 
-void PlatformModel::setSourceData(QStandardItemModel *sourceModel)
+// NOTE: allows recursively select children using checkbox
+bool PlatformModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (sourceModel && (sourceModel != d->sourceModel))
-    {
-        d->sourceModel = sourceModel;
+    const QStandardItem *item = itemFromIndex(index);
+    const bool rv             = QStandardItemModel::setData(index, value, role);
 
-        populateModel(d->sourceModel);
+    // (un)check all children on item (un)check
+    for (int i = 0; i < item->rowCount(); i++)
+    {
+        QStandardItem *childItem = item->child(i);
+        setData(childItem->index(), value, role);
     }
+
+    // update all parents state
+    for (QStandardItem *parent = item->parent(); parent; parent = parent->parent())
+    {
+        QStandardItemModel::setData(parent->index(), getItemCheckStateBasedOnChildren(parent), role);
+    }
+
+    return rv;
 }
 
-void PlatformModel::populateModel(QStandardItemModel *sourceModel)
+Qt::CheckState PlatformModel::getItemCheckStateBasedOnChildren(const QStandardItem *parent) const
 {
-    d->uniqueItems.clear();
+    constexpr int NUMBER_OF_VARIANTS       = 3; // Qt::Unchecked, Qt::PartiallyChecked, Qt::Checked
+    int32_t hasVariant[NUMBER_OF_VARIANTS] = {0};
+    int32_t numberOfChildren               = parent->rowCount();
 
+    for (int32_t row = 0; row < numberOfChildren; row++)
+    {
+        ++hasVariant[parent->child(row)->checkState()];
+    }
+
+    for (int32_t variant = 0; variant < NUMBER_OF_VARIANTS; ++variant)
+    {
+        if (hasVariant[variant] == numberOfChildren)
+        {
+            return static_cast<Qt::CheckState>(variant);
+        };
+    }
+
+    return Qt::PartiallyChecked;
+}
+
+void PlatformModel::populateModel(std::vector<std::shared_ptr<model::admx::SupportedProduct>> products)
+{
     clear();
 
-    auto stack = std::make_unique<QStack<QModelIndex>>();
-    stack->push(sourceModel->invisibleRootItem()->index());
+    d->items = products;
 
-    while (!stack->empty())
+    for (const auto &product : d->items)
     {
-        auto current = stack->pop();
+        auto productElement = new PlatformItem(product->name, product->displayName);
 
-        auto supportedOn = current.data(model::bundle::PolicyRoles::SUPPORTED_ON).value<QString>().trimmed();
-
-        if (!supportedOn.isEmpty())
+        int majorVersionIdx = 0;
+        for (const auto &majorVersion : product->majorVersion)
         {
-            d->uniqueItems.insert(supportedOn);
-        }
+            auto majorVersionElement = new PlatformItem(majorVersion.name, majorVersion.displayName);
 
-        for (int row = 0; row < sourceModel->rowCount(current); ++row)
-        {
-            QModelIndex index = sourceModel->index(row, 0, current);
-
-            if (sourceModel->hasChildren(index))
+            int minorVersionIdx = 0;
+            for (const auto &minorVersion : majorVersion.minorVersion)
             {
-                for (int childRow = 0; childRow < sourceModel->rowCount(index); ++childRow)
-                {
-                    QModelIndex childIndex = sourceModel->index(childRow, 0, index);
-                    stack->push(childIndex);
-                }
+                auto minorVersionElement = new PlatformItem(minorVersion.name, minorVersion.displayName);
+
+                majorVersionElement->setChild(minorVersionIdx++, 0, minorVersionElement);
             }
+
+            productElement->setChild(majorVersionIdx++, 0, majorVersionElement);
         }
+
+        insertRow(rowCount(), productElement);
     }
 
-    for (const auto &uniqueItem : d->uniqueItems)
+    buildPlatformMap();
+}
+
+void PlatformModel::buildPlatformMap()
+{
+    std::function<void(const QModelIndex &root)> buildCache = [&](const QModelIndex &root) {
+        const QString &rootReference        = root.data(PLATFORM_ROLE_SORT).value<QString>();
+        d->mapPlatformToNode[rootReference] = root;
+        for (int row = 0; row < rowCount(root); ++row)
+        {
+            buildCache(index(row, 0, root));
+        }
+    };
+    buildCache(invisibleRootItem()->index());
+}
+
+int PlatformModel::getPlatformIndex(QString platform, QString parentReference) const
+{
+    const QModelIndex &parentIndex = d->mapPlatformToNode[parentReference];
+    QModelIndex platformIndex      = d->mapPlatformToNode[platform];
+    if (!parentIndex.isValid() || !platformIndex.isValid())
     {
-        auto listElement = new QStandardItem(uniqueItem);
-        listElement->setCheckable(true);
-
-        insertRow(rowCount(), listElement);
+        return -1;
     }
+
+    while (platformIndex.parent() != parentIndex)
+    {
+        if (platformIndex == invisibleRootItem()->index())
+        {
+            return -1;
+        }
+
+        platformIndex = platformIndex.parent();
+    }
+
+    return platformIndex.row();
 }
 
 } // namespace gpui

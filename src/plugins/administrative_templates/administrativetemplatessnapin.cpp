@@ -272,8 +272,14 @@ public:
         auto bundle = std::make_unique<model::bundle::PolicyBundle>();
         model       = bundle->loadFolder(admxPath, localeName);
         proxyModel->setSourceModel(model.get());
+
+        auto supportedOnDefinitions = bundle->getSupportedOnDefenitions();
+        filterModel->setSupportedOnDefenitions(std::move(supportedOnDefinitions));
         filterModel->setSourceModel(proxyModel.get());
-        platformModel->setSourceData(model.get());
+        filterModel->setPlatformModel(platformModel.get());
+
+        auto products = bundle->getProducts();
+        platformModel->populateModel(products);
     }
 
     void updateFilter()
@@ -368,10 +374,9 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
 
         d->filterDialog = new gpui::TemplateFilterDialog();
 
-        d->actionEnableFilter.setText(QObject::tr("Enable &filter"));
-        d->actionEditFilter.setText(QObject::tr("&Edit filter"));
+        d->filterMenu = std::make_unique<QMenu>();
 
-        d->filterMenu = std::make_unique<QMenu>(QObject::tr("&Filter"));
+        setMenuItemNames();
 
         d->filterMenu->addAction(&d->actionEditFilter);
         d->filterMenu->addAction(&d->actionEnableFilter);
@@ -472,10 +477,20 @@ void AdministrativeTemplatesSnapIn::onDataSave()
     d->onDataSave();
 }
 
+void AdministrativeTemplatesSnapIn::setMenuItemNames()
+{
+    d->actionEnableFilter.setText(QObject::tr("Enable &filter"));
+    d->actionEditFilter.setText(QObject::tr("&Edit filter"));
+    d->filterMenu->menuAction()->setText(QObject::tr("&Filter"));
+}
+
 void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {
     d->localeName = locale;
     d->policyBundleLoad();
+    setMenuItemNames();
+    d->filterDialog->onLanguageChanged();
+    d->updateFilter();
     setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
 }
 

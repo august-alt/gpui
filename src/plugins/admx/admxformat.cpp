@@ -443,6 +443,44 @@ public:
     {
         this->displayName = category.displayName();
         this->name        = category.name();
+
+        const uint32_t defaultMinVersion = 0;
+        const uint32_t defaultMaxVersion = UINT32_MAX;
+        if (category.or_().present())
+        {
+            for (auto &rangeElement : category.or_()->range())
+            {
+                uint32_t minVersion = defaultMinVersion;
+                uint32_t maxVersion = defaultMaxVersion;
+                assign_if_exists(minVersion, rangeElement.minVersionIndex());
+                assign_if_exists(maxVersion, rangeElement.maxVersionIndex());
+
+                this->or_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
+            }
+
+            for (auto &rangeElement : category.or_()->reference())
+            {
+                this->or_.emplace_back(rangeElement.ref(), defaultMinVersion, defaultMaxVersion);
+            }
+        }
+
+        if (category.and_().present())
+        {
+            for (auto &rangeElement : category.and_()->range())
+            {
+                uint32_t minVersion = defaultMinVersion;
+                uint32_t maxVersion = defaultMaxVersion;
+                assign_if_exists(minVersion, rangeElement.minVersionIndex());
+                assign_if_exists(maxVersion, rangeElement.maxVersionIndex());
+
+                this->and_.emplace_back(rangeElement.ref(), minVersion, maxVersion);
+            }
+
+            for (auto &rangeElement : category.and_()->reference())
+            {
+                this->and_.emplace_back(rangeElement.ref(), defaultMinVersion, defaultMaxVersion);
+            }
+        }
     }
 
     static std::shared_ptr<model::admx::SupportedDefinition> create(const SupportedOnDefinition &element)
@@ -462,6 +500,28 @@ public:
     {
         this->displayName = category.displayName();
         this->name        = category.name();
+
+        for (auto &catregoryMajorVersion : category.majorVersion())
+        {
+            model::admx::MajorVersion currentMajorVersion;
+
+            currentMajorVersion.name         = catregoryMajorVersion.name();
+            currentMajorVersion.displayName  = catregoryMajorVersion.displayName();
+            currentMajorVersion.versionIndex = catregoryMajorVersion.versionIndex();
+
+            for (auto &categoryMinorVersion : catregoryMajorVersion.minorVersion())
+            {
+                model::admx::MinorVersion currentMinorVersion;
+
+                currentMinorVersion.name         = categoryMinorVersion.name();
+                currentMinorVersion.displayName  = categoryMinorVersion.displayName();
+                currentMinorVersion.versionIndex = categoryMinorVersion.versionIndex();
+
+                currentMajorVersion.minorVersion.push_back(currentMinorVersion);
+            }
+
+            this->majorVersion.push_back(currentMajorVersion);
+        }
     }
 
     static std::shared_ptr<model::admx::SupportedProduct> create(const SupportedProduct &element)

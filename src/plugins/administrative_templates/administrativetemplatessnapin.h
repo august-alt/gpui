@@ -43,6 +43,8 @@ public:
 
 private:
     std::unique_ptr<AdministrativeTemplatesSnapInPrivate> d;
+
+    void setMenuItemNames();
 };
 
 } // namespace gpui

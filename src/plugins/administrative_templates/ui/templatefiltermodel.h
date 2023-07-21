@@ -23,6 +23,10 @@
 
 #include "registry/policystatemanager.h"
 
+#include "admx/supporteddefinition.h"
+#include "ui/platformmodel.h"
+
+#include <string>
 #include <QSortFilterProxyModel>
 
 namespace model
@@ -51,6 +55,8 @@ public:
     ~TemplateFilterModel();
 
     void setFilter(const TemplateFilter &filter, const bool enabled);
+    void setSupportedOnDefenitions(const model::admx::SupportedDefinitions &SupportedOnDefinitions);
+    void setPlatformModel(PlatformModel *model);
 
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
     void setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource);
@@ -58,11 +64,16 @@ public:
 
     bool filterAcceptsRow(const QModelIndex &index, const model::registry::PolicyStateManager::PolicyState state) const;
 
+    void onLanguageChanged();
+
 private:
     TemplateFilterModel(const TemplateFilterModel &) = delete;            // copy ctor
     TemplateFilterModel(TemplateFilterModel &&)      = delete;            // move ctor
     TemplateFilterModel &operator=(const TemplateFilterModel &) = delete; // copy assignment
     TemplateFilterModel &operator=(TemplateFilterModel &&) = delete;      // move assignment
+
+    bool filterPlatform(const QModelIndex &index) const;
+    bool filterKeyword(const QModelIndex &index) const;
 
 private:
     TemplateFilterModelPrivate *d;

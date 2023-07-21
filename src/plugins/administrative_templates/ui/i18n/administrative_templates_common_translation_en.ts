@@ -240,6 +240,21 @@
         <translation>Enable Keyword Filters</translation>
     </message>
     <message>
+        <location filename="../templatefilterdialog.ui" line="382"/>
+        <source>Match any word</source>
+        <translation>Match any word</translation>
+    </message>
+    <message>
+        <location filename="../templatefilterdialog.ui" line="387"/>
+        <source>Match all words</source>
+        <translation>Match all words</translation>
+    </message>
+    <message>
+        <location filename="../templatefilterdialog.ui" line="392"/>
+        <source>Match exact</source>
+        <translation>Match exact</translation>
+    </message>
+    <message>
         <location filename="../templatefilterdialog.ui" line="416"/>
         <source>Policy Settings Title</source>
         <translation>Policy Settings Title</translation>

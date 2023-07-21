@@ -32,6 +32,7 @@
 #include <QSet>
 #include <QString>
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 template<>
 struct std::hash<QString>
 {
@@ -40,6 +41,7 @@ struct std::hash<QString>
         return qHash(s);
     }
 };
+#endif
 
 namespace gpui
 {

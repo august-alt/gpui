@@ -61,6 +61,7 @@ private:
 private:
     PlatformModelPrivate *d;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    Qt::CheckState getItemCheckStateBasedOnChildren(const QStandardItem *parent) const;
 };
 
 } // namespace gpui

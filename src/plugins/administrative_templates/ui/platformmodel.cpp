@@ -23,10 +23,10 @@
 
 #include <qnamespace.h>
 
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <unordered_map>
-#include <functional>
 
 #include <QDebug>
 #include <QSet>
@@ -36,16 +36,12 @@
 template<>
 struct std::hash<QString>
 {
-    std::size_t operator()(QString const& s) const noexcept
-    {
-        return qHash(s);
-    }
+    std::size_t operator()(QString const &s) const noexcept { return qHash(s); }
 };
 #endif
 
 namespace gpui
 {
-
 class PlatformModelPrivate
 {
 public:
@@ -90,7 +86,8 @@ PlatformModel::~PlatformModel()
 // NOTE: allows recursively select children using checkbox
 bool PlatformModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    auto item = itemFromIndex(index);
+    const QStandardItem *item = itemFromIndex(index);
+    const bool rv             = QStandardItemModel::setData(index, value, role);
 
     // (un)check all children on item (un)check
     for (int i = 0; i < item->rowCount(); i++)
@@ -99,17 +96,35 @@ bool PlatformModel::setData(const QModelIndex &index, const QVariant &value, int
         setData(childItem->index(), value, role);
     }
 
-    // uncheck all parent if item was unchecked
-    bool isItemBeingUnchecked = (item->checkState() == Qt::CheckState::Checked); // effect was not applied yet
-    if (isItemBeingUnchecked && role == Qt::CheckStateRole)
+    // update all parents state
+    for (QStandardItem *parent = item->parent(); parent; parent = parent->parent())
     {
-        for (auto parent = item->parent(); parent; parent = parent->parent())
-        {
-            QStandardItemModel::setData(parent->index(), value, role);
-        }
+        QStandardItemModel::setData(parent->index(), getItemCheckStateBasedOnChildren(parent), role);
     }
 
-    return QStandardItemModel::setData(index, value, role);
+    return rv;
+}
+
+Qt::CheckState PlatformModel::getItemCheckStateBasedOnChildren(const QStandardItem *parent) const
+{
+    constexpr int NUMBER_OF_VARIANTS       = 3; // Qt::Unchecked, Qt::PartiallyChecked, Qt::Checked
+    int32_t hasVariant[NUMBER_OF_VARIANTS] = {0};
+    int32_t numberOfChildren               = parent->rowCount();
+
+    for (int32_t row = 0; row < numberOfChildren; row++)
+    {
+        ++hasVariant[parent->child(row)->checkState()];
+    }
+
+    for (int32_t variant = 0; variant < NUMBER_OF_VARIANTS; ++variant)
+    {
+        if (hasVariant[variant] == numberOfChildren)
+        {
+            return static_cast<Qt::CheckState>(variant);
+        };
+    }
+
+    return Qt::PartiallyChecked;
 }
 
 void PlatformModel::populateModel(std::vector<std::shared_ptr<model::admx::SupportedProduct>> products)

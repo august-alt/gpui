@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="SCMX" elementFormDefault="qualified" targetNamespace="http://www.microsoft.com/GroupPolicy/PolicyDefinitions" xmlns:pd="http://www.microsoft.com/GroupPolicy/PolicyDefinitions" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+</xs:schema>

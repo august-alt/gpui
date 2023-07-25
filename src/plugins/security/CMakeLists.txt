@@ -12,7 +12,7 @@ set(CMAKE_AUTOUIC ON)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
-add_subdirectory(schemas)
+add_subdirectory(schema)
 
 set(HEADERS
 )
@@ -50,7 +50,7 @@ add_library(${PLUGIN_STATIC_LIBRARY} STATIC ${SOURCES})
 target_link_libraries(${PLUGIN_STATIC_LIBRARY} Qt5::Core Qt5::Widgets)
 target_link_libraries(${PLUGIN_STATIC_LIBRARY} ${GPUI_LIBRARIES})
 
-target_link_libraries(${PLUGIN_STATIC_LIBRARY} static_xsd_library)
+target_link_libraries(${PLUGIN_STATIC_LIBRARY} security_static_xsd_library)
 target_link_libraries(${PLUGIN_STATIC_LIBRARY} xerces-c)
 
 add_gpui_plugin(${PLUGIN_NAME} ${PLUGIN_SOURCES} ${LIB_RESOURCES})

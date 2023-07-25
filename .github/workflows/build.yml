@@ -29,6 +29,7 @@ jobs:
         ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
 
     - name: Extract fresh packages
+      if: github.ref == 'refs/heads/master'
       run: |
         docker cp gpui-build-${{ inputs.architecture }}:/home/builder2/RPM/RPMS/ "$(pwd)/packages"
 

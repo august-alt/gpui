@@ -1,30 +1,18 @@
-name: gpui-ci
+name: gpui-pull-request-ci
 
 on:
   workflow_dispatch:
   workflow_call:
-  push:
-    branches: [ master ]
+  pull_request:
+    types: [ opened, synchronize, ready_for_review ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  gpui-build-container:
-    uses: ./.github/workflows/build-container.yml
-    secrets: inherit
-    strategy:
-      matrix:
-        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
-        architecture: [ amd64, i386 ]
-    with:
-      distr: ${{ matrix.os.distr }}
-      architecture: ${{ matrix.architecture }}
-
   gpui-build:
     uses: ./.github/workflows/build.yml
-    needs: [ gpui-build-container ]
     secrets: inherit
     strategy:
       matrix:
@@ -37,12 +25,6 @@ jobs:
 
   gpui-test:
     uses: ./.github/workflows/test.yml
-    needs: [ gpui-build-container ]
     secrets: inherit
     with:
       architecture: "amd64"
-
-  gpui-publish-api-docs:
-    uses: ./.github/workflows/publish-api-docs.yml
-    needs: [ gpui-build, gpui-test ]
-    secrets: inherit

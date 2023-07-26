@@ -3,10 +3,10 @@ name: gpui-ci
 on:
   workflow_dispatch:
   workflow_call:
-  pull_request:
-    types: [ opened, synchronize, ready_for_review ]
   push:
     branches: [ master ]
+  pull_request:
+    types: [ opened, synchronize, ready_for_review ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

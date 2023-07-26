@@ -72,7 +72,6 @@ public:
     std::vector<PolicyStorage> unassignedItems                           = {};
     QStandardItem *rootMachineItem                                       = nullptr;
     QStandardItem *rootUserItem                                          = nullptr;
-    std::vector<QStandardItem *> items                                   = {};
     std::map<std::string, std::string> supportedOnMap                    = {};
     admx::SupportedDefinitions supportedOnDefinitions                    = {};
     QStringList languageDirectoryPaths                                   = {};
@@ -526,8 +525,6 @@ QStandardItem *PolicyBundle::createItem(const QString &displayName,
     categoryItem->setData(static_cast<uint32_t>(policyType), PolicyRoles::POLICY_TYPE);
     categoryItem->setData(alreadyInserted, PolicyRoles::POLICY_WIDGET + 1);
 
-    d->items.push_back(categoryItem);
-
     return categoryItem;
 }
 
@@ -570,8 +567,7 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
 
 void PolicyBundle::assignSupportedOn()
 {
-    for (auto &item : d->items)
-    {
+    const auto f = [&](QStandardItem *item) {
         if (item->data(PolicyRoles::ITEM_TYPE).value<uint>() == 1)
         {
             QString toFind = item->data(PolicyRoles::SUPPORTED_ON).value<QString>().split(':').back();
@@ -586,7 +582,16 @@ void PolicyBundle::assignSupportedOn()
                 qWarning() << "Not found support for: " << toFind;
             }
         }
-    }
+    };
+
+    std::function<void(QStandardItem *item)> applyOnAllItems = [&](QStandardItem *item) {
+        f(item);
+        for (int row = 0; row < item->rowCount(); ++row)
+        {
+            applyOnAllItems(item->child(row));
+        }
+    };
+    applyOnAllItems(d->treeModel->invisibleRootItem());
 }
 
 void PolicyBundle::iterateModelAndRemoveEmptyFolders(QAbstractItemModel *model, const QModelIndex &parent)

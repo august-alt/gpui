@@ -58,10 +58,10 @@ struct CategoryStorage
 
 struct PolicyStorage
 {
-    model::admx::PolicyType type = model::admx::PolicyType::Machine;
-    std::string category         = {};
-    std::string fileName         = {};
-    QStandardItem *item          = nullptr;
+    model::admx::PolicyType type        = model::admx::PolicyType::Machine;
+    std::string category                = {};
+    std::string fileName                = {};
+    std::unique_ptr<QStandardItem> item = nullptr;
 };
 
 class PolicyBundlePrivate
@@ -91,58 +91,56 @@ std::unique_ptr<QStandardItemModel> PolicyBundle::loadFolder(const std::string &
 {
     d->treeModel = std::make_unique<QStandardItemModel>();
 
+    std::unique_ptr<QStandardItem> visibleRootItem = createItem(QObject::tr("[Local Group Policy]"),
+                                                                "text-x-generic-template",
+                                                                QObject::tr("Local group policies"),
+                                                                ItemType::ITEM_TYPE_CATEGORY,
+                                                                model::admx::PolicyType::Both,
+                                                                false);
+    const auto visibleRootItemQUuid                = QUuid("{123e4567-e89b-12d3-a456-426652340003}");
+    visibleRootItem->setData(visibleRootItemQUuid, model::bundle::CURRENT_UUID);
+
     {
-        QStandardItem *rootItem                        = d->treeModel->invisibleRootItem();
-        std::unique_ptr<QStandardItem> visibleRootItem = createItem(QObject::tr("[Local Group Policy]"),
-                                                                    "text-x-generic-template",
-                                                                    QObject::tr("Local group policies"),
-                                                                    ItemType::ITEM_TYPE_CATEGORY,
-                                                                    model::admx::PolicyType::Both,
-                                                                    false);
-        visibleRootItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::CURRENT_UUID);
-
-        {
-            std::unique_ptr<QStandardItem> machineItem = createItem(QObject::tr("Machine"),
-                                                                    "computer",
-                                                                    QObject::tr("Machine level policies"),
-                                                                    ItemType::ITEM_TYPE_CATEGORY,
-                                                                    model::admx::PolicyType::Machine,
-                                                                    false);
-            machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
-            machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), model::bundle::CURRENT_UUID);
-            d->rootMachineItem = createItem(QObject::tr("Administrative Templates"),
-                                            "folder",
-                                            QObject::tr("Machine administrative templates"),
-                                            ItemType::ITEM_TYPE_CATEGORY,
-                                            model::admx::PolicyType::Machine,
-                                            false)
-                                     .release();
-            machineItem->appendRow(d->rootMachineItem);
-            visibleRootItem->appendRow(machineItem.release());
-        }
-
-        {
-            std::unique_ptr<QStandardItem> userItem = createItem(QObject::tr("User"),
-                                                                 "user-home",
-                                                                 QObject::tr("User level policies"),
-                                                                 ItemType::ITEM_TYPE_CATEGORY,
-                                                                 model::admx::PolicyType::User,
-                                                                 false);
-            userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
-            userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), model::bundle::CURRENT_UUID);
-            d->rootUserItem = createItem(QObject::tr("Administrative Templates"),
-                                         "folder",
-                                         QObject::tr("User administrative templates"),
-                                         ItemType::ITEM_TYPE_CATEGORY,
-                                         model::admx::PolicyType::User,
-                                         false)
-                                  .release();
-            userItem->appendRow(d->rootUserItem);
-            visibleRootItem->appendRow(userItem.release());
-        }
-
-        rootItem->appendRow(visibleRootItem.release());
+        std::unique_ptr<QStandardItem> machineItem = createItem(QObject::tr("Machine"),
+                                                                "computer",
+                                                                QObject::tr("Machine level policies"),
+                                                                ItemType::ITEM_TYPE_CATEGORY,
+                                                                model::admx::PolicyType::Machine,
+                                                                false);
+        machineItem->setData(visibleRootItemQUuid, model::bundle::PARENT_UUID);
+        machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), model::bundle::CURRENT_UUID);
+        d->rootMachineItem = createItem(QObject::tr("Administrative Templates"),
+                                        "folder",
+                                        QObject::tr("Machine administrative templates"),
+                                        ItemType::ITEM_TYPE_CATEGORY,
+                                        model::admx::PolicyType::Machine,
+                                        false)
+                                 .release();
+        machineItem->appendRow(d->rootMachineItem);
+        visibleRootItem->appendRow(machineItem.release());
     }
+
+    {
+        std::unique_ptr<QStandardItem> userItem = createItem(QObject::tr("User"),
+                                                             "user-home",
+                                                             QObject::tr("User level policies"),
+                                                             ItemType::ITEM_TYPE_CATEGORY,
+                                                             model::admx::PolicyType::User,
+                                                             false);
+        userItem->setData(visibleRootItemQUuid, model::bundle::PARENT_UUID);
+        userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), model::bundle::CURRENT_UUID);
+        d->rootUserItem = createItem(QObject::tr("Administrative Templates"),
+                                     "folder",
+                                     QObject::tr("User administrative templates"),
+                                     ItemType::ITEM_TYPE_CATEGORY,
+                                     model::admx::PolicyType::User,
+                                     false)
+                              .release();
+        userItem->appendRow(d->rootUserItem);
+        visibleRootItem->appendRow(userItem.release());
+    }
+
+    d->treeModel->invisibleRootItem()->appendRow(visibleRootItem.release());
 
     const QDir dir(path.c_str());
     const QFileInfoList files       = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
@@ -408,12 +406,12 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
             QString displayName = QString::fromStdString(findStringById(policy->displayName, policyResources));
             QString explainText = QString::fromStdString(findStringById(policy->explainText, policyResources));
 
-            auto policyItem = createItem(displayName,
-                                         "text-x-generic",
-                                         explainText,
-                                         ItemType::ITEM_TYPE_POLICY,
-                                         policy->policyType,
-                                         false);
+            std::unique_ptr<QStandardItem> policyItem = createItem(displayName,
+                                                                   "text-x-generic",
+                                                                   explainText,
+                                                                   ItemType::ITEM_TYPE_POLICY,
+                                                                   policy->policyType,
+                                                                   false);
 
             policyItem->setData(QString::fromStdString(policy->supportedOn), PolicyRoles::SUPPORTED_ON);
             policyItem->setData(QString::fromStdString(d->supportedOnMap[policy->supportedOn]),
@@ -433,7 +431,7 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
 
             PolicyStorage container;
             container.category = policy->parentCategory;
-            container.item     = policyItem.release(); // TODO
+            container.item     = std::move(policyItem);
             container.type     = policy->policyType;
             container.fileName = admxFileName.fileName().toStdString();
 
@@ -461,9 +459,9 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string &rawCat
     const auto assignToCategory = [&machineItem, &userItem](QStandardItem *parentMachineItem,
                                                             QStandardItem *parentUserItem) {
         const auto assignItemToCategory = [](QStandardItem *item, QStandardItem *parentItem) {
-            if (!item->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
+            if (!item->data(PolicyRoles::HAS_PARENT).value<bool>())
             {
-                item->setData(true, PolicyRoles::POLICY_WIDGET + 1);
+                item->setData(true, PolicyRoles::HAS_PARENT);
                 parentItem->appendRow(item);
             }
         };
@@ -506,7 +504,7 @@ std::unique_ptr<QStandardItem> PolicyBundle::createItem(const QString &displayNa
     categoryItem->setData(explainText, PolicyRoles::EXPLAIN_TEXT);
     categoryItem->setData(itemType, PolicyRoles::ITEM_TYPE);
     categoryItem->setData(static_cast<uint32_t>(policyType), PolicyRoles::POLICY_TYPE);
-    categoryItem->setData(alreadyInserted, PolicyRoles::POLICY_WIDGET + 1);
+    categoryItem->setData(alreadyInserted, PolicyRoles::HAS_PARENT);
 
     return categoryItem;
 }
@@ -521,15 +519,15 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
                              entry.second.fileName);
     }
 
-    for (const auto &item : d->unassignedItems)
+    for (auto &item : d->unassignedItems)
     {
         if (item.type == model::admx::PolicyType::User)
         {
-            assignParentCategory(item.category, nullptr, item.item, item.fileName);
+            assignParentCategory(item.category, nullptr, item.item.release(), item.fileName);
         }
         else if (item.type == model::admx::PolicyType::Machine)
         {
-            assignParentCategory(item.category, item.item, nullptr, item.fileName);
+            assignParentCategory(item.category, item.item.release(), nullptr, item.fileName);
         }
         else
         {
@@ -544,9 +542,10 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
             copyItem->setData(item.item->data(PolicyRoles::SUPPORTED_ON), PolicyRoles::SUPPORTED_ON);
             copyItem->setData(item.item->data(PolicyRoles::PRESENTATION), PolicyRoles::PRESENTATION);
             copyItem->setData(item.item->data(PolicyRoles::POLICY), PolicyRoles::POLICY);
-            assignParentCategory(item.category, item.item, copyItem.release(), item.fileName); // TODO
+            assignParentCategory(item.category, item.item.release(), copyItem.release(), item.fileName);
         }
     }
+    d->unassignedItems.clear();
 }
 
 void PolicyBundle::assignSupportedOn()

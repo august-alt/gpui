@@ -5,6 +5,7 @@ on: [ workflow_call, workflow_dispatch ]
 jobs:
   gpui-publish-api-doc:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
 
     steps:
       - name: Git Checkout

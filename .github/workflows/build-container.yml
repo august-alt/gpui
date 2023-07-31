@@ -18,13 +18,16 @@ jobs:
 
     steps:
       - name: Checkout
+        if: github.ref == 'refs/heads/master'
         uses: actions/checkout@v3
 
       - name: Login to GitHub Container Registry
+        if: github.ref == 'refs/heads/master'
         run: |
           docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.github_token }}
 
       - name: Build container
+        if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:${{ github.run_number }} \
           -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest \
@@ -34,5 +37,6 @@ jobs:
           --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --platform ${{ inputs.architecture }} .
 
       - name: Push container
+        if: github.ref == 'refs/heads/master'
         run: |
           docker push -a ghcr.io/${{ github.repository }}-${{ inputs.architecture }}

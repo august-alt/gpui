@@ -29,10 +29,12 @@ jobs:
         ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
 
     - name: Extract fresh packages
+      if: github.ref == 'refs/heads/master'
       run: |
         docker cp gpui-build-${{ inputs.architecture }}:/home/builder2/RPM/RPMS/ "$(pwd)/packages"
 
     - name: Upload fresh RPM packages
+      if: github.ref == 'refs/heads/master'
       uses: actions/upload-artifact@v3
       with:
         name: gpui-${{ inputs.artifact }}-${{ inputs.architecture }}

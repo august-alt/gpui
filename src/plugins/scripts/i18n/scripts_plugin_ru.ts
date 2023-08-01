@@ -8,7 +8,7 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <source>Script Name:</source>
+        <source>Script Path:</source>
         <translation>Имя сценария:</translation>
     </message>
     <message>
@@ -16,7 +16,7 @@
         <translation>Обзор...</translation>
     </message>
     <message>
-        <source>Script Parameters:</source>
+        <source>Script Arguments:</source>
         <translation>Параметры сценария:</translation>
     </message>
     <message>

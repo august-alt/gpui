@@ -9,16 +9,16 @@
         <translation>Form</translation>
     </message>
     <message>
-        <source>Script Name:</source>
-        <translation>Script Name:</translation>
+        <source>Script Path:</source>
+        <translation>Script Path:</translation>
     </message>
     <message>
         <source>Browse...</source>
         <translation>Browse...</translation>
     </message>
     <message>
-        <source>Script Parameters:</source>
-        <translation>Script Parameters:</translation>
+        <source>Script Arguments:</source>
+        <translation>Script Arguments:</translation>
     </message>
     <message>
         <source>OK</source>

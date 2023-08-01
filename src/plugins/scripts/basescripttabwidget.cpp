@@ -20,9 +20,6 @@
 
 #include "basescripttabwidget.h"
 #include "addscriptwidget.h"
-#include "scriptitem.h"
-
-#include "../../gui/filedialogutils.h"
 
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/viewitem.h>
@@ -53,13 +50,6 @@ void BaseScriptTabWidget::onDownClicked()
 
 void BaseScriptTabWidget::onAddClicked()
 {
-    // NOTE(mchernigin): don't quite understand why this check is needed
-    auto root = findRootItem();
-    if (root == nullptr)
-    {
-        return;
-    }
-
     auto addWidget = new AddScriptWidget(parent, this->rootItem, nullptr);
     addWidget->show();
 }
@@ -71,7 +61,6 @@ void BaseScriptTabWidget::onEditClicked()
     {
         auto addWidget = new AddScriptWidget(parent, nullptr, this->selectedItem->item()->parent());
         addWidget->setWindowTitle(QObject::tr("Edit script"));
-
         addWidget->show();
     }
 }
@@ -92,7 +81,7 @@ void BaseScriptTabWidget::onDeleteClicked()
         else
         {
             qWarning() << "Selected item: " << this->selectedItem
-                       << " Parent: " << this->selectedItem->item()->parent();
+                       << "Parent: " << this->selectedItem->item()->parent();
         }
     }
 }
@@ -111,50 +100,6 @@ void BaseScriptTabWidget::onBrowseClicked()
     qWarning() << dirName;
 
     QDesktopServices::openUrl(QUrl(dirName, QUrl::TolerantMode));
-}
-
-ScriptItemContainer *BaseScriptTabWidget::findRootItem()
-{
-    std::string machineSectionName = "Shutdown";
-    std::string userSectionName    = "Logoff";
-
-    if (this->isStartUpScripts)
-    {
-        machineSectionName = "Startup";
-        userSectionName    = "Logon";
-    }
-
-    if (!this->sessionModel)
-    {
-        qCritical() << "Section model is NULL!";
-        return nullptr;
-    }
-
-    auto containers = this->sessionModel->topItems();
-
-    for (size_t i = 0; i < containers.size(); i++)
-    {
-        auto itemContainer = containers[i];
-
-        auto section = dynamic_cast<ScriptItemContainer *>(itemContainer);
-
-        if (section)
-        {
-            if (machineSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
-            {
-                return section;
-            }
-
-            if (userSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
-            {
-                return section;
-            }
-        }
-    }
-
-    qWarning() << "Section:" << userSectionName.c_str() << " or " << machineSectionName.c_str() << " not found!!";
-
-    return nullptr;
 }
 
 BaseScriptTabWidget::~BaseScriptTabWidget() {}

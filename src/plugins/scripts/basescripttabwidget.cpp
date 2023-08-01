@@ -37,8 +37,7 @@ BaseScriptTabWidget::BaseScriptTabWidget(QWidget *p)
 
 void BaseScriptTabWidget::onUpClicked()
 {
-    auto *item = this->selectedItem;
-    if (item != nullptr)
+    if (this->selectedItem != nullptr)
     {
         ModelView::Utils::MoveUp(this->selectedItem->item()->parent());
     }
@@ -46,8 +45,7 @@ void BaseScriptTabWidget::onUpClicked()
 
 void BaseScriptTabWidget::onDownClicked()
 {
-    auto *item = this->selectedItem;
-    if (item != nullptr)
+    if (this->selectedItem != nullptr)
     {
         ModelView::Utils::MoveDown(this->selectedItem->item()->parent());
     }
@@ -55,22 +53,14 @@ void BaseScriptTabWidget::onDownClicked()
 
 void BaseScriptTabWidget::onAddClicked()
 {
+    // NOTE(mchernigin): don't quite understand why this check is needed
     auto root = findRootItem();
-
     if (root == nullptr)
     {
         return;
     }
 
-    auto newItem = this->rootItem->insertItem<ScriptItem>({"", 0});
-
-    auto addWidget = new AddScriptWidget(parent);
-
-    addWidget->setDeletingFlag(true);
-    addWidget->setWindowTitle(QObject::tr("Add script"));
-    addWidget->setItem(newItem);
-    addWidget->setModal(true);
-
+    auto addWidget = new AddScriptWidget(parent, this->rootItem, nullptr);
     addWidget->show();
 }
 
@@ -79,12 +69,8 @@ void BaseScriptTabWidget::onEditClicked()
     auto *item = this->selectedItem;
     if (item != nullptr)
     {
-        auto addWidget = new AddScriptWidget(parent);
-
+        auto addWidget = new AddScriptWidget(parent, nullptr, this->selectedItem->item()->parent());
         addWidget->setWindowTitle(QObject::tr("Edit script"));
-
-        addWidget->setItem(this->selectedItem->item()->parent());
-        addWidget->setModal(true);
 
         addWidget->show();
     }

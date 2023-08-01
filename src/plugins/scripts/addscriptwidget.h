@@ -47,18 +47,12 @@ public:
     Q_OBJECT
 
 public:
-    explicit AddScriptWidget(QWidget *parent = nullptr);
+    explicit AddScriptWidget(QWidget *parent, ModelView::SessionItem *root, ModelView::SessionItem *item);
     ~AddScriptWidget();
-
-    void setItem(ModelView::SessionItem *item);
-
-    void setDeletingFlag(bool flag);
 
 private slots:
     void on_okPushButton_clicked();
-
     void on_cancelPushButton_clicked();
-
     void on_browsePushButton_clicked();
 
 private:
@@ -68,17 +62,15 @@ private:
     AddScriptWidget &operator=(AddScriptWidget &&) = delete;      // move assignment
 
 private:
-    //!< Underlying item of this view.
-    ModelView::SessionItem *m_item{nullptr};
+    ModelView::SessionItem *scriptItem = nullptr;
+    ModelView::SessionItem *scriptParentItem = nullptr;
 
-    std::unique_ptr<ModelView::ViewModel> view_model;
-    std::unique_ptr<ModelView::ViewModelDelegate> delegate;
-    std::unique_ptr<QDataWidgetMapper> mapper;
-
-    bool deletingFlag = false;
+    std::unique_ptr<ModelView::ViewModel> view_model       = nullptr;
+    std::unique_ptr<ModelView::ViewModelDelegate> delegate = nullptr;
+    std::unique_ptr<QDataWidgetMapper> mapper              = nullptr;
 
 private:
-    Ui::AddScriptWidget *ui{nullptr};
+    Ui::AddScriptWidget *ui = nullptr;
 };
 
 } // namespace scripts_plugin

@@ -97,6 +97,14 @@
         <translation>Edit script</translation>
     </message>
     <message>
+        <source>Error while saving script file</source>
+        <translation>Error while saving script file</translation>
+    </message>
+    <message>
+        <source>Script Path cannot be empty</source>
+        <translation>Script Path cannot be empty</translation>
+    </message>
+    <message>
         <source>System settings for computer</source>
         <translation>System settings for computer</translation>
     </message>

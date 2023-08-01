@@ -43,7 +43,6 @@ AddScriptWidget::AddScriptWidget(QWidget *parentWidget, ModelView::SessionItem *
     , mapper(new QDataWidgetMapper())
     , ui(new Ui::AddScriptWidget())
 {
-    setWindowTitle(QObject::tr("Add script"));
     setModal(true);
 
     this->ui->setupUi(this);
@@ -64,8 +63,23 @@ AddScriptWidget::~AddScriptWidget()
     delete ui;
 }
 
+bool AddScriptWidget::validateState()
+{
+    return !this->ui->nameLineEdit->text().isEmpty();
+}
+
 void AddScriptWidget::on_okPushButton_clicked()
 {
+    if (!validateState())
+    {
+        QMessageBox mb(QMessageBox::Warning,
+                       QObject::tr("Error while saving script file"),
+                       QObject::tr("Script Path cannot be empty"),
+                       QMessageBox::Ok);
+        mb.exec();
+        return;
+    }
+
     if (this->scriptItem == nullptr)
     {
         this->scriptItem = this->scriptParentItem->insertItem<ScriptItem>({"", 0});

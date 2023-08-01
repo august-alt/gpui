@@ -60,6 +60,8 @@ private:
     AddScriptWidget(AddScriptWidget &&)      = delete;            // move ctor
     AddScriptWidget &operator=(const AddScriptWidget &) = delete; // copy assignment
     AddScriptWidget &operator=(AddScriptWidget &&) = delete;      // move assignment
+                                                                  //
+    bool validateState();
 
 private:
     ModelView::SessionItem *scriptItem = nullptr;

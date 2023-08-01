@@ -51,17 +51,17 @@ void BaseScriptTabWidget::onDownClicked()
 void BaseScriptTabWidget::onAddClicked()
 {
     auto addWidget = new AddScriptWidget(parent, this->rootItem, nullptr);
+    addWidget->setWindowTitle(QObject::tr("Add script"));
     addWidget->show();
 }
 
 void BaseScriptTabWidget::onEditClicked()
 {
-    auto *item = this->selectedItem;
-    if (item != nullptr)
+    if (this->selectedItem != nullptr)
     {
-        auto addWidget = new AddScriptWidget(parent, nullptr, this->selectedItem->item()->parent());
-        addWidget->setWindowTitle(QObject::tr("Edit script"));
-        addWidget->show();
+        auto editWidget = new AddScriptWidget(parent, nullptr, this->selectedItem->item()->parent());
+        editWidget->setWindowTitle(QObject::tr("Edit script"));
+        editWidget->show();
     }
 }
 
@@ -80,8 +80,8 @@ void BaseScriptTabWidget::onDeleteClicked()
         }
         else
         {
-            qWarning() << "Selected item: " << this->selectedItem
-                       << "Parent: " << this->selectedItem->item()->parent();
+            qWarning() << "Selected item:" << this->selectedItem
+                       << "Parent:" << this->selectedItem->item()->parent();
         }
     }
 }

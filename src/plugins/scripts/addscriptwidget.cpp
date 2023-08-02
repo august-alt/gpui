@@ -39,8 +39,6 @@ AddScriptWidget::AddScriptWidget(QWidget *parentWidget, ModelView::SessionItem *
     : QDialog(parentWidget)
     , scriptItem(item)
     , scriptParentItem(parentItem)
-    , delegate(new ModelView::ViewModelDelegate())
-    , mapper(new QDataWidgetMapper())
     , ui(new Ui::AddScriptWidget())
 {
     setModal(true);

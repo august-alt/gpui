@@ -80,8 +80,7 @@ void BaseScriptTabWidget::onDeleteClicked()
         }
         else
         {
-            qWarning() << "Selected item:" << this->selectedItem
-                       << "Parent:" << this->selectedItem->item()->parent();
+            qWarning() << "Selected item:" << this->selectedItem << "Parent:" << this->selectedItem->item()->parent();
         }
     }
 }

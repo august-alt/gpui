@@ -64,12 +64,10 @@ private:
     bool validateState();
 
 private:
-    ModelView::SessionItem *scriptItem = nullptr;
+    ModelView::SessionItem *scriptItem       = nullptr;
     ModelView::SessionItem *scriptParentItem = nullptr;
 
-    std::unique_ptr<ModelView::ViewModel> view_model       = nullptr;
-    std::unique_ptr<ModelView::ViewModelDelegate> delegate = nullptr;
-    std::unique_ptr<QDataWidgetMapper> mapper              = nullptr;
+    std::unique_ptr<ModelView::ViewModel> view_model = nullptr;
 
 private:
     Ui::AddScriptWidget *ui = nullptr;

@@ -96,7 +96,7 @@
     </message>
     <message>
         <source>Error while saving script file</source>
-        <translation>Ощибка при сохранении скрипта</translation>
+        <translation>Ошибка при сохранении скрипта</translation>
     </message>
     <message>
         <source>Script Path cannot be empty</source>

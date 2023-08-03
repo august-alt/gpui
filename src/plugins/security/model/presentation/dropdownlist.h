@@ -18,33 +18,22 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_DATA_ELEMENT_H
-#define SECURITY_DATA_ELEMENT_H
+#ifndef SECURITY_DROPDOWNLIST_H
+#define SECURITY_DROPDOWNLIST_H
 
-#include "security.h"
-
-#include <string>
+#include "dataelementcontent.h"
 
 namespace security
 {
 
 /*!
- * \class DataElement
- * \brief Represents base of simple graphical elements.
- *
- * \ingroup security
- * \ingroup presentation
+ * \class DropdownList
+ * \brief Represents a dropdown list display element.
  */
-class DataElement
+class DropdownList : public DataElementContent
 {
-public:
-
-    /*!
-     * \brief refId A reference Id.
-     */
-    std::string refId {};
 };
 
 } // of namespace security
 
-#endif // SECURITY_DATA_ELEMENT_H
+#endif // SECURITY_DROPDOWNLIST_H

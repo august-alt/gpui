@@ -18,51 +18,25 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_COMBOBOX_H
-#define SECURITY_COMBOBOX_H
-
-#include "security.h"
+#ifndef SECURITY_LISTBOX_H
+#define SECURITY_LISTBOX_H
 
 #include "dataelementcontent.h"
-
-#include <string>
-#include <vector>
 
 namespace security
 {
 
 /*!
-   \class ComboBox
- * \brief Represents a combobox display element with default/suggested entries.
+ * \class ListBox
+ * \brief Represents a listbox display element.
  *
  * \ingroup security
  * \ingroup presentation
  */
-class ComboBox: public DataElementContent
+class ListBox : DataElementContent
 {
-public:
-    /*!
-     * \brief label Text associated with the input box to provide prompt text.
-     */
-    std::string label {};
-
-    /*!
-     * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
-     */
-    std::string defaultValue {};
-
-    /*!
-     * \brief suggestions A suggested value to be placed in the drop-down list.
-     * Multiple suggestion elements result in multiple suggestions.
-     */
-    std::string suggestion {};
-
-    /*!
-     * \brief noSort If elements should be sorted.
-     */
-    bool noSort { false };
 };
 
 } // of namespace security
 
-#endif // SECURITY_COMBOBOX_H
+#endif // SECURITY_LISTBOX_H

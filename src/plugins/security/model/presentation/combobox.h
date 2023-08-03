@@ -18,56 +18,49 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_GROUPBOX_H
-#define SECURITY_GROUPBOX_H
-
-#include "security.h"
+#ifndef SECURITY_COMBOBOX_H
+#define SECURITY_COMBOBOX_H
 
 #include "dataelementcontent.h"
-#include "presentationelements.h"
 
-#include <memory>
+#include <string>
+#include <vector>
 
 namespace security
 {
 
 /*!
- * \class GroupBox
- * \brief The GroupBox class are used to provide an identifiable grouping for other graphical elements.
+   \class ComboBox
+ * \brief Represents a combobox display element with default/suggested entries.
  *
  * \ingroup security
  * \ingroup presentation
  */
-class GroupBox: public DataElementContent
+class ComboBox: public DataElementContent
 {
 public:
+    /*!
+     * \brief label Text associated with the input box to provide prompt text.
+     */
+    std::string label {};
 
     /*!
-     * \brief hasCheckBox If group box has checkbox.
+     * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
      */
-    bool hasCheckBox { false };
+    std::string defaultValue {};
 
     /*!
-     * \brief defaultChecked If group box's check box is checked.
+     * \brief suggestions A suggested value to be placed in the drop-down list.
+     * Multiple suggestion elements result in multiple suggestions.
      */
-    bool defaultChecked { false };
+    std::string suggestion {};
 
     /*!
-     * \brief elements Content of the group box.
+     * \brief noSort If elements should be sorted.
      */
-    std::unique_ptr<PresentationElements> elements{};
-
-    /*!
-     * \brief label Description of the group box.
-     */
-    std::string label{};
-
-    /*!
-     * \brief hasBorder If group box is flat or it has border.
-     */
-    bool hasBorder { false };
+    bool noSort { false };
 };
 
 } // of namespace security
 
-#endif // SECURITY_GROUPBOX_H
+#endif // SECURITY_COMBOBOX_H

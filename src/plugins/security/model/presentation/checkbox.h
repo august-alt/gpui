@@ -18,10 +18,8 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_LISTBOX_H
-#define SECURITY_LISTBOX_H
-
-#include "security.h"
+#ifndef SECURITY_CHECKBOX_H
+#define SECURITY_CHECKBOX_H
 
 #include "dataelementcontent.h"
 
@@ -29,16 +27,22 @@ namespace security
 {
 
 /*!
- * \class ListBox
- * \brief Represents a listbox display element.
+ * \class CheckBox
+ * \brief Represents a checkbox display element.\nCan be associated with a BooleanElement.
  *
  * \ingroup security
  * \ingroup presentation
  */
-class ListBox : DataElementContent
+class CheckBox: public DataElementContent
 {
+public:
+
+    /*!
+     * \brief If checkbox should be initially checked upon creation.
+     */
+    bool defaultChecked { false };
 };
 
 } // of namespace security
 
-#endif // SECURITY_LISTBOX_H
+#endif // SECURITY_CHECKBOX_H

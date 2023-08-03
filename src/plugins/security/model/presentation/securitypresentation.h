@@ -18,43 +18,39 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_LONG_DECIMAL_TEXTBOX_H
-#define SECURITY_LONG_DECIMAL_TEXTBOX_H
+#ifndef SECURITY_SECURITY_PRESENTATION_H
+#define SECURITY_SECURITY_PRESENTATION_H
 
-#include "security.h"
+#include "presentationelements.h"
 
-#include "dataelementcontent.h"
+#include <string>
 
-namespace security {
+namespace security
+{
 
-/**
- * \class LongDecimalTextBox
- * \brief Represents a text box with or without a spin control for entering long decimal numbers.
- *
- * \ingroup security
- * \ingroup presentation
+/*!
+ * \class SecurityPresentation
+ * \brief Root presentation element.
  */
-class LongDecimalTextBox: public DataElementContent
+class SecurityPresentation: public PresentationElements
 {
 public:
+    /*!
+     * \brief id Id of current presentation element.
+     */
+    std::string id{};
 
     /*!
-     * \brief defaultValue
+     * \brief text
      */
-    uint64_t defaultValue;
+    std::string text{};
 
     /*!
-     * \brief spinBox
+     * \brief icon Icon associated with current presentation element.
      */
-    bool spinBox { false };
-
-    /*!
-     * \brief spinStep
-     */
-    uint64_t spinStep {1};
-
+    std::string icon{};
 };
 
 } // of namespace security
 
-#endif // SECURITY_LONG_DECIMAL_TEXTBOX_H
+#endif // SECURITY_SECURITY_PRESENTATION_H

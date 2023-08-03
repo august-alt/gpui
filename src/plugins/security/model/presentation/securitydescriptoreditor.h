@@ -21,8 +21,6 @@
 #ifndef SECURITY_SECURITY_DESCRIPTOR_EDITOR_H
 #define SECURITY_SECURITY_DESCRIPTOR_EDITOR_H
 
-#include "security.h"
-
 #include "dataelement.h"
 
 namespace security

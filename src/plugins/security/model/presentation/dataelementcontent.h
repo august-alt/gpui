@@ -18,12 +18,8 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_COMMENT_H
-#define SECURITY_COMMENT_H
-
-#include "security.h"
-
-#include "dataelement.h"
+#ifndef SECURITY_DATA_ELEMENT_CONTENT_H
+#define SECURITY_DATA_ELEMENT_CONTENT_H
 
 #include <string>
 
@@ -31,28 +27,31 @@ namespace security
 {
 
 /*!
- * \class Comment
- * \brief Represents a comment display element.
+   \class DataElementContent
+ * \brief The DataElementContent class base class for graphical element such as combobox or radio-button.
  *
  * \ingroup security
  * \ingroup presentation
  */
-class Comment: public DataElement
+class DataElementContent
 {
 public:
+    /*!
+     * \brief value An initial value of graphical element.
+     */
+    std::string value;
 
     /*!
-     * \brief text Text of the comment.
+     * \brief refId A reference Id.
      */
-    std::string text;
+    std::string refId;
 
     /*!
-     * \brief image Image that can be incorporated into comment.
+     * \brief postfix A description that follows graphical element.
      */
-    std::string image;
-
+    std::string postfix;
 };
 
 } // of namespace security
 
-#endif // SECURITY_COMMENT_H
+#endif // SECURITY_DATA_ELEMENT_CONTENT_H

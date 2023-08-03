@@ -18,86 +18,56 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_PRESENTATION_ELEMENTS_H
-#define SECURITY_PRESENTATION_ELEMENTS_H
+#ifndef SECURITY_CATEGORY_H
+#define SECURITY_CATEGORY_H
 
-#include "security.h"
-
-#include "checkbox.h"
-#include "combobox.h"
-#include "comment.h"
-#include "decimaltextbox.h"
-#include "dropdownlist.h"
-#include "groupbox.h"
-#include "listbox.h"
-#include "longdecimaltextbox.h"
-#include "multitextbox.h"
-#include "textbox.h"
-
+#include <string>
 #include <vector>
 
 namespace security
 {
 
 /*!
- * \class PresentationElements
- * \brief The PresentationElements class
+ * \class Category
+ * \brief A grouping of security definitions.
+ *
+ * \ingroup model
+ * \ingroup presentation
  */
-class PresentationElements
+class Category
 {
 public:
+    /*!
+     * \brief name Specifies a logical name to use for a specific supported application and revision.
+     */
+    std::string name{};
 
     /*!
-     * \brief decimalTextBox
+     * \brief displayName The reference to the category text string located in the string table of the .sdml file.
      */
-    std::vector<DecimalTextBox> decimalTextBox {};
+    std::string displayName{};
 
     /*!
-     * \brief textBox
+     * \brief keywords Contains index words that could be used to search for elements.
      */
-    std::vector<TextBox> textBox{};
+    std::vector<std::string> keywords{};
 
     /*!
-     * \brief checkBox
+     * \brief seeAlso Reference to another element that may be related.
      */
-    std::vector<CheckBox> checkBox{};
+    std::vector<std::string> seeAlso{};
 
     /*!
-     * \brief comboBox
+     * \brief explainText Explain or Help text associated with a specific category.
      */
-    std::vector<ComboBox> comboBox{};
+    std::string explainText{};
 
     /*!
-     * \brief dropdownList
+     * \brief parentCategory Reference to parent of the current category.
      */
-    std::vector<DropdownList> dropdownList{};
-
-    /*!
-     * \brief longDecimalTextBox
-     */
-    std::vector<LongDecimalTextBox> longDecimalTextBox{};
-
-    /*!
-     * \brief multiTextBox
-     */
-    std::vector<MultiTextBox> multiTextBox{};
-
-    /*!
-     * \brief groupBox
-     */
-    std::vector<GroupBox> groupBox{};
-
-    /*!
-     * \brief listBox
-     */
-    std::vector<ListBox> listBox{};
-
-    /*!
-     * \brief comment
-     */
-    std::vector<Comment> comment{};
+    std::string parentCategory{};
 };
 
 } // of namespace security
 
-#endif // SECURITY_PRESENTATION_ELEMENTS_H
+#endif // SECURITY_CATEGORY_H

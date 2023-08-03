@@ -18,37 +18,39 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_MULTITEXTBOX_H
-#define SECURITY_MULTITEXTBOX_H
+#ifndef SECURITY_COMMENT_H
+#define SECURITY_COMMENT_H
 
-#include "security.h"
+#include "dataelement.h"
 
-#include "dataelementcontent.h"
+#include <string>
 
 namespace security
 {
 
-/**
- * \class MultiTextBox
- * \brief Represents a textbox display element with default entry.
+/*!
+ * \class Comment
+ * \brief Represents a comment display element.
  *
  * \ingroup security
  * \ingroup presentation
  */
-class MultiTextBox : public DataElementContent
+class Comment: public DataElement
 {
 public:
-    /*!
-     * \brief label
-     */
-    std::string label{};
 
     /*!
-     * \brief defaultValue
+     * \brief text Text of the comment.
      */
-    std::string defaultValue{};
+    std::string text;
+
+    /*!
+     * \brief image Image that can be incorporated into comment.
+     */
+    std::string image;
+
 };
 
 } // of namespace security
 
-#endif // SECURITY_MULTITEXTBOX_H
+#endif // SECURITY_COMMENT_H

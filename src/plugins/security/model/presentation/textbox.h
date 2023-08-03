@@ -18,33 +18,35 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_CHECKBOX_H
-#define SECURITY_CHECKBOX_H
-
-#include "security.h"
+#ifndef SECURITY_TEXTBOX_H
+#define SECURITY_TEXTBOX_H
 
 #include "dataelementcontent.h"
+
+#include <string>
 
 namespace security
 {
 
-/*!
- * \class CheckBox
- * \brief Represents a checkbox display element.\nCan be associated with a BooleanElement.
- *
- * \ingroup security
- * \ingroup presentation
+/**
+ * \class TextBox
+ * \brief Represents a textbox display element with default entry.
  */
-class CheckBox: public DataElementContent
+class TextBox: public DataElementContent
 {
 public:
 
     /*!
-     * \brief If checkbox should be initially checked upon creation.
+     * \brief label
      */
-    bool defaultChecked { false };
+    std::string label{};
+
+    /*!
+     * \brief defaultValue
+     */
+    std::string defaultValue{};
 };
 
 } // of namespace security
 
-#endif // SECURITY_CHECKBOX_H
+#endif // SECURITY_TEXTBOX_H

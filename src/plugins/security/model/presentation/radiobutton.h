@@ -18,41 +18,28 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_SECURITY_PRESENTATION_H
-#define SECURITY_SECURITY_PRESENTATION_H
+#ifndef SECURITY_RADIO_BUTTON_H
+#define SECURITY_RADIO_BUTTON_H
 
-#include "security.h"
-
-#include "presentationelements.h"
-
-#include <string>
+#include "dataelement.h"
 
 namespace security
 {
 
 /*!
- * \class SecurityPresentation
- * \brief Root presentation element.
+ * \class RadioButton
+ * \brief Represents a radio button display element.\nCan be associated with a BooleanElement.
  */
-class SecurityPresentation: public PresentationElements
+class RadioButton: public DataElement
 {
 public:
-    /*!
-     * \brief id Id of current presentation element.
-     */
-    std::string id{};
 
     /*!
-     * \brief text
+     * \brief defaultChecked Shows if radio button is enabled by default.
      */
-    std::string text{};
-
-    /*!
-     * \brief icon Icon associated with current presentation element.
-     */
-    std::string icon{};
+    bool defaultChecked { false };
 };
 
 } // of namespace security
 
-#endif // SECURITY_SECURITY_PRESENTATION_H
+#endif // SECURITY_RADIO_BUTTON_H

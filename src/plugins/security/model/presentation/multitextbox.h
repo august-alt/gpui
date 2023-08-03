@@ -18,26 +18,24 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_TEXTBOX_H
-#define SECURITY_TEXTBOX_H
-
-#include "security.h"
+#ifndef SECURITY_MULTITEXTBOX_H
+#define SECURITY_MULTITEXTBOX_H
 
 #include "dataelementcontent.h"
-
-#include <string>
 
 namespace security
 {
 
 /**
- * \class TextBox
+ * \class MultiTextBox
  * \brief Represents a textbox display element with default entry.
+ *
+ * \ingroup security
+ * \ingroup presentation
  */
-class TextBox: public DataElementContent
+class MultiTextBox : public DataElementContent
 {
 public:
-
     /*!
      * \brief label
      */
@@ -51,4 +49,4 @@ public:
 
 } // of namespace security
 
-#endif // SECURITY_TEXTBOX_H
+#endif // SECURITY_MULTITEXTBOX_H

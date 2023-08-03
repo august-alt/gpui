@@ -18,24 +18,47 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_DROPDOWNLIST_H
-#define SECURITY_DROPDOWNLIST_H
-
-#include "security.h"
+#ifndef SECURITY_LDAP_SEARCH_DIALOG_H
+#define SECURITY_LDAP_SEARCH_DIALOG_H
 
 #include "dataelementcontent.h"
+
+#include <string>
 
 namespace security
 {
 
 /*!
- * \class DropdownList
- * \brief Represents a dropdown list display element.
+ * \class LdapSearchDialog
+ * \brief Represents a LDAP search dialog display element.\nCan be associated with a TextElement.
+ *
+ * \ingroup security
+ * \ingroup presentation
  */
-class DropdownList : public DataElementContent
+class LdapSearchDialog: public DataElementContent
 {
+public:
+    /*!
+     * \brief dn Base DN for elements to search.
+     */
+    std::string dn{};
+
+    /*!
+     * \brief filter LDAP search filter.
+     */
+    std::string filter{};
+
+    /*!
+     * \brief addLabel Label for add button.
+     */
+    std::string addLabel{};
+
+    /*!
+     * \brief removeLabel Label for remove button.
+     */
+    std::string removeLabel{};
 };
 
 } // of namespace security
 
-#endif // SECURITY_DROPDOWNLIST_H
+#endif // SECURITY_LDAP_SEARCH_DIALOG_H

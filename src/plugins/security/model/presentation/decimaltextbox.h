@@ -18,49 +18,42 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_LDAP_SEARCH_DIALOG_H
-#define SECURITY_LDAP_SEARCH_DIALOG_H
-
-#include "security.h"
+#ifndef SECURITY_DECIMAL_TEXTBOX_H
+#define SECURITY_DECIMAL_TEXTBOX_H
 
 #include "dataelementcontent.h"
-
-#include <string>
 
 namespace security
 {
 
 /*!
- * \class LdapSearchDialog
- * \brief Represents a LDAP search dialog display element.\nCan be associated with a TextElement.
+ * \class DecimalTextBox
+ * \brief Represents a text box with or without a spin control for entering decimal numbers.
  *
  * \ingroup security
  * \ingroup presentation
  */
-class LdapSearchDialog: public DataElementContent
+class DecimalTextBox: public DataElementContent
 {
 public:
-    /*!
-     * \brief dn Base DN for elements to search.
-     */
-    std::string dn{};
 
     /*!
-     * \brief filter LDAP search filter.
+     * \brief defaultValue
      */
-    std::string filter{};
+    uint32_t defaultValue {0};
 
     /*!
-     * \brief addLabel Label for add button.
+     * \brief spinBox
      */
-    std::string addLabel{};
+    bool spinBox { false };
 
     /*!
-     * \brief removeLabel Label for remove button.
+     * \brief spinStep
      */
-    std::string removeLabel{};
+    uint32_t spinStep {1};
+
 };
 
 } // of namespace security
 
-#endif // SECURITY_LDAP_SEARCH_DIALOG_H
+#endif // SECURITY_DECIMAL_TEXTBOX_H

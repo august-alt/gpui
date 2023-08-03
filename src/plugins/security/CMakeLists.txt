@@ -15,41 +15,41 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 add_subdirectory(schema)
 
 set(HEADERS
-    model/booleanelement.h
-    model/category.h
-    model/checkbox.h
-    model/combobox.h
-    model/comment.h
-    model/dataelementcontent.h
-    model/dataelement.h
-    model/decimalelement.h
-    model/decimaltextbox.h
-    model/decimaltype.h
-    model/dropdownlist.h
-    model/enumerationelement.h
-    model/groupbox.h
-    model/ldapsearchdialog.h
-    model/listbox.h
-    model/listelement.h
-    model/longdecimalelement.h
-    model/longdecimaltextbox.h
-    model/longdecimaltype.h
-    model/multitextbox.h
-    model/multitextelement.h
-    model/presentationelements.h
-    model/radiobutton.h
-    model/security.h
-    model/securitydefinition.h
-    model/securitydefinitions.h
-    model/securitydescriptoreditor.h
-    model/securityelement.h
-    model/securityelements.h
-    model/securityitem.h
-    model/securitypresentation.h
-    model/securityvalue.h
-    model/securityvaluelist.h
-    model/textbox.h
-    model/textelement.h
+    model/presentation/category.h
+    model/presentation/checkbox.h
+    model/presentation/combobox.h
+    model/presentation/comment.h
+    model/presentation/dataelementcontent.h
+    model/presentation/dataelement.h
+    model/presentation/decimaltextbox.h
+    model/presentation/dropdownlist.h
+    model/presentation/groupbox.h
+    model/presentation/ldapsearchdialog.h
+    model/presentation/listbox.h
+    model/presentation/longdecimaltextbox.h
+    model/presentation/multitextbox.h
+    model/presentation/presentationelements.h
+    model/presentation/radiobutton.h
+    model/presentation/securitydescriptoreditor.h
+    model/presentation/securitypresentation.h
+    model/presentation/textbox.h
+    model/sdmx/booleanelement.h
+    model/sdmx/decimalelement.h
+    model/sdmx/decimaltype.h
+    model/sdmx/enumerationelement.h
+    model/sdmx/listelement.h
+    model/sdmx/longdecimalelement.h
+    model/sdmx/longdecimaltype.h
+    model/sdmx/multitextelement.h
+    model/sdmx/securitydefinition.h
+    model/sdmx/securitydefinitions.h
+    model/sdmx/securityelement.h
+    model/sdmx/securityelements.h
+    model/sdmx/security.h
+    model/sdmx/securityitem.h
+    model/sdmx/securityvalue.h
+    model/sdmx/securityvaluelist.h
+    model/sdmx/textelement.h
 )
 
 set(SOURCES

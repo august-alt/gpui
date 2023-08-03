@@ -18,44 +18,54 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_DECIMAL_TEXTBOX_H
-#define SECURITY_DECIMAL_TEXTBOX_H
-
-#include "security.h"
+#ifndef SECURITY_GROUPBOX_H
+#define SECURITY_GROUPBOX_H
 
 #include "dataelementcontent.h"
+#include "presentationelements.h"
+
+#include <memory>
 
 namespace security
 {
 
 /*!
- * \class DecimalTextBox
- * \brief Represents a text box with or without a spin control for entering decimal numbers.
+ * \class GroupBox
+ * \brief The GroupBox class are used to provide an identifiable grouping for other graphical elements.
  *
  * \ingroup security
  * \ingroup presentation
  */
-class DecimalTextBox: public DataElementContent
+class GroupBox: public DataElementContent
 {
 public:
 
     /*!
-     * \brief defaultValue
+     * \brief hasCheckBox If group box has checkbox.
      */
-    uint32_t defaultValue {0};
+    bool hasCheckBox { false };
 
     /*!
-     * \brief spinBox
+     * \brief defaultChecked If group box's check box is checked.
      */
-    bool spinBox { false };
+    bool defaultChecked { false };
 
     /*!
-     * \brief spinStep
+     * \brief elements Content of the group box.
      */
-    uint32_t spinStep {1};
+    std::unique_ptr<PresentationElements> elements{};
 
+    /*!
+     * \brief label Description of the group box.
+     */
+    std::string label{};
+
+    /*!
+     * \brief hasBorder If group box is flat or it has border.
+     */
+    bool hasBorder { false };
 };
 
 } // of namespace security
 
-#endif // SECURITY_DECIMAL_TEXTBOX_H
+#endif // SECURITY_GROUPBOX_H

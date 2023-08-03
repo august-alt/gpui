@@ -29,12 +29,10 @@ ScriptsSnapInPrivate::ScriptsSnapInPrivate(ScriptsSnapIn *scriptsSnapIn)
     auto machineLogoffItemContainer = machineScriptsModel.get()->insertItem<ScriptItemContainer>();
     machineLogoffItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Shutdown");
 
-    auto machineStartUpItemContainer = machinePowerScriptsModel.get()
-                                           ->insertItem<ScriptItemContainer>();
+    auto machineStartUpItemContainer = machinePowerScriptsModel.get()->insertItem<ScriptItemContainer>();
     machineStartUpItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Startup");
 
-    auto machineShutdownItemContainer = machinePowerScriptsModel.get()
-                                            ->insertItem<ScriptItemContainer>();
+    auto machineShutdownItemContainer = machinePowerScriptsModel.get()->insertItem<ScriptItemContainer>();
     machineShutdownItemContainer->setProperty(ScriptItemContainer::SECTION_NAME, "Shutdown");
 }
 

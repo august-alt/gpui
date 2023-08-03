@@ -99,9 +99,6 @@ public:
     }
 
 private:
-    ScriptItemContainer *findRootItem();
-
-private:
     QWidget *parent;
 };
 } // namespace scripts_plugin

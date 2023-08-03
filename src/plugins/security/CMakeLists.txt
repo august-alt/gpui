@@ -50,12 +50,19 @@ set(HEADERS
     model/sdmx/securityvalue.h
     model/sdmx/securityvaluelist.h
     model/sdmx/textelement.h
+    model/ui/presentationbuilder.h
+    model/ui/securityproxymodel.h
+    model/ui/securitywidget.h
 )
 
 set(SOURCES
+    model/ui/presentationbuilder.cpp
+    model/ui/securityproxymodel.cpp
+    model/ui/securitywidget.cpp
 )
 
 set(UI_FORMS
+    model/ui/securitywidget.ui
 )
 
 set(PLUGIN_HEADERS

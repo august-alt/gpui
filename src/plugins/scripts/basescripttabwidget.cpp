@@ -92,13 +92,11 @@ void BaseScriptTabWidget::onBrowseClicked()
         return;
     }
 
-    auto path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
+    std::string script_path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
+    std::string path = script_path.substr(0, script_path.rfind('/'));
+    QUrl url = QUrl(QString::fromStdString(path), QUrl::TolerantMode);
 
-    QString dirName = QFileInfo(QString::fromStdString(path)).absolutePath();
-
-    qWarning() << dirName;
-
-    QDesktopServices::openUrl(QUrl(dirName, QUrl::TolerantMode));
+    QDesktopServices::openUrl(url);
 }
 
 BaseScriptTabWidget::~BaseScriptTabWidget() {}

@@ -9,16 +9,16 @@
         <translation>Form</translation>
     </message>
     <message>
-        <source>Script Name:</source>
-        <translation>Script Name:</translation>
+        <source>Script Path:</source>
+        <translation>Script Path:</translation>
     </message>
     <message>
         <source>Browse...</source>
         <translation>Browse...</translation>
     </message>
     <message>
-        <source>Script Parameters:</source>
-        <translation>Script Parameters:</translation>
+        <source>Script Arguments:</source>
+        <translation>Script Arguments:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -95,6 +95,14 @@
     <message>
         <source>Edit script</source>
         <translation>Edit script</translation>
+    </message>
+    <message>
+        <source>Error while saving script file</source>
+        <translation>Error while saving script file</translation>
+    </message>
+    <message>
+        <source>Script Path cannot be empty</source>
+        <translation>Script Path cannot be empty</translation>
     </message>
     <message>
         <source>System settings for computer</source>

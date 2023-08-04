@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="nameLabel">
      <property name="text">
-      <string>Script Path:</string>
+      <string>Script Name:</string>
      </property>
      <property name="buddy">
       <cstring>nameLineEdit</cstring>
@@ -43,7 +43,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="paramLabel">
      <property name="text">
-      <string>Script Arguments:</string>
+      <string>Script Parameters:</string>
      </property>
      <property name="buddy">
       <cstring>paramLineEdit</cstring>

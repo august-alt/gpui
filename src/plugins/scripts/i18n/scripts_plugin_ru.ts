@@ -8,16 +8,16 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <source>Script Path:</source>
-        <translation>Путь до скрипта:</translation>
+        <source>Script Name:</source>
+        <translation>Имя сценария:</translation>
     </message>
     <message>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <source>Script Arguments:</source>
-        <translation>Аргументы скрипта:</translation>
+        <source>Script Parameters:</source>
+        <translation>Параметры сценария:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -93,14 +93,6 @@
     <message>
         <source>Edit script</source>
         <translation>Редактировать скрипт</translation>
-    </message>
-    <message>
-        <source>Error while saving script file</source>
-        <translation>Ошибка при сохранении скрипта</translation>
-    </message>
-    <message>
-        <source>Script Path cannot be empty</source>
-        <translation>Путь до скрипта не может быть пустым</translation>
     </message>
     <message>
         <source>System settings for computer</source>

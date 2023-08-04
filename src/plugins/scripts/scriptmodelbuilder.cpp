@@ -83,7 +83,7 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, s
                 auto item = group->insertItem<ScriptItem>(GroupScriptContainerItem::ITEM);
 
                 item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::PATH), iniCommandPath);
-                item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::ARGUMENTS), iniCommandParam);
+                item->setProperty(ScriptItem::propertyToString(ScriptItem::PropertyType::PARAMETER), iniCommandParam);
             }
         }
     }
@@ -121,7 +121,7 @@ std::unique_ptr<io::IniFile> ScriptModelBuilder::modelToIni(ScriptsModel *model)
 
                 auto path  = item->property<std::string>(ScriptItem::propertyToString(ScriptItem::PropertyType::PATH));
                 auto param = item->property<std::string>(
-                    ScriptItem::propertyToString(ScriptItem::PropertyType::ARGUMENTS));
+                    ScriptItem::propertyToString(ScriptItem::PropertyType::PARAMETER));
 
                 iniFile->addValue(sectionName, cmdLine, path);
 

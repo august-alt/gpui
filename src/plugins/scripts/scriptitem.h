@@ -31,7 +31,7 @@ public:
     enum PropertyType
     {
         PATH      = 0,
-        ARGUMENTS = 1
+        PARAMETER = 1
     };
 
 public:
@@ -45,9 +45,9 @@ public:
         switch (type)
         {
         case PATH:
-            return "Path";
-        case ARGUMENTS:
-            return "Arguments";
+            return "path";
+        case PARAMETER:
+            return "parameter";
         default:
             break;
         }

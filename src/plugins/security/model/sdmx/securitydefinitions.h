@@ -52,7 +52,7 @@ public:
     /*!
      * \brief security
      */
-    std::vector<std::unique_ptr<SecurityDefinition> > security {};
+    std::vector<std::shared_ptr<SecurityDefinition> > security {};
 };
 
 } // of namespace security

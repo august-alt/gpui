@@ -79,7 +79,7 @@ public:
     /*!
      * \brief elements
      */
-    std::unique_ptr<SecurityElements> elements {};
+    std::vector<std::unique_ptr<SecurityElement>> elements {};
 
     /*!
      * \brief enabledValue

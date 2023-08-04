@@ -20,6 +20,10 @@
 
 #include "sdmlformat.h"
 
+#include "../security/schema/security.h"
+
+#include "../common/exceptionhandler.h"
+
 namespace gpui
 {
 
@@ -30,10 +34,20 @@ SdmlFormat::SdmlFormat()
 
 bool SdmlFormat::read(std::istream &input, io::PolicyResourcesFile *file)
 {
-    Q_UNUSED(input);
-    Q_UNUSED(file);
+    std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityDefinitions> securityDefinitions;
+    auto operation = [&]() {
+        std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityPresentation>policyDefinitionResources;
+//            = ::GroupPolicy::SecurityDefinitions::SecurityPresentation_(input,
+//                                                                        ::xsd::cxx::tree::flags::dont_validate
+//                                                                            | ::xsd::cxx::tree::flags::keep_dom
+//                                                                            | ::xsd::cxx::tree::flags::own_dom);
 
-    return false;
+//        file->add(XsdResourcesAdapter::create(*policyDefinitionResources));
+    };
+
+    auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };
+
+    return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
 bool SdmlFormat::write(std::ostream &output, io::PolicyResourcesFile *file)

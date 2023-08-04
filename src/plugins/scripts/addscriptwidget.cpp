@@ -35,25 +35,15 @@
 
 namespace scripts_plugin
 {
-AddScriptWidget::AddScriptWidget(QWidget *parentWidget, ModelView::SessionItem *parentItem, ModelView::SessionItem *item)
-    : QDialog(parentWidget)
-    , scriptItem(item)
-    , scriptParentItem(parentItem)
+AddScriptWidget::AddScriptWidget(QWidget *parent)
+    : QDialog(parent)
+    , m_item(nullptr)
+    , view_model(nullptr)
+    , delegate(new ModelView::ViewModelDelegate())
+    , mapper(new QDataWidgetMapper())
     , ui(new Ui::AddScriptWidget())
 {
-    setModal(true);
-
-    this->ui->setupUi(this);
-
-    if (item != nullptr)
-    {
-        auto currentPath      = this->scriptItem->property<std::string>(ScriptItem::propertyToString(ScriptItem::PATH));
-        auto currentArguments = this->scriptItem->property<std::string>(
-            ScriptItem::propertyToString(ScriptItem::ARGUMENTS));
-
-        this->ui->nameLineEdit->setText(QString::fromStdString(currentPath));
-        this->ui->paramLineEdit->setText(QString::fromStdString(currentArguments));
-    }
+    ui->setupUi(this);
 }
 
 AddScriptWidget::~AddScriptWidget()
@@ -61,32 +51,45 @@ AddScriptWidget::~AddScriptWidget()
     delete ui;
 }
 
-bool AddScriptWidget::validateState()
+void AddScriptWidget::setItem(ModelView::SessionItem *item)
 {
-    return !this->ui->nameLineEdit->text().isEmpty();
+    m_item          = item;
+
+    view_model = ModelView::Factory::CreatePropertyFlatViewModel(item->model());
+    view_model->setRootSessionItem(item);
+
+    mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    mapper->setOrientation(Qt::Vertical);
+
+    mapper->setModel(view_model.get());
+    mapper->setItemDelegate(delegate.get());
+    mapper->setRootIndex(QModelIndex());
+
+    mapper->addMapping(ui->nameLineEdit, 0);
+    mapper->addMapping(ui->paramLineEdit, 1);
+
+    mapper->setCurrentModelIndex(view_model->index(0, 1));
+}
+
+void AddScriptWidget::setDeletingFlag(bool flag)
+{
+    deletingFlag = flag;
 }
 
 void AddScriptWidget::on_okPushButton_clicked()
 {
-    if (!validateState())
+    if (ui->nameLineEdit->text().isEmpty())
     {
-        QMessageBox mb(QMessageBox::Warning,
-                       QObject::tr("Error while saving script file"),
-                       QObject::tr("Script Path cannot be empty"),
-                       QMessageBox::Ok);
-        mb.exec();
-        return;
+        if (deletingFlag)
+        {
+            auto model = m_item->parent()->model();
+            model->removeItem(m_item->parent(), m_item->tagRow());
+        }
     }
-
-    if (this->scriptItem == nullptr)
+    else
     {
-        this->scriptItem = this->scriptParentItem->insertItem<ScriptItem>({"", 0});
+        mapper->submit();
     }
-
-    this->scriptItem->setProperty(ScriptItem::propertyToString(ScriptItem::PATH),
-                                  ui->nameLineEdit->text().toStdString());
-    this->scriptItem->setProperty(ScriptItem::propertyToString(ScriptItem::ARGUMENTS),
-                                  ui->paramLineEdit->text().toStdString());
 
     this->close();
 }
@@ -98,13 +101,15 @@ void AddScriptWidget::on_cancelPushButton_clicked()
 
 void AddScriptWidget::on_browsePushButton_clicked()
 {
-    auto dialog  = std::make_unique<gpui::FileDialogUtils>();
+    auto dialog  = new gpui::FileDialogUtils();
     QString file = dialog->getOpenFileName();
 
     if (!file.isEmpty())
     {
         ui->nameLineEdit->setText(file);
     }
+
+    delete dialog;
 }
 
 } // namespace scripts_plugin

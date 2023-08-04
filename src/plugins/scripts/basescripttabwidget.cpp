@@ -20,6 +20,9 @@
 
 #include "basescripttabwidget.h"
 #include "addscriptwidget.h"
+#include "scriptitem.h"
+
+#include "../../gui/filedialogutils.h"
 
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/viewitem.h>
@@ -34,7 +37,8 @@ BaseScriptTabWidget::BaseScriptTabWidget(QWidget *p)
 
 void BaseScriptTabWidget::onUpClicked()
 {
-    if (this->selectedItem != nullptr)
+    auto *item = this->selectedItem;
+    if (item != nullptr)
     {
         ModelView::Utils::MoveUp(this->selectedItem->item()->parent());
     }
@@ -42,7 +46,8 @@ void BaseScriptTabWidget::onUpClicked()
 
 void BaseScriptTabWidget::onDownClicked()
 {
-    if (this->selectedItem != nullptr)
+    auto *item = this->selectedItem;
+    if (item != nullptr)
     {
         ModelView::Utils::MoveDown(this->selectedItem->item()->parent());
     }
@@ -50,18 +55,38 @@ void BaseScriptTabWidget::onDownClicked()
 
 void BaseScriptTabWidget::onAddClicked()
 {
-    auto addWidget = new AddScriptWidget(parent, this->rootItem, nullptr);
+    auto root = findRootItem();
+
+    if (root == nullptr)
+    {
+        return;
+    }
+
+    auto newItem = this->rootItem->insertItem<ScriptItem>({"", 0});
+
+    auto addWidget = new AddScriptWidget(parent);
+
+    addWidget->setDeletingFlag(true);
     addWidget->setWindowTitle(QObject::tr("Add script"));
+    addWidget->setItem(newItem);
+    addWidget->setModal(true);
+
     addWidget->show();
 }
 
 void BaseScriptTabWidget::onEditClicked()
 {
-    if (this->selectedItem != nullptr)
+    auto *item = this->selectedItem;
+    if (item != nullptr)
     {
-        auto editWidget = new AddScriptWidget(parent, nullptr, this->selectedItem->item()->parent());
-        editWidget->setWindowTitle(QObject::tr("Edit script"));
-        editWidget->show();
+        auto addWidget = new AddScriptWidget(parent);
+
+        addWidget->setWindowTitle(QObject::tr("Edit script"));
+
+        addWidget->setItem(this->selectedItem->item()->parent());
+        addWidget->setModal(true);
+
+        addWidget->show();
     }
 }
 
@@ -80,7 +105,8 @@ void BaseScriptTabWidget::onDeleteClicked()
         }
         else
         {
-            qWarning() << "Selected item:" << this->selectedItem << "Parent:" << this->selectedItem->item()->parent();
+            qWarning() << "Selected item: " << this->selectedItem
+                       << " Parent: " << this->selectedItem->item()->parent();
         }
     }
 }
@@ -92,11 +118,57 @@ void BaseScriptTabWidget::onBrowseClicked()
         return;
     }
 
-    std::string script_path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
-    std::string path = script_path.substr(0, script_path.rfind('/'));
-    QUrl url = QUrl(QString::fromStdString(path), QUrl::TolerantMode);
+    auto path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
 
-    QDesktopServices::openUrl(url);
+    QString dirName = QFileInfo(QString::fromStdString(path)).absolutePath();
+
+    qWarning() << dirName;
+
+    QDesktopServices::openUrl(QUrl(dirName, QUrl::TolerantMode));
+}
+
+ScriptItemContainer *BaseScriptTabWidget::findRootItem()
+{
+    std::string machineSectionName = "Shutdown";
+    std::string userSectionName    = "Logoff";
+
+    if (this->isStartUpScripts)
+    {
+        machineSectionName = "Startup";
+        userSectionName    = "Logon";
+    }
+
+    if (!this->sessionModel)
+    {
+        qCritical() << "Section model is NULL!";
+        return nullptr;
+    }
+
+    auto containers = this->sessionModel->topItems();
+
+    for (size_t i = 0; i < containers.size(); i++)
+    {
+        auto itemContainer = containers[i];
+
+        auto section = dynamic_cast<ScriptItemContainer *>(itemContainer);
+
+        if (section)
+        {
+            if (machineSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
+            {
+                return section;
+            }
+
+            if (userSectionName.compare(section->property<std::string>(ScriptItemContainer::SECTION_NAME)) == 0)
+            {
+                return section;
+            }
+        }
+    }
+
+    qWarning() << "Section:" << userSectionName.c_str() << " or " << machineSectionName.c_str() << " not found!!";
+
+    return nullptr;
 }
 
 BaseScriptTabWidget::~BaseScriptTabWidget() {}

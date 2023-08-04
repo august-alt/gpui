@@ -26,7 +26,7 @@ ScriptItem::ScriptItem()
     : ModelView::CompoundItem("ScriptItem")
 {
     addProperty(propertyToString(PATH), "");
-    addProperty(propertyToString(ARGUMENTS), "");
+    addProperty(propertyToString(PARAMETER), "");
 }
 
 ScriptItem::ScriptItem(const ScriptItem &other)

@@ -282,7 +282,7 @@ public:
         this->revision = definitions.revision();
         this->schemaVersion = definitions.schemaVersion();
 
-        for (const auto securityElement : definitions.security())
+        for (const auto& securityElement : definitions.security())
         {
             auto ourSecurity = XsdSecurityAdapter::create(securityElement);
 

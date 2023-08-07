@@ -39,17 +39,17 @@ public:
     /*!
      * \brief value An initial value of graphical element.
      */
-    std::string value;
+    std::string value{};
 
     /*!
      * \brief refId A reference Id.
      */
-    std::string refId;
+    std::string refId{};
 
     /*!
      * \brief postfix A description that follows graphical element.
      */
-    std::string postfix;
+    std::string postfix{};
 };
 
 } // of namespace security

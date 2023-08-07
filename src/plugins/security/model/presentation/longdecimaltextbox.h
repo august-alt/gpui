@@ -39,7 +39,7 @@ public:
     /*!
      * \brief defaultValue
      */
-    uint64_t defaultValue;
+    uint64_t defaultValue{};
 
     /*!
      * \brief spinBox

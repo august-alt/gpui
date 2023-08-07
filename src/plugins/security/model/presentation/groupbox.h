@@ -29,6 +29,8 @@
 namespace security
 {
 
+class PresentationElements;
+
 /*!
  * \class GroupBox
  * \brief The GroupBox class are used to provide an identifiable grouping for other graphical elements.

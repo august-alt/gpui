@@ -30,7 +30,7 @@ public:
     SdmxPlugin()
         : Plugin("sdmx")
     {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<io::PolicyResourcesFile>).name(), SdmxPlugin);
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<SdmxFile>).name(), SdmxPlugin);
     }
 };
 } // namespace gpui

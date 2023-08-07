@@ -23,19 +23,27 @@
 
 #include "../../../src/core/common.h"
 
+#include "../../../src/io/basefile.h"
 #include "../../../src/io/policyfileformat.h"
 #include "../../../src/io/policyresourcesfile.h"
 
+namespace security
+{
+    class SecurityPresentation;
+}
+
 namespace gpui
 {
-class GPUI_SYMBOL_EXPORT SdmlFormat : public io::PolicyFileFormat<io::PolicyResourcesFile>
+typedef io::BaseFile<security::SecurityPresentation> SdmlFile;
+
+class GPUI_SYMBOL_EXPORT SdmlFormat : public io::PolicyFileFormat<SdmlFile>
 {
 public:
     SdmlFormat();
 
-    bool read(std::istream &input, io::PolicyResourcesFile *file) override;
+    bool read(std::istream &input, SdmlFile *file) override;
 
-    bool write(std::ostream &output, io::PolicyResourcesFile *file) override;
+    bool write(std::ostream &output, SdmlFile *file) override;
 };
 } // namespace gpui
 

@@ -314,11 +314,11 @@ public:
 };
 
 SdmxFormat::SdmxFormat()
-    : io::PolicyFileFormat<io::PolicyResourcesFile>("sdmx")
+    : io::PolicyFileFormat<SdmxFile>("sdmx")
 {
 }
 
-bool SdmxFormat::read(std::istream &input, io::PolicyResourcesFile *file)
+bool SdmxFormat::read(std::istream &input, SdmxFile *file)
 {
     Q_UNUSED(file);
 
@@ -328,7 +328,7 @@ bool SdmxFormat::read(std::istream &input, io::PolicyResourcesFile *file)
 
         auto security = XsdSecurityDefinitionsAdapter::create(*securityDefinitions);
 
-//        file->add(security); TODO: Implement.
+        file->add(security);
     };
 
     auto errorHandler = [&](const std::string &error) { this->setErrorString(error); };
@@ -336,7 +336,7 @@ bool SdmxFormat::read(std::istream &input, io::PolicyResourcesFile *file)
     return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
-bool SdmxFormat::write(std::ostream &output, io::PolicyResourcesFile *file)
+bool SdmxFormat::write(std::ostream &output, SdmxFile *file)
 {
     Q_UNUSED(output);
     Q_UNUSED(file);

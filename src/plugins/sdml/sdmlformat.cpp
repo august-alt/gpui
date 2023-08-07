@@ -28,11 +28,11 @@ namespace gpui
 {
 
 SdmlFormat::SdmlFormat()
-    : io::PolicyFileFormat<io::PolicyResourcesFile>("sdml")
+    : io::PolicyFileFormat<SdmlFile>("sdml")
 {
 }
 
-bool SdmlFormat::read(std::istream &input, io::PolicyResourcesFile *file)
+bool SdmlFormat::read(std::istream &input, SdmlFile *file)
 {
     std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityDefinitions> securityDefinitions;
     auto operation = [&]() {
@@ -50,7 +50,7 @@ bool SdmlFormat::read(std::istream &input, io::PolicyResourcesFile *file)
     return ExceptionHandler::handleOperation(operation, errorHandler);
 }
 
-bool SdmlFormat::write(std::ostream &output, io::PolicyResourcesFile *file)
+bool SdmlFormat::write(std::ostream &output, SdmlFile *file)
 {
     Q_UNUSED(output);
     Q_UNUSED(file);

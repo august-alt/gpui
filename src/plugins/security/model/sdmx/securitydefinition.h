@@ -94,12 +94,12 @@ public:
     /*!
      * \brief enabledList
      */
-    std::unique_ptr<SecurityValueList> enabledList;
+    std::unique_ptr<SecurityValueList> enabledList{};
 
     /*!
      * \brief disabledList
      */
-    std::unique_ptr<SecurityValueList> disabledList;
+    std::unique_ptr<SecurityValueList> disabledList{};
 };
 
 } // of namespace security

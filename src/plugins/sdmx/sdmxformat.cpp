@@ -47,7 +47,7 @@ void adapter_base(security::SecurityElement *output, const ElementType &input)
         output->clientExtension = QUuid(input.clientExtension().get().c_str());
     }
 
-//    assign_if_exists(output->propertyName, input.propertyName());
+    output->propertyName = input.propertyName();
 }
 
 template<typename TInput, typename TOutput>
@@ -55,13 +55,13 @@ void decimal_adapter_base(TOutput *output, const TInput &input)
 {
     adapter_base(output, input);
 
-//    output->maxValue    = input.maxValue().value();
-//    output->minValue    = input.minValue();
+    assign_if_exists(output->maxValue, input.maxValue());
+    assign_if_exists(output->minValue, input.minValue());
     output->required    = input.required();
     output->soft        = input.soft();
     output->storeAsText = input.storeAsText();
 
-//    assign_if_exists(output->propertyName, input.propertyName());
+    output->propertyName = input.propertyName();
 }
 
 template<typename AdapterType, typename SequenceType>
@@ -85,7 +85,7 @@ public:
     {
         adapter_base(this, element);
 
-        this->propertyName = element.valueName();
+        this->propertyName = element.propertyName();
     }
 
     static std::unique_ptr<security::BooleanElement> create(const BooleanElement &element)
@@ -118,7 +118,7 @@ public:
     {
         adapter_base(this, element);
 
-        this->propertyName = element.valueName();
+        this->propertyName = element.propertyName();
 
         this->required = element.required();
 
@@ -188,13 +188,11 @@ public:
     {
         adapter_base(this, element);
 
-        this->propertyName = element.valueName();
+        this->propertyName = element.propertyName();
 
         this->required = element.required();
 
         this->maxLength = element.maxLength();
-
-//        this->expandable = element.expandable();
 
         this->soft = element.soft();
     }
@@ -229,7 +227,7 @@ public:
     {
         adapter_base(this, element);
 
-        this->propertyName = element.valueName();
+        this->propertyName = element.propertyName();
     }
 
     static std::unique_ptr<security::MultiTextElement> create(const MultiTextElement &element)
@@ -257,8 +255,13 @@ public:
             this->parentCategory = definition.parentCategory()->ref();
         }
 
-        assign_if_exists(this->propertyName, definition.valueName());
-        assign_if_exists(this->sectionName, definition.sectionName());
+        std::string propertyNameLocal{};
+        std::string sectionNameLocal = definition.sectionName();
+
+        assign_if_exists(propertyNameLocal, definition.propertyName());
+
+        this->propertyName = std::make_unique<std::string>(propertyNameLocal);
+        this->sectionName = std::make_unique<std::string>(sectionNameLocal);
     }
 
     static std::shared_ptr<security::SecurityDefinition> create(const SecurityDefinition &element)

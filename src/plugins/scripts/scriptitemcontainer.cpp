@@ -53,8 +53,14 @@ GroupScriptContainerItem *ScriptItemContainer::getScripts() const
 
 void ScriptItemContainer::retranslateStrings()
 {
-    qWarning() << "TRanslate section: "
-               << this->property<std::string>(ScriptItemContainer::SECTION_NAME).c_str();
+    for (auto& child : getScripts()->getItems("ITEMS"))
+    {
+        auto scriptItem = dynamic_cast<ScriptItem*>(child);
+        if (scriptItem)
+        {
+            scriptItem->retranslateStrings();
+        }
+    }
 }
 
 } // namespace scripts_plugin

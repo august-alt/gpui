@@ -116,6 +116,8 @@ void ScriptsSnapIn::onDataSave()
 
 void ScriptsSnapIn::onRetranslateUI(const std::string &locale)
 {
+    Q_UNUSED(locale);
+
     d->treeModel      = std::make_unique<ScriptsTreeModel>();
     d->viewModel      = ModelView::Factory::CreateTopItemsViewModel(d->treeModel.get());
     d->proxyViewModel = std::make_unique<ScriptsTreeProxyModel>();

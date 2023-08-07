@@ -120,6 +120,14 @@
         <source>Scripts for user</source>
         <translation>Scripts for user</translation>
     </message>
+    <message>
+        <source>Path</source>
+        <translation>Path</translation>
+    </message>
+    <message>
+        <source>Arguments</source>
+        <translation>Arguments</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>

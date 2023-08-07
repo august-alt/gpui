@@ -118,6 +118,14 @@
         <source>Scripts for user</source>
         <translation>Скрипты для пользователя</translation>
     </message>
+    <message>
+        <source>Path</source>
+        <translation>Путь</translation>
+    </message>
+    <message>
+        <source>Arguments</source>
+        <translation>Аргументы</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>

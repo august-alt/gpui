@@ -25,20 +25,26 @@ namespace scripts_plugin
 ScriptItem::ScriptItem()
     : ModelView::CompoundItem("ScriptItem")
 {
-    addProperty(propertyToString(PATH), "");
-    addProperty(propertyToString(ARGUMENTS), "");
+    addProperty(propertyToString(PATH), "")->setDisplayName(QObject::tr("Path").toStdString());
+    addProperty(propertyToString(ARGUMENTS), "")->setDisplayName(QObject::tr("Arguments").toStdString());
 }
 
 ScriptItem::ScriptItem(const ScriptItem &other)
     : ModelView::CompoundItem("ScriptItem")
 {
     addProperty(propertyToString(PATH), other.property<std::string>(propertyToString(PATH)));
-    addProperty(propertyToString(PATH), other.property<std::string>(propertyToString(PATH)));
+    addProperty(propertyToString(ARGUMENTS), other.property<std::string>(propertyToString(ARGUMENTS)));
 }
 
 constexpr int ScriptItem::propertyToInt(PropertyType &type)
 {
     return static_cast<int>(type);
+}
+
+void ScriptItem::retranslateStrings()
+{
+    children()[0]->setDisplayName(QObject::tr("Path").toStdString());
+    children()[1]->setDisplayName(QObject::tr("Arguments").toStdString());
 }
 
 } // namespace scripts_plugin

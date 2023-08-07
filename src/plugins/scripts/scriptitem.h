@@ -54,6 +54,9 @@ public:
 
         return "";
     }
+
+
+    void retranslateStrings();
 };
 
 } // namespace scripts_plugin

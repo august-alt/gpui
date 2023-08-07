@@ -1,6 +1,7 @@
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
 set(HEADERS
+    basefile.h
     genericfile.h
     genericfile.inl
     genericreader.h
@@ -21,6 +22,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    basefile.cpp
     commentresourcesfile.cpp
     inifile.cpp
     io.cpp

@@ -317,8 +317,10 @@ SdmxFormat::SdmxFormat()
 
 bool SdmxFormat::read(std::istream &input, io::PolicyResourcesFile *file)
 {
+    Q_UNUSED(file);
+
     std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityDefinitions> securityDefinitions;
-    auto operation = [&]() {
+    auto operation = [&]() noexcept {
         securityDefinitions = GroupPolicy::SecurityDefinitions::SecurityDefinitions_(input, ::xsd::cxx::tree::flags::dont_validate);
 
         auto security = XsdSecurityDefinitionsAdapter::create(*securityDefinitions);

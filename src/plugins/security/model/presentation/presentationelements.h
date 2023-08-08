@@ -31,6 +31,7 @@
 #include "longdecimaltextbox.h"
 #include "multitextbox.h"
 #include "textbox.h"
+#include "text.h"
 
 #include <vector>
 
@@ -94,6 +95,11 @@ public:
      * \brief comment
      */
     std::vector<Comment> comment{};
+
+    /*!
+     * \brief text
+     */
+    std::vector<Text> text{};
 };
 
 } // of namespace security

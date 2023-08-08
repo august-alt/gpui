@@ -18,49 +18,53 @@
  **
  ***********************************************************************************************************************/
 
-#ifndef SECURITY_COMBOBOX_H
-#define SECURITY_COMBOBOX_H
+#ifndef SECURITY_SECURITY_PRESENTATION_RESOURCES_H
+#define SECURITY_SECURITY_PRESENTATION_RESOURCES_H
 
-#include "dataelementcontent.h"
+#include "securitypresentation.h"
 
+#include <map>
 #include <string>
-#include <vector>
 
 namespace security
 {
 
 /*!
-   \class ComboBox
- * \brief Represents a combobox display element with default/suggested entries.
- *
- * \ingroup security
- * \ingroup presentation
+ * \class SecurityPresentationResources
+ * \brief Root presentation element.
  */
-class ComboBox: public DataElementContent
+class SecurityPresentationResources
 {
 public:
     /*!
-     * \brief label Text associated with the input box to provide prompt text.
+     * \brief displayName The localized friendly name of the policy settings file.
+     * Unsupported by current Group Policy tools.
      */
-    std::string label {};
+    std::string displayName{};
 
     /*!
-     * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
+     * \brief description The localized description of policy settings contained in an .adml file.
+     * Unsupported by current Group Policy tools.
      */
-    std::string defaultValue {};
+    std::string description{};
 
     /*!
-     * \brief suggestions A suggested value to be placed in the drop-down list.
-     * Multiple suggestion elements result in multiple suggestions.
+     * \brief annotation A comment string for .adml files.
+     * Strings added to this tag will not be processed by Group Policy tools.
      */
-    std::vector<std::string> suggestion {};
+    std::vector<std::string> annotation{};
 
     /*!
-     * \brief noSort If elements should be sorted.
+     * \brief stringTable A table of localized strings.
      */
-    bool noSort { false };
+    std::map<std::string, std::string> stringTable{};
+
+    /*!
+     * \brief presentationTable A table of presentation elements representing policy setting parameters.
+     */
+    std::map<std::string, std::shared_ptr<SecurityPresentation>> presentationTable{};
 };
 
 } // of namespace security
 
-#endif // SECURITY_COMBOBOX_H
+#endif // SECURITY_SECURITY_PRESENTATION_RESOURCES_H

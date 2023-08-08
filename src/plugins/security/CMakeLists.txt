@@ -32,7 +32,9 @@ set(HEADERS
     model/presentation/radiobutton.h
     model/presentation/securitydescriptoreditor.h
     model/presentation/securitypresentation.h
+    model/presentation/securitypresentationresources.h
     model/presentation/textbox.h
+    model/presentation/text.h
     model/sdmx/booleanelement.h
     model/sdmx/decimalelement.h
     model/sdmx/decimaltype.h

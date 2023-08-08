@@ -33,7 +33,7 @@ namespace security
  * \ingroup security
  * \ingroup presentation
  */
-class ListBox : DataElementContent
+class ListBox : public DataElementContent
 {
 };
 

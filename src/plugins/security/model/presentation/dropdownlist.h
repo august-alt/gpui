@@ -23,6 +23,9 @@
 
 #include "dataelementcontent.h"
 
+#include <string>
+#include <vector>
+
 namespace security
 {
 
@@ -32,6 +35,32 @@ namespace security
  */
 class DropdownList : public DataElementContent
 {
+public:
+    /*!
+     * \brief noSort
+     */
+    bool noSort { false };
+
+    /*!
+     * \brief defaultItem The numerical value identifying the default choice of the list of items.
+     * The item list is numbered starting from 0.
+     */
+    unsigned int defaultItem { 0 };
+
+    /*!
+     * \brief label Text associated with the drop-down list.
+     */
+    std::string label{};
+
+    /*!
+     * \brief values Values of the drop-down list.
+     */
+    std::vector<std::string> values{};
+
+    /*!
+     * \brief refId A mapping to the element.
+     */
+    std::string refId{};
 };
 
 } // of namespace security

@@ -3,15 +3,11 @@
   <xsd:element ecore:ignore="true" name="DecimalElement" type="security:DecimalElement"/>
   <xsd:element ecore:ignore="true" name="EnumerationElement" type="security:EnumerationElement"/>
   <xsd:element ecore:ignore="true" name="LongDecimalElement" type="security:LongDecimalElement"/>
-  <xsd:element ecore:ignore="true" name="ListElement" type="security:ListElement"/>
   <xsd:element ecore:ignore="true" name="SecurityDefinition" type="security:SecurityDefinition"/>
   <xsd:element ecore:ignore="true" name="CategoryReference" type="security:CategoryReference"/>
-  <xsd:element ecore:ignore="true" name="SecurityDefinitions" type="security:SecurityDefinitions"/>
   <xsd:element ecore:ignore="true" name="SecurityValue" type="security:SecurityValue"/>
   <xsd:element ecore:ignore="true" name="SecurityItem" type="security:SecurityItem"/>
   <xsd:element ecore:ignore="true" name="SecurityValueList" type="security:SecurityValueList"/>
-  <xsd:element ecore:ignore="true" name="DataElementContent" type="security:DataElementContent"/>
-  <xsd:element ecore:ignore="true" name="GroupBox" type="security:GroupBox"/>
   <xsd:complexType name="BooleanElement">
     <xsd:annotation>
       <xsd:documentation>Describes a choice element in a policy with associated values for the true and false cases.</xsd:documentation>
@@ -50,6 +46,9 @@
     </xsd:complexContent>
   </xsd:complexType>
   <xsd:complexType name="ListElement">
+    <xsd:annotation>
+      <xsd:documentation>Describes a list element  in a security policy.</xsd:documentation>
+    </xsd:annotation>
     <xsd:complexContent>
       <xsd:extension base="security:SecurityElement">
         <xsd:attribute name="valuePrefix" type="xsd:string"/>
@@ -81,18 +80,18 @@
   </xsd:complexType>
   <xsd:complexType name="SecurityDefinition">
     <xsd:sequence>
-      <xsd:element type="security:CategoryReference" form="qualified" minOccurs="0" name="parentCategory" />
-      <xsd:element type="security:SecurityElements" form="qualified" minOccurs="0" name="elements" />
-      <xsd:element type="security:SecurityValue" form="qualified" minOccurs="0" name="enabledValue" />
-      <xsd:element type="security:SecurityValue" form="qualified" minOccurs="0" name="disabledValue" />
-      <xsd:element type="security:SecurityValueList" form="qualified" minOccurs="0" name="enabledList" />
-      <xsd:element type="security:SecurityValueList" form="qualified" minOccurs="0" name="disabledList" />
+      <xsd:element type="security:CategoryReference" form="qualified" minOccurs="0" name="parentCategory"/>
+      <xsd:element type="security:SecurityElements" form="qualified" minOccurs="0" name="elements"/>
+      <xsd:element type="security:SecurityValue" form="qualified" minOccurs="0" name="enabledValue"/>
+      <xsd:element type="security:SecurityValue" form="qualified" minOccurs="0" name="disabledValue"/>
+      <xsd:element type="security:SecurityValueList" form="qualified" minOccurs="0" name="enabledList"/>
+      <xsd:element type="security:SecurityValueList" form="qualified" minOccurs="0" name="disabledList"/>
     </xsd:sequence>
     <xsd:attribute form="qualified" name="name" type="security:ItemReference" use="required"/>
     <xsd:attribute form="qualified" name="displayName" type="security:StringReference" use="required"/>
     <xsd:attribute name="explainText" type="security:StringReference"/>
     <xsd:attribute form="qualified" name="sectionName" type="security:SectionName" use="required"/>
-    <xsd:attribute ecore:name="propertyName" name="propertyName" type="security:PropertyName"/>
+    <xsd:attribute name="propertyName" type="security:PropertyName"/>
     <xsd:attribute ecore:unsettable="false" name="securityType" type="security:SecurityType" use="required"/>
   </xsd:complexType>
   <xsd:simpleType name="SecurityType">
@@ -112,7 +111,7 @@
     <xsd:sequence>
       <xsd:element ecore:unique="true" maxOccurs="unbounded" minOccurs="0" name="keywords" nillable="true" type="xsd:string"/>
       <xsd:element ecore:unique="true" maxOccurs="unbounded" minOccurs="0" name="seeAlso" nillable="true" type="xsd:string"/>
-      <xsd:element type="security:CategoryReference" name="parentCategory" maxOccurs="1" minOccurs="1"/>
+      <xsd:element type="security:CategoryReference" name="parentCategory"/>
     </xsd:sequence>
     <xsd:attribute name="name" type="security:ItemReference" use="required"/>
     <xsd:attribute name="displayName" type="security:StringReference" use="required"/>
@@ -127,22 +126,24 @@
   <xsd:simpleType ecore:instanceClass="java.lang.String" name="StringReference">
     <xsd:restriction base="xsd:string"/>
   </xsd:simpleType>
-  <xsd:complexType name="SecurityDefinitions">
+  <xsd:element name="SecurityDefinitions">
+  <xsd:complexType>
     <xsd:sequence>
-      <xsd:element form="qualified" name="revision" type="xsd:string"/>
-      <xsd:element form="qualified" name="schemaVersion" type="xsd:string"/>
-      <xsd:element type="security:SecurityDefinition" form="qualified" maxOccurs="unbounded" minOccurs="0" name="security" />
+      <xsd:element type="security:SecurityDefinition" form="qualified"  minOccurs="0" maxOccurs="unbounded" name="security"/>
     </xsd:sequence>
+    <xsd:attribute ecore:derived="true" ecore:transient="true" ecore:volatile="true" form="qualified" name="revision" type="xsd:string"/>
+    <xsd:attribute ecore:derived="true" ecore:transient="true" ecore:volatile="true" form="qualified" name="schemaVersion" type="xsd:string"/>
   </xsd:complexType>
+  </xsd:element>
   <xsd:complexType name="SecurityElements">
     <xsd:sequence>
-      <xsd:element minOccurs="0" type="security:BooleanElement" maxOccurs="unbounded" form="qualified" name="boolean" />
-      <xsd:element minOccurs="0" type="security:DecimalElement" maxOccurs="unbounded" form="qualified" name="decimal" />
-      <xsd:element minOccurs="0" type="security:TextElement" maxOccurs="unbounded" form="qualified" name="text" />
-      <xsd:element minOccurs="0" type="security:EnumerationElement" maxOccurs="unbounded" form="qualified" name="enum" />
-      <xsd:element minOccurs="0" type="security:ListElement" maxOccurs="unbounded" form="qualified" name="list" />
-      <xsd:element minOccurs="0" type="security:LongDecimalElement" maxOccurs="unbounded" form="qualified" name="longDecimal" />
-      <xsd:element minOccurs="0" type="security:MultiTextElement" maxOccurs="unbounded" form="qualified" name="multiText" />
+      <xsd:element minOccurs="0" type="security:BooleanElement" maxOccurs="unbounded" form="qualified" name="boolean"/>
+      <xsd:element minOccurs="0" type="security:DecimalElement" maxOccurs="unbounded" form="qualified" name="decimal"/>
+      <xsd:element minOccurs="0" type="security:TextElement" maxOccurs="unbounded" form="qualified" name="text"/>
+      <xsd:element minOccurs="0" type="security:EnumerationElement" maxOccurs="unbounded" form="qualified" name="enum"/>
+      <xsd:element minOccurs="0" type="security:ListElement" maxOccurs="unbounded" form="qualified" name="list"/>
+      <xsd:element minOccurs="0" type="security:LongDecimalElement" maxOccurs="unbounded" form="qualified" name="longDecimal"/>
+      <xsd:element minOccurs="0" type="security:MultiTextElement" maxOccurs="unbounded" form="qualified" name="multiText"/>
       <xsd:choice ecore:featureMap="group" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
@@ -155,25 +156,25 @@
   <xsd:complexType name="SecurityElement">
     <xsd:attribute name="refId" type="xsd:string" use="required"/>
     <xsd:attribute name="clientExtension" type="xsd:string"/>
-    <xsd:attribute ecore:name="propertyName" name="propertyName" type="security:PropertyName" use="required"/>
+    <xsd:attribute name="propertyName" type="security:PropertyName" use="required"/>
   </xsd:complexType>
   <xsd:complexType name="SecurityValue">
     <xsd:sequence>
-      <xsd:element type="security:decimal_._type" form="qualified" minOccurs="0" name="decimal" />
-      <xsd:element type="security:longDecimal_._type" form="qualified" minOccurs="0" name="longDecimal" />
+      <xsd:element type="security:decimal_._type" form="qualified" minOccurs="0" name="decimal"/>
+      <xsd:element type="security:longDecimal_._type" form="qualified" minOccurs="0" name="longDecimal"/>
       <xsd:element ecore:unsettable="false" form="qualified" minOccurs="0" name="string" type="security:SecurityType"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:complexType name="SecurityItem">
     <xsd:sequence>
-      <xsd:element type="security:SecurityValue" name="value" />
+      <xsd:element type="security:SecurityValue" name="value"/>
     </xsd:sequence>
     <xsd:attribute form="qualified" name="sectionName" type="security:SectionName"/>
-    <xsd:attribute ecore:name="propertyName" name="propertyName" type="security:PropertyName" use="required"/>
+    <xsd:attribute ecore:name="propertyName" name="peropertyName" type="security:PropertyName" use="required"/>
   </xsd:complexType>
   <xsd:complexType name="SecurityValueList">
     <xsd:sequence>
-      <xsd:element type="security:SecurityValue" maxOccurs="unbounded" minOccurs="0" name="item" />
+      <xsd:element type="security:SecurityValue" maxOccurs="unbounded" minOccurs="0" name="item"/>
     </xsd:sequence>
     <xsd:attribute name="defaultSectionName" type="security:SectionName"/>
   </xsd:complexType>
@@ -194,8 +195,10 @@
     </xsd:annotation>
     <xsd:complexContent>
       <xsd:extension base="security:PresentationElements">
-        <xsd:attribute name="id" type="security:ResourceID"/>
-        <xsd:attribute name="text" type="xsd:string"/>
+        <xsd:sequence>
+          <xsd:element minOccurs="0" ecore:unique="true" maxOccurs="unbounded" form="qualified" name="text" nillable="true" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="security:ResourceID" use="required"/>
         <xsd:attribute name="icon" type="xsd:string"/>
       </xsd:extension>
     </xsd:complexContent>
@@ -222,40 +225,39 @@
     <xsd:complexContent>
       <xsd:extension base="security:DataElementContent">
         <xsd:attribute ecore:unsettable="false" name="defaultValue" type="xsd:int"/>
-        <xsd:attribute ecore:unsettable="false" name="spinBox" type="xsd:boolean"/>
+        <xsd:attribute ecore:unsettable="false" name="spin" type="xsd:boolean"/>
         <xsd:attribute ecore:unsettable="false" name="spinStep" type="xsd:int"/>
       </xsd:extension>
     </xsd:complexContent>
-  </xsd:complexType>
-  <xsd:complexType name="PresentationElements">
-    <xsd:sequence>
-      <xsd:element minOccurs="0" type="security:DecimalTextBox" maxOccurs="unbounded" form="qualified" name="decimalTextBox" />
-      <xsd:element minOccurs="0" type="security:TextBox" maxOccurs="unbounded" form="qualified" name="textBox" />
-      <xsd:element minOccurs="0" type="security:CheckBox" maxOccurs="unbounded" form="qualified" name="checkBox" />
-      <xsd:element minOccurs="0" type="security:ComboBox" maxOccurs="unbounded" form="qualified" name="comboBox" />
-      <xsd:element minOccurs="0" type="security:DropdownList" maxOccurs="unbounded" form="qualified" name="dropdownList" />
-      <xsd:element minOccurs="0" type="security:LongDecimalTextBox" maxOccurs="unbounded" form="qualified" name="longDecimalTextBox" />
-      <xsd:element minOccurs="0" type="security:MultiTextBox" maxOccurs="unbounded" form="qualified" name="multiTextBox" />
-      <xsd:element minOccurs="0" type="security:GroupBox" maxOccurs="unbounded" form="qualified" name="groupBox" />
-      <xsd:choice ecore:featureMap="group" maxOccurs="unbounded">
-        <xsd:element minOccurs="0" type="security:ListBox" maxOccurs="unbounded" form="qualified" name="listBox" />
-        <xsd:element minOccurs="0" type="security:Comment" maxOccurs="unbounded" form="qualified" name="comment" />
-      </xsd:choice>
-    </xsd:sequence>
   </xsd:complexType>
   <xsd:complexType name="GroupBox">
     <xsd:complexContent>
       <xsd:extension base="security:DataElementContent">
         <xsd:sequence>
-          <xsd:element maxOccurs="1" minOccurs="1" type="security:PresentationElements" name="elements"/>
+          <xsd:element type="security:PresentationElements" minOccurs="0" name="elements"/>
         </xsd:sequence>
         <xsd:attribute ecore:unsettable="false" name="hasCheckBox" type="xsd:boolean"/>
         <xsd:attribute ecore:unsettable="false" name="defaultChecked" type="xsd:boolean"/>
-
         <xsd:attribute name="label" type="xsd:string"/>
         <xsd:attribute ecore:unsettable="false" name="hasBorder" type="xsd:boolean"/>
       </xsd:extension>
     </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PresentationElements">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" type="security:DecimalTextBox" maxOccurs="unbounded" form="qualified" name="decimalTextBox"/>
+      <xsd:element minOccurs="0" type="security:TextBox" maxOccurs="unbounded" form="qualified" name="textBox"/>
+      <xsd:element minOccurs="0" type="security:CheckBox" maxOccurs="unbounded" form="qualified" name="checkBox"/>
+      <xsd:element minOccurs="0" type="security:ComboBox" maxOccurs="unbounded" form="qualified" name="comboBox"/>
+      <xsd:element minOccurs="0" type="security:DropdownList" maxOccurs="unbounded" form="qualified" name="dropdownList"/>
+      <xsd:element minOccurs="0" type="security:LongDecimalTextBox" maxOccurs="unbounded" form="qualified" name="longDecimalTextBox"/>
+      <xsd:element minOccurs="0" type="security:MultiTextBox" maxOccurs="unbounded" form="qualified" name="multiTextBox"/>
+      <xsd:element minOccurs="0" type="security:GroupBox" maxOccurs="unbounded" form="qualified" name="groupBox"/>
+      <xsd:choice ecore:featureMap="group" maxOccurs="unbounded">
+        <xsd:element minOccurs="0" type="security:ListBox" maxOccurs="unbounded" form="qualified" name="listBox"/>
+        <xsd:element minOccurs="0" type="security:Comment" maxOccurs="unbounded" form="qualified" name="comment"/>
+      </xsd:choice>
+    </xsd:sequence>
   </xsd:complexType>
   <xsd:simpleType ecore:instanceClass="java.lang.String" name="ResourceID">
     <xsd:restriction base="xsd:string"/>
@@ -292,20 +294,29 @@
     <xsd:annotation>
       <xsd:documentation>Represents a dropdown list display element.</xsd:documentation>
     </xsd:annotation>
+    <xsd:attribute ecore:unsettable="false" name="defaultItem" type="xsd:unsignedInt"/>
+    <xsd:attribute ecore:unsettable="false" name="noSort" type="xsd:boolean"/>
   </xsd:complexType>
   <xsd:complexType name="MultiTextBox">
     <xsd:annotation>
       <xsd:documentation>Represents a textbox display element with default entry.</xsd:documentation>
     </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element form="qualified" name="label" type="xsd:string"/>
-      <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="xsd:string"/>
-    </xsd:sequence>
+    <xsd:complexContent>
+      <xsd:extension base="security:DataElement">
+        <xsd:sequence>
+          <xsd:element form="qualified" name="label" type="xsd:string"/>
+          <xsd:element form="qualified" minOccurs="0" name="defaultValue" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
   </xsd:complexType>
   <xsd:complexType name="ListBox">
     <xsd:annotation>
       <xsd:documentation>Represents a listbox display element.</xsd:documentation>
     </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="security:DataElementContent"/>
+    </xsd:complexContent>
   </xsd:complexType>
   <xsd:complexType name="Comment">
     <xsd:annotation>
@@ -369,9 +380,27 @@
     <xsd:complexContent>
       <xsd:extension base="security:DataElementContent">
         <xsd:attribute ecore:unsettable="false" name="defaultValue" type="xsd:long"/>
-        <xsd:attribute ecore:unsettable="false" name="spinBox" type="xsd:boolean"/>
+        <xsd:attribute ecore:unsettable="false" name="spin" type="xsd:boolean"/>
         <xsd:attribute ecore:unsettable="false" name="spinStep" type="xsd:long"/>
       </xsd:extension>
     </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SecurityPresentationResources">
+  <xsd:complexType>
+    <xsd:annotation>
+      <xsd:documentation>Root element for presentation resources.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element ecore:derived="true" type="security:SecurityPresentation" ecore:transient="true" ecore:volatile="true"  minOccurs="0" name="presentationTable"/>
+      <xsd:element type="security:StringType" maxOccurs="unbounded" minOccurs="0" name="stringTable"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType ecore:name="StringTableType" name="StringType">
+    <xsd:simpleContent ecore:name="simple">
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="id" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
   </xsd:complexType>
 </xsd:schema>

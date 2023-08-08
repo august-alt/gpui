@@ -391,7 +391,7 @@
       <xsd:documentation>Root element for presentation resources.</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element ecore:derived="true" type="security:SecurityPresentation" ecore:transient="true" ecore:volatile="true"  minOccurs="0" name="presentationTable"/>
+      <xsd:element ecore:derived="true" type="security:SecurityPresentation" ecore:transient="true" ecore:volatile="true" maxOccurs="unbounded" minOccurs="0" name="presentationTable"/>
       <xsd:element type="security:StringType" maxOccurs="unbounded" minOccurs="0" name="stringTable"/>
     </xsd:sequence>
   </xsd:complexType>

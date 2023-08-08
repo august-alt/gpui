@@ -22,12 +22,21 @@
 
 #include "../security/schema/security.h"
 
-#include "../security/model/presentation/securitypresentation.h"
+#include "../security/model/presentation/securitypresentationresources.h"
 
 #include "../common/exceptionhandler.h"
 
 namespace gpui
 {
+
+template<typename TInput, typename TOutput>
+inline void assign_if_exists(TOutput &output, const TInput &input)
+{
+    if (input.present())
+    {
+        output = input.get();
+    }
+}
 
 class XsdCheckBoxAdapter : public security::CheckBox
 {
@@ -38,8 +47,9 @@ public:
     XsdCheckBoxAdapter(const CheckBox &widget)
         : security::CheckBox()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        this->defaultChecked = widget.defaultChecked();
+
+        assign_if_exists(this->postfix, widget.postfix());
     }
 
     static std::unique_ptr<security::CheckBox> create(const CheckBox &widget)
@@ -57,8 +67,15 @@ public:
     XsdComboBoxAdapter(const ComboBox &widget)
         : security::ComboBox()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        this->refId = widget.refId();
+        assign_if_exists(this->postfix, widget.postfix());
+
+        assign_if_exists(this->defaultValue, widget.defaultChecked());
+
+        for (const auto& suggestionText : widget.suggestion())
+        {
+            this->suggestion.emplace_back(suggestionText);
+        }
     }
 
     static std::unique_ptr<security::ComboBox> create(const ComboBox &widget)
@@ -76,8 +93,10 @@ public:
     XsdDecimalTextBoxAdapter(const DecimalTextBox &widget)
         : security::DecimalTextBox()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        this->spinBox = widget.spin();
+        assign_if_exists(this->defaultValue, widget.defaultValue());
+        assign_if_exists(this->spinStep, widget.spinStep());
+        assign_if_exists(this->postfix, widget.postfix());
     }
 
     static std::unique_ptr<security::DecimalTextBox> create(const DecimalTextBox &widget)
@@ -114,8 +133,7 @@ public:
     XsdListBoxAdapter(const ListBox &widget)
         : security::ListBox()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        assign_if_exists(this->postfix, widget.postfix());
     }
 
     static std::unique_ptr<security::ListBox> create(const ListBox &widget)
@@ -133,8 +151,10 @@ public:
     XsdLongDecimalTextBoxAdapter(const LongDecimalTextBox &widget)
         : security::LongDecimalTextBox()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        this->spinBox = widget.spin();
+        assign_if_exists(this->defaultValue, widget.defaultValue());
+        assign_if_exists(this->spinStep, widget.spinStep());
+        assign_if_exists(this->postfix, widget.postfix());
     }
 
     static std::unique_ptr<security::LongDecimalTextBox> create(const LongDecimalTextBox &widget)
@@ -152,8 +172,9 @@ public:
     XsdMultiTextBoxAdapter(const MultiTextBox &widget)
         : security::MultiTextBox()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+//        this->defaultHeight = widget.defaultHeight();
+        this->refId         = widget.refId();
+//        this->showAsDialog  = widget.showAsDialog();
     }
 
     static std::unique_ptr<security::MultiTextBox> create(const MultiTextBox &widget)
@@ -185,20 +206,20 @@ public:
     }
 };
 
-class XsdTextAdapter : public security::TextBox
+class XsdTextAdapter : public security::Text
 {
 private:
     typedef ::GroupPolicy::SecurityDefinitions::TextElement TextElement;
 
 public:
-    XsdTextAdapter(const TextElement &string)
-        : security::TextBox()
+    XsdTextAdapter(const TextElement &widget)
+        : security::Text()
     {
-        Q_UNUSED(string);
+        Q_UNUSED(widget);
         // TODO: Implement.
     }
 
-    static std::unique_ptr<security::TextBox> create(const TextElement &string)
+    static std::unique_ptr<security::Text> create(const TextElement &string)
     {
         return std::make_unique<XsdTextAdapter>(string);
     }
@@ -215,6 +236,28 @@ void adapt_widgets(const SequenceType &sequence,
         widgets[adaptee.refId()] = std::move(adaptedElement);
     }
 }
+
+class XsdResourcesAdapter : public security::SecurityPresentationResources
+{
+private:
+    typedef ::GroupPolicy::SecurityDefinitions::SecurityPresentationResources SecurityPresentationResources;
+
+public:
+    XsdResourcesAdapter(const SecurityPresentationResources &resources)
+        : security::SecurityPresentationResources()
+    {
+        for (const auto &presentation : resources.presentationTable())
+        {
+            Q_UNUSED(presentation);
+            // TODO: Implement.
+        }
+    }
+
+    static std::unique_ptr<security::SecurityPresentationResources> create(const SecurityPresentationResources &resources)
+    {
+        return std::make_unique<XsdResourcesAdapter>(resources);
+    }
+};
 
 SdmlFormat::SdmlFormat()
     : io::PolicyFileFormat<SdmlFile>("sdml")

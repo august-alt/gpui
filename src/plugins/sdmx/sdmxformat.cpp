@@ -279,8 +279,8 @@ public:
     XsdSecurityDefinitionsAdapter(const SecurityDefinitions &definitions)
         : security::SecurityDefinitions()
     {
-        this->revision = definitions.revision();
-        this->schemaVersion = definitions.schemaVersion();
+        assign_if_exists(this->revision, definitions.revision());
+        assign_if_exists(this->schemaVersion, definitions.schemaVersion());
 
         for (const auto& securityElement : definitions.security())
         {

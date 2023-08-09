@@ -221,7 +221,7 @@ void PolicyStateManager::setPolicyStateEnabled()
     if (d->policy.valueName.size() > 0
         && !d->policy.enabledValue
         && d->policy.enabledList.empty()
-        && d->policy.elements.empty())
+        && !d->policy.elements.empty())
     {
         d->source.setValue(d->policy.key, d->policy.valueName, RegistryEntryType::REG_DWORD, 1);
     }

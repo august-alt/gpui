@@ -26,13 +26,18 @@
 #include "../core/snapinmanager.h"
 #include "../core/translatorstorage.h"
 #include "../core/version.h"
+#include "../core/logger.h"
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
+#include <iostream>
 
 #include <QApplication>
 
 int main(int argc, char **argv)
 {
+    // Create logger
+    auto logger = std::make_unique<gpui::Logger>();
+
     // Register types for factory.
     gpui::SnapInDetailsFactory::define<gpui::SnapInDetailsDialog>("ISnapIn");
     gpui::SnapInDetailsFactory::define<gpui::CompositeSnapInDetailsDialog>("ICompositeSnapIn");
@@ -86,5 +91,10 @@ int main(int argc, char **argv)
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();
 
-    return app.exec();
+    int rv = app.exec();
+
+    window.close();
+    QPluginLoader().unload();
+
+    return rv;
 }

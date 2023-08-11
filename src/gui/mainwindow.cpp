@@ -158,11 +158,11 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
         {
             if (!currentId.isNull())
             {
-                qWarning() << "Current id: " << currentId;
+                qInfo() << "Current id: " << currentId;
             }
             if (!parentId.isNull())
             {
-                qWarning() << "Non null uuid" << index.data() << parentId;
+                qInfo() << "Non null uuid" << index.data() << parentId;
                 parentIndex = findParent(target->model(), target->model()->index(0, 0), parentId);
             }
 
@@ -181,7 +181,7 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
 
             if (parentIndex.isValid())
             {
-                qWarning() << "Found valid index" << parentIndex.data();
+                qInfo() << "Found valid index" << parentIndex.data();
                 target->model()->itemFromIndex(parentIndex)->appendRow(child);
             }
             else
@@ -267,7 +267,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     for (auto &snapIn : manager->getSnapIns())
     {
-        qWarning() << "Loading model from: " << snapIn->getDisplayName();
+        qInfo() << "Loading model from: " << snapIn->getDisplayName();
         snapIn->onInitialize(this);
     }
 
@@ -281,7 +281,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     QString guid = isAnyGUID(d->options.path);
 
-    qWarning() << "Guid: " << guid;
+    qInfo() << "Guid: " << guid;
 
     if (guid != "")
     {
@@ -367,7 +367,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
         if (snapIn->getRootNode())
         {
             QAbstractItemModel *snapInModel = snapIn->getRootNode();
-            qWarning() << "Appending model from: " << snapIn->getDisplayName();
+            qInfo() << "Appending model from: " << snapIn->getDisplayName();
             appendModel(visibleRootItem, snapInModel, snapInModel->index(0, 0));
         }
     }
@@ -471,7 +471,7 @@ void MainWindow::onLanguageChanged(QAction *action)
     for (auto &snapIn : d->manager->getSnapIns())
     {
         snapIn->onRetranslateUI(d->localeName.toStdString());
-        qWarning() << d->localeName;
+        qInfo() << d->localeName;
     }
 
     d->contentWidget->onLanguageChanged();
@@ -524,7 +524,7 @@ QString MainWindow::isAnyGUID(QString &path)
     QRegExp lastPartOfPath("/\\{([^/]+)\\}/?$");
     QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
 
-    qWarning() << lastPartOfPath.indexIn(path);
+    qInfo() << lastPartOfPath.indexIn(path);
 
     if (lastPartOfPath.indexIn(path) != -1)
     {

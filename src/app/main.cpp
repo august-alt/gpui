@@ -19,6 +19,9 @@
 ***********************************************************************************************************************/
 
 #include "../core/compositesnapindetailsdialog.h"
+#include "../core/consolelogger.h"
+#include "../core/log.h"
+#include "../core/loggermanager.h"
 #include "../core/pluginstorage.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
@@ -82,6 +85,20 @@ int main(int argc, char **argv)
     default:
         break;
     }
+
+    auto logManager = gpui::logger::LoggerManager::getInstance();
+
+    auto consoleLogger = std::make_shared<gpui::logger::ConsoleLogger>();
+    consoleLogger->setLogLevel(gpui::logger::Logger::LogLevel::Debug | gpui::logger::Logger::LogLevel::Info
+                               | gpui::logger::Logger::LogLevel::Warning | gpui::logger::Logger::LogLevel::Error
+                               | gpui::logger::Logger::LogLevel::Critical);
+    logManager->addLogger(consoleLogger);
+
+    GPUI_DEBUG("debug test");
+    GPUI_INFO("info test");
+    GPUI_WARNING("warning test");
+    GPUI_ERROR("error test");
+    GPUI_CRITICAL("critical test");
 
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();

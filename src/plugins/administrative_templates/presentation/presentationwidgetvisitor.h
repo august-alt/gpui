@@ -23,6 +23,8 @@
 
 #include "../administrativetemplates.h"
 
+#include <string>
+
 namespace model
 {
 namespace presentation
@@ -45,23 +47,43 @@ class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT PresentationWidgetVisitor
 public:
     virtual ~PresentationWidgetVisitor() = default;
 
-    virtual void visit(CheckBox &widget) const = 0;
+    virtual bool visit(CheckBox &widget) const = 0;
 
-    virtual void visit(ComboBox &widget) const = 0;
+    virtual bool visit(ComboBox &widget) const = 0;
 
-    virtual void visit(DecimalTextBox &widget) const = 0;
+    virtual bool visit(DecimalTextBox &widget) const = 0;
 
-    virtual void visit(DropdownList &widget) const = 0;
+    virtual bool visit(DropdownList &widget) const = 0;
 
-    virtual void visit(ListBox &widget) const = 0;
+    virtual bool visit(ListBox &widget) const = 0;
 
-    virtual void visit(LongDecimalTextBox &widget) const = 0;
+    virtual bool visit(LongDecimalTextBox &widget) const = 0;
 
-    virtual void visit(MultiTextBox &widget) const = 0;
+    virtual bool visit(MultiTextBox &widget) const = 0;
 
-    virtual void visit(Text &widget) const = 0;
+    virtual bool visit(Text &widget) const = 0;
 
-    virtual void visit(TextBox &widget) const = 0;
+    virtual bool visit(TextBox &widget) const = 0;
+
+
+    virtual std::string check(CheckBox &widget) const = 0;
+
+    virtual std::string check(ComboBox &widget) const = 0;
+
+    virtual std::string check(DecimalTextBox &widget) const = 0;
+
+    virtual std::string check(DropdownList &widget) const = 0;
+
+    virtual std::string check(ListBox &widget) const = 0;
+
+    virtual std::string check(LongDecimalTextBox &widget) const = 0;
+
+    virtual std::string check(MultiTextBox &widget) const = 0;
+
+    virtual std::string check(Text &widget) const = 0;
+
+    virtual std::string check(TextBox &widget) const = 0;
+
 };
 } // namespace presentation
 } // namespace model

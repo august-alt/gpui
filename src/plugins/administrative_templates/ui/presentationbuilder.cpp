@@ -161,6 +161,9 @@ public:
                 {
                     return;
                 }
+                if (elementInfo.element->required && !checkBox->isChecked()){
+                    return;
+                }
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 int checked = checkBox->checkState() == Qt::Checked ? 1 : 0;
@@ -202,7 +205,7 @@ public:
                 if (!(*m_stateEnabled))
                 {
                     return;
-                }
+                }                
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
@@ -397,6 +400,11 @@ public:
                     {
                         return;
                     }
+
+                    if (elementInfo.element->required && currentItems.empty()){
+                        return;
+                    }
+
                     qWarning() << "Items debug: " << currentItems.values();
                     // clean-up registry values.
                     auto valueNames = m_source->getValueNames(listElement->key);
@@ -445,6 +453,11 @@ public:
                         {
                             return;
                         }
+
+                        if (elementInfo.element->required && currentItems.empty()){
+                            return;
+                        }
+
                         qWarning() << "Items debug: " << currentItems.values();
                         size_t index = 1;
                         // clean-up registry values.
@@ -487,6 +500,11 @@ public:
                         {
                             return;
                         }
+
+                        if (elementInfo.element->required && currentItems.empty()){
+                            return;
+                        }
+
                         qWarning() << "Items debug: " << currentItems.values();
                         // clean-up registry values.
                         auto registryValueNames = m_source->getValueNames(listElement->key);
@@ -572,6 +590,11 @@ public:
                 {
                     return;
                 }
+
+                if (elementInfo.element->required && textEdit->toPlainText().isEmpty()){
+                    return;
+                }
+
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 QStringList data(textEdit->toPlainText());
@@ -619,6 +642,11 @@ public:
                 {
                     return;
                 }
+
+                if (elementInfo.element->required && lineEdit->text().isEmpty()){
+                    return;
+                }
+
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 QString data(lineEdit->text());

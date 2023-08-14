@@ -43,6 +43,11 @@ public:
     std::string id{};
 
     /*!
+     * \brief Requirement to enter a value for the element.
+     */
+    bool required = false;
+
+    /*!
      * \brief The GUID of the extension.
      */
     QUuid clientExtension{};

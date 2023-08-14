@@ -72,13 +72,8 @@ class PolicyEnumElement : public PolicyElement
 {
 public:
     /*!
-             * \brief True if the value is required.
-             */
-    bool required = false;
-
-    /*!
-             * \brief items List of enum items.
-             */
+    * \brief items List of enum items.
+    */
     std::vector<std::pair<std::string, std::unique_ptr<EnumValue>>> items{};
 
     registry::RegistryEntryType getRegistryEntryType() const override

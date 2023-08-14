@@ -37,11 +37,6 @@ class PolicyDecimalElement : public PolicyElement
 {
 public:
     /*!
-     * \brief True if the value is required.
-     */
-    bool required = false;
-
-    /*!
      * \brief The minimum value of the element.
      */
     unsigned int minValue = 0;

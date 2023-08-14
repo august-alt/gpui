@@ -147,7 +147,7 @@ std::string Logger::getPrefix(QtMsgType type, Output output) const
 
 void Logger::outputMessageToSyslog(QtMsgType type, const char *message) const
 {
-    int log_flag;
+    int log_flag = -1;
     switch (type)
     {
     case QtDebugMsg:
@@ -166,6 +166,13 @@ void Logger::outputMessageToSyslog(QtMsgType type, const char *message) const
         log_flag = LOG_ERR;
         break;
     }
+
+    if (log_flag < 0)
+    {
+        std::cerr << "Logger error: Invalid message type, defaulting to LOG_INFO" << std::endl;
+        log_flag = LOG_INFO;
+    }
+
     syslog(log_flag, "%s", message);
 }
 

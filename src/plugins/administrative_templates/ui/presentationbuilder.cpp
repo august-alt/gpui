@@ -68,6 +68,7 @@
 #include <QDebug>
 
 #include <iostream>
+#include <queue>
 
 using namespace model::presentation;
 using namespace model::admx;
@@ -121,12 +122,27 @@ public:
     };
 
 public:
-    virtual void visit(CheckBox &widget) const override
+    virtual bool visit(CheckBox &widget) const override
     {
+        bool ans = true;
+
         QCheckBox *checkBox = new QCheckBox();
 
         checkBox->setChecked(widget.defaultChecked);
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(checkBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(checkBox, QString::fromStdString(label));
 
         if (m_policy && m_source)
         {
@@ -153,10 +169,13 @@ public:
         }
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(ComboBox &widget) const override
+    virtual bool visit(ComboBox &widget) const override
     {
+        bool ans = true;
         QComboBox *comboBox = new QComboBox();
         comboBox->setCurrentText(QString::fromStdString(widget.defaultValue));
         for (const auto &item : widget.suggestions)
@@ -190,26 +209,72 @@ public:
             });
         }
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(DecimalTextBox &widget) const override
+    virtual bool visit(DecimalTextBox &widget) const override
     {
+        bool ans = true;
         QWidget *textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(DropdownList &widget) const override
+    virtual bool visit(DropdownList &widget) const override
     {
+        bool ans = true;
+
         QComboBox *comboBox = new QComboBox();
         comboBox->setCurrentIndex(widget.defaultItem);
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(label));
 
         if (widget.values.size() > 0)
         {
@@ -250,13 +315,30 @@ public:
         }
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(ListBox &widget) const override
+    virtual bool visit(ListBox &widget) const override
     {
+        bool ans = true;
+
         QPushButton *button = new QPushButton(QObject::tr("Edit"));
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(label));
 
         PolicyListElement* listElement = nullptr;
 
@@ -437,19 +519,38 @@ public:
         QObject::connect(button, &QPushButton::clicked, onClicked);
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(LongDecimalTextBox &widget) const override
+    virtual bool visit(LongDecimalTextBox &widget) const override
     {
+        bool ans = true;
         QWidget *textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(MultiTextBox &widget) const override
+    virtual bool visit(MultiTextBox &widget) const override
     {
+        bool ans = true;
         QTextEdit *textEdit = new QTextEdit();
         textEdit->setMaximumHeight(widget.defaultHeight * textEdit->fontMetrics().height());
 
@@ -479,19 +580,24 @@ public:
         }
 
         addToLayout(textEdit);
+
+        return ans;
     }
 
-    virtual void visit(Text &widget) const override
+    virtual bool visit(Text &widget) const override
     {
-        QLabel *label = new QLabel();
-        label->setText(QString::fromStdString(widget.content));
-        label->setWordWrap(true);
-        label->setAlignment(Qt::AlignHCenter);
-        addToLayout(label);
+//        QLabel *label = new QLabel();
+//        label->setText(QString::fromStdString(widget.content));
+//        label->setWordWrap(true);
+//        label->setAlignment(Qt::AlignHCenter);
+//        addToLayout(label);
+        return true;
     }
 
-    virtual void visit(TextBox &widget) const override
+    virtual bool visit(TextBox &widget) const override
     {
+        bool ans = true;
+
         QLineEdit *lineEdit = new QLineEdit();
         lineEdit->setText(QString::fromStdString(widget.defaultValue));
 
@@ -523,9 +629,37 @@ public:
             });
         }
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(lineEdit, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(lineEdit, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
+    }
+
+    virtual std::string check(CheckBox &widget) const override{return "";}
+    virtual std::string check(ComboBox &widget) const override{return "";}
+    virtual std::string check(DecimalTextBox &widget) const override{return "";}
+    virtual std::string check(DropdownList &widget) const override{return "";}
+    virtual std::string check(ListBox &widget) const override{return "";}
+    virtual std::string check(LongDecimalTextBox &widget) const override{return "";}
+    virtual std::string check(MultiTextBox &widget) const override{return "";}
+    virtual std::string check(TextBox &widget) const override{return "";}
+    virtual std::string check(Text &widget) const override
+    {
+        return widget.content;
     }
 
     void setLayout(QLayout *layout) { m_layout = layout; }
@@ -542,12 +676,17 @@ public:
 
     void setStateEnabled(bool &stateEnabled) { m_stateEnabled = &stateEnabled; }
 
+    void addLabel(std::string label){ m_labels.push(label); }
+
+    void popLabel(){ m_labels.pop(); }
+
 private:
     QLayout *m_layout                = nullptr;
     const Policy *m_policy           = nullptr;
     AbstractRegistrySource *m_source = nullptr;
     QPushButton *m_saveButton        = nullptr;
     std::string m_elementName        = "";
+    std::queue<std::string> m_labels = std::queue<std::string>();
 
     void addToLayout(QWidget *widget) const
     {
@@ -801,9 +940,19 @@ QVBoxLayout *::gpui::PresentationBuilder::build(const ::gpui::PresentationBuilde
 
     for (const auto &widget : params.presentation.widgets)
     {
+        std::string checkRes = widget.second->acceptCheck(*d);
+        if (!checkRes.empty()){
+            d->addLabel(checkRes);
+        }
+    }
+
+    for (const auto &widget : params.presentation.widgets)
+    {
         QWidget *policyWidget = nullptr;
         d->setCurrentElementName(widget.first);
-        widget.second->accept(*d);
+        if (!widget.second->accept(*d)){
+            d->popLabel();
+        }
 
         if (policyWidget)
         {

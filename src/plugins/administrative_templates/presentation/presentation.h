@@ -26,6 +26,7 @@
 #include "presentationwidget.h"
 
 #include <map>
+#include <unordered_map>
 #include <memory>
 #include <vector>
 
@@ -42,7 +43,7 @@ namespace presentation
 class Presentation
 {
 public:
-    std::map<std::string, std::shared_ptr<PresentationWidget>> widgets{};
+    std::unordered_map<std::string, std::shared_ptr<PresentationWidget>> widgets{};
     std::vector<std::shared_ptr<PresentationWidget>> widgetsVector{};
 };
 } // namespace presentation

@@ -58,7 +58,9 @@ public:
         : PresentationWidget(presentation)
     {}
 
-    virtual void accept(const PresentationWidgetVisitor &visitor) override { visitor.visit(*this); }
+    virtual bool accept(const PresentationWidgetVisitor &visitor) override { return visitor.visit(*this); }
+
+    virtual std::string acceptCheck(const PresentationWidgetVisitor &visitor) override { return visitor.check(*this); }
 };
 } // namespace presentation
 } // namespace model

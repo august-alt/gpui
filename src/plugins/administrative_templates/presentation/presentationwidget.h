@@ -23,6 +23,8 @@
 
 #include "../administrativetemplates.h"
 
+#include <string>
+
 namespace model
 {
 namespace presentation
@@ -40,7 +42,9 @@ public:
 
     virtual ~PresentationWidget() = default;
 
-    virtual void accept(const PresentationWidgetVisitor &visitor) = 0;
+    virtual bool accept(const PresentationWidgetVisitor &visitor) = 0;
+
+    virtual std::string acceptCheck(const PresentationWidgetVisitor &visitor) = 0;
 
 private:
     PresentationWidget(const PresentationWidget &) = delete;            // copy ctor

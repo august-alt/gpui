@@ -24,6 +24,7 @@
 #include "../administrativetemplates.h"
 
 #include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -66,12 +67,12 @@ public:
     /*!
      * \brief stringTable A table of localized strings.
      */
-    std::map<std::string, std::string> stringTable{};
+    std::unordered_map<std::string, std::string> stringTable{};
 
     /*!
      * \brief presentationTable A table of presentation elements representing policy setting parameters.
      */
-    std::map<std::string, std::shared_ptr<Presentation>> presentationTable{};
+    std::unordered_map<std::string, std::shared_ptr<Presentation>> presentationTable{};
 };
 } // namespace presentation
 } // namespace model

@@ -22,34 +22,54 @@
 
 #include <functional>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
+#include <sys/stat.h>
 #include <syslog.h>
+#include <unistd.h>
 
 #include <QApplication>
 #include <QFileInfo>
+#include <qdebug.h>
+#include <qdir.h>
 
 namespace gpui
 {
 typedef void(QtMessageHandler)(QtMsgType, const QMessageLogContext &, const QString &);
-static std::function<QtMessageHandler> m;
+static std::function<QtMessageHandler> bindVersion;
 static void messageOutputStatic(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    m(type, context, msg);
+    bindVersion(type, context, msg);
 }
 
 Logger::Logger(const char *app_name, uint8_t ol)
-    : app_name(app_name)
+    : APP_NAME(app_name)
     , output_locations(ol)
 {
     using namespace std::placeholders;
 
-    m = std::bind(Logger::outputMessage, this, _1, _2, _3);
+    bindVersion = std::bind(Logger::outputMessage, this, _1, _2, _3);
     qInstallMessageHandler(messageOutputStatic);
 
+    if (this->output_locations & Output::StdErr)
+    {
+        this->stdErrSupportsColor = checkColorSupport(STDERR_FILENO);
+    }
     if (this->output_locations & Output::Syslog)
     {
-        openlog(this->app_name, (LOG_CONS | LOG_PERROR | LOG_PID), LOG_DAEMON);
+        openlog(this->APP_NAME, (LOG_CONS | LOG_PERROR | LOG_PID), LOG_DAEMON);
+    }
+    if (this->output_locations & Output::File)
+    {
+        auto logDirPath = QDir::home().path() + "/.local/share/gpui";
+        if (!QDir(logDirPath).exists())
+        {
+            QDir().mkpath(logDirPath);
+        }
+
+        std::string logFile = logDirPath.toStdString() + "/gpui.log";
+        this->logFileStream.open(logFile, std::fstream::out | std::fstream::app);
     }
 }
 
@@ -59,38 +79,17 @@ Logger::~Logger()
     {
         closelog();
     }
+    if (this->output_locations & Output::File)
+    {
+        this->logFileStream.close();
+    }
 }
 
-void Logger::outputMessage(const Logger *logger, QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void Logger::outputMessage(Logger *logger, QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     std::stringstream buf;
 
-    const auto colorize = [](const char *text, const char *params) {
-        return std::string(text);
-        return std::string("\033[") + params + "m" + text + "\033[0m";
-    };
-
-    switch (type)
-    {
-    case QtDebugMsg:
-        buf << colorize("Debug", "1;96");
-        break;
-    case QtInfoMsg:
-        buf << colorize("Info", "1;34");
-        break;
-    case QtWarningMsg:
-        buf << colorize("Warning", "1;33");
-        break;
-    case QtCriticalMsg:
-        buf << colorize("Critical", "1;31");
-        break;
-    case QtFatalMsg:
-        buf << colorize("Fatal", "1;91");
-        break;
-    }
-
     buf << ": " << msg.toLocal8Bit().constData();
-
     if (context.file != nullptr || context.function != nullptr)
     {
         const char *file     = context.file ? context.file : "unknown file";
@@ -99,20 +98,51 @@ void Logger::outputMessage(const Logger *logger, QtMsgType type, const QMessageL
     }
     buf << "\n";
 
-    std::string message = buf.str();
+    std::string messageWithoutPrefix = buf.str();
 
-    if (logger->output_locations & Output::Console)
+    if (logger->output_locations & Output::StdErr)
     {
-        std::cerr << message;
+        std::cerr << logger->getPrefix(type, Output::StdErr) << messageWithoutPrefix;
     }
     if (logger->output_locations & Output::Syslog)
     {
+        const std::string message = logger->getPrefix(type, Output::StdErr) + messageWithoutPrefix;
         logger->outputMessageToSyslog(type, message.c_str());
     }
     if (logger->output_locations & Output::File)
     {
-        // TODO(mchernigin): not implemented
+        logger->logFileStream << logger->getPrefix(type, Output::File) << messageWithoutPrefix;
     }
+}
+
+std::string Logger::getPrefix(QtMsgType type, Output output) const
+{
+    bool shouldColorize = output == Output::StdErr && this->stdErrSupportsColor;
+
+    auto tryColorize = [&shouldColorize](const char *text, const char *params) {
+        if (!shouldColorize)
+        {
+            return std::string(text);
+        }
+        return std::string("\033[") + params + "m" + text + "\033[0m";
+    };
+
+    switch (type)
+    {
+    case QtDebugMsg:
+        return tryColorize("Debug", "1;96");
+    case QtInfoMsg:
+        return tryColorize("Info", "1;34");
+    case QtWarningMsg:
+        return tryColorize("Warning", "1;33");
+    case QtCriticalMsg:
+        return tryColorize("Critical", "1;31");
+    case QtFatalMsg:
+        return tryColorize("Fatal", "1;91");
+    }
+
+    // NOTE(mchernigin): Should be unreachable
+    return "";
 }
 
 void Logger::outputMessageToSyslog(QtMsgType type, const char *message) const
@@ -137,6 +167,16 @@ void Logger::outputMessageToSyslog(QtMsgType type, const char *message) const
         break;
     }
     syslog(log_flag, "%s", message);
+}
+
+bool Logger::checkColorSupport(int fd)
+{
+    // TODO(mchernigin): use `tput color`, and use method bellow only if `tput` returns !0
+
+    bool is_tty      = isatty(fd);
+    const char *TERM = std::getenv("TERM");
+
+    return is_tty && TERM != NULL && strcmp(TERM, "dumb") != 0;
 }
 
 } // namespace gpui

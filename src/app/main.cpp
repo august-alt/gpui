@@ -36,7 +36,8 @@
 int main(int argc, char **argv)
 {
     // Create logger
-    auto logger = std::make_unique<gpui::Logger>("GPUI", gpui::Logger::Console | gpui::Logger::Syslog);
+    auto logger = std::make_unique<gpui::Logger>("GPUI",
+                                                 gpui::Logger::StdErr | gpui::Logger::Syslog | gpui::Logger::File);
 
     // Register types for factory.
     gpui::SnapInDetailsFactory::define<gpui::SnapInDetailsDialog>("ISnapIn");

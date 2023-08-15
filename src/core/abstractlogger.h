@@ -18,9 +18,10 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_LOGGER_H
-#define GPUI_LOGGER_H
+#ifndef GPUI_ABSTRACT_LOGGER_H
+#define GPUI_ABSTRACT_LOGGER_H
 
+#include "loggermessage.h"
 #include "core.h"
 
 #include <fstream>
@@ -29,21 +30,31 @@
 
 namespace gpui
 {
+namespace logger
+{
 class GPUI_CORE_EXPORT Logger
 {
 public:
-    enum Output
+    enum LogLevel
     {
-        StdErr = 1 << 0,
-        Syslog = 1 << 1,
-        File   = 1 << 2,
+        Debug    = 1 << 0,
+        Info     = 1 << 1,
+        Warning  = 1 << 2,
+        Error    = 1 << 3,
+        Critical = 1 << 4,
     };
 
 public:
-    explicit Logger(const char *app_name, uint8_t output_locations = 0);
-    ~Logger();
+    Logger();
+    virtual ~Logger() = default;
+    void setLogLevel(int mask);
+    bool isLogLevel(int mask);
 
-    static void outputMessage(Logger *logger, QtMsgType type, const QMessageLogContext &context, const QString &msg);
+    void onDebug(const LoggerMessage &message);
+    void onInfo(const LoggerMessage &message);
+    void onWarning(const LoggerMessage &message);
+    void onError(const LoggerMessage &message);
+    void onCritical(const LoggerMessage &message);
 
 private:
     Logger(const Logger &) = delete;            // copy ctor
@@ -52,16 +63,15 @@ private:
     Logger &operator=(Logger &&) = delete;      // move assignment
 
 private:
-    const char *APP_NAME        = "";
-    bool stdErrSupportsColor    = false;
-    uint8_t output_locations    = {};
-    std::ofstream logFileStream = {};
+    virtual void logDebug(const LoggerMessage &message)    = 0;
+    virtual void logInfo(const LoggerMessage &message)     = 0;
+    virtual void logWarning(const LoggerMessage &message)  = 0;
+    virtual void logError(const LoggerMessage &message)    = 0;
+    virtual void logCritical(const LoggerMessage &message) = 0;
 
-private:
-    void outputMessageToSyslog(QtMsgType type, const char *message) const;
-    std::string getPrefix(QtMsgType type, Output out) const;
-    static bool checkColorSupport(int fd);
+    int logLevelMask = 0;
 };
+} // namespace logger
 } // namespace gpui
 
-#endif // GPUI_LOGGER_H
+#endif // GPUI_ABSTRACT_LOGGER_H

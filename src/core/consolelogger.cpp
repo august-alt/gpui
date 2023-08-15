@@ -35,46 +35,47 @@ ConsoleLogger::ConsoleLogger() {}
 void ConsoleLogger::logDebug(const LoggerMessage &message)
 {
     std::string prefix = "DEBUG";
-    prefix = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;96") : prefix;
+    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;96") : prefix;
     logMessage(prefix, message);
 }
 
 void ConsoleLogger::logInfo(const LoggerMessage &message)
 {
     std::string prefix = "INFO";
-    prefix = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;34") : prefix;
+    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;34") : prefix;
     logMessage(prefix, message);
 }
 
 void ConsoleLogger::logWarning(const LoggerMessage &message)
 {
     std::string prefix = "WARNING";
-    prefix = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;33") : prefix;
+    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;33") : prefix;
     logMessage(prefix, message);
 }
 
 void ConsoleLogger::logError(const LoggerMessage &message)
 {
     std::string prefix = "ERROR";
-    prefix = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;31") : prefix;
+    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;31") : prefix;
     logMessage(prefix, message);
 }
 
 void ConsoleLogger::logCritical(const LoggerMessage &message)
 {
     std::string prefix = "CRITICAL";
-    prefix = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;91") : prefix;
+    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;91") : prefix;
     logMessage(prefix, message);
 }
 
 void ConsoleLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
 {
-    std::cerr << prefix << ": " << message.message << " (" << message.filePath << ":" << message.line << ")";
+    std::cerr << prefix << ": " << message.message << " (" << message.filePath << ":" << message.line << ")"
+              << std::endl;
 }
 
 bool ConsoleLogger::checkColorSupport(int fd)
 {
-    // TODO(mchernigin): use `tput color`, and use method bellow only if `tput` returns !0
+    // TODO(mchernigin): use `tput colors`, and use method bellow only if `tput` returns !0
 
     bool is_tty      = isatty(fd);
     const char *TERM = std::getenv("TERM");

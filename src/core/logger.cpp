@@ -18,7 +18,7 @@
 **
 ***********************************************************************************************************************/
 
-#include "abstractlogger.h"
+#include "logger.h"
 
 #include <functional>
 #include <iostream>
@@ -49,7 +49,7 @@ void Logger::onDebug(const LoggerMessage &message)
 {
     if (isLogLevel(LogLevel::Debug))
     {
-        logInfo(message);
+        logDebug(message);
     }
 }
 
@@ -81,7 +81,7 @@ void Logger::onCritical(const LoggerMessage &message)
 {
     if (isLogLevel(LogLevel::Critical))
     {
-        logInfo(message);
+        logCritical(message);
     }
 }
 } // namespace logger

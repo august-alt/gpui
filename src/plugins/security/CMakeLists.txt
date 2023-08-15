@@ -15,6 +15,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 add_subdirectory(schema)
 
 set(HEADERS
+    model/bundle/securitybundle.h
     model/presentation/category.h
     model/presentation/checkbox.h
     model/presentation/combobox.h
@@ -58,6 +59,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    model/bundle/securitybundle.cpp
     model/ui/presentationbuilder.cpp
     model/ui/securityproxymodel.cpp
     model/ui/securitywidget.cpp

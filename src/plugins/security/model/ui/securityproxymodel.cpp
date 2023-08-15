@@ -20,29 +20,54 @@
 
 #include "securityproxymodel.h"
 
+#include "../administrative_templates/bundle/itemtype.h"
+#include "../administrative_templates/bundle/policyroles.h"
+
+#include "securitywidget.h"
+
 namespace security
 {
+
 class SecurityProxyModelPrivate
 {
 public:
 };
 
 SecurityProxyModel::SecurityProxyModel()
+    : d(new SecurityProxyModelPrivate())
 {
-
 }
 
 SecurityProxyModel::~SecurityProxyModel()
 {
-
+    delete d;
 }
 
 QVariant SecurityProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
-    Q_UNUSED(proxyIndex);
-    Q_UNUSED(role);
+    if (role == model::bundle::POLICY_WIDGET)
+    {
+        std::function<QWidget *()> widgetCreator = [=]() {
+            auto contentWidget = new SecurityWidget();
 
-    return QVariant();
+            contentWidget->setMachineSecuritySource();
+            contentWidget->setUserSecuritySource();
+
+            contentWidget->setModelIndex(proxyIndex);
+
+            connect(contentWidget,
+                    &SecurityWidget::savePolicyChanges,
+                    this,
+                    &SecurityProxyModel::savePolicyChanges);
+            return contentWidget;
+        };
+
+        return QVariant::fromValue(widgetCreator);
+    }
+
+    return QIdentityProxyModel::data(proxyIndex, role);
 }
 
 } // namespace security
+
+Q_DECLARE_METATYPE(std::function<QWidget *()>)

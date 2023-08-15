@@ -23,6 +23,8 @@
 
 #include <QtWidgets>
 
+#include "../../gui/pluginwidgetinterface.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class SecurityWidget; }
 QT_END_NAMESPACE
@@ -30,7 +32,7 @@ QT_END_NAMESPACE
 namespace security
 {
 
-class SecurityWidget : public QWidget
+class SecurityWidget : public gui::PluginWidgetInterface
 {
 public:
     Q_OBJECT
@@ -38,6 +40,16 @@ public:
 public:
     explicit SecurityWidget(QWidget* parent = nullptr);
     ~SecurityWidget();
+
+    void setModelIndex(const QModelIndex &index);
+
+    void setUserSecuritySource();
+    void setMachineSecuritySource();
+
+    virtual bool hasDataChanged() override final;
+
+signals:
+    void savePolicyChanges();
 
 private:
     SecurityWidget(const SecurityWidget&)            = delete;   // copy ctor

@@ -37,6 +37,12 @@ public:
 
     QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
 
+    void setUserSecuritySource();
+    void setMachineSecuritySource();
+
+signals:
+    void savePolicyChanges();
+
 private:
     SecurityProxyModelPrivate *d = nullptr;
 

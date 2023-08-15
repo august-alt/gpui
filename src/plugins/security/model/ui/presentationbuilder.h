@@ -38,10 +38,6 @@ namespace security
     {
         const security::SecurityPresentation& presentation;
         const security::SecurityDefinition& security;
-        void* source; // TODO: Implement.
-        QPushButton& saveButton;
-        bool& dataChanged;
-        bool& stateEnabled;
     };
 
     class PresentationBuilderPrivate;

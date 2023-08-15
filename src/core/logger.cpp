@@ -19,59 +19,124 @@
 ***********************************************************************************************************************/
 
 #include "logger.h"
+
+#include <functional>
 #include <iostream>
+#include <sstream>
 #include <string>
+#include <syslog.h>
 
 #include <QApplication>
+#include <QFileInfo>
 
 namespace gpui
 {
-class LoggerPrivate
+typedef void(QtMessageHandler)(QtMsgType, const QMessageLogContext &, const QString &);
+static std::function<QtMessageHandler> m;
+static void messageOutputStatic(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-public:
-};
-
-Logger::Logger()
-    : d(new LoggerPrivate())
-{
-    // QLoggingCategory::setFilterRules("*.debug=true\nam.*=true");
-    qInstallMessageHandler(messageOutput);
+    m(type, context, msg);
 }
 
-void Logger::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+Logger::Logger(const char *app_name, uint8_t ol)
+    : app_name(app_name)
+    , output_locations(ol)
 {
+    using namespace std::placeholders;
+
+    m = std::bind(Logger::outputMessage, this, _1, _2, _3);
+    qInstallMessageHandler(messageOutputStatic);
+
+    if (this->output_locations & Output::Syslog)
+    {
+        openlog(this->app_name, (LOG_CONS | LOG_PERROR | LOG_PID), LOG_DAEMON);
+    }
+}
+
+Logger::~Logger()
+{
+    if (this->output_locations & Output::Syslog)
+    {
+        closelog();
+    }
+}
+
+void Logger::outputMessage(const Logger *logger, QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    std::stringstream buf;
+
     const auto colorize = [](const char *text, const char *params) {
+        return std::string(text);
         return std::string("\033[") + params + "m" + text + "\033[0m";
     };
 
     switch (type)
     {
     case QtDebugMsg:
-        std::cerr << colorize("Debug", "1;96");
+        buf << colorize("Debug", "1;96");
         break;
     case QtInfoMsg:
-        std::cerr << colorize("Info", "1;34");
+        buf << colorize("Info", "1;34");
         break;
     case QtWarningMsg:
-        std::cerr << colorize("Warning", "1;33");
+        buf << colorize("Warning", "1;33");
         break;
     case QtCriticalMsg:
-        std::cerr << colorize("Critical", "1;31");
+        buf << colorize("Critical", "1;31");
         break;
     case QtFatalMsg:
-        std::cerr << colorize("Fatal", "1;91");
+        buf << colorize("Fatal", "1;91");
         break;
     }
 
-    std::cerr << ": " << msg.toLocal8Bit().constData();
+    buf << ": " << msg.toLocal8Bit().constData();
 
     if (context.file != nullptr || context.function != nullptr)
     {
         const char *file     = context.file ? context.file : "unknown file";
         const char *function = context.function ? context.function : "unknown function";
-        std::cerr << " (" << file << ":" << context.line << ", " << function << ")";
+        buf << " (" << file << ":" << context.line << ", " << function << ")";
     }
-    std::cerr << "\n";
+    buf << "\n";
+
+    std::string message = buf.str();
+
+    if (logger->output_locations & Output::Console)
+    {
+        std::cerr << message;
+    }
+    if (logger->output_locations & Output::Syslog)
+    {
+        logger->outputMessageToSyslog(type, message.c_str());
+    }
+    if (logger->output_locations & Output::File)
+    {
+        // TODO(mchernigin): not implemented
+    }
+}
+
+void Logger::outputMessageToSyslog(QtMsgType type, const char *message) const
+{
+    int log_flag;
+    switch (type)
+    {
+    case QtDebugMsg:
+        log_flag = LOG_DEBUG;
+        break;
+    case QtInfoMsg:
+        log_flag = LOG_INFO;
+        break;
+    case QtWarningMsg:
+        log_flag = LOG_WARNING;
+        break;
+    case QtCriticalMsg:
+        log_flag = LOG_CRIT;
+        break;
+    case QtFatalMsg:
+        log_flag = LOG_ERR;
+        break;
+    }
+    syslog(log_flag, "%s", message);
 }
 
 } // namespace gpui

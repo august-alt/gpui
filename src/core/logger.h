@@ -27,14 +27,24 @@
 
 namespace gpui
 {
-class LoggerPrivate;
-
 class GPUI_CORE_EXPORT Logger
 {
 public:
-    explicit Logger();
+    enum Output
+    {
+        Console = 1 << 0,
+        Syslog  = 1 << 1,
+        File    = 1 << 2,
+    };
 
-    static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+public:
+    explicit Logger(const char *app_name, uint8_t output_locations = 0);
+    ~Logger();
+
+    static void outputMessage(const Logger *logger,
+                              QtMsgType type,
+                              const QMessageLogContext &context,
+                              const QString &msg);
 
 private:
     Logger(const Logger &) = delete;            // copy ctor
@@ -43,7 +53,11 @@ private:
     Logger &operator=(Logger &&) = delete;      // move assignment
 
 private:
-    LoggerPrivate *d = nullptr;
+    const char *app_name     = "";
+    uint8_t output_locations = {};
+
+private:
+    void outputMessageToSyslog(QtMsgType type, const char *message) const;
 };
 } // namespace gpui
 

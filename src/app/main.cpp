@@ -19,6 +19,7 @@
 ***********************************************************************************************************************/
 
 #include "../core/compositesnapindetailsdialog.h"
+#include "../core/logger.h"
 #include "../core/pluginstorage.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
@@ -26,7 +27,6 @@
 #include "../core/snapinmanager.h"
 #include "../core/translatorstorage.h"
 #include "../core/version.h"
-#include "../core/logger.h"
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
 #include <iostream>
@@ -36,7 +36,7 @@
 int main(int argc, char **argv)
 {
     // Create logger
-    auto logger = std::make_unique<gpui::Logger>();
+    auto logger = std::make_unique<gpui::Logger>("GPUI", gpui::Logger::Console | gpui::Logger::Syslog);
 
     // Register types for factory.
     gpui::SnapInDetailsFactory::define<gpui::SnapInDetailsDialog>("ISnapIn");

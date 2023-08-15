@@ -21,8 +21,8 @@
 #ifndef GPUI_ABSTRACT_LOGGER_H
 #define GPUI_ABSTRACT_LOGGER_H
 
-#include "loggermessage.h"
 #include "core.h"
+#include "loggermessage.h"
 
 #include <fstream>
 #include <QApplication>
@@ -32,18 +32,18 @@ namespace gpui
 {
 namespace logger
 {
+enum LogLevel
+{
+    Debug    = 1 << 0,
+    Info     = 1 << 1,
+    Warning  = 1 << 2,
+    Error    = 1 << 3,
+    Critical = 1 << 4,
+};
+
 class GPUI_CORE_EXPORT Logger
 {
 public:
-    enum LogLevel
-    {
-        Debug    = 1 << 0,
-        Info     = 1 << 1,
-        Warning  = 1 << 2,
-        Error    = 1 << 3,
-        Critical = 1 << 4,
-    };
-
 public:
     Logger();
     virtual ~Logger() = default;

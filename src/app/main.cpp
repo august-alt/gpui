@@ -89,9 +89,9 @@ int main(int argc, char **argv)
     auto logManager = gpui::logger::LoggerManager::getInstance();
 
     auto consoleLogger = std::make_shared<gpui::logger::ConsoleLogger>();
-    consoleLogger->setLogLevel(gpui::logger::Logger::LogLevel::Debug | gpui::logger::Logger::LogLevel::Info
-                               | gpui::logger::Logger::LogLevel::Warning | gpui::logger::Logger::LogLevel::Error
-                               | gpui::logger::Logger::LogLevel::Critical);
+    consoleLogger->setLogLevel(gpui::logger::LogLevel::Debug | gpui::logger::LogLevel::Info
+                               | gpui::logger::LogLevel::Warning | gpui::logger::LogLevel::Error
+                               | gpui::logger::LogLevel::Critical);
     logManager->addLogger(consoleLogger);
 
     GPUI_DEBUG("debug test");

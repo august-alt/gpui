@@ -23,8 +23,7 @@
 
 #include <QWidget>
 #include <QDialogButtonBox>
-
-class QVBoxLayout;
+#include <QVBoxLayout>
 
 namespace security
 {

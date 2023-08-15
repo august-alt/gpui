@@ -62,7 +62,7 @@ public:
     /*!
      * \brief presentationTable A table of presentation elements representing policy setting parameters.
      */
-    std::map<std::string, std::shared_ptr<SecurityPresentation>> presentationTable{};
+    std::vector<std::pair<std::string, std::shared_ptr<SecurityPresentation>>> presentationTable{};
 };
 
 } // of namespace security

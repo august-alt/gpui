@@ -23,14 +23,33 @@
 
 #include "presentationelements.h"
 
+#include <memory>
 #include <string>
+#include <type_traits>
+#include <variant>
+#include <vector>
 
 namespace security
 {
+// the variant to visit
+typedef ::std::variant<DecimalTextBox,
+                       TextBox,
+                       CheckBox,
+                       ComboBox,
+                       DropdownList,
+                       LongDecimalTextBox,
+                       MultiTextBox,
+                       GroupBox,
+                       ListBox,
+                       Comment,
+                       Text> PresentationElement;
 
 /*!
  * \class SecurityPresentation
  * \brief Root presentation element.
+ *
+ * \ingroup security
+ * \ingroup presentation
  */
 class SecurityPresentation: public PresentationElements
 {
@@ -49,6 +68,11 @@ public:
      * \brief icon Icon associated with current presentation element.
      */
     std::string icon{};
+
+    /*!
+     * \brief widgets List of widgets, associated with their ids.
+     */
+    std::vector<std::pair<std::string, std::shared_ptr<PresentationElement>>> widgets{};
 };
 
 } // of namespace security

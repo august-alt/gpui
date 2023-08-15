@@ -38,6 +38,8 @@
 namespace security
 {
 
+class GroupBox;
+
 /*!
  * \class PresentationElements
  * \brief The PresentationElements class

@@ -21,12 +21,12 @@
 #ifndef GPUI_LOGGER_MANAGER_H
 #define GPUI_LOGGER_MANAGER_H
 
-#include "logger.h"
 #include "../core.h"
+#include "logger.h"
 
 #include <memory>
-#include <vector>
 #include <mutex>
+#include <vector>
 
 namespace gpui
 {

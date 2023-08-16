@@ -23,6 +23,7 @@
 #include "../core/logger/filelogger.h"
 #include "../core/logger/log.h"
 #include "../core/logger/loggermanager.h"
+#include "../core/logger/loggerstream.h"
 #include "../core/pluginstorage.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
@@ -109,6 +110,12 @@ int main(int argc, char **argv)
     GPUI_WARNING("warning test");
     GPUI_ERROR("error test");
     GPUI_CRITICAL("critical test");
+
+    GPUI_DEBUG_STREAM << "debug test" << logManager->getLoggerCount();
+    GPUI_INFO_STREAM << "info test" << logManager->getLoggerCount();
+    GPUI_WARNING_STREAM << "warning test" << logManager->getLoggerCount();
+    GPUI_ERROR_STREAM << "error test" << logManager->getLoggerCount();
+    GPUI_CRITICAL_STREAM << "critical test" << logManager->getLoggerCount();
 
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();

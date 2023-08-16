@@ -38,6 +38,39 @@
 #define GPUI_CRITICAL(message) \
     gpui::logger::LoggerManager::getInstance()->logCritical(message, __FILE__, __FUNCTION__, __LINE__)
 
-#define GPUI_LOG gpui::logger::LoggerManager::getInstance()
+#define GPUI_DEBUG_STREAM \
+    gpui::logger::LoggerStream(gpui::logger::LoggerManager::getInstance(), \
+                               gpui::logger::Debug, \
+                               __FILE__, \
+                               __FUNCTION__, \
+                               __LINE__)
+
+#define GPUI_INFO_STREAM \
+    gpui::logger::LoggerStream(gpui::logger::LoggerManager::getInstance(), \
+                               gpui::logger::Info, \
+                               __FILE__, \
+                               __FUNCTION__, \
+                               __LINE__)
+
+#define GPUI_WARNING_STREAM \
+    gpui::logger::LoggerStream(gpui::logger::LoggerManager::getInstance(), \
+                               gpui::logger::Warning, \
+                               __FILE__, \
+                               __FUNCTION__, \
+                               __LINE__)
+
+#define GPUI_ERROR_STREAM \
+    gpui::logger::LoggerStream(gpui::logger::LoggerManager::getInstance(), \
+                               gpui::logger::Error, \
+                               __FILE__, \
+                               __FUNCTION__, \
+                               __LINE__)
+
+#define GPUI_CRITICAL_STREAM \
+    gpui::logger::LoggerStream(gpui::logger::LoggerManager::getInstance(), \
+                               gpui::logger::Critical, \
+                               __FILE__, \
+                               __FUNCTION__, \
+                               __LINE__)
 
 #endif // GPUI_LOG_H

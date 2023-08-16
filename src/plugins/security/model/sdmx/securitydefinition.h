@@ -72,6 +72,11 @@ public:
     SecurityType securityType { SecurityType::Machine };
 
     /*!
+     * \brief presentation A reference to a policy presentation in the localized presentation section/table.
+     */
+    std::unique_ptr<std::string> presentation{};
+
+    /*!
      * \brief parentCategory
      */
     std::string parentCategory {};

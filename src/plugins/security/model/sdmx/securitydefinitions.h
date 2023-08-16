@@ -25,6 +25,8 @@
 
 #include "securitydefinition.h"
 
+#include "../presentation/category.h"
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -48,6 +50,12 @@ public:
      * \brief schemaVersion
      */
     std::string schemaVersion{};
+
+    /*!
+     * \brief categories Contains a list of categories under which Group Policy
+     * settings will be displayed in the Editor.
+     */
+    std::vector<std::shared_ptr<Category>> categories{};
 
     /*!
      * \brief security

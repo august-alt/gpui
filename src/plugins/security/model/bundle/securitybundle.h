@@ -24,6 +24,8 @@
 #include <memory>
 #include <string>
 
+#include "../sdmx/security.h"
+
 class QFileInfo;
 class QString;
 class QStandardItem;
@@ -54,7 +56,7 @@ private:
     SecurityBundlePrivate *d { nullptr };
 
 private:
-    bool loadAdmxAndAdml(const QFileInfo &admxFileName);
+    bool loadSdmxAndSdml(const QFileInfo &sdmxFileName);
 
     QString constructFileName(const QFileInfo &fileName);
 
@@ -69,7 +71,7 @@ private:
                               const QString &iconName,
                               const QString &explainText,
                               const uint itemType,
-                              int securityType,
+                              const SecurityType securityType,
                               const bool alreadyInserted);
 
     void assignSupportedOn();

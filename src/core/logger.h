@@ -37,7 +37,14 @@ enum LogLevel
     Warning  = 1 << 2,
     Error    = 1 << 3,
     Critical = 1 << 4,
-    All      = (1 << 5) - 1,
+};
+
+enum LogMask
+{
+    All             = (1 << 5) - 1,
+    InfoAndAbove    = All - Debug,
+    WarningAndAbove = InfoAndAbove - Info,
+    ErrorAndAbove   = WarningAndAbove - Warning,
 };
 
 class GPUI_CORE_EXPORT Logger

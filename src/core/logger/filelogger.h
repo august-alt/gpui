@@ -18,21 +18,24 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_CONSOLE_LOGGER_H
-#define GPUI_CONSOLE_LOGGER_H
+#ifndef GPUI_FILE_LOGGER_H
+#define GPUI_FILE_LOGGER_H
 
 #include "logger.h"
 #include "loggermessage.h"
-#include "core.h"
+#include "../core.h"
+
+#include <fstream>
 
 namespace gpui
 {
 namespace logger
 {
-class GPUI_CORE_EXPORT ConsoleLogger : public Logger
+class GPUI_CORE_EXPORT FileLogger : public Logger
 {
 public:
-    ConsoleLogger();
+    explicit FileLogger(const char *filename = "gpui.log");
+    ~FileLogger();
 
 private:
     void logDebug(const LoggerMessage &message) override;
@@ -43,10 +46,12 @@ private:
 
     void logMessage(const std::string &prefix, const LoggerMessage &message);
 
-    static bool checkColorSupport(int fd);
-    static std::string colorize(const std::string &text, const char *params);
+    static const char *getHomeDir();
+    static bool ensureDir(const char *path);
+
+    std::fstream logFileStream = {};
 };
 } // namespace logger
 } // namespace gpui
 
-#endif // GPUI_CONSOLE_LOGGER_H
+#endif // GPUI_FILE_LOGGER_H

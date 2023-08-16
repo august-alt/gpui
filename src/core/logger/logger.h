@@ -21,7 +21,7 @@
 #ifndef GPUI_ABSTRACT_LOGGER_H
 #define GPUI_ABSTRACT_LOGGER_H
 
-#include "core.h"
+#include "../core.h"
 #include "loggermessage.h"
 
 #include <fstream>

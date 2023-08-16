@@ -72,8 +72,8 @@ void FileLogger::logCritical(const LoggerMessage &message)
 
 void FileLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
 {
-    this->logFileStream << prefix << ": " << message.message << " (" << message.filePath << ":" << message.line << ")"
-                        << std::endl;
+    this->logFileStream << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
+                        << message.filePath << ":" << message.line << ")" << std::endl;
 }
 
 const char *FileLogger::getHomeDir()

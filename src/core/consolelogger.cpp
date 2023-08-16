@@ -20,10 +20,10 @@
 
 #include "consolelogger.h"
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <unistd.h>
-#include <cstring>
 
 namespace gpui
 {
@@ -68,8 +68,8 @@ void ConsoleLogger::logCritical(const LoggerMessage &message)
 
 void ConsoleLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
 {
-    std::cerr << prefix << ": " << message.message << " (" << message.filePath << ":" << message.line << ")"
-              << std::endl;
+    std::cerr << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
+              << message.filePath << ":" << message.line << ")" << std::endl;
 }
 
 bool ConsoleLogger::checkColorSupport(int fd)

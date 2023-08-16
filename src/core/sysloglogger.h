@@ -18,21 +18,26 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_CONSOLE_LOGGER_H
-#define GPUI_CONSOLE_LOGGER_H
+#ifndef GPUI_SYSLOG_LOGGER_H
+#define GPUI_SYSLOG_LOGGER_H
 
 #include "logger.h"
 #include "loggermessage.h"
 #include "core.h"
 
+#include <fstream>
+#include <QApplication>
+#include <qdir.h>
+
 namespace gpui
 {
 namespace logger
 {
-class GPUI_CORE_EXPORT ConsoleLogger : public Logger
+class GPUI_CORE_EXPORT SyslogLogger : public Logger
 {
 public:
-    ConsoleLogger();
+    SyslogLogger();
+    ~SyslogLogger();
 
 private:
     void logDebug(const LoggerMessage &message) override;
@@ -41,12 +46,9 @@ private:
     void logError(const LoggerMessage &message) override;
     void logCritical(const LoggerMessage &message) override;
 
-    void logMessage(const std::string &prefix, const LoggerMessage &message);
-
-    static bool checkColorSupport(int fd);
-    static std::string colorize(const std::string &text, const char *params);
+    void logMessage(const int log_flag, const std::string &prefix, const LoggerMessage &message);
 };
 } // namespace logger
 } // namespace gpui
 
-#endif // GPUI_CONSOLE_LOGGER_H
+#endif // GPUI_SYSLOG_LOGGER_H

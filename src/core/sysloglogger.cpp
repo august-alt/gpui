@@ -18,35 +18,53 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_CONSOLE_LOGGER_H
-#define GPUI_CONSOLE_LOGGER_H
+#include "sysloglogger.h"
 
-#include "logger.h"
-#include "loggermessage.h"
-#include "core.h"
+#include <sstream>
+#include <syslog.h>
 
 namespace gpui
 {
 namespace logger
 {
-class GPUI_CORE_EXPORT ConsoleLogger : public Logger
+SyslogLogger::SyslogLogger()
 {
-public:
-    ConsoleLogger();
+    openlog("gpui-main", (LOG_CONS | LOG_PERROR | LOG_PID), LOG_DAEMON);
+}
 
-private:
-    void logDebug(const LoggerMessage &message) override;
-    void logInfo(const LoggerMessage &message) override;
-    void logWarning(const LoggerMessage &message) override;
-    void logError(const LoggerMessage &message) override;
-    void logCritical(const LoggerMessage &message) override;
+SyslogLogger::~SyslogLogger()
+{
+    closelog();
+}
 
-    void logMessage(const std::string &prefix, const LoggerMessage &message);
+void SyslogLogger::logDebug(const LoggerMessage &message)
+{
+    logMessage(LOG_DEBUG, "DEBUG", message);
+}
 
-    static bool checkColorSupport(int fd);
-    static std::string colorize(const std::string &text, const char *params);
-};
+void SyslogLogger::logInfo(const LoggerMessage &message)
+{
+    logMessage(LOG_INFO, "INFO", message);
+}
+
+void SyslogLogger::logWarning(const LoggerMessage &message)
+{
+    logMessage(LOG_WARNING, "WARNING", message);
+}
+
+void SyslogLogger::logError(const LoggerMessage &message)
+{
+    logMessage(LOG_ERR, "ERROR", message);
+}
+
+void SyslogLogger::logCritical(const LoggerMessage &message)
+{
+    logMessage(LOG_CRIT, "CRITICAL", message);
+}
+
+void SyslogLogger::logMessage(const int log_flag, const std::string &prefix, const LoggerMessage &message)
+{
+    syslog(log_flag, "%s: %s (%s:%u)", prefix.c_str(), message.message.c_str(), message.filePath.c_str(), message.line);
+}
 } // namespace logger
 } // namespace gpui
-
-#endif // GPUI_CONSOLE_LOGGER_H

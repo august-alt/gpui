@@ -25,8 +25,6 @@
 #include "loggermessage.h"
 
 #include <fstream>
-#include <QApplication>
-#include <qdir.h>
 
 namespace gpui
 {
@@ -39,6 +37,7 @@ enum LogLevel
     Warning  = 1 << 2,
     Error    = 1 << 3,
     Critical = 1 << 4,
+    All      = (1 << 5) - 1,
 };
 
 class GPUI_CORE_EXPORT Logger

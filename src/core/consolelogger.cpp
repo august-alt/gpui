@@ -23,8 +23,7 @@
 #include <fstream>
 #include <iostream>
 #include <unistd.h>
-#include <QApplication>
-#include <qdir.h>
+#include <cstring>
 
 namespace gpui
 {

@@ -20,15 +20,6 @@
 
 #include "logger.h"
 
-#include <functional>
-#include <iostream>
-#include <memory>
-#include <sstream>
-#include <string>
-#include <sys/stat.h>
-#include <syslog.h>
-#include <unistd.h>
-
 namespace gpui
 {
 namespace logger

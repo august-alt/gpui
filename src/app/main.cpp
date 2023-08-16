@@ -20,6 +20,7 @@
 
 #include "../core/compositesnapindetailsdialog.h"
 #include "../core/consolelogger.h"
+#include "../core/sysloglogger.h"
 #include "../core/log.h"
 #include "../core/loggermanager.h"
 #include "../core/pluginstorage.h"
@@ -89,10 +90,13 @@ int main(int argc, char **argv)
     auto logManager = gpui::logger::LoggerManager::getInstance();
 
     auto consoleLogger = std::make_shared<gpui::logger::ConsoleLogger>();
-    consoleLogger->setLogLevel(gpui::logger::LogLevel::Debug | gpui::logger::LogLevel::Info
-                               | gpui::logger::LogLevel::Warning | gpui::logger::LogLevel::Error
-                               | gpui::logger::LogLevel::Critical);
+    consoleLogger->setLogLevel(gpui::logger::Debug | gpui::logger::Info | gpui::logger::Warning | gpui::logger::Error
+                               | gpui::logger::Critical);
     logManager->addLogger(consoleLogger);
+    auto syslogLogger = std::make_shared<gpui::logger::SyslogLogger>();
+    syslogLogger->setLogLevel(gpui::logger::Debug | gpui::logger::Info | gpui::logger::Warning | gpui::logger::Error
+                               | gpui::logger::Critical);
+    logManager->addLogger(syslogLogger);
 
     GPUI_DEBUG("debug test");
     GPUI_INFO("info test");

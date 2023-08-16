@@ -22,10 +22,10 @@
 #define GPUI_LOGGER_MANAGER_H
 
 #include "logger.h"
-#include "loggermessage.h"
 #include "core.h"
 
 #include <memory>
+#include <vector>
 #include <mutex>
 
 namespace gpui

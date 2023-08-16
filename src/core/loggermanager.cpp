@@ -20,6 +20,8 @@
 
 #include "loggermanager.h"
 
+#include <algorithm>
+
 namespace gpui
 {
 namespace logger

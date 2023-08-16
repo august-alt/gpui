@@ -18,42 +18,26 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_FILE_LOGGER_H
-#define GPUI_FILE_LOGGER_H
+#ifndef GPUI_LOG_H
+#define GPUI_LOG_H
 
-#include "logger.h"
-#include "loggermessage.h"
-#include "core.h"
+#include "loggermanager.h"
 
-#include <fstream>
-#include <QApplication>
-#include <qdir.h>
+#define GPUI_DEBUG(message) \
+    gpui::logger::LoggerManager::getInstance()->logDebug(message, __FILE__, __FUNCTION__, __LINE__)
 
-namespace gpui
-{
-namespace logger
-{
-class GPUI_CORE_EXPORT FileLogger : public Logger
-{
-public:
-    explicit FileLogger(const char *filename = "gpui.log");
-    ~FileLogger();
+#define GPUI_INFO(message) \
+    gpui::logger::LoggerManager::getInstance()->logInfo(message, __FILE__, __FUNCTION__, __LINE__)
 
-private:
-    void logDebug(const LoggerMessage &message) override;
-    void logInfo(const LoggerMessage &message) override;
-    void logWarning(const LoggerMessage &message) override;
-    void logError(const LoggerMessage &message) override;
-    void logCritical(const LoggerMessage &message) override;
+#define GPUI_WARNING(message) \
+    gpui::logger::LoggerManager::getInstance()->logWarning(message, __FILE__, __FUNCTION__, __LINE__)
 
-    void logMessage(const std::string &prefix, const LoggerMessage &message);
+#define GPUI_ERROR(message) \
+    gpui::logger::LoggerManager::getInstance()->logError(message, __FILE__, __FUNCTION__, __LINE__)
 
-    static const char *getHomeDir();
-    static bool ensureDir(const char *path);
+#define GPUI_CRITICAL(message) \
+    gpui::logger::LoggerManager::getInstance()->logCritical(message, __FILE__, __FUNCTION__, __LINE__)
 
-    std::fstream logFileStream = {};
-};
-} // namespace logger
-} // namespace gpui
+#define GPUI_LOG gpui::logger::LoggerManager::getInstance()
 
-#endif // GPUI_FILE_LOGGER_H
+#endif // GPUI_LOG_H

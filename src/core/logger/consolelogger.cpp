@@ -68,7 +68,7 @@ void ConsoleLogger::logCritical(const LoggerMessage &message)
 
 void ConsoleLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
 {
-    std::cerr << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
+    std::clog << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
               << message.filePath << ":" << message.line << ")" << std::endl;
 }
 

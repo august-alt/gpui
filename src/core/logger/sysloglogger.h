@@ -23,11 +23,9 @@
 
 #include "logger.h"
 #include "loggermessage.h"
-#include "core.h"
+#include "../core.h"
 
 #include <fstream>
-#include <QApplication>
-#include <qdir.h>
 
 namespace gpui
 {

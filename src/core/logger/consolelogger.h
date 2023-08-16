@@ -18,24 +18,35 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_LOG_H
-#define GPUI_LOG_H
+#ifndef GPUI_CONSOLE_LOGGER_H
+#define GPUI_CONSOLE_LOGGER_H
 
-#include "loggermanager.h"
+#include "logger.h"
+#include "loggermessage.h"
+#include "../core.h"
 
-#define GPUI_DEBUG(message) \
-    gpui::logger::LoggerManager::getInstance()->logDebug(message, __FILE__, __FUNCTION__, __LINE__)
+namespace gpui
+{
+namespace logger
+{
+class GPUI_CORE_EXPORT ConsoleLogger : public Logger
+{
+public:
+    ConsoleLogger();
 
-#define GPUI_INFO(message) \
-    gpui::logger::LoggerManager::getInstance()->logInfo(message, __FILE__, __FUNCTION__, __LINE__)
+private:
+    void logDebug(const LoggerMessage &message) override;
+    void logInfo(const LoggerMessage &message) override;
+    void logWarning(const LoggerMessage &message) override;
+    void logError(const LoggerMessage &message) override;
+    void logCritical(const LoggerMessage &message) override;
 
-#define GPUI_WARNING(message) \
-    gpui::logger::LoggerManager::getInstance()->logWarning(message, __FILE__, __FUNCTION__, __LINE__)
+    void logMessage(const std::string &prefix, const LoggerMessage &message);
 
-#define GPUI_ERROR(message) \
-    gpui::logger::LoggerManager::getInstance()->logError(message, __FILE__, __FUNCTION__, __LINE__)
+    static bool checkColorSupport(int fd);
+    static std::string colorize(const std::string &text, const char *params);
+};
+} // namespace logger
+} // namespace gpui
 
-#define GPUI_CRITICAL(message) \
-    gpui::logger::LoggerManager::getInstance()->logCritical(message, __FILE__, __FUNCTION__, __LINE__)
-
-#endif // GPUI_LOG_H
+#endif // GPUI_CONSOLE_LOGGER_H

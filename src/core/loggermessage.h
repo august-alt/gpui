@@ -33,11 +33,11 @@ class LoggerMessage
 {
 public:
     LoggerMessage(const std::string &message_,
-               const std::string &filePath_,
-               const std::string &functionName_,
-               const uint32_t line_,
-               const std::tm &time_,
-               const std::thread::id &threadId_)
+                  const std::string &filePath_,
+                  const std::string &functionName_,
+                  const uint32_t line_,
+                  const std::tm &time_,
+                  const std::thread::id &threadId_)
         : message(message_)
         , filePath(filePath_)
         , functionName(functionName_)
@@ -46,12 +46,16 @@ public:
         , threadId(threadId_)
     {}
 
-    /* std::string getTimeFormatted(const char *format) const
+    std::string getTimeFormatted(const char *format) const
     {
         char timeString[50];
+        // NOTE(mchernigin): is it even a good idea? if it is, do compilers actually support this?
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
         strftime(timeString, 50, format, &time);
+#pragma GCC diagnostic pop
         return std::string(timeString);
-    } */
+    }
 
     const std::string message;
     const std::string filePath;

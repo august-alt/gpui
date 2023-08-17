@@ -253,9 +253,9 @@ public:
         }
     }
 
-    static std::unique_ptr<security::SecurityPresentationResources> create(const SecurityPresentationResources &resources)
+    static std::shared_ptr<security::SecurityPresentationResources> create(const SecurityPresentationResources &resources)
     {
-        return std::make_unique<XsdResourcesAdapter>(resources);
+        return std::make_shared<XsdResourcesAdapter>(resources);
     }
 };
 
@@ -268,11 +268,11 @@ bool SdmlFormat::read(std::istream &input, SdmlFile *file)
 {
     Q_UNUSED(input);
 
-    std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityDefinitions> securityDefinitions;
+    std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityPresentationResources> securityDefinitions;
     auto operation = [&]() {
-        std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityPresentation>policyDefinitionResources;
+        securityDefinitions = GroupPolicy::SecurityDefinitions::SecurityPresentationResources_(input, ::xsd::cxx::tree::flags::dont_validate);
 
-        std::shared_ptr<security::SecurityPresentationResources> securityPresentation(nullptr);
+        auto securityPresentation = XsdResourcesAdapter::create(*securityDefinitions);
 
         file->add(securityPresentation);
     };

@@ -38,7 +38,7 @@
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 
 #include <QCoreApplication>
-#include <QDebug>
+#include "../../core/logger/log.h"
 #include <QDirIterator>
 
 namespace gpui

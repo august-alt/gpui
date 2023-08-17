@@ -38,7 +38,7 @@
 
 #include "policyroles.h"
 
-#include <QDebug>
+#include "../../../core/logger/log.h"
 #include <QDir>
 #include <QStandardItemModel>
 
@@ -201,7 +201,7 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
 
         if (!format->read(file, policies.get()))
         {
-            qWarning() << admxFileName.fileName() + " " + QString::fromStdString(format->getErrorString());
+            GPUI_WARNING_STREAM << admxFileName.fileName() + " " + QString::fromStdString(format->getErrorString());
         }
     }
 
@@ -490,7 +490,7 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string &rawCat
     }
     else if (rawCategory.size() > 0)
     {
-        qWarning() << "Unable to find parent category: " << rawCategory.c_str() << fileName.c_str();
+        GPUI_WARNING_STREAM << "Unable to find parent category: " << rawCategory.c_str() << fileName.c_str();
         if (machineItem)
         {
             if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
@@ -583,7 +583,7 @@ void PolicyBundle::assignSupportedOn()
             }
             else
             {
-                qWarning() << "Not found support for: " << toFind;
+                GPUI_WARNING_STREAM << "Not found support for: " << toFind;
             }
         }
     }
@@ -596,7 +596,7 @@ void PolicyBundle::iterateModelAndRemoveEmptyFolders(QAbstractItemModel *model, 
         QModelIndex index = model->index(r, 0, parent);
         QVariant data     = model->data(index, PolicyRoles::ITEM_TYPE);
 
-        qDebug() << "Folder " << model->data(index) << " has children: " << model->hasChildren(index)
+        GPUI_DEBUG_STREAM << "Folder " << model->data(index) << " has children: " << model->hasChildren(index)
                  << " type: " << data;
 
         if (model->hasChildren(index))
@@ -607,7 +607,7 @@ void PolicyBundle::iterateModelAndRemoveEmptyFolders(QAbstractItemModel *model, 
         {
             if (data == 0)
             {
-                qDebug() << "Deleted folder " << model->data(index);
+                GPUI_DEBUG_STREAM << "Deleted folder " << model->data(index);
 
                 model->removeRow(index.row(), index.parent());
 

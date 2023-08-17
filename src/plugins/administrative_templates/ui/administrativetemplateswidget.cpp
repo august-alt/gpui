@@ -26,6 +26,8 @@
 
 #include <QDataWidgetMapper>
 
+#include "../../../core/logger/log.h"
+
 #include "presentationbuilder.h"
 
 #include "../presentation/presentation.h"
@@ -86,7 +88,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
         {
             d->dataChanged = d->state != STATE_NOT_CONFIGURED && d->initialState != STATE_NOT_CONFIGURED;
             setPolicyWidgetState(STATE_NOT_CONFIGURED);
-            qWarning() << "Setting state not configured" << d->manager.get();
+            GPUI_WARNING_STREAM << "Setting state not configured" << d->manager.get();
             if (d->manager)
             {
                 d->policyState = model::registry::PolicyStateManager::STATE_NOT_CONFIGURED;
@@ -98,7 +100,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
         {
             d->dataChanged = d->state != STATE_ENABLED && d->initialState != STATE_ENABLED;
             setPolicyWidgetState(STATE_ENABLED);
-            qWarning() << "Setting state enabled" << d->manager.get();
+            GPUI_WARNING_STREAM << "Setting state enabled" << d->manager.get();
             if (d->manager)
             {
                 d->policyState = model::registry::PolicyStateManager::STATE_ENABLED;
@@ -110,7 +112,7 @@ AdministrativeTemplatesWidget::AdministrativeTemplatesWidget(QWidget *parent)
         {
             d->dataChanged = d->state != STATE_DISABLED && d->initialState != STATE_DISABLED;
             setPolicyWidgetState(STATE_DISABLED);
-            qWarning() << "Setting state disabled" << d->manager.get();
+            GPUI_WARNING_STREAM << "Setting state disabled" << d->manager.get();
             if (d->manager)
             {
                 d->policyState = model::registry::PolicyStateManager::STATE_DISABLED;
@@ -209,7 +211,7 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
 
                 auto policyType = static_cast<PolicyType>(model->data(index, PolicyRoles::POLICY_TYPE).toUInt());
 
-                qDebug() << policy->displayName.c_str() << " type: "
+                GPUI_DEBUG_STREAM << policy->displayName.c_str() << " type: "
                          << (policyType == PolicyType::Machine
                                  ? "Machine"
                                  : (policyType == PolicyType::User
@@ -227,7 +229,7 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                 }
                 else
                 {
-                    qWarning() << "Policy name: " << policy->name.c_str() << "comment not found!";
+                    GPUI_WARNING_STREAM << "Policy name: " << policy->name.c_str() << "comment not found!";
                 }
             }
 
@@ -338,13 +340,13 @@ void AdministrativeTemplatesWidget::onCancelClicked()
 
 void AdministrativeTemplatesWidget::setUserRegistrySource(model::registry::AbstractRegistrySource *registrySource)
 {
-    qWarning() << "Test user registry source";
+    GPUI_WARNING_STREAM << "Test user registry source";
     d->userSource = registrySource;
 }
 
 void AdministrativeTemplatesWidget::setMachineRegistrySource(model::registry::AbstractRegistrySource *registrySource)
 {
-    qWarning() << "Test machine registry source";
+    GPUI_WARNING_STREAM << "Test machine registry source";
     d->machineSource = registrySource;
 }
 

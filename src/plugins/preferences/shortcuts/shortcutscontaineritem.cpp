@@ -28,7 +28,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/signals/itemmapper.h>
 
-#include <QDebug>
+#include "../../../core/logger/log.h"
 
 namespace preferences
 {

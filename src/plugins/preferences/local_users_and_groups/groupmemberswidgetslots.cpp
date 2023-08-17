@@ -29,7 +29,7 @@
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/factories/viewmodelfactory.h>
 
-#include <QDebug>
+#include "../../../core/logger/log.h"
 
 namespace preferences
 {
@@ -38,7 +38,7 @@ void GroupMembersWidget::on_addPushButton_clicked()
 {
     if (!m_item)
     {
-        qWarning() << "Invalid m_item";
+        GPUI_WARNING_STREAM << "Invalid m_item";
     }
 
     auto item = m_item->model()->insertItem<GroupMemberItem>(m_item);
@@ -58,7 +58,7 @@ void GroupMembersWidget::on_removePushButton_clicked()
     }
     else
     {
-        qWarning() << "GroupMembersWidget::on_removePushButton_clicked" << "No item selected.";
+        GPUI_WARNING_STREAM << "GroupMembersWidget::on_removePushButton_clicked" << "No item selected.";
     }
 }
 
@@ -71,7 +71,7 @@ void GroupMembersWidget::on_changePushButton_clicked()
     }
     else
     {
-        qWarning() << "GroupMembersWidget::on_changePushButton_clicked" << "No item selected.";
+        GPUI_WARNING_STREAM << "GroupMembersWidget::on_changePushButton_clicked" << "No item selected.";
     }
 }
 

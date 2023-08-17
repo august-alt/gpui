@@ -30,7 +30,7 @@
 
 #include "../plugins/storage/smb/smbfile.h"
 
-#include <QDebug>
+#include "../../../core/logger/log.h"
 #include <QFileInfo>
 #include <QMessageBox>
 
@@ -68,7 +68,7 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
 
         if (!format->read(file, policies.get()))
         {
-            qWarning() << policyFileName.fileName() + " " + QString::fromStdString(format->getErrorString());
+            GPUI_WARNING_STREAM << policyFileName.fileName() + " " + QString::fromStdString(format->getErrorString());
         }
     }
 
@@ -89,7 +89,7 @@ void savePolicies(const QString &pluginName, const QString &fileName, std::share
 
     if (!format)
     {
-        qWarning() << "Format supporting: " << pluginName << " not found.";
+        GPUI_WARNING_STREAM << "Format supporting: " << pluginName << " not found.";
 
         return;
     }
@@ -98,12 +98,12 @@ void savePolicies(const QString &pluginName, const QString &fileName, std::share
 
     if (!format->write(*oss, fileData.get()))
     {
-        qWarning() << fileName << " " << format->getErrorString().c_str();
+        GPUI_WARNING_STREAM << fileName << " " << format->getErrorString().c_str();
     }
 
     oss->flush();
 
-    qWarning() << "Current string values:\n" << oss->str().c_str();
+    GPUI_WARNING_STREAM << "Current string values:\n" << oss->str().c_str();
 
     bool ifShowError = false;
 
@@ -198,7 +198,7 @@ void CommentsModel::load(const QString &cmtxFileName)
         = loadPolicies<io::PolicyCommentsFile, io::PolicyFileFormat<io::PolicyCommentsFile>>("cmtx", cmtxFileName);
     if (!commentDefinitions.get())
     {
-        qWarning() << "File not found: " << cmtxFileName;
+        GPUI_WARNING_STREAM << "File not found: " << cmtxFileName;
         return;
     }
 
@@ -208,7 +208,7 @@ void CommentsModel::load(const QString &cmtxFileName)
         = loadPolicies<io::CommentResourcesFile, io::PolicyFileFormat<io::CommentResourcesFile>>("cmtl", cmtlFileName);
     if (!commentTranslations.get())
     {
-        qWarning() << "File not found: " << cmtlFileName;
+        GPUI_WARNING_STREAM << "File not found: " << cmtlFileName;
         noCMTL = true;
     }
     else if (commentTranslations->commentResourcesCount() == 0)
@@ -218,7 +218,7 @@ void CommentsModel::load(const QString &cmtxFileName)
 
     if (commentDefinitions->policyCommentsCount() == 0)
     {
-        qWarning() << "No comment definitions in file: " << cmtxFileName;
+        GPUI_WARNING_STREAM << "No comment definitions in file: " << cmtxFileName;
         return;
     }
 
@@ -253,7 +253,7 @@ void CommentsModel::load(const QString &cmtxFileName)
         item->setData(QString::fromStdString(policyRef), CommentsModel::ITEM_REFERENCE_ROLE);
         item->setData(namespace_, CommentsModel::ITEM_NAMESPACE_ROLE);
 
-        qWarning() << comment.commentText.c_str() << comment.policyRef.c_str();
+        GPUI_WARNING_STREAM << comment.commentText.c_str() << comment.policyRef.c_str();
 
         this->appendRow(item);
     }
@@ -261,7 +261,7 @@ void CommentsModel::load(const QString &cmtxFileName)
 
 void CommentsModel::save(const QString &path, const QString& localeName)
 {
-    qWarning() << "Imitating write of cmtx and cmtl to: " << path;
+    GPUI_WARNING_STREAM << "Imitating write of cmtx and cmtl to: " << path;
 
     std::shared_ptr<comments::PolicyComments> commentDefinitions = std::make_shared<comments::PolicyComments>();
 
@@ -395,7 +395,7 @@ bool CommentsModel::setComment(const QString &comment, const QString& policyName
         if (itemReference.compare(policyName) == 0
             && itemNamespace.compare(namespace_) == 0)
         {
-            qWarning() << "Changing comment in model: " << index << comment;
+            GPUI_WARNING_STREAM << "Changing comment in model: " << index << comment;
 
             setData(index, comment);
             commentFound = true;
@@ -411,7 +411,7 @@ bool CommentsModel::setComment(const QString &comment, const QString& policyName
 
         appendRow(item);
 
-        qWarning() << "Appending comment to model: " <<  item;
+        GPUI_WARNING_STREAM << "Appending comment to model: " <<  item;
     }
 
     return true;

@@ -22,7 +22,7 @@
 
 #include <codecvt>
 
-#include <QDebug>
+#include "../../core/logger/log.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
@@ -70,11 +70,11 @@ bool IniFormat::read(std::istream &input, IniFile *file)
 
         for (auto& section : pt)
         {
-            qDebug() << "[" << section.first.c_str() << "]\n";
+            GPUI_DEBUG_STREAM << "[" << section.first.c_str() << "]\n";
 
             for (auto& key : section.second)
             {
-                qDebug() << key.first.c_str() << "=" << key.second.get_value("").c_str() << "\n";
+                GPUI_DEBUG_STREAM << key.first.c_str() << "=" << key.second.get_value("").c_str() << "\n";
 
                 file->addValue(section.first, key.first, key.second.get_value(""));
             }
@@ -98,13 +98,13 @@ bool IniFormat::write(std::ostream &output, IniFile *file)
         QMap<std::string, QMultiMap<std::string, std::string>>::const_iterator section_iterator =
                 file->getAllSections()->constBegin();
         while (section_iterator != file->getAllSections()->constEnd()) {
-            qDebug() << "[" << section_iterator.key().c_str() << "]\n";
+            GPUI_DEBUG_STREAM << "[" << section_iterator.key().c_str() << "]\n";
 
             auto keyIterator = section_iterator->constBegin();
 
             while (keyIterator != section_iterator->constEnd())
             {
-                qDebug() << section_iterator.key().c_str() << "." << keyIterator.key().c_str()
+                GPUI_DEBUG_STREAM << section_iterator.key().c_str() << "." << keyIterator.key().c_str()
                          << keyIterator.value().c_str() << "\n";
                 pt.add(section_iterator.key() + "." + keyIterator.key(), keyIterator.value());
                 ++keyIterator;

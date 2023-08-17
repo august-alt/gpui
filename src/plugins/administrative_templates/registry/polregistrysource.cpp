@@ -24,7 +24,7 @@
 
 #include "../../src/core/pluginstorage.h"
 
-#include <QDebug>
+#include "../../../core/logger/log.h"
 
 namespace model
 {
@@ -85,7 +85,7 @@ void PolRegistrySource::setValue(const std::string &key,
                                  RegistryEntryType registryEntryType,
                                  const QVariant &data)
 {
-    qWarning() << "Set value" << key.c_str() << valueName.c_str() << data;
+    GPUI_WARNING_STREAM << "Set value" << key.c_str() << valueName.c_str() << data;
 
     if (isValuePresent(key, valueName))
     {
@@ -147,7 +147,7 @@ void PolRegistrySource::markValueForDeletion(const std::string &key, const std::
     clearValue(key, valueName);
 
     setValue(key, deleteValueName, RegistryEntryType::REG_SZ, QString(' '));
-    qWarning() << "Marking value for deletion: " << key.c_str() << valueName.c_str();
+    GPUI_WARNING_STREAM << "Marking value for deletion: " << key.c_str() << valueName.c_str();
 }
 
 bool PolRegistrySource::undeleteValue(const std::string &key, const std::string &valueName)
@@ -263,7 +263,7 @@ void PolRegistrySource::updateValue(const std::string &key,
             }
             else
             {
-                qWarning() << "Attempt to assign value of different type to: " << key.c_str() << valueName.c_str();
+                GPUI_WARNING_STREAM << "Attempt to assign value of different type to: " << key.c_str() << valueName.c_str();
             }
         }
     }

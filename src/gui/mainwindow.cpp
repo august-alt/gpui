@@ -158,11 +158,11 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
         {
             if (!currentId.isNull())
             {
-                qInfo() << "Current id: " << currentId;
+                GPUI_INFO_STREAM << "Current id: " << currentId;
             }
             if (!parentId.isNull())
             {
-                qInfo() << "Non null uuid" << index.data() << parentId;
+                GPUI_INFO_STREAM << "Non null uuid" << index.data() << parentId;
                 parentIndex = findParent(target->model(), target->model()->index(0, 0), parentId);
             }
 
@@ -181,7 +181,7 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
 
             if (parentIndex.isValid())
             {
-                qInfo() << "Found valid index" << parentIndex.data();
+                GPUI_INFO_STREAM << "Found valid index" << parentIndex.data();
                 target->model()->itemFromIndex(parentIndex)->appendRow(child);
             }
             else
@@ -267,7 +267,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     for (auto &snapIn : manager->getSnapIns())
     {
-        qInfo() << "Loading model from: " << snapIn->getDisplayName();
+        GPUI_INFO_STREAM << "Loading model from: " << snapIn->getDisplayName();
         snapIn->onInitialize(this);
     }
 
@@ -281,7 +281,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     QString guid = isAnyGUID(d->options.path);
 
-    qInfo() << "Guid: " << guid;
+    GPUI_INFO_STREAM << "Guid: " << guid;
 
     if (guid != "")
     {
@@ -367,7 +367,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
         if (snapIn->getRootNode())
         {
             QAbstractItemModel *snapInModel = snapIn->getRootNode();
-            qInfo() << "Appending model from: " << snapIn->getDisplayName();
+            GPUI_INFO_STREAM << "Appending model from: " << snapIn->getDisplayName();
             appendModel(visibleRootItem, snapInModel, snapInModel->index(0, 0));
         }
     }
@@ -471,7 +471,7 @@ void MainWindow::onLanguageChanged(QAction *action)
     for (auto &snapIn : d->manager->getSnapIns())
     {
         snapIn->onRetranslateUI(d->localeName.toStdString());
-        qInfo() << d->localeName;
+        GPUI_INFO_STREAM << d->localeName;
     }
 
     d->contentWidget->onLanguageChanged();
@@ -524,7 +524,7 @@ QString MainWindow::isAnyGUID(QString &path)
     QRegExp lastPartOfPath("/\\{([^/]+)\\}/?$");
     QRegExp regExpGuid("^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$");
 
-    qInfo() << lastPartOfPath.indexIn(path);
+    GPUI_INFO_STREAM << lastPartOfPath.indexIn(path);
 
     if (lastPartOfPath.indexIn(path) != -1)
     {

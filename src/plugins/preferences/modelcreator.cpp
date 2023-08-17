@@ -20,7 +20,7 @@
 
 #include "modelcreator.h"
 
-#include <QDebug>
+#include "../../core/logger/log.h"
 
 #include <fstream>
 
@@ -73,7 +73,7 @@ void ModelCreator::populateModels(const std::string &policyPath,
         }
         catch (std::exception &ex)
         {
-            qWarning() << ex.what();
+            GPUI_WARNING_STREAM << ex.what();
         }
     }
 }

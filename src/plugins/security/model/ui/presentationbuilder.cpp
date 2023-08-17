@@ -264,55 +264,55 @@ QVBoxLayout *PresentationBuilder::build(const PresentationBuilderParams &params)
         std::visit([](auto&& arg) noexcept
         {
             using T = std::decay_t<decltype(arg)>;
-            if constexpr (std::is_same_v<T, DecimalTextBox>)
+            if constexpr (std::is_same_v<T, std::shared_ptr<DecimalTextBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, TextBox>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<TextBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, CheckBox>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<CheckBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, ComboBox>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<ComboBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, DropdownList>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<DropdownList> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, LongDecimalTextBox>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<LongDecimalTextBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, MultiTextBox>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<MultiTextBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, GroupBox>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<GroupBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, ListBox>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<ListBox> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, Comment>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<Comment> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
-            else if constexpr (std::is_same_v<T, Text>)
+            else if constexpr (std::is_same_v<T, std::shared_ptr<Text> >)
             {
-                d->visit(arg);
+                d->visit(*arg);
             }
             else
             {
                 static_assert(always_false_v<T>, "non-exhaustive visitor!");
             }
-        }, *widget.second.get());
+        }, widget.second);
     }
     layout->addStretch();
 

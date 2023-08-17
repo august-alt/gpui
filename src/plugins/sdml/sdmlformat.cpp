@@ -52,9 +52,9 @@ public:
         assign_if_exists(this->postfix, widget.postfix());
     }
 
-    static std::unique_ptr<security::CheckBox> create(const CheckBox &widget)
+    static std::shared_ptr<security::CheckBox> create(const CheckBox &widget)
     {
-        return std::make_unique<XsdCheckBoxAdapter>(widget);
+        return std::make_shared<XsdCheckBoxAdapter>(widget);
     }
 };
 
@@ -78,9 +78,9 @@ public:
         }
     }
 
-    static std::unique_ptr<security::ComboBox> create(const ComboBox &widget)
+    static std::shared_ptr<security::ComboBox> create(const ComboBox &widget)
     {
-        return std::make_unique<XsdComboBoxAdapter>(widget);
+        return std::make_shared<XsdComboBoxAdapter>(widget);
     }
 };
 
@@ -99,9 +99,9 @@ public:
         assign_if_exists(this->postfix, widget.postfix());
     }
 
-    static std::unique_ptr<security::DecimalTextBox> create(const DecimalTextBox &widget)
+    static std::shared_ptr<security::DecimalTextBox> create(const DecimalTextBox &widget)
     {
-        return std::make_unique<XsdDecimalTextBoxAdapter>(widget);
+        return std::make_shared<XsdDecimalTextBoxAdapter>(widget);
     }
 };
 
@@ -118,9 +118,9 @@ public:
         // TODO: Implement.
     }
 
-    static std::unique_ptr<security::DropdownList> create(const DropdownList &widget)
+    static std::shared_ptr<security::DropdownList> create(const DropdownList &widget)
     {
-        return std::make_unique<XsdDropdownListAdapter>(widget);
+        return std::make_shared<XsdDropdownListAdapter>(widget);
     }
 };
 
@@ -136,9 +136,9 @@ public:
         assign_if_exists(this->postfix, widget.postfix());
     }
 
-    static std::unique_ptr<security::ListBox> create(const ListBox &widget)
+    static std::shared_ptr<security::ListBox> create(const ListBox &widget)
     {
-        return std::make_unique<XsdListBoxAdapter>(widget);
+        return std::make_shared<XsdListBoxAdapter>(widget);
     }
 };
 
@@ -157,9 +157,9 @@ public:
         assign_if_exists(this->postfix, widget.postfix());
     }
 
-    static std::unique_ptr<security::LongDecimalTextBox> create(const LongDecimalTextBox &widget)
+    static std::shared_ptr<security::LongDecimalTextBox> create(const LongDecimalTextBox &widget)
     {
-        return std::make_unique<XsdLongDecimalTextBoxAdapter>(widget);
+        return std::make_shared<XsdLongDecimalTextBoxAdapter>(widget);
     }
 };
 
@@ -177,9 +177,9 @@ public:
 //        this->showAsDialog  = widget.showAsDialog();
     }
 
-    static std::unique_ptr<security::MultiTextBox> create(const MultiTextBox &widget)
+    static std::shared_ptr<security::MultiTextBox> create(const MultiTextBox &widget)
     {
-        return std::make_unique<XsdMultiTextBoxAdapter>(widget);
+        return std::make_shared<XsdMultiTextBoxAdapter>(widget);
     }
 };
 
@@ -200,9 +200,9 @@ public:
         this->refId = widget.refId();
     }
 
-    static std::unique_ptr<security::TextBox> create(const TextBox &widget)
+    static std::shared_ptr<security::TextBox> create(const TextBox &widget)
     {
-        return std::make_unique<XsdTextBoxAdapter>(widget);
+        return std::make_shared<XsdTextBoxAdapter>(widget);
     }
 };
 
@@ -219,9 +219,9 @@ public:
         // TODO: Implement.
     }
 
-    static std::unique_ptr<security::Text> create(const TextElement &string)
+    static std::shared_ptr<security::Text> create(const TextElement &string)
     {
-        return std::make_unique<XsdTextAdapter>(string);
+        return std::make_shared<XsdTextAdapter>(string);
     }
 };
 

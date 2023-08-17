@@ -32,17 +32,17 @@
 namespace security
 {
 // the variant to visit
-typedef ::std::variant<DecimalTextBox,
-                       TextBox,
-                       CheckBox,
-                       ComboBox,
-                       DropdownList,
-                       LongDecimalTextBox,
-                       MultiTextBox,
-                       GroupBox,
-                       ListBox,
-                       Comment,
-                       Text> PresentationElement;
+typedef ::std::variant<std::shared_ptr<DecimalTextBox>,
+                       std::shared_ptr<TextBox>,
+                       std::shared_ptr<CheckBox>,
+                       std::shared_ptr<ComboBox>,
+                       std::shared_ptr<DropdownList>,
+                       std::shared_ptr<LongDecimalTextBox>,
+                       std::shared_ptr<MultiTextBox>,
+                       std::shared_ptr<GroupBox>,
+                       std::shared_ptr<ListBox>,
+                       std::shared_ptr<Comment>,
+                       std::shared_ptr<Text> > PresentationElement;
 
 /*!
  * \class SecurityPresentation
@@ -72,7 +72,7 @@ public:
     /*!
      * \brief widgets List of widgets, associated with their ids.
      */
-    std::vector<std::pair<std::string, std::shared_ptr<PresentationElement>>> widgets{};
+    std::vector<std::pair<std::string, PresentationElement>> widgets{};
 };
 
 } // of namespace security

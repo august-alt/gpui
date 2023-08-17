@@ -29,12 +29,12 @@
 
 namespace security
 {
-    class SecurityPresentation;
+    class SecurityPresentationResources;
 }
 
 namespace gpui
 {
-typedef io::BaseFile<security::SecurityPresentation> SdmlFile;
+typedef io::BaseFile<security::SecurityPresentationResources> SdmlFile;
 
 class GPUI_SYMBOL_EXPORT SdmlFormat : public io::PolicyFileFormat<SdmlFile>
 {

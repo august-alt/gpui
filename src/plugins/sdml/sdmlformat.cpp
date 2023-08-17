@@ -272,7 +272,7 @@ bool SdmlFormat::read(std::istream &input, SdmlFile *file)
     auto operation = [&]() {
         std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityPresentation>policyDefinitionResources;
 
-        std::shared_ptr<security::SecurityPresentation> securityPresentation(nullptr);
+        std::shared_ptr<security::SecurityPresentationResources> securityPresentation(nullptr);
 
         file->add(securityPresentation);
     };

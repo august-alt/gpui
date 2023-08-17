@@ -57,11 +57,6 @@ public:
      */
     unsigned int spinStep = 1;
 
-    /*!
-     * \brief label Text associated with the text box.
-     */
-    std::string label{};
-
     DecimalTextBox(Presentation *presentation)
         : PresentationWidget(presentation)
     {}

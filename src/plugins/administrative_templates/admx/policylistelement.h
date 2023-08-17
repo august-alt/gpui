@@ -58,6 +58,40 @@ public:
      */
     bool explicitValue = false;
 
+    PolicyListElement()
+        : PolicyElement()
+    {
+        required = true;
+    }
+
+    PolicyListElement(const PolicyListElement &other)
+        : PolicyListElement()
+    {
+        this->additive = other.additive;
+        this->clientExtension = other.clientExtension;
+        this->expandable = other.expandable;
+        this->explicitValue = other.explicitValue;
+        this->id = other.id;
+        this->key = other.key;
+        this->required = other.required;
+        this->valueName = other.valueName;
+        this->valuePrefix = other.valuePrefix;
+    }
+    PolicyListElement &operator=(const PolicyListElement &other)
+    {
+        this->additive = other.additive;
+        this->clientExtension = other.clientExtension;
+        this->expandable = other.expandable;
+        this->explicitValue = other.explicitValue;
+        this->id = other.id;
+        this->key = other.key;
+        this->required = other.required;
+        this->valueName = other.valueName;
+        this->valuePrefix = other.valuePrefix;
+
+        return *this;
+    }
+
     registry::RegistryEntryType getRegistryEntryType() const override
     {
         return expandable ? registry::REG_SZ : registry::REG_EXPAND_SZ;

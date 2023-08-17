@@ -49,11 +49,6 @@ public:
     std::string refId{};
 
     /*!
-     * \brief label Text associated with the input box to provide prompt text.
-     */
-    std::string label{};
-
-    /*!
      * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
      */
     std::string defaultValue{};

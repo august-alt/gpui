@@ -64,8 +64,10 @@
 #include <QSpinBox>
 #include <QTableWidget>
 #include <QTextEdit>
+#include <QMessageBox>
 
 #include <QDebug>
+#include <QTranslator>
 
 #include <iostream>
 #include <queue>
@@ -155,13 +157,23 @@ public:
 
             checkBox->connect(checkBox, &QCheckBox::toggled, []() { *m_dataChanged = true; });
 
+            std::string widgetLabel = widget.label;
+
+            widget.requirementsMet = [elementInfo, checkBox, this]{ return !elementInfo.element->required || !checkBox->isChecked();};
+
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, checkBox, this]() {
+            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [widgetLabel, elementInfo, checkBox, this]() {
                 if (!(*m_stateEnabled))
                 {
                     return;
                 }
                 if (elementInfo.element->required && !checkBox->isChecked()){
+                    QMessageBox message;
+                    message.setText("Property '" + QString::fromStdString(widgetLabel) + "' is required!");
+                    message.setStandardButtons(QMessageBox::Close);
+                    message.setDefaultButton(QMessageBox::Close);
+                    message.exec();
+
                     return;
                 }
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
@@ -367,7 +379,11 @@ public:
             }
         }
 
-        auto onClicked = [&, elementInfo, listElement]() {
+        widget.requirementsMet = [listElement, this]
+        { return !listElement->required || m_source->isValuePresent(
+                        listElement->key, listElement->valuePrefix + std::to_string(1)); };
+
+        auto onClicked = [&, elementInfo, listElement, label]() {
             gpui::ListBoxDialog *listBox = new gpui::ListBoxDialog(QString::fromStdString(widget.label));
             listBox->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -402,6 +418,12 @@ public:
                     }
 
                     if (elementInfo.element->required && currentItems.empty()){
+                        QMessageBox message;
+                        message.setText("Property '" + QString::fromStdString(label) + "' is required!");
+                        message.setStandardButtons(QMessageBox::Close);
+                        message.setDefaultButton(QMessageBox::Close);
+                        message.exec();
+
                         return;
                     }
 
@@ -455,6 +477,12 @@ public:
                         }
 
                         if (elementInfo.element->required && currentItems.empty()){
+                            QMessageBox message;
+                            message.setText("Property '" + QString::fromStdString(label) + "' is required!");
+                            message.setStandardButtons(QMessageBox::Close);
+                            message.setDefaultButton(QMessageBox::Close);
+                            message.exec();
+
                             return;
                         }
 
@@ -502,6 +530,12 @@ public:
                         }
 
                         if (elementInfo.element->required && currentItems.empty()){
+                            QMessageBox message;
+                            message.setText("Property '" + QString::fromStdString(label) + "' is required!");
+                            message.setStandardButtons(QMessageBox::Close);
+                            message.setDefaultButton(QMessageBox::Close);
+                            message.exec();
+
                             return;
                         }
 
@@ -584,14 +618,24 @@ public:
 
             textEdit->connect(textEdit, &QTextEdit::textChanged, [=]() { *m_dataChanged = true; });
 
+            std::string widgetLabel = widget.label;
+
+            widget.requirementsMet = [elementInfo, textEdit, this]{ return !elementInfo.element->required || !textEdit->toPlainText().isEmpty();};
+
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, textEdit, this]() {
+            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [widgetLabel, elementInfo, textEdit, this]() {
                 if (!(*m_stateEnabled))
                 {
                     return;
                 }
 
                 if (elementInfo.element->required && textEdit->toPlainText().isEmpty()){
+                    QMessageBox message;
+                    message.setText("Property '" + QString::fromStdString(widgetLabel) + "' is required!");
+                    message.setStandardButtons(QMessageBox::Close);
+                    message.setDefaultButton(QMessageBox::Close);
+                    message.exec();
+
                     return;
                 }
 
@@ -636,14 +680,25 @@ public:
 
             lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=]() { *m_dataChanged = true; });
 
+            std::string widgetLabel = widget.label;
+
+            widget.requirementsMet = [elementInfo, lineEdit, this]{ return !elementInfo.element->required || !lineEdit->text().isEmpty();};
+
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, lineEdit, this]() {
+            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [widgetLabel, elementInfo, lineEdit, this]() {
                 if (!(*m_stateEnabled))
                 {
                     return;
                 }
 
                 if (elementInfo.element->required && lineEdit->text().isEmpty()){
+
+                    QMessageBox message;
+                    message.setText("Property '" + QString::fromStdString(widgetLabel) + "' is required!");
+                    message.setStandardButtons(QMessageBox::Close);
+                    message.setDefaultButton(QMessageBox::Close);
+                    message.exec();
+
                     return;
                 }
 
@@ -987,6 +1042,7 @@ QVBoxLayout *::gpui::PresentationBuilder::build(const ::gpui::PresentationBuilde
             layout->addWidget(policyWidget);
         }
     }
+
     layout->addStretch();
 
     return layout;

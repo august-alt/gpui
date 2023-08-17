@@ -49,11 +49,6 @@ public:
      */
     bool defaultChecked = false;
 
-    /*!
-     * \brief label Text associated with the check box.
-     */
-    std::string label{};
-
     CheckBox(Presentation *presentation)
         : PresentationWidget(presentation)
     {}

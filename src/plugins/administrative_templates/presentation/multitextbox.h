@@ -57,15 +57,9 @@ public:
      */
     unsigned int defaultHeight = 3;
 
-    /*!
-     * \brief label Text associated with the text box.
-     */
-    std::string label;
-
     MultiTextBox(Presentation *presentation)
         : PresentationWidget(presentation)
         , refId()
-        , label()
     {}
 
     virtual bool accept(const PresentationWidgetVisitor &visitor) override { return visitor.visit(*this); }

@@ -55,11 +55,6 @@ public:
     unsigned int defaultItem = 0;
 
     /*!
-     * \brief label Text associated with the drop-down list.
-     */
-    std::string label{};
-
-    /*!
      * \brief values Values of the drop-down list.
      */
     std::vector<std::string> values{};

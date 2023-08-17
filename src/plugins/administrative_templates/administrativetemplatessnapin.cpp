@@ -60,7 +60,7 @@
 
 #include <QAction>
 #include <QApplication>
-#include <QDebug>
+#include "../../core/logger/log.h"
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -82,7 +82,7 @@ void onPolFileSave(const std::string &fileName, std::shared_ptr<model::registry:
 
     if (!format)
     {
-        qWarning() << "Format supporting: " << pluginName << " not found.";
+        GPUI_WARNING_STREAM << "Format supporting: " << pluginName << " not found.";
 
         return;
     }
@@ -91,12 +91,12 @@ void onPolFileSave(const std::string &fileName, std::shared_ptr<model::registry:
 
     if (!format->write(*oss, fileData.get()))
     {
-        qWarning() << fileName.c_str() << " " << format->getErrorString().c_str();
+        GPUI_WARNING_STREAM << fileName.c_str() << " " << format->getErrorString().c_str();
     }
 
     oss->flush();
 
-    qWarning() << "Current string values." << oss->str().c_str();
+    GPUI_WARNING_STREAM << "Current string values." << oss->str().c_str();
 
     bool ifShowError = false;
 
@@ -204,42 +204,42 @@ public:
 
         if (!machineRegistryPath.isEmpty())
         {
-            qWarning() << "Saving machine registry to: " << machineRegistryPath;
+            GPUI_WARNING_STREAM << "Saving machine registry to: " << machineRegistryPath;
             onPolFileSave(machineRegistryPath.toStdString(), machineRegistry);
         }
         else
         {
-            qWarning() << "Unable to save machine registry path is empty!";
+            GPUI_WARNING_STREAM << "Unable to save machine registry path is empty!";
         }
 
         if (!userRegistryPath.isEmpty())
         {
-            qWarning() << "Saving user registry to: " << userRegistryPath;
+            GPUI_WARNING_STREAM << "Saving user registry to: " << userRegistryPath;
             onPolFileSave(userRegistryPath.toStdString(), userRegistry);
         }
         else
         {
-            qWarning() << "Unable to save user registry path is empty!";
+            GPUI_WARNING_STREAM << "Unable to save user registry path is empty!";
         }
 
         if (!userCommentsPath.isEmpty())
         {
-            qWarning() << "Saving user comments to: " << userRegistryPath;
+            GPUI_WARNING_STREAM << "Saving user comments to: " << userRegistryPath;
             userCommentsModel->save(userRegistryPath, QString::fromStdString(localeName));
         }
         else
         {
-            qWarning() << "Unable to save user comments path is empty!";
+            GPUI_WARNING_STREAM << "Unable to save user comments path is empty!";
         }
 
         if (!machineCommentsPath.isEmpty())
         {
-            qWarning() << "Saving machine comments to: " << machineCommentsPath;
+            GPUI_WARNING_STREAM << "Saving machine comments to: " << machineCommentsPath;
             machineCommentsModel->save(machineCommentsPath, QString::fromStdString(localeName));
         }
         else
         {
-            qWarning() << "Unable to save machine comments path is empty!";
+            GPUI_WARNING_STREAM << "Unable to save machine comments path is empty!";
         }
     }
 
@@ -305,7 +305,7 @@ void onPolFileOpen(const QString &path,
                    std::unique_ptr<model::registry::AbstractRegistrySource> &source,
                    std::function<void(model::registry::AbstractRegistrySource *)> callback)
 {
-    qWarning() << "Path recieved: " << path;
+    GPUI_WARNING_STREAM << "Path recieved: " << path;
 
     auto stringvalues = std::make_unique<std::string>();
 
@@ -335,7 +335,7 @@ void onPolFileOpen(const QString &path,
         auto registryFile = reader->load<io::RegistryFile, io::RegistryFileFormat<io::RegistryFile>>(*iss, pluginName);
         if (!registryFile)
         {
-            qWarning() << "Unable to load registry file contents.";
+            GPUI_WARNING_STREAM << "Unable to load registry file contents.";
             return;
         }
 
@@ -347,7 +347,7 @@ void onPolFileOpen(const QString &path,
     }
     catch (std::exception &e)
     {
-        qWarning() << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
+        GPUI_WARNING_STREAM << "Warning: Unable to read file: " << qPrintable(path) << " description: " << e.what();
     }
 }
 
@@ -369,7 +369,7 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
     {
         d->admxPath   = mainWindow->getAdmxPath().toStdString();
         d->localeName = mainWindow->getLanguage().toStdString();
-        qWarning() << "Setting default settings for administrative templates snap-in: " << d->admxPath.c_str()
+        GPUI_WARNING_STREAM << "Setting default settings for administrative templates snap-in: " << d->admxPath.c_str()
                    << d->localeName.c_str();
 
         d->filterDialog = new gpui::TemplateFilterDialog();
@@ -417,7 +417,7 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
     if (mainWindow)
     {
         QObject::connect(mainWindow, &MainWindow::admxPathChanged, [&](const QString &admxPath) {
-            qWarning() << "Loading bundle from snap-in: " << admxPath;
+            GPUI_WARNING_STREAM << "Loading bundle from snap-in: " << admxPath;
             d->admxPath = admxPath.toStdString();
             d->policyBundleLoad();
         });

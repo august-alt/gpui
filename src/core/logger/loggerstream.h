@@ -26,6 +26,11 @@
 #include <memory>
 #include <sstream>
 
+#include <QModelIndex>
+#include <QString>
+#include <QUuid>
+#include <QVariant>
+
 namespace gpui
 {
 namespace logger
@@ -35,17 +40,67 @@ class GPUI_CORE_EXPORT LoggerStream
 public:
     LoggerStream(std::shared_ptr<LoggerManager> loggerManager_,
                  int logMask_,
-                 const std::string &file,
-                 const std::string &function,
-                 const uint32_t line);
+                 const std::string &file_,
+                 const std::string &function_,
+                 const uint32_t line_);
     ~LoggerStream();
 
     template<typename T>
     inline LoggerStream &operator<<(const T &value)
     {
-        this->buf << value << ' ';
+        this->buf << value;
+
+        if (this->add_space)
+        {
+            this->buf << ' ';
+        }
+
         return (*this);
     }
+
+    template<typename T>
+    inline LoggerStream &operator<<(const std::vector<T> &value)
+    {
+        bool old_add_space = this->add_space;
+        this->add_space    = false;
+
+        *this << '{';
+        for (size_t i = 0; i < value.size(); ++i)
+        {
+            *this << value[i];
+            if (i != value.size() - 1)
+            {
+                *this << ", ";
+            }
+        }
+        *this << '}';
+
+        this->add_space = old_add_space;
+
+        return *this;
+    }
+
+    inline LoggerStream &operator<<(const QList<QString> &value)
+    {
+        return *this << std::vector<QString>(value.begin(), value.end());
+    }
+
+    inline LoggerStream &operator<<(const QStringList &value)
+    {
+        return *this << std::vector<QString>(value.begin(), value.end());
+    }
+
+    inline LoggerStream &operator<<(const QModelIndex &value)
+    {
+        this->buf << "QModelIndex(" << value.row() << ", " << value.column() << ", " << value.internalPointer() << ", "
+                  << value.model() << ')';
+        return *this;
+    }
+
+    inline LoggerStream &operator<<(const QString &value) { return *this << value.constData(); }
+    inline LoggerStream &operator<<(const QVariant &value) { return *this << value.toString(); }
+    inline LoggerStream &operator<<(const QUuid &value) { return *this << value.toString(); }
+    LoggerStream &operator<<(const QKeySequence &value);
 
 private:
     LoggerStream(const LoggerStream &) = delete;            // copy ctor
@@ -60,6 +115,7 @@ private:
     const std::string &file                      = {};
     const std::string &function                  = {};
     const uint32_t line                          = 0;
+    bool add_space                               = true;
 };
 
 } // namespace logger

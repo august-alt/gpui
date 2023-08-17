@@ -22,7 +22,7 @@
 
 #include <fstream>
 #include <sstream>
-#include <QDebug>
+#include "../../../core/logger/log.h"
 
 #include "../../../src/plugins/storage/smb/smbfile.h"
 
@@ -64,7 +64,7 @@ std::unique_ptr<preferences::PreferencesModel> preferences::BasePreferenceReader
     }
     catch (const std::exception &e)
     {
-        qWarning() << e.what();
+        GPUI_WARNING_STREAM << e.what();
     }
 
     return result;

@@ -20,6 +20,8 @@
 
 #include "polformat.h"
 
+#include "../../core/logger/log.h"
+
 #include "pregdata.h"
 #include "pregparser.h"
 #include "pregwriter.h"
@@ -122,7 +124,7 @@ private:
                 std::align(alignof(char16_t), sizeof(char), pt, requiredSize));
             std::vector<std::vector<char16_t>> list;
             std::vector<char16_t> current;
-            qWarning() << "Data: "
+            GPUI_WARNING_STREAM << "Data: "
                        << QString::fromUtf16(reinterpret_cast<char16_t *>(
                                                  std::align(alignof(char16_t), sizeof(char), pt, requiredSize)),
                                              size / 2)
@@ -132,7 +134,7 @@ private:
                 current.push_back(data[i]);
                 if (data[i] == 0)
                 {
-                    qWarning() << current << " split at: " << i;
+                    GPUI_WARNING_STREAM << current << " split at: " << i;
                     list.emplace_back(current);
                     current.clear();
                 }

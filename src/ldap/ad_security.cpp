@@ -33,7 +33,7 @@
 
 #include "ad_filter.h"
 
-#include <QDebug>
+#include "../core/logger/log.h"
 
 #define UNUSED_ARG(x) (void) (x)
 
@@ -620,12 +620,12 @@ void security_descriptor_print(security_descriptor *sd, AdInterface &ad)
 
     for (const security_ace &ace : dacl)
     {
-        qInfo() << "\nace:";
+        GPUI_INFO_STREAM << "\nace:";
         const QByteArray trustee_sid = dom_sid_to_bytes(ace.trustee);
         const QString trustee_name   = ad_security_get_trustee_name(ad, trustee_sid);
-        qInfo() << "trustee:" << trustee_name;
-        qInfo() << "mask:" << int_to_hex_string(ace.access_mask);
-        qInfo() << "type:" << ace.type;
+        GPUI_INFO_STREAM << "trustee:" << trustee_name;
+        GPUI_INFO_STREAM << "mask:" << int_to_hex_string(ace.access_mask);
+        GPUI_INFO_STREAM << "type:" << ace.type;
     }
 }
 

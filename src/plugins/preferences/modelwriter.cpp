@@ -30,7 +30,7 @@
 #include "shortcuts/shortcutspreferencewriter.h"
 #include "variables/variablespreferencewriter.h"
 
-#include <QDebug>
+#include "../../core/logger/log.h"
 #include <QDir>
 #include <QMessageBox>
 
@@ -96,12 +96,12 @@ bool ModelWriter::saveModels(const std::string &policyPath,
                     writeSuccessful = false;
                 }
 
-                qWarning() << "Saving file: " << fullPath.c_str();
+                GPUI_WARNING_STREAM << "Saving file: " << fullPath.c_str();
             }
         }
         catch (std::exception &ex)
         {
-            qWarning() << ex.what();
+            GPUI_WARNING_STREAM << ex.what();
             writeSuccessful = false;
         }
 

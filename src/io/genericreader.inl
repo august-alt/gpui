@@ -24,7 +24,7 @@
 
 #include <fstream>
 
-#include <QDebug>
+#include "../core/logger/log.h"
 #include <QString>
 
 namespace io
@@ -41,7 +41,7 @@ std::unique_ptr<TData> GenericReader::load(const std::string &fileName)
 
     if (!format)
     {
-        qWarning() << "Format supporting: " << pluginName << " not found.";
+        GPUI_WARNING_STREAM << "Format supporting: " << pluginName << " not found.";
 
         return fileData;
     }
@@ -56,7 +56,7 @@ std::unique_ptr<TData> GenericReader::load(const std::string &fileName)
 
         if (!format->read(file, fileData.get()))
         {
-            qWarning() << fileName.c_str() << " " << format->getErrorString().c_str();
+            GPUI_WARNING_STREAM << fileName.c_str() << " " << format->getErrorString().c_str();
         }
     }
 
@@ -76,7 +76,7 @@ std::unique_ptr<TData> GenericReader::load(std::istream &fileContent, const std:
 
     if (!format)
     {
-        qWarning() << "Format supporting: " << pluginName.c_str() << " not found.";
+        GPUI_WARNING_STREAM << "Format supporting: " << pluginName.c_str() << " not found.";
 
         return fileData;
     }
@@ -87,7 +87,7 @@ std::unique_ptr<TData> GenericReader::load(std::istream &fileContent, const std:
 
         if (!format->read(fileContent, fileData.get()))
         {
-            qWarning() << "Error while reading file contents: " << format->getErrorString().c_str();
+            GPUI_WARNING_STREAM << "Error while reading file contents: " << format->getErrorString().c_str();
         }
     }
 

@@ -23,7 +23,7 @@
 
 #include <mvvm/factories/viewmodelfactory.h>
 
-#include <QDebug>
+#include "../../core/logger/log.h"
 
 namespace scripts_plugin
 {

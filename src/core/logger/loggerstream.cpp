@@ -20,6 +20,8 @@
 
 #include "loggerstream.h"
 
+#include <QKeySequence>
+
 namespace gpui
 {
 namespace logger
@@ -65,6 +67,8 @@ LoggerStream::~LoggerStream()
         this->loggerManager->logCritical(message, this->file, this->function, this->line);
     }
 }
+
+inline LoggerStream &LoggerStream::operator<<(const QKeySequence &value) { return *this << value.toString(); }
 
 } // namespace logger
 } // namespace gpui

@@ -22,6 +22,7 @@
 #define GPUI_LOG_H
 
 #include "loggermanager.h"
+#include "loggerstream.h"
 
 #define GPUI_DEBUG(message) \
     gpui::logger::LoggerManager::getInstance()->logDebug(message, __FILE__, __FUNCTION__, __LINE__)

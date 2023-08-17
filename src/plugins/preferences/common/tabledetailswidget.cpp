@@ -33,7 +33,7 @@
 #include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
-#include <QDebug>
+#include "../../../core/logger/log.h"
 
 namespace preferences
 {

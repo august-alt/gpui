@@ -23,7 +23,7 @@
 
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/viewitem.h>
-#include <QDebug>
+#include "../../core/logger/log.h"
 #include <QDesktopServices>
 
 namespace scripts_plugin
@@ -80,7 +80,7 @@ void BaseScriptTabWidget::onDeleteClicked()
         }
         else
         {
-            qWarning() << "Selected item:" << this->selectedItem << "Parent:" << this->selectedItem->item()->parent();
+            GPUI_WARNING_STREAM << "Selected item:" << this->selectedItem << "Parent:" << this->selectedItem->item()->parent();
         }
     }
 }

@@ -1,7 +1,7 @@
 #include "scriptssnapinprivate.h"
 #include "scriptitemcontainer.h"
 
-#include <QDebug>
+#include "../../core/logger/log.h"
 
 namespace scripts_plugin
 {

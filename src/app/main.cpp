@@ -102,12 +102,6 @@ int main(int argc, char **argv)
     fileLogger->setLogLevel(gpui::logger::InfoAndAbove);
     logManager->addLogger(fileLogger);
 
-    GPUI_DEBUG("debug test");
-    GPUI_INFO("info test");
-    GPUI_WARNING("warning test");
-    GPUI_ERROR("error test");
-    GPUI_CRITICAL("critical test");
-
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();
 

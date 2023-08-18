@@ -26,7 +26,23 @@ namespace gpui
 {
 namespace logger
 {
-std::shared_ptr<LoggerManager> LoggerManager::instance = nullptr;
+class LoggerManagerPrivate
+{
+public:
+    std::vector<std::shared_ptr<Logger>> loggers = {};
+    mutable std::mutex loggerMutex = {};
+};
+
+std::shared_ptr<LoggerManager> LoggerManager::instance{nullptr};
+
+LoggerManager::LoggerManager()
+    : d(new LoggerManagerPrivate)
+{}
+
+LoggerManager::~LoggerManager()
+{
+    delete d;
+}
 
 std::shared_ptr<LoggerManager> LoggerManager::getInstance()
 {
@@ -45,22 +61,24 @@ void LoggerManager::destroyInstance()
 
 void LoggerManager::addLogger(std::shared_ptr<Logger> logger)
 {
-    this->loggers.push_back(logger);
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    d->loggers.push_back(logger);
 }
 
 void LoggerManager::removeLogger(std::shared_ptr<Logger> logger)
 {
-    const auto search = std::find(this->loggers.begin(), this->loggers.end(), logger);
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    const auto search = std::find(d->loggers.begin(), d->loggers.end(), logger);
 
-    if (search != this->loggers.end())
+    if (search != d->loggers.end())
     {
-        this->loggers.erase(search);
+        d->loggers.erase(search);
     }
 }
 
 void LoggerManager::clearLoggers()
 {
-    this->loggers.clear();
+    d->loggers.clear();
 }
 
 void LoggerManager::logDebug(const std::string &message,
@@ -68,7 +86,8 @@ void LoggerManager::logDebug(const std::string &message,
                              const std::string &function,
                              const uint32_t line)
 {
-    for (const auto &logger : this->loggers)
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    for (const auto &logger : d->loggers)
     {
         logger->onDebug(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
     }
@@ -79,7 +98,8 @@ void LoggerManager::logInfo(const std::string &message,
                             const std::string &function,
                             const uint32_t line)
 {
-    for (const auto &logger : this->loggers)
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    for (const auto &logger : d->loggers)
     {
         logger->onInfo(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
     }
@@ -90,7 +110,8 @@ void LoggerManager::logWarning(const std::string &message,
                                const std::string &function,
                                const uint32_t line)
 {
-    for (const auto &logger : this->loggers)
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    for (const auto &logger : d->loggers)
     {
         logger->onWarning(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
     }
@@ -101,7 +122,8 @@ void LoggerManager::logError(const std::string &message,
                              const std::string &function,
                              const uint32_t line)
 {
-    for (const auto &logger : this->loggers)
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    for (const auto &logger : d->loggers)
     {
         logger->onError(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
     }
@@ -112,7 +134,8 @@ void LoggerManager::logCritical(const std::string &message,
                                 const std::string &function,
                                 const uint32_t line)
 {
-    for (const auto &logger : this->loggers)
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    for (const auto &logger : d->loggers)
     {
         logger->onCritical(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
     }
@@ -120,7 +143,8 @@ void LoggerManager::logCritical(const std::string &message,
 
 size_t LoggerManager::getLoggerCount() const
 {
-    return this->loggers.size();
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    return d->loggers.size();
 }
 
 std::tm LoggerManager::getCurrentTime()

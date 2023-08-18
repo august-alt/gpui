@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Test Clang
-        if: ${{ inputs.cpp-compiler }} == "clang"
+        if: inputs.cpp-compiler == 'clang'
         env:
           QT_QPA_PLATFORM: offscreen
         run: |
@@ -32,7 +32,7 @@ jobs:
           make test
 
       - name: Test GCC
-        if: ${{ inputs.cpp-compiler }} != "clang"
+        if: inputs.cpp-compiler != 'clang'
         env:
           QT_QPA_PLATFORM: offscreen
         run: |

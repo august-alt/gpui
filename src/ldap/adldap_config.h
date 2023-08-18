@@ -21,7 +21,7 @@
 #if !defined(__ADLDAP_CONFIG_H)
 #   define __ADLDAP_CONFIG_H 1
 
-#define NDR_VERSION_GREATER_THAN_1_0_1 "ON"
+/* #undef NDR_VERSION_GREATER_THAN_1_0_1 */
 
 #endif /* __ADLDAP_CONFIG_H */
 

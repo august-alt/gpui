@@ -24,8 +24,6 @@ namespace gpui
 {
 namespace logger
 {
-Logger::Logger() {}
-
 void Logger::setLogLevel(int mask)
 {
     this->logLevelMask = mask;

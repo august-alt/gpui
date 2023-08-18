@@ -26,8 +26,6 @@ namespace gpui
 {
 namespace logger
 {
-LoggerManager::LoggerManager() {}
-
 std::shared_ptr<LoggerManager> LoggerManager::instance = nullptr;
 
 std::shared_ptr<LoggerManager> LoggerManager::getInstance()

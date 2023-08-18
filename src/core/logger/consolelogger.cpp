@@ -29,8 +29,6 @@ namespace gpui
 {
 namespace logger
 {
-ConsoleLogger::ConsoleLogger() {}
-
 void ConsoleLogger::logDebug(const LoggerMessage &message)
 {
     std::string prefix = "DEBUG";

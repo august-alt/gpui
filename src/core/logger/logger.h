@@ -50,9 +50,9 @@ enum LogMask
 class GPUI_CORE_EXPORT Logger
 {
 public:
-public:
-    Logger();
+    Logger() = default;
     virtual ~Logger() = default;
+
     void setLogLevel(int mask);
     bool isLogLevel(int mask);
 

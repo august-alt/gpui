@@ -31,9 +31,6 @@ namespace logger
 {
 class GPUI_CORE_EXPORT ConsoleLogger : public Logger
 {
-public:
-    ConsoleLogger();
-
 private:
     void logDebug(const LoggerMessage &message) override;
     void logInfo(const LoggerMessage &message) override;

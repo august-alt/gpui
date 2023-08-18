@@ -38,7 +38,7 @@ public:
     static std::shared_ptr<LoggerManager> getInstance();
     static void destroyInstance();
 
-    LoggerManager();
+    LoggerManager() = default;
     ~LoggerManager() = default;
 
     void addLogger(std::shared_ptr<Logger> logger);

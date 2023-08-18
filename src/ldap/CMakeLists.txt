@@ -1,3 +1,4 @@
+find_package(GPUI COMPONENTS core REQUIRED)
 find_package(Qt5 COMPONENTS Core Gui REQUIRED)
 find_package(Ldap REQUIRED)
 
@@ -76,4 +77,5 @@ target_link_libraries(gpui-ldap Qt5::Core
     PkgConfig::NdrStandard
     PkgConfig::Sasl
     resolv
+    gpui-core
 )

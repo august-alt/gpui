@@ -29,6 +29,7 @@ namespace gpui
 {
 namespace logger
 {
+
 class LoggerMessage
 {
 public:
@@ -46,6 +47,7 @@ public:
         , threadId(threadId_)
     {}
 
+    // __attribute__((__format__ (__strftime__, 2, 0)))
     std::string getTimeFormatted(const char *format) const
     {
         char timeString[50];

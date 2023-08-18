@@ -25,6 +25,7 @@ RUN apt-get update \
     rpm-macros-cmake \
     cmake-modules \
     gcc-c++ \
+    llvm-common \
     qt5-base-devel \
     qt5-declarative-devel \
     qt5-tools-devel \

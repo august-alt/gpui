@@ -42,7 +42,9 @@ typedef ::std::variant<std::shared_ptr<DecimalTextBox>,
                        std::shared_ptr<GroupBox>,
                        std::shared_ptr<ListBox>,
                        std::shared_ptr<Comment>,
-                       std::shared_ptr<Text> > PresentationElement;
+                       std::shared_ptr<Text>,
+                       std::shared_ptr<LdapSearchDialog>,
+                       std::shared_ptr<RadioButton> > PresentationElement;
 
 /*!
  * \class SecurityPresentation

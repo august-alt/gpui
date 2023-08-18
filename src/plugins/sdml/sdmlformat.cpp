@@ -225,6 +225,63 @@ public:
     }
 };
 
+class XsdLdapSearchDialogAdapter : public security::LdapSearchDialog
+{
+private:
+    typedef ::GroupPolicy::SecurityDefinitions::LdapSearchDialog LdapSearchDialog;
+
+public:
+    XsdLdapSearchDialogAdapter(const LdapSearchDialog &widget)
+        : security::LdapSearchDialog()
+    {
+        Q_UNUSED(widget);
+        // TODO: Implement.
+    }
+
+    static std::shared_ptr<security::LdapSearchDialog> create(const LdapSearchDialog &string)
+    {
+        return std::make_shared<XsdLdapSearchDialogAdapter>(string);
+    }
+};
+
+class XsdRadioButtonAdapter : public security::RadioButton
+{
+private:
+    typedef ::GroupPolicy::SecurityDefinitions::RadioButton RadioButton;
+
+public:
+    XsdRadioButtonAdapter(const RadioButton& widget)
+        : security::RadioButton()
+    {
+        Q_UNUSED(widget);
+        // TODO: Implement.
+    }
+
+    static std::shared_ptr<security::RadioButton> create(const RadioButton &radioButton)
+    {
+        return std::make_shared<XsdRadioButtonAdapter>(radioButton);
+    }
+};
+
+class XsdGroupBoxAdapter : public security::GroupBox
+{
+private:
+    typedef ::GroupPolicy::SecurityDefinitions::GroupBox GroupBox;
+
+public:
+    XsdGroupBoxAdapter(const GroupBox& widget)
+        : security::GroupBox()
+    {
+        Q_UNUSED(widget);
+        // TODO: Implement.
+    }
+
+    static std::shared_ptr<security::GroupBox> create(const GroupBox &groupBox)
+    {
+        return std::make_shared<XsdGroupBoxAdapter>(groupBox);
+    }
+};
+
 template<typename AdapterType, typename SequenceType>
 void adapt_widgets(const SequenceType &sequence,
                    std::map<std::string, std::shared_ptr<security::DataElement>> &widgets)
@@ -319,6 +376,24 @@ public:
                     {
                         auto text      = std::make_unique<::GroupPolicy::SecurityDefinitions::Comment>(*elementNode);
                         // TODO: Implement.
+                    }
+                    else if (elementType.compare("ldapSearchDialog") == 0)
+                    {
+                        auto ldapSearch = std::make_unique<::GroupPolicy::SecurityDefinitions::LdapSearchDialog>(*elementNode);
+                        auto widget = XsdLdapSearchDialogAdapter::create(*ldapSearch);
+                        widgetsVector.emplace_back(ldapSearch->refId(), widget);
+                    }
+                    else if (elementType.compare("radioButton") == 0)
+                    {
+                        auto radioButton = std::make_unique<::GroupPolicy::SecurityDefinitions::RadioButton>(*elementNode);
+                        auto widget = XsdRadioButtonAdapter::create(*radioButton);
+                        widgetsVector.emplace_back(radioButton->refId(), widget);
+                    }
+                    else if (elementType.compare("groupBox") == 0)
+                    {
+                        auto groupBox = std::make_unique<::GroupPolicy::SecurityDefinitions::GroupBox>(*elementNode);
+                        auto widget = XsdGroupBoxAdapter::create(*groupBox);
+                        widgetsVector.emplace_back(groupBox->refId(), widget);
                     }
                 }
             }

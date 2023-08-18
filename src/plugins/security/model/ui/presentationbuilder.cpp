@@ -180,6 +180,20 @@ public:
         Q_UNUSED(widget);
     }
 
+    void visit(LdapSearchDialog &widget) const
+    {
+        // TODO: Implement.
+
+        Q_UNUSED(widget);
+    }
+
+    void visit(RadioButton &widget) const
+    {
+        // TODO: Implement.
+
+        Q_UNUSED(widget);
+    }
+
     void visit(Comment &widget) const
     {
         QLabel *label = new QLabel();
@@ -305,6 +319,14 @@ QVBoxLayout *PresentationBuilder::build(const PresentationBuilderParams &params)
                 d->visit(*arg);
             }
             else if constexpr (std::is_same_v<T, std::shared_ptr<Text> >)
+            {
+                d->visit(*arg);
+            }
+            else if constexpr (std::is_same_v<T, std::shared_ptr<LdapSearchDialog> >)
+            {
+                d->visit(*arg);
+            }
+            else if constexpr (std::is_same_v<T, std::shared_ptr<RadioButton> >)
             {
                 d->visit(*arg);
             }

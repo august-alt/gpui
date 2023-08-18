@@ -29,6 +29,8 @@
 #include "groupbox.h"
 #include "listbox.h"
 #include "longdecimaltextbox.h"
+#include "ldapsearchdialog.h"
+#include "radiobutton.h"
 #include "multitextbox.h"
 #include "textbox.h"
 #include "text.h"
@@ -102,6 +104,16 @@ public:
      * \brief text
      */
     std::vector<Text> text{};
+
+    /*!
+     * \brief ldapSearchDialog
+     */
+    std::vector<LdapSearchDialog> ldapSearchDialog{};
+
+    /*!
+     * \brief radioButton
+     */
+    std::vector<RadioButton> radioButton{};
 };
 
 } // of namespace security

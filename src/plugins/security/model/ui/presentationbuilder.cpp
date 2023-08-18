@@ -46,6 +46,7 @@
 #include <QIntValidator>
 #include <QComboBox>
 #include <QGroupBox>
+#include <QRadioButton>
 
 #include <gui/altspinbox.h>
 
@@ -189,9 +190,12 @@ public:
 
     void visit(RadioButton &widget) const
     {
-        // TODO: Implement.
+        QRadioButton *radioButton = new QRadioButton();
 
-        Q_UNUSED(widget);
+        radioButton->setChecked(widget.defaultChecked);
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(radioButton, "");
+
+        addToLayout(container);
     }
 
     void visit(Comment &widget) const

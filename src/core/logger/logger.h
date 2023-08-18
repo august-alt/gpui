@@ -45,12 +45,14 @@ enum LogMask
     InfoAndAbove    = All - Debug,
     WarningAndAbove = InfoAndAbove - Info,
     ErrorAndAbove   = WarningAndAbove - Warning,
+    // Instead of CriticalAndAbove use LogLevel::Critical
+    None            = 0,
 };
 
 class GPUI_CORE_EXPORT Logger
 {
 public:
-    Logger() = default;
+    Logger()          = default;
     virtual ~Logger() = default;
 
     void setLogLevel(int mask);

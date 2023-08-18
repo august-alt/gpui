@@ -32,14 +32,16 @@ namespace gpui
 {
 namespace logger
 {
+class LoggerManagerPrivate;
+
 class GPUI_CORE_EXPORT LoggerManager
 {
 public:
     static std::shared_ptr<LoggerManager> getInstance();
     static void destroyInstance();
 
-    LoggerManager() = default;
-    ~LoggerManager() = default;
+    LoggerManager();
+    ~LoggerManager();
 
     void addLogger(std::shared_ptr<Logger> logger);
     void removeLogger(std::shared_ptr<Logger> logger);
@@ -65,12 +67,10 @@ private:
     LoggerManager &operator=(LoggerManager &&) = delete;      // move assignment
 
 private:
-    static std::shared_ptr<LoggerManager> instance;
     static std::tm getCurrentTime();
 
-    std::vector<std::shared_ptr<Logger>> loggers = {};
-
-    mutable std::mutex loggerMutex = {};
+    static std::shared_ptr<LoggerManager> instance;
+    LoggerManagerPrivate *d;
 };
 } // namespace logger
 } // namespace gpui

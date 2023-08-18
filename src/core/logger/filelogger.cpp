@@ -32,8 +32,9 @@ namespace logger
 {
 FileLogger::FileLogger(const char *filename)
 {
+    // TODO(mchernigin): timestamp on creation/editing log file is UTC and local timezone
     std::string homeDir = getHomeDir();
-    std::string logDir  = homeDir + "/.local/share/gpui";
+    std::string logDir  = homeDir + "/.local/share/gpui/";
     ensureDir(logDir.c_str());
 
     std::string logFile = logDir + filename;
@@ -76,29 +77,39 @@ void FileLogger::logMessage(const std::string &prefix, const LoggerMessage &mess
                         << message.filePath << ":" << message.line << ")" << std::endl;
 }
 
-const char *FileLogger::getHomeDir()
+std::string FileLogger::getHomeDir()
 {
-    const char *homeDir = getenv("HOME");
-    if (homeDir == NULL)
+    const char *HOME = getenv("HOME");
+    if (HOME != NULL)
     {
-        // NOTE(mchernigin): it might be an overkill, checking $HOME should be enough for this use case
-        long bufsize = 1 << 14;
-        char *buf    = new char[bufsize];
-        passwd pwd;
-        passwd *result;
-        int s = getpwuid_r(getuid(), &pwd, buf, bufsize, &result);
-        if (result != NULL)
-        {
-            homeDir = result->pw_dir;
-        }
-        else
-        {
-            homeDir = "/root";
-            std::cerr << "FileLogger Error: cannot determine home directory, defaulting to " << homeDir;
-        }
-
-        delete[] buf;
+        return HOME;
     }
+
+    // NOTE(mchernigin): it might be an overkill, checking $HOME should be enough for this use case
+    long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+    if (bufsize == -1)
+    {
+        bufsize = 1 << 14;
+    }
+
+    char *resultBuf = new char[bufsize];
+    passwd pwd;
+    passwd *result;
+    getpwuid_r(getuid(), &pwd, resultBuf, bufsize, &result);
+
+    std::string homeDir;
+    if (result != NULL)
+    {
+        // TODO(mchernigin): does it actually copy chars under a pointer into a string?
+        homeDir = result->pw_dir;
+    }
+    else
+    {
+        homeDir = "/root";
+        std::cerr << "FileLogger Error: cannot determine home directory, defaulting to " << homeDir << std::endl;
+    }
+
+    delete[] resultBuf;
 
     return homeDir;
 }
@@ -108,7 +119,7 @@ bool FileLogger::ensureDir(const char *path)
     struct stat sb;
     if (stat(path, &sb) != 0 && mkdir(path, 0750) != 0)
     {
-        std::cerr << "Cannot create log directory (" << path << ")\n";
+        std::cerr << "FileLogger Error: Cannot create log directory (" << path << ")" << std::endl;
         return false;
     }
 

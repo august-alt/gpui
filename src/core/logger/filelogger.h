@@ -46,7 +46,7 @@ private:
 
     void logMessage(const std::string &prefix, const LoggerMessage &message);
 
-    static const char *getHomeDir();
+    static std::string getHomeDir();
     static bool ensureDir(const char *path);
 
     std::fstream logFileStream = {};

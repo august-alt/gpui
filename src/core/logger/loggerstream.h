@@ -22,6 +22,7 @@
 #define GPUI_LOGGER_STREAM_H
 
 #include "loggermanager.h"
+#include "loggerstreamprivate.h"
 
 #include <memory>
 #include <sstream>
@@ -46,23 +47,23 @@ public:
     ~LoggerStream();
 
     template<typename T>
-    inline LoggerStream &operator<<(const T &value)
+    LoggerStream &operator<<(const T &value)
     {
-        this->buf << value;
+        d->buf << value;
 
-        if (this->add_space)
+        if (d->add_space)
         {
-            this->buf << ' ';
+            d->buf << ' ';
         }
 
         return (*this);
     }
 
     template<typename T>
-    inline LoggerStream &operator<<(const std::vector<T> &value)
+    LoggerStream &operator<<(const std::vector<T> &value)
     {
-        bool old_add_space = this->add_space;
-        this->add_space    = false;
+        bool old_add_space = d->add_space;
+        d->add_space       = false;
 
         *this << '{';
         for (size_t i = 0; i < value.size(); ++i)
@@ -75,7 +76,7 @@ public:
         }
         *this << '}';
 
-        this->add_space = old_add_space;
+        d->add_space = old_add_space;
 
         return *this;
     }
@@ -92,14 +93,15 @@ public:
 
     inline LoggerStream &operator<<(const QModelIndex &value)
     {
-        this->buf << "QModelIndex(" << value.row() << ", " << value.column() << ", " << value.internalPointer() << ", "
-                  << value.model() << ')';
+        d->buf << "QModelIndex(" << value.row() << ", " << value.column() << ", " << value.internalPointer() << ", "
+               << value.model() << ')';
         return *this;
     }
 
     inline LoggerStream &operator<<(const QString &value) { return *this << value.constData(); }
     inline LoggerStream &operator<<(const QVariant &value) { return *this << value.toString(); }
     inline LoggerStream &operator<<(const QUuid &value) { return *this << value.toString(); }
+
     LoggerStream &operator<<(const QKeySequence &value);
 
 private:
@@ -109,13 +111,7 @@ private:
     LoggerStream &operator=(LoggerStream &&) = delete;      // move assignment
 
 private:
-    std::shared_ptr<LoggerManager> loggerManager = nullptr;
-    std::stringstream buf                        = {};
-    int logMask                                  = 0;
-    const std::string &file                      = {};
-    const std::string &function                  = {};
-    const uint32_t line                          = 0;
-    bool add_space                               = true;
+    LoggerStreamPrivate *d;
 };
 
 } // namespace logger

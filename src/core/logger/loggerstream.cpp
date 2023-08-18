@@ -26,49 +26,56 @@ namespace gpui
 {
 namespace logger
 {
-LoggerStream::LoggerStream(std::shared_ptr<LoggerManager> loggerManager_,
-                           int logMask_,
-                           const std::string &file_,
-                           const std::string &function_,
-                           const uint32_t line_)
-    : loggerManager(loggerManager_)
-    , logMask(logMask_)
-    , file(file_)
-    , function(function_)
-    , line(line_)
-{}
+LoggerStream::LoggerStream(std::shared_ptr<LoggerManager> loggerManager,
+                           int logMask,
+                           const std::string &file,
+                           const std::string &function,
+                           const uint32_t line)
+    : d(new LoggerStreamPrivate())
+{
+    d->loggerManager = loggerManager;
+    d->logMask       = logMask;
+    d->file          = file;
+    d->function      = function;
+    d->line          = line;
+}
 
 LoggerStream::~LoggerStream()
 {
-    std::string message = this->buf.str();
+    std::string message = d->buf.str();
     if (message.back() == ' ')
     {
         message.pop_back();
     }
 
-    if (this->logMask & LogLevel::Debug)
+    if (d->logMask & LogLevel::Debug)
     {
-        this->loggerManager->logDebug(message, this->file, this->function, this->line);
+        d->loggerManager->logDebug(message, d->file, d->function, d->line);
     }
-    if (this->logMask & LogLevel::Info)
+    if (d->logMask & LogLevel::Info)
     {
-        this->loggerManager->logInfo(message, this->file, this->function, this->line);
+        d->loggerManager->logInfo(message, d->file, d->function, d->line);
     }
-    if (this->logMask & LogLevel::Warning)
+    if (d->logMask & LogLevel::Warning)
     {
-        this->loggerManager->logWarning(message, this->file, this->function, this->line);
+        d->loggerManager->logWarning(message, d->file, d->function, d->line);
     }
-    if (this->logMask & LogLevel::Error)
+    if (d->logMask & LogLevel::Error)
     {
-        this->loggerManager->logError(message, this->file, this->function, this->line);
+        d->loggerManager->logError(message, d->file, d->function, d->line);
     }
-    if (this->logMask & LogLevel::Critical)
+    if (d->logMask & LogLevel::Critical)
     {
-        this->loggerManager->logCritical(message, this->file, this->function, this->line);
+        d->loggerManager->logCritical(message, d->file, d->function, d->line);
     }
+
+    delete d;
 }
 
-inline LoggerStream &LoggerStream::operator<<(const QKeySequence &value) { return *this << value.toString(); }
+LoggerStream &LoggerStream::operator<<(const QKeySequence &value)
+{
+    return *this << value.toString();
+}
 
 } // namespace logger
 } // namespace gpui

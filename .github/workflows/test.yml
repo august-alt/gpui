@@ -7,6 +7,10 @@ on:
         description: "Architecture"
         type: string
         required: true
+      cpp-compiler:
+        description: "C++ compiler"
+        type: "string"
+        default: "gcc"
 
 jobs:
   gpui-test:
@@ -17,7 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Test
+      - name: Test Clang
+        if: inputs.cpp-compiler == 'clang'
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          CXX=clang++ cmake -B build -DCMAKE_BUILD_TYPE:STRING=Debug -DGPUI_BUILD_TESTS:BOOL=ON .
+          cd build
+          make -j `nproc`
+          make test
+
+      - name: Test GCC
+        if: inputs.cpp-compiler != 'clang'
         env:
           QT_QPA_PLATFORM: offscreen
         run: |

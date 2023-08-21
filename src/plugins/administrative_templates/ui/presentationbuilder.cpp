@@ -266,7 +266,7 @@ public:
         {
              elementInfo = findElementInfo();
 
-            if (listElement = dynamic_cast<PolicyListElement *>(elementInfo.element))
+            if ((listElement = dynamic_cast<PolicyListElement *>(elementInfo.element)))
             {
                 qWarning() << "List element: " << listElement->id.c_str() << "\n"
                            << "key: " << listElement->key.c_str() << "\n"

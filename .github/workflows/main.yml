@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   workflow_call:
   push:
-    branches: [ master ]
+    branches: [ "*" ]
   pull_request:
     types: [ opened, synchronize, ready_for_review ]
 
@@ -41,8 +41,13 @@ jobs:
     uses: ./.github/workflows/test.yml
     needs: [ gpui-build-container ]
     secrets: inherit
+    strategy:
+      matrix:
+        cpp-compiler: [ "gcc", "clang" ]
+      fail-fast: false
     with:
       architecture: "amd64"
+      cpp-compiler: ${{ matrix.cpp-compiler }}
 
   gpui-publish-api-docs:
     uses: ./.github/workflows/publish-api-docs.yml

@@ -215,7 +215,8 @@ public:
     XsdTextAdapter(const TextElement &widget)
         : security::Text()
     {
-        Q_UNUSED(widget);
+        this->refId = widget.refId();
+
         // TODO: Implement.
     }
 
@@ -278,8 +279,15 @@ public:
     XsdGroupBoxAdapter(const GroupBox& widget)
         : security::GroupBox()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        this->refId = widget.refId();
+
+        assign_if_exists(this->label, widget.label());
+
+        assign_if_exists(this->hasCheckBox, widget.hasCheckBox());
+
+        assign_if_exists(this->defaultChecked, widget.defaultChecked());
+
+        assign_if_exists(this->hasBorder, widget.hasBorder());
     }
 
     static std::shared_ptr<security::GroupBox> create(const GroupBox &groupBox)

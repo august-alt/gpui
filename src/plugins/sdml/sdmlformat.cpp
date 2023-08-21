@@ -258,8 +258,9 @@ public:
     XsdRadioButtonAdapter(const RadioButton& widget)
         : security::RadioButton()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        this->refId = widget.refId();
+
+        assign_if_exists(this->defaultChecked, widget.defaultChecked());
     }
 
     static std::shared_ptr<security::RadioButton> create(const RadioButton &radioButton)

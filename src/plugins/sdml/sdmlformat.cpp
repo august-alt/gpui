@@ -234,8 +234,13 @@ public:
     XsdLdapSearchDialogAdapter(const LdapSearchDialog &widget)
         : security::LdapSearchDialog()
     {
-        Q_UNUSED(widget);
-        // TODO: Implement.
+        this->refId = widget.refId();
+
+        assign_if_exists(this->postfix, widget.postfix());
+        assign_if_exists(this->dn, widget.dn());
+        assign_if_exists(this->filter, widget.filter());
+        assign_if_exists(this->addLabel, widget.addLabel());
+        assign_if_exists(this->removeLabel, widget.removeLabel());
     }
 
     static std::shared_ptr<security::LdapSearchDialog> create(const LdapSearchDialog &string)

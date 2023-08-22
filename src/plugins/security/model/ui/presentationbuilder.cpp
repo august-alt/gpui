@@ -35,6 +35,7 @@
 #include "../presentation/textbox.h"
 
 #include "../presentation/securitypresentationresources.h"
+#include "ldapsearchlistwidget.h"
 
 #include <type_traits>
 #include <variant>
@@ -183,9 +184,14 @@ public:
 
     void visit(LdapSearchDialog &widget) const
     {
-        // TODO: Implement.
+        LdapSearchListWidget* ldapSearchListWidget = new LdapSearchListWidget(widget.filter, widget.dn);
+        ldapSearchListWidget->setAddButtonText(QString::fromStdString(widget.addLabel));
+        ldapSearchListWidget->setRemoveButtonText(QString::fromStdString(widget.removeLabel));
 
-        Q_UNUSED(widget);
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(ldapSearchListWidget,
+                                                                   QString::fromStdString(widget.postfix));
+
+        addToLayout(container);
     }
 
     void visit(RadioButton &widget) const

@@ -21,12 +21,12 @@
 #ifndef GPUI_LOGGER_MANAGER_H
 #define GPUI_LOGGER_MANAGER_H
 
-#include "logger.h"
 #include "../core.h"
+#include "logger.h"
 
 #include <memory>
-#include <vector>
 #include <mutex>
+#include <vector>
 
 #include <QString>
 
@@ -56,11 +56,11 @@ public:
                     const std::string &file,
                     const std::string &function,
                     const uint32_t line);
-    void logError(const std::string &message, const std::string &file, const std::string &function, const uint32_t line);
     void logCritical(const std::string &message,
                      const std::string &file,
                      const std::string &function,
                      const uint32_t line);
+    void logFatal(const std::string &message, const std::string &file, const std::string &function, const uint32_t line);
 
 private:
     LoggerManager(const LoggerManager &) = delete;            // copy ctor

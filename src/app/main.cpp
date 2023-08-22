@@ -90,15 +90,15 @@ int main(int argc, char **argv)
     auto logManager = gpui::logger::LoggerManager::globalInstance();
 
     auto consoleLogger = std::make_shared<gpui::logger::ConsoleLogger>();
-    consoleLogger->setLogLevel(gpui::logger::All);
+    consoleLogger->setLogLevel(QtDebugMsg);
     logManager->addLogger(consoleLogger);
 
     auto syslogLogger = std::make_shared<gpui::logger::SyslogLogger>();
-    syslogLogger->setLogLevel(gpui::logger::WarningAndAbove);
+    syslogLogger->setLogLevel(QtWarningMsg);
     logManager->addLogger(syslogLogger);
 
     auto fileLogger = std::make_shared<gpui::logger::FileLogger>();
-    fileLogger->setLogLevel(gpui::logger::InfoAndAbove);
+    fileLogger->setLogLevel(QtInfoMsg);
     logManager->addLogger(fileLogger);
 
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);

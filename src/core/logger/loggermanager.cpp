@@ -110,18 +110,6 @@ void LoggerManager::logWarning(const std::string &message,
     }
 }
 
-void LoggerManager::logError(const std::string &message,
-                             const std::string &file,
-                             const std::string &function,
-                             const uint32_t line)
-{
-    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
-    for (const auto &logger : d->loggers)
-    {
-        logger->onError(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
-    }
-}
-
 void LoggerManager::logCritical(const std::string &message,
                                 const std::string &file,
                                 const std::string &function,
@@ -131,6 +119,18 @@ void LoggerManager::logCritical(const std::string &message,
     for (const auto &logger : d->loggers)
     {
         logger->onCritical(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
+    }
+}
+
+void LoggerManager::logFatal(const std::string &message,
+                             const std::string &file,
+                             const std::string &function,
+                             const uint32_t line)
+{
+    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
+    for (const auto &logger : d->loggers)
+    {
+        logger->onFatal(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
     }
 }
 
@@ -160,10 +160,10 @@ void LoggerManager::messageHandler(QtMsgType type, const QMessageLogContext &con
             logger->logWarning(msg.toStdString(), file, function, line);
             break;
         case QtCriticalMsg:
-            logger->logError(msg.toStdString(), file, function, line);
+            logger->logCritical(msg.toStdString(), file, function, line);
             break;
         case QtFatalMsg:
-            logger->logCritical(msg.toStdString(), file, function, line);
+            logger->logFatal(msg.toStdString(), file, function, line);
             break;
     }
 }

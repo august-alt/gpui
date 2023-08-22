@@ -39,27 +39,27 @@ SyslogLogger::~SyslogLogger()
 
 void SyslogLogger::logDebug(const LoggerMessage &message)
 {
-    logMessage(LOG_DEBUG, "DEBUG", message);
+    logMessage(LOG_DEBUG, this->logLevelMap.at(QtDebugMsg), message);
 }
 
 void SyslogLogger::logInfo(const LoggerMessage &message)
 {
-    logMessage(LOG_INFO, "INFO", message);
+    logMessage(LOG_INFO, this->logLevelMap.at(QtInfoMsg), message);
 }
 
 void SyslogLogger::logWarning(const LoggerMessage &message)
 {
-    logMessage(LOG_WARNING, "WARNING", message);
-}
-
-void SyslogLogger::logError(const LoggerMessage &message)
-{
-    logMessage(LOG_ERR, "ERROR", message);
+    logMessage(LOG_WARNING, this->logLevelMap.at(QtWarningMsg), message);
 }
 
 void SyslogLogger::logCritical(const LoggerMessage &message)
 {
-    logMessage(LOG_CRIT, "CRITICAL", message);
+    logMessage(LOG_ERR, this->logLevelMap.at(QtCriticalMsg), message);
+}
+
+void SyslogLogger::logFatal(const LoggerMessage &message)
+{
+    logMessage(LOG_CRIT, this->logLevelMap.at(QtFatalMsg), message);
 }
 
 void SyslogLogger::logMessage(const int log_flag, const std::string &prefix, const LoggerMessage &message)

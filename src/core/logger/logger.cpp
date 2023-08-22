@@ -24,19 +24,19 @@ namespace gpui
 {
 namespace logger
 {
-void Logger::setLogLevel(int mask)
+void Logger::setLogLevel(QtMsgType level)
 {
-    this->logLevelMask = mask;
+    this->minLogLevel = level;
 }
 
-bool Logger::isLogLevel(int mask)
+bool Logger::isLogLevel(QtMsgType level)
 {
-    return this->logLevelMask & mask;
+    return level >= this->minLogLevel;
 }
 
 void Logger::onDebug(const LoggerMessage &message)
 {
-    if (isLogLevel(LogLevel::Debug))
+    if (isLogLevel(QtDebugMsg))
     {
         logDebug(message);
     }
@@ -44,7 +44,7 @@ void Logger::onDebug(const LoggerMessage &message)
 
 void Logger::onInfo(const LoggerMessage &message)
 {
-    if (isLogLevel(LogLevel::Info))
+    if (isLogLevel(QtInfoMsg))
     {
         logInfo(message);
     }
@@ -52,25 +52,25 @@ void Logger::onInfo(const LoggerMessage &message)
 
 void Logger::onWarning(const LoggerMessage &message)
 {
-    if (isLogLevel(LogLevel::Warning))
+    if (isLogLevel(QtWarningMsg))
     {
         logWarning(message);
     }
 }
 
-void Logger::onError(const LoggerMessage &message)
+void Logger::onCritical(const LoggerMessage &message)
 {
-    if (isLogLevel(LogLevel::Error))
+    if (isLogLevel(QtCriticalMsg))
     {
-        logError(message);
+        logCritical(message);
     }
 }
 
-void Logger::onCritical(const LoggerMessage &message)
+void Logger::onFatal(const LoggerMessage &message)
 {
-    if (isLogLevel(LogLevel::Critical))
+    if (isLogLevel(QtFatalMsg))
     {
-        logCritical(message);
+        logFatal(message);
     }
 }
 } // namespace logger

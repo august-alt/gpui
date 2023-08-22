@@ -25,52 +25,7 @@
 #include <iostream>
 #include <unistd.h>
 
-namespace gpui
-{
-namespace logger
-{
-void ConsoleLogger::logDebug(const LoggerMessage &message)
-{
-    std::string prefix = "DEBUG";
-    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;96") : prefix;
-    logMessage(prefix, message);
-}
-
-void ConsoleLogger::logInfo(const LoggerMessage &message)
-{
-    std::string prefix = "INFO";
-    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;34") : prefix;
-    logMessage(prefix, message);
-}
-
-void ConsoleLogger::logWarning(const LoggerMessage &message)
-{
-    std::string prefix = "WARNING";
-    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;33") : prefix;
-    logMessage(prefix, message);
-}
-
-void ConsoleLogger::logError(const LoggerMessage &message)
-{
-    std::string prefix = "ERROR";
-    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;31") : prefix;
-    logMessage(prefix, message);
-}
-
-void ConsoleLogger::logCritical(const LoggerMessage &message)
-{
-    std::string prefix = "CRITICAL";
-    prefix             = checkColorSupport(STDERR_FILENO) ? colorize(prefix, "1;91") : prefix;
-    logMessage(prefix, message);
-}
-
-void ConsoleLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
-{
-    std::clog << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
-              << message.filePath << ":" << message.line << ")" << std::endl;
-}
-
-bool ConsoleLogger::checkColorSupport(int fd)
+static bool checkColorSupport(int fd)
 {
     // TODO(mchernigin): use `tput colors`, and use method bellow only if `tput` returns !0
 
@@ -80,9 +35,59 @@ bool ConsoleLogger::checkColorSupport(int fd)
     return is_tty && TERM != NULL && strcmp(TERM, "dumb") != 0;
 }
 
-std::string ConsoleLogger::colorize(const std::string &text, const char *params)
+static std::string colorize(const std::string &text, const char *params)
 {
     return std::string("\033[") + params + "m" + text + "\033[0m";
+}
+
+namespace gpui
+{
+namespace logger
+{
+ConsoleLogger::ConsoleLogger()
+{
+    this->hasColorSupport = checkColorSupport(STDERR_FILENO);
+}
+
+void ConsoleLogger::logDebug(const LoggerMessage &message)
+{
+    const std::string prefix = this->logLevelMap.at(QtDebugMsg);
+    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;96") : prefix;
+    logMessage(coloredPrefix, message);
+}
+
+void ConsoleLogger::logInfo(const LoggerMessage &message)
+{
+    const std::string prefix = this->logLevelMap.at(QtInfoMsg);
+    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;34") : prefix;
+    logMessage(coloredPrefix, message);
+}
+
+void ConsoleLogger::logWarning(const LoggerMessage &message)
+{
+    const std::string prefix = this->logLevelMap.at(QtWarningMsg);
+    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;33") : prefix;
+    logMessage(coloredPrefix, message);
+}
+
+void ConsoleLogger::logCritical(const LoggerMessage &message)
+{
+    const std::string prefix = this->logLevelMap.at(QtCriticalMsg);
+    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;31") : prefix;
+    logMessage(coloredPrefix, message);
+}
+
+void ConsoleLogger::logFatal(const LoggerMessage &message)
+{
+    const std::string prefix = this->logLevelMap.at(QtFatalMsg);
+    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;91") : prefix;
+    logMessage(coloredPrefix, message);
+}
+
+void ConsoleLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
+{
+    std::clog << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
+              << message.filePath << ":" << message.line << ")" << std::endl;
 }
 } // namespace logger
 } // namespace gpui

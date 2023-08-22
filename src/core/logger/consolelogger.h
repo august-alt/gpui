@@ -31,17 +31,19 @@ namespace logger
 {
 class GPUI_CORE_EXPORT ConsoleLogger : public Logger
 {
+public:
+    ConsoleLogger();
+
 private:
     void logDebug(const LoggerMessage &message) override;
     void logInfo(const LoggerMessage &message) override;
     void logWarning(const LoggerMessage &message) override;
-    void logError(const LoggerMessage &message) override;
     void logCritical(const LoggerMessage &message) override;
+    void logFatal(const LoggerMessage &message) override;
 
     void logMessage(const std::string &prefix, const LoggerMessage &message);
 
-    static bool checkColorSupport(int fd);
-    static std::string colorize(const std::string &text, const char *params);
+    bool hasColorSupport = false;
 };
 } // namespace logger
 } // namespace gpui

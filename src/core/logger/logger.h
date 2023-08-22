@@ -25,44 +25,27 @@
 #include "loggermessage.h"
 
 #include <fstream>
+#include <unordered_map>
+#include <QtMsgHandler>
 
 namespace gpui
 {
 namespace logger
 {
-enum LogLevel
-{
-    Debug    = 1 << 0,
-    Info     = 1 << 1,
-    Warning  = 1 << 2,
-    Error    = 1 << 3,
-    Critical = 1 << 4,
-};
-
-enum LogMask
-{
-    All             = (1 << 5) - 1,
-    InfoAndAbove    = All - Debug,
-    WarningAndAbove = InfoAndAbove - Info,
-    ErrorAndAbove   = WarningAndAbove - Warning,
-    // Instead of CriticalAndAbove use LogLevel::Critical
-    None            = 0,
-};
-
 class GPUI_CORE_EXPORT Logger
 {
 public:
     Logger()          = default;
     virtual ~Logger() = default;
 
-    void setLogLevel(int mask);
-    bool isLogLevel(int mask);
+    void setLogLevel(QtMsgType level);
+    bool isLogLevel(QtMsgType level);
 
     void onDebug(const LoggerMessage &message);
     void onInfo(const LoggerMessage &message);
     void onWarning(const LoggerMessage &message);
-    void onError(const LoggerMessage &message);
     void onCritical(const LoggerMessage &message);
+    void onFatal(const LoggerMessage &message);
 
 private:
     Logger(const Logger &) = delete;            // copy ctor
@@ -74,10 +57,19 @@ private:
     virtual void logDebug(const LoggerMessage &message)    = 0;
     virtual void logInfo(const LoggerMessage &message)     = 0;
     virtual void logWarning(const LoggerMessage &message)  = 0;
-    virtual void logError(const LoggerMessage &message)    = 0;
     virtual void logCritical(const LoggerMessage &message) = 0;
+    virtual void logFatal(const LoggerMessage &message)    = 0;
 
-    int logLevelMask = 0;
+    int minLogLevel = 0;
+
+protected:
+    const std::unordered_map<QtMsgType, const char *> logLevelMap = {
+        {QtDebugMsg, "DEBUG"},
+        {QtInfoMsg, "INFO"},
+        {QtWarningMsg, "WARNING"},
+        {QtCriticalMsg, "CRITICAL"},
+        {QtFatalMsg, "FATAL"},
+    };
 };
 } // namespace logger
 } // namespace gpui

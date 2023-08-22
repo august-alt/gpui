@@ -46,33 +46,9 @@ FileLogger::~FileLogger()
     this->logFileStream.close();
 }
 
-void FileLogger::logDebug(const LoggerMessage &message)
+void FileLogger::log(const LoggerMessage &message)
 {
-    logMessage(this->logLevelMap.at(QtDebugMsg), message);
-}
-
-void FileLogger::logInfo(const LoggerMessage &message)
-{
-    logMessage(this->logLevelMap.at(QtInfoMsg), message);
-}
-
-void FileLogger::logWarning(const LoggerMessage &message)
-{
-    logMessage(this->logLevelMap.at(QtWarningMsg), message);
-}
-
-void FileLogger::logCritical(const LoggerMessage &message)
-{
-    logMessage(this->logLevelMap.at(QtCriticalMsg), message);
-}
-
-void FileLogger::logFatal(const LoggerMessage &message)
-{
-    logMessage(this->logLevelMap.at(QtFatalMsg), message);
-}
-
-void FileLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
-{
+    const char *prefix = this->logLevelMap.at(message.msgType);
     this->logFileStream << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
                         << message.filePath << ":" << message.line << ")" << std::endl;
 }

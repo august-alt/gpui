@@ -49,43 +49,32 @@ ConsoleLogger::ConsoleLogger()
     this->hasColorSupport = checkColorSupport(STDERR_FILENO);
 }
 
-void ConsoleLogger::logDebug(const LoggerMessage &message)
+void ConsoleLogger::log(const LoggerMessage &message)
 {
-    const std::string prefix = this->logLevelMap.at(QtDebugMsg);
-    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;96") : prefix;
-    logMessage(coloredPrefix, message);
-}
+    std::string prefix = this->logLevelMap.at(message.msgType);
 
-void ConsoleLogger::logInfo(const LoggerMessage &message)
-{
-    const std::string prefix = this->logLevelMap.at(QtInfoMsg);
-    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;34") : prefix;
-    logMessage(coloredPrefix, message);
-}
+    if (this->hasColorSupport)
+    {
+        switch (message.msgType)
+        {
+        case QtDebugMsg:
+            prefix = this->hasColorSupport ? colorize(prefix, "1;96") : prefix;
+            break;
+        case QtInfoMsg:
+            prefix = this->hasColorSupport ? colorize(prefix, "1;34") : prefix;
+            break;
+        case QtWarningMsg:
+            prefix = this->hasColorSupport ? colorize(prefix, "1;33") : prefix;
+            break;
+        case QtCriticalMsg:
+            prefix = this->hasColorSupport ? colorize(prefix, "1;31") : prefix;
+            break;
+        case QtFatalMsg:
+            prefix = this->hasColorSupport ? colorize(prefix, "1;91") : prefix;
+            break;
+        }
+    }
 
-void ConsoleLogger::logWarning(const LoggerMessage &message)
-{
-    const std::string prefix = this->logLevelMap.at(QtWarningMsg);
-    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;33") : prefix;
-    logMessage(coloredPrefix, message);
-}
-
-void ConsoleLogger::logCritical(const LoggerMessage &message)
-{
-    const std::string prefix = this->logLevelMap.at(QtCriticalMsg);
-    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;31") : prefix;
-    logMessage(coloredPrefix, message);
-}
-
-void ConsoleLogger::logFatal(const LoggerMessage &message)
-{
-    const std::string prefix = this->logLevelMap.at(QtFatalMsg);
-    const std::string coloredPrefix = this->hasColorSupport ? colorize(prefix, "1;91") : prefix;
-    logMessage(coloredPrefix, message);
-}
-
-void ConsoleLogger::logMessage(const std::string &prefix, const LoggerMessage &message)
-{
     std::clog << message.getTimeFormatted("%H:%M:%S") << " | " << prefix << ": " << message.message << " ("
               << message.filePath << ":" << message.line << ")" << std::endl;
 }

@@ -23,6 +23,15 @@
 #include <algorithm>
 #include <iostream>
 
+static std::tm getCurrentTime()
+{
+    time_t time;
+    std::time(&time);
+
+    // NOTE: localtime returns a pointer to a statically allocated object
+    return *std::localtime(&time);
+}
+
 namespace gpui
 {
 namespace logger
@@ -31,7 +40,7 @@ class LoggerManagerPrivate
 {
 public:
     std::vector<std::shared_ptr<Logger>> loggers = {};
-    mutable std::mutex loggerMutex = {};
+    mutable std::mutex loggerMutex               = {};
 };
 
 std::shared_ptr<LoggerManager> LoggerManager::instance{nullptr};
@@ -74,63 +83,17 @@ void LoggerManager::clearLoggers()
     d->loggers.clear();
 }
 
-void LoggerManager::logDebug(const std::string &message,
-                             const std::string &file,
-                             const std::string &function,
-                             const uint32_t line)
+void LoggerManager::log(const QtMsgType &msgType,
+                        const std::string &message,
+                        const std::string &file,
+                        const std::string &function,
+                        const uint32_t line)
 {
     std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
     for (const auto &logger : d->loggers)
     {
-        logger->onDebug(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
-    }
-}
-
-void LoggerManager::logInfo(const std::string &message,
-                            const std::string &file,
-                            const std::string &function,
-                            const uint32_t line)
-{
-    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
-    for (const auto &logger : d->loggers)
-    {
-        logger->onInfo(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
-    }
-}
-
-void LoggerManager::logWarning(const std::string &message,
-                               const std::string &file,
-                               const std::string &function,
-                               const uint32_t line)
-{
-    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
-    for (const auto &logger : d->loggers)
-    {
-        logger->onWarning(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
-    }
-}
-
-void LoggerManager::logCritical(const std::string &message,
-                                const std::string &file,
-                                const std::string &function,
-                                const uint32_t line)
-{
-    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
-    for (const auto &logger : d->loggers)
-    {
-        logger->onCritical(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
-    }
-}
-
-void LoggerManager::logFatal(const std::string &message,
-                             const std::string &file,
-                             const std::string &function,
-                             const uint32_t line)
-{
-    std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
-    for (const auto &logger : d->loggers)
-    {
-        logger->onFatal(LoggerMessage(message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
+        logger->logMessage(
+            LoggerMessage(msgType, message, file, function, line, getCurrentTime(), std::this_thread::get_id()));
     }
 }
 
@@ -140,32 +103,14 @@ size_t LoggerManager::getLoggerCount() const
     return d->loggers.size();
 }
 
-void LoggerManager::messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void LoggerManager::messageHandler(QtMsgType msgType, const QMessageLogContext &context, const QString &msg)
 {
-    auto logger = globalInstance();
-    std::string file = context.file ? context.file : "";
+    auto logger          = globalInstance();
+    std::string file     = context.file ? context.file : "";
     std::string function = context.function ? context.function : "";
-    int line = context.line;
+    int line             = context.line;
 
-    std::cerr << type << std::endl;
-    switch (type)
-    {
-        case QtDebugMsg:
-            logger->logDebug(msg.toStdString(), file, function, line);
-            break;
-        case QtInfoMsg:
-            logger->logInfo(msg.toStdString(), file, function, line);
-            break;
-        case QtWarningMsg:
-            logger->logWarning(msg.toStdString(), file, function, line);
-            break;
-        case QtCriticalMsg:
-            logger->logCritical(msg.toStdString(), file, function, line);
-            break;
-        case QtFatalMsg:
-            logger->logFatal(msg.toStdString(), file, function, line);
-            break;
-    }
+    logger->log(msgType, msg.toStdString(), file, function, line);
 }
 
 Q_GLOBAL_STATIC(LoggerManager, loggerInstance)
@@ -173,15 +118,5 @@ LoggerManager *LoggerManager::globalInstance()
 {
     return loggerInstance();
 }
-
-std::tm LoggerManager::getCurrentTime()
-{
-    time_t time;
-    std::time(&time);
-
-    // NOTE: localtime returns a pointer to a statically allocated object
-    return *std::localtime(&time);
-}
-
 } // namespace logger
 } // namespace gpui

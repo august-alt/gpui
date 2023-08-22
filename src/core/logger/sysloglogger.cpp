@@ -37,34 +37,30 @@ SyslogLogger::~SyslogLogger()
     closelog();
 }
 
-void SyslogLogger::logDebug(const LoggerMessage &message)
+void SyslogLogger::log(const LoggerMessage &message)
 {
-    logMessage(LOG_DEBUG, this->logLevelMap.at(QtDebugMsg), message);
-}
+    const char *prefix = this->logLevelMap.at(message.msgType);
 
-void SyslogLogger::logInfo(const LoggerMessage &message)
-{
-    logMessage(LOG_INFO, this->logLevelMap.at(QtInfoMsg), message);
-}
+    int logFlag = LOG_DEBUG;
+    switch (message.msgType)
+    {
+    case QtInfoMsg:
+        logFlag = LOG_INFO;
+        break;
+    case QtWarningMsg:
+        logFlag = LOG_WARNING;
+        break;
+    case QtCriticalMsg:
+        logFlag = LOG_ERR;
+        break;
+    case QtFatalMsg:
+        logFlag = LOG_CRIT;
+        break;
+    default:
+        break;
+    }
 
-void SyslogLogger::logWarning(const LoggerMessage &message)
-{
-    logMessage(LOG_WARNING, this->logLevelMap.at(QtWarningMsg), message);
-}
-
-void SyslogLogger::logCritical(const LoggerMessage &message)
-{
-    logMessage(LOG_ERR, this->logLevelMap.at(QtCriticalMsg), message);
-}
-
-void SyslogLogger::logFatal(const LoggerMessage &message)
-{
-    logMessage(LOG_CRIT, this->logLevelMap.at(QtFatalMsg), message);
-}
-
-void SyslogLogger::logMessage(const int log_flag, const std::string &prefix, const LoggerMessage &message)
-{
-    syslog(log_flag, "%s: %s (%s:%u)", prefix.c_str(), message.message.c_str(), message.filePath.c_str(), message.line);
+    syslog(logFlag, "%s: %s (%s:%u)", prefix, message.message.c_str(), message.filePath.c_str(), message.line);
 }
 } // namespace logger
 } // namespace gpui

@@ -38,13 +38,7 @@ public:
     ~SyslogLogger();
 
 private:
-    void logDebug(const LoggerMessage &message) override;
-    void logInfo(const LoggerMessage &message) override;
-    void logWarning(const LoggerMessage &message) override;
-    void logCritical(const LoggerMessage &message) override;
-    void logFatal(const LoggerMessage &message) override;
-
-    void logMessage(const int log_flag, const std::string &prefix, const LoggerMessage &message);
+    void log(const LoggerMessage &message) override;
 };
 } // namespace logger
 } // namespace gpui

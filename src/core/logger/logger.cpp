@@ -34,43 +34,11 @@ bool Logger::isLogLevel(QtMsgType level)
     return level >= this->minLogLevel;
 }
 
-void Logger::onDebug(const LoggerMessage &message)
+void Logger::logMessage(const LoggerMessage &message)
 {
-    if (isLogLevel(QtDebugMsg))
+    if (isLogLevel(message.msgType))
     {
-        logDebug(message);
-    }
-}
-
-void Logger::onInfo(const LoggerMessage &message)
-{
-    if (isLogLevel(QtInfoMsg))
-    {
-        logInfo(message);
-    }
-}
-
-void Logger::onWarning(const LoggerMessage &message)
-{
-    if (isLogLevel(QtWarningMsg))
-    {
-        logWarning(message);
-    }
-}
-
-void Logger::onCritical(const LoggerMessage &message)
-{
-    if (isLogLevel(QtCriticalMsg))
-    {
-        logCritical(message);
-    }
-}
-
-void Logger::onFatal(const LoggerMessage &message)
-{
-    if (isLogLevel(QtFatalMsg))
-    {
-        logFatal(message);
+        log(message);
     }
 }
 } // namespace logger

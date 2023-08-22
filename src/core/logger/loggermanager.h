@@ -50,17 +50,11 @@ public:
     void clearLoggers();
     size_t getLoggerCount() const;
 
-    void logDebug(const std::string &message, const std::string &file, const std::string &function, const uint32_t line);
-    void logInfo(const std::string &message, const std::string &file, const std::string &function, const uint32_t line);
-    void logWarning(const std::string &message,
-                    const std::string &file,
-                    const std::string &function,
-                    const uint32_t line);
-    void logCritical(const std::string &message,
-                     const std::string &file,
-                     const std::string &function,
-                     const uint32_t line);
-    void logFatal(const std::string &message, const std::string &file, const std::string &function, const uint32_t line);
+    void log(const QtMsgType &msgType,
+             const std::string &message,
+             const std::string &file,
+             const std::string &function,
+             const uint32_t line);
 
 private:
     LoggerManager(const LoggerManager &) = delete;            // copy ctor
@@ -70,7 +64,6 @@ private:
 
 private:
     static void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-    static std::tm getCurrentTime();
 
     static std::shared_ptr<LoggerManager> instance;
     LoggerManagerPrivate *d;

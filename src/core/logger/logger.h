@@ -41,11 +41,7 @@ public:
     void setLogLevel(QtMsgType level);
     bool isLogLevel(QtMsgType level);
 
-    void onDebug(const LoggerMessage &message);
-    void onInfo(const LoggerMessage &message);
-    void onWarning(const LoggerMessage &message);
-    void onCritical(const LoggerMessage &message);
-    void onFatal(const LoggerMessage &message);
+    void logMessage(const LoggerMessage &message);
 
 private:
     Logger(const Logger &) = delete;            // copy ctor
@@ -54,13 +50,9 @@ private:
     Logger &operator=(Logger &&) = delete;      // move assignment
 
 private:
-    virtual void logDebug(const LoggerMessage &message)    = 0;
-    virtual void logInfo(const LoggerMessage &message)     = 0;
-    virtual void logWarning(const LoggerMessage &message)  = 0;
-    virtual void logCritical(const LoggerMessage &message) = 0;
-    virtual void logFatal(const LoggerMessage &message)    = 0;
+    virtual void log(const LoggerMessage &message) = 0;
 
-    int minLogLevel = 0;
+    QtMsgType minLogLevel = QtDebugMsg;
 
 protected:
     const std::unordered_map<QtMsgType, const char *> logLevelMap = {

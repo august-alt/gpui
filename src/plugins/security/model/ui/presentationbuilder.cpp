@@ -167,8 +167,9 @@ public:
 
     void visit(GroupBox &widget) const
     {
-        Q_UNUSED(widget);
         QGroupBox *groupBox = new QGroupBox();
+        groupBox->setCheckable(widget.hasCheckBox);
+        groupBox->setChecked(widget.defaultChecked);
 
         // TODO: Implement.
 

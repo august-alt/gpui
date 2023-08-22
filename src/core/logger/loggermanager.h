@@ -39,7 +39,6 @@ class LoggerManagerPrivate;
 class GPUI_CORE_EXPORT LoggerManager
 {
 public:
-    static std::shared_ptr<LoggerManager> getInstance();
     static LoggerManager *globalInstance();
     static void destroyInstance();
 

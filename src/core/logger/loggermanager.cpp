@@ -47,16 +47,6 @@ LoggerManager::~LoggerManager()
     delete d;
 }
 
-std::shared_ptr<LoggerManager> LoggerManager::getInstance()
-{
-    if (instance.use_count() == 0)
-    {
-        instance = std::make_shared<LoggerManager>();
-    }
-
-    return instance;
-}
-
 void LoggerManager::destroyInstance()
 {
     instance.reset();

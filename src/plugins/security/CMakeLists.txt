@@ -56,6 +56,8 @@ set(HEADERS
     model/ui/presentationbuilder.h
     model/ui/securityproxymodel.h
     model/ui/securitywidget.h
+    model/ui/ldapsearchlistwidget.h
+    model/ui/browseldapdialog.h
 )
 
 set(SOURCES
@@ -63,10 +65,14 @@ set(SOURCES
     model/ui/presentationbuilder.cpp
     model/ui/securityproxymodel.cpp
     model/ui/securitywidget.cpp
+    model/ui/ldapsearchlistwidget.cpp
+    model/ui/browseldapdialog.cpp
 )
 
 set(UI_FORMS
     model/ui/securitywidget.ui
+    model/ui/ldapsearchlistwidget.ui
+    model/ui/browseldapdialog.ui
 )
 
 set(PLUGIN_HEADERS

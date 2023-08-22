@@ -88,7 +88,7 @@ int main(int argc, char **argv)
         break;
     }
 
-    auto logManager = gpui::logger::LoggerManager::getInstance();
+    auto logManager = gpui::logger::LoggerManager::globalInstance();
 
     auto consoleLogger = std::make_shared<gpui::logger::ConsoleLogger>();
     consoleLogger->setLogLevel(gpui::logger::All);

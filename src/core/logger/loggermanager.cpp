@@ -21,6 +21,7 @@
 #include "loggermanager.h"
 
 #include <algorithm>
+#include <iostream>
 
 namespace gpui
 {
@@ -152,6 +153,29 @@ size_t LoggerManager::getLoggerCount() const
 void LoggerManager::messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     auto logger = globalInstance();
+    std::string file = context.file ? context.file : "";
+    std::string function = context.function ? context.function : "";
+    int line = context.line;
+
+    std::cerr << type << std::endl;
+    switch (type)
+    {
+        case QtDebugMsg:
+            logger->logDebug(msg.toStdString(), file, function, line);
+            break;
+        case QtInfoMsg:
+            logger->logInfo(msg.toStdString(), file, function, line);
+            break;
+        case QtWarningMsg:
+            logger->logWarning(msg.toStdString(), file, function, line);
+            break;
+        case QtCriticalMsg:
+            logger->logError(msg.toStdString(), file, function, line);
+            break;
+        case QtFatalMsg:
+            logger->logCritical(msg.toStdString(), file, function, line);
+            break;
+    }
 }
 
 Q_GLOBAL_STATIC(LoggerManager, loggerInstance)

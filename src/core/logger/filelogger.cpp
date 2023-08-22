@@ -85,7 +85,6 @@ std::string FileLogger::getHomeDir()
         return HOME;
     }
 
-    // NOTE(mchernigin): it might be an overkill, checking $HOME should be enough for this use case
     long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
     if (bufsize == -1)
     {
@@ -100,7 +99,6 @@ std::string FileLogger::getHomeDir()
     std::string homeDir;
     if (result != NULL)
     {
-        // TODO(mchernigin): does it actually copy chars under a pointer into a string?
         homeDir = result->pw_dir;
     }
     else

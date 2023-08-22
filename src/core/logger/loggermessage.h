@@ -47,11 +47,10 @@ public:
         , threadId(threadId_)
     {}
 
-    // __attribute__((__format__ (__strftime__, 2, 0)))
     std::string getTimeFormatted(const char *format) const
     {
         char timeString[50];
-        // NOTE(mchernigin): is it even a good idea? if it is, do compilers actually support this?
+        // NOTE(mchernigin): do all compilers actually support this?
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"
         strftime(timeString, 50, format, &time);

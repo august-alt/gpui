@@ -21,7 +21,6 @@
 #include "../core/compositesnapindetailsdialog.h"
 #include "../core/logger/consolelogger.h"
 #include "../core/logger/filelogger.h"
-#include "../core/logger/log.h"
 #include "../core/logger/loggermanager.h"
 #include "../core/pluginstorage.h"
 #include "../core/snapindetailsdialog.h"

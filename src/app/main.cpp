@@ -19,6 +19,7 @@
 ***********************************************************************************************************************/
 
 #include "../core/compositesnapindetailsdialog.h"
+#include "../core/logger/prelude.h"
 #include "../core/pluginstorage.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
@@ -82,6 +83,20 @@ int main(int argc, char **argv)
     default:
         break;
     }
+
+    auto logManager = gpui::logger::LoggerManager::globalInstance();
+
+    auto consoleLogger = std::make_shared<gpui::logger::ConsoleLogger>();
+    consoleLogger->setLogLevel(QtDebugMsg);
+    logManager->addLogger(consoleLogger);
+
+    auto syslogLogger = std::make_shared<gpui::logger::SyslogLogger>();
+    syslogLogger->setLogLevel(QtWarningMsg);
+    logManager->addLogger(syslogLogger);
+
+    auto fileLogger = std::make_shared<gpui::logger::FileLogger>();
+    fileLogger->setLogLevel(QtInfoMsg);
+    logManager->addLogger(fileLogger);
 
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();

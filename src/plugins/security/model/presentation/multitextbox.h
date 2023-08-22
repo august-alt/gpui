@@ -45,6 +45,16 @@ public:
      * \brief defaultValue
      */
     std::string defaultValue{};
+
+    /*!
+     * \brief showAsDialog If we need to display multitext as a dialog.
+     */
+    bool showAsDialog = false;
+
+    /*!
+     * \brief defaultHeight Deafult height of the widget.
+     */
+    unsigned int defaultHeight = 3;
 };
 
 } // of namespace security

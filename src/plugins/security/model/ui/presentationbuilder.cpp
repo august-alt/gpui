@@ -50,6 +50,7 @@
 #include <QRadioButton>
 
 #include <gui/altspinbox.h>
+#include <gui/listboxdialog.h>
 
 template<class>
 inline constexpr bool always_false_v = false;
@@ -159,8 +160,7 @@ public:
     {
         Q_UNUSED(widget);
         QTextEdit *textEdit = new QTextEdit();
-
-        // TODO: Implement.
+        textEdit->setMaximumHeight(widget.defaultHeight * textEdit->fontMetrics().height());
 
         addToLayout(textEdit);
     }
@@ -178,9 +178,20 @@ public:
 
     void visit(ListBox &widget) const
     {
-        // TODO: Implement.
+        QPushButton *button = new QPushButton(QObject::tr("Edit"));
 
-        Q_UNUSED(widget);
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(widget.postfix));
+
+        auto onClicked = [&]() {
+            gpui::ListBoxDialog *listBox = new gpui::ListBoxDialog(QString::fromStdString(widget.postfix));
+            listBox->setAttribute(Qt::WA_DeleteOnClose);
+
+            listBox->show();
+        };
+
+        QObject::connect(button, &QPushButton::clicked, onClicked);
+
+        addToLayout(container);
     }
 
     void visit(LdapSearchDialog &widget) const

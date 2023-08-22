@@ -37,7 +37,9 @@ std::shared_ptr<LoggerManager> LoggerManager::instance{nullptr};
 
 LoggerManager::LoggerManager()
     : d(new LoggerManagerPrivate)
-{}
+{
+    qInstallMessageHandler(LoggerManager::messageHandler);
+}
 
 LoggerManager::~LoggerManager()
 {
@@ -145,6 +147,17 @@ size_t LoggerManager::getLoggerCount() const
 {
     std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
     return d->loggers.size();
+}
+
+void LoggerManager::messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    auto logger = globalInstance();
+}
+
+Q_GLOBAL_STATIC(LoggerManager, loggerInstance)
+LoggerManager *LoggerManager::globalInstance()
+{
+    return loggerInstance();
 }
 
 std::tm LoggerManager::getCurrentTime()

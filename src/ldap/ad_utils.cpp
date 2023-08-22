@@ -33,7 +33,7 @@
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QDateTime>
-#include "../core/logger/log.h"
+#include <QDebug>
 #include <QLocale>
 #include <QString>
 #include <QTranslator>
@@ -327,14 +327,14 @@ QString get_default_domain_from_krb5() {
 
     result = krb5_init_context(&context);
     if (result) {
-        GPUI_DEBUG_STREAM << "Failed to init krb5 context";
+        qDebug() << "Failed to init krb5 context";
 
         return QString();
     }
 
     result = krb5_cc_default(context, &default_cache);
     if (result) {
-        GPUI_DEBUG_STREAM << "Failed to get default krb5 ccache";
+        qDebug() << "Failed to get default krb5 ccache";
 
         krb5_free_context(context);
 
@@ -343,7 +343,7 @@ QString get_default_domain_from_krb5() {
 
     result = krb5_cc_get_principal(context, default_cache, &default_principal);
     if (result) {
-        GPUI_DEBUG_STREAM << "Failed to get default krb5 principal";
+        qDebug() << "Failed to get default krb5 principal";
 
         krb5_cc_close(context, default_cache);
         krb5_free_context(context);

@@ -24,7 +24,7 @@
 
 #include <fstream>
 #include <sstream>
-#include "../../../core/logger/log.h"
+#include <QDebug>
 #include <QMessageBox>
 
 std::string preferences::BasePreferenceWriter::getType() const
@@ -43,7 +43,7 @@ bool preferences::BasePreferenceWriter::write(const std::string path,
 
     oss->flush();
 
-    GPUI_WARNING_STREAM << "Current string values." << oss->str().c_str();
+    qWarning() << "Current string values." << oss->str().c_str();
 
     bool ifShowError = false;
 

@@ -37,7 +37,7 @@
 #include <../../io/genericwriter.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/sessionmodel.h>
-#include "../../core/logger/log.h"
+#include <QDebug>
 #include <QFile>
 
 namespace scripts_plugin
@@ -86,7 +86,7 @@ void ScriptsSnapIn::onDataLoad(const std::string &policyPath, const std::string 
 
     if (policyPath.empty())
     {
-        GPUI_WARNING_STREAM << "Warning: Unable to load ini file. Path is empty! ";
+        qWarning() << "Warning: Unable to load ini file. Path is empty! ";
 
         return;
     }

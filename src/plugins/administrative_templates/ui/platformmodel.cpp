@@ -28,7 +28,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "../../../core/logger/log.h"
+#include <QDebug>
 #include <QSet>
 #include <QString>
 

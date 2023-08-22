@@ -20,7 +20,7 @@
 
 #include "altspinbox.h"
 
-#include "../core/logger/log.h"
+#include <QDebug>
 #include <QMessageBox>
 
 namespace gui

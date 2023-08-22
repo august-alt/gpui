@@ -34,7 +34,7 @@
 
 #include <algorithm>
 #include <QCoreApplication>
-#include "../core/logger/log.h"
+#include <QDebug>
 #include <QLocale>
 
 #define ATTRIBUTE_ATTRIBUTE_DISPLAY_NAMES "attributeDisplayNames"
@@ -457,7 +457,7 @@ int AdConfig::get_column_index(const QString &attribute) const
 {
     if (!d->columns.contains(attribute))
     {
-        GPUI_WARNING_STREAM << "ADCONFIG columns missing attribute:" << attribute;
+        qWarning() << "ADCONFIG columns missing attribute:" << attribute;
     }
 
     return d->columns.indexOf(attribute);

@@ -65,7 +65,7 @@
 #include <QTableWidget>
 #include <QTextEdit>
 
-#include "../../../core/logger/log.h"
+#include <QDebug>
 
 #include <iostream>
 
@@ -145,7 +145,7 @@ public:
                 {
                     return;
                 }
-                GPUI_WARNING_STREAM << "Presentation builder::save: " << elementInfo.key.c_str() << " "
+                qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 int checked = checkBox->checkState() == Qt::Checked ? 1 : 0;
                 m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD, checked);
@@ -184,7 +184,7 @@ public:
                 {
                     return;
                 }
-                GPUI_WARNING_STREAM << "Presentation builder::save: " << elementInfo.key.c_str() << " "
+                qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
             });
@@ -243,7 +243,7 @@ public:
                 {
                     return;
                 }
-                GPUI_WARNING_STREAM << "Presentation builder::save: " << elementInfo.key.c_str() << " "
+                qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
             });
@@ -268,7 +268,7 @@ public:
 
             if (listElement = dynamic_cast<PolicyListElement *>(elementInfo.element))
             {
-                GPUI_WARNING_STREAM << "List element: " << listElement->id.c_str() << "\n"
+                qWarning() << "List element: " << listElement->id.c_str() << "\n"
                            << "key: " << listElement->key.c_str() << "\n"
                            << "valueName: " << listElement->valueName.c_str() << "\n"
                            << "valuePrefix: " << listElement->valuePrefix.c_str() << "\n"
@@ -278,7 +278,7 @@ public:
             }
             else
             {
-                GPUI_WARNING_STREAM << "Unsupported policy element type.";
+                qWarning() << "Unsupported policy element type.";
             }
         }
 
@@ -288,7 +288,7 @@ public:
 
             if (!listElement || elementInfo.type == REG_NONE)
             {
-                GPUI_WARNING_STREAM << "Unable to get valid policy listElement or elementInfo is not initialized.";
+                qWarning() << "Unable to get valid policy listElement or elementInfo is not initialized.";
                 return;
             }
 
@@ -315,7 +315,7 @@ public:
                     {
                         return;
                     }
-                    GPUI_WARNING_STREAM << "Items debug: " << currentItems.values();
+                    qWarning() << "Items debug: " << currentItems.values();
                     // clean-up registry values.
                     auto valueNames = m_source->getValueNames(listElement->key);
                     for (const auto &valueName : valueNames)
@@ -363,7 +363,7 @@ public:
                         {
                             return;
                         }
-                        GPUI_WARNING_STREAM << "Items debug: " << currentItems.values();
+                        qWarning() << "Items debug: " << currentItems.values();
                         size_t index = 1;
                         // clean-up registry values.
                         auto registryValueName = listElement->valuePrefix
@@ -405,7 +405,7 @@ public:
                         {
                             return;
                         }
-                        GPUI_WARNING_STREAM << "Items debug: " << currentItems.values();
+                        qWarning() << "Items debug: " << currentItems.values();
                         // clean-up registry values.
                         auto registryValueNames = m_source->getValueNames(listElement->key);
                         for (const auto &valueName : registryValueNames)
@@ -427,7 +427,7 @@ public:
                     });
                 }
 
-                GPUI_WARNING_STREAM << "Items debug: " << items;
+                qWarning() << "Items debug: " << items;
                 listBox->setItems(items);
             }
 
@@ -471,7 +471,7 @@ public:
                 {
                     return;
                 }
-                GPUI_WARNING_STREAM << "Presentation builder::save: " << elementInfo.key.c_str() << " "
+                qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 QStringList data(textEdit->toPlainText());
                 m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_MULTI_SZ, data);
@@ -513,7 +513,7 @@ public:
                 {
                     return;
                 }
-                GPUI_WARNING_STREAM << "Presentation builder::save: " << elementInfo.key.c_str() << " "
+                qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 QString data(lineEdit->text());
                 m_source->setValue(elementInfo.key,
@@ -607,7 +607,7 @@ private:
                     {
                         return;
                     }
-                    GPUI_WARNING_STREAM << "Presentation builder::save: " << elementInfo.key.c_str() << " "
+                    qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                                << elementInfo.value.c_str();
                     m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type, spinBox->value());
                 });
@@ -647,7 +647,7 @@ private:
                 {
                     return;
                 }
-                GPUI_WARNING_STREAM << "Presentation builder::save: " << elementInfo.key.c_str() << " "
+                qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 m_source->setValue(elementInfo.key, elementInfo.value, elementInfo.type, edit->text().toUInt());
             });
@@ -676,7 +676,7 @@ private:
             }
         }
 
-        GPUI_WARNING_STREAM << "Key and value not found!" << m_elementName.c_str();
+        qWarning() << "Key and value not found!" << m_elementName.c_str();
 
         return {"", "", static_cast<RegistryEntryType>(0), nullptr};
     }
@@ -750,7 +750,7 @@ private:
                 {
                     qwordValue = qv->value;
                 }
-                GPUI_WARNING_STREAM << "Element: " << it->first.c_str() << " : " << stringValue.c_str() << " : " << dwordValue
+                qWarning() << "Element: " << it->first.c_str() << " : " << stringValue.c_str() << " : " << dwordValue
                            << " : " << qwordValue;
             }
         }
@@ -774,7 +774,7 @@ private:
         }
         break;
         default:
-            GPUI_WARNING_STREAM << "Unable to detect value type for element with key: " << key.c_str()
+            qWarning() << "Unable to detect value type for element with key: " << key.c_str()
                        << " value: " << valueName.c_str();
             break;
         }

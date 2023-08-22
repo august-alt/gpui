@@ -23,8 +23,6 @@
 
 #include "shortcutsitem.h"
 
-#include "../../../core/logger/log.h"
-
 namespace preferences
 {
 enum ViewMode
@@ -149,7 +147,7 @@ void ShortcutsWidget::updateCurrentSequence(const QKeySequence &sequence)
 {
     if (!m_item)
     {
-        GPUI_WARNING_STREAM << "No item found exiting!";
+        qWarning() << "No item found exiting!";
 
         return;
     }

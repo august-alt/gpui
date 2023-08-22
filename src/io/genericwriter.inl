@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-#include "../core/logger/log.h"
+#include <QDebug>
 #include <QString>
 
 namespace io {
@@ -19,7 +19,7 @@ bool GenericWriter::save(const std::string &filename, TData *fileData)
 
     if(!format)
     {
-        GPUI_WARNING_STREAM << "Format supporting: " << pluginName << " not found.";
+        qWarning() << "Format supporting: " << pluginName << " not found.";
 
         return false;
     }
@@ -32,14 +32,14 @@ bool GenericWriter::save(const std::string &filename, TData *fileData)
     {
         if(!format->write(file, fileData))
         {
-            GPUI_WARNING_STREAM << "Error while writing file contents: " << format->getErrorString().c_str();
+            qWarning() << "Error while writing file contents: " << format->getErrorString().c_str();
 
             return false;
         }
     }
     else
     {
-        GPUI_WARNING_STREAM << "Unable to open a file: " << filename.c_str();
+        qWarning() << "Unable to open a file: " << filename.c_str();
     }
 
     file.close();
@@ -60,7 +60,7 @@ bool GenericWriter::save(std::ostream &fileContent, const std::string &plName, T
 
     if(!format)
     {
-        GPUI_WARNING_STREAM << "Format supporting: " << pluginName << " not found.";
+        qWarning() << "Format supporting: " << pluginName << " not found.";
 
         return false;
     }
@@ -69,7 +69,7 @@ bool GenericWriter::save(std::ostream &fileContent, const std::string &plName, T
     {
         if(!format->write(fileContent, fileData))
         {
-            GPUI_WARNING_STREAM << "Error while writing file contents: " << format->getErrorString().c_str();
+            qWarning() << "Error while writing file contents: " << format->getErrorString().c_str();
 
             return false;
         }

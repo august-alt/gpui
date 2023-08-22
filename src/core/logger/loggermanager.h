@@ -28,6 +28,8 @@
 #include <vector>
 #include <mutex>
 
+#include <QString>
+
 namespace gpui
 {
 namespace logger
@@ -38,6 +40,7 @@ class GPUI_CORE_EXPORT LoggerManager
 {
 public:
     static std::shared_ptr<LoggerManager> getInstance();
+    static LoggerManager *globalInstance();
     static void destroyInstance();
 
     LoggerManager();
@@ -67,6 +70,7 @@ private:
     LoggerManager &operator=(LoggerManager &&) = delete;      // move assignment
 
 private:
+    static void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     static std::tm getCurrentTime();
 
     static std::shared_ptr<LoggerManager> instance;

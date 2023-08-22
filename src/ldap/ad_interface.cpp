@@ -56,7 +56,7 @@
 #include <sys/types.h>
 #include <uuid/uuid.h>
 
-#include "../core/logger/log.h"
+#include <QDebug>
 #include <QTextCodec>
 
 // NOTE: LDAP library char* inputs are non-const in the API
@@ -475,7 +475,7 @@ bool AdInterfacePrivate::search_paged_internal(const char *base,
     result = create_sd_control(get_sacl, is_critical, &sd_control);
     if (result != LDAP_SUCCESS)
     {
-        GPUI_DEBUG_STREAM << "Failed to create sd control: " << ldap_err2string(result);
+        qDebug() << "Failed to create sd control: " << ldap_err2string(result);
 
         cleanup();
         return false;
@@ -486,7 +486,7 @@ bool AdInterfacePrivate::search_paged_internal(const char *base,
     result                    = ldap_create_page_control(ld, page_size, prev_cookie, is_critical, &page_control);
     if (result != LDAP_SUCCESS)
     {
-        GPUI_DEBUG_STREAM << "Failed to create page control: " << ldap_err2string(result);
+        qDebug() << "Failed to create page control: " << ldap_err2string(result);
 
         cleanup();
         return false;
@@ -506,7 +506,7 @@ bool AdInterfacePrivate::search_paged_internal(const char *base,
         // distinguish this error type from others
         if (result != LDAP_NO_SUCH_OBJECT)
         {
-            GPUI_DEBUG_STREAM << "Error in paged ldap_search_ext_s: " << ldap_err2string(result);
+            qDebug() << "Error in paged ldap_search_ext_s: " << ldap_err2string(result);
         }
 
         cleanup();
@@ -566,7 +566,7 @@ bool AdInterfacePrivate::search_paged_internal(const char *base,
     result = ldap_parse_result(ld, res, &errcodep, NULL, NULL, NULL, &returned_controls, false);
     if (result != LDAP_SUCCESS)
     {
-        GPUI_DEBUG_STREAM << "Failed to parse result: " << ldap_err2string(result);
+        qDebug() << "Failed to parse result: " << ldap_err2string(result);
 
         cleanup();
         return false;
@@ -587,7 +587,7 @@ bool AdInterfacePrivate::search_paged_internal(const char *base,
         result     = ldap_parse_pageresponse_control(ld, pageresponse_control, &total_count, new_cookie);
         if (result != LDAP_SUCCESS)
         {
-            GPUI_DEBUG_STREAM << "Failed to parse pageresponse control: " << ldap_err2string(result);
+            qDebug() << "Failed to parse pageresponse control: " << ldap_err2string(result);
 
             cleanup();
             return false;
@@ -1986,18 +1986,18 @@ bool AdInterface::gpo_check_perms(const QString &gpo, bool *ok)
         return out;
     }();
 
-    GPUI_DEBUG_STREAM << "--------";
-    GPUI_DEBUG_STREAM << "gpc_sd:";
+    qDebug() << "--------";
+    qDebug() << "gpc_sd:";
     for (auto e : QString(gpc_sd).split(","))
     {
-        GPUI_DEBUG_STREAM << e;
+        qDebug() << e;
     }
 
-    GPUI_DEBUG_STREAM << "--------";
-    GPUI_DEBUG_STREAM << "gpt_sd:";
+    qDebug() << "--------";
+    qDebug() << "gpt_sd:";
     for (auto e : QString(gpt_sd).split(","))
     {
-        GPUI_DEBUG_STREAM << e;
+        qDebug() << e;
     }
 
     if (gpc_sd.isEmpty() || gpt_sd.isEmpty())
@@ -2625,7 +2625,7 @@ QString get_gpt_sd_string(const AdObject &gpc_object, const AceMaskFormat format
 
     if (!NT_STATUS_IS_OK(create_sd_status))
     {
-        GPUI_DEBUG_STREAM << "Failed to create gpt sd";
+        qDebug() << "Failed to create gpt sd";
         talloc_free(mem_ctx);
 
         return QString();

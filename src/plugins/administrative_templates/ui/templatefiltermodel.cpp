@@ -31,7 +31,7 @@
 
 #include "admx/supporteddefinition.h"
 
-#include "../../../core/logger/log.h"
+#include <QDebug>
 
 using namespace model::registry;
 using namespace model::admx;

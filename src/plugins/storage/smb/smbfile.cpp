@@ -22,7 +22,7 @@
 
 #include "smbclient.h"
 
-#include "../../../core/logger/log.h"
+#include <QDebug>
 
 namespace gpui
 {
@@ -57,7 +57,7 @@ bool SmbFile::rename(const QString &newName)
 
     if (result < 0)
     {
-        GPUI_WARNING_STREAM << "File" << d->fileName << "Error: " << strerror(errno);
+        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
 
         return false;
     }
@@ -93,7 +93,7 @@ bool SmbFile::open(QFile::OpenMode flags)
 
         if (d->handle == nullptr)
         {
-            GPUI_WARNING_STREAM << "File" << d->fileName << "Error: " << strerror(errno);
+            qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
         }
 
         result = d->handle != 0;
@@ -121,16 +121,16 @@ qint64 SmbFile::size() const
     {
         ok = d->client.stat(d->fileName, st) == 0;
 
-        GPUI_WARNING_STREAM << "FileName: " << d->fileName << " ok: " << ok;
+        qWarning() << "FileName: " << d->fileName << " ok: " << ok;
     }
     if (!ok)
     {
-        GPUI_WARNING_STREAM << "File" << d->fileName << "Error: " << strerror(errno);
+        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
     }
 
     if (ok)
     {
-        GPUI_WARNING_STREAM << "File: " << d->fileName << "\n"
+        qWarning() << "File: " << d->fileName << "\n"
                    << "st.st_atim"    << st.st_atim.tv_sec  << "\n"
                    << "st.st_blksize" << st.st_blksize      << "\n"
                    << "st.st_blocks"  << st.st_blocks       << "\n"
@@ -166,7 +166,7 @@ QFileDevice::Permissions SmbFile::permissions() const
     int result = d->client.stat(d->handle, st);
     if (result < 0)
     {
-        GPUI_WARNING_STREAM << "File" << d->fileName << "Error: " << strerror(errno);
+        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
     }
 
     return createPermissions(st.st_mode);
@@ -179,7 +179,7 @@ bool SmbFile::setPermissions(const QFileDevice::Permissions &permissionSpec)
 
     if (result < 0)
     {
-        GPUI_WARNING_STREAM << "File" << d->fileName << "Error: " << strerror(errno);
+        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
     }
 
     return result >= 0;
@@ -191,7 +191,7 @@ qint64 SmbFile::read(char* buffer, qint64 count)
 
     if (result < 0)
     {
-        GPUI_WARNING_STREAM << "File" << d->fileName << "Error: " << strerror(errno);
+        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
     }
 
     return result;
@@ -203,7 +203,7 @@ qint64 SmbFile::write(const char *buffer, qint64 count)
 
     if (result < 0)
     {
-        GPUI_WARNING_STREAM << "File" << d->fileName << "Error: " << strerror(errno);
+        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
     }
 
     return result;

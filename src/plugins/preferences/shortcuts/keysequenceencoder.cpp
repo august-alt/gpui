@@ -20,7 +20,7 @@
 
 #include "keysequenceencoder.h"
 
-#include "../../../core/logger/log.h"
+#include <QDebug>
 
 const uint32_t VK_CANCEL     = 0x03;
 const uint32_t VK_BACK       = 0x08;
@@ -491,7 +491,7 @@ uint32_t fromNativeModifiers(uint32_t modifiers)
 {
     modifiers = (modifiers >> 8);
 
-    GPUI_WARNING_STREAM << "Modifiers: " << modifiers;
+    qWarning() << "Modifiers: " << modifiers;
 
     uint32_t qt = 0;
     if ((modifiers & MOD_SHIFT) == MOD_SHIFT)
@@ -888,9 +888,9 @@ KeySequenceEncoder::KeySequenceEncoder() {}
 
 uint32_t KeySequenceEncoder::encode(const QKeySequence &sequence)
 {
-    GPUI_WARNING_STREAM << "Debug: Encoding shortcut key!";
+    qWarning() << "Debug: Encoding shortcut key!";
 
-    GPUI_WARNING_STREAM << "Encoding sequence: " << sequence << " 0: " << sequence[0] << " 1: " << sequence[1]
+    qWarning() << "Encoding sequence: " << sequence << " 0: " << sequence[0] << " 1: " << sequence[1]
                << " 2: " << sequence[2] << " 3: " << sequence[3];
 
     uint32_t modifiers = 0xFF00;
@@ -898,37 +898,37 @@ uint32_t KeySequenceEncoder::encode(const QKeySequence &sequence)
     uint32_t qKey = 0x00FF;
     qKey &= sequence[0];
 
-    GPUI_WARNING_STREAM << "Debug: modifiers - " << modifiers << " key: " << qKey;
+    qWarning() << "Debug: modifiers - " << modifiers << " key: " << qKey;
 
     uint32_t nativeCode = toNativeKeycode(qKey);
     uint32_t nativeMods = toNativeModifiers(sequence[0]);
 
     uint32_t result = ((nativeMods << 8) ^ nativeCode);
 
-    GPUI_WARNING_STREAM << "Debug: native modifiers - " << nativeMods << " nativeCode: " << nativeCode << " m^k " << result;
+    qWarning() << "Debug: native modifiers - " << nativeMods << " nativeCode: " << nativeCode << " m^k " << result;
 
     return result;
 }
 
 QKeySequence KeySequenceEncoder::decode(const uint32_t sequence)
 {
-    GPUI_WARNING_STREAM << "Debug: Decoding shortcut key!";
+    qWarning() << "Debug: Decoding shortcut key!";
 
     uint32_t nativeModifiers = 0xFF00;
     nativeModifiers &= sequence; //mask out modifiers
     uint32_t nativeKeycode = 0x00FF;
     nativeKeycode &= sequence;
 
-    GPUI_WARNING_STREAM << "Debug: modifiers - " << nativeModifiers << " key: " << nativeKeycode;
+    qWarning() << "Debug: modifiers - " << nativeModifiers << " key: " << nativeKeycode;
 
     uint32_t code      = fromNativeKeycode(nativeKeycode);
     uint32_t modifiers = fromNativeModifiers(nativeModifiers);
 
-    GPUI_WARNING_STREAM << "Debug: native modifiers - " << modifiers << " nativeCode: " << code << " m^k " << (modifiers ^ code);
+    qWarning() << "Debug: native modifiers - " << modifiers << " nativeCode: " << code << " m^k " << (modifiers ^ code);
 
     QKeySequence result(modifiers ^ code);
 
-    GPUI_WARNING_STREAM << "Debug: encoded sequence - " << result;
+    qWarning() << "Debug: encoded sequence - " << result;
 
     return result;
 }

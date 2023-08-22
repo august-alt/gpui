@@ -31,7 +31,7 @@
 
 #include <QDataWidgetMapper>
 
-#include "../../core/logger/log.h"
+#include <QDebug>
 
 namespace scripts_plugin
 {

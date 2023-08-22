@@ -10,7 +10,7 @@
 #include "scriptitemcontainer.h"
 #include "scriptmodelbuilder.h"
 
-#include "../../core/logger/log.h"
+#include <QDebug>
 #include <QFile>
 
 namespace scripts_plugin
@@ -113,7 +113,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
         auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile>>(*iss, pluginName);
         if (!iniFile)
         {
-            GPUI_WARNING_STREAM << "Unable to load registry file contents.";
+            qWarning() << "Unable to load registry file contents.";
             return;
         }
 
@@ -123,7 +123,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
     }
     catch (std::exception &e)
     {
-        GPUI_WARNING_STREAM << "Warning: Unable to read file: " << path.c_str() << " description: " << e.what();
+        qWarning() << "Warning: Unable to read file: " << path.c_str() << " description: " << e.what();
     }
 }
 
@@ -147,12 +147,12 @@ void ScriptsModelIo::saveIniFile(std::string &path, ScriptsModel *model)
 
             gpui::smb::SmbFile smbLocationItemFile(filePath);
 
-            GPUI_WARNING_STREAM << "Script file path: " << filePath;
+            qWarning() << "Script file path: " << filePath;
 
             bool openResult = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
             if (!openResult)
             {
-                GPUI_WARNING_STREAM << "Unable to open file for writing trying to create new file.";
+                qWarning() << "Unable to open file for writing trying to create new file.";
                 openResult = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
             }
             if (openResult && fileContent.str().size() > 0)
@@ -161,7 +161,7 @@ void ScriptsModelIo::saveIniFile(std::string &path, ScriptsModel *model)
             }
             else
             {
-                GPUI_WARNING_STREAM << "Unable to open new file!";
+                qWarning() << "Unable to open new file!";
             }
             smbLocationItemFile.close();
         }
@@ -172,7 +172,7 @@ void ScriptsModelIo::saveIniFile(std::string &path, ScriptsModel *model)
     }
     catch (std::exception &e)
     {
-        GPUI_WARNING_STREAM << "Warning: Unable to write file: " << filePath.toStdString().c_str()
+        qWarning() << "Warning: Unable to write file: " << filePath.toStdString().c_str()
                    << " description: " << e.what();
     }
 }

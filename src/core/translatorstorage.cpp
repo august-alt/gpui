@@ -21,7 +21,7 @@
 #include "translatorstorage.h"
 
 #include <QCoreApplication>
-#include "logger/log.h"
+#include <QDebug>
 #include <QDirIterator>
 #include <QLibraryInfo>
 

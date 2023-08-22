@@ -27,7 +27,7 @@
 
 #include <mvvm/factories/viewmodelfactory.h>
 
-#include "../../core/logger/log.h"
+#include <QDebug>
 
 namespace scripts_plugin
 {
@@ -110,7 +110,7 @@ ScriptItemContainer *ScriptsDialog::findItemContainer(ScriptsModel *model, std::
         }
     }
 
-    GPUI_WARNING_STREAM << "Section: " << section.c_str() << " not found!";
+    qWarning() << "Section: " << section.c_str() << " not found!";
 
     return nullptr;
 }

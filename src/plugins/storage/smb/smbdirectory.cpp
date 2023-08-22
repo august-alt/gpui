@@ -22,7 +22,7 @@
 
 #include "smbclient.h"
 
-#include "../../../core/logger/log.h"
+#include <QDebug>
 
 namespace gpui
 {
@@ -63,7 +63,7 @@ bool SmbDirectory::exists() const
             return true;
         }
 
-        GPUI_WARNING_STREAM << "Directory: " << d->path << "Error: " << strerror(errno);
+        qWarning() << "Directory: " << d->path << "Error: " << strerror(errno);
     }
 
     return result;
@@ -75,7 +75,7 @@ bool SmbDirectory::mkdir(const QString &dir) const
 
     if (operationResult < 0)
     {
-        GPUI_WARNING_STREAM << "Directory: " << dir << "Error: " << strerror(errno);
+        qWarning() << "Directory: " << dir << "Error: " << strerror(errno);
 
         return false;
     }
@@ -91,7 +91,7 @@ bool SmbDirectory::rmdir(const QString &dir) const
 
     if (operationResult < 0)
     {
-        GPUI_WARNING_STREAM << "Directory: " << dir << "Error: " << strerror(errno);
+        qWarning() << "Directory: " << dir << "Error: " << strerror(errno);
 
         return false;
     }

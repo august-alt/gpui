@@ -23,15 +23,20 @@
 
 #include <QString>
 #include <QUuid>
+#include <QtMessageHandler>
 
-namespace gpui {
-    class CommandLineOptions
-    {
-    public:
-        QString path {};
-        QString policyBundle {};
-        QString policyName {};
-    };
-}
+namespace gpui
+{
+class CommandLineOptions
+{
+public:
+    QString path{};
+    QString policyBundle{};
+    QString policyName{};
+    QtMsgType consoleLogLevel{};
+    QtMsgType syslogLogLevel{};
+    QtMsgType fileLogLevel{};
+};
+} // namespace gpui
 
 #endif // GPUI_COMMAND_LINE_OPTIONS_H

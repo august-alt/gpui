@@ -20,6 +20,7 @@
 
 #include "commandlineparser.h"
 
+#include <iostream>
 #include <memory>
 
 #include <QCommandLineParser>
@@ -82,12 +83,24 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 #endif
                                             << QStringLiteral("h") << QStringLiteral("help"),
                                         QObject::tr("Displays help on commandline options."));
+    const QCommandLineOption consoleLogLevelOpion("log-console",
+                                                  QObject::tr("Set log level for console."),
+                                                  QObject::tr("level"));
+    const QCommandLineOption syslogLogLevelOpion("log-syslog",
+                                                 QObject::tr("Set log level for syslog."),
+                                                 QObject::tr("level"));
+    const QCommandLineOption fileLogLevelOpion("log-file",
+                                               QObject::tr("Set log level for file in ~/.local/share/gpui/."),
+                                               QObject::tr("level"));
 
     d->parser->setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     d->parser->addOption(pathOption);
     d->parser->addOption(bundleOption);
     d->parser->addOption(helpOption);
     d->parser->addOption(nameOption);
+    d->parser->addOption(consoleLogLevelOpion);
+    d->parser->addOption(syslogLogLevelOpion);
+    d->parser->addOption(fileLogLevelOpion);
 
     const QCommandLineOption versionOption = d->parser->addVersionOption();
 
@@ -131,12 +144,58 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
         }
     }
 
+    const auto handleLogOption = [this, errorMessage](const QCommandLineOption &option, QtMsgType &result) -> bool {
+        if (d->parser->isSet(option))
+        {
+            const QString logString = d->parser->value(option);
+
+            if (logString == "none")
+            {
+                result = LOG_LEVEL_DISABLED;
+            }
+            else if (logString == "debug")
+            {
+                result = QtDebugMsg;
+            }
+            else if (logString == "info")
+            {
+                result = QtInfoMsg;
+            }
+            else if (logString == "warning")
+            {
+                result = QtWarningMsg;
+            }
+            else if (logString == "critical")
+            {
+                result = QtCriticalMsg;
+            }
+            else if (logString == "fatal")
+            {
+                result = QtFatalMsg;
+            }
+            else
+            {
+                *errorMessage = QObject::tr("Bad log level: ") + logString;
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    if (!handleLogOption(consoleLogLevelOpion, options->consoleLogLevel)
+        || !handleLogOption(syslogLogLevelOpion, options->syslogLogLevel)
+        || !handleLogOption(fileLogLevelOpion, options->fileLogLevel))
+    {
+        return CommandLineError;
+    }
+
     return CommandLineOk;
 }
 
 void CommandLineParser::showHelp() const
 {
-    d->parser->showHelp();
+    std::cerr << qPrintable(d->parser->helpText());
 }
 
 void CommandLineParser::showVersion() const

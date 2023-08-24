@@ -24,6 +24,7 @@
 #include "gui.h"
 
 #include "../gui/commandlineoptions.h"
+#include "../core/logger/prelude.h"
 
 #include <QApplication>
 #include <QCommandLineParser>

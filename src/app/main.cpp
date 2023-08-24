@@ -30,6 +30,7 @@
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
 
+#include <iostream>
 #include <QApplication>
 
 int main(int argc, char **argv)
@@ -70,7 +71,7 @@ int main(int argc, char **argv)
     switch (parserResult)
     {
     case gpui::CommandLineParser::CommandLineError:
-        printf("%s \n", qPrintable(errorMessage));
+        std::cerr << qPrintable(errorMessage) << std::endl;
         parser.showHelp();
         return 1;
     case gpui::CommandLineParser::CommandLineHelpRequested:
@@ -86,17 +87,18 @@ int main(int argc, char **argv)
 
     auto logManager = gpui::logger::LoggerManager::globalInstance();
 
-    auto consoleLogger = std::make_shared<gpui::logger::ConsoleLogger>();
-    consoleLogger->setLogLevel(QtDebugMsg);
-    logManager->addLogger(consoleLogger);
-
-    auto syslogLogger = std::make_shared<gpui::logger::SyslogLogger>();
-    syslogLogger->setLogLevel(QtWarningMsg);
-    logManager->addLogger(syslogLogger);
-
-    auto fileLogger = std::make_shared<gpui::logger::FileLogger>();
-    fileLogger->setLogLevel(QtInfoMsg);
-    logManager->addLogger(fileLogger);
+    if (options.consoleLogLevel != LOG_LEVEL_DISABLED)
+    {
+        logManager->addLogger<gpui::logger::ConsoleLogger>(options.consoleLogLevel);
+    }
+    if (options.consoleLogLevel != LOG_LEVEL_DISABLED)
+    {
+        logManager->addLogger<gpui::logger::SyslogLogger>(options.syslogLogLevel);
+    }
+    if (options.consoleLogLevel != LOG_LEVEL_DISABLED)
+    {
+        logManager->addLogger<gpui::logger::FileLogger>(options.fileLogLevel);
+    }
 
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
     window.show();

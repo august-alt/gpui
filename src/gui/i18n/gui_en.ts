@@ -656,7 +656,7 @@ context (user policy option).</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+71"/>
+        <location filename="../commandlineparser.cpp" line="+72"/>
         <source>The full path of policy to edit.</source>
         <translation>The full path of policy to edit.</translation>
     </message>
@@ -691,17 +691,51 @@ context (user policy option).</translation>
         <translation>Displays help on commandline options.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+13"/>
+        <source>Set log level for console. </source>
+        <translation>Set log level for console. </translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <source>Default</source>
+        <translation>Default</translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <location line="+5"/>
+        <location line="+5"/>
+        <source>level</source>
+        <translation>level</translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>Set log level for syslog. </source>
+        <translation>Set log level for syslog. </translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Set log level for file in ~/.local/share/gpui/. </source>
+        <translation>Set log level for file in ~/.local/share/gpui/. </translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
         <translation>Bad policy path: </translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>Bad log level: </source>
+        <translation>Bad log level: </translation>
     </message>
     <message>
         <source>Bad policy name: </source>
         <translation type="vanished">Bad policy name: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+169"/>
+        <location filename="../contentwidget.cpp" line="+170"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
@@ -711,59 +745,47 @@ context (user policy option).</translation>
         <translation>Policy settings were modified do you want to save them?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+102"/>
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Options:</source>
         <translation>Options:</translation>
     </message>
     <message>
-        <location line="+154"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+330"/>
-        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
+        <location filename="../mainwindow.cpp" line="+343"/>
         <source>Local group policies</source>
         <translation>Local group policies templates</translation>
     </message>
     <message>
-        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+7"/>
         <source>Machine</source>
         <translation>Machine</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Machine level policies</source>
         <translation>Machine level policies</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+13"/>
         <source>Administrative Templates</source>
         <translation>Administrative Templates</translation>
     </message>
     <message>
-        <location line="-11"/>
         <source>Machine administrative templates</source>
         <translation>Machine administrative templates</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>User</source>
         <translation>User</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>User level policies</source>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>User administrative templates</source>
         <translation>User administrative templates</translation>
     </message>
@@ -776,13 +798,12 @@ context (user policy option).</translation>
         <translation type="vanished">Error writing file:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+12"/>
+        <location line="+12"/>
         <source>[Domain Group Policy]</source>
         <translation>[Domain Group Policy]</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="-31"/>
         <source>[Local Group Policy]</source>
         <translation>[Local Group Policy]</translation>
     </message>

@@ -94,22 +94,21 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 #define FILE_LOG_LEVEL_DEFAULT "warning"
 #endif
 
-    const QCommandLineOption
-        consoleLogLevelOpion("log-console",
-                             QObject::tr("Set log level for console. Default is \"" CONSOLE_LOG_LEVEL_DEFAULT "\"."),
-                             QObject::tr("level"),
-                             CONSOLE_LOG_LEVEL_DEFAULT);
+    const QCommandLineOption consoleLogLevelOpion("log-console",
+                                                  QObject::tr("Set log level for console. ") + QObject::tr("Default")
+                                                      + ": \"" CONSOLE_LOG_LEVEL_DEFAULT "\".",
+                                                  QObject::tr("level"),
+                                                  CONSOLE_LOG_LEVEL_DEFAULT);
     const QCommandLineOption syslogLogLevelOpion("log-syslog",
-                                                 QObject::tr(
-                                                     "Set log level for syslog. Default is \"" SYSLOG_LOG_LEVEL_DEFAULT
-                                                     "\"."),
+                                                 QObject::tr("Set log level for syslog. ") + QObject::tr("Default")
+                                                     + ": \"" SYSLOG_LOG_LEVEL_DEFAULT "\".",
                                                  QObject::tr("level"),
                                                  SYSLOG_LOG_LEVEL_DEFAULT);
-    const QCommandLineOption fileLogLevelOpion(
-        "log-file",
-        QObject::tr("Set log level for file in ~/.local/share/gpui/. Default is \"" FILE_LOG_LEVEL_DEFAULT "\"."),
-        QObject::tr("level"),
-        FILE_LOG_LEVEL_DEFAULT);
+    const QCommandLineOption fileLogLevelOpion("log-file",
+                                               QObject::tr("Set log level for file in ~/.local/share/gpui/. ")
+                                                   + QObject::tr("Default") + ": \"" FILE_LOG_LEVEL_DEFAULT "\".",
+                                               QObject::tr("level"),
+                                               FILE_LOG_LEVEL_DEFAULT);
 
     d->parser->setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     d->parser->addOption(pathOption);

@@ -654,7 +654,7 @@ context (user policy option).</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../commandlineparser.cpp" line="+71"/>
+        <location filename="../commandlineparser.cpp" line="+72"/>
         <source>The full path of policy to edit.</source>
         <translation>Полный путь для редактируемой политики.</translation>
     </message>
@@ -689,17 +689,51 @@ context (user policy option).</source>
         <translation>Показать описание опций коммандной строки.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+13"/>
+        <source>Set log level for console. </source>
+        <translation>Установить уровень логирования для консоли. </translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <source>Default</source>
+        <translation>По умолчанию</translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <location line="+5"/>
+        <location line="+5"/>
+        <source>level</source>
+        <translation>уровень</translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>Set log level for syslog. </source>
+        <translation>Установить уровень логирования для syslog. </translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Set log level for file in ~/.local/share/gpui/. </source>
+        <translation>Установить уровень логирования для файла в ~/.local/share/gpui/. </translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <location line="+12"/>
         <source>Bad policy path: </source>
         <translation>Неверный путь к политике: </translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>Bad log level: </source>
+        <translation>Неверный уровень логирования: </translation>
     </message>
     <message>
         <source>Bad policy name: </source>
         <translation type="vanished">Ошибочное название политики: </translation>
     </message>
     <message>
-        <location filename="../contentwidget.cpp" line="+169"/>
+        <location filename="../contentwidget.cpp" line="+170"/>
         <source>Save settings dialog</source>
         <translation>Состояние настроек</translation>
     </message>
@@ -709,59 +743,47 @@ context (user policy option).</source>
         <translation>Настройки политки были изменены, хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../presentationbuilder.cpp" line="+102"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Options:</source>
         <translation>Опции:</translation>
     </message>
     <message>
-        <location line="+154"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+330"/>
-        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+92"/>
+        <location filename="../mainwindow.cpp" line="+343"/>
         <source>Local group policies</source>
         <translation>Шаблон локальных групповых политик</translation>
     </message>
     <message>
-        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="+7"/>
         <source>Machine</source>
         <translation>Компьютер</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Machine level policies</source>
         <translation>Политики настройки компьютера</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+13"/>
         <source>Administrative Templates</source>
         <translation>Административные шаблоны</translation>
     </message>
     <message>
-        <location line="-11"/>
         <source>Machine administrative templates</source>
         <translation>Административные шаблоны компьютера</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>User</source>
         <translation>Пользователь</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>User level policies</source>
         <translation>Политики настройки пользователей</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>User administrative templates</source>
         <translation>Пользовательские административные шаблоны</translation>
     </message>
@@ -774,13 +796,12 @@ context (user policy option).</source>
         <translation type="vanished">Ошибка записи файла:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+12"/>
+        <location line="+12"/>
         <source>[Domain Group Policy]</source>
         <translation>[Доменная групповая политика]</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../../plugins/administrative_templates/bundle/policybundle.cpp" line="-31"/>
         <source>[Local Group Policy]</source>
         <translation>[Локальная групповая политика]</translation>
     </message>
@@ -907,7 +928,7 @@ context (user policy option).</source>
     <message>
         <source>Action
 Modifiers:</source>
-        <translation type="vanished">Модификаторы 
+        <translation type="vanished">Модификаторы
 действий:</translation>
     </message>
     <message>

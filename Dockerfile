@@ -53,7 +53,11 @@ RUN apt-get update \
     sudo \
     ctest \
     && export CURRENT_PWD=`pwd` \
-    && groupadd --gid $GROUP_ID builder2 \
+    && if [ $(getent group $GROUP_ID) ]; then \
+      echo "group $GROUP_ID exists."; \
+    else \
+      groupadd --gid $GROUP_ID builder2; \
+    fi
     && useradd --uid $USER_ID --gid $GROUP_ID -ms /bin/bash builder2 \
     && groupadd sudo \
     && usermod -aG rpm builder2 \

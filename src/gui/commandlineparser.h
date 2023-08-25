@@ -58,6 +58,8 @@ namespace gpui {
         CommandLineParser& operator=(const CommandLineParser&) = delete;   // copy assignment
         CommandLineParser& operator=(CommandLineParser&&)      = delete;   // move assignment
 
+    bool handleLoggerOption(const QCommandLineOption &option, QtMsgType &result, QString *errorMessage);
+
     private:
         CommandLineParserPrivate* d;
     };

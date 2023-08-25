@@ -161,53 +161,54 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
         }
     }
 
-    const auto handleLogOption = [this, errorMessage](const QCommandLineOption &option, QtMsgType &result) -> bool {
-        if (d->parser->isSet(option))
-        {
-            const QString logString = d->parser->value(option);
-
-            if (logString == "none")
-            {
-                result = LOG_LEVEL_DISABLED;
-            }
-            else if (logString == "debug")
-            {
-                result = QtDebugMsg;
-            }
-            else if (logString == "info")
-            {
-                result = QtInfoMsg;
-            }
-            else if (logString == "warning")
-            {
-                result = QtWarningMsg;
-            }
-            else if (logString == "critical")
-            {
-                result = QtCriticalMsg;
-            }
-            else if (logString == "fatal")
-            {
-                result = QtFatalMsg;
-            }
-            else
-            {
-                *errorMessage = QObject::tr("Bad log level: ") + logString;
-                return false;
-            }
-        }
-
-        return true;
-    };
-
-    if (!handleLogOption(consoleLogLevelOpion, options->consoleLogLevel)
-        || !handleLogOption(syslogLogLevelOpion, options->syslogLogLevel)
-        || !handleLogOption(fileLogLevelOpion, options->fileLogLevel))
+    if (!handleLoggerOption(consoleLogLevelOpion, options->consoleLogLevel, errorMessage)
+        || !handleLoggerOption(syslogLogLevelOpion, options->syslogLogLevel, errorMessage)
+        || !handleLoggerOption(fileLogLevelOpion, options->fileLogLevel, errorMessage))
     {
         return CommandLineError;
     }
 
     return CommandLineOk;
+}
+
+bool CommandLineParser::handleLoggerOption(const QCommandLineOption &option, QtMsgType &result, QString *errorMessage)
+{
+    if (d->parser->isSet(option))
+    {
+        const QString logString = d->parser->value(option);
+
+        if (logString == "none")
+        {
+            result = LOG_LEVEL_DISABLED;
+        }
+        else if (logString == "debug")
+        {
+            result = QtDebugMsg;
+        }
+        else if (logString == "info")
+        {
+            result = QtInfoMsg;
+        }
+        else if (logString == "warning")
+        {
+            result = QtWarningMsg;
+        }
+        else if (logString == "critical")
+        {
+            result = QtCriticalMsg;
+        }
+        else if (logString == "fatal")
+        {
+            result = QtFatalMsg;
+        }
+        else
+        {
+            *errorMessage = QObject::tr("Bad log level: ") + logString;
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void CommandLineParser::showHelp() const

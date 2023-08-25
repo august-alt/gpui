@@ -72,14 +72,11 @@ int main(int argc, char **argv)
     {
     case gpui::CommandLineParser::CommandLineError:
         std::cerr << qPrintable(errorMessage) << std::endl;
-        parser.showHelp();
-        return 1;
+        parser.showHelp(1); // NOTE: Exits with 1
     case gpui::CommandLineParser::CommandLineHelpRequested:
-        parser.showHelp();
-        return 0;
+        parser.showHelp(0); // NOTE: Exits with 0
     case gpui::CommandLineParser::CommandLineVersionRequested:
-        parser.showVersion();
-        return 0;
+        parser.showVersion(); // NOTE: Exits with 0
     case gpui::CommandLineParser::CommandLineOk:
     default:
         break;

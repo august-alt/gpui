@@ -211,9 +211,9 @@ bool CommandLineParser::handleLoggerOption(const QCommandLineOption &option, QtM
     return true;
 }
 
-void CommandLineParser::showHelp() const
+void CommandLineParser::showHelp(int exitCode) const
 {
-    std::cerr << qPrintable(d->parser->helpText());
+    d->parser->showHelp(exitCode);
 }
 
 void CommandLineParser::showVersion() const

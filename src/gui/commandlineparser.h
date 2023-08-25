@@ -49,8 +49,8 @@ namespace gpui {
 
         CommandLineParseResult parseCommandLine(CommandLineOptions *options, QString *errorMessage);
 
-        void showHelp() const;
-        void showVersion() const;
+        Q_NORETURN void showHelp(int exitCode) const;
+        Q_NORETURN void showVersion() const;
 
     private:
         CommandLineParser(const CommandLineParser&)            = delete;   // copy ctor

@@ -24,6 +24,7 @@
 #include "gui.h"
 
 #include "../gui/commandlineoptions.h"
+#include "../core/logger/prelude.h"
 
 #include <QApplication>
 #include <QCommandLineParser>
@@ -48,14 +49,16 @@ namespace gpui {
 
         CommandLineParseResult parseCommandLine(CommandLineOptions *options, QString *errorMessage);
 
-        void showHelp() const;
-        void showVersion() const;
+        Q_NORETURN void showHelp(int exitCode) const;
+        Q_NORETURN void showVersion() const;
 
     private:
         CommandLineParser(const CommandLineParser&)            = delete;   // copy ctor
         CommandLineParser(CommandLineParser&&)                 = delete;   // move ctor
         CommandLineParser& operator=(const CommandLineParser&) = delete;   // copy assignment
         CommandLineParser& operator=(CommandLineParser&&)      = delete;   // move assignment
+
+    bool handleLoggerOption(const QCommandLineOption &option, QtMsgType &result, QString *errorMessage);
 
     private:
         CommandLineParserPrivate* d;

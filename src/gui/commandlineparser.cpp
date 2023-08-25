@@ -20,6 +20,7 @@
 
 #include "commandlineparser.h"
 
+#include <iostream>
 #include <memory>
 
 #include <QCommandLineParser>
@@ -83,11 +84,40 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
                                             << QStringLiteral("h") << QStringLiteral("help"),
                                         QObject::tr("Displays help on commandline options."));
 
+#ifdef QT_DEBUG
+#define CONSOLE_LOG_LEVEL_DEFAULT "debug"
+#define SYSLOG_LOG_LEVEL_DEFAULT "none"
+#define FILE_LOG_LEVEL_DEFAULT "debug"
+#else
+#define CONSOLE_LOG_LEVEL_DEFAULT "none"
+#define SYSLOG_LOG_LEVEL_DEFAULT "none"
+#define FILE_LOG_LEVEL_DEFAULT "warning"
+#endif
+
+    const QCommandLineOption consoleLogLevelOpion("log-console",
+                                                  QObject::tr("Set log level for console. ") + QObject::tr("Default")
+                                                      + ": \"" CONSOLE_LOG_LEVEL_DEFAULT "\".",
+                                                  QObject::tr("level"),
+                                                  CONSOLE_LOG_LEVEL_DEFAULT);
+    const QCommandLineOption syslogLogLevelOpion("log-syslog",
+                                                 QObject::tr("Set log level for syslog. ") + QObject::tr("Default")
+                                                     + ": \"" SYSLOG_LOG_LEVEL_DEFAULT "\".",
+                                                 QObject::tr("level"),
+                                                 SYSLOG_LOG_LEVEL_DEFAULT);
+    const QCommandLineOption fileLogLevelOpion("log-file",
+                                               QObject::tr("Set log level for file in ~/.local/share/gpui/. ")
+                                                   + QObject::tr("Default") + ": \"" FILE_LOG_LEVEL_DEFAULT "\".",
+                                               QObject::tr("level"),
+                                               FILE_LOG_LEVEL_DEFAULT);
+
     d->parser->setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     d->parser->addOption(pathOption);
     d->parser->addOption(bundleOption);
     d->parser->addOption(helpOption);
     d->parser->addOption(nameOption);
+    d->parser->addOption(consoleLogLevelOpion);
+    d->parser->addOption(syslogLogLevelOpion);
+    d->parser->addOption(fileLogLevelOpion);
 
     const QCommandLineOption versionOption = d->parser->addVersionOption();
 
@@ -131,12 +161,59 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
         }
     }
 
+    if (!handleLoggerOption(consoleLogLevelOpion, options->consoleLogLevel, errorMessage)
+        || !handleLoggerOption(syslogLogLevelOpion, options->syslogLogLevel, errorMessage)
+        || !handleLoggerOption(fileLogLevelOpion, options->fileLogLevel, errorMessage))
+    {
+        return CommandLineError;
+    }
+
     return CommandLineOk;
 }
 
-void CommandLineParser::showHelp() const
+bool CommandLineParser::handleLoggerOption(const QCommandLineOption &option, QtMsgType &result, QString *errorMessage)
 {
-    d->parser->showHelp();
+    if (d->parser->isSet(option))
+    {
+        const QString logString = d->parser->value(option);
+
+        if (logString == "none")
+        {
+            result = LOG_LEVEL_DISABLED;
+        }
+        else if (logString == "debug")
+        {
+            result = QtDebugMsg;
+        }
+        else if (logString == "info")
+        {
+            result = QtInfoMsg;
+        }
+        else if (logString == "warning")
+        {
+            result = QtWarningMsg;
+        }
+        else if (logString == "critical")
+        {
+            result = QtCriticalMsg;
+        }
+        else if (logString == "fatal")
+        {
+            result = QtFatalMsg;
+        }
+        else
+        {
+            *errorMessage = QObject::tr("Bad log level: ") + logString;
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void CommandLineParser::showHelp(int exitCode) const
+{
+    d->parser->showHelp(exitCode);
 }
 
 void CommandLineParser::showVersion() const

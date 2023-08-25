@@ -57,7 +57,7 @@ RUN apt-get update \
       echo "group $GROUP_ID exists."; \
     else \
       groupadd --gid $GROUP_ID builder2; \
-    fi
+    fi \
     && useradd --uid $USER_ID --gid $GROUP_ID -ms /bin/bash builder2 \
     && groupadd sudo \
     && usermod -aG rpm builder2 \
@@ -67,7 +67,7 @@ RUN apt-get update \
     && echo "builder2 ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers \
     && hasher-useradd builder2 || : \
     && mkdir /app \
-    && chown root:builder2 /app
+    && chown $USER_ID:$GROUP_ID /app
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY script/build.sh /build.sh

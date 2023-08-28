@@ -88,6 +88,11 @@ void SecurityWidget::setMachineSecuritySource()
 {
 }
 
+bool SecurityWidget::hasDataChanged()
+{
+    return false;
+}
+
 }
 
 Q_DECLARE_METATYPE(std::shared_ptr<::security::SecurityDefinition>)

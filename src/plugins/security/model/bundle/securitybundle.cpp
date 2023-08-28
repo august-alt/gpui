@@ -222,13 +222,21 @@ std::unique_ptr<QStandardItemModel> SecurityBundle::loadFolder(const std::string
                                             false);
     machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
     machineItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340000}"), model::bundle::CURRENT_UUID);
-    d->rootMachineItem = createItem(QObject::tr("Administrative Templates"),
-                                    "folder",
-                                    QObject::tr("Machine administrative templates"),
-                                    ItemType::ITEM_TYPE_CATEGORY,
-                                    SecurityType::Machine,
-                                    false);
-    machineItem->appendRow(d->rootMachineItem);
+    QStandardItem *machineSystemSettingsItem = createItem(QObject::tr("System settings"),
+                                                          "folder",
+                                                          QObject::tr("System settings for computer"),
+                                                          ItemType::ITEM_TYPE_CATEGORY,
+                                                          SecurityType::Machine,
+                                                          false);
+    machineItem->appendRow(machineSystemSettingsItem);
+    d->rootMachineItem = createItem(QObject::tr("Security Settings"),
+                                         "folder",
+                                         QObject::tr("Machine level security settings"),
+                                         ItemType::ITEM_TYPE_CATEGORY,
+                                         SecurityType::User,
+                                         false);
+    machineSystemSettingsItem->appendRow(d->rootMachineItem);
+
     QStandardItem *userItem = createItem(QObject::tr("User"),
                                          "user-home",
                                          QObject::tr("User level policies"),
@@ -237,13 +245,20 @@ std::unique_ptr<QStandardItemModel> SecurityBundle::loadFolder(const std::string
                                          false);
     userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340003}"), model::bundle::PARENT_UUID);
     userItem->setData(QUuid("{123e4567-e89b-12d3-a456-426652340001}"), model::bundle::CURRENT_UUID);
-    d->rootUserItem = createItem(QObject::tr("Administrative Templates"),
-                                 "folder",
-                                 QObject::tr("User administrative templates"),
-                                 ItemType::ITEM_TYPE_CATEGORY,
-                                 SecurityType::User,
-                                 false);
-    userItem->appendRow(d->rootUserItem);
+    QStandardItem *userSystemSettingsItem = createItem(QObject::tr("System settings"),
+                                              "folder",
+                                              QObject::tr("System settings for user"),
+                                              ItemType::ITEM_TYPE_CATEGORY,
+                                              SecurityType::User,
+                                              false);
+    userItem->appendRow(userSystemSettingsItem);
+    d->rootUserItem = createItem(QObject::tr("Security Settings"),
+                                         "folder",
+                                         QObject::tr("User level security settings"),
+                                         ItemType::ITEM_TYPE_CATEGORY,
+                                         SecurityType::User,
+                                         false);
+    userSystemSettingsItem->appendRow(d->rootUserItem);
 
     visibleRootItem->appendRow(machineItem);
     visibleRootItem->appendRow(userItem);

@@ -30,6 +30,23 @@ namespace gpui
 {
 namespace logger
 {
+/*!
+ * \class FileLogger filelogger.h
+ * \brief Implementation of logger which logs messages to a file.
+ * \ingroup logger
+ *
+ * Writes logs to ~/.local/share/gpui/<filename>.
+ */
+
+/*!
+ * \brief FileLogger::FileLogger Creates FileLogger
+ * \param filename Name of a file for logs. By default "gpui.log".
+ *
+ * File logger writes to a file in ~/.local/share/gpui/<filename>.
+ * If given path does not exist, it will create needed directories.
+ *
+ * Opens a file stream to log file.
+ */
 FileLogger::FileLogger(const char *filename)
 {
     // TODO(mchernigin): timestamp on creation/editing log file is UTC and not local timezone
@@ -41,11 +58,20 @@ FileLogger::FileLogger(const char *filename)
     this->logFileStream.open(logFile, std::fstream::out | std::fstream::app);
 }
 
+/*!
+ * \brief FileLogger::~FileLogger Destroys a file logger.
+ *
+ * Closes file stream to log file.
+ */
 FileLogger::~FileLogger()
 {
     this->logFileStream.close();
 }
 
+/*!
+ * \brief FileLogger::log Format and log given message to log file.
+ * \param message Message.
+ */
 void FileLogger::log(const LoggerMessage &message)
 {
     const char *prefix = this->logLevelMap.at(message.msgType);
@@ -53,6 +79,12 @@ void FileLogger::log(const LoggerMessage &message)
                         << message.filePath << ":" << message.line << ")" << std::endl;
 }
 
+/*!
+ * \brief FileLogger::getHomeDir Gets current user home directory.
+ * \return Absolute path to home directory.
+ *
+ * Gets home directory from $HOME. If $HOME is not set, uses `getpwuid`.
+ */
 std::string FileLogger::getHomeDir()
 {
     const char *HOME = getenv("HOME");
@@ -88,6 +120,11 @@ std::string FileLogger::getHomeDir()
     return homeDir;
 }
 
+/*!
+ * \brief FileLogger::ensureDir Ensure if given path exists.
+ * \param path Path
+ * \return True, if dir already exists or was created successfully.
+ */
 bool FileLogger::ensureDir(const char *path)
 {
     struct stat sb;

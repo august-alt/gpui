@@ -25,6 +25,11 @@
 #include <iostream>
 #include <unistd.h>
 
+/*!
+ * \brief checkColorSupport Checks if console supports colored output.
+ * \param fd File descriptor.
+ * \return True if console supports colored output.
+ */
 static bool checkColorSupport(int fd)
 {
     // TODO(mchernigin): use `tput colors`, and use method bellow only if `tput` returns !0
@@ -35,6 +40,12 @@ static bool checkColorSupport(int fd)
     return is_tty && TERM != NULL && strcmp(TERM, "dumb") != 0;
 }
 
+/*!
+ * \brief colorize Colorizes given text using escape sequences.
+ * \param text Text to colorize.
+ * \param params String which describes styling in escape sequence.
+ * \return Colorized text.
+ */
 static std::string colorize(const std::string &text, const char *params)
 {
     return std::string("\033[") + params + "m" + text + "\033[0m";
@@ -44,11 +55,30 @@ namespace gpui
 {
 namespace logger
 {
+/*!
+ * \class ConsoleLogger consolelogger.h
+ * \brief Implementation of logger which logs messages to console.
+ * \ingroup logger
+ *
+ * Logs messages to std::clog.
+ */
+
+/*!
+ * \brief ConsoleLogger Create new console logger.
+ *
+ * Checks if stderr supports color.
+ */
 ConsoleLogger::ConsoleLogger()
 {
     this->hasColorSupport = checkColorSupport(STDERR_FILENO);
 }
 
+/*!
+ * \brief ConsoleLogger::log Send message to console.
+ * \param message Message.
+ *
+ * Formats and sends message to std::clog.
+ */
 void ConsoleLogger::log(const LoggerMessage &message)
 {
     std::string prefix = this->logLevelMap.at(message.msgType);

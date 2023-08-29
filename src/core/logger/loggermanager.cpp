@@ -23,6 +23,10 @@
 #include <algorithm>
 #include <iostream>
 
+/*!
+ * \brief getCurrentTime Returns current system time.
+ * \return Time struct.
+ */
 static std::tm getCurrentTime()
 {
     time_t time;
@@ -43,30 +47,61 @@ public:
     mutable std::mutex loggerMutex               = {};
 };
 
+/*!
+ * \class LoggerManager loggermanager.h
+ * \brief Class for managing loggers.
+ * \ingroup logger
+ *
+ * Provides ability to enable new loggers.
+ */
+
 std::shared_ptr<LoggerManager> LoggerManager::instance{nullptr};
 
+/*!
+ * \brief LoggerManager::LoggerManager Create new LoggerManager.
+ *
+ * Installs qt message handler to its own static function.
+ */
 LoggerManager::LoggerManager()
     : d(new LoggerManagerPrivate)
 {
     qInstallMessageHandler(LoggerManager::messageHandler);
 }
 
+/*!
+ * \brief LoggerManager::~LoggerManager Destroy logger manager.
+ */
 LoggerManager::~LoggerManager()
 {
     delete d;
 }
 
+/*!
+ * \brief LoggerManager::destroyInstance Destroy global logger manager instance.
+ */
 void LoggerManager::destroyInstance()
 {
     instance.reset();
 }
 
+/*!
+ * \brief LoggerManager::addLogger Add new logger.
+ * \param logger New logger.
+ *
+ * Enables given logger.
+ */
 void LoggerManager::addLogger(std::shared_ptr<Logger> logger)
 {
     std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
     d->loggers.push_back(logger);
 }
 
+/*!
+ * \brief LoggerManager::removeLogger Remove logger.
+ * \param logger Logger.
+ *
+ * Disables given logger.
+ */
 void LoggerManager::removeLogger(std::shared_ptr<Logger> logger)
 {
     std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
@@ -78,11 +113,24 @@ void LoggerManager::removeLogger(std::shared_ptr<Logger> logger)
     }
 }
 
+/*!
+ * \brief LoggerManager::clearLoggers Remove all logger.
+ *
+ * Disables all loggers.
+ */
 void LoggerManager::clearLoggers()
 {
     d->loggers.clear();
 }
 
+/*!
+ * \brief LoggerManager::log Log message to all loggers.
+ * \param msgType Log level.
+ * \param message Message text.
+ * \param file File where logger was invoked.
+ * \param function Function where logger was invoked.
+ * \param line Line where logger was invoked.
+ */
 void LoggerManager::log(const QtMsgType &msgType,
                         const std::string &message,
                         const std::string &file,
@@ -97,12 +145,22 @@ void LoggerManager::log(const QtMsgType &msgType,
     }
 }
 
+/*!
+ * \brief LoggerManager::getLoggerCount Get number of enabled loggers.
+ * \return Number of loggers.
+ */
 size_t LoggerManager::getLoggerCount() const
 {
     std::lock_guard<std::mutex> lockGuardLogger(d->loggerMutex);
     return d->loggers.size();
 }
 
+/*!
+ * \brief LoggerManager::messageHandler Handler of all log messages.
+ * \param msgType Log level.
+ * \param context Qt context.
+ * \param msg Message text.
+ */
 void LoggerManager::messageHandler(QtMsgType msgType, const QMessageLogContext &context, const QString &msg)
 {
     auto logger          = globalInstance();
@@ -114,6 +172,10 @@ void LoggerManager::messageHandler(QtMsgType msgType, const QMessageLogContext &
 }
 
 Q_GLOBAL_STATIC(LoggerManager, loggerInstance)
+/*!
+ * \brief LoggerManager::globalInstance Get global instance of logger manager.
+ * \return Pointer to logger manager.
+ */
 LoggerManager *LoggerManager::globalInstance()
 {
     return loggerInstance();

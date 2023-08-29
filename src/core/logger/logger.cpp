@@ -24,16 +24,37 @@ namespace gpui
 {
 namespace logger
 {
+/*!
+ * \class Logger logger.h
+ * \brief Abstract logger.
+ * \ingroup logger
+ */
+
+/*!
+ * \brief Logger::setLogLevel Set minimum logging level.
+ * \param level Minimum logging level.
+ */
 void Logger::setLogLevel(QtMsgType level)
 {
     this->minLogLevel = level;
 }
 
+/*!
+ * \brief Logger::isLogLevel Check if log level will be logged.
+ * \param level Logging level.
+ * \return Returns true if givven logging level will be logged.
+ */
 bool Logger::isLogLevel(QtMsgType level)
 {
     return level >= this->minLogLevel;
 }
 
+/*!
+ * \brief Logger::logMessage Log message.
+ * \param message Message.
+ *
+ * Logs only message logging level equals or above minimum logging level.
+ */
 void Logger::logMessage(const LoggerMessage &message)
 {
     if (isLogLevel(message.msgType))

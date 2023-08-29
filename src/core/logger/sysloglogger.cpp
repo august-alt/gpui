@@ -27,16 +27,36 @@ namespace gpui
 {
 namespace logger
 {
+/*!
+ * \class SyslogLogger syslogger.h
+ * \brief Implementation of logger which logs messages to syslog.
+ * \ingroup logger
+ */
+
+/*!
+ * \brief SyslogLogger::SyslogLogger Create new syslog logger.
+ *
+ * Opens syslog connection.
+ */
 SyslogLogger::SyslogLogger()
 {
     openlog("gpui-main", (LOG_CONS | LOG_PERROR | LOG_PID), LOG_DAEMON);
 }
 
+/*!
+ * \brief SyslogLogger::~SyslogLogger Destroy syslog logger.
+ *
+ * Closes syslog connection.
+ */
 SyslogLogger::~SyslogLogger()
 {
     closelog();
 }
 
+/*!
+ * \brief SyslogLogger::log Send message to syslog.
+ * \param message Message.
+ */
 void SyslogLogger::log(const LoggerMessage &message)
 {
     const char *prefix = this->logLevelMap.at(message.msgType);

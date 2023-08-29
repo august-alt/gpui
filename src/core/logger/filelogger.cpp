@@ -40,7 +40,7 @@ namespace logger
 
 /*!
  * \brief FileLogger::FileLogger Creates FileLogger
- * \param filename Name of a file for logs. By default gpui.log.
+ * \param filename Name of a file for logs. By default "gpui.log".
  *
  * File logger writes to a file in ~/.local/share/gpui/<filename>.
  * If given path does not exist, it will create needed directories.
@@ -59,7 +59,7 @@ FileLogger::FileLogger(const char *filename)
 }
 
 /*!
- * \brief FileLogger::~FileLogger Destoroys a file logger.
+ * \brief FileLogger::~FileLogger Destroys a file logger.
  *
  * Closes file stream to log file.
  */
@@ -123,7 +123,7 @@ std::string FileLogger::getHomeDir()
 /*!
  * \brief FileLogger::ensureDir Ensure if given path exists.
  * \param path Path
- * \return True, if dir already exists or was created successfuly.
+ * \return True, if dir already exists or was created successfully.
  */
 bool FileLogger::ensureDir(const char *path)
 {

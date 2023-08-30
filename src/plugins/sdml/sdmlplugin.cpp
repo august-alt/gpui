@@ -30,7 +30,7 @@ public:
     SdmlPlugin()
         : Plugin("sdml")
     {
-        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<SdmlFile>).name(), SdmlPlugin);
+        GPUI_REGISTER_PLUGIN_CLASS(typeid(io::PolicyFileFormat<SdmlFile>).name(), SdmlFormat);
     }
 };
 } // namespace gpui

@@ -61,4 +61,6 @@ namespace io {
     };
 }
 
+#include "basefile.inl"
+
 #endif // GPUI_BASEFILE_H

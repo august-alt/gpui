@@ -391,25 +391,23 @@
       </xsd:extension>
     </xsd:simpleContent>
   </xsd:complexType>
-  <xsd:complexType name="Localization">
+  <xsd:complexType name="StringTable">
+    <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+      <xsd:element name="string" type="LocalizedString"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresentationTable">
+    <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+      <xsd:element name="presentation" type="SecurityPresentation"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SecurityLocalization">
     <xsd:annotation>
       <xsd:documentation>A table of referenced localized strings and policy presentations.</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="stringTable" minOccurs="0">
-        <xsd:complexType>
-          <xsd:sequence minOccurs="1" maxOccurs="unbounded">
-            <xsd:element name="string" type="LocalizedString"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="presentationTable" minOccurs="0">
-        <xsd:complexType>
-          <xsd:sequence minOccurs="1" maxOccurs="unbounded">
-            <xsd:element name="presentation" type="SecurityPresentation"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+      <xsd:element name="stringTable" minOccurs="0" type="StringTable"/>
+      <xsd:element name="presentationTable" minOccurs="0" type="PresentationTable"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:complexType name="SecurityPresentationResources">
@@ -417,7 +415,7 @@
       <xsd:element name="displayName" type="xsd:string"/>
       <xsd:element name="description" type="xsd:string"/>
       <xsd:element name="annotation" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-      <xsd:element name="resources" type="Localization" minOccurs="1"/>
+      <xsd:element name="resources" type="SecurityLocalization" minOccurs="1" maxOccurs="1"/>
     </xsd:sequence>
     <xsd:attribute name="revision" type="xsd:string" use="required"/>
     <xsd:attribute name="schemaVersion" type="xsd:string" use="required"/>

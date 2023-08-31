@@ -337,6 +337,8 @@ public:
                 auto securityPresentation = std::make_shared<security::SecurityPresentation>();
                 auto &widgetsVector                        = securityPresentation->widgets;
 
+                this->presentationTable.emplace_back(presentation.id(), securityPresentation);
+
                 const xercesc::DOMNode *n = presentation._node();
                 assert(n->getNodeType() == xercesc::DOMNode::ELEMENT_NODE);
                 const xercesc::DOMElement *re = static_cast<const xercesc::DOMElement *>(n);
@@ -371,7 +373,7 @@ public:
                             auto dropdownList = std::make_unique<::GroupPolicy::SecurityDefinitions::DropdownList>(
                                 *elementNode);
                             auto widget = XsdDropdownListAdapter::create(*dropdownList);
-    //                        widgetsVector.emplace_back(dropdownList->refId(), widget);
+//                            widgetsVector.emplace_back(dropdownList->refId(), widget);
                         }
                         else if (elementType.compare("listBox") == 0)
                         {

@@ -260,6 +260,10 @@ public:
 
         assign_if_exists(propertyNameLocal, definition.propertyName());
 
+        std::string presentationName{};
+        assign_if_exists(presentationName, definition.presentation());
+
+        this->presentation = std::make_unique<std::string>(presentationName);
         this->propertyName = std::make_unique<std::string>(propertyNameLocal);
         this->sectionName = std::make_unique<std::string>(sectionNameLocal);
     }

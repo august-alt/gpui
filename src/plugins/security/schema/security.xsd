@@ -84,6 +84,7 @@
     <xsd:attribute name="explainText" type="StringReference"/>
     <xsd:attribute  name="sectionName" type="SectionName" use="required"/>
     <xsd:attribute name="propertyName" type="PropertyName"/>
+    <xsd:attribute name="presentation" type="StringReference"/>
     <xsd:attribute name="class" type="SecurityType" use="required"/>
   </xsd:complexType>
   <xsd:simpleType name="SecurityType">

@@ -215,7 +215,7 @@ public:
     XsdTextAdapter(const TextElement &widget)
         : security::Text()
     {
-        this->refId = widget.refId();
+        this->refId = widget.id();
 
         // TODO: Implement.
     }
@@ -317,97 +317,111 @@ public:
     XsdResourcesAdapter(const SecurityPresentationResources &resources)
         : security::SecurityPresentationResources()
     {
-        for (const auto &presentation : resources.presentationTable())
+        this->description = resources.description();
+        this->displayName = resources.displayName();
+
+        if (resources.resources().stringTable().present())
         {
-            Q_UNUSED(presentation);
-
-            auto securityPresentation = std::make_shared<security::SecurityPresentation>();
-            auto &widgetsVector                        = securityPresentation->widgets;
-
-            const xercesc::DOMNode *n = presentation._node();
-            assert(n->getNodeType() == xercesc::DOMNode::ELEMENT_NODE);
-            const xercesc::DOMElement *re = static_cast<const xercesc::DOMElement *>(n);
-
-            for (n = re->getFirstChild(); n != 0; n = n->getNextSibling())
+            for (const auto &string : resources.resources().stringTable()->string())
             {
-                if (n->getNodeType() == xercesc::DOMNode::ELEMENT_NODE)
+                this->stringTable[string.id()] = string;
+            }
+        }
+
+        if (resources.resources().presentationTable().present())
+        {
+            for (const auto &presentation : resources.resources().presentationTable()->presentation())
+            {
+                Q_UNUSED(presentation);
+
+                auto securityPresentation = std::make_shared<security::SecurityPresentation>();
+                auto &widgetsVector                        = securityPresentation->widgets;
+
+                const xercesc::DOMNode *n = presentation._node();
+                assert(n->getNodeType() == xercesc::DOMNode::ELEMENT_NODE);
+                const xercesc::DOMElement *re = static_cast<const xercesc::DOMElement *>(n);
+
+                for (n = re->getFirstChild(); n != 0; n = n->getNextSibling())
                 {
-                    auto elementNode = static_cast<const xercesc::DOMElement *>(n);
-                    auto elementType = QString::fromStdU16String(elementNode->getTagName());
-                    if (elementType.compare("checkBox") == 0)
+                    if (n->getNodeType() == xercesc::DOMNode::ELEMENT_NODE)
                     {
-                        auto checkBox = std::make_unique<::GroupPolicy::SecurityDefinitions::CheckBox>(*elementNode);
-                        auto widget = XsdCheckBoxAdapter::create(*checkBox);
-                        widgetsVector.emplace_back(checkBox->refId(), widget);
-                    }
-                    else if (elementType.compare("comboBox") == 0)
-                    {
-                        auto comboBox = std::make_unique<::GroupPolicy::SecurityDefinitions::ComboBox>(*elementNode);
-                        auto widget = XsdComboBoxAdapter::create(*comboBox);
-                        widgetsVector.emplace_back(comboBox->refId(), widget);
-                    }
-                    else if (elementType.compare("decimalTextBox") == 0)
-                    {
-                        auto decimalTextBox = std::make_unique<::GroupPolicy::SecurityDefinitions::DecimalTextBox>(
-                            *elementNode);
-                        auto widget = XsdDecimalTextBoxAdapter::create(*decimalTextBox);
-                        widgetsVector.emplace_back(decimalTextBox->refId(), widget);
-                    }
-                    else if (elementType.compare("dropdownList") == 0)
-                    {
-                        auto dropdownList = std::make_unique<::GroupPolicy::SecurityDefinitions::DropdownList>(
-                            *elementNode);
-                        auto widget = XsdDropdownListAdapter::create(*dropdownList);
-//                        widgetsVector.emplace_back(dropdownList->refId(), widget);
-                    }
-                    else if (elementType.compare("listBox") == 0)
-                    {
-                        auto listBox = std::make_unique<::GroupPolicy::SecurityDefinitions::ListBox>(*elementNode);
-                        auto widget = XsdListBoxAdapter::create(*listBox);
-                        widgetsVector.emplace_back(listBox->refId(), widget);
-                    }
-                    else if (elementType.compare("longDecimalTextBox") == 0)
-                    {
-                        auto longDecimalTextBox
-                            = std::make_unique<::GroupPolicy::SecurityDefinitions::LongDecimalTextBox>(*elementNode);
-                        auto widget = XsdLongDecimalTextBoxAdapter::create(*longDecimalTextBox);
-                        widgetsVector.emplace_back(longDecimalTextBox->refId(), widget);
-                    }
-                    else if (elementType.compare("multiTextBox") == 0)
-                    {
-                        auto multiTextBox = std::make_unique<::GroupPolicy::SecurityDefinitions::MultiTextBox>(
-                            *elementNode);
-                        auto widget = XsdMultiTextBoxAdapter::create(*multiTextBox);
-                        widgetsVector.emplace_back(multiTextBox->refId(), widget);
-                    }
-                    else if (elementType.compare("textBox") == 0)
-                    {
-                        auto textBox = std::make_unique<::GroupPolicy::SecurityDefinitions::TextBox>(*elementNode);
-                        auto widget = XsdTextBoxAdapter::create(*textBox);
-                        widgetsVector.emplace_back(textBox->refId(), widget);
-                    }
-                    else if (elementType.compare("text") == 0)
-                    {
-                        auto text      = std::make_unique<::GroupPolicy::SecurityDefinitions::Comment>(*elementNode);
-                        // TODO: Implement.
-                    }
-                    else if (elementType.compare("ldapSearchDialog") == 0)
-                    {
-                        auto ldapSearch = std::make_unique<::GroupPolicy::SecurityDefinitions::LdapSearchDialog>(*elementNode);
-                        auto widget = XsdLdapSearchDialogAdapter::create(*ldapSearch);
-                        widgetsVector.emplace_back(ldapSearch->refId(), widget);
-                    }
-                    else if (elementType.compare("radioButton") == 0)
-                    {
-                        auto radioButton = std::make_unique<::GroupPolicy::SecurityDefinitions::RadioButton>(*elementNode);
-                        auto widget = XsdRadioButtonAdapter::create(*radioButton);
-                        widgetsVector.emplace_back(radioButton->refId(), widget);
-                    }
-                    else if (elementType.compare("groupBox") == 0)
-                    {
-                        auto groupBox = std::make_unique<::GroupPolicy::SecurityDefinitions::GroupBox>(*elementNode);
-                        auto widget = XsdGroupBoxAdapter::create(*groupBox);
-                        widgetsVector.emplace_back(groupBox->refId(), widget);
+                        auto elementNode = static_cast<const xercesc::DOMElement *>(n);
+                        auto elementType = QString::fromStdU16String(elementNode->getTagName());
+                        if (elementType.compare("checkBox") == 0)
+                        {
+                            auto checkBox = std::make_unique<::GroupPolicy::SecurityDefinitions::CheckBox>(*elementNode);
+                            auto widget = XsdCheckBoxAdapter::create(*checkBox);
+                            widgetsVector.emplace_back(checkBox->refId(), widget);
+                        }
+                        else if (elementType.compare("comboBox") == 0)
+                        {
+                            auto comboBox = std::make_unique<::GroupPolicy::SecurityDefinitions::ComboBox>(*elementNode);
+                            auto widget = XsdComboBoxAdapter::create(*comboBox);
+                            widgetsVector.emplace_back(comboBox->refId(), widget);
+                        }
+                        else if (elementType.compare("decimalTextBox") == 0)
+                        {
+                            auto decimalTextBox = std::make_unique<::GroupPolicy::SecurityDefinitions::DecimalTextBox>(
+                                *elementNode);
+                            auto widget = XsdDecimalTextBoxAdapter::create(*decimalTextBox);
+                            widgetsVector.emplace_back(decimalTextBox->refId(), widget);
+                        }
+                        else if (elementType.compare("dropdownList") == 0)
+                        {
+                            auto dropdownList = std::make_unique<::GroupPolicy::SecurityDefinitions::DropdownList>(
+                                *elementNode);
+                            auto widget = XsdDropdownListAdapter::create(*dropdownList);
+    //                        widgetsVector.emplace_back(dropdownList->refId(), widget);
+                        }
+                        else if (elementType.compare("listBox") == 0)
+                        {
+                            auto listBox = std::make_unique<::GroupPolicy::SecurityDefinitions::ListBox>(*elementNode);
+                            auto widget = XsdListBoxAdapter::create(*listBox);
+                            widgetsVector.emplace_back(listBox->refId(), widget);
+                        }
+                        else if (elementType.compare("longDecimalTextBox") == 0)
+                        {
+                            auto longDecimalTextBox
+                                = std::make_unique<::GroupPolicy::SecurityDefinitions::LongDecimalTextBox>(*elementNode);
+                            auto widget = XsdLongDecimalTextBoxAdapter::create(*longDecimalTextBox);
+                            widgetsVector.emplace_back(longDecimalTextBox->refId(), widget);
+                        }
+                        else if (elementType.compare("multiTextBox") == 0)
+                        {
+                            auto multiTextBox = std::make_unique<::GroupPolicy::SecurityDefinitions::MultiTextBox>(
+                                *elementNode);
+                            auto widget = XsdMultiTextBoxAdapter::create(*multiTextBox);
+                            widgetsVector.emplace_back(multiTextBox->refId(), widget);
+                        }
+                        else if (elementType.compare("textBox") == 0)
+                        {
+                            auto textBox = std::make_unique<::GroupPolicy::SecurityDefinitions::TextBox>(*elementNode);
+                            auto widget = XsdTextBoxAdapter::create(*textBox);
+                            widgetsVector.emplace_back(textBox->refId(), widget);
+                        }
+                        else if (elementType.compare("text") == 0)
+                        {
+                            auto text      = std::make_unique<::GroupPolicy::SecurityDefinitions::Comment>(*elementNode);
+                            // TODO: Implement.
+                        }
+                        else if (elementType.compare("ldapSearchDialog") == 0)
+                        {
+                            auto ldapSearch = std::make_unique<::GroupPolicy::SecurityDefinitions::LdapSearchDialog>(*elementNode);
+                            auto widget = XsdLdapSearchDialogAdapter::create(*ldapSearch);
+                            widgetsVector.emplace_back(ldapSearch->refId(), widget);
+                        }
+                        else if (elementType.compare("radioButton") == 0)
+                        {
+                            auto radioButton = std::make_unique<::GroupPolicy::SecurityDefinitions::RadioButton>(*elementNode);
+                            auto widget = XsdRadioButtonAdapter::create(*radioButton);
+                            widgetsVector.emplace_back(radioButton->refId(), widget);
+                        }
+                        else if (elementType.compare("groupBox") == 0)
+                        {
+                            auto groupBox = std::make_unique<::GroupPolicy::SecurityDefinitions::GroupBox>(*elementNode);
+                            auto widget = XsdGroupBoxAdapter::create(*groupBox);
+                            widgetsVector.emplace_back(groupBox->refId(), widget);
+                        }
                     }
                 }
             }
@@ -431,7 +445,10 @@ bool SdmlFormat::read(std::istream &input, SdmlFile *file)
 
     std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityPresentationResources> securityDefinitions;
     auto operation = [&]() {
-        securityDefinitions = GroupPolicy::SecurityDefinitions::SecurityPresentationResources_(input, ::xsd::cxx::tree::flags::dont_validate);
+        securityDefinitions = GroupPolicy::SecurityDefinitions::securityPresentationResources(input,
+                                                                                            ::xsd::cxx::tree::flags::dont_validate
+                                                                                            | ::xsd::cxx::tree::flags::keep_dom
+                                                                                            | ::xsd::cxx::tree::flags::own_dom);
 
         auto securityPresentation = XsdResourcesAdapter::create(*securityDefinitions);
 

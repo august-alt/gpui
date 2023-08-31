@@ -40,7 +40,7 @@ inline void assign_if_exists(TOutput &output, const TInput &input)
 template<typename ElementType>
 void adapter_base(security::SecurityElement *output, const ElementType &input)
 {
-    output->refId = input.refId();
+    output->refId = input.id();
 
     if (input.clientExtension().present())
     {
@@ -245,7 +245,7 @@ public:
     XsdSecurityAdapter(const SecurityDefinition &definition)
         : security::SecurityDefinition()
     {
-        this->name        = definition.name();
+        this->name = definition.name();
         this->displayName = definition.displayName();
 
         assign_if_exists(this->explainText, definition.explainText());
@@ -282,7 +282,7 @@ public:
         assign_if_exists(this->revision, definitions.revision());
         assign_if_exists(this->schemaVersion, definitions.schemaVersion());
 
-        for (const auto& securityElement : definitions.security())
+        for (const auto& securityElement : definitions.security()->securityDefinition())
         {
             auto ourSecurity = XsdSecurityAdapter::create(securityElement);
 
@@ -323,8 +323,9 @@ bool SdmxFormat::read(std::istream &input, SdmxFile *file)
     Q_UNUSED(file);
 
     std::unique_ptr<::GroupPolicy::SecurityDefinitions::SecurityDefinitions> securityDefinitions;
-    auto operation = [&]() noexcept {
-        securityDefinitions = GroupPolicy::SecurityDefinitions::SecurityDefinitions_(input, ::xsd::cxx::tree::flags::dont_validate);
+    auto operation = [&]() {
+        securityDefinitions = GroupPolicy::SecurityDefinitions::securityDefinitions(input,
+                                                                                    ::xsd::cxx::tree::flags::dont_validate);
 
         auto security = XsdSecurityDefinitionsAdapter::create(*securityDefinitions);
 

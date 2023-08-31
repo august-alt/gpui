@@ -1,6 +1,6 @@
 .\" Manpage for gpui.
 .\" Contact august@altlinux.org to correct errors or typos.
-.TH man 1 "10 Nov 2022" "0.2.17" "gpui man page"
+.TH man 1 "29 Aug 2023" "0.2.32" "gpui man page"
 .SH NAME
 gpui-main \- редактирует шаблоны групповых политик
 .SH SYNOPSIS
@@ -18,11 +18,39 @@ gpui-main это программа для управления шаблонам
 .if  !'po4a'hide' .BR \-n
 Параметр оставлен для обеспечения обраной совместимости с ADMC. Он никак не влияет на работу приложения.
 .TP
+.if  !'po4a'hide' .BR \-\-log\-console
+Установить уровень логирования для консоли. По умолчанию: "none".
+.TP
+.if  !'po4a'hide' .BR \-\-log\-syslog
+Установить уровень логирования для syslog. По умолчанию: "none".
+.TP
+.if  !'po4a'hide' .BR \-\-log\-file
+Установить уровень логирования для файла в ~/.local/share/gpui/. По умолчанию: "warning".
+.TP
 .if  !'po4a'hide' .BR \-h ", " \-\-help
 Показать справочное сообщение и закончить работу.
 .TP
 .if  !'po4a'hide' .BR \-v ", " \-\-version
 Показать информацию о версии.
+.SH LOG LEVELS
+.TP
+.if  !'po4a'hide' .BR "none"
+Отключить логирование.
+.TP
+.if  !'po4a'hide' .BR "debug"
+Логировать сообщения уровня debug и выше.
+.TP
+.if  !'po4a'hide' .BR "info"
+Логировать сообщения уровня info и выше.
+.TP
+.if  !'po4a'hide' .BR "warning"
+Логировать сообщения уровня warning и выше.
+.TP
+.if  !'po4a'hide' .BR "critical"
+Логировать сообщения уровня critical и выше.
+.TP
+.if  !'po4a'hide' .BR "fatal"
+Логировать сообщения уровня fatal.
 .SH SEE ALSO
 .SH BUGS
 Утилита находится в состоянии активной разработки и может содержать неопределенное количество различных ошибок.

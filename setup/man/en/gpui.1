@@ -18,11 +18,39 @@ Provide the path of admx files to load.
 .if  !'po4a'hide' .BR \-n
 Parameters provides compatibilty with ADMC, currently it performs no specific function.
 .TP
+.if  !'po4a'hide' .BR \-\-log\-console
+Set log level for console. By default: "none".
+.TP
+.if  !'po4a'hide' .BR \-\-log\-syslog
+Set log level for syslog. By default: "none".
+.TP
+.if  !'po4a'hide' .BR \-\-log\-file
+Set log level for file in ~/.local/share/gpui/. By default: "warning".
+.TP
 .if  !'po4a'hide' .BR \-h ", " \-\-help
 Show help message and exit program.
 .TP
 .if  !'po4a'hide' .BR \-v ", " \-\-version
 Show version information.
+.SH LOG LEVELS
+.TP
+.if  !'po4a'hide' .BR "none"
+Disable logging.
+.TP
+.if  !'po4a'hide' .BR "debug"
+Log debug messages and higher.
+.TP
+.if  !'po4a'hide' .BR "info"
+Log info messages and higher.
+.TP
+.if  !'po4a'hide' .BR "warning"
+Log warning messages and higher.
+.TP
+.if  !'po4a'hide' .BR "critical"
+Log critical messages and higher.
+.TP
+.if  !'po4a'hide' .BR "fatal"
+Log fatal messages and higher.
 .SH SEE ALSO
 .SH BUGS
 Utility in a state of active development and may contain unspecified number of various bugs.

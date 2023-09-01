@@ -61,20 +61,10 @@ namespace security
 template<typename TLayoutItem>
 QLayoutItem *createAndAttachLabel(QWidget *buddy, const QString &text)
 {
-    QLabel *label = new QLabel(text.trimmed());
-    label->setBuddy(buddy);
-    label->setWordWrap(true);
-
-    QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    sizePolicy.setHorizontalStretch(1);
-
-    label->setSizePolicy(sizePolicy);
-    buddy->setSizePolicy(sizePolicy);
+    Q_UNUSED(text);
 
     TLayoutItem *container = new TLayoutItem();
-    container->addWidget(label);
     container->addWidget(buddy);
-
     return container;
 }
 

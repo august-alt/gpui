@@ -64,10 +64,13 @@
 #include <QSpinBox>
 #include <QTableWidget>
 #include <QTextEdit>
+#include <QMessageBox>
 
 #include <QDebug>
+#include <QTranslator>
 
 #include <iostream>
+#include <queue>
 
 using namespace model::presentation;
 using namespace model::admx;
@@ -121,12 +124,27 @@ public:
     };
 
 public:
-    virtual void visit(CheckBox &widget) const override
+    virtual bool visit(CheckBox &widget) const override
     {
+        bool ans = true;
+
         QCheckBox *checkBox = new QCheckBox();
 
         checkBox->setChecked(widget.defaultChecked);
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(checkBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(checkBox, QString::fromStdString(label));
 
         if (m_policy && m_source)
         {
@@ -139,10 +157,23 @@ public:
 
             checkBox->connect(checkBox, &QCheckBox::toggled, []() { *m_dataChanged = true; });
 
+            std::string widgetLabel = widget.label;
+
+            widget.requirementsMet = [elementInfo, checkBox, this]{ return !elementInfo.element->required || !checkBox->isChecked();};
+
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, checkBox, this]() {
+            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [widgetLabel, elementInfo, checkBox, this]() {
                 if (!(*m_stateEnabled))
                 {
+                    return;
+                }
+                if (elementInfo.element->required && !checkBox->isChecked()){
+                    QMessageBox message;
+                    message.setText("Property '" + QString::fromStdString(widgetLabel) + "' is required!");
+                    message.setStandardButtons(QMessageBox::Close);
+                    message.setDefaultButton(QMessageBox::Close);
+                    message.exec();
+
                     return;
                 }
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
@@ -153,10 +184,13 @@ public:
         }
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(ComboBox &widget) const override
+    virtual bool visit(ComboBox &widget) const override
     {
+        bool ans = true;
         QComboBox *comboBox = new QComboBox();
         comboBox->setCurrentText(QString::fromStdString(widget.defaultValue));
         for (const auto &item : widget.suggestions)
@@ -183,33 +217,79 @@ public:
                 if (!(*m_stateEnabled))
                 {
                     return;
-                }
+                }                
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 setComboData(elementInfo.key, elementInfo.value, elementInfo.type, comboBox, elementInfo.element);
             });
         }
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(DecimalTextBox &widget) const override
+    virtual bool visit(DecimalTextBox &widget) const override
     {
+        bool ans = true;
         QWidget *textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(DropdownList &widget) const override
+    virtual bool visit(DropdownList &widget) const override
     {
+        bool ans = true;
+
         QComboBox *comboBox = new QComboBox();
         comboBox->setCurrentIndex(widget.defaultItem);
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(comboBox, QString::fromStdString(label));
 
         if (widget.values.size() > 0)
         {
@@ -250,13 +330,30 @@ public:
         }
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(ListBox &widget) const override
+    virtual bool visit(ListBox &widget) const override
     {
+        bool ans = true;
+
         QPushButton *button = new QPushButton(QObject::tr("Edit"));
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(button, QString::fromStdString(label));
 
         PolicyListElement* listElement = nullptr;
 
@@ -282,7 +379,11 @@ public:
             }
         }
 
-        auto onClicked = [&, elementInfo, listElement]() {
+        widget.requirementsMet = [listElement, this]
+        { return !listElement->required || m_source->isValuePresent(
+                        listElement->key, listElement->valuePrefix + std::to_string(1)); };
+
+        auto onClicked = [&, elementInfo, listElement, label]() {
             gpui::ListBoxDialog *listBox = new gpui::ListBoxDialog(QString::fromStdString(widget.label));
             listBox->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -315,6 +416,17 @@ public:
                     {
                         return;
                     }
+
+                    if (elementInfo.element->required && currentItems.empty()){
+                        QMessageBox message;
+                        message.setText("Property '" + QString::fromStdString(label) + "' is required!");
+                        message.setStandardButtons(QMessageBox::Close);
+                        message.setDefaultButton(QMessageBox::Close);
+                        message.exec();
+
+                        return;
+                    }
+
                     qWarning() << "Items debug: " << currentItems.values();
                     // clean-up registry values.
                     auto valueNames = m_source->getValueNames(listElement->key);
@@ -363,6 +475,17 @@ public:
                         {
                             return;
                         }
+
+                        if (elementInfo.element->required && currentItems.empty()){
+                            QMessageBox message;
+                            message.setText("Property '" + QString::fromStdString(label) + "' is required!");
+                            message.setStandardButtons(QMessageBox::Close);
+                            message.setDefaultButton(QMessageBox::Close);
+                            message.exec();
+
+                            return;
+                        }
+
                         qWarning() << "Items debug: " << currentItems.values();
                         size_t index = 1;
                         // clean-up registry values.
@@ -405,6 +528,17 @@ public:
                         {
                             return;
                         }
+
+                        if (elementInfo.element->required && currentItems.empty()){
+                            QMessageBox message;
+                            message.setText("Property '" + QString::fromStdString(label) + "' is required!");
+                            message.setStandardButtons(QMessageBox::Close);
+                            message.setDefaultButton(QMessageBox::Close);
+                            message.exec();
+
+                            return;
+                        }
+
                         qWarning() << "Items debug: " << currentItems.values();
                         // clean-up registry values.
                         auto registryValueNames = m_source->getValueNames(listElement->key);
@@ -437,19 +571,38 @@ public:
         QObject::connect(button, &QPushButton::clicked, onClicked);
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(LongDecimalTextBox &widget) const override
+    virtual bool visit(LongDecimalTextBox &widget) const override
     {
+        bool ans = true;
         QWidget *textBox = createAnyDecimalTextBox(widget.spin, widget.defaultValue, widget.spinStep);
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(textBox, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
     }
 
-    virtual void visit(MultiTextBox &widget) const override
+    virtual bool visit(MultiTextBox &widget) const override
     {
+        bool ans = true;
         QTextEdit *textEdit = new QTextEdit();
         textEdit->setMaximumHeight(widget.defaultHeight * textEdit->fontMetrics().height());
 
@@ -465,12 +618,27 @@ public:
 
             textEdit->connect(textEdit, &QTextEdit::textChanged, [=]() { *m_dataChanged = true; });
 
+            std::string widgetLabel = widget.label;
+
+            widget.requirementsMet = [elementInfo, textEdit, this]{ return !elementInfo.element->required || !textEdit->toPlainText().isEmpty();};
+
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, textEdit, this]() {
+            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [widgetLabel, elementInfo, textEdit, this]() {
                 if (!(*m_stateEnabled))
                 {
                     return;
                 }
+
+                if (elementInfo.element->required && textEdit->toPlainText().isEmpty()){
+                    QMessageBox message;
+                    message.setText("Property '" + QString::fromStdString(widgetLabel) + "' is required!");
+                    message.setStandardButtons(QMessageBox::Close);
+                    message.setDefaultButton(QMessageBox::Close);
+                    message.exec();
+
+                    return;
+                }
+
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 QStringList data(textEdit->toPlainText());
@@ -479,19 +647,24 @@ public:
         }
 
         addToLayout(textEdit);
+
+        return ans;
     }
 
-    virtual void visit(Text &widget) const override
+    virtual bool visit(Text &widget) const override
     {
-        QLabel *label = new QLabel();
-        label->setText(QString::fromStdString(widget.content));
-        label->setWordWrap(true);
-        label->setAlignment(Qt::AlignHCenter);
-        addToLayout(label);
+//        QLabel *label = new QLabel();
+//        label->setText(QString::fromStdString(widget.content));
+//        label->setWordWrap(true);
+//        label->setAlignment(Qt::AlignHCenter);
+//        addToLayout(label);
+        return true;
     }
 
-    virtual void visit(TextBox &widget) const override
+    virtual bool visit(TextBox &widget) const override
     {
+        bool ans = true;
+
         QLineEdit *lineEdit = new QLineEdit();
         lineEdit->setText(QString::fromStdString(widget.defaultValue));
 
@@ -507,12 +680,28 @@ public:
 
             lineEdit->connect(lineEdit, &QLineEdit::textChanged, [=]() { *m_dataChanged = true; });
 
+            std::string widgetLabel = widget.label;
+
+            widget.requirementsMet = [elementInfo, lineEdit, this]{ return !elementInfo.element->required || !lineEdit->text().isEmpty();};
+
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, lineEdit, this]() {
+            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [widgetLabel, elementInfo, lineEdit, this]() {
                 if (!(*m_stateEnabled))
                 {
                     return;
                 }
+
+                if (elementInfo.element->required && lineEdit->text().isEmpty()){
+
+                    QMessageBox message;
+                    message.setText("Property '" + QString::fromStdString(widgetLabel) + "' is required!");
+                    message.setStandardButtons(QMessageBox::Close);
+                    message.setDefaultButton(QMessageBox::Close);
+                    message.exec();
+
+                    return;
+                }
+
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();
                 QString data(lineEdit->text());
@@ -523,9 +712,37 @@ public:
             });
         }
 
-        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(lineEdit, QString::fromStdString(widget.label));
+        std::string label;
+        if (widget.label.empty())
+        {
+            if (!m_labels.empty())
+            {
+                label = m_labels.front();
+                ans = false;
+            }else{
+                label = "";
+            }
+        }else{
+            label = widget.label;
+        }
+        QLayoutItem *container = createAndAttachLabel<QHBoxLayout>(lineEdit, QString::fromStdString(label));
 
         addToLayout(container);
+
+        return ans;
+    }
+
+    virtual std::string check(CheckBox &widget) const override{return "";}
+    virtual std::string check(ComboBox &widget) const override{return "";}
+    virtual std::string check(DecimalTextBox &widget) const override{return "";}
+    virtual std::string check(DropdownList &widget) const override{return "";}
+    virtual std::string check(ListBox &widget) const override{return "";}
+    virtual std::string check(LongDecimalTextBox &widget) const override{return "";}
+    virtual std::string check(MultiTextBox &widget) const override{return "";}
+    virtual std::string check(TextBox &widget) const override{return "";}
+    virtual std::string check(Text &widget) const override
+    {
+        return widget.content;
     }
 
     void setLayout(QLayout *layout) { m_layout = layout; }
@@ -542,12 +759,17 @@ public:
 
     void setStateEnabled(bool &stateEnabled) { m_stateEnabled = &stateEnabled; }
 
+    void addLabel(std::string label){ m_labels.push(label); }
+
+    void popLabel(){ m_labels.pop(); }
+
 private:
     QLayout *m_layout                = nullptr;
     const Policy *m_policy           = nullptr;
     AbstractRegistrySource *m_source = nullptr;
     QPushButton *m_saveButton        = nullptr;
     std::string m_elementName        = "";
+    std::queue<std::string> m_labels = std::queue<std::string>();
 
     void addToLayout(QWidget *widget) const
     {
@@ -801,15 +1023,26 @@ QVBoxLayout *::gpui::PresentationBuilder::build(const ::gpui::PresentationBuilde
 
     for (const auto &widget : params.presentation.widgets)
     {
+        std::string checkRes = widget.second->acceptCheck(*d);
+        if (!checkRes.empty()){
+            d->addLabel(checkRes);
+        }
+    }
+
+    for (const auto &widget : params.presentation.widgets)
+    {
         QWidget *policyWidget = nullptr;
         d->setCurrentElementName(widget.first);
-        widget.second->accept(*d);
+        if (!widget.second->accept(*d)){
+            d->popLabel();
+        }
 
         if (policyWidget)
         {
             layout->addWidget(policyWidget);
         }
     }
+
     layout->addStretch();
 
     return layout;

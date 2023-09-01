@@ -49,11 +49,6 @@ public:
     std::string refId{};
 
     /*!
-     * \brief label Text associated with the input box to provide prompt text.
-     */
-    std::string label{};
-
-    /*!
      * \brief defaultValue Specifies a default value. This can be used for either string or numeric data.
      */
     std::string defaultValue{};
@@ -68,7 +63,9 @@ public:
         : PresentationWidget(presentation)
     {}
 
-    virtual void accept(const PresentationWidgetVisitor &visitor) override { visitor.visit(*this); }
+    virtual bool accept(const PresentationWidgetVisitor &visitor) override { return visitor.visit(*this); }
+
+    virtual std::string acceptCheck(const PresentationWidgetVisitor &visitor) override { return visitor.check(*this); }
 };
 } // namespace presentation
 } // namespace model

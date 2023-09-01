@@ -55,11 +55,6 @@ public:
     unsigned int defaultItem = 0;
 
     /*!
-     * \brief label Text associated with the drop-down list.
-     */
-    std::string label{};
-
-    /*!
      * \brief values Values of the drop-down list.
      */
     std::vector<std::string> values{};
@@ -73,7 +68,9 @@ public:
         : PresentationWidget(presentation)
     {}
 
-    virtual void accept(const PresentationWidgetVisitor &visitor) override { visitor.visit(*this); }
+    virtual bool accept(const PresentationWidgetVisitor &visitor) override { return visitor.visit(*this); }
+
+    virtual std::string acceptCheck(const PresentationWidgetVisitor &visitor) override { return visitor.check(*this); }
 };
 } // namespace presentation
 } // namespace model

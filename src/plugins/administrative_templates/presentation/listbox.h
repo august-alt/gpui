@@ -42,17 +42,13 @@ namespace presentation
 class ListBox : public PresentationWidget
 {
 public:
-    /*!
-     * \brief label Text associated with the list box.
-     */
-    std::string label;
-
     ListBox(Presentation *presentation)
         : PresentationWidget(presentation)
-        , label()
     {}
 
-    virtual void accept(const PresentationWidgetVisitor &visitor) override { visitor.visit(*this); }
+    virtual bool accept(const PresentationWidgetVisitor &visitor) override { return visitor.visit(*this); }
+
+    virtual std::string acceptCheck(const PresentationWidgetVisitor &visitor) override { return visitor.check(*this); }
 };
 } // namespace presentation
 } // namespace model

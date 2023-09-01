@@ -29,6 +29,7 @@
 #include "presentationbuilder.h"
 
 #include "../presentation/presentation.h"
+#include "../presentation/presentationwidget.h"
 #include "../registry/abstractregistrysource.h"
 #include "../registry/policystatemanager.h"
 
@@ -325,9 +326,33 @@ void AdministrativeTemplatesWidget::connectDialogBoxSignals()
 
 void AdministrativeTemplatesWidget::onApplyClickedInternal()
 {
-    d->dataChanged = false;
-    d->manager->setupPolicyState(d->policyState);
-    savePolicyChanges();
+    auto widgets = d->currentIndex.model()->data
+            (d->currentIndex, PolicyRoles::PRESENTATION).value<PresentationPtr>()->widgetsVector;
+    bool updatePossible = true;
+    std::vector<std::string> pendingFields;
+    for (auto widget: widgets){
+        bool verdict = widget->requirementsMet();
+        updatePossible &= verdict;
+        if (!verdict){
+            pendingFields.push_back(widget->label);
+        }
+    }
+    if (updatePossible ||
+            (d->policyState != model::registry::PolicyStateManager::STATE_ENABLED)){
+        d->dataChanged = false;
+        d->manager->setupPolicyState(d->policyState);
+        savePolicyChanges();
+    }else{
+        QMessageBox message;
+        std::string text = "The following properties are required:\n";
+        for (auto i: pendingFields){
+            text += i + "\n";
+        }
+        message.setText(QString::fromStdString(text));
+        message.setStandardButtons(QMessageBox::Close);
+        message.setDefaultButton(QMessageBox::Close);
+        message.exec();
+    }
 }
 
 void AdministrativeTemplatesWidget::onCancelClicked()

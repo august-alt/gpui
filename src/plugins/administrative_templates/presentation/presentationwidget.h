@@ -23,6 +23,9 @@
 
 #include "../administrativetemplates.h"
 
+#include <string>
+#include <functional>
+
 namespace model
 {
 namespace presentation
@@ -36,11 +39,23 @@ class PresentationWidgetVisitor;
 class GPUI_ADMINISTRATIVE_TEMPLATES_EXPORT PresentationWidget
 {
 public:
+    /*!
+     * \brief label Text associated with the input box to provide prompt text.
+     */
+    std::string label{};
+
+    /*!
+     * \brief requirementsMet returns False only when field is required and empty.
+     */
+    std::function<bool()> requirementsMet = [](){ return true; };
+
     explicit PresentationWidget(Presentation *parent);
 
     virtual ~PresentationWidget() = default;
 
-    virtual void accept(const PresentationWidgetVisitor &visitor) = 0;
+    virtual bool accept(const PresentationWidgetVisitor &visitor) = 0;
+
+    virtual std::string acceptCheck(const PresentationWidgetVisitor &visitor) = 0;
 
 private:
     PresentationWidget(const PresentationWidget &) = delete;            // copy ctor

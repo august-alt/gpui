@@ -36,11 +36,6 @@ class PolicyTextElement : public PolicyElement
 {
 public:
     /*!
-     * \brief Requirement to enter a value in the parameter box.
-     */
-    bool required = false;
-
-    /*!
      * \brief The maximum length of the string.
      */
     unsigned int maxLength = 1023;

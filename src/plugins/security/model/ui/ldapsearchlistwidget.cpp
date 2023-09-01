@@ -69,13 +69,13 @@ void LdapSearchListWidget::setRemoveButtonText(const QString &text)
     ui->removeButton->setText(text);
 }
 
-void LdapSearchListWidget::on_addButton_Pressed()
+void security::LdapSearchListWidget::on_addButton_clicked()
 {
     auto browseLdapDialog = new BrowseLdapDialog(this);
     browseLdapDialog->show();
 }
 
-void LdapSearchListWidget::on_removeButton_Pressed()
+void security::LdapSearchListWidget::on_removeButton_clicked()
 {
     auto selectedItems = ui->listWidget->selectedItems();
 

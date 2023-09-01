@@ -46,8 +46,8 @@ public:
     void setRemoveButtonText(const QString& text);
 
 private slots:
-    void on_addButton_Pressed();
-    void on_removeButton_Pressed();
+    void on_addButton_clicked();
+    void on_removeButton_clicked();
 
 private:
     LdapSearchListWidget(const LdapSearchListWidget&)            = delete;   // copy ctor

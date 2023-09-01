@@ -186,7 +186,7 @@ public:
 
     void visit(LdapSearchDialog &widget) const
     {
-        LdapSearchListWidget* ldapSearchListWidget = new LdapSearchListWidget(widget.filter, widget.dn);
+        LdapSearchListWidget* ldapSearchListWidget = new LdapSearchListWidget(widget.filter, widget.dn, widget.title);
         ldapSearchListWidget->setAddButtonText(QString::fromStdString(widget.addLabel));
         ldapSearchListWidget->setRemoveButtonText(QString::fromStdString(widget.removeLabel));
 

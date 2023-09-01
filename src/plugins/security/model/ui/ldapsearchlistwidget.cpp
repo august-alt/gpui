@@ -40,16 +40,18 @@ public:
     {}
 };
 
-LdapSearchListWidget::LdapSearchListWidget(const QString &filter, const QString &dn, QWidget *parent)
+LdapSearchListWidget::LdapSearchListWidget(const QString &filter, const QString &dn, const QString &title, QWidget *parent)
     : QWidget(parent)
     , d(new LdapSearchListWidgetPrivate(filter, dn))
     , ui(new Ui::LdapSearchListWidget())
 {
     ui->setupUi(this);
+
+    ui->groupBox->setTitle(title);
 }
 
-LdapSearchListWidget::LdapSearchListWidget(const std::string &filter, const std::string &dn, QWidget *parent)
-    : LdapSearchListWidget(QString::fromStdString(filter), QString::fromStdString(dn), parent)
+LdapSearchListWidget::LdapSearchListWidget(const std::string &filter, const std::string &dn, const std::string &title, QWidget *parent)
+    : LdapSearchListWidget(QString::fromStdString(filter), QString::fromStdString(dn), QString::fromStdString(title), parent)
 {
 }
 

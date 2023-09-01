@@ -242,6 +242,7 @@ public:
         assign_if_exists(this->filter, widget.filter());
         assign_if_exists(this->addLabel, widget.addLabel());
         assign_if_exists(this->removeLabel, widget.removeLabel());
+        assign_if_exists(this->title, widget.title());
     }
 
     static std::shared_ptr<security::LdapSearchDialog> create(const LdapSearchDialog &string)

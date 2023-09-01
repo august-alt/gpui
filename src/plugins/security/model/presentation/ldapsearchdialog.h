@@ -57,6 +57,11 @@ public:
      * \brief removeLabel Label for remove button.
      */
     std::string removeLabel{};
+
+    /*!
+     * \brief title Label for group box.
+     */
+    std::string title{};
 };
 
 } // of namespace security

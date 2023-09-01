@@ -346,6 +346,7 @@
         <xsd:attribute name="filter" type="xsd:string"/>
         <xsd:attribute name="addLabel" type="StringReference"/>
         <xsd:attribute name="removeLabel" type="StringReference"/>
+        <xsd:attribute name="title" type="StringReference"/>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>

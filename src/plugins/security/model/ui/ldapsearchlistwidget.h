@@ -38,8 +38,8 @@ public:
     Q_OBJECT
 
 public:
-    explicit LdapSearchListWidget(const QString& filter, const QString& dn, QWidget* parent = nullptr);
-    explicit LdapSearchListWidget(const std::string& filter, const std::string& dn, QWidget* parent = nullptr);
+    explicit LdapSearchListWidget(const QString& filter, const QString& dn, const QString &title, QWidget* parent = nullptr);
+    explicit LdapSearchListWidget(const std::string& filter, const std::string& dn, const std::string &title, QWidget* parent = nullptr);
     ~LdapSearchListWidget() override;
 
     void setAddButtonText(const QString& text);

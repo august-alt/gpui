@@ -80,12 +80,12 @@ void PreferencesSnapIn::onInitialize(QMainWindow *window)
                          &MainWindow::updateStatusBar);
     }
 
-    std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
+    qWarning() << __PRETTY_FUNCTION__;
 }
 
 void PreferencesSnapIn::onShutdown()
 {
-    std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
+    qWarning() << __PRETTY_FUNCTION__;
 }
 
 void PreferencesSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)

@@ -428,12 +428,12 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
                          &MainWindow::updateStatusBar);
     }
 
-    std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
+    qWarning() << __PRETTY_FUNCTION__;
 }
 
 void AdministrativeTemplatesSnapIn::onShutdown()
 {
-    std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
+    qWarning() << __PRETTY_FUNCTION__;
 }
 
 void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)

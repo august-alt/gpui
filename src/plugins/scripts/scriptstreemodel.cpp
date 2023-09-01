@@ -86,7 +86,9 @@ void ScriptsTreeModel::populateModel()
     machineNamespace->setProperty(ScriptsFolderItem::CATEGORY, true);
 
     auto machineSystemSettings = insertItem<ScriptsFolderItem>(machineNamespace);
+    auto machineSystemUuid = QUuid("{123e4567-e89b-12d3-a456-426652340010}");
     machineSystemSettings->setDisplayName(QObject::tr("System settings").toStdString());
+    machineSystemSettings->setProperty(ScriptsFolderItem::NODE_ID, machineSystemUuid);
     machineSystemSettings->setProperty(ScriptsFolderItem::PARENT_ID, machineUuid);
     machineSystemSettings->setProperty(ScriptsFolderItem::HELP_MSG,
                                        QObject::tr("System settings for computer").toStdString());
@@ -110,7 +112,9 @@ void ScriptsTreeModel::populateModel()
     userNamespace->setProperty(ScriptsFolderItem::CATEGORY, true);
 
     auto userSystemSetting = insertItem<ScriptsFolderItem>(userNamespace);
+    auto userSystemUuid = QUuid("{123e4567-e89b-12d3-a456-426652340011}");
     userSystemSetting->setDisplayName(QObject::tr("System settings").toStdString());
+    userSystemSetting->setProperty(ScriptsFolderItem::NODE_ID, userSystemUuid);
     userSystemSetting->setProperty(ScriptsFolderItem::PARENT_ID, userUuid);
     userSystemSetting->setProperty(ScriptsFolderItem::HELP_MSG,
                                    QObject::tr("System settings for user").toStdString());

@@ -44,6 +44,7 @@ AddScriptWidget::AddScriptWidget(QWidget *parentWidget, ModelView::SessionItem *
     setModal(true);
 
     this->ui->setupUi(this);
+    this->ui->browsePushButton->setVisible(false);
 
     if (item != nullptr)
     {

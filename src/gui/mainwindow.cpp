@@ -90,6 +90,8 @@ public:
 
     TranslatorStorage *translatorStorage = nullptr;
 
+    std::vector<QAction*> languageActions{};
+
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
         , ldapImpl(new ldap::LDAPImpl())
@@ -250,6 +252,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
     d->localeName = locale.name().replace("_", "-");
     d->contentWidget->onLanguageChanged();
     ui->retranslateUi(this);
+    retranslateLanguageActions();
 
     d->windowIcon = QIcon(":gpui.png");
 
@@ -457,6 +460,14 @@ void MainWindow::on_actionAbout_triggered()
     about->show();
 }
 
+void gpui::MainWindow::retranslateLanguageActions()
+{
+    for (auto& languageAction : d->languageActions)
+    {
+        languageAction->setText(selectTranslationForLanguageName(languageAction->data().toString()));
+    }
+}
+
 void MainWindow::onLanguageChanged(QAction *action)
 {
     d->translatorStorage->clearTranslators();
@@ -482,6 +493,8 @@ void MainWindow::onLanguageChanged(QAction *action)
     ui->treeView->selectionModel()->clearSelection();
 
     ui->searchLineEdit->clear();
+
+    retranslateLanguageActions();
 }
 
 void MainWindow::createLanguageMenu()
@@ -516,6 +529,8 @@ void MainWindow::createLanguageMenu()
         {
             action->setChecked(true);
         }
+
+        d->languageActions.emplace_back(action);
     }
 }
 
@@ -555,6 +570,23 @@ void MainWindow::loadTranslations(QString &language)
 
     d->translatorStorage->loadQtTranslations(language, QString("qtbase_%2").arg(language));
     d->translatorStorage->loadQtTranslations(language, "qt_");
+}
+
+QString MainWindow::selectTranslationForLanguageName(const QString &name)
+{
+    qWarning() << "Trying to select name for language: " << name;
+
+    if (name.compare("en") == 0)
+    {
+        return QObject::tr("English");
+    }
+
+    if (name.compare("ru") == 0)
+    {
+        return QObject::tr("Russian");
+    }
+
+    return "";
 }
 
 void MainWindow::updateFilterModel()

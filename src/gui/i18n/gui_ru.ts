@@ -724,7 +724,7 @@ context (user policy option).</source>
         <translation>Неверный путь к политике: </translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+47"/>
         <source>Bad log level: </source>
         <translation>Неверный уровень логирования: </translation>
     </message>
@@ -809,6 +809,16 @@ context (user policy option).</source>
         <location line="+62"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
+    </message>
+    <message>
+        <location line="+146"/>
+        <source>English</source>
+        <translation>Английский</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Russian</source>
+        <translation>Русский</translation>
     </message>
     <message>
         <source>Error reading file:</source>
@@ -1133,7 +1143,7 @@ Enumeration:</source>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="-6"/>
+        <location filename="../mainwindow.cpp" line="-157"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
@@ -1166,6 +1176,14 @@ Enumeration:</source>
         <location line="+11"/>
         <source>Applied changes for policy: </source>
         <translation>Применены изменения для политики: </translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>Английский</translation>
+    </message>
+    <message>
+        <source>Russian</source>
+        <translation>Русский</translation>
     </message>
 </context>
 <context>

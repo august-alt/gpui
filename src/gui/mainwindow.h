@@ -111,6 +111,10 @@ private:
 
     void loadTranslations(QString &language);
 
+    QString selectTranslationForLanguageName(const QString& name);
+
+    void retranslateLanguageActions();
+
 private:
     MainWindow(const MainWindow &) = delete;            // copy ctor
     MainWindow(MainWindow &&)      = delete;            // move ctor

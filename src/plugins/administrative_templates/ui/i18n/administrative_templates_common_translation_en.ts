@@ -35,16 +35,21 @@
     </message>
     <message>
         <location filename="../administrativetemplateswidget.ui" line="213"/>
+        <source>Comment:</source>
+        <translation>Comment:</translation>
+    </message>
+    <message>
+        <location filename="../administrativetemplateswidget.ui" line="251"/>
         <source>Help:</source>
         <translation>Help:</translation>
     </message>
     <message>
-        <location filename="../administrativetemplateswidget.ui" line="283"/>
+        <location filename="../administrativetemplateswidget.ui" line="321"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancel</translation>
     </message>
     <message>
-        <location filename="../administrativetemplateswidget.ui" line="290"/>
+        <location filename="../administrativetemplateswidget.ui" line="328"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -52,83 +57,85 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="101"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="105"/>
+        <location filename="../../comments/commentsmodel.cpp" line="112"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="102"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="106"/>
+        <location filename="../../comments/commentsmodel.cpp" line="113"/>
         <source>Error writing file:</source>
         <translation>Error writing file:</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="343"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="483"/>
         <source>&amp;Edit filter</source>
         <translation>&amp;Edit filter</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="342"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="482"/>
         <source>Enable &amp;filter</source>
         <translation>Enable &amp;filter</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="345"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="484"/>
         <source>&amp;Filter</source>
         <translation>&amp;Filter</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="92"/>
+        <location filename="../../bundle/policybundle.cpp" line="96"/>
         <source>[Local Group Policy]</source>
         <translation>[Local Group Policy]</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="94"/>
+        <location filename="../../bundle/policybundle.cpp" line="98"/>
         <source>Local group policies</source>
         <translation>Local group policies</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="101"/>
+        <location filename="../../bundle/policybundle.cpp" line="106"/>
         <source>Machine</source>
         <translation>Machine</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="103"/>
+        <location filename="../../bundle/policybundle.cpp" line="108"/>
         <source>Machine level policies</source>
         <translation>Machine level policies</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="108"/>
-        <location filename="../../bundle/policybundle.cpp" line="121"/>
+        <location filename="../../bundle/policybundle.cpp" line="114"/>
+        <location filename="../../bundle/policybundle.cpp" line="129"/>
         <source>Administrative Templates</source>
         <translation>Administrative Templates</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="110"/>
+        <location filename="../../bundle/policybundle.cpp" line="116"/>
         <source>Machine administrative templates</source>
         <translation>Machine administrative templates</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="114"/>
+        <location filename="../../bundle/policybundle.cpp" line="121"/>
         <source>User</source>
         <translation>User</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="116"/>
+        <location filename="../../bundle/policybundle.cpp" line="123"/>
         <source>User level policies</source>
         <translation>User level policies</translation>
     </message>
     <message>
-        <location filename="../../bundle/policybundle.cpp" line="123"/>
+        <location filename="../../bundle/policybundle.cpp" line="131"/>
         <source>User administrative templates</source>
         <translation>User administrative templates</translation>
     </message>
     <message>
-        <location filename="../administrativetemplateswidget.cpp" line="256"/>
+        <location filename="../administrativetemplateswidget.cpp" line="292"/>
         <source>Save settings dialog</source>
         <translation>Save settings dialog</translation>
     </message>
     <message>
-        <location filename="../administrativetemplateswidget.cpp" line="257"/>
+        <location filename="../administrativetemplateswidget.cpp" line="293"/>
         <source>Policy settings were modified do you want to save them?</source>
         <translation>Policy settings were modified do you want to save them?</translation>
     </message>
@@ -156,136 +163,126 @@
         <translation>Template Filters Dialog</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="57"/>
         <source>Managed:</source>
         <translation>Managed:</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="67"/>
+        <location filename="../templatefilterdialog.ui" line="60"/>
         <source>Configured:</source>
         <translation>Configured:</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="80"/>
         <source>Commented:</source>
         <translation>Commented:</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="109"/>
-        <location filename="../templatefilterdialog.ui" line="156"/>
-        <location filename="../templatefilterdialog.ui" line="206"/>
-        <location filename="../templatefilterdialog.ui" line="450"/>
+        <location filename="../templatefilterdialog.ui" line="92"/>
         <source>Any</source>
         <translation>Any</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="114"/>
-        <location filename="../templatefilterdialog.ui" line="161"/>
-        <location filename="../templatefilterdialog.ui" line="211"/>
-        <location filename="../templatefilterdialog.ui" line="455"/>
+        <location filename="../templatefilterdialog.ui" line="97"/>
         <source>Yes</source>
         <translation>Yes</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="119"/>
-        <location filename="../templatefilterdialog.ui" line="166"/>
-        <location filename="../templatefilterdialog.ui" line="216"/>
-        <location filename="../templatefilterdialog.ui" line="460"/>
+        <location filename="../templatefilterdialog.ui" line="102"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="236"/>
+        <location filename="../templatefilterdialog.ui" line="141"/>
         <source>Enable Requirements Filters</source>
         <translation>Enable Requirements Filters</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="47"/>
+        <location filename="../templatefilterdialog.ui" line="53"/>
         <source>Select the type of policy settings to display.</source>
         <translation>Select the type of policy settings to display.</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="289"/>
+        <location filename="../templatefilterdialog.ui" line="197"/>
         <source>Select the desired platform and application filter(s):</source>
         <translation>Select the desired platform and application filter(s):</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="303"/>
+        <location filename="../templatefilterdialog.ui" line="211"/>
         <source>Include settings that match any of the selected platforms.</source>
         <translation>Include settings that match any of the selected platforms.</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="308"/>
+        <location filename="../templatefilterdialog.ui" line="216"/>
         <source>Include settings that match all of the selected platforms.</source>
         <translation>Include settings that match all of the selected platforms.</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="316"/>
+        <location filename="../templatefilterdialog.ui" line="224"/>
         <source>Select All</source>
         <translation>Select All</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="323"/>
+        <location filename="../templatefilterdialog.ui" line="231"/>
         <source>Clear All</source>
         <translation>Clear All</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="345"/>
+        <location filename="../templatefilterdialog.ui" line="253"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="361"/>
+        <location filename="../templatefilterdialog.ui" line="275"/>
         <source>Enable Keyword Filters</source>
         <translation>Enable Keyword Filters</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="382"/>
+        <location filename="../templatefilterdialog.ui" line="381"/>
+        <location filename="../templatefilterdialog.ui" line="385"/>
         <source>Match any word</source>
         <translation>Match any word</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="387"/>
+        <location filename="../templatefilterdialog.ui" line="390"/>
         <source>Match all words</source>
         <translation>Match all words</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="392"/>
+        <location filename="../templatefilterdialog.ui" line="395"/>
         <source>Match exact</source>
         <translation>Match exact</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="416"/>
+        <location filename="../templatefilterdialog.ui" line="330"/>
         <source>Policy Settings Title</source>
         <translation>Policy Settings Title</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="426"/>
+        <location filename="../templatefilterdialog.ui" line="346"/>
         <source>Filter for word(s):</source>
         <translation>Filter for word(s):</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="436"/>
+        <location filename="../templatefilterdialog.ui" line="356"/>
         <source>Within:</source>
         <translation>Within:</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="471"/>
+        <location filename="../templatefilterdialog.ui" line="406"/>
         <source>Comment</source>
         <translation>Comment</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="490"/>
+        <location filename="../templatefilterdialog.ui" line="432"/>
         <source>Help Text</source>
         <translation>Help Text</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="539"/>
+        <location filename="../templatefilterdialog.ui" line="481"/>
         <source>Select options below to enable and change or disable types of global filters that will be applied to the Administrative Templates nodes.</source>
         <translation>Select options below to enable and change or disable types of global filters that will be applied to the Administrative Templates nodes.</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.ui" line="549"/>
+        <location filename="../templatefilterdialog.ui" line="491"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -293,17 +290,17 @@
 <context>
     <name>gpui::AdministrativeTemplatesWidget</name>
     <message>
-        <location filename="../administrativetemplateswidget.cpp" line="177"/>
+        <location filename="../administrativetemplateswidget.cpp" line="184"/>
         <source>Policy: </source>
         <translation>Policy: </translation>
     </message>
     <message>
-        <location filename="../administrativetemplateswidget.cpp" line="260"/>
+        <location filename="../administrativetemplateswidget.cpp" line="296"/>
         <source>Yes</source>
         <translation>Yes</translation>
     </message>
     <message>
-        <location filename="../administrativetemplateswidget.cpp" line="261"/>
+        <location filename="../administrativetemplateswidget.cpp" line="297"/>
         <source>No</source>
         <translation>No</translation>
     </message>
@@ -311,12 +308,12 @@
 <context>
     <name>gpui::TemplateFilterDialog</name>
     <message>
-        <location filename="../templatefilterdialog.cpp" line="206"/>
+        <location filename="../templatefilterdialog.cpp" line="201"/>
         <source>Filter Error</source>
         <translation>Filter Error</translation>
     </message>
     <message>
-        <location filename="../templatefilterdialog.cpp" line="207"/>
+        <location filename="../templatefilterdialog.cpp" line="202"/>
         <source>Please select one or more keyword filter Within options.</source>
         <translation>Please select one or more keyword filter Within options.</translation>
     </message>

@@ -32,6 +32,8 @@ using namespace io;
 namespace gpui
 {
 
+const char* CODEC_NAME = "UTF-16LE";
+
 IniFormat::IniFormat()
     : PolicyFileFormat("ini")
 {
@@ -40,30 +42,21 @@ IniFormat::IniFormat()
 bool IniFormat::read(std::istream &input, IniFile *file)
 {
     try {
-        // TODO: Check validity of conversion to wide characters.
-        // Research Boost lexical_cast and Boost Iostreams Filters.
-        // Maybe they are better way of doing conversion.
-        auto wide_input = reinterpret_cast<std::basic_streambuf<wchar_t>*>(input.rdbuf());
-
-        std::istreambuf_iterator<wchar_t> eos;
-        std::wstring string_input(std::istreambuf_iterator<wchar_t>(wide_input), eos);
-
-        std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff,
-            std::codecvt_mode::little_endian>, char16_t> convertor;
-
-        auto utf8 = convertor.to_bytes(reinterpret_cast<const char16_t*>(string_input.data()));
-
-        std::string utf_string{};
-
-        // Strip BOM
-        if (utf8[0] == '\xef'
-         && utf8[1] == '\xbb'
-         && utf8[2] == '\xbf')
+        QByteArray array;
+        char buffer[128];
+        while (!input.eof())
         {
-           utf_string = utf8.substr(3, utf8.size() - 3);
+            int size = input.read(buffer, sizeof(buffer)).gcount();
+            array.append(buffer, size);
         }
 
-        std::istringstream utf8stream(utf_string);
+        QString string;
+        QTextCodec *codec = QTextCodec::codecForName(CODEC_NAME);
+        QTextDecoder *decoder = codec->makeDecoder();
+
+        string = decoder->toUnicode(array);
+
+        std::istringstream utf8stream(string.toStdString());
 
         boost::property_tree::ptree pt;
         boost::property_tree::ini_parser::read_ini(utf8stream, pt);
@@ -116,14 +109,12 @@ bool IniFormat::write(std::ostream &output, IniFile *file)
 
         boost::property_tree::ini_parser::write_ini(string_output, pt);
 
-        std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff,
-                std::codecvt_mode::little_endian>, char16_t> convert;
+        QString string = QString::fromStdString(string_output.str());
 
-        auto utf16le = convert.from_bytes(string_output.str());
+        QTextCodec *codec = QTextCodec::codecForName(CODEC_NAME);
+        QByteArray encodedString = codec->fromUnicode(string);
 
-        // Add BOM
-        output.write("\xff\xfe", 2);
-        output.write(reinterpret_cast<const char*>(utf16le.data()), utf16le.size() * 2);
+        output.write(encodedString, encodedString.size());
     }
     catch (std::exception& e)
     {

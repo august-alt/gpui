@@ -41,6 +41,8 @@ public:
 
     void onRetranslateUI(const std::string &locale) override;
 
+    ISettingsWidget *getSettingsWidget() const override;
+
 private:
     std::unique_ptr<AdministrativeTemplatesSnapInPrivate> d;
 

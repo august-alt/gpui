@@ -73,6 +73,7 @@ set(HEADERS
     registry/registrysourcetype.h
     ui/administrativetemplatesproxymodel.h
     ui/administrativetemplateswidget.h
+    ui/administrativetemplatessettingswidget.h
     ui/presentationbuilder.h
     ui/platformmodel.h
     ui/templatefilterdialog.h
@@ -93,6 +94,7 @@ set(SOURCES
     registry/polregistrysource.cpp
     ui/administrativetemplatesproxymodel.cpp
     ui/administrativetemplateswidget.cpp
+    ui/administrativetemplatessettingswidget.cpp
     ui/presentationbuilder.cpp
     ui/platformmodel.cpp
     ui/templatefilterdialog.cpp

@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -17,38 +17,42 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 ***********************************************************************************************************************/
-#ifndef ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
-#define ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
 
-#include "abstractsnapin.h"
+#ifndef GPUI_SETTINGS_WIDGET_H
+#define GPUI_SETTINGS_WIDGET_H
+
+#include <QtWidgets>
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class SettingsDialog; }
+QT_END_NAMESPACE
 
 namespace gpui
 {
-class AdministrativeTemplatesSnapInPrivate;
 
-class AdministrativeTemplatesSnapIn final : public AbstractSnapIn
+class ISettingsWidget;
+
+class SettingsDialog : public QDialog
 {
 public:
-    AdministrativeTemplatesSnapIn();
+    Q_OBJECT
 
-    void onInitialize(QMainWindow *mainWindow) override;
+public:
+    explicit SettingsDialog(QWidget* parent = nullptr);
+    ~SettingsDialog() override;
 
-    void onShutdown() override;
-
-    void onDataLoad(const std::string &policyPath, const std::string &locale) override;
-
-    void onDataSave() override;
-
-    void onRetranslateUI(const std::string &locale) override;
-
-    ISettingsWidget *getSettingsWidget() const override;
+    void addTab(ISettingsWidget *settingsWidget);
 
 private:
-    std::unique_ptr<AdministrativeTemplatesSnapInPrivate> d;
+    SettingsDialog(const SettingsDialog&)            = delete;   // copy ctor
+    SettingsDialog(SettingsDialog&&)                 = delete;   // move ctor
+    SettingsDialog& operator=(const SettingsDialog&) = delete;   // copy assignment
+    SettingsDialog& operator=(SettingsDialog&&)      = delete;   // move assignment
 
-    void setMenuItemNames();
+private:
+    Ui::SettingsDialog *ui {nullptr};
 };
 
-} // namespace gpui
+}
 
-#endif // ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
+#endif//GPUI_SETTINGS_WIDGET_H

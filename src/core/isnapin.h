@@ -22,6 +22,7 @@
 #define _ISNAPIN_H
 
 #include "core.h"
+#include "isettingswidget.h"
 
 #include <QAbstractItemModel>
 #include <QMainWindow>
@@ -113,6 +114,12 @@ public:
      * @param locale locale to use in current snap-in.
      */
     virtual void onRetranslateUI(const std::string &locale) = 0;
+
+    /*!
+     * \brief getSettingsWidget Returns pointer to settings widget.
+     * \return Pointer to settings widget.
+     */
+    virtual ISettingsWidget* getSettingsWidget() const = 0;
 };
 
 } // namespace gpui

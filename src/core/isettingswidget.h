@@ -17,38 +17,42 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 ***********************************************************************************************************************/
-#ifndef ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
-#define ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
 
-#include "abstractsnapin.h"
+#ifndef _ISETTINGS_WIDGET_H
+#define _ISETTINGS_WIDGET_H
+
+#include "core.h"
+
+#include <QtWidgets>
 
 namespace gpui
 {
-class AdministrativeTemplatesSnapInPrivate;
-
-class AdministrativeTemplatesSnapIn final : public AbstractSnapIn
+/**
+ * @brief Composite snap-in requires list of dependencies to operate.
+ */
+class GPUI_CORE_EXPORT ISettingsWidget : public QWidget
 {
 public:
-    AdministrativeTemplatesSnapIn();
+    Q_OBJECT
 
-    void onInitialize(QMainWindow *mainWindow) override;
+public:
+    /*!
+     * \brief getName Return tab name for settings widget.
+     * \return
+     */
+    virtual QString getName() const = 0;
 
-    void onShutdown() override;
+    /*!
+     * \brief saveSettings
+     */
+    virtual void saveSettings() = 0;
 
-    void onDataLoad(const std::string &policyPath, const std::string &locale) override;
-
-    void onDataSave() override;
-
-    void onRetranslateUI(const std::string &locale) override;
-
-    ISettingsWidget *getSettingsWidget() const override;
-
-private:
-    std::unique_ptr<AdministrativeTemplatesSnapInPrivate> d;
-
-    void setMenuItemNames();
+protected:
+    ISettingsWidget(QWidget* parent = nullptr)
+        : QWidget(parent)
+    {}
 };
 
 } // namespace gpui
 
-#endif // ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
+#endif //_ISETTINGS_WIDGET_H

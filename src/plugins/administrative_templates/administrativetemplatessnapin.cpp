@@ -49,6 +49,7 @@
 #include "../../src/plugins/storage/smb/smbdirectory.h"
 
 #include "ui/administrativetemplatesproxymodel.h"
+#include "ui/administrativetemplatessettingswidget.h"
 
 #include "ui/templatefilter.h"
 #include "ui/templatefilterdialog.h"
@@ -492,6 +493,11 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
     d->filterDialog->onLanguageChanged();
     d->updateFilter();
     setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
+}
+
+ISettingsWidget *AdministrativeTemplatesSnapIn::getSettingsWidget() const
+{
+    return new AdministrativeTemplatesSettingsWidget();
 }
 
 } // namespace gpui

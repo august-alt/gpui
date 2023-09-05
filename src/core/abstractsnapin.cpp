@@ -77,6 +77,11 @@ QString AbstractSnapIn::getCopyright() const
     return d->copyright;
 }
 
+ISettingsWidget *AbstractSnapIn::getSettingsWidget() const
+{
+    return nullptr;
+}
+
 AbstractSnapIn::AbstractSnapIn(QString type,
                                QString name,
                                QString helpText,

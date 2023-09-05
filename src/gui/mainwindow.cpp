@@ -28,6 +28,7 @@
 
 #include "contentwidget.h"
 
+#include "settingsdialog.h"
 #include "treevieweventfilter.h"
 
 #include "../core/isnapin.h"
@@ -274,11 +275,21 @@ MainWindow::MainWindow(CommandLineOptions &options,
         snapIn->onInitialize(this);
     }
 
+    auto settingsDialog = new SettingsDialog(this);
+
+    connect(ui->actionSettings, &QAction::triggered, this, [=]{
+        settingsDialog->show();
+    });
+
     if (!d->options.path.isEmpty())
     {
         for (auto &snapIn : manager->getSnapIns())
         {
             snapIn->onDataLoad(d->options.path.toStdString(), d->localeName.toStdString());
+
+            auto settingsWidget = snapIn->getSettingsWidget();
+
+            settingsDialog->addTab(settingsWidget);
         }
     }
 

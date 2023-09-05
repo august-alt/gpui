@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -17,38 +17,33 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 ***********************************************************************************************************************/
-#ifndef ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
-#define ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
 
-#include "abstractsnapin.h"
+#include "settingsdialog.h"
+#include "ui_settingsdialog.h"
+
+#include "../core/isettingswidget.h"
 
 namespace gpui
 {
-class AdministrativeTemplatesSnapInPrivate;
 
-class AdministrativeTemplatesSnapIn final : public AbstractSnapIn
+SettingsDialog::SettingsDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::SettingsDialog())
 {
-public:
-    AdministrativeTemplatesSnapIn();
+    ui->setupUi(this);
+}
 
-    void onInitialize(QMainWindow *mainWindow) override;
+SettingsDialog::~SettingsDialog()
+{
+    delete ui;
+}
 
-    void onShutdown() override;
+void SettingsDialog::addTab(ISettingsWidget *settingsWidget)
+{
+    if (settingsWidget)
+    {
+        ui->tabWidget->addTab(settingsWidget, settingsWidget->getName());
+    }
+}
 
-    void onDataLoad(const std::string &policyPath, const std::string &locale) override;
-
-    void onDataSave() override;
-
-    void onRetranslateUI(const std::string &locale) override;
-
-    ISettingsWidget *getSettingsWidget() const override;
-
-private:
-    std::unique_ptr<AdministrativeTemplatesSnapInPrivate> d;
-
-    void setMenuItemNames();
-};
-
-} // namespace gpui
-
-#endif // ADMINISTRATIVE_TEMPLATES_SNAP_IN_H
+}

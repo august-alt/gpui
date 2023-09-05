@@ -43,6 +43,9 @@ public:
 
     void addTab(ISettingsWidget *settingsWidget);
 
+private slots:
+    void on_okButtonClicked();
+
 private:
     SettingsDialog(const SettingsDialog&)            = delete;   // copy ctor
     SettingsDialog(SettingsDialog&&)                 = delete;   // move ctor

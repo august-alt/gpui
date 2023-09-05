@@ -25,12 +25,14 @@
 
 namespace gpui
 {
-
 SettingsDialog::SettingsDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::SettingsDialog())
 {
     ui->setupUi(this);
+    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
+
+    connect(okButton, &QPushButton::clicked, this, &SettingsDialog::on_okButtonClicked);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -46,4 +48,21 @@ void SettingsDialog::addTab(ISettingsWidget *settingsWidget)
     }
 }
 
+void SettingsDialog::on_okButtonClicked()
+{
+    for (int i = 0; i < ui->tabWidget->count(); ++i)
+    {
+        ISettingsWidget *widget = dynamic_cast<ISettingsWidget *>(ui->tabWidget->widget(i));
+
+        if (widget)
+        {
+            widget->saveSettings();
+        }
+        else
+        {
+            qWarning() << "Can't cast to ISettingsWidget fron snapIn!";
+        }
+    }
 }
+
+} // namespace gpui

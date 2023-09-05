@@ -3,7 +3,6 @@
 
 namespace gpui
 {
-
 AdministrativeTemplatesSettingsWidget::AdministrativeTemplatesSettingsWidget(QWidget *parent)
     : ISettingsWidget(parent)
     , ui(new Ui::AdministrativeTemplatesSettingsWidget())
@@ -26,4 +25,4 @@ void AdministrativeTemplatesSettingsWidget::saveSettings()
     // TODO: Implement.
 }
 
-}
+} // namespace gpui

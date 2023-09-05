@@ -16,6 +16,7 @@ set(HEADERS
     presentationbuilder.h
     pluginwidgetinterface.h
     treevieweventfilter.h
+    settingsdialog.h
 )
 
 set(SOURCES
@@ -29,13 +30,15 @@ set(SOURCES
     mainwindow.cpp
     mainwindowsettings.cpp
     treevieweventfilter.cpp
+    settingsdialog.cpp
 )
 
 set(UI_FORMS
     aboutdialog.ui
     contentwidget.ui
     listboxdialog.ui
-    mainwindow.ui    
+    mainwindow.ui
+    settingsdialog.ui
 )
 
 set(MOC_HEADERS
@@ -47,6 +50,7 @@ set(MOC_HEADERS
     mainwindowsettings.h
     pluginwidgetinterface.h
     treevieweventfilter.h
+    settingsdialog.h
 )
 
 set(TS_FILES

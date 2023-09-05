@@ -19,11 +19,13 @@
 ***********************************************************************************************************************/
 
 #include "../core/compositesnapindetailsdialog.h"
+#include "../core/isnapinmanagementsettings.h"
 #include "../core/logger/prelude.h"
 #include "../core/pluginstorage.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
 #include "../core/snapinloader.h"
+#include "../core/snapinmanagementsettings.h"
 #include "../core/snapinmanager.h"
 #include "../core/translatorstorage.h"
 #include "../core/version.h"
@@ -38,6 +40,9 @@ int main(int argc, char **argv)
     // Register types for factory.
     gpui::SnapInDetailsFactory::define<gpui::SnapInDetailsDialog>("ISnapIn");
     gpui::SnapInDetailsFactory::define<gpui::CompositeSnapInDetailsDialog>("ICompositeSnapIn");
+
+    //Create settings manager.
+    std::unique_ptr<gpui::ISnapInManagementSettings> settingsManager = std::make_unique<gpui::SnapInManagementSettings>();
 
     // Load plugins and snap-ins.
     auto snapInManager = std::make_unique<gpui::SnapInManager>();
@@ -97,7 +102,7 @@ int main(int argc, char **argv)
         logManager->addLogger<gpui::logger::FileLogger>(options.fileLogLevel);
     }
 
-    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
+    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage, settingsManager.get());
     window.show();
 
     return app.exec();

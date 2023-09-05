@@ -24,6 +24,7 @@
 #include "gui.h"
 
 #include "../core/translatorstorage.h"
+#include "../core/isnapinmanagementsettings.h"
 #include <QtWidgets>
 
 #include "../ldap/ldapcontract.h"
@@ -59,7 +60,7 @@ public:
     // construction and destruction
     MainWindow(CommandLineOptions &options,
                ISnapInManager *manager,
-               TranslatorStorage *translatorStorage,
+               TranslatorStorage *translatorStorage, ISnapInManagementSettings *settingsManager,
                QWidget *parent = 0);
     ~MainWindow();
 

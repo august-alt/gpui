@@ -35,6 +35,7 @@ public:
     QVersionNumber version{};
     QString license{};
     QString copyright{};
+    ISnapInManagementSettings *settingsManager = nullptr;
 };
 
 QUuid AbstractSnapIn::getId() const
@@ -82,12 +83,18 @@ ISettingsWidget *AbstractSnapIn::getSettingsWidget() const
     return nullptr;
 }
 
-AbstractSnapIn::AbstractSnapIn(QString type,
-                               QString name,
-                               QString helpText,
-                               QVersionNumber version,
-                               QString license,
-                               QString copyright)
+ISnapInManagementSettings *AbstractSnapIn::getSettingsManager() const
+{
+    return d->settingsManager;
+}
+
+void AbstractSnapIn::setSettingsManager(ISnapInManagementSettings *manager)
+{
+    d->settingsManager = manager;
+}
+
+AbstractSnapIn::AbstractSnapIn(
+    QString type, QString name, QString helpText, QVersionNumber version, QString license, QString copyright)
     : d(new AbstractSnapInPrivate())
 {
     d->name      = name;

@@ -91,7 +91,9 @@ public:
 
     TranslatorStorage *translatorStorage = nullptr;
 
-    std::vector<QAction*> languageActions{};
+    std::vector<QAction *> languageActions{};
+
+    ISnapInManagementSettings *settingsManager = nullptr;
 
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
@@ -207,6 +209,7 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
 MainWindow::MainWindow(CommandLineOptions &options,
                        ISnapInManager *manager,
                        TranslatorStorage *translatorStorage,
+                       ISnapInManagementSettings *settingsManager,
                        QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
@@ -217,6 +220,8 @@ MainWindow::MainWindow(CommandLineOptions &options,
     d->options = options;
 
     d->translatorStorage = translatorStorage;
+
+    d->settingsManager = settingsManager;
 
     ui->setupUi(this);
 
@@ -273,13 +278,12 @@ MainWindow::MainWindow(CommandLineOptions &options,
     {
         qWarning() << "Loading model from: " << snapIn->getDisplayName();
         snapIn->onInitialize(this);
+        snapIn->setSettingsManager(d->settingsManager);
     }
 
     auto settingsDialog = new SettingsDialog(this);
 
-    connect(ui->actionSettings, &QAction::triggered, this, [=]{
-        settingsDialog->show();
-    });
+    connect(ui->actionSettings, &QAction::triggered, this, [=] { settingsDialog->show(); });
 
     if (!d->options.path.isEmpty())
     {
@@ -289,7 +293,10 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
             auto settingsWidget = snapIn->getSettingsWidget();
 
-            settingsDialog->addTab(settingsWidget);
+            if (settingsWidget)
+            {
+                settingsDialog->addTab(settingsWidget);
+            }
         }
     }
 
@@ -473,7 +480,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void gpui::MainWindow::retranslateLanguageActions()
 {
-    for (auto& languageAction : d->languageActions)
+    for (auto &languageAction : d->languageActions)
     {
         languageAction->setText(selectTranslationForLanguageName(languageAction->data().toString()));
     }

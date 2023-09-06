@@ -176,7 +176,7 @@ public:
     std::unique_ptr<PlatformModel> platformModel = nullptr;
 
     std::unique_ptr<CommentsModel> machineCommentsModel = nullptr;
-    std::unique_ptr<CommentsModel> userCommentsModel = nullptr;
+    std::unique_ptr<CommentsModel> userCommentsModel    = nullptr;
 
     std::vector<std::unique_ptr<QTranslator>> translators{};
 
@@ -400,11 +400,11 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
         }
     }
 
-    d->filterModel   = std::make_unique<gpui::TemplateFilterModel>();
-    d->proxyModel    = std::make_unique<AdministrativeTemplatesProxyModel>();
-    d->platformModel = std::make_unique<PlatformModel>();
+    d->filterModel          = std::make_unique<gpui::TemplateFilterModel>();
+    d->proxyModel           = std::make_unique<AdministrativeTemplatesProxyModel>();
+    d->platformModel        = std::make_unique<PlatformModel>();
     d->machineCommentsModel = std::make_unique<CommentsModel>();
-    d->userCommentsModel = std::make_unique<CommentsModel>();
+    d->userCommentsModel    = std::make_unique<CommentsModel>();
 
     d->policyBundleLoad();
     d->filterDialog->setPlatformModel(d->platformModel.get());
@@ -448,7 +448,7 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
         d->userRegistryPath    = QString::fromStdString(policyPath) + "/User/Registry.pol";
         d->machineRegistryPath = QString::fromStdString(policyPath) + "/Machine/Registry.pol";
 
-        d->userCommentsPath = QString::fromStdString(policyPath) + "/User/";
+        d->userCommentsPath    = QString::fromStdString(policyPath) + "/User/";
         d->machineCommentsPath = QString::fromStdString(policyPath) + "/Machine/";
 
         onPolFileOpen(d->userRegistryPath,
@@ -497,7 +497,7 @@ void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 
 ISettingsWidget *AdministrativeTemplatesSnapIn::getSettingsWidget() const
 {
-    return new AdministrativeTemplatesSettingsWidget();
+    return new AdministrativeTemplatesSettingsWidget(getSettingsManager());
 }
 
 } // namespace gpui

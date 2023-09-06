@@ -93,11 +93,14 @@ public:
 
     std::vector<QAction *> languageActions{};
 
-    ISnapInManagementSettings *settingsManager = nullptr;
+    ISnapInManagementSettings *settingsManager     = nullptr;
+    std::unique_ptr<SettingsDialog> settingsDialog = nullptr;
 
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
         , ldapImpl(new ldap::LDAPImpl())
+        , settingsDialog(new SettingsDialog())
+
     {}
 
 private:
@@ -281,9 +284,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
         snapIn->setSettingsManager(d->settingsManager);
     }
 
-    auto settingsDialog = new SettingsDialog(this);
-
-    connect(ui->actionSettings, &QAction::triggered, this, [=] { settingsDialog->show(); });
+    connect(ui->actionSettings, &QAction::triggered, this, [=] { d->settingsDialog->show(); });
 
     if (!d->options.path.isEmpty())
     {
@@ -295,7 +296,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
             if (settingsWidget)
             {
-                settingsDialog->addTab(settingsWidget);
+                d->settingsDialog->addTab(settingsWidget);
             }
         }
     }

@@ -3,9 +3,11 @@
 
 namespace gpui
 {
-AdministrativeTemplatesSettingsWidget::AdministrativeTemplatesSettingsWidget(QWidget *parent)
-    : ISettingsWidget(parent)
+AdministrativeTemplatesSettingsWidget::AdministrativeTemplatesSettingsWidget(ISnapInManagementSettings *manager,
+                                                                             QWidget *parent)
+    : ISettingsWidget(manager, parent)
     , ui(new Ui::AdministrativeTemplatesSettingsWidget())
+    , settings{}
 {
     ui->setupUi(this);
 }
@@ -22,7 +24,9 @@ QString AdministrativeTemplatesSettingsWidget::getName() const
 
 void AdministrativeTemplatesSettingsWidget::saveSettings()
 {
-    // TODO: Implement.
+    settings.enableLayout = ui->enableLayoutCheckBox->isChecked();
+
+    getSettingsManager()->saveSattings(&settings);
 }
 
 } // namespace gpui

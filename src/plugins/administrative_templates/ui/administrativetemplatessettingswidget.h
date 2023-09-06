@@ -22,23 +22,28 @@
 #define ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
 
 #include "../../core/isettingswidget.h"
+#include "../../core/isnapinmanagementsettings.h"
+
+#include "administrativetemplatessettingsobject.h"
 
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class AdministrativeTemplatesSettingsWidget; }
+namespace Ui
+{
+class AdministrativeTemplatesSettingsWidget;
+}
 QT_END_NAMESPACE
 
 namespace gpui
 {
-
 class AdministrativeTemplatesSettingsWidget : public ISettingsWidget
 {
 public:
     Q_OBJECT
 
 public:
-    explicit AdministrativeTemplatesSettingsWidget(QWidget* parent = nullptr);
+    explicit AdministrativeTemplatesSettingsWidget(ISnapInManagementSettings *manager, QWidget *parent = nullptr);
     ~AdministrativeTemplatesSettingsWidget() override;
 
     QString getName() const override;
@@ -46,15 +51,18 @@ public:
     void saveSettings() override;
 
 private:
-    AdministrativeTemplatesSettingsWidget(const AdministrativeTemplatesSettingsWidget&)            = delete;   // copy ctor
-    AdministrativeTemplatesSettingsWidget(AdministrativeTemplatesSettingsWidget&&)                 = delete;   // move ctor
-    AdministrativeTemplatesSettingsWidget& operator=(const AdministrativeTemplatesSettingsWidget&) = delete;   // copy assignment
-    AdministrativeTemplatesSettingsWidget& operator=(AdministrativeTemplatesSettingsWidget&&)      = delete;   // move assignment
+    AdministrativeTemplatesSettingsWidget(const AdministrativeTemplatesSettingsWidget &) = delete; // copy ctor
+    AdministrativeTemplatesSettingsWidget(AdministrativeTemplatesSettingsWidget &&)      = delete; // move ctor
+    AdministrativeTemplatesSettingsWidget &operator=(const AdministrativeTemplatesSettingsWidget &)
+        = delete; // copy assignment
+    AdministrativeTemplatesSettingsWidget &operator=(AdministrativeTemplatesSettingsWidget &&) = delete; // move assignment
 
 private:
-    Ui::AdministrativeTemplatesSettingsWidget *ui {nullptr};
+    Ui::AdministrativeTemplatesSettingsWidget *ui{nullptr};
+
+    AdministrativeTemplatesSettingsObject settings;
 };
 
-}
+} // namespace gpui
 
-#endif//ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
+#endif //ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H

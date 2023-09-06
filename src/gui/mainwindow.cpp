@@ -93,7 +93,6 @@ public:
 
     std::vector<QAction *> languageActions{};
 
-    ISnapInManagementSettings *settingsManager     = nullptr;
     std::unique_ptr<SettingsDialog> settingsDialog = nullptr;
 
     MainWindowPrivate()
@@ -212,7 +211,6 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
 MainWindow::MainWindow(CommandLineOptions &options,
                        ISnapInManager *manager,
                        TranslatorStorage *translatorStorage,
-                       ISnapInManagementSettings *settingsManager,
                        QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
@@ -223,8 +221,6 @@ MainWindow::MainWindow(CommandLineOptions &options,
     d->options = options;
 
     d->translatorStorage = translatorStorage;
-
-    d->settingsManager = settingsManager;
 
     ui->setupUi(this);
 
@@ -281,7 +277,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
     {
         qWarning() << "Loading model from: " << snapIn->getDisplayName();
         snapIn->onInitialize(this);
-        snapIn->setSettingsManager(d->settingsManager);
+        snapIn->setSettingsManager(d->settings.get());
     }
 
     connect(ui->actionSettings, &QAction::triggered, this, [=] { d->settingsDialog->show(); });

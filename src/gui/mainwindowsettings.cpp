@@ -105,4 +105,26 @@ void MainWindowSettings::restoreSettings()
     }
 }
 
+void MainWindowSettings::saveSettings(QString section, QObject *snapinSettings)
+{
+    //where do we count from zero or one?
+    for (int i = 1; i < snapinSettings->metaObject()->propertyCount(); ++i)
+    {
+        QMetaProperty currentProperty = snapinSettings->metaObject()->property(i);
+
+        QString propertyName = currentProperty.name();
+
+        QByteArray charArray = propertyName.toLocal8Bit();
+
+        const char *propName = charArray.data();
+
+        QString fullPropertyName = section + "/" + propertyName;
+
+        fullPropertyName.replace(" ", "");
+        fullPropertyName = fullPropertyName.trimmed();
+
+        d->settings.setValue(fullPropertyName, QVariant(snapinSettings->property(propName)));
+    }
+}
+
 } // namespace gpui

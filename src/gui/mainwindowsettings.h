@@ -22,6 +22,7 @@
 #define GPUI_MAIN_WINDOW_SETTINGS_H
 
 #include <QObject>
+#include "../core/isnapinmanagementsettings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,7 +33,7 @@ namespace gpui {
 class MainWindow;
 class MainWindowSettingsPrivate;
 
-class MainWindowSettings : public QObject
+class MainWindowSettings : public QObject, public ISnapInManagementSettings
 {
     Q_OBJECT
 public:
@@ -40,6 +41,8 @@ public:
     ~MainWindowSettings();
 
     void restoreSettings();
+
+    void saveSettings(QString section, QObject *snapinSettings) override;
 
 public slots:
     void saveSettings();

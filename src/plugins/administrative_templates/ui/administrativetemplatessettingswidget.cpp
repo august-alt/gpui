@@ -26,7 +26,7 @@ void AdministrativeTemplatesSettingsWidget::saveSettings()
 {
     settings.enableLayout = ui->enableLayoutCheckBox->isChecked();
 
-    getSettingsManager()->saveSattings(&settings);
+    getSettingsManager()->saveSettings(getName(), &settings);
 }
 
 } // namespace gpui

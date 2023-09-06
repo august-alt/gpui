@@ -60,7 +60,7 @@ public:
     // construction and destruction
     MainWindow(CommandLineOptions &options,
                ISnapInManager *manager,
-               TranslatorStorage *translatorStorage, ISnapInManagementSettings *settingsManager,
+               TranslatorStorage *translatorStorage,
                QWidget *parent = 0);
     ~MainWindow();
 

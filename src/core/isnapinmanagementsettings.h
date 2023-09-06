@@ -21,6 +21,7 @@
 #ifndef _ISNAPINMANAGEMENTSETTINGS_H
 #define _ISNAPINMANAGEMENTSETTINGS_H
 
+#include "core.h"
 #include <QSettings>
 
 namespace gpui
@@ -28,8 +29,8 @@ namespace gpui
 class GPUI_CORE_EXPORT ISnapInManagementSettings
 {
 public:
-    virtual void saveSattings(QObject *snapinSettings) = 0;
-    virtual ~ISnapInManagementSettings()               = default;
+    virtual void saveSettings(QString section, QObject *snapinSettings) = 0;
+    virtual ~ISnapInManagementSettings()                                = default;
 };
 
 } // namespace gpui

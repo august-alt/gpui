@@ -30,6 +30,7 @@ class GPUI_CORE_EXPORT ISnapInManagementSettings
 {
 public:
     virtual void saveSettings(QString section, QObject *snapinSettings) = 0;
+    virtual void loadSettings(QString section, QObject *snapinSettings) = 0;
     virtual ~ISnapInManagementSettings()                                = default;
 };
 

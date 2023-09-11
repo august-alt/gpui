@@ -50,6 +50,11 @@ public:
 
     void saveSettings() override;
 
+    void loadSettings() override;
+
+private:
+    void updateWidgetFromSettings();
+
 private:
     AdministrativeTemplatesSettingsWidget(const AdministrativeTemplatesSettingsWidget &) = delete; // copy ctor
     AdministrativeTemplatesSettingsWidget(AdministrativeTemplatesSettingsWidget &&)      = delete; // move ctor

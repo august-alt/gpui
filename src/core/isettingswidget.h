@@ -55,6 +55,11 @@ public:
      */
     virtual void saveSettings() = 0;
 
+    /*!
+     * \brief loadSettings Load snapin settings using settings manager
+     */
+    virtual void loadSettings() = 0;
+
 protected:
     ISettingsWidget(ISnapInManagementSettings *manager, QWidget *parent = nullptr);
 

@@ -293,6 +293,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
             if (settingsWidget)
             {
                 d->settingsDialog->addTab(settingsWidget);
+                settingsWidget->loadSettings();
             }
         }
     }

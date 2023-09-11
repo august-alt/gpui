@@ -127,4 +127,30 @@ void MainWindowSettings::saveSettings(QString section, QObject *snapinSettings)
     }
 }
 
+void MainWindowSettings::loadSettings(QString section, QObject *snapinSettings)
+{
+    for (int i = 1; i < snapinSettings->metaObject()->propertyCount(); ++i)
+    {
+        QMetaProperty currentProperty = snapinSettings->metaObject()->property(i);
+
+        QString propertyName = currentProperty.name();
+
+        QByteArray charArray = propertyName.toLocal8Bit();
+
+        const char *propName = charArray.data();
+
+        QString fullPropertyName = section + "/" + propertyName;
+
+        fullPropertyName.replace(" ", "");
+        fullPropertyName = fullPropertyName.trimmed();
+
+        QVariant value = d->settings.value(fullPropertyName, QVariant::fromValue(nullptr));
+
+        if (!value.isNull())
+        {
+            snapinSettings->setProperty(propertyName.toLocal8Bit().data(), value);
+        }
+    }
+}
+
 } // namespace gpui

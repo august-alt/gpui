@@ -29,4 +29,16 @@ void AdministrativeTemplatesSettingsWidget::saveSettings()
     getSettingsManager()->saveSettings(getName(), &settings);
 }
 
+void AdministrativeTemplatesSettingsWidget::loadSettings()
+{
+    getSettingsManager()->loadSettings(getName(), &settings);
+
+    updateWidgetFromSettings();
+}
+
+void AdministrativeTemplatesSettingsWidget::updateWidgetFromSettings()
+{
+    ui->enableLayoutCheckBox->setChecked(settings.enableLayout);
+}
+
 } // namespace gpui

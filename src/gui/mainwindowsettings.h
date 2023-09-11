@@ -44,6 +44,8 @@ public:
 
     void saveSettings(QString section, QObject *snapinSettings) override;
 
+    void loadSettings(QString section, QObject *snapinSettings) override;
+
 public slots:
     void saveSettings();
 

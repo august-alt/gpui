@@ -25,6 +25,7 @@
 
 #include "../core/translatorstorage.h"
 #include "../core/isnapinmanagementsettings.h"
+#include "../core/settings.h"
 #include <QtWidgets>
 
 #include "../ldap/ldapcontract.h"
@@ -61,6 +62,7 @@ public:
     MainWindow(CommandLineOptions &options,
                ISnapInManager *manager,
                TranslatorStorage *translatorStorage,
+               Settings *settings,
                QWidget *parent = 0);
     ~MainWindow();
 

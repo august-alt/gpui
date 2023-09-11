@@ -22,6 +22,7 @@
 #include "../core/isnapinmanagementsettings.h"
 #include "../core/logger/prelude.h"
 #include "../core/pluginstorage.h"
+#include "../core/settings.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
 #include "../core/snapinloader.h"
@@ -45,6 +46,9 @@ int main(int argc, char **argv)
     auto snapInLoader  = std::make_unique<gpui::SnapInLoader>(snapInManager.get());
 
     snapInLoader->loadDefaultSnapIns();
+
+    //Create settings
+    auto settings = std::make_unique<gpui::Settings>();
 
     // Create window.
     QApplication app(argc, argv);
@@ -98,7 +102,7 @@ int main(int argc, char **argv)
         logManager->addLogger<gpui::logger::FileLogger>(options.fileLogLevel);
     }
 
-    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
+    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage, settings.get());
     window.show();
 
     return app.exec();

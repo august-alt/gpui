@@ -19,7 +19,6 @@
 ***********************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "mainwindowsettings.h"
 #include "ui_mainwindow.h"
 
 #include "aboutdialog.h"
@@ -28,6 +27,7 @@
 
 #include "contentwidget.h"
 
+#include "mainwindowsettings.h"
 #include "settingsdialog.h"
 #include "treevieweventfilter.h"
 
@@ -67,14 +67,14 @@ namespace gpui
 class MainWindowPrivate
 {
 public:
-    std::unique_ptr<QAbstractItemModel> model    = nullptr;
-    ContentWidget *contentWidget                 = nullptr;
-    std::unique_ptr<MainWindowSettings> settings = nullptr;
-    ISnapInManager *manager                      = nullptr;
+    std::unique_ptr<QAbstractItemModel> model = nullptr;
+    ContentWidget *contentWidget              = nullptr;
+    ISnapInManager *manager                   = nullptr;
 
     std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> searchModel       = nullptr;
+    std::unique_ptr<MainWindowSettings> mainWindowSettings   = nullptr;
 
     std::vector<std::unique_ptr<QTranslator>> translators{};
     QString localeName{};
@@ -90,6 +90,8 @@ public:
     std::unique_ptr<ldap::LDAPContract> ldapImpl = nullptr;
 
     TranslatorStorage *translatorStorage = nullptr;
+
+    Settings *settings = nullptr;
 
     std::vector<QAction *> languageActions{};
 
@@ -211,6 +213,7 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
 MainWindow::MainWindow(CommandLineOptions &options,
                        ISnapInManager *manager,
                        TranslatorStorage *translatorStorage,
+                       Settings *settings,
                        QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
@@ -222,14 +225,17 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     d->translatorStorage = translatorStorage;
 
+    d->settings = settings;
+
     ui->setupUi(this);
+
+    d->mainWindowSettings = std::make_unique<MainWindowSettings>(this, ui, settings);
 
     ui->treeView->installEventFilter(d->eventFilter.get());
 
     d->ldapImpl->initialize();
 
-    d->settings = std::make_unique<MainWindowSettings>(this, ui);
-    d->settings->restoreSettings();
+    d->mainWindowSettings->loadSettings();
 
     createLanguageMenu();
 
@@ -277,7 +283,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
     {
         qWarning() << "Loading model from: " << snapIn->getDisplayName();
         snapIn->onInitialize(this);
-        snapIn->setSettingsManager(d->settings.get());
+        snapIn->setSettingsManager(d->settings);
     }
 
     connect(ui->actionSettings, &QAction::triggered, this, [=] { d->settingsDialog->show(); });
@@ -344,7 +350,7 @@ QString MainWindow::getAdmxPath() const
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    d->settings->saveSettings();
+    d->mainWindowSettings->saveSettings();
 
     QMainWindow::closeEvent(event);
 }

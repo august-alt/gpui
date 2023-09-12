@@ -37,6 +37,8 @@ QT_END_NAMESPACE
 
 namespace gpui
 {
+class AdministrativeTemplatesSettingsWidgetPrivate;
+
 class AdministrativeTemplatesSettingsWidget : public ISettingsWidget
 {
 public:
@@ -63,9 +65,7 @@ private:
     AdministrativeTemplatesSettingsWidget &operator=(AdministrativeTemplatesSettingsWidget &&) = delete; // move assignment
 
 private:
-    Ui::AdministrativeTemplatesSettingsWidget *ui{nullptr};
-
-    AdministrativeTemplatesSettingsObject settings;
+    AdministrativeTemplatesSettingsWidgetPrivate *d;
 };
 
 } // namespace gpui

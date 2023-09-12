@@ -3,18 +3,36 @@
 
 namespace gpui
 {
+class AdministrativeTemplatesSettingsWidgetPrivate
+{
+public:
+    AdministrativeTemplatesSettingsWidgetPrivate() { ui = new Ui::AdministrativeTemplatesSettingsWidget(); }
+    ~AdministrativeTemplatesSettingsWidgetPrivate() { delete ui; }
+
+public:
+    AdministrativeTemplatesSettingsObject settings{};
+
+    Ui::AdministrativeTemplatesSettingsWidget *ui{nullptr};
+
+private:
+    AdministrativeTemplatesSettingsWidgetPrivate(const AdministrativeTemplatesSettingsWidgetPrivate &) = delete;
+    AdministrativeTemplatesSettingsWidgetPrivate(AdministrativeTemplatesSettingsWidgetPrivate &&)      = delete;
+    AdministrativeTemplatesSettingsWidgetPrivate &operator=(const AdministrativeTemplatesSettingsWidgetPrivate &)
+        = delete;
+    AdministrativeTemplatesSettingsWidgetPrivate &operator=(AdministrativeTemplatesSettingsWidgetPrivate &&) = delete;
+};
+
 AdministrativeTemplatesSettingsWidget::AdministrativeTemplatesSettingsWidget(ISnapInManagementSettings *manager,
                                                                              QWidget *parent)
     : ISettingsWidget(manager, parent)
-    , ui(new Ui::AdministrativeTemplatesSettingsWidget())
-    , settings{}
+    , d(new AdministrativeTemplatesSettingsWidgetPrivate())
 {
-    ui->setupUi(this);
+    d->ui->setupUi(this);
 }
 
 AdministrativeTemplatesSettingsWidget::~AdministrativeTemplatesSettingsWidget()
 {
-    delete ui;
+    delete d;
 }
 
 QString AdministrativeTemplatesSettingsWidget::getName() const
@@ -24,21 +42,21 @@ QString AdministrativeTemplatesSettingsWidget::getName() const
 
 void AdministrativeTemplatesSettingsWidget::saveSettings()
 {
-    settings.enableLayout = ui->enableLayoutCheckBox->isChecked();
+    d->settings.enableLayout = d->ui->enableLayoutCheckBox->isChecked();
 
-    getSettingsManager()->saveSettings(getName(), &settings);
+    getSettingsManager()->saveSettings(getName(), &d->settings);
 }
 
 void AdministrativeTemplatesSettingsWidget::loadSettings()
 {
-    getSettingsManager()->loadSettings(getName(), &settings);
+    getSettingsManager()->loadSettings(getName(), &d->settings);
 
     updateWidgetFromSettings();
 }
 
 void AdministrativeTemplatesSettingsWidget::updateWidgetFromSettings()
 {
-    ui->enableLayoutCheckBox->setChecked(settings.enableLayout);
+    d->ui->enableLayoutCheckBox->setChecked(d->settings.enableLayout);
 }
 
 } // namespace gpui

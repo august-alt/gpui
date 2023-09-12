@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     //Create settings
     auto settings = std::make_unique<gpui::Settings>();
 
-    // Create window.
+    // Create application and window.
     QApplication app(argc, argv);
 
     // NOTE: set app variables which will be used to

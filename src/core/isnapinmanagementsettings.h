@@ -29,9 +29,21 @@ namespace gpui
 class GPUI_CORE_EXPORT ISnapInManagementSettings
 {
 public:
+    /*!
+     * \brief saveSettings Saving settings to specified section in ini file
+     * \param section section to save
+     * \param snapinSettings QObject with properties to save
+     */
     virtual void saveSettings(QString section, QObject *snapinSettings) = 0;
+
+    /*!
+     * \brief loadSettings Loading settings from specified section in ini file
+     * \param section section to load
+     * \param snapinSettings QObject to which the settings will be loaded
+     */
     virtual void loadSettings(QString section, QObject *snapinSettings) = 0;
-    virtual ~ISnapInManagementSettings()                                = default;
+
+    virtual ~ISnapInManagementSettings() = default;
 };
 
 } // namespace gpui

@@ -428,7 +428,7 @@ context (user policy option).</translation>
         <translation>&amp;View</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>&amp;Help</source>
         <translation>&amp;Help</translation>
     </message>
@@ -637,6 +637,11 @@ context (user policy option).</translation>
         <source>&amp;Manual</source>
         <translation>&amp;Manual</translation>
     </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Settings</source>
+        <translation>Settings</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -757,7 +762,7 @@ context (user policy option).</translation>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+343"/>
+        <location filename="../mainwindow.cpp" line="+368"/>
         <source>Local group policies</source>
         <translation>Local group policies templates</translation>
     </message>
@@ -813,7 +818,7 @@ context (user policy option).</translation>
         <translation>All files (*.*)</translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+156"/>
         <source>English</source>
         <translation>English</translation>
     </message>
@@ -897,6 +902,14 @@ context (user policy option).</translation>
         <location line="+2"/>
         <source>. Minimum allowed value has been set.</source>
         <translation>. Minimum allowed value has been set.</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../settingsdialog.ui" line="+14"/>
+        <source>Dialog</source>
+        <translation>Settings</translation>
     </message>
 </context>
 <context>
@@ -1264,7 +1277,7 @@ Enumeration:</translation>
 <context>
     <name>gpui::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="-157"/>
+        <location filename="../mainwindow.cpp" line="-167"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>

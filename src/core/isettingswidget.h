@@ -18,8 +18,8 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_ISETTINGS_WIDGET_H
-#define GPUI_ISETTINGS_WIDGET_H
+#ifndef _ISETTINGSWIDGET_H
+#define _ISETTINGSWIDGET_H
 
 #include "core.h"
 #include "isnapinmanagementsettings.h"
@@ -29,10 +29,7 @@
 namespace gpui
 {
 class ISettingsWidgetPrivate;
-}
 
-namespace gpui
-{
 /**
  * @brief Base class for snapin's settings widgets
  */

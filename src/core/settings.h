@@ -36,9 +36,8 @@ namespace gpui
 class MainWindow;
 class SettingsPrivate;
 
-class GPUI_CORE_EXPORT Settings : public QObject, public ISnapInManagementSettings
+class GPUI_CORE_EXPORT Settings : public ISnapInManagementSettings
 {
-    Q_OBJECT
 public:
     Settings();
     ~Settings();

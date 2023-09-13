@@ -52,21 +52,15 @@ Settings::~Settings()
 
 void Settings::saveSettings(QString section, QObject *snapinSettings)
 {
-    //where do we count from zero or one?
-    for (int i = 1; i < snapinSettings->metaObject()->propertyCount(); ++i)
+    for (int i = snapinSettings->metaObject()->propertyOffset(); i < snapinSettings->metaObject()->propertyCount(); ++i)
     {
         QMetaProperty currentProperty = snapinSettings->metaObject()->property(i);
 
         QString propertyName = currentProperty.name();
 
-        QByteArray charArray = propertyName.toLocal8Bit();
+        QByteArray propName = propertyName.toLocal8Bit().data();
 
-        const char *propName = charArray.data();
-
-        QString fullPropertyName = section + "/" + propertyName;
-
-        fullPropertyName.replace(" ", "");
-        fullPropertyName = fullPropertyName.trimmed();
+        QString fullPropertyName = QString(section + "/" + propertyName).remove("\\s").trimmed();
 
         d->settings.setValue(fullPropertyName, QVariant(snapinSettings->property(propName)));
     }
@@ -74,20 +68,13 @@ void Settings::saveSettings(QString section, QObject *snapinSettings)
 
 void Settings::loadSettings(QString section, QObject *snapinSettings)
 {
-    for (int i = 1; i < snapinSettings->metaObject()->propertyCount(); ++i)
+    for (int i = snapinSettings->metaObject()->propertyOffset(); i < snapinSettings->metaObject()->propertyCount(); ++i)
     {
         QMetaProperty currentProperty = snapinSettings->metaObject()->property(i);
 
         QString propertyName = currentProperty.name();
 
-        QByteArray charArray = propertyName.toLocal8Bit();
-
-        const char *propName = charArray.data();
-
-        QString fullPropertyName = section + "/" + propertyName;
-
-        fullPropertyName.replace(" ", "");
-        fullPropertyName = fullPropertyName.trimmed();
+        QString fullPropertyName = QString(section + "/" + propertyName).remove("\\s").trimmed();
 
         QVariant value = d->settings.value(fullPropertyName, QVariant::fromValue(nullptr));
 

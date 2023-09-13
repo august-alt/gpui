@@ -21,7 +21,7 @@
 #ifndef _SETTINGS_H
 #define _SETTINGS_H
 
-#include "../core/isnapinmanagementsettings.h"
+#include "../core/isnapinsettingsmanager.h"
 #include <QObject>
 
 QT_BEGIN_NAMESPACE
@@ -36,7 +36,7 @@ namespace gpui
 class MainWindow;
 class SettingsPrivate;
 
-class GPUI_CORE_EXPORT Settings : public ISnapInManagementSettings
+class GPUI_CORE_EXPORT Settings : public ISnapInSettingsManager
 {
 public:
     Settings();

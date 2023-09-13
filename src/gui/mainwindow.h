@@ -24,7 +24,7 @@
 #include "gui.h"
 
 #include "../core/translatorstorage.h"
-#include "../core/isnapinmanagementsettings.h"
+#include "../core/isnapinsettingsmanager.h"
 #include "../core/settings.h"
 #include <QtWidgets>
 

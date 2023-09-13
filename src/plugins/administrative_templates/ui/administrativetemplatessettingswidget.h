@@ -22,7 +22,7 @@
 #define GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
 
 #include "../../core/isettingswidget.h"
-#include "../../core/isnapinmanagementsettings.h"
+#include "../../core/isnapinsettingsmanager.h"
 
 #include "administrativetemplatessettingsobject.h"
 
@@ -45,7 +45,7 @@ public:
     Q_OBJECT
 
 public:
-    explicit AdministrativeTemplatesSettingsWidget(ISnapInManagementSettings *manager, QWidget *parent = nullptr);
+    explicit AdministrativeTemplatesSettingsWidget(ISnapInSettingsManager *manager, QWidget *parent = nullptr);
     ~AdministrativeTemplatesSettingsWidget() override;
 
     QString getName() const override;

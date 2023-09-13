@@ -18,15 +18,15 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef _ISNAPINMANAGEMENTSETTINGS_H
-#define _ISNAPINMANAGEMENTSETTINGS_H
+#ifndef _ISNAPINSETTINGSMANAGER_H
+#define _ISNAPINSETTINGSMANAGER_H
 
 #include "core.h"
 #include <QSettings>
 
 namespace gpui
 {
-class GPUI_CORE_EXPORT ISnapInManagementSettings
+class GPUI_CORE_EXPORT ISnapInSettingsManager
 {
 public:
     /*!
@@ -43,9 +43,9 @@ public:
      */
     virtual void loadSettings(QString section, QObject *snapinSettings) = 0;
 
-    virtual ~ISnapInManagementSettings() = default;
+    virtual ~ISnapInSettingsManager() = default;
 };
 
 } // namespace gpui
 
-#endif //_ISNAPINMANAGEMENTSETTINGS_H
+#endif //_ISNAPINSETTINGSMANAGER_H

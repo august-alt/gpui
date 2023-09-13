@@ -22,7 +22,7 @@
 #define _ISETTINGSWIDGET_H
 
 #include "core.h"
-#include "isnapinmanagementsettings.h"
+#include "isnapinsettingsmanager.h"
 
 #include <QtWidgets>
 
@@ -58,9 +58,9 @@ public:
     virtual void loadSettings() = 0;
 
 protected:
-    ISettingsWidget(ISnapInManagementSettings *manager, QWidget *parent = nullptr);
+    ISettingsWidget(ISnapInSettingsManager *manager, QWidget *parent = nullptr);
 
-    ISnapInManagementSettings *getSettingsManager();
+    ISnapInSettingsManager *getSettingsManager();
 
 private:
     ISettingsWidgetPrivate *d;

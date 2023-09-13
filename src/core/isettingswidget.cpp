@@ -25,16 +25,16 @@ namespace gpui
 class ISettingsWidgetPrivate
 {
 public:
-    ISnapInManagementSettings *manager = nullptr;
+    ISnapInSettingsManager *manager = nullptr;
 };
 
-ISettingsWidget::ISettingsWidget(ISnapInManagementSettings *manager, QWidget *parent)
+ISettingsWidget::ISettingsWidget(ISnapInSettingsManager *manager, QWidget *parent)
     : d(new ISettingsWidgetPrivate)
 {
     d->manager = manager;
 }
 
-ISnapInManagementSettings *ISettingsWidget::getSettingsManager()
+ISnapInSettingsManager *ISettingsWidget::getSettingsManager()
 {
     return d->manager;
 }

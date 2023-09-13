@@ -22,7 +22,7 @@ private:
     AdministrativeTemplatesSettingsWidgetPrivate &operator=(AdministrativeTemplatesSettingsWidgetPrivate &&) = delete;
 };
 
-AdministrativeTemplatesSettingsWidget::AdministrativeTemplatesSettingsWidget(ISnapInManagementSettings *manager,
+AdministrativeTemplatesSettingsWidget::AdministrativeTemplatesSettingsWidget(ISnapInSettingsManager *manager,
                                                                              QWidget *parent)
     : ISettingsWidget(manager, parent)
     , d(new AdministrativeTemplatesSettingsWidgetPrivate())

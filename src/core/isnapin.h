@@ -23,7 +23,7 @@
 
 #include "core.h"
 #include "isettingswidget.h"
-#include "isnapinmanagementsettings.h"
+#include "isnapinsettingsmanager.h"
 
 #include <QAbstractItemModel>
 #include <QMainWindow>
@@ -126,13 +126,13 @@ public:
      * \brief getSettingsManager Returns pointer to settings manager
      * \return Pointer to settings Manager
      */
-    virtual ISnapInManagementSettings *getSettingsManager() const = 0;
+    virtual ISnapInSettingsManager *getSettingsManager() const = 0;
 
     /*!
      * \brief setSettingsManaget set SettingsManager for snap-in
      * \param manager
      */
-    virtual void setSettingsManager(ISnapInManagementSettings *manager) = 0;
+    virtual void setSettingsManager(ISnapInSettingsManager *manager) = 0;
 };
 
 } // namespace gpui

@@ -35,7 +35,7 @@ public:
     QVersionNumber version{};
     QString license{};
     QString copyright{};
-    ISnapInManagementSettings *settingsManager = nullptr;
+    ISnapInSettingsManager *settingsManager = nullptr;
 };
 
 QUuid AbstractSnapIn::getId() const
@@ -83,12 +83,12 @@ ISettingsWidget *AbstractSnapIn::getSettingsWidget() const
     return nullptr;
 }
 
-ISnapInManagementSettings *AbstractSnapIn::getSettingsManager() const
+ISnapInSettingsManager *AbstractSnapIn::getSettingsManager() const
 {
     return d->settingsManager;
 }
 
-void AbstractSnapIn::setSettingsManager(ISnapInManagementSettings *manager)
+void AbstractSnapIn::setSettingsManager(ISnapInSettingsManager *manager)
 {
     d->settingsManager = manager;
 }

@@ -19,7 +19,7 @@
 ***********************************************************************************************************************/
 
 #include "../core/compositesnapindetailsdialog.h"
-#include "../core/isnapinmanagementsettings.h"
+#include "../core/isnapinsettingsmanager.h"
 #include "../core/logger/prelude.h"
 #include "../core/pluginstorage.h"
 #include "../core/settings.h"

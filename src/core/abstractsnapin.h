@@ -58,9 +58,9 @@ public:
 
     ISettingsWidget *getSettingsWidget() const override;
 
-    ISnapInManagementSettings *getSettingsManager() const override;
+    ISnapInSettingsManager *getSettingsManager() const override;
 
-    void setSettingsManager(ISnapInManagementSettings *manager) override;
+    void setSettingsManager(ISnapInSettingsManager *manager) override;
 
 protected:
     AbstractSnapIn(QString type,

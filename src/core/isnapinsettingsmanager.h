@@ -18,8 +18,8 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef _ISNAPINSETTINGSMANAGER_H
-#define _ISNAPINSETTINGSMANAGER_H
+#ifndef GPUI_ISNAPINSETTINGSMANAGER_H
+#define GPUI_ISNAPINSETTINGSMANAGER_H
 
 #include "core.h"
 #include <QSettings>

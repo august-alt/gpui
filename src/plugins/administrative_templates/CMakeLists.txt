@@ -96,7 +96,6 @@ set(SOURCES
     ui/administrativetemplatesproxymodel.cpp
     ui/administrativetemplateswidget.cpp
     ui/administrativetemplatessettingswidget.cpp
-    ui/administrativetemplatessettingsobject.cpp
     ui/presentationbuilder.cpp
     ui/platformmodel.cpp
     ui/templatefilterdialog.cpp

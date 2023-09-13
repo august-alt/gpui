@@ -18,8 +18,8 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
-#define ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
+#ifndef GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
+#define GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
 
 #include "../../core/isettingswidget.h"
 #include "../../core/isnapinmanagementsettings.h"

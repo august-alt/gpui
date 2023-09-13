@@ -6,7 +6,7 @@
     <message>
         <location filename="../administrativetemplatessettingswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Административные шаблоны</translation>
+        <translation>Administrative templates settings</translation>
     </message>
     <message>
         <location filename="../administrativetemplatessettingswidget.ui" line="20"/>
@@ -70,60 +70,77 @@
 <context>
     <name>QObject</name>
     <message>
+        <location filename="../../administrativetemplatessnapin.cpp" line="106"/>
+        <location filename="../../comments/commentsmodel.cpp" line="112"/>
         <source>Error</source>
-        <translation type="vanished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
+        <location filename="../../administrativetemplatessnapin.cpp" line="107"/>
+        <location filename="../../comments/commentsmodel.cpp" line="113"/>
         <source>Error writing file:</source>
-        <translation type="vanished">Error writing file:</translation>
+        <translation>Error writing file:</translation>
     </message>
     <message>
+        <location filename="../../administrativetemplatessnapin.cpp" line="484"/>
         <source>&amp;Edit filter</source>
-        <translation type="vanished">&amp;Edit filter</translation>
+        <translation>&amp;Edit filter</translation>
     </message>
     <message>
+        <location filename="../../administrativetemplatessnapin.cpp" line="483"/>
         <source>Enable &amp;filter</source>
-        <translation type="vanished">Enable &amp;filter</translation>
+        <translation>Enable &amp;filter</translation>
     </message>
     <message>
+        <location filename="../../administrativetemplatessnapin.cpp" line="485"/>
         <source>&amp;Filter</source>
-        <translation type="vanished">&amp;Filter</translation>
+        <translation>&amp;Filter</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="96"/>
         <source>[Local Group Policy]</source>
-        <translation type="vanished">[Local Group Policy]</translation>
+        <translation>[Local Group Policy]</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="98"/>
         <source>Local group policies</source>
-        <translation type="vanished">Local group policies</translation>
+        <translation>Local group policies</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="106"/>
         <source>Machine</source>
-        <translation type="vanished">Machine</translation>
+        <translation>Machine</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="108"/>
         <source>Machine level policies</source>
-        <translation type="vanished">Machine level policies</translation>
+        <translation>Machine level policies</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="114"/>
+        <location filename="../../bundle/policybundle.cpp" line="129"/>
         <source>Administrative Templates</source>
-        <translation type="vanished">Administrative Templates</translation>
+        <translation>Administrative Templates</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="116"/>
         <source>Machine administrative templates</source>
-        <translation type="vanished">Machine administrative templates</translation>
+        <translation>Machine administrative templates</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="121"/>
         <source>User</source>
-        <translation type="vanished">User</translation>
+        <translation>User</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="123"/>
         <source>User level policies</source>
-        <translation type="vanished">User level policies</translation>
+        <translation>User level policies</translation>
     </message>
     <message>
+        <location filename="../../bundle/policybundle.cpp" line="131"/>
         <source>User administrative templates</source>
-        <translation type="vanished">User administrative templates</translation>
+        <translation>User administrative templates</translation>
     </message>
     <message>
         <location filename="../administrativetemplateswidget.cpp" line="292"/>

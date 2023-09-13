@@ -18,8 +18,8 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_MAIN_WINDOW_SETTINGS_H
-#define GPUI_MAIN_WINDOW_SETTINGS_H
+#ifndef _SETTINGS_H
+#define _SETTINGS_H
 
 #include "../core/isnapinmanagementsettings.h"
 #include <QObject>

@@ -39,7 +39,7 @@ class SettingsPrivate;
 class GPUI_CORE_EXPORT Settings : public ISnapInSettingsManager
 {
 public:
-    Settings();
+    Settings(QString directory, QString file);
     ~Settings();
 
     void saveSettings(QString section, QObject *snapinSettings) override;

@@ -30,8 +30,8 @@ class SettingsPrivate
 public:
     QSettings settings{};
 
-    SettingsPrivate()
-        : settings("BaseALT", "GPUI")
+    SettingsPrivate(QString directory, QString file)
+        : settings(directory, file)
     {}
 
 private:
@@ -41,8 +41,8 @@ private:
     SettingsPrivate &operator=(SettingsPrivate &&) = delete;      // move assignment
 };
 
-Settings::Settings()
-    : d(new SettingsPrivate())
+Settings::Settings(QString directory, QString file)
+    : d(new SettingsPrivate(directory, file))
 {}
 
 Settings::~Settings()

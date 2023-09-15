@@ -35,6 +35,9 @@
 #include <iostream>
 #include <QApplication>
 
+const QString SETTINGS_DIRECTORY = "BaseALT";
+const QString SETTINGS_FILE      = "GPUI";
+
 int main(int argc, char **argv)
 {
     // Register types for factory.
@@ -48,7 +51,7 @@ int main(int argc, char **argv)
     snapInLoader->loadDefaultSnapIns();
 
     //Create settings
-    auto settings = std::make_unique<gpui::Settings>();
+    auto settings = std::make_unique<gpui::Settings>(SETTINGS_DIRECTORY, SETTINGS_FILE);
 
     // Create application and window.
     QApplication app(argc, argv);

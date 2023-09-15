@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>AdministrativeTemplatesSettingsWidget</name>
+    <message>
+        <location filename="../administrativetemplatessettingswidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Настройки административных шаблоной</translation>
+    </message>
+    <message>
+        <location filename="../administrativetemplatessettingswidget.ui" line="20"/>
+        <source>Enable new layout</source>
+        <translation>Включить новый порядок отображения</translation>
+    </message>
+</context>
+<context>
     <name>AdministrativeTemplatesWidget</name>
     <message>
         <location filename="../administrativetemplateswidget.ui" line="14"/>
@@ -57,29 +70,29 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="105"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="106"/>
         <location filename="../../comments/commentsmodel.cpp" line="112"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="106"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="107"/>
         <location filename="../../comments/commentsmodel.cpp" line="113"/>
         <source>Error writing file:</source>
         <translation>Ошибка записи файла:</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="483"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="484"/>
         <source>&amp;Edit filter</source>
         <translation>&amp;Редактировать фильтры</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="482"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="483"/>
         <source>Enable &amp;filter</source>
         <translation>Включить &amp;фильтр</translation>
     </message>
     <message>
-        <location filename="../../administrativetemplatessnapin.cpp" line="484"/>
+        <location filename="../../administrativetemplatessnapin.cpp" line="485"/>
         <source>&amp;Filter</source>
         <translation>&amp;Фильтр</translation>
     </message>
@@ -164,7 +177,7 @@
     </message>
     <message>
         <source>Managed:</source>
-        <translation>Настроен:</translation>
+        <translation type="vanished">Настроен:</translation>
     </message>
     <message>
         <location filename="../templatefilterdialog.ui" line="60"/>
@@ -173,7 +186,7 @@
     </message>
     <message>
         <source>Commented:</source>
-        <translation>Содержит комментарий:</translation>
+        <translation type="vanished">Содержит комментарий:</translation>
     </message>
     <message>
         <location filename="../templatefilterdialog.ui" line="92"/>

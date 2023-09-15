@@ -56,7 +56,11 @@ public:
 
     QString getCopyright() const override;
 
-    ISettingsWidget* getSettingsWidget() const override;
+    ISettingsWidget *getSettingsWidget() const override;
+
+    ISnapInSettingsManager *getSettingsManager() const override;
+
+    void setSettingsManager(ISnapInSettingsManager *manager) override;
 
 protected:
     AbstractSnapIn(QString type,

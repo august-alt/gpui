@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2023 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,21 +18,20 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef _SNAPINMANAGEMENTSETTINGS_H
-#define _SNAPINMANAGEMENTSETTINGS_H
+#ifndef GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_OBJECT_H
+#define GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_OBJECT_H
 
-#include "core.h"
+#include <QObject>
 
-#include <QSettings>
-
-namespace gpui
+class AdministrativeTemplatesSettingsObject : public QObject
 {
-class GPUI_CORE_EXPORT SnapInManagementSettings
-{
-private:
-    QSettings settings;
+public:
+    Q_OBJECT
+
+public:
+    Q_PROPERTY(bool enableLayout MEMBER enableLayout)
+
+    bool enableLayout = false;
 };
 
-} // namespace gpui
-
-#endif //_SNAPINMANAGEMENTSETTINGS_H
+#endif //GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_OBJECT_H

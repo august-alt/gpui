@@ -19,8 +19,10 @@
 ***********************************************************************************************************************/
 
 #include "../core/compositesnapindetailsdialog.h"
+#include "../core/isnapinsettingsmanager.h"
 #include "../core/logger/prelude.h"
 #include "../core/pluginstorage.h"
+#include "../core/settings.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
 #include "../core/snapinloader.h"
@@ -32,6 +34,9 @@
 
 #include <iostream>
 #include <QApplication>
+
+const QString SETTINGS_DIRECTORY = "BaseALT";
+const QString SETTINGS_FILE      = "GPUI";
 
 int main(int argc, char **argv)
 {
@@ -45,7 +50,10 @@ int main(int argc, char **argv)
 
     snapInLoader->loadDefaultSnapIns();
 
-    // Create window.
+    //Create settings
+    auto settings = std::make_unique<gpui::Settings>(SETTINGS_DIRECTORY, SETTINGS_FILE);
+
+    // Create application and window.
     QApplication app(argc, argv);
 
     // NOTE: set app variables which will be used to
@@ -97,7 +105,7 @@ int main(int argc, char **argv)
         logManager->addLogger<gpui::logger::FileLogger>(options.fileLogLevel);
     }
 
-    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);
+    gpui::MainWindow window(options, snapInManager.get(), &translatorStorage, settings.get());
     window.show();
 
     return app.exec();

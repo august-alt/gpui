@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,44 +18,34 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_SETTINGS_WIDGET_H
-#define GPUI_SETTINGS_WIDGET_H
+#ifndef GPUI_ISNAPINSETTINGSMANAGER_H
+#define GPUI_ISNAPINSETTINGSMANAGER_H
 
-#include <QtWidgets>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class SettingsDialog; }
-QT_END_NAMESPACE
+#include "core.h"
+#include <QSettings>
 
 namespace gpui
 {
-
-class ISettingsWidget;
-
-class SettingsDialog : public QDialog
+class GPUI_CORE_EXPORT ISnapInSettingsManager
 {
 public:
-    Q_OBJECT
+    /*!
+     * \brief saveSettings Saving settings to specified section in ini file
+     * \param section section to save
+     * \param snapinSettings QObject with properties to save
+     */
+    virtual void saveSettings(QString section, QObject *snapinSettings) = 0;
 
-public:
-    explicit SettingsDialog(QWidget* parent = nullptr);
-    ~SettingsDialog() override;
+    /*!
+     * \brief loadSettings Loading settings from specified section in ini file
+     * \param section section to load
+     * \param snapinSettings QObject to which the settings will be loaded
+     */
+    virtual void loadSettings(QString section, QObject *snapinSettings) = 0;
 
-    void addTab(ISettingsWidget *settingsWidget);
-
-private slots:
-    void on_okButtonClicked();
-
-private:
-    SettingsDialog(const SettingsDialog&)            = delete;   // copy ctor
-    SettingsDialog(SettingsDialog&&)                 = delete;   // move ctor
-    SettingsDialog& operator=(const SettingsDialog&) = delete;   // copy assignment
-    SettingsDialog& operator=(SettingsDialog&&)      = delete;   // move assignment
-
-private:
-    Ui::SettingsDialog *ui {nullptr};
+    virtual ~ISnapInSettingsManager() = default;
 };
 
-}
+} // namespace gpui
 
-#endif//GPUI_SETTINGS_WIDGET_H
+#endif //_ISNAPINSETTINGSMANAGER_H

@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -20,46 +20,36 @@
 
 #include "mainwindowsettings.h"
 
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-#include <QSettings>
-
 namespace gpui
 {
-const QString MAIN_WINDOW_GEOMETRY       = "mainwindow/geometry";
-const QString MAIN_WINDOW_STATE          = "mainwindow/state";
-const QString MAIN_WINDOW_SPLITTER_STATE = "mainwindow/splitterState";
-
-const QString MAIN_WINDOW_LANGUAGE_STATE = "mainwindow/language";
-const QString MAIN_WINDOW_ADMX_PATH      = "mainwindow/admxPath";
+const QString MAIN_WINDOW_SECTION = "mainwindow";
 
 class MainWindowSettingsPrivate
 {
 public:
-    Ui::MainWindow *ui = nullptr;
-    QSettings settings{};
-    gpui::MainWindow *window = nullptr;
+    MainWindowSettingsPrivate(MainWindow *win, Ui::MainWindow *winUi, Settings *set)
+    {
+        window   = win;
+        ui       = winUi;
+        settings = set;
+    }
+    ~MainWindowSettingsPrivate() = default;
 
-    MainWindowSettingsPrivate()
-        : ui(nullptr)
-        , settings("BaseALT", "GPUI")
-        , window(nullptr)
-    {}
+public:
+    MainWindow *window = nullptr;
+    Ui::MainWindow *ui = nullptr;
+    Settings *settings = nullptr;
 
 private:
-    MainWindowSettingsPrivate(const MainWindowSettingsPrivate &) = delete;            // copy ctor
-    MainWindowSettingsPrivate(MainWindowSettingsPrivate &&)      = delete;            // move ctor
-    MainWindowSettingsPrivate &operator=(const MainWindowSettingsPrivate &) = delete; // copy assignment
-    MainWindowSettingsPrivate &operator=(MainWindowSettingsPrivate &&) = delete;      // move assignment
+    MainWindowSettingsPrivate(const MainWindowSettingsPrivate &) = delete;
+    MainWindowSettingsPrivate(MainWindowSettingsPrivate &&)      = delete;
+    MainWindowSettingsPrivate &operator=(const MainWindowSettingsPrivate &) = delete;
+    MainWindowSettingsPrivate &operator=(MainWindowSettingsPrivate &&) = delete;
 };
 
-MainWindowSettings::MainWindowSettings(gpui::MainWindow *window, Ui::MainWindow *ui)
-    : d(new MainWindowSettingsPrivate())
-{
-    d->window = window;
-    d->ui     = ui;
-}
+MainWindowSettings::MainWindowSettings(MainWindow *window, Ui::MainWindow *ui, Settings *setttings)
+    : d(new MainWindowSettingsPrivate(window, ui, setttings))
+{}
 
 MainWindowSettings::~MainWindowSettings()
 {
@@ -68,37 +58,39 @@ MainWindowSettings::~MainWindowSettings()
 
 void MainWindowSettings::saveSettings()
 {
-    const QByteArray geometry = d->window->saveGeometry();
-    d->settings.setValue(MAIN_WINDOW_GEOMETRY, geometry);
-
-    const QByteArray state = d->window->saveState();
-    d->settings.setValue(MAIN_WINDOW_STATE, state);
-
-    const QByteArray splitterState = d->ui->splitter->saveState();
-    d->settings.setValue(MAIN_WINDOW_SPLITTER_STATE, splitterState);
-
-    const QString languageState = d->window->getLanguage();
-    d->settings.setValue(MAIN_WINDOW_LANGUAGE_STATE, languageState);
-
-    const QString admxPath = d->window->getAdmxPath();
-    d->settings.setValue(MAIN_WINDOW_ADMX_PATH, admxPath);
+    convertSettingsToProperties();
+    d->settings->saveSettings(MAIN_WINDOW_SECTION, this);
 }
 
-void MainWindowSettings::restoreSettings()
+void MainWindowSettings::loadSettings()
 {
-    const QByteArray geometry = d->settings.value(MAIN_WINDOW_GEOMETRY).toByteArray();
+    d->settings->loadSettings(MAIN_WINDOW_SECTION, this);
+    convertPropertiesToSettings();
+}
+
+void MainWindowSettings::convertSettingsToProperties()
+{
+    geometry = d->window->saveGeometry();
+
+    windowState = d->window->saveState();
+
+    splitterState = d->ui->splitter->saveState();
+
+    languageState = d->window->getLanguage();
+
+    admxPath = d->window->getAdmxPath();
+}
+
+void MainWindowSettings::convertPropertiesToSettings()
+{
     d->window->restoreGeometry(geometry);
 
-    const QByteArray state = d->settings.value(MAIN_WINDOW_STATE).toByteArray();
-    d->window->restoreState(state);
+    d->window->restoreState(windowState);
 
-    const QByteArray splitterState = d->settings.value(MAIN_WINDOW_SPLITTER_STATE).toByteArray();
     d->ui->splitter->restoreState(splitterState);
 
-    const QString languageState = d->settings.value(MAIN_WINDOW_LANGUAGE_STATE).toString();
     d->window->setLanguage(languageState);
 
-    const QString admxPath = d->settings.value(MAIN_WINDOW_ADMX_PATH).toString();
     if (d->window->getAdmxPath().isEmpty())
     {
         d->window->setAdmxPath(admxPath);

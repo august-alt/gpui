@@ -19,7 +19,6 @@
 ***********************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "mainwindowsettings.h"
 #include "ui_mainwindow.h"
 
 #include "aboutdialog.h"
@@ -28,6 +27,7 @@
 
 #include "contentwidget.h"
 
+#include "mainwindowsettings.h"
 #include "settingsdialog.h"
 #include "treevieweventfilter.h"
 
@@ -67,14 +67,14 @@ namespace gpui
 class MainWindowPrivate
 {
 public:
-    std::unique_ptr<QAbstractItemModel> model    = nullptr;
-    ContentWidget *contentWidget                 = nullptr;
-    std::unique_ptr<MainWindowSettings> settings = nullptr;
-    ISnapInManager *manager                      = nullptr;
+    std::unique_ptr<QAbstractItemModel> model = nullptr;
+    ContentWidget *contentWidget              = nullptr;
+    ISnapInManager *manager                   = nullptr;
 
     std::unique_ptr<QSortFilterProxyModel> itemNameSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> itemRoleSortModel = nullptr;
     std::unique_ptr<QSortFilterProxyModel> searchModel       = nullptr;
+    std::unique_ptr<MainWindowSettings> mainWindowSettings   = nullptr;
 
     std::vector<std::unique_ptr<QTranslator>> translators{};
     QString localeName{};
@@ -91,11 +91,17 @@ public:
 
     TranslatorStorage *translatorStorage = nullptr;
 
-    std::vector<QAction*> languageActions{};
+    Settings *settings = nullptr;
+
+    std::vector<QAction *> languageActions{};
+
+    std::unique_ptr<SettingsDialog> settingsDialog = nullptr;
 
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
         , ldapImpl(new ldap::LDAPImpl())
+        , settingsDialog(new SettingsDialog())
+
     {}
 
 private:
@@ -207,6 +213,7 @@ void appendModel(QStandardItem *target, const QAbstractItemModel *model, const Q
 MainWindow::MainWindow(CommandLineOptions &options,
                        ISnapInManager *manager,
                        TranslatorStorage *translatorStorage,
+                       Settings *settings,
                        QWidget *parent)
     : QMainWindow(parent)
     , d(new MainWindowPrivate())
@@ -218,14 +225,17 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     d->translatorStorage = translatorStorage;
 
+    d->settings = settings;
+
     ui->setupUi(this);
+
+    d->mainWindowSettings = std::make_unique<MainWindowSettings>(this, ui, settings);
 
     ui->treeView->installEventFilter(d->eventFilter.get());
 
     d->ldapImpl->initialize();
 
-    d->settings = std::make_unique<MainWindowSettings>(this, ui);
-    d->settings->restoreSettings();
+    d->mainWindowSettings->loadSettings();
 
     createLanguageMenu();
 
@@ -273,13 +283,10 @@ MainWindow::MainWindow(CommandLineOptions &options,
     {
         qWarning() << "Loading model from: " << snapIn->getDisplayName();
         snapIn->onInitialize(this);
+        snapIn->setSettingsManager(d->settings);
     }
 
-    auto settingsDialog = new SettingsDialog(this);
-
-    connect(ui->actionSettings, &QAction::triggered, this, [=]{
-        settingsDialog->show();
-    });
+    connect(ui->actionSettings, &QAction::triggered, this, [=] { d->settingsDialog->show(); });
 
     if (!d->options.path.isEmpty())
     {
@@ -289,7 +296,11 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
             auto settingsWidget = snapIn->getSettingsWidget();
 
-            settingsDialog->addTab(settingsWidget);
+            if (settingsWidget)
+            {
+                d->settingsDialog->addTab(settingsWidget);
+                settingsWidget->loadSettings();
+            }
         }
     }
 
@@ -339,7 +350,7 @@ QString MainWindow::getAdmxPath() const
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    d->settings->saveSettings();
+    d->mainWindowSettings->saveSettings();
 
     QMainWindow::closeEvent(event);
 }
@@ -473,7 +484,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void gpui::MainWindow::retranslateLanguageActions()
 {
-    for (auto& languageAction : d->languageActions)
+    for (auto &languageAction : d->languageActions)
     {
         languageAction->setText(selectTranslationForLanguageName(languageAction->data().toString()));
     }

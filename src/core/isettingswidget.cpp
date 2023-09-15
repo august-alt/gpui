@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,44 +18,30 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_SETTINGS_WIDGET_H
-#define GPUI_SETTINGS_WIDGET_H
-
-#include <QtWidgets>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class SettingsDialog; }
-QT_END_NAMESPACE
+#include "isettingswidget.h"
 
 namespace gpui
 {
-
-class ISettingsWidget;
-
-class SettingsDialog : public QDialog
+class ISettingsWidgetPrivate
 {
 public:
-    Q_OBJECT
-
-public:
-    explicit SettingsDialog(QWidget* parent = nullptr);
-    ~SettingsDialog() override;
-
-    void addTab(ISettingsWidget *settingsWidget);
-
-private slots:
-    void on_okButtonClicked();
-
-private:
-    SettingsDialog(const SettingsDialog&)            = delete;   // copy ctor
-    SettingsDialog(SettingsDialog&&)                 = delete;   // move ctor
-    SettingsDialog& operator=(const SettingsDialog&) = delete;   // copy assignment
-    SettingsDialog& operator=(SettingsDialog&&)      = delete;   // move assignment
-
-private:
-    Ui::SettingsDialog *ui {nullptr};
+    ISnapInSettingsManager *manager = nullptr;
 };
 
+ISettingsWidget::ISettingsWidget(ISnapInSettingsManager *manager, QWidget *parent)
+    : d(new ISettingsWidgetPrivate)
+{
+    d->manager = manager;
 }
 
-#endif//GPUI_SETTINGS_WIDGET_H
+ISnapInSettingsManager *ISettingsWidget::getSettingsManager()
+{
+    return d->manager;
+}
+
+ISettingsWidget::~ISettingsWidget()
+{
+    delete d;
+}
+
+} // namespace gpui

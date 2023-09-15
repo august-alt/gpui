@@ -18,19 +18,26 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
-#define ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
+#ifndef GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
+#define GPUI_ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
 
 #include "../../core/isettingswidget.h"
+#include "../../core/isnapinsettingsmanager.h"
+
+#include "administrativetemplatessettingsobject.h"
 
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class AdministrativeTemplatesSettingsWidget; }
+namespace Ui
+{
+class AdministrativeTemplatesSettingsWidget;
+}
 QT_END_NAMESPACE
 
 namespace gpui
 {
+class AdministrativeTemplatesSettingsWidgetPrivate;
 
 class AdministrativeTemplatesSettingsWidget : public ISettingsWidget
 {
@@ -38,23 +45,29 @@ public:
     Q_OBJECT
 
 public:
-    explicit AdministrativeTemplatesSettingsWidget(QWidget* parent = nullptr);
+    explicit AdministrativeTemplatesSettingsWidget(ISnapInSettingsManager *manager, QWidget *parent = nullptr);
     ~AdministrativeTemplatesSettingsWidget() override;
 
     QString getName() const override;
 
     void saveSettings() override;
 
-private:
-    AdministrativeTemplatesSettingsWidget(const AdministrativeTemplatesSettingsWidget&)            = delete;   // copy ctor
-    AdministrativeTemplatesSettingsWidget(AdministrativeTemplatesSettingsWidget&&)                 = delete;   // move ctor
-    AdministrativeTemplatesSettingsWidget& operator=(const AdministrativeTemplatesSettingsWidget&) = delete;   // copy assignment
-    AdministrativeTemplatesSettingsWidget& operator=(AdministrativeTemplatesSettingsWidget&&)      = delete;   // move assignment
+    void loadSettings() override;
 
 private:
-    Ui::AdministrativeTemplatesSettingsWidget *ui {nullptr};
+    void updateWidgetFromSettings();
+
+private:
+    AdministrativeTemplatesSettingsWidget(const AdministrativeTemplatesSettingsWidget &) = delete; // copy ctor
+    AdministrativeTemplatesSettingsWidget(AdministrativeTemplatesSettingsWidget &&)      = delete; // move ctor
+    AdministrativeTemplatesSettingsWidget &operator=(const AdministrativeTemplatesSettingsWidget &)
+        = delete; // copy assignment
+    AdministrativeTemplatesSettingsWidget &operator=(AdministrativeTemplatesSettingsWidget &&) = delete; // move assignment
+
+private:
+    AdministrativeTemplatesSettingsWidgetPrivate *d;
 };
 
-}
+} // namespace gpui
 
-#endif//ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H
+#endif //ADMINISTRATIVE_TEMPLATES_SETTINGS_WIDGET_H

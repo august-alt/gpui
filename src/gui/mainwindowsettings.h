@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 **
-** Copyright (C) 2021 BaseALT Ltd. <org@basealt.ru>
+** Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -18,42 +18,58 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_MAIN_WINDOW_SETTINGS_H
-#define GPUI_MAIN_WINDOW_SETTINGS_H
+#ifndef GPUI_MAINWINDOW_SETTINGS_H
+#define GPUI_MAINWINDOW_SETTINGS_H
+
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "../core/settings.h"
 
 #include <QObject>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+namespace gpui
+{
 
-namespace gpui {
-
-class MainWindow;
 class MainWindowSettingsPrivate;
 
 class MainWindowSettings : public QObject
 {
-    Q_OBJECT
 public:
-    MainWindowSettings(MainWindow *window, Ui::MainWindow *ui);
+    Q_OBJECT
+
+    Q_PROPERTY(QByteArray geometry MEMBER geometry)
+    Q_PROPERTY(QByteArray windowState MEMBER windowState)
+    Q_PROPERTY(QByteArray splitterState MEMBER splitterState)
+    Q_PROPERTY(QString languageState MEMBER languageState)
+    Q_PROPERTY(QString admxPath MEMBER admxPath)
+
+public:
+    MainWindowSettings(MainWindow *window, Ui::MainWindow *ui, Settings *setttings);
     ~MainWindowSettings();
 
-    void restoreSettings();
-
-public slots:
     void saveSettings();
+    void loadSettings();
+
+public:
+    QByteArray geometry{} ;
+    QByteArray windowState{};
+    QByteArray splitterState{};
+    QString languageState{};
+    QString admxPath{};
 
 private:
-    MainWindowSettings(const MainWindowSettings&)            = delete;   // copy ctor
-    MainWindowSettings(MainWindowSettings&&)                 = delete;   // move ctor
-    MainWindowSettings& operator=(const MainWindowSettings&) = delete;   // copy assignment
-    MainWindowSettings& operator=(MainWindowSettings&&)      = delete;   // move assignment
+    MainWindowSettingsPrivate *d;
 
 private:
-    MainWindowSettingsPrivate* d;
+    void convertSettingsToProperties();
+    void convertPropertiesToSettings();
+
+    MainWindowSettings(const MainWindowSettings&) = delete;
+    MainWindowSettings(MainWindowSettings &&) = delete;
+    MainWindowSettings &operator=(const MainWindowSettings &) = delete;
+    MainWindowSettings &operator=(MainWindowSettings &&) = delete;
 };
 
-}
+} //gpui
 
-#endif // GPUI_MAIN_WINDOW_SETTINGS_H
+#endif // MAINWINDOWSETTINGS_H

@@ -74,6 +74,7 @@ set(HEADERS
     ui/administrativetemplatesproxymodel.h
     ui/administrativetemplateswidget.h
     ui/administrativetemplatessettingswidget.h
+    ui/administrativetemplatessettingsobject.h
     ui/presentationbuilder.h
     ui/platformmodel.h
     ui/templatefilterdialog.h

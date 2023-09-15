@@ -18,51 +18,44 @@
 **
 ***********************************************************************************************************************/
 
-#include "settingsdialog.h"
-#include "ui_settingsdialog.h"
+#ifndef _SETTINGS_H
+#define _SETTINGS_H
 
-#include "../core/isettingswidget.h"
+#include "../core/isnapinsettingsmanager.h"
+#include <QObject>
+
+QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class MainWindow;
+}
+QT_END_NAMESPACE
 
 namespace gpui
 {
-SettingsDialog::SettingsDialog(QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::SettingsDialog())
+class MainWindow;
+class SettingsPrivate;
+
+class GPUI_CORE_EXPORT Settings : public ISnapInSettingsManager
 {
-    ui->setupUi(this);
-    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
+public:
+    Settings(QString directory, QString file);
+    ~Settings();
 
-    connect(okButton, &QPushButton::clicked, this, &SettingsDialog::on_okButtonClicked);
-}
+    void saveSettings(QString section, QObject *snapinSettings) override;
 
-SettingsDialog::~SettingsDialog()
-{
-    delete ui;
-}
+    void loadSettings(QString section, QObject *snapinSettings) override;
 
-void SettingsDialog::addTab(ISettingsWidget *settingsWidget)
-{
-    if (settingsWidget)
-    {
-        ui->tabWidget->addTab(settingsWidget, settingsWidget->getName());
-    }
-}
+private:
+    Settings(const Settings &) = delete;            // copy ctor
+    Settings(Settings &&)      = delete;            // move ctor
+    Settings &operator=(const Settings &) = delete; // copy assignment
+    Settings &operator=(Settings &&) = delete;      // move assignment
 
-void SettingsDialog::on_okButtonClicked()
-{
-    for (int i = 0; i < ui->tabWidget->count(); ++i)
-    {
-        ISettingsWidget *widget = dynamic_cast<ISettingsWidget *>(ui->tabWidget->widget(i));
-
-        if (widget)
-        {
-            widget->saveSettings();
-        }
-        else
-        {
-            qWarning() << "Can't cast to ISettingsWidget fron snapIn!";
-        }
-    }
-}
+private:
+    SettingsPrivate *d;
+};
 
 } // namespace gpui
+
+#endif // GPUI_MAIN_WINDOW_SETTINGS_H

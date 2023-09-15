@@ -18,17 +18,20 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef _ISETTINGS_WIDGET_H
-#define _ISETTINGS_WIDGET_H
+#ifndef _ISETTINGSWIDGET_H
+#define _ISETTINGSWIDGET_H
 
 #include "core.h"
+#include "isnapinsettingsmanager.h"
 
 #include <QtWidgets>
 
 namespace gpui
 {
+class ISettingsWidgetPrivate;
+
 /**
- * @brief Composite snap-in requires list of dependencies to operate.
+ * @brief Base class for snapin's settings widgets
  */
 class GPUI_CORE_EXPORT ISettingsWidget : public QWidget
 {
@@ -36,6 +39,8 @@ public:
     Q_OBJECT
 
 public:
+    virtual ~ISettingsWidget();
+
     /*!
      * \brief getName Return tab name for settings widget.
      * \return
@@ -43,14 +48,28 @@ public:
     virtual QString getName() const = 0;
 
     /*!
-     * \brief saveSettings
+     * \brief saveSettings Saves settings of snapin using settings manager
      */
     virtual void saveSettings() = 0;
 
+    /*!
+     * \brief loadSettings Load snapin settings using settings manager
+     */
+    virtual void loadSettings() = 0;
+
 protected:
-    ISettingsWidget(QWidget* parent = nullptr)
-        : QWidget(parent)
-    {}
+    ISettingsWidget(ISnapInSettingsManager *manager, QWidget *parent = nullptr);
+
+    ISnapInSettingsManager *getSettingsManager();
+
+private:
+    ISettingsWidgetPrivate *d;
+
+private:
+    ISettingsWidget(const ISettingsWidget &) = delete;
+    ISettingsWidget(ISettingsWidget &&)      = delete;
+    ISettingsWidget &operator=(const ISettingsWidget &) = delete;
+    ISettingsWidget &operator=(ISettingsWidget &&) = delete;
 };
 
 } // namespace gpui

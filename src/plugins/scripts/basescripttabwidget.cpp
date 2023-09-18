@@ -94,6 +94,7 @@ void BaseScriptTabWidget::onBrowseClicked()
 
     std::string script_path = scriptsItemContainer->property<std::string>(ScriptItemContainer::INI_FILE_PATH);
     std::string path = script_path.substr(0, script_path.rfind('/'));
+    path.append("/" + scriptsItemContainer->property<std::string>(ScriptItemContainer::SECTION_NAME));
     QUrl url = QUrl(QString::fromStdString(path), QUrl::TolerantMode);
 
     QDesktopServices::openUrl(url);

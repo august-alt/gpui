@@ -33,6 +33,8 @@ ScriptsPowerShellWidget::ScriptsPowerShellWidget(QWidget *parent)
     , ui(new Ui::ScriptsPowerShellWidget())
 {
     ui->setupUi(this);
+
+    treeView = ui->treeView;
 }
 
 ScriptsPowerShellWidget::~ScriptsPowerShellWidget()

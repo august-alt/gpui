@@ -33,6 +33,8 @@ ScriptsWidget::ScriptsWidget(QWidget *parent)
     , ui(new Ui::ScriptsWidget())
 {
     ui->setupUi(this);
+
+    treeView = ui->treeView;
 }
 
 ScriptsWidget::~ScriptsWidget()

@@ -76,7 +76,16 @@ void BaseScriptTabWidget::onDeleteClicked()
 
             this->sessionModel->removeItem(parentItem->parent(), parentItem->tagRow());
 
-            this->selectedItem = nullptr;
+            auto selectedIdices = treeView->selectionModel()->selectedIndexes();
+
+            if (!selectedIdices.isEmpty())
+            {
+                this->selectedItem = model->itemFromIndex(treeView->selectionModel()->selectedIndexes().first());
+            }
+            else
+            {
+                this->selectedItem = nullptr;
+            }
         }
         else
         {

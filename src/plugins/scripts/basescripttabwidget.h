@@ -30,6 +30,7 @@
 #include <mvvm/factories/viewmodelfactory.h>
 
 #include <QHeaderView>
+#include <QTreeView>
 
 namespace scripts_plugin
 {
@@ -59,6 +60,8 @@ public:
     ScriptItemContainer *scriptsItemContainer   = nullptr;
 
     ModelView::ViewItem *selectedItem = nullptr;
+
+    QTreeView* treeView = nullptr;
 
     bool isStartUpScripts = false;
 

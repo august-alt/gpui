@@ -76,18 +76,30 @@ void FilesWidget::on_actionComboBox_currentIndexChanged(int index)
 
 void FilesWidget::on_sourceToolButton_clicked()
 {
-    ui->sourceLineEdit->setText(FileDialogUtils::getOpenFileName(this, QObject::tr("All files (*)")));
+    QString fileName = FileDialogUtils::getOpenFileName(this, QObject::tr("All files (*)"));
+
+    if (!fileName.isEmpty())
+    {
+        ui->sourceLineEdit->setText(fileName);
+    }
 }
 
 void FilesWidget::on_destinationToolButton_clicked()
 {
+    QString fileName;
+
     if (fileMode)
     {
-        ui->destinationLineEdit->setText(FileDialogUtils::getOpenFileName(this, QObject::tr("All files (*)")));
+        fileName = FileDialogUtils::getOpenFileName(this, QObject::tr("All files (*)"));
     }
     else
     {
-        ui->destinationLineEdit->setText(FileDialogUtils::getOpenDirectoryName(this, QObject::tr("All files (*.*)")));
+        fileName = FileDialogUtils::getOpenDirectoryName(this, QObject::tr("All files (*.*)"));
+    }
+
+    if (!fileName.isEmpty())
+    {
+        ui->destinationLineEdit->setText(fileName);
     }
 }
 

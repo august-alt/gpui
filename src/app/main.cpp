@@ -19,7 +19,6 @@
 ***********************************************************************************************************************/
 
 #include "../core/compositesnapindetailsdialog.h"
-#include "../core/logger/prelude.h"
 #include "../core/pluginstorage.h"
 #include "../core/snapindetailsdialog.h"
 #include "../core/snapindetailsfactory.h"
@@ -30,6 +29,7 @@
 #include "../gui/commandlineparser.h"
 #include "../gui/mainwindow.h"
 
+#include <qbase/logger/prelude.h>
 #include <iostream>
 #include <QApplication>
 
@@ -82,19 +82,19 @@ int main(int argc, char **argv)
         break;
     }
 
-    auto logManager = gpui::logger::LoggerManager::globalInstance();
+    auto logManager = qbase::logger::LoggerManager::globalInstance();
 
     if (options.consoleLogLevel != LOG_LEVEL_DISABLED)
     {
-        logManager->addLogger<gpui::logger::ConsoleLogger>(options.consoleLogLevel);
+        logManager->addLogger<qbase::logger::ConsoleLogger>(options.consoleLogLevel);
     }
     if (options.consoleLogLevel != LOG_LEVEL_DISABLED)
     {
-        logManager->addLogger<gpui::logger::SyslogLogger>(options.syslogLogLevel);
+        logManager->addLogger<qbase::logger::SyslogLogger>(options.syslogLogLevel, "gpui");
     }
     if (options.consoleLogLevel != LOG_LEVEL_DISABLED)
     {
-        logManager->addLogger<gpui::logger::FileLogger>(options.fileLogLevel);
+        logManager->addLogger<qbase::logger::FileLogger>(options.fileLogLevel, "gpui", "gpui.log");
     }
 
     gpui::MainWindow window(options, snapInManager.get(), &translatorStorage);

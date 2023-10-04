@@ -72,6 +72,8 @@ RUN apt-get update \
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY script/build.sh /build.sh
 
+RUN chmod a=rwx,u+t /tmp
+
 ARG ARCH
 
 RUN if [ "$ARCH" = "i386" ]; then \

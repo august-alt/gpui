@@ -29,6 +29,7 @@ RUN apt-get update \
     qt5-base-devel \
     qt5-declarative-devel \
     qt5-tools-devel \
+    libqbase \
     libsmbclient-devel \
     libsmbclient \
     qt5-base-common \

@@ -16,6 +16,7 @@ BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
+BuildRequires: libqbase
 BuildRequires: libsmbclient-devel libsmbclient
 
 BuildRequires: samba-devel

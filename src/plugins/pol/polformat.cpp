@@ -203,7 +203,7 @@ public:
         break;
 
         default: {
-            std::cout << "Unrecognized data type detected!" << std::endl;
+            qWarning() << "Unrecognized data type detected! " << entry.type;
             delete[] entry.data;
         }
         break;
@@ -317,7 +317,11 @@ bool PolFormat::read(std::istream &input, io::RegistryFile *file)
 
         while (auto entryPointer = parser->getNextEntry())
         {
-            registry->registryEntries.push_back(RegistryEntryAdapter::create(*entryPointer));
+            auto registryEntry = RegistryEntryAdapter::create(*entryPointer);
+            if (registryEntry.get())
+            {
+                registry->registryEntries.push_back(std::move(registryEntry));
+            }
         }
     }
     catch (preg::InvalidMagic &e)

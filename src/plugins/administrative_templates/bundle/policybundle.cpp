@@ -449,65 +449,38 @@ void model::bundle::PolicyBundle::assignParentCategory(const std::string &rawCat
 
     std::string parentCategoryWithFilename = parentCategory + "." + fileName;
 
+    const auto assignToCategory = [&machineItem, &userItem](QStandardItem *parentMachineItem,
+                                                            QStandardItem *parentUserItem) {
+        const auto assignItemToCategory = [](QStandardItem *item, QStandardItem *parentItem) {
+            if (!item->data(PolicyRoles::POLICY_HAS_PARENT).value<bool>())
+            {
+                item->setData(true, PolicyRoles::POLICY_HAS_PARENT);
+                parentItem->appendRow(item);
+            }
+        };
+        if (machineItem)
+        {
+            assignItemToCategory(machineItem, parentMachineItem);
+        }
+        if (userItem)
+        {
+            assignItemToCategory(userItem, parentUserItem);
+        }
+    };
+
     auto search = d->categoryItemMap.find(parentCategoryWithFilename);
     if (search != d->categoryItemMap.end())
     {
-        if (machineItem)
-        {
-            if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
-            {
-                search->second.machineItem->appendRow(machineItem);
-                machineItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
-            }
-        }
-        if (userItem)
-        {
-            if (!userItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
-            {
-                search->second.userItem->appendRow(userItem);
-                userItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
-            }
-        }
+        assignToCategory(search->second.machineItem, search->second.userItem);
     }
     else if ((search = d->categoryItemMap.find(parentCategory)) != d->categoryItemMap.end())
     {
-        if (machineItem)
-        {
-            if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
-            {
-                search->second.machineItem->appendRow(machineItem);
-                machineItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
-            }
-        }
-        if (userItem)
-        {
-            if (!userItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
-            {
-                search->second.userItem->appendRow(userItem);
-                userItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
-            }
-        }
+        assignToCategory(search->second.machineItem, search->second.userItem);
     }
     else if (rawCategory.size() > 0)
     {
         qWarning() << "Unable to find parent category: " << rawCategory.c_str() << fileName.c_str();
-        if (machineItem)
-        {
-            if (!machineItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
-            {
-                d->rootMachineItem->appendRow(machineItem);
-                machineItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
-            }
-        }
-
-        if (userItem)
-        {
-            if (!userItem->data(PolicyRoles::POLICY_WIDGET + 1).value<bool>())
-            {
-                d->rootUserItem->appendRow(userItem);
-                userItem->setData(true, PolicyRoles::POLICY_WIDGET + 1);
-            }
-        }
+        assignToCategory(d->rootMachineItem, d->rootUserItem);
     }
 }
 
@@ -553,6 +526,7 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
         }
         else
         {
+            qWarning() << "Found Both element: " << item.item->text() << item.category.c_str();
             item.item->setData(static_cast<uint32_t>(model::admx::PolicyType::Machine), PolicyRoles::POLICY_TYPE);
             QStandardItem *copyItem = createItem(item.item->text(),
                                                  "text-x-generic",
@@ -560,6 +534,7 @@ void model::bundle::PolicyBundle::rearrangeTreeItems()
                                                  ItemType::ITEM_TYPE_POLICY,
                                                  model::admx::PolicyType::User,
                                                  true);
+            copyItem->setData(item.item->data(PolicyRoles::POLICY_HAS_PARENT), PolicyRoles::POLICY_HAS_PARENT);
             copyItem->setData(item.item->data(PolicyRoles::SUPPORTED_ON), PolicyRoles::SUPPORTED_ON);
             copyItem->setData(item.item->data(PolicyRoles::PRESENTATION), PolicyRoles::PRESENTATION);
             copyItem->setData(item.item->data(PolicyRoles::POLICY), PolicyRoles::POLICY);

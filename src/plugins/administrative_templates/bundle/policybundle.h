@@ -77,12 +77,12 @@ private:
                               QStandardItem *userItem,
                               const std::string &fileName);
 
-    QStandardItem *createItem(const QString &displayName,
-                              const QString &iconName,
-                              const QString &explainText,
-                              const uint itemType,
-                              const model::admx::PolicyType policyType,
-                              const bool alreadyInserted);
+    std::unique_ptr<QStandardItem> createItem(const QString &displayName,
+                                              const QString &iconName,
+                                              const QString &explainText,
+                                              const uint itemType,
+                                              const model::admx::PolicyType policyType,
+                                              const bool alreadyInserted);
 
     void assignSupportedOn();
 

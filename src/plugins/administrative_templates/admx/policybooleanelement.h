@@ -22,19 +22,42 @@
 #define GPUI_POLICYboolELEMENT_H
 
 #include "policyelement.h"
+#include "policyenumelement.h"
 
+#include <any>
 #include <string>
 
 namespace model
 {
 namespace admx
 {
+// TODO: Add key to vector of true list.
 /*!
  * \brief A choice element in a policy with associated values for the true and false cases.
  */
 class PolicyBoolElement : public PolicyElement
 {
 public:
+    /*!
+     * \brief trueValue Value associated with true.
+     */
+    std::unique_ptr<EnumValue> trueValue {};
+
+    /*!
+     * \brief falseValue Value associated with false.
+     */
+    std::unique_ptr<EnumValue> falseValue {};
+
+    /*!
+     * \brief trueList List of values assicated with true.
+     */
+    std::vector<std::pair<std::string, std::unique_ptr<EnumValue>>> trueList {};
+
+    /*!
+     * \brief trueList List of values assicated with false.
+     */
+    std::vector<std::pair<std::string, std::unique_ptr<EnumValue>>> falseList {};
+
     registry::RegistryEntryType getRegistryEntryType() const override { return registry::REG_DWORD; }
 };
 } // namespace admx

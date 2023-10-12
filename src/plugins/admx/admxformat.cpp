@@ -239,6 +239,36 @@ public:
     }
 };
 
+void handle_boolean_element(std::unique_ptr<model::admx::EnumValue>& in,
+                            const ::GroupPolicy::PolicyDefinitions::Value& out)
+{
+    if (out.decimal().present())
+    {
+        in = std::make_unique<model::admx::DecimalValue>(out.decimal()->value());
+    }
+
+    if (out.longDecimal().present())
+    {
+        in = std::make_unique<model::admx::LongDecimalValue>(out.longDecimal()->value());
+    }
+
+    if (out.string().present())
+    {
+        in = std::make_unique<model::admx::StringValue>(out.string().get());
+    }
+}
+
+void handle_boolean_element(std::unique_ptr<model::admx::EnumValue>& in,
+                           const ::xsd::cxx::tree::optional<::GroupPolicy::PolicyDefinitions::Value>& out)
+{
+    if (!out.present())
+    {
+        return;
+    }
+
+    handle_boolean_element(in, *out);
+}
+
 class XsdBooleanElementAdapter : public model::admx::PolicyBoolElement
 {
 private:
@@ -250,6 +280,34 @@ public:
         adapter_base(this, element);
 
         assign_if_exists(this->valueName, element.valueName());
+
+        handle_boolean_element(this->trueValue, element.trueValue());
+
+        handle_boolean_element(this->falseValue, element.falseValue());
+
+        if (element.trueList().present())
+        {
+            for (auto &listElement : element.trueList()->item())
+            {
+                std::unique_ptr<model::admx::EnumValue> in;
+
+                handle_boolean_element(in, listElement.value());
+
+                this->trueList.emplace_back(listElement.valueName(), std::move(in));
+            }
+        }
+
+        if (element.falseList().present())
+        {
+            for (auto &listElement : element.falseList()->item())
+            {
+                std::unique_ptr<model::admx::EnumValue> in;
+
+                handle_boolean_element(in, listElement.value());
+
+                this->falseList.emplace_back(listElement.valueName(), std::move(in));
+            }
+        }
     }
 
     static std::unique_ptr<model::admx::PolicyBoolElement> create(const BooleanElement &element)

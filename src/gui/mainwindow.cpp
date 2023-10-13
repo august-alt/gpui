@@ -92,6 +92,9 @@ public:
 
     std::vector<QAction*> languageActions{};
 
+    int machineVersion = 0;
+    int userVersion = 0;
+
     MainWindowPrivate()
         : eventFilter(new TreeViewEventFilter())
         , ldapImpl(new ldap::LDAPImpl())
@@ -289,6 +292,11 @@ MainWindow::MainWindow(CommandLineOptions &options,
     if (guid != "")
     {
         d->options.policyName = " - " + d->ldapImpl.get()->getDisplayNameGPO(guid);
+
+       int version = d->ldapImpl->getGPOVersion(guid);
+
+       d->machineVersion = version & 0x0000FFFF;
+       d->userVersion = (version & 0xFFFF0000) >> 16;
     }
 
     loadPolicyModel(manager);
@@ -438,6 +446,33 @@ void MainWindow::onDirectoryOpen()
 
 void MainWindow::updateStatusBar()
 {
+    QString guid = isAnyGUID(d->options.path);
+
+    const QString preferecnes {
+                                 "[{5794DAFD-BE60-433f-88A2-1A31939AC01F}{2EA1A81B-48E5-45E9-8BB7-A6E3AC170006}]" // Preference CSE GUID Drives
+                                 "[{0E28E245-9368-4853-AD84-6DA3BA35BB75}{35141B6B-498A-4CC7-AD59-CEF93D89B2CE}]" // Preference CSE GUID Environment Variables
+                                 "[{7150F9BF-48AD-4da4-A49C-29EF4A8369BA}{3BAE7E51-E3F4-41D0-853D-9BB9FD47605F}]" // Preference CSE GUID Files
+                                 "[{6232C319-91AC-4931-9385-E70C2B099F0E}{3EC4E9D3-714D-471F-88DC-4DD4471AAB47}]" // Preference CSE GUID Folders
+                                 "[{74EE6C03-5363-4554-B161-627540339CAB}{516FC620-5D34-4B08-8165-6A06B623EDEB}]" // Preference CSE GUID Ini Files
+                                 "[{6A4C88C6-C502-4f74-8F60-2CB23EDC24E2}{BFCBBEB0-9DF4-4c0c-A728-434EA66A0373}]" // Preference CSE GUID Network Shares
+                                 "[{B087BE9D-ED37-454f-AF9C-04291E351182}{BEE07A6A-EC9F-4659-B8C9-0B1937907C83}]" // Preference CSE GUID Registry
+                                 "[{6A4C88C6-C502-4f74-8F60-2CB23EDC24E2}{BFCBBEB0-9DF4-4c0c-A728-434EA66A0373}]" // Preference CSE GUID Network Shares";
+                              };
+
+    const QString machineAdministrativeTemplates = "[{35378EAC-683F-11D2-A89A-00C04FBBCFA2}{D02B1F72-3407-48AE-BA88-E8213C6761F1}]";
+    const QString machineScripts = "[{42B5FAAE-6536-11d2-AE5A-0000F87571E3}{40B6664F-4972-11D1-A7CA-0000F87571E3}]";
+
+    const QString userAdministrativeTemplates = "[{35378EAC-683F-11D2-A89A-00C04FBBCFA2}{D02B1F73-3407-48AE-BA88-E8213C6761F1}]";
+    const QString userScripts = "[{42B5FAAE-6536-11d2-AE5A-0000F87571E3}{40B66650-4972-11D1-A7CA-0000F87571E3}]";
+
+    QString machineExtensions = machineAdministrativeTemplates + preferecnes + machineScripts;
+    QString userExtensions = userAdministrativeTemplates + preferecnes + userScripts;
+
+    if (guid != "")
+    {
+        d->ldapImpl->setExtensions(guid, machineExtensions, userExtensions, d->machineVersion + 1, d->userVersion + 1);
+    }
+
     ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);
 }
 

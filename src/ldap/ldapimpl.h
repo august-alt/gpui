@@ -32,11 +32,19 @@ public:
      */
     virtual QString getDisplayNameGPO(const QString &guid);
 
+    virtual int getGPOVersion(const QString &guid);
+
     virtual const QHash<QString, AdObject> search(const QString &base,
                                                   const SearchScope scope,
                                                   const QString &filter,
                                                   const QList<QString> &attributes,
                                                   const bool get_sacl = false);
+
+    virtual bool setExtensions(const QString &guid,
+                               const QString &machineExtensions,
+                               const QString &userExtensions,
+                               const int machineVersion,
+                               const int userVersion);
 
     virtual AdConfig *getAdConfig();
 

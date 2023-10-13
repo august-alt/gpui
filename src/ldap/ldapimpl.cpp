@@ -3,6 +3,9 @@
 
 #include <QLocale>
 
+#define ATTRIBUTE_GPC_MACHINE_EXTENSION_NAMES "gPCMachineExtensionNames"
+#define ATTRIBUTE_GPC_USER_EXTENSION_NAMES    "gPCUserExtensionNames"
+
 namespace ldap {
 
 class LDAPImplPrivate {
@@ -60,8 +63,35 @@ QString LDAPImpl::getDisplayNameGPO(const QString &guid)
     return NULL;
 }
 
+int LDAPImpl::getGPOVersion(const QString &guid)
+{
+    const QString base = d->adConfig.get()->policies_dn();
+    const SearchScope scope = SearchScope_All;
+
+    QString filter = getFilterCondition(ldap::LDAPContract::Condition::Condition_Equals, ATTRIBUTE_OBJECT_CLASS, CLASS_GP_CONTAINER);
+    QString filter2 = getFilterCondition(ldap::LDAPContract::Condition::Condition_Equals, ATTRIBUTE_GPC_FILE_SYS_PATH, "*" + guid + "*");
+
+    QList<QString> filtersList;
+    filtersList << filter << filter2;
+    QString commonFilter = getFilter_AND(filtersList);
+
+    const QList<QString> attributes = QList<QString>();
+    const QHash<QString, AdObject> results = search(base, scope, commonFilter, attributes);
+
+    if(results.size() > 0)
+    {
+        QList<QString> keys = results.keys();
+
+        return results[keys[0]].get_strings(ATTRIBUTE_VERSION_NUMBER)[0].toInt();
+
+    }
+
+    return 0;
+}
+
 const QHash<QString, AdObject> LDAPImpl::search(const QString &base, const SearchScope scope, const QString &filter, const QList<QString> &attributes, const bool get_sacl)
 {
+    Q_UNUSED(get_sacl);
     QHash<QString, AdObject> result;
 
     if(!d->adInterface->is_connected()) {
@@ -69,6 +99,21 @@ const QHash<QString, AdObject> LDAPImpl::search(const QString &base, const Searc
     }
 
     return d->adInterface.get()->search(base, scope, filter, attributes);
+}
+
+bool LDAPImpl::setExtensions(const QString &guid, const QString& machineExtensions, const QString& userExtensions, const int machineVersion, const int userVersion)
+{
+    const QString gpc_dn = QString("CN=%1,CN=Policies,CN=System,%2").arg(guid, d->adConfig.get()->policies_dn());
+
+    const int version = (userVersion << 16) + machineVersion;
+
+    d->adInterface->attribute_replace_string(gpc_dn, ATTRIBUTE_GPC_MACHINE_EXTENSION_NAMES, machineExtensions);
+
+    d->adInterface->attribute_replace_string(gpc_dn, ATTRIBUTE_GPC_USER_EXTENSION_NAMES, userExtensions);
+
+    d->adInterface->attribute_replace_int(gpc_dn, ATTRIBUTE_VERSION_NUMBER, version);
+
+    return true;
 }
 
 AdConfig* LDAPImpl::getAdConfig()

@@ -103,7 +103,7 @@ const QHash<QString, AdObject> LDAPImpl::search(const QString &base, const Searc
 
 bool LDAPImpl::setExtensions(const QString &guid, const QString& machineExtensions, const QString& userExtensions, const int machineVersion, const int userVersion)
 {
-    const QString gpc_dn = QString("CN={%1},CN=Policies,CN=System,%2").arg(guid, d->adConfig.get()->policies_dn());
+    const QString gpc_dn = QString("CN={%1},%2").arg(guid, d->adConfig->policies_dn());
 
     const int version = (userVersion << 16) + machineVersion;
 

@@ -28,6 +28,10 @@
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
+    <message>
+        <source>Script Name:</source>
+        <translation>Script Name:</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

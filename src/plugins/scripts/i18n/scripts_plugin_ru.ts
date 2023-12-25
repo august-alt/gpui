@@ -27,6 +27,10 @@
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
+    <message>
+        <source>Script Name:</source>
+        <translation>Имя скрипта:</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

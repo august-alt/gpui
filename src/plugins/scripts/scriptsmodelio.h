@@ -31,6 +31,9 @@ private:
     std::string correctPath(const std::string &path);
 
     void createDirectory(const std::string &directoryName);
+
+    void createDirectories(std::string newPath);
+
 };
 } // namespace scripts_plugin
 

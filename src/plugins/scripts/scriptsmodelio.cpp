@@ -39,6 +39,8 @@ void ScriptsModelIo::loadPolicies(const std::string &path,
     {
         std::string newPath = correctPath(path);
 
+        createDirectories(newPath);
+
         auto machinePathScripts      = newPath + "Machine/Scripts/scripts.ini";
         auto machinePathPowerScripts = newPath + "Machine/Scripts/psscripts.ini";
         auto userPathScripts         = newPath + "User/Scripts/scripts.ini";
@@ -51,6 +53,20 @@ void ScriptsModelIo::loadPolicies(const std::string &path,
     }
 }
 
+void ScriptsModelIo::createDirectories(std::string newPath)
+{
+    createDirectory(newPath + "Machine/");
+    createDirectory(newPath + "User/");
+
+    createDirectory(newPath + "Machine/Scripts/");
+    createDirectory(newPath + "User/Scripts/");
+
+    createDirectory(newPath + "Machine/Scripts/Startup");
+    createDirectory(newPath + "Machine/Scripts/Shutdown");
+    createDirectory(newPath + "User/Scripts/Logon");
+    createDirectory(newPath + "User/Scripts/Logoff");
+}
+
 void ScriptsModelIo::savePolicies(const std::string &path,
                                   ScriptsModel *userScripts,
                                   ScriptsModel *userPowerScripts,
@@ -61,13 +77,7 @@ void ScriptsModelIo::savePolicies(const std::string &path,
     {
         std::string newPath = correctPath(path);
 
-        createDirectory(newPath + "Machine/Scripts/");
-        createDirectory(newPath + "User/Scripts/");
-
-        createDirectory(newPath + "Machine/Scripts/Startup");
-        createDirectory(newPath + "Machine/Scripts/Shutdown");
-        createDirectory(newPath + "User/Scripts/Logon");
-        createDirectory(newPath + "User/Scripts/Logoff");
+        createDirectories(newPath);
 
         auto machinePathScripts      = newPath + "Machine/Scripts/scripts.ini";
         auto machinePathPowerScripts = newPath + "Machine/Scripts/psscripts.ini";
@@ -123,6 +133,12 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
     }
     catch (std::exception &e)
     {
+        ScriptModelBuilder builder;
+
+        auto iniFile = std::make_unique<io::IniFile>();
+
+        builder.iniToModel(model, iniFile.get(), path);
+
         qWarning() << "Warning: Unable to read file: " << path.c_str() << " description: " << e.what();
     }
 }

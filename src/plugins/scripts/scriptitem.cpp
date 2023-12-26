@@ -25,7 +25,7 @@ namespace scripts_plugin
 ScriptItem::ScriptItem()
     : ModelView::CompoundItem("ScriptItem")
 {
-    addProperty(propertyToString(PATH), "")->setDisplayName(QObject::tr("Path").toStdString());
+    addProperty(propertyToString(PATH), "")->setDisplayName(QObject::tr("Name").toStdString());
     addProperty(propertyToString(ARGUMENTS), "")->setDisplayName(QObject::tr("Arguments").toStdString());
 }
 
@@ -43,7 +43,7 @@ constexpr int ScriptItem::propertyToInt(PropertyType &type)
 
 void ScriptItem::retranslateStrings()
 {
-    children()[0]->setDisplayName(QObject::tr("Path").toStdString());
+    children()[0]->setDisplayName(QObject::tr("Name").toStdString());
     children()[1]->setDisplayName(QObject::tr("Arguments").toStdString());
 }
 

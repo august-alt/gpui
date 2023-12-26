@@ -130,6 +130,10 @@
         <source>Arguments</source>
         <translation>Аргументы</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>

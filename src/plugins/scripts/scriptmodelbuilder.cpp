@@ -45,7 +45,7 @@ void scripts_plugin::ScriptModelBuilder::makeSectionIfNotFound(const std::string
     }
 }
 
-void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, std::string &file_path)
+void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, std::string &file_path, bool machineScript)
 {
     auto sections = iniFile->getAllSections();
 
@@ -88,8 +88,7 @@ void ScriptModelBuilder::iniToModel(ScriptsModel *model, io::IniFile *iniFile, s
         }
     }
 
-    QString filePath = QString::fromStdString(file_path);
-    if (filePath.toLower().contains("user"))
+    if (!machineScript)
     {
         makeSectionIfNotFound("Logon", file_path, sections, model);
         makeSectionIfNotFound("Logoff", file_path, sections, model);

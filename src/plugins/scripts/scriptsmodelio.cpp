@@ -46,10 +46,10 @@ void ScriptsModelIo::loadPolicies(const std::string &path,
         auto userPathScripts         = newPath + "User/Scripts/scripts.ini";
         auto userPathPowerScripts    = newPath + "User/Scripts/psscripts.ini";
 
-        loadIniFile(machinePathScripts, machineScripts);
-        loadIniFile(machinePathPowerScripts, machinePowerScripts);
-        loadIniFile(userPathScripts, userScripts);
-        loadIniFile(userPathPowerScripts, userPowerScripts);
+        loadIniFile(machinePathScripts, machineScripts, true);
+        loadIniFile(machinePathPowerScripts, machinePowerScripts, true);
+        loadIniFile(userPathScripts, userScripts, false);
+        loadIniFile(userPathPowerScripts, userPowerScripts, false);
     }
 }
 
@@ -91,7 +91,7 @@ void ScriptsModelIo::savePolicies(const std::string &path,
     }
 }
 
-void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
+void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model, bool machineScript)
 {
     QString filePath = QString::fromStdString(path);
 
@@ -129,7 +129,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
 
         ScriptModelBuilder builder;
 
-        builder.iniToModel(model, iniFile.get(), path);
+        builder.iniToModel(model, iniFile.get(), path, machineScript);
     }
     catch (std::exception &e)
     {
@@ -137,7 +137,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model)
 
         auto iniFile = std::make_unique<io::IniFile>();
 
-        builder.iniToModel(model, iniFile.get(), path);
+        builder.iniToModel(model, iniFile.get(), path, machineScript);
 
         qWarning() << "Warning: Unable to read file: " << path.c_str() << " description: " << e.what();
     }

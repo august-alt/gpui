@@ -24,7 +24,7 @@ public:
                       ScriptsModel *machinePowerScripts);
 
 private:
-    void loadIniFile(std::string &path, ScriptsModel *model);
+    void loadIniFile(std::string &path, ScriptsModel *model, bool machineScript);
 
     void saveIniFile(std::string &path, ScriptsModel *model);
 

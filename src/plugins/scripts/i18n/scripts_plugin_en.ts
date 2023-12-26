@@ -132,6 +132,10 @@
         <source>Arguments</source>
         <translation>Arguments</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
 </context>
 <context>
     <name>ScriptsContentWidget</name>

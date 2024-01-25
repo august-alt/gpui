@@ -233,6 +233,16 @@ void PreferencesTreeModel::populateModel()
     machineShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
     machineShortcutsItems->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
 
+    auto machineControlPanelSettingsItem = insertItem<FolderItem>(machinePreferencesItem);
+    machineControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
+    machineControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Policies that set control panel settings.").toStdString());
+
+    auto machinePrintersItem = insertItem<PreferenceCategoryItem>(machineControlPanelSettingsItem);
+    machinePrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
+    machinePrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
+    machinePrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
+    machinePrintersItem->setProperty(PreferenceCategoryItem::MODEL_TYPE, true);
+
     auto machineDrivesItem = insertItem<PreferenceCategoryItem>(machineSystemSettingsItem);
     machineDrivesItem->setDisplayName(QObject::tr("Drive Maps").toStdString());
     machineDrivesItem->setProperty(FolderItem::PARENT_ID, machineSystemSettingsUuid);
@@ -294,10 +304,21 @@ void PreferencesTreeModel::populateModel()
     userShortcutsItems->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, shortcutsTypeIds);
     userShortcutsItems->setProperty(FolderItem::HELP_MSG, QObject::tr("Shortcuts settings.").toStdString());
 
+    auto userControlPanelSettingsItem = insertItem<FolderItem>(userPreferencesItem);
+    userControlPanelSettingsItem->setDisplayName(QObject::tr("Control Panel Settings").toStdString());
+    userControlPanelSettingsItem->setProperty(FolderItem::HELP_MSG,
+                                              QObject::tr("Policies that set control panel settings.").toStdString());
+
+    auto userPrintersItem = insertItem<PreferenceCategoryItem>(userControlPanelSettingsItem);
+    userPrintersItem->setDisplayName(QObject::tr("Printers").toStdString());
+    userPrintersItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, printerTypeIds);
+    userPrintersItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Printers settings.").toStdString());
+
     auto userSharesItem = insertItem<PreferenceCategoryItem>(userSystemSettingsItem);
     userSharesItem->setDisplayName(QObject::tr("Network Shares").toStdString());
     userSharesItem->setProperty<std::map<std::string, QString>>(PreferenceCategoryItem::TYPE, sharesTypeIds);
     userSharesItem->setProperty(FolderItem::HELP_MSG, QObject::tr("Network shares settings.").toStdString());
+
  }
 
 } // namespace preferences

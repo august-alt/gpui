@@ -29,6 +29,7 @@
 #include "shares/sharespreferencewriter.h"
 #include "shortcuts/shortcutspreferencewriter.h"
 #include "variables/variablespreferencewriter.h"
+#include "printers/printerpreferenceswriter.h"
 
 #include <QDebug>
 #include <QDir>
@@ -53,6 +54,7 @@ bool ModelWriter::saveModels(const std::string &policyPath,
     writers["Preferences/NetworkShares/"]        = std::make_unique<SharesPreferenceWriter>();
     writers["Preferences/Shortcuts/"]            = std::make_unique<ShortcutsPreferenceWriter>();
     writers["Preferences/EnvironmentVariables/"] = std::make_unique<VariablesPreferenceWriter>();
+    writers["Preferences/Printers/"] = std::make_unique<PrinterPreferenceWriter>();
 
     std::vector<std::string> fileNames = {
         "Drives.xml",
@@ -61,6 +63,7 @@ bool ModelWriter::saveModels(const std::string &policyPath,
         "Folders.xml",
         "IniFiles.xml",
         "NetworkShares.xml",
+        "Printers.xml",
         "Registry.xml",
         "Shortcuts.xml",
     };

@@ -281,7 +281,7 @@ void handlePresentation(const std::shared_ptr<model::presentation::Presentation>
 {
     for (auto &widget : presentation->widgetsVector)
     {
-        auto dropdownList = dynamic_cast<model::presentation::DropdownList *>(widget.get());
+        auto dropdownList = dynamic_cast<model::presentation::DropdownList *>(widget.first.get());
         if (dropdownList)
         {
             dropdownList->values.clear();

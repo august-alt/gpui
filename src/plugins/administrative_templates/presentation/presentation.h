@@ -43,7 +43,7 @@ class Presentation
 {
 public:
     std::map<std::string, std::shared_ptr<PresentationWidget>> widgets{};
-    std::vector<std::shared_ptr<PresentationWidget>> widgetsVector{};
+    std::vector<std::pair<std::shared_ptr<PresentationWidget>, std::string> > widgetsVector{};
 };
 } // namespace presentation
 } // namespace model

@@ -799,11 +799,11 @@ QVBoxLayout *::gpui::PresentationBuilder::build(const ::gpui::PresentationBuilde
         layout->addLayout(captions);
     }
 
-    for (const auto &widget : params.presentation.widgets)
+    for (const auto &widget : params.presentation.widgetsVector)
     {
         QWidget *policyWidget = nullptr;
-        d->setCurrentElementName(widget.first);
-        widget.second->accept(*d);
+        d->setCurrentElementName(widget.second);
+        widget.first->accept(*d);
 
         if (policyWidget)
         {

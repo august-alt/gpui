@@ -302,33 +302,33 @@ public:
                         {
                             auto checkBox = std::make_unique<::GroupPolicy::PolicyDefinitions::CheckBox>(*elementNode);
                             widgets[checkBox->refId()] = XsdCheckBoxAdapter::create(*checkBox);
-                            widgetsVector.emplace_back(widgets[checkBox->refId()]);
+                            widgetsVector.emplace_back(widgets[checkBox->refId()], checkBox->refId());
                         }
                         else if (elementType.compare("comboBox") == 0)
                         {
                             auto comboBox = std::make_unique<::GroupPolicy::PolicyDefinitions::ComboBox>(*elementNode);
                             widgets[comboBox->refId()] = XsdComboBoxAdapter::create(*comboBox);
-                            widgetsVector.emplace_back(widgets[comboBox->refId()]);
+                            widgetsVector.emplace_back(widgets[comboBox->refId()], comboBox->refId());
                         }
                         else if (elementType.compare("decimalTextBox") == 0)
                         {
                             auto decimalTextBox = std::make_unique<::GroupPolicy::PolicyDefinitions::DecimalTextBox>(
                                 *elementNode);
                             widgets[decimalTextBox->refId()] = XsdDecimalTextBoxAdapter::create(*decimalTextBox);
-                            widgetsVector.emplace_back(widgets[decimalTextBox->refId()]);
+                            widgetsVector.emplace_back(widgets[decimalTextBox->refId()], decimalTextBox->refId());
                         }
                         else if (elementType.compare("dropdownList") == 0)
                         {
                             auto dropdownList = std::make_unique<::GroupPolicy::PolicyDefinitions::DropdownList>(
                                 *elementNode);
                             widgets[dropdownList->refId()] = XsdDropdownListAdapter::create(*dropdownList);
-                            widgetsVector.emplace_back(widgets[dropdownList->refId()]);
+                            widgetsVector.emplace_back(widgets[dropdownList->refId()], dropdownList->refId());
                         }
                         else if (elementType.compare("listBox") == 0)
                         {
                             auto listBox = std::make_unique<::GroupPolicy::PolicyDefinitions::ListBox>(*elementNode);
                             widgets[listBox->refId()] = XsdListBoxAdapter::create(*listBox);
-                            widgetsVector.emplace_back(widgets[listBox->refId()]);
+                            widgetsVector.emplace_back(widgets[listBox->refId()], listBox->refId());
                         }
                         else if (elementType.compare("longDecimalTextBox") == 0)
                         {
@@ -336,26 +336,26 @@ public:
                                 = std::make_unique<::GroupPolicy::PolicyDefinitions::LongDecimalTextBox>(*elementNode);
                             widgets[longDecimalTextBox->refId()] = XsdLongDecimalTextBoxAdapter::create(
                                 *longDecimalTextBox);
-                            widgetsVector.emplace_back(widgets[longDecimalTextBox->refId()]);
+                            widgetsVector.emplace_back(widgets[longDecimalTextBox->refId()], longDecimalTextBox->refId());
                         }
                         else if (elementType.compare("multiTextBox") == 0)
                         {
                             auto multiTextBox = std::make_unique<::GroupPolicy::PolicyDefinitions::MultiTextBox>(
                                 *elementNode);
                             widgets[multiTextBox->refId()] = XsdMultiTextBoxAdapter::create(*multiTextBox);
-                            widgetsVector.emplace_back(widgets[multiTextBox->refId()]);
+                            widgetsVector.emplace_back(widgets[multiTextBox->refId()], multiTextBox->refId());
                         }
                         else if (elementType.compare("textBox") == 0)
                         {
                             auto textBox = std::make_unique<::GroupPolicy::PolicyDefinitions::TextBox>(*elementNode);
                             widgets[textBox->refId()] = XsdTextBoxAdapter::create(*textBox);
-                            widgetsVector.emplace_back(widgets[textBox->refId()]);
+                            widgetsVector.emplace_back(widgets[textBox->refId()], textBox->refId());
                         }
                         else if (elementType.compare("text") == 0)
                         {
                             auto text      = std::make_unique<::GroupPolicy::PolicyDefinitions::String>(*elementNode);
                             widgets[*text] = XsdTextAdapter::create(*text);
-                            widgetsVector.emplace_back(widgets[*text]);
+                            widgetsVector.emplace_back(widgets[*text], *text);
                         }
                     }
                 }

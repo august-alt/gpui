@@ -101,6 +101,13 @@ void TableDetailsWidget::on_treeView_customContextMenuRequested(const QPoint &po
         auto item   = view_item->item()->parent();
         auto tagrow = item->tagRow();
 
+        // editing item under the mouse
+        auto editItemAction = menu.addAction(tr("Edit item"));
+        auto edit_item = [=]() {
+            createPreferencesDialogForItem(item, this);
+        };
+        connect(editItemAction, &QAction::triggered, edit_item);
+
         // removing item under the mouse
         auto removeItemAction = menu.addAction(tr("Remove item"));
         auto remove_item      = [=]() {
@@ -160,9 +167,7 @@ void TableDetailsWidget::on_treeView_doubleClicked(const QModelIndex &index)
     if (index.isValid())
     {
         auto item              = view_model->sessionItemFromIndex(index);
-        auto preferencesDialog = new PreferencesDialog(item->parent(), this);
-        connect(preferencesDialog, &QDialog::accepted, [&]() { emit okPressed(); });
-        preferencesDialog->exec();
+        createPreferencesDialogForItem(item->parent(), this);
     }
 }
 
@@ -189,7 +194,14 @@ void TableDetailsWidget::setupConnections()
                 {
                     ui->propertiesWidget->setDescriptionVisibility(false);
                 }
-            });
+    });
+}
+
+void TableDetailsWidget::createPreferencesDialogForItem(ModelView::SessionItem *item, QWidget *parent)
+{
+    auto preferencesDialog = new PreferencesDialog(item, parent);
+    connect(preferencesDialog, &QDialog::accepted, [&]() { emit okPressed(); });
+    preferencesDialog->exec();
 }
 
 } // namespace preferences

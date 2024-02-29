@@ -461,14 +461,12 @@ context (user policy option)</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../../preferencessnapinprivate.cpp" line="52"/>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation type="vanished">Ошибка</translation>
     </message>
     <message>
-        <location filename="../../preferencessnapinprivate.cpp" line="53"/>
         <source>Error writing preferences file!</source>
-        <translation>Ошибка записи файла настроек!</translation>
+        <translation type="vanished">Ошибка записи файла настроек!</translation>
     </message>
     <message>
         <source>Error writing file:</source>
@@ -510,17 +508,22 @@ context (user policy option)</source>
 <context>
     <name>preferences::TableDetailsWidget</name>
     <message>
-        <location filename="../tabledetailswidget.cpp" line="89"/>
+        <location filename="../tabledetailswidget.cpp" line="97"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../tabledetailswidget.cpp" line="107"/>
+        <location filename="../tabledetailswidget.cpp" line="105"/>
+        <source>Edit item</source>
+        <translation>Изменить элемент</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="122"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../tabledetailswidget.cpp" line="97"/>
+        <location filename="../tabledetailswidget.cpp" line="112"/>
         <source>Remove item</source>
         <translation>Удалить элемент</translation>
     </message>

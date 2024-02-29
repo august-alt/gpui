@@ -460,14 +460,12 @@ context (user policy option)</translation>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../../preferencessnapinprivate.cpp" line="52"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
     <message>
-        <location filename="../../preferencessnapinprivate.cpp" line="53"/>
         <source>Error writing preferences file!</source>
-        <translation>Error writing preferences file!</translation>
+        <translation type="vanished">Error writing preferences file!</translation>
     </message>
     <message>
         <source>Error writing file:</source>
@@ -509,17 +507,22 @@ context (user policy option)</translation>
 <context>
     <name>preferences::TableDetailsWidget</name>
     <message>
-        <location filename="../tabledetailswidget.cpp" line="89"/>
+        <location filename="../tabledetailswidget.cpp" line="97"/>
         <source>New</source>
         <translation>New</translation>
     </message>
     <message>
-        <location filename="../tabledetailswidget.cpp" line="107"/>
+        <location filename="../tabledetailswidget.cpp" line="105"/>
+        <source>Edit item</source>
+        <translation>Edit item</translation>
+    </message>
+    <message>
+        <location filename="../tabledetailswidget.cpp" line="122"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../tabledetailswidget.cpp" line="97"/>
+        <location filename="../tabledetailswidget.cpp" line="112"/>
         <source>Remove item</source>
         <translation>Remove item</translation>
     </message>

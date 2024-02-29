@@ -37,6 +37,7 @@ namespace ModelView
 class ViewModel;
 class ViewModelDelegate;
 class SessionModel;
+class SessionItem;
 } // namespace ModelView
 
 namespace preferences
@@ -65,6 +66,7 @@ private slots:
 
 private:
     void setupConnections();
+    void createPreferencesDialogForItem(ModelView::SessionItem* item, QWidget* parent);
 
 private:
     TableDetailsWidget(const TableDetailsWidget &) = delete;            // copy ctor

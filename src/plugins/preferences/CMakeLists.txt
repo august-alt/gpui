@@ -30,7 +30,9 @@ set(HEADERS
     common/preferencestreeview.h
     common/propertieswidget.h
     common/propertieswidgetdelegate.h
+    common/selectvariablewidget.h
     common/tabledetailswidget.h
+    common/variablesmodel.h
     common/widgetfactory.h
 
     datasource/datasourcecontaineritem.h
@@ -212,7 +214,9 @@ set(SOURCES
     common/preferencestreeview.cpp
     common/propertieswidget.cpp
     common/propertieswidgetdelegate.cpp
+    common/selectvariablewidget.cpp
     common/tabledetailswidget.cpp
+    common/variablesmodel.cpp
     common/widgetfactory.cpp
 
     datasource/datasourceitem.cpp
@@ -378,6 +382,7 @@ set(UI_FORMS
     common/commonview.ui
     common/preferencesdialog.ui
     common/propertieswidget.ui
+    common/selectvariablewidget.ui
     common/tabledetailswidget.ui
 
     datasource/datasourcewidget.ui

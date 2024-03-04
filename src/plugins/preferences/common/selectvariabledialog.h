@@ -1,4 +1,4 @@
-/***********************************************************************************************************************
+﻿/***********************************************************************************************************************
 **
 ** Copyright (C) 2024 BaseALT Ltd. <org@basealt.ru>
 **
@@ -18,39 +18,48 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef GPUI_SELECT_VARIABLE_WIDGET_H
-#define GPUI_SELECT_VARIABLE_WIDGET_H
+#ifndef GPUI_SELECT_VARIABLE_DIALOG_H
+#define GPUI_SELECT_VARIABLE_DIALOG_H
 
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class SelectVariableWidget;
+class SelectVariableDialog;
 }
 QT_END_NAMESPACE
 
 namespace preferences
 {
-class SelectVariableWidget : public QWidget
+class VariablesModel;
+
+class SelectVariableDialog : public QDialog
 {
 public:
     Q_OBJECT
 
 public:
-    explicit SelectVariableWidget(QWidget *parent = nullptr);
-    ~SelectVariableWidget() override;
+    explicit SelectVariableDialog(QWidget *parent = nullptr);
+    ~SelectVariableDialog() override;
+
+    static void addShortcut(QLineEdit* lineEdit);
+
+signals:
+    void variableSelected(QString variable);
 
 private:
-    SelectVariableWidget(const SelectVariableWidget &) = delete;            // copy ctor
-    SelectVariableWidget(SelectVariableWidget &&)      = delete;            // move ctor
-    SelectVariableWidget &operator=(const SelectVariableWidget &) = delete; // copy assignment
-    SelectVariableWidget &operator=(SelectVariableWidget &&) = delete;      // move assignment
+    SelectVariableDialog(const SelectVariableDialog &) = delete;            // copy ctor
+    SelectVariableDialog(SelectVariableDialog &&)      = delete;            // move ctor
+    SelectVariableDialog &operator=(const SelectVariableDialog &) = delete; // copy assignment
+    SelectVariableDialog &operator=(SelectVariableDialog &&) = delete;      // move assignment
 
 private:
-    Ui::SelectVariableWidget *ui{nullptr};
+    Ui::SelectVariableDialog *ui{nullptr};
+
+    QScopedPointer<VariablesModel> model;
 };
 
 } // namespace preferences
 
-#endif //GPUI_SELECT_VARIABLE_WIDGET_H
+#endif //GPUI_SELECT_VARIABLE_DIALOG_H

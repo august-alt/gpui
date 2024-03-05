@@ -368,7 +368,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="pathLineEdit">
+         <widget class="preferences::ShortcutLineEdit" name="pathLineEdit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -435,7 +435,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="labelLineEdit">
+         <widget class="preferences::ShortcutLineEdit" name="labelLineEdit">
           <property name="font">
            <font>
             <family>Sans Serif</family>
@@ -453,6 +453,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>preferences::ShortcutLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>common/shortcutlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>

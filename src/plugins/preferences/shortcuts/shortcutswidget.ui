@@ -100,7 +100,7 @@
       <item row="0" column="1">
        <layout class="QHBoxLayout" name="targetPathLayout">
         <item>
-         <widget class="QLineEdit" name="targetPathLineEdit">
+         <widget class="preferences::ShortcutLineEdit" name="targetPathLineEdit">
           <property name="text">
            <string/>
           </property>
@@ -135,7 +135,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="argumentsLineEdit">
+       <widget class="preferences::ShortcutLineEdit" name="argumentsLineEdit">
         <property name="text">
          <string/>
         </property>
@@ -169,7 +169,7 @@
       <item row="0" column="1">
        <layout class="QHBoxLayout" name="iconFilePathLayout">
         <item>
-         <widget class="QLineEdit" name="iconFilePathLineEdit">
+         <widget class="preferences::ShortcutLineEdit" name="iconFilePathLineEdit">
           <property name="text">
            <string/>
           </property>
@@ -204,7 +204,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="iconIndexLineEdit">
+       <widget class="preferences::ShortcutLineEdit" name="iconIndexLineEdit">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -241,7 +241,7 @@
       <item row="0" column="1">
        <layout class="QHBoxLayout" name="startInLayout">
         <item>
-         <widget class="QLineEdit" name="startInLineEdit">
+         <widget class="preferences::ShortcutLineEdit" name="startInLineEdit">
           <property name="text">
            <string/>
           </property>
@@ -333,7 +333,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="commentLineEdit">
+       <widget class="preferences::ShortcutLineEdit" name="commentLineEdit">
         <property name="text">
          <string/>
         </property>
@@ -351,7 +351,7 @@
       <item row="0" column="1">
        <layout class="QHBoxLayout" name="nameLayout">
         <item>
-         <widget class="QLineEdit" name="nameLineEdit">
+         <widget class="preferences::ShortcutLineEdit" name="nameLineEdit">
           <property name="text">
            <string/>
           </property>
@@ -589,6 +589,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>preferences::ShortcutLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>common/shortcutlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

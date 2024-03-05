@@ -40,23 +40,26 @@ SelectVariableDialog::SelectVariableDialog(QWidget *parent)
 
     this->setWindowTitle(tr("Select a variable"));
 
-    connect(ui->okPushButton, &QPushButton::clicked, [=]()
-    {
-        auto selectedIndexes = ui->variablesTableView->selectionModel()->selectedIndexes();
-
-        if (selectedIndexes.size() > 0)
-        {
-            this->variableSelected(QString("%%1%").arg(model->itemFromIndex(selectedIndexes[0])->text()));
-        }
-        else
-        {
-            this->variableSelected("%AppDataDir%");
-        }
-    });
+    connect(ui->okPushButton, &QPushButton::clicked, this, &SelectVariableDialog::onItemSelected);
+    connect(ui->variablesTableView, &QTableView::doubleClicked, ui->okPushButton, &QPushButton::click);
 }
 
 SelectVariableDialog::~SelectVariableDialog()
 {
+}
+
+void SelectVariableDialog::onItemSelected()
+{
+    auto selectedIndexes = ui->variablesTableView->selectionModel()->selectedIndexes();
+
+    if (selectedIndexes.size() > 0)
+    {
+        this->variableSelected(QString("%%1%").arg(model->itemFromIndex(selectedIndexes[0])->text()));
+    }
+    else
+    {
+        this->variableSelected("%AppDataDir%");
+    }
 }
 
 }

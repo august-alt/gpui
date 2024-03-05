@@ -56,6 +56,9 @@ private:
     Ui::SelectVariableDialog *ui{nullptr};
 
     QScopedPointer<VariablesModel> model;
+
+private:
+    void onItemSelected();
 };
 
 } // namespace preferences

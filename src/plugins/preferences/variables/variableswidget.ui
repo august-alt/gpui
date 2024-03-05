@@ -73,7 +73,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="valueLineEdit"/>
+      <widget class="preferences::ShortcutLineEdit" name="valueLineEdit"/>
      </item>
     </layout>
    </item>
@@ -102,7 +102,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="nameLineEdit"/>
+      <widget class="preferences::ShortcutLineEdit" name="nameLineEdit"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -228,6 +228,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>preferences::ShortcutLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>common/shortcutlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

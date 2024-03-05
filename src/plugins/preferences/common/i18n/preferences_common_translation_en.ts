@@ -471,6 +471,246 @@ context (user policy option)</translation>
         <source>Error writing file:</source>
         <translation type="vanished">Error writing file:</translation>
     </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="31"/>
+        <source>Variable Name</source>
+        <translation>Variable Name</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="32"/>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="81"/>
+        <source>The current user&apos;s Application Data directory.</source>
+        <translation>The current user&apos;s Application Data directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="82"/>
+        <source>The SID of the computer in hexadecimal format.</source>
+        <translation>The SID of the computer in hexadecimal format.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="83"/>
+        <source>The SID of the current user in hexadecimal format. </source>
+        <translation>The SID of the current user in hexadecimal format. </translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="84"/>
+        <source>The &apos;all users&apos; Application Data directory.</source>
+        <translation>The &apos;all users&apos; Application Data directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="85"/>
+        <source>The &apos;all users&apos; Desktop directory.</source>
+        <translation>The &apos;all users&apos; Desktop directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="86"/>
+        <source>The &apos;all users&apos; Explorer Favorites directory.</source>
+        <translation>The &apos;all users&apos; Explorer Favorites directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="87"/>
+        <source>The &apos;all users&apos; Programs directory.</source>
+        <translation>The &apos;all users&apos; Programs directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="88"/>
+        <source>The &apos;all users&apos; Start Menu directory.</source>
+        <translation>The &apos;all users&apos; Start Menu directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="89"/>
+        <source>The &apos;all users&apos; Startup directory.</source>
+        <translation>The &apos;all users&apos; Startup directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="90"/>
+        <source>The NetBIOS name of the computer.</source>
+        <translation>The NetBIOS name of the computer.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="91"/>
+        <source>The numeric identity of the main client process.</source>
+        <translation>The numeric identity of the main client process.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="92"/>
+        <source>The numeric identity of the main client thread.</source>
+        <translation>The numeric identity of the main client thread.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="93"/>
+        <source>The current time (UTC).</source>
+        <translation>The current time (UTC).</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="94"/>
+        <source>The current time (UTC) with milliseconds.</source>
+        <translation>The current time (UTC) with milliseconds.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="95"/>
+        <source>The current user&apos;s desktop directory.</source>
+        <translation>The current user&apos;s desktop directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="96"/>
+        <source>The domain name or workgroup of the computer.</source>
+        <translation>The domain name or workgroup of the computer.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="97"/>
+        <source>The current user&apos;s Explorer Favorites directory.</source>
+        <translation>The current user&apos;s Explorer Favorites directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="98"/>
+        <source>The last error code encountered during configuration.</source>
+        <translation>The last error code encountered during configuration.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="99"/>
+        <source>The last error code text description.</source>
+        <translation>The last error code text description.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="100"/>
+        <source>The SID of the computer in LDAP escaped binary format.</source>
+        <translation>The SID of the computer in LDAP escaped binary format.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="101"/>
+        <source>The SID of the current user in LDAP escaped binary format.</source>
+        <translation>The SID of the current user in LDAP escaped binary format.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="102"/>
+        <source>The current local time.</source>
+        <translation>The current local time.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="103"/>
+        <source>The current local time with milliseconds.</source>
+        <translation>The current local time with milliseconds.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="104"/>
+        <source>The domain of the current user.</source>
+        <translation>The domain of the current user.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="105"/>
+        <source>The domain controller that authenticated the current user.</source>
+        <translation>The domain controller that authenticated the current user.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="106"/>
+        <source>The user name of the current user.</source>
+        <translation>The user name of the current user.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="107"/>
+        <source>The SID of the current user.</source>
+        <translation>The SID of the current user.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="108"/>
+        <source>The first detected MAC address on the computer.</source>
+        <translation>The first detected MAC address on the computer.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="109"/>
+        <source>The current user&apos;s My Network Places directory.</source>
+        <translation>The current user&apos;s My Network Places directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="110"/>
+        <source>The operating system: Windows Server® 2008 R2, Windows® 7, Windows Server® 2008, Windows Vista®, Windows Server 2003, Windows XP, or Unknown.</source>
+        <translation>The operating system: Windows Server® 2008 R2, Windows® 7, Windows Server® 2008, Windows Vista®, Windows Server 2003, Windows XP, or Unknown.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="111"/>
+        <source>The Windows Program Files directory.</source>
+        <translation>The Windows Program Files directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="112"/>
+        <source>The current user&apos;s Programs directory.</source>
+        <translation>The current user&apos;s Programs directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="113"/>
+        <source>The current user&apos;s Recent Documents directory.</source>
+        <translation>The current user&apos;s Recent Documents directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="114"/>
+        <source>The client&apos;s exit code.</source>
+        <translation>The client&apos;s exit code.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="115"/>
+        <source>The client&apos;s exit code text description.</source>
+        <translation>The client&apos;s exit code text description.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="116"/>
+        <source>The SID of the computer in reversed byte order hexadecimal format.</source>
+        <translation>The SID of the computer in reversed byte order hexadecimal format.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="117"/>
+        <source>The SID of the current user in reversed byte order hexadecimal format.</source>
+        <translation>The SID of the current user in reversed byte order hexadecimal format.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="118"/>
+        <source>The current user&apos;s Send to directory.</source>
+        <translation>The current user&apos;s Send to directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="119"/>
+        <source>The current user&apos;s Start Menu directory.</source>
+        <translation>The current user&apos;s Start Menu directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="120"/>
+        <source>The current user&apos;s Startup directory.</source>
+        <translation>The current user&apos;s Startup directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="121"/>
+        <source>The Windows system directory.</source>
+        <translation>The Windows system directory.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="122"/>
+        <source>The name of the drive from which the operating system is running.</source>
+        <translation>The name of the drive from which the operating system is running.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="123"/>
+        <source>The current user&apos;s Temp directory as determined by Windows API.</source>
+        <translation>The current user&apos;s Temp directory as determined by Windows API.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="124"/>
+        <source>The time stamp of the configurations being implemented.</source>
+        <translation>The time stamp of the configurations being implemented.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="125"/>
+        <source>The path/name of the trace file.</source>
+        <translation>The path/name of the trace file.</translation>
+    </message>
+    <message>
+        <location filename="../variablesmodel.cpp" line="126"/>
+        <source>The Windows directory.</source>
+        <translation>The Windows directory.</translation>
+    </message>
 </context>
 <context>
     <name>SelectDialog</name>
@@ -478,6 +718,34 @@ context (user policy option)</translation>
         <location filename="../selectdialog.ui" line="14"/>
         <source>Dialog</source>
         <translation>Dialog</translation>
+    </message>
+</context>
+<context>
+    <name>SelectVariableDialog</name>
+    <message>
+        <location filename="../selectvariabledialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Dialog</translation>
+    </message>
+    <message>
+        <location filename="../selectvariabledialog.ui" line="20"/>
+        <source>Resolve Variable</source>
+        <translation>Resolve Variable</translation>
+    </message>
+    <message>
+        <location filename="../selectvariabledialog.ui" line="30"/>
+        <source>&amp;Select</source>
+        <translation>&amp;Select</translation>
+    </message>
+    <message>
+        <location filename="../selectvariabledialog.ui" line="66"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancel</translation>
+    </message>
+    <message>
+        <location filename="../selectvariabledialog.ui" line="73"/>
+        <source>Select a System Defined Variable</source>
+        <translation>Select a System Defined Variable</translation>
     </message>
 </context>
 <context>
@@ -502,6 +770,14 @@ context (user policy option)</translation>
         <location filename="../preferencestreeview.cpp" line="41"/>
         <source>There are no policies currently</source>
         <translation>There are no policies currently</translation>
+    </message>
+</context>
+<context>
+    <name>preferences::SelectVariableDialog</name>
+    <message>
+        <location filename="../selectvariabledialog.cpp" line="41"/>
+        <source>Select a variable</source>
+        <translation>Select a variable</translation>
     </message>
 </context>
 <context>

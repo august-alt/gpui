@@ -59,20 +59,4 @@ SelectVariableDialog::~SelectVariableDialog()
 {
 }
 
-void SelectVariableDialog::addShortcut(QLineEdit *lineEdit)
-{
-    auto shortcut = new QShortcut(QKeySequence(QObject::tr("F3")), lineEdit);
-    QObject::connect(shortcut, &QShortcut::activated, [lineEdit]()
-    {
-        auto dialog = new SelectVariableDialog();
-
-        QObject::connect(dialog, &SelectVariableDialog::variableSelected, [lineEdit](QString variable)
-        {
-            lineEdit->setText(variable);
-        });
-
-        dialog->exec();
-    });
-}
-
 }

@@ -43,8 +43,6 @@ public:
     explicit SelectVariableDialog(QWidget *parent = nullptr);
     ~SelectVariableDialog() override;
 
-    static void addShortcut(QLineEdit* lineEdit);
-
 signals:
     void variableSelected(QString variable);
 

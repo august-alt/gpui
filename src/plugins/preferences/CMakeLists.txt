@@ -31,6 +31,7 @@ set(HEADERS
     common/propertieswidget.h
     common/propertieswidgetdelegate.h
     common/selectvariabledialog.h
+    common/shortcutlineedit.h
     common/tabledetailswidget.h
     common/variablesmodel.h
     common/widgetfactory.h
@@ -215,6 +216,7 @@ set(SOURCES
     common/propertieswidget.cpp
     common/propertieswidgetdelegate.cpp
     common/selectvariabledialog.cpp
+    common/shortcutlineedit.cpp
     common/tabledetailswidget.cpp
     common/variablesmodel.cpp
     common/widgetfactory.cpp

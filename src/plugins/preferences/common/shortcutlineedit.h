@@ -32,6 +32,8 @@ public:
     Q_OBJECT
 
 public:
+    explicit ShortcutLineEdit(QWidget* parent = nullptr);
+
     bool event(QEvent *event) override;
 };
 

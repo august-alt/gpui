@@ -28,6 +28,11 @@
 namespace preferences
 {
 
+ShortcutLineEdit::ShortcutLineEdit(QWidget *parent)
+    : QLineEdit(parent)
+{
+}
+
 bool ShortcutLineEdit::event(QEvent *event)
 {
     if (event->type() == QEvent::KeyPress)
@@ -39,7 +44,7 @@ bool ShortcutLineEdit::event(QEvent *event)
 
             QObject::connect(dialog, &SelectVariableDialog::variableSelected, [&](QString variable)
             {
-                this->setText(variable);
+                this->insert(variable);
             });
 
             dialog->exec();

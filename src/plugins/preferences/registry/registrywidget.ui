@@ -152,7 +152,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="keyPathLineEdit"/>
+      <widget class="preferences::ShortcutLineEdit" name="keyPathLineEdit"/>
      </item>
     </layout>
    </item>
@@ -189,7 +189,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="valueNameLineEdit"/>
+       <widget class="preferences::ShortcutLineEdit" name="valueNameLineEdit"/>
       </item>
      </layout>
     </widget>
@@ -282,7 +282,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="valueDataLineEdit"/>
+      <widget class="preferences::ShortcutLineEdit" name="valueDataLineEdit"/>
      </item>
     </layout>
    </item>
@@ -301,6 +301,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>preferences::ShortcutLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>common/shortcutlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

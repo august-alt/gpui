@@ -84,7 +84,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="pathLineEdit"/>
+      <widget class="preferences::ShortcutLineEdit" name="pathLineEdit"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="sectionLabel">
@@ -102,7 +102,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="sectionLineEdit">
+      <widget class="preferences::ShortcutLineEdit" name="sectionLineEdit">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -124,7 +124,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="propertyLineEdit">
+      <widget class="preferences::ShortcutLineEdit" name="propertyLineEdit">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -146,7 +146,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="valueLineEdit">
+      <widget class="preferences::ShortcutLineEdit" name="valueLineEdit">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -176,6 +176,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>preferences::ShortcutLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>common/shortcutlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -76,7 +76,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="sourceLineEdit">
+      <widget class="preferences::ShortcutLineEdit" name="sourceLineEdit">
        <property name="text">
         <string>Placeholder</string>
        </property>
@@ -102,7 +102,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="destinationLineEdit">
+      <widget class="preferences::ShortcutLineEdit" name="destinationLineEdit">
        <property name="text">
         <string>Placeholder</string>
        </property>
@@ -196,6 +196,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>preferences::ShortcutLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>common/shortcutlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

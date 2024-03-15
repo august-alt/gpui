@@ -2,6 +2,9 @@ find_package(GPUI COMPONENTS core io REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Core LinguistTools REQUIRED)
 find_package(MVVM REQUIRED)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(Smbclient REQUIRED IMPORTED_TARGET smbclient)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -77,6 +80,6 @@ add_gpui_plugin(${PLUGIN_NAME} ${SOURCES} ${LIB_RESOURCES})
 target_link_libraries(${PLUGIN_NAME} Qt5::Core Qt5::Widgets)
 target_link_libraries(${PLUGIN_NAME} ${GPUI_LIBRARIES})
 target_link_libraries(${PLUGIN_NAME} ${MVVM_LIBRARIES})
-
+target_link_libraries(${PLUGIN_NAME} PkgConfig::Smbclient)
 
 

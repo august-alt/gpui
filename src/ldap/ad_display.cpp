@@ -27,7 +27,6 @@
 #include "ad_config.h"
 #include "ad_defines.h"
 #include "ad_utils.h"
-#include "samba/dom_sid.h"
 
 #include <algorithm>
 #include <QByteArray>
@@ -103,7 +102,7 @@ QString attribute_display_value(const QString &attribute, const QByteArray &valu
     case AttributeType_GeneralizedTime:
         return datetime_display_value(attribute, value, adconfig);
     case AttributeType_Sid:
-        return object_sid_display_value(value);
+        return octet_display_value(value);
     case AttributeType_Octet: {
         if (attribute == ATTRIBUTE_OBJECT_GUID)
         {
@@ -150,21 +149,6 @@ QString attribute_display_values(const QString &attribute, const QList<QByteArra
 
         return out;
     }
-}
-
-QString object_sid_display_value(const QByteArray &sid_bytes)
-{
-    std::unique_ptr<dom_sid> sid = std::make_unique<dom_sid>();
-    memcpy(sid.get(), sid_bytes.data(), sizeof(dom_sid));
-
-    TALLOC_CTX *tmp_ctx = talloc_new(NULL);
-
-    const char *sid_cstr = dom_sid_string(tmp_ctx, sid.get());
-    const QString out    = QString(sid_cstr);
-
-    talloc_free(tmp_ctx);
-
-    return out;
 }
 
 QString large_integer_datetime_display_value(const QString &attribute, const QByteArray &value, const AdConfig *adconfig)
@@ -461,17 +445,7 @@ QString primarygrouptype_to_display_value(const QByteArray &bytes)
     // NOTE: builtin group rid's are not included
     // because they can't be primary
     const QHash<int, QString> mask_name_map = {
-        {DOMAIN_RID_ADMINS, "GROUP_RID_ADMINS"},
-        {DOMAIN_RID_USERS, "GROUP_RID_USERS"},
-        {DOMAIN_RID_GUESTS, "GROUP_RID_GUESTS"},
-        {DOMAIN_RID_DOMAIN_MEMBERS, "GROUP_RID_DOMAIN_MEMBERS"},
-        {DOMAIN_RID_DCS, "GROUP_RID_DCS"},
-        {DOMAIN_RID_CERT_ADMINS, "GROUP_RID_CERT_ADMINS"},
-        {DOMAIN_RID_SCHEMA_ADMINS, "GROUP_RID_SCHEMA_ADMINS"},
-        {DOMAIN_RID_ENTERPRISE_ADMINS, "GROUP_RID_ENTERPRISE_ADMINS"},
-        {DOMAIN_RID_POLICY_ADMINS, "GROUP_RID_POLICY_ADMINS"},
-        {DOMAIN_RID_READONLY_DCS, "GROUP_RID_READONLY_DCS"},
-        {DOMAIN_RID_RAS_SERVERS, "GROUP_RID_RAS_SERVERS"},
+
     };
 
     if (mask_name_map.contains(value_int))

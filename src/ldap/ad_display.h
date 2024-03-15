@@ -34,6 +34,5 @@ class QList;
 
 QString attribute_display_value(const QString &attribute, const QByteArray &value, const AdConfig *adconfig);
 QString attribute_display_values(const QString &attribute, const QList<QByteArray> &values, const AdConfig *adconfig);
-QString object_sid_display_value(const QByteArray &sid_bytes);
 
 #endif /* ATTRIBUTE_DISPLAY_H */

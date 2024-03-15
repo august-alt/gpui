@@ -26,10 +26,7 @@
 
 #include "ad_config.h"
 #include "ad_display.h"
-#include "ad_security.h"
 #include "ad_utils.h"
-
-#include "samba/ndr_security.h"
 
 #include <QByteArray>
 #include <QDateTime>
@@ -177,7 +174,7 @@ bool AdObject::get_system_flag(const SystemFlagsBit bit) const {
 bool AdObject::get_account_option(AccountOption option, AdConfig *adconfig) const {
     switch (option) {
         case AccountOption_CantChangePassword: {
-            const bool out = ad_security_get_user_cant_change_pass(this, adconfig);
+            const bool out = false;
 
             return out;
         }
@@ -274,7 +271,7 @@ security_descriptor *AdObject::get_security_descriptor(TALLOC_CTX *mem_ctx_arg) 
     }();
 
     const QByteArray sd_bytes = get_value(ATTRIBUTE_SECURITY_DESCRIPTOR);
-    security_descriptor *out = security_descriptor_make_from_bytes(mem_ctx, sd_bytes);
+    security_descriptor *out = NULL;
 
     return out;
 }

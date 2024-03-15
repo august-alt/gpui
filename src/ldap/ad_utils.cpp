@@ -25,7 +25,6 @@
 
 #include "ad_config.h"
 #include "ad_display.h"
-#include "samba/dom_sid.h"
 
 #include <krb5.h>
 #include <ldap.h>
@@ -420,15 +419,6 @@ QByteArray guid_string_to_bytes(const QString &guid_string) {
     }();
 
     return guid_bytes;
-}
-
-QByteArray sid_string_to_bytes(const QString &sid_string) {
-    dom_sid sid;
-    string_to_sid(&sid, cstr(sid_string));
-
-    const QByteArray sid_bytes = QByteArray((char *) &sid, sizeof(dom_sid));
-
-    return sid_bytes;
 }
 
 QString attribute_type_display_string(const AttributeType type) {

@@ -59,12 +59,6 @@ public:
     int get_ldap_result() const;
     bool search_paged_internal(const char *base, const int scope, const char *filter, char **attributes, QHash<QString, AdObject> *results, AdCookie *cookie, const bool get_sacl);
     bool connect_via_ldap(const char *uri);
-    bool delete_gpt(const QString &parent_path);
-    bool smb_path_is_dir(const QString &path, bool *ok);
-
-    // Returns GPT contents including the root path, in
-    // order of increasing depth, so root path is first
-    QList<QString> gpo_get_gpt_contents(const QString &gpt_root_path, bool *ok);
 
 private:
     static AdConfig *adconfig;
@@ -73,7 +67,6 @@ private:
     static void *s_sasl_nocanon;
     static int s_port;
     static CertStrategy s_cert_strat;
-    static SMBCCTX *smbc;
     AdInterface *q;
 };
 

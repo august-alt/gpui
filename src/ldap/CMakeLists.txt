@@ -33,13 +33,10 @@ set(HEADERS
     ad_defines.h
     ad_object.h
     ad_filter.h
-    ad_security.h
     ad_display.h
     gplink.h
     adldap.h
     ldap-common.h
-
-    samba/ndr_security.h
 )
 
 set(SOURCES
@@ -50,17 +47,8 @@ set(SOURCES
     ad_utils.cpp
     ad_object.cpp
     ad_filter.cpp
-    ad_security.cpp
     ad_display.cpp
     gplink.cpp
-
-    samba/gp_manage.c
-    samba/ndr_security.c
-    samba/dom_sid.c
-    samba/replace.c
-    samba/ndr_misc.c
-    samba/libsmb_xattr.c
-    samba/security_descriptor.c
 )
 
 add_definitions(
@@ -68,12 +56,11 @@ add_definitions(
 )
 
 add_gpui_library(gpui-ldap ${HEADERS} ${SOURCES})
-target_link_libraries(gpui-ldap Qt5::Core
+target_link_libraries(gpui-ldap
+    Qt5::Core
     PkgConfig::Uuid
-    PkgConfig::Smbclient
     PkgConfig::Krb5
-    Ldap::Ldap
-    PkgConfig::NdrStandard
     PkgConfig::Sasl
+    Ldap::Ldap
     resolv
 )

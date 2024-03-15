@@ -27,10 +27,7 @@
 #include "ad_filter.h"
 #include "ad_interface.h"
 #include "ad_object.h"
-#include "ad_security.h"
 #include "ad_utils.h"
-
-#include "samba/ndr_security.h"
 
 #include <algorithm>
 #include <QCoreApplication>
@@ -835,7 +832,7 @@ int AdConfig::get_rights_valid_accesses(const QString &rights_cn) const
     // membership right does allow writing.
     if (rights_cn == "Membership")
     {
-        return SEC_ADS_READ_PROP;
+        return 0;
     }
 
     const int out = d->rights_valid_accesses_map.value(rights_cn, 0);

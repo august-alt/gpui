@@ -16,6 +16,7 @@ macro(add_gpui_executable name)
 
 endmacro(add_gpui_executable)
 
+find_package(qbase COMPONENTS logger REQUIRED)
 find_package(GPUI COMPONENTS gui model REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
@@ -32,3 +33,4 @@ add_gpui_executable(main ${SOURCES})
 
 target_link_libraries(main ${GPUI_LIBRARIES})
 target_link_libraries(main Qt5::Widgets)
+target_link_libraries(main qbase::logger)

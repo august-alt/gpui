@@ -21,8 +21,7 @@ add_definitions(
 )
 
 add_gpui_library(gpui-core ${SOURCES})
-add_subdirectory(logger)
-target_link_libraries(gpui-core gpui-logger)
+target_link_libraries(gpui-core)
 
 target_link_libraries(gpui-core Qt5::Core Qt5::Gui Qt5::Widgets)
 

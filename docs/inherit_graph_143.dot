@@ -1,0 +1,26 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="preferences::PreferenceWriter\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_preference_writer_interface.html",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="preferences::BasePreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_base_preference_writer.html",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="preferences::DrivesPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_drives_preference_writer.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="preferences::FilesPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_files_preference_writer.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="preferences::FolderPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_folder_preference_writer.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="preferences::IniPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_ini_preference_writer.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="preferences::RegistryPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_registry_preference_writer.html",tooltip=" "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="preferences::SharesPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_shares_preference_writer.html",tooltip=" "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="preferences::ShortcutsPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_shortcuts_preference_writer.html",tooltip=" "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="preferences::VariablesPreference\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_variables_preference_writer.html",tooltip=" "];
+}

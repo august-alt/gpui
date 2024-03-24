@@ -1,0 +1,13 @@
+digraph "preferences::LocalUserWidget"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="preferences::LocalUserWidget",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Folder item representation for editor."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="preferences::BasePreference\lWidget",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_base_preference_widget.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="preferences::PreferenceWidget\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_preference_widget_interface.html",tooltip=" "];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="QWidget",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+}

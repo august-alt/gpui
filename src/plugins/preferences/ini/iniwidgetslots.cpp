@@ -60,7 +60,11 @@ void IniWidget::on_pathToolButton_clicked()
 {
     using namespace gpui;
 
-    ui->pathLineEdit->setText(FileDialogUtils::getOpenFileName(this, QObject::tr("Ini files (*.ini)")));
+    QString newText;
+    if (FileDialogUtils::getOpenFileName(newText, this, QObject::tr("Ini files (*.ini)")))
+    {
+        ui->pathLineEdit->setText(newText);
+    }
 }
 
 void IniWidget::on_pathLineEdit_textChanged(const QString &text)

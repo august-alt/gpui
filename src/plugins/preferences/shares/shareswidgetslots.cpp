@@ -161,7 +161,11 @@ void SharesWidget::on_folderToolButton_clicked()
 {
     using namespace gpui;
 
-    ui->folderPathLineEdit->setText(FileDialogUtils::getOpenDirectoryName(this, QObject::tr("All files (*.*)")));
+    QString newText;
+    if (FileDialogUtils::getOpenDirectoryName(newText, this, QObject::tr("All files (*.*)")))
+    {
+        ui->folderPathLineEdit->setText(newText);
+    }
 }
 
 }

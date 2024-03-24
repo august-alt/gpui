@@ -26,7 +26,7 @@
 
 namespace gpui
 {
-QString FileDialogUtils::getOpenFileName(QWidget *parent, const QString &filter)
+bool FileDialogUtils::getOpenFileName(QString& fileName, QWidget *parent, const QString &filter)
 {
     std::unique_ptr<QFileDialog> fileDialog = std::make_unique<QFileDialog>(parent);
 
@@ -45,15 +45,17 @@ QString FileDialogUtils::getOpenFileName(QWidget *parent, const QString &filter)
 
     fileDialog->setWindowTitle(QObject::tr("Open File"));
 
-    if (fileDialog->exec() == QDialog::Accepted)
+    bool dialogState = fileDialog->exec() == QDialog::Accepted;
+
+    if (dialogState)
     {
-        return fileDialog->selectedUrls()[0].toLocalFile();
+        fileName = fileDialog->selectedUrls()[0].toLocalFile();
     }
 
-    return QString();
+    return dialogState;
 }
 
-QString FileDialogUtils::getOpenDirectoryName(QWidget *parent, const QString &filter)
+bool FileDialogUtils::getOpenDirectoryName(QString& directoryName, QWidget *parent, const QString &filter)
 {
     std::unique_ptr<QFileDialog> fileDialog = std::make_unique<QFileDialog>(parent);
 
@@ -73,12 +75,14 @@ QString FileDialogUtils::getOpenDirectoryName(QWidget *parent, const QString &fi
 
     fileDialog->setWindowTitle(QObject::tr("Open Directory"));
 
-    if (fileDialog->exec() == QDialog::Accepted)
+    bool dialogState = fileDialog->exec() == QDialog::Accepted;
+
+    if (dialogState)
     {
-        return fileDialog->selectedUrls()[0].toLocalFile();
+        directoryName = fileDialog->selectedUrls()[0].toLocalFile();
     }
 
-    return QString();
+    return dialogState;
 }
 
 } // namespace gpui

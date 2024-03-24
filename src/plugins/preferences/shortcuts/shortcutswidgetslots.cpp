@@ -56,22 +56,38 @@ void ShortcutsWidget::on_locationComboBox_currentIndexChanged(int index)
 
 void ShortcutsWidget::on_nameToolButton_clicked()
 {
-    ui->nameLineEdit->setText(openFileOrFolder(true));
+    QString newText = openFileOrFolder(true);
+    if (!newText.isEmpty())
+    {
+        ui->nameLineEdit->setText(newText);
+    }
 }
 
 void ShortcutsWidget::on_targetPathToolButton_clicked()
 {
-    ui->targetPathLineEdit->setText(openFileOrFolder(true));
+    QString newText = openFileOrFolder(true);
+    if (!newText.isEmpty())
+    {
+        ui->targetPathLineEdit->setText(newText);
+    }
 }
 
 void ShortcutsWidget::on_iconFilePathToolButton_clicked()
 {
-    ui->iconFilePathLineEdit->setText(openFileOrFolder(false));
+    QString newText = openFileOrFolder(false);
+    if (!newText.isEmpty())
+    {
+        ui->iconFilePathLineEdit->setText(newText);
+    }
 }
 
 void ShortcutsWidget::on_startInToolButton_clicked()
 {
-    ui->startInLineEdit->setText(openFileOrFolder(true));
+    QString newText = openFileOrFolder(true);
+    if (!newText.isEmpty())
+    {
+        ui->startInLineEdit->setText(newText);
+    }
 }
 
 void ShortcutsWidget::on_targetTypeComboBox_currentIndexChanged(int index)

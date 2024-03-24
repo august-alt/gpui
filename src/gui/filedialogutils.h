@@ -30,9 +30,9 @@ namespace gpui
 class GPUI_GUI_EXPORT FileDialogUtils
 {
 public:
-    static QString getOpenFileName(QWidget *parent = nullptr, const QString &filter = QString());
+    static bool getOpenFileName(QString &fileName, QWidget *parent = nullptr, const QString &filter = QString());
 
-    static QString getOpenDirectoryName(QWidget *parent = nullptr, const QString &filter = QString());
+    static bool getOpenDirectoryName(QString &directoryName, QWidget *parent = nullptr, const QString &filter = QString());
 };
 
 } // namespace gpui

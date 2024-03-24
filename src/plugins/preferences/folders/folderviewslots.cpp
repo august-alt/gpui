@@ -56,7 +56,11 @@ void FolderWidget::on_pathToolButton_clicked()
 {
     using namespace gpui;
 
-    ui->pathLineEdit->setText(FileDialogUtils::getOpenDirectoryName(this, QObject::tr("All files (*.*)")));
+    QString newText;
+    if (FileDialogUtils::getOpenDirectoryName(newText, this, QObject::tr("All files (*.*)")))
+    {
+        ui->pathLineEdit->setText(newText);
+    }
 }
 
 } // namespace preferences

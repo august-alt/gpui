@@ -100,9 +100,9 @@ void AddScriptWidget::on_cancelPushButton_clicked()
 void AddScriptWidget::on_browsePushButton_clicked()
 {
     auto dialog  = std::make_unique<gpui::FileDialogUtils>();
-    QString file = dialog->getOpenFileName();
+    QString file;
 
-    if (!file.isEmpty())
+    if (dialog->getOpenFileName(file))
     {
         ui->nameLineEdit->setText(file);
     }

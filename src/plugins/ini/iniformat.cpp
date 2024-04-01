@@ -58,6 +58,8 @@ bool IniFormat::read(std::istream &input, IniFile *file)
 
         std::istringstream utf8stream(string.toStdString());
 
+        delete decoder;
+
         boost::property_tree::ptree pt;
         boost::property_tree::ini_parser::read_ini(utf8stream, pt);
 

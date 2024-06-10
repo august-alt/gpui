@@ -5,12 +5,14 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 
 set(HEADERS
     iniformat.h
+    iniformat.inl
 )
 
 set(SOURCES
-    iniformat.cpp
     iniplugin.cpp
 )
+
+set(SOURCES ${SOURCES} ${HEADERS})
 
 add_gpui_plugin(inifile-plugin ${SOURCES})
 target_link_libraries(inifile-plugin Qt5::Core)

@@ -39,4 +39,6 @@ public:
 };
 } // namespace gpui
 
+#include "iniformat.inl"
+
 #endif // GPUI_ADMX_FORMAT_H

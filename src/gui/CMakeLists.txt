@@ -9,6 +9,7 @@ set(HEADERS
     commandlineoptions.h
     commandlineparser.h
     filedialogutils.h
+    gptiniutil.h
     gui.h
     listboxdialog.h
     mainwindow.h
@@ -24,6 +25,7 @@ set(SOURCES
     commandlineparser.cpp
     contentwidget.cpp
     filedialogutils.cpp
+    gptiniutil.cpp
     gui.cpp
     listboxdialog.cpp
     mainwindow.cpp
@@ -42,6 +44,7 @@ set(MOC_HEADERS
     aboutdialog.h
     altspinbox.h
     contentwidget.h
+    gptiniutil.h
     listboxdialog.h
     mainwindow.h
     mainwindowsettings.h

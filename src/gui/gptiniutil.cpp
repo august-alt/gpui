@@ -124,7 +124,7 @@ bool GptIniUtils::onIniFileSave(const QString &path, const QString &policyName, 
     QString pluginName = path;
     pluginName         = pluginName.mid(pluginName.lastIndexOf('.') + 1);
 
-    gpui::IniFormat *format = gpui::PluginStorage::instance()->createPluginClass<gpui::IniFormat>(pluginName);
+    io::PolicyFileFormat<io::IniFile> *format = gpui::PluginStorage::instance()->createPluginClass<io::PolicyFileFormat<io::IniFile>>(pluginName);
 
     if (!format)
     {

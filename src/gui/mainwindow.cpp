@@ -28,6 +28,8 @@
 
 #include "contentwidget.h"
 
+#include "gptiniutil.h"
+
 #include "treevieweventfilter.h"
 
 #include "../core/isnapin.h"
@@ -414,6 +416,17 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     ui->treeView->setColumnHidden(1, true);
 
     d->contentWidget->modelItemSelected(d->searchModel->index(0, 0));
+
+    int gptIniMachineVersion = 0;
+    int gptIniUserVersion = 0;
+    QString gptIniPolicyName;
+
+    GptIniUtils gptUtils;
+
+    gptUtils.onIniFileOpen(d->options.path + "/gpt.ini", gptIniPolicyName, gptIniMachineVersion, gptIniUserVersion);
+
+    d->machineVersion = d->machineVersion >= gptIniMachineVersion ? d->machineVersion : gptIniMachineVersion;
+    d->userVersion = d->userVersion >= gptIniUserVersion ? d->userVersion : gptIniUserVersion;
 }
 
 void MainWindow::onDirectoryOpen()
@@ -472,6 +485,10 @@ void MainWindow::updateStatusBar()
     {
         d->ldapImpl->setExtensions(guid, machineExtensions, userExtensions, d->machineVersion + 1, d->userVersion + 1);
     }
+
+    GptIniUtils gptUtils;
+
+    gptUtils.onIniFileSave(d->options.path + "/gpt.ini", d->options.policyName, d->machineVersion + 1, d->userVersion + 1);
 
     ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);
 }

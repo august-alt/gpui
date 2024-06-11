@@ -118,7 +118,7 @@ bool GptIniUtils::onIniFileSave(const QString &path, const QString &policyName, 
 {
     std::unique_ptr<io::IniFile> fileData = std::make_unique<io::IniFile>();
     fileData->addValue("General", "DisplayName", policyName.toStdString());
-    int version = 0;
+    int version = (userVersion << 16) + machineVersion;
     fileData->addValue("General", "Version", std::to_string(version));
 
     QString pluginName = path;

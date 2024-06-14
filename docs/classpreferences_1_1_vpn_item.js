@@ -1,0 +1,38 @@
+var classpreferences_1_1_vpn_item =
+[
+    [ "PropertyType", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360", [
+      [ "ACTION", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360aef55225ef42e5e051f05b08cba138ebd", null ],
+      [ "USER", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a11e6a3e476833d5cb8ac8e34c7853b2f", null ],
+      [ "NAME", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a91c50888fa9b697f61dd1bb385f6b4f8", null ],
+      [ "IP_ADDRESS", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360ad8c82f2a52a9c013a5ca2ee9c112b19b", null ],
+      [ "USE_DNS", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360ab8ede336653e6a61d1076f33aa931206", null ],
+      [ "DIAL_FIRST", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a77536b9dce13e1b9d41c07cc37e15d26", null ],
+      [ "TRAY_ICON", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a1e63af9ae7af47652b4c5476965da542", null ],
+      [ "SHOW_PROGRESS", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360af8191977657502644e3d238c9774cc73", null ],
+      [ "SHOW_PASSWORD", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360ae760d4e9c332b514a1987dfd623d05e2", null ],
+      [ "SHOW_DOMAIN", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a28a91df5ad5a44a4bf0309d575246150", null ],
+      [ "REDIAL_COUNT", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a9c0ccd66360a95ded376ec9c37ff197d", null ],
+      [ "REDIAL_PAUSE", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a649b6784d50c655ea760ccebd193d8d7", null ],
+      [ "IDLE_DISCONNECT", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360ac9c311a6ea2f382612df882e427e96f2", null ],
+      [ "RECONNECT", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360acddf00e1f5bac667f1dc239981b77235", null ],
+      [ "CUSTOM_SETTINGS", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a1c3b7f70bf24f1ab420b58df39dfeb06", null ],
+      [ "SECURE_PASSWORD", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a31516fa12a41b725e1ae77f8c86f844d", null ],
+      [ "SECURE_DATA", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360aa85920f1cd82396ae1ec5e33df5a3447", null ],
+      [ "USE_LOGON", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a550095735cd2d5e39e216ff6251dd17a", null ],
+      [ "VPN_STRATEGY", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a665488fe1dd7d9ba94582b9f420e636a", null ],
+      [ "ENCRYPTION_TYPE", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360af36aecf730e927ed4406a8138b827e13", null ],
+      [ "EAP", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360afa1002cf11a3e43a857585b0f73ec041", null ],
+      [ "PAP", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360ad0449429d2dadb86bf8e4061c4634bd2", null ],
+      [ "SPAP", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a12931f8767aef36b80151ee1f86150c7", null ],
+      [ "CHAP", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a0026d6442878aa4ccec3f074cf2bb771", null ],
+      [ "MS_CHAP", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a6f0af6eed87ce4a76f0c77662880a797", null ],
+      [ "OLD_MS_CHAP", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a7617825d6f64025c49e7801ffb2cdf00", null ],
+      [ "MS_CHAP_V2", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a047dbde6988301ba585f9b9bdbe32044", null ],
+      [ "SYSTEM", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a7b6744d10ce42fc18068564933bdef81", null ],
+      [ "TYPICAL", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a77f4d60adb499aaf22cde09eddeb50db", null ],
+      [ "ADVANCED", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a369c20d99c45bcf776a29024528a3711", null ],
+      [ "USE_OTHER", "classpreferences_1_1_vpn_item.html#ad409f207e825a2f76b0c630d68e72360a02c6f0a3c3c6103cb3cd5b54b80fa16f", null ]
+    ] ],
+    [ "VpnItem", "classpreferences_1_1_vpn_item.html#a8d9c33a0d638583803ac3739e13a020d", null ],
+    [ "VpnItem", "classpreferences_1_1_vpn_item.html#a2b5e1862ed553b2a8768a6f9249de9bd", null ]
+];

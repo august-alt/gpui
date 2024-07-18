@@ -20,119 +20,111 @@
 
 #include "booleanvalue.h"
 
-namespace model
+namespace model {
+namespace admx {
+/*!
+ * \brief Describes a value that is equivalent to some logical state (true, false)
+ */
+
+/*!
+ * \brief Construct BooleanValue with deleted value.
+ */
+BooleanValue::BooleanValue() : m_type(BOOLEAN_VALUE_TYPE_DELETED) { }
+
+/*!
+ * \brief Construct BooleanValue with decimal value.
+ */
+BooleanValue::BooleanValue(unsigned int decimalValue)
+    : m_type(BOOLEAN_VALUE_TYPE_DECIMAL), m_decimal(decimalValue)
 {
-    namespace admx
-    {
-        /*!
-         * \brief Describes a value that is equivalent to some logical state (true, false)
-         */
+}
 
-        /*!
-         * \brief Construct BooleanValue with deleted value.
-         */
-        BooleanValue::BooleanValue() : m_type(BOOLEAN_VALUE_TYPE_DELETED) {}
+/*!
+ * \brief Construct BooleanValue with string value
+ */
+BooleanValue::BooleanValue(const std::string &string)
+    : m_type(BOOLEAN_VALUE_TYPE_STRING), m_string(string)
+{
+}
 
-        /*!
-         * \brief Construct BooleanValue with decimal value.
-         */
-        BooleanValue::BooleanValue(unsigned int decimalValue)
-            : m_type(BOOLEAN_VALUE_TYPE_DECIMAL), m_decimal(decimalValue)
-        {
-        }
+/*!
+ * \brief Set Boolean value to deleted value
+ */
+void BooleanValue::clear()
+{
+    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
+        this->m_string.clear();
+    }
+    this->m_type = BOOLEAN_VALUE_TYPE_DELETED;
+}
 
-        /*!
-         * \brief Construct BooleanValue with string value
-         */
-        BooleanValue::BooleanValue(const std::string &string)
-            : m_type(BOOLEAN_VALUE_TYPE_STRING), m_string(string)
-        {
-        }
+/*!
+ * \brief Set BooleanValue deleted value.
+ */
+void BooleanValue::setValue()
+{
+    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
+        this->m_string.clear();
+    }
+    this->m_type = BOOLEAN_VALUE_TYPE_DELETED;
+}
 
-        /*!
-         * \brief Set Boolean value to deleted value
-         */
-        void BooleanValue::clear()
-        {
-            if (this->m_type == BOOLEAN_VALUE_TYPE_STRING)
-            {
-                this->m_string.clear();
-            }
-            this->m_type = BOOLEAN_VALUE_TYPE_DELETED;
-        }
+/*!
+ * \brief Set BooleanValue decimal value.
+ */
+void BooleanValue::setValue(unsigned int decimal)
+{
+    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
+        this->m_string.clear();
+    }
+    this->m_type = BOOLEAN_VALUE_TYPE_DECIMAL;
+    this->m_decimal = decimal;
+}
 
-        /*!
-         * \brief Set BooleanValue deleted value.
-         */
-        void BooleanValue::setValue()
-        {
-            if (this->m_type == BOOLEAN_VALUE_TYPE_STRING)
-            {
-                this->m_string.clear();
-            }
-            this->m_type = BOOLEAN_VALUE_TYPE_DELETED;
-        }
+/*!
+ * \brief Set BooleanValue string value.
+ */
+void BooleanValue::setValue(const std::string &string)
+{
+    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
+        this->m_string.clear();
+    }
+    this->m_type = BOOLEAN_VALUE_TYPE_STRING;
+    this->m_string = string;
+}
 
-        /*!
-         * \brief Set BooleanValue decimal value.
-         */
-        void BooleanValue::setValue(unsigned int decimal)
-        {
-            if (this->m_type == BOOLEAN_VALUE_TYPE_STRING)
-            {
-                this->m_string.clear();
-            }
-            this->m_type = BOOLEAN_VALUE_TYPE_DECIMAL;
-            this->m_decimal = decimal;
-        }
+/*!
+ * \brief Return string value.
+ */
+BooleanValue::Type BooleanValue::type()
+{
+    return this->m_type;
+}
 
-        /*!
-         * \brief Set BooleanValue string value.
-         */
-        void BooleanValue::setValue(const std::string &string)
-        {
-            if (this->m_type == BOOLEAN_VALUE_TYPE_STRING)
-            {
-                this->m_string.clear();
-            }
-            this->m_type = BOOLEAN_VALUE_TYPE_STRING;
-            this->m_string = string;
-        }
+/*!
+ * \brief Return string value.
+ * \throw std::runtime_error if BooleanValue type is't string
+ */
+const std::string &BooleanValue::string()
+{
+    if (this->m_type != BOOLEAN_VALUE_TYPE_STRING) {
+        throw std::runtime_error("wrong type for BooleanValue");
+    }
 
-        /*!
-         * \brief Return string value.
-         */
-        BooleanValue::Type BooleanValue::type()
-        {
-            return this->m_type;
-        }
+    return this->m_string;
+}
 
-        /*!
-         * \brief Return string value.
-         * \throw std::runtime_error if BooleanValue type is't string
-         */
-        const std::string &BooleanValue::string()
-        {
-            if (this->m_type != BOOLEAN_VALUE_TYPE_STRING)
-            {
-                throw std::runtime_error("wrong type for BooleanValue");
-            }
+/*!
+ * \brief Return decimal value.
+ * \throw std::runtime_error if BooleanValue type is't decimal
+ */
+double BooleanValue::decimal()
+{
+    if (this->m_type != BOOLEAN_VALUE_TYPE_DECIMAL) {
+        throw std::runtime_error("wrong type for BooleanValue");
+    }
 
-            return this->m_string;
-        }
-
-        /*!
-         * \brief Return decimal value.
-         * \throw std::runtime_error if BooleanValue type is't decimal
-         */
-        double BooleanValue::decimal()
-        {
-            if (this->m_type != BOOLEAN_VALUE_TYPE_DECIMAL)
-            {
-                throw std::runtime_error("wrong type for BooleanValue");
-            }
-
-            return this->m_decimal;
-        }
-    } // namespace admx
+    return this->m_decimal;
+}
+} // namespace admx
 } // namespace model

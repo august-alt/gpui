@@ -24,80 +24,77 @@
 #include <string>
 #include <stdexcept>
 
-namespace model
+namespace model {
+namespace admx {
+/*!
+ * \brief Describes a value that is equivalent to some logical state (true, false)
+ */
+class BooleanValue
 {
-    namespace admx
-    {
-        /*!
-         * \brief Describes a value that is equivalent to some logical state (true, false)
-         */
-        class BooleanValue
-        {
-        public:
-            /*!
-             * \brief Enumeration of all possible value types
-             */
-            enum Type
-            {
-                BOOLEAN_VALUE_TYPE_DELETED,
-                BOOLEAN_VALUE_TYPE_DECIMAL,
-                BOOLEAN_VALUE_TYPE_STRING,
-            };
+public:
+    /*!
+     * \brief Enumeration of all possible value types
+     */
+    enum Type {
+        BOOLEAN_VALUE_TYPE_DELETED,
+        BOOLEAN_VALUE_TYPE_DECIMAL,
+        BOOLEAN_VALUE_TYPE_STRING,
+    };
 
-            /*!
-             * \brief Construct BooleanValue with deleted value.
-             */
-            BooleanValue();
-            /*!
-             * \brief Construct BooleanValue with decimal value.
-             */
-            BooleanValue(unsigned int decimalValue);
-            /*!
-             * \brief Construct BooleanValue with string value
-             */
-            BooleanValue(const std::string &string);
+    /*!
+     * \brief Construct BooleanValue with deleted value.
+     */
+    BooleanValue();
+    /*!
+     * \brief Construct BooleanValue with decimal value.
+     */
+    BooleanValue(unsigned int decimalValue);
+    /*!
+     * \brief Construct BooleanValue with string value
+     */
+    BooleanValue(const std::string &string);
 
-            /*!
-             * \brief Set Boolean value to deleted value
-             */
-            void clear();
+    /*!
+     * \brief Set Boolean value to deleted value
+     */
+    void clear();
 
-            /*!
-             * \brief Set BooleanValue deleted value.
-             */
-            void setValue();
-            /*!
-             * \brief Set BooleanValue decimal value.
-             */
-            void setValue(unsigned int decimal);
-            /*!
-             * \brief Set BooleanValue string value.
-             */
-            void setValue(const std::string &string);
+    /*!
+     * \brief Set BooleanValue deleted value.
+     */
+    void setValue();
+    /*!
+     * \brief Set BooleanValue decimal value.
+     */
+    void setValue(unsigned int decimal);
+    /*!
+     * \brief Set BooleanValue string value.
+     */
+    void setValue(const std::string &string);
 
-            /*!
-             * \brief Return string value.
-             */
-            Type type();
+    /*!
+     * \brief Return string value.
+     */
+    Type type();
 
-            /*!
-             * \brief Return string value.
-             * \throw std::runtime_error if BooleanValue type is't string
-             */
-            const std::string &string();
-            /*!
-             * \brief Return decimal value.
-             * \throw std::runtime_error if BooleanValue type is't decimal
-             */
-            double decimal();
+    /*!
+     * \brief Return string value.
+     * \throw std::runtime_error if BooleanValue type is't string
+     */
+    const std::string &string();
+    /*!
+     * \brief Return decimal value.
+     * \throw std::runtime_error if BooleanValue type is't decimal
+     */
+    double decimal();
 
-        private:
-            Type m_type{};
+private:
+    Type m_type{};
 
-            unsigned int m_decimal{};
-            std::string m_string{};
-        };
-    } // namespace admx
+    unsigned int m_decimal{};
+    std::string m_string{};
+};
+} // namespace admx
 } // namespace model
 
 #endif // GPUI_BOOLEAN_VALUE_H

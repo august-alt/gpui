@@ -22,22 +22,49 @@
 #define GPUI_POLICYboolELEMENT_H
 
 #include "policyelement.h"
+#include "booleanvalue.h"
 
 #include <string>
+#include <vector>
 
 namespace model
 {
-namespace admx
-{
-/*!
- * \brief A choice element in a policy with associated values for the true and false cases.
- */
-class PolicyBoolElement : public PolicyElement
-{
-public:
-    registry::RegistryEntryType getRegistryEntryType() const override { return registry::REG_DWORD; }
-};
-} // namespace admx
+    namespace admx
+    {
+        /*!
+         * \brief A choice element in a policy with associated values for the true and false cases.
+         */
+        class PolicyBoolElement : public PolicyElement
+        {
+        public:
+            typedef std::vector<BooleanValue> BooleanList;
+
+            /*!
+             * \brief The trueValue element sets the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanList trueList{};
+            /*!
+             * \brief The falseValue element sets the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanList falseList{};
+
+            /*!
+             * \brief Information about the existence of trueList
+             */
+            bool hasTrueList{};
+            /*!
+             * \brief Information about the existence of falseList
+             */
+            bool hasFalseList{};
+
+            registry::RegistryEntryType getRegistryEntryType() const override
+            {
+                return registry::REG_DWORD;
+            }
+        };
+    } // namespace admx
 } // namespace model
 
 #endif // GPUI_POLICYboolELEMENT_H

@@ -41,6 +41,14 @@ BooleanValue::BooleanValue(unsigned int decimalValue)
 }
 
 /*!
+ * \brief Construct BooleanValue with long decimal value.
+ */
+BooleanValue::BooleanValue(unsigned long long longDecimalValue)
+    : m_type(BOOLEAN_VALUE_TYPE_LONGDECIMAL), m_long_decimal(longDecimalValue)
+{
+}
+
+/*!
  * \brief Construct BooleanValue with string value
  */
 BooleanValue::BooleanValue(const std::string &string)
@@ -73,6 +81,9 @@ BooleanValue::BooleanValue(BooleanValue &&value) : m_type(value.m_type)
     case BOOLEAN_VALUE_TYPE_DECIMAL:
         this->m_decimal = value.m_decimal;
         break;
+    case BOOLEAN_VALUE_TYPE_LONGDECIMAL:
+        this->m_long_decimal = value.m_long_decimal;
+        break;
     case BOOLEAN_VALUE_TYPE_STRING:
         new (&this->m_string) std::string(std::move(value.m_string));
         break;
@@ -103,6 +114,18 @@ void BooleanValue::setValue()
 }
 
 /*!
+ * \brief Set BooleanValue string value.
+ */
+void BooleanValue::setValue(const std::string &string)
+{
+    if (this->m_type != BOOLEAN_VALUE_TYPE_STRING) {
+        new (&this->m_string) std::string;
+    }
+    this->m_type = BOOLEAN_VALUE_TYPE_STRING;
+    this->m_string = string;
+}
+
+/*!
  * \brief Set BooleanValue decimal value.
  */
 void BooleanValue::setValue(unsigned int decimal)
@@ -115,15 +138,15 @@ void BooleanValue::setValue(unsigned int decimal)
 }
 
 /*!
- * \brief Set BooleanValue string value.
+ * \brief Set BooleanValue long decimal value.
  */
-void BooleanValue::setValue(const std::string &string)
+void BooleanValue::setValue(unsigned long long longDecimal)
 {
-    if (this->m_type != BOOLEAN_VALUE_TYPE_STRING) {
-        new (&this->m_string) std::string;
+    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
+        this->m_string.~basic_string();
     }
-    this->m_type = BOOLEAN_VALUE_TYPE_STRING;
-    this->m_string = string;
+    this->m_type = BOOLEAN_VALUE_TYPE_LONGDECIMAL;
+    this->m_long_decimal = longDecimal;
 }
 
 /*!
@@ -151,13 +174,25 @@ const std::string &BooleanValue::string()
  * \brief Return decimal value.
  * \throw std::runtime_error if BooleanValue type is't decimal
  */
-double BooleanValue::decimal()
+unsigned int BooleanValue::decimal()
 {
     if (this->m_type != BOOLEAN_VALUE_TYPE_DECIMAL) {
         throw std::runtime_error("wrong type for BooleanValue");
     }
 
     return this->m_decimal;
+}
+/*!
+ * \brief Return decimal value.
+ * \throw std::runtime_error if BooleanValue type is't decimal
+ */
+unsigned long long BooleanValue::longDecimal()
+{
+    if (this->m_type != BOOLEAN_VALUE_TYPE_LONGDECIMAL) {
+        throw std::runtime_error("wrong type for BooleanValue");
+    }
+
+    return this->m_long_decimal;
 }
 
 /*!

@@ -37,8 +37,9 @@ public:
      */
     enum Type {
         BOOLEAN_VALUE_TYPE_DELETED,
-        BOOLEAN_VALUE_TYPE_DECIMAL,
         BOOLEAN_VALUE_TYPE_STRING,
+        BOOLEAN_VALUE_TYPE_DECIMAL,
+        BOOLEAN_VALUE_TYPE_LONGDECIMAL,
     };
 
     /*!
@@ -46,13 +47,18 @@ public:
      */
     BooleanValue();
     /*!
+     * \brief Construct BooleanValue with string value
+     */
+    BooleanValue(const std::string &string);
+    /*!
      * \brief Construct BooleanValue with decimal value.
      */
     BooleanValue(unsigned int decimalValue);
     /*!
-     * \brief Construct BooleanValue with string value
+     * \brief Construct BooleanValue with long decimal value.
      */
-    BooleanValue(const std::string &string);
+    BooleanValue(unsigned long long longDecimalValue);
+
     /*!
      * \brief Copy-constructor
      */
@@ -72,13 +78,17 @@ public:
      */
     void setValue();
     /*!
+     * \brief Set BooleanValue string value.
+     */
+    void setValue(const std::string &string);
+    /*!
      * \brief Set BooleanValue decimal value.
      */
     void setValue(unsigned int decimal);
     /*!
-     * \brief Set BooleanValue string value.
+     * \brief Set BooleanValue decimal value.
      */
-    void setValue(const std::string &string);
+    void setValue(unsigned long long decimal);
 
     /*!
      * \brief Return string value.
@@ -94,7 +104,12 @@ public:
      * \brief Return decimal value.
      * \throw std::runtime_error if BooleanValue type is't decimal
      */
-    double decimal();
+    unsigned int decimal();
+    /*!
+     * \brief Return long decimal value.
+     * \throw std::runtime_error if BooleanValue type is't decimal
+     */
+    unsigned long long longDecimal();
 
     /*!
      * \brief Default destructor.
@@ -106,6 +121,7 @@ private:
 
     union {
         unsigned int m_decimal;
+        unsigned long long m_long_decimal;
         std::string m_string;
     };
 };

@@ -53,6 +53,14 @@ public:
      * \brief Construct BooleanValue with string value
      */
     BooleanValue(const std::string &string);
+    /*!
+     * \brief Copy-constructor
+     */
+    BooleanValue(const BooleanValue &value);
+    /*!
+     * \brief Move-constructor
+     */
+    BooleanValue(BooleanValue &&value);
 
     /*!
      * \brief Set Boolean value to deleted value
@@ -88,11 +96,18 @@ public:
      */
     double decimal();
 
+    /*!
+     * \brief Default destructor.
+     */
+    ~BooleanValue();
+
 private:
     Type m_type{};
 
-    unsigned int m_decimal{};
-    std::string m_string{};
+    union {
+        unsigned int m_decimal;
+        std::string m_string;
+    };
 };
 } // namespace admx
 } // namespace model

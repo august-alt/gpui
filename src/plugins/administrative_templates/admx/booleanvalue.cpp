@@ -19,6 +19,7 @@
 ***********************************************************************************************************************/
 
 #include "booleanvalue.h"
+#include <new>
 
 namespace model {
 namespace admx {
@@ -48,12 +49,46 @@ BooleanValue::BooleanValue(const std::string &string)
 }
 
 /*!
+ * \brief Copy-constructor
+ */
+BooleanValue::BooleanValue(const BooleanValue &value) : m_type(value.m_type)
+{
+    switch (this->m_type) {
+    case BOOLEAN_VALUE_TYPE_DECIMAL:
+        this->m_decimal = value.m_decimal;
+        break;
+    case BOOLEAN_VALUE_TYPE_STRING:
+        new (&this->m_string) std::string(value.m_string);
+        break;
+    default:
+        break;
+    }
+}
+/*!
+ * \brief Move-constructor
+ */
+BooleanValue::BooleanValue(BooleanValue &&value) : m_type(value.m_type)
+{
+    switch (this->m_type) {
+    case BOOLEAN_VALUE_TYPE_DECIMAL:
+        this->m_decimal = value.m_decimal;
+        break;
+    case BOOLEAN_VALUE_TYPE_STRING:
+        new (&this->m_string) std::string(std::move(value.m_string));
+        break;
+    default:
+        break;
+    }
+    value.clear();
+}
+
+/*!
  * \brief Set Boolean value to deleted value
  */
 void BooleanValue::clear()
 {
     if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
-        this->m_string.clear();
+        this->m_string.~basic_string();
     }
     this->m_type = BOOLEAN_VALUE_TYPE_DELETED;
 }
@@ -63,10 +98,8 @@ void BooleanValue::clear()
  */
 void BooleanValue::setValue()
 {
-    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
-        this->m_string.clear();
-    }
-    this->m_type = BOOLEAN_VALUE_TYPE_DELETED;
+    // BooleanValue::clear() do the same.
+    this->clear();
 }
 
 /*!
@@ -75,7 +108,7 @@ void BooleanValue::setValue()
 void BooleanValue::setValue(unsigned int decimal)
 {
     if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
-        this->m_string.clear();
+        this->m_string.~basic_string();
     }
     this->m_type = BOOLEAN_VALUE_TYPE_DECIMAL;
     this->m_decimal = decimal;
@@ -86,8 +119,8 @@ void BooleanValue::setValue(unsigned int decimal)
  */
 void BooleanValue::setValue(const std::string &string)
 {
-    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
-        this->m_string.clear();
+    if (this->m_type != BOOLEAN_VALUE_TYPE_STRING) {
+        new (&this->m_string) std::string;
     }
     this->m_type = BOOLEAN_VALUE_TYPE_STRING;
     this->m_string = string;
@@ -125,6 +158,17 @@ double BooleanValue::decimal()
     }
 
     return this->m_decimal;
+}
+
+/*!
+ * \brief Default destructor.
+ */
+BooleanValue::~BooleanValue()
+{
+    if (this->m_type == BOOLEAN_VALUE_TYPE_STRING) {
+        this->m_string.~basic_string();
+    }
+    this->m_type = BOOLEAN_VALUE_TYPE_DELETED;
 }
 } // namespace admx
 } // namespace model

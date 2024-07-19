@@ -75,6 +75,9 @@ compile_commands.json
 # Qt Qml cache
 *_qmlcache.qrc
 
+# VSCode Settings 
+.vscode/
+
 # Build directory
 build/
 docs/

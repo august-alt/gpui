@@ -84,7 +84,6 @@ set(HEADERS
 set(SOURCES
     administrativetemplatessnapin.cpp
     administrativetemplatesplugin.cpp
-    admx/booleanvalue.cpp
     bundle/policybundle.cpp
     commands/command.cpp
     commands/commandgroup.cpp

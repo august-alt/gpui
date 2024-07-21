@@ -167,36 +167,34 @@ public:
                             for (const auto &booleanValue : setList) {
                                 // If the key is not present, then select the one to which
                                 // elementInfo is linked
-                                const std::string &key = booleanValue.keyPresent()
-                                        ? booleanValue.key()
-                                        : elementInfo.key;
+                                const std::string &key =
+                                        booleanValue.has_key ? booleanValue.key : elementInfo.key;
 
                                 qWarning() << "Presentation builder::save: " << key.c_str() << " "
-                                           << booleanValue.valueName().c_str();
+                                           << booleanValue.value_name.c_str();
 
-                                switch (booleanValue.type()) {
+                                switch (booleanValue.type) {
 
                                 case BooleanValue::BOOLEAN_VALUE_TYPE_DELETED:
-                                    m_source->clearValue(key, booleanValue.valueName());
+                                    m_source->clearValue(key, booleanValue.value_name);
                                     break;
 
                                 case BooleanValue::BOOLEAN_VALUE_TYPE_DECIMAL:
-                                    m_source->setValue(key, booleanValue.valueName(),
+                                    m_source->setValue(key, booleanValue.value_name,
                                                        RegistryEntryType::REG_DWORD,
-                                                       booleanValue.decimal());
+                                                       booleanValue.decimal);
                                     break;
 
                                 case BooleanValue::BOOLEAN_VALUE_TYPE_LONGDECIMAL:
-                                    m_source->setValue(key, booleanValue.valueName(),
+                                    m_source->setValue(key, booleanValue.value_name,
                                                        RegistryEntryType::REG_QWORD,
-                                                       booleanValue.longDecimal());
+                                                       booleanValue.long_decimal);
                                     break;
 
                                 case BooleanValue::BOOLEAN_VALUE_TYPE_STRING:
-                                    m_source->setValue(
-                                            key, booleanValue.valueName(),
+                                    m_source->setValue(key, booleanValue.value_name,
                                             RegistryEntryType::REG_SZ,
-                                            QString::fromStdString(booleanValue.string()));
+                                                       QString::fromStdString(booleanValue.string));
                                     break;
                                 }
                             }

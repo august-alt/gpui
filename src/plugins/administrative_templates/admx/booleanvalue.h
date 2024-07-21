@@ -43,117 +43,35 @@ public:
     };
 
     /*!
-     * \brief Construct BooleanValue with deleted value.
+     * \brief Type of boolean value
      */
-    BooleanValue();
+    Type type{ BOOLEAN_VALUE_TYPE_DELETED };
     /*!
-     * \brief Construct BooleanValue with string value
+     * \brief True if the key is present, i.e. false
      */
-    BooleanValue(const std::string &string);
-    /*!
-     * \brief Construct BooleanValue with decimal value.
-     */
-    BooleanValue(unsigned int decimalValue);
-    /*!
-     * \brief Construct BooleanValue with long decimal value.
-     */
-    BooleanValue(unsigned long long longDecimalValue);
+    bool has_key{ false };
 
     /*!
-     * \brief Copy-constructor
+     * \brief Contain value name
      */
-    BooleanValue(const BooleanValue &value);
+    std::string value_name{};
     /*!
-     * \brief Move-constructor
+     * \brief Contain the key if the key is present, i.e. UB
      */
-    BooleanValue(BooleanValue &&value);
+    std::string key{};
 
     /*!
-     * \brief Set Boolean value to deleted value
+     * \brief Contains a decimal number if the type is BOOLEAN_VALUE_TYPE_DECIMAL, i.e. UB
      */
-    void clear();
-
+    unsigned int decimal{};
     /*!
-     * \brief Set BooleanValue deleted value.
+     * \brief Contains a long decimal number if the type is BOOLEAN_VALUE_TYPE_LONGDECIMAL, i.e. UB
      */
-    void setValue();
+    unsigned long long long_decimal{};
     /*!
-     * \brief Set BooleanValue string value.
+     * \brief Contains a string if the type is BOOLEAN_VALUE_TYPE_STRING, i.e. UB
      */
-    void setValue(const std::string &string);
-    /*!
-     * \brief Set BooleanValue decimal value.
-     */
-    void setValue(unsigned int decimal);
-    /*!
-     * \brief Set BooleanValue decimal value.
-     */
-    void setValue(unsigned long long decimal);
-    /*!
-     * \brief Set value name.
-     */
-    void setValueName(const std::string &valueName);
-    /*!
-     * \brief Set key.
-     */
-    void setKey(const std::string &key);
-
-    /*!
-     * \brief Return string value.
-     */
-    Type type() const;
-
-    /*!
-     * \brief Return string value.
-     * \throw std::runtime_error if BooleanValue type is't string
-     */
-    const std::string &string() const;
-    /*!
-     * \brief Return decimal value.
-     * \throw std::runtime_error if BooleanValue type is't decimal
-     */
-    unsigned int decimal() const;
-    /*!
-     * \brief Return long decimal value.
-     * \throw std::runtime_error if BooleanValue type is't decimal
-     */
-    unsigned long long longDecimal() const;
-    /*!
-     * \brief Return value name.
-     * \throw std::runtime_error if value name is'nt present.
-     */
-    const std::string &valueName() const;
-    /*!
-     * \brief Return key.
-     * \throw std::runtime_error if key is'nt present.
-     */
-    const std::string &key() const;
-    /*!
-     * \brief Return true if key is present.
-     */
-    bool keyPresent() const;
-    /*!
-     * \brief Return true if value name is present.
-     */
-    bool valuePresent() const;
-
-    /*!
-     * \brief Default destructor.
-     */
-    ~BooleanValue();
-
-private:
-    Type m_type{};
-    bool m_has_key;
-    bool m_has_value_name;
-
-    std::string m_value_name{};
-    std::string m_key{};
-    union {
-        unsigned int m_decimal;
-        unsigned long long m_long_decimal;
-        std::string m_string;
-    };
+    std::string string{};
 };
 } // namespace admx
 } // namespace model

@@ -105,9 +105,9 @@ private:
 public:
     static std::unique_ptr<model::admx::AbstractRegistryValue> create(const Value &element)
     {
-        if (element.decimal().present())
-        {
-            auto value  = std::make_unique<model::admx::RegistryValue<uint32_t>>(element.decimal()->value());
+        if (element.decimal().present()) {
+            auto value = std::make_unique<model::admx::RegistryValue<uint32_t>>(
+                    element.decimal()->value());
             value->type = model::admx::RegistryValueType::DECIMAL;
             return value;
         }
@@ -250,17 +250,24 @@ private:
 
     static AdmxBooleanValue XsdValueToAdmxBooleanValue(const XsdValue &value)
     {
+        AdmxBooleanValue admxValue;
         if (value.decimal().present()) {
-            return { value.decimal().get().value() };
+            admxValue.decimal = value.decimal().get().value();
+            admxValue.type = AdmxBooleanValue::BOOLEAN_VALUE_TYPE_DECIMAL;
+            return admxValue;
         }
         if (value.longDecimal().present()) {
-            return { value.longDecimal().get().value() };
+            admxValue.long_decimal = value.longDecimal().get().value();
+            admxValue.type = AdmxBooleanValue::BOOLEAN_VALUE_TYPE_LONGDECIMAL;
+            return admxValue;
         }
         if (value.string().present()) {
-            return { value.string().get() };
+            admxValue.string = value.string().get();
+            admxValue.type = AdmxBooleanValue::BOOLEAN_VALUE_TYPE_STRING;
+            return admxValue;
         }
         if (value.delete_().present()) {
-            return {};
+            return admxValue;
         }
         throw std::runtime_error("empty XsdValue");
     }
@@ -274,10 +281,11 @@ private:
 
         for (auto value : sourceList) {
             auto admxValue = XsdValueToAdmxBooleanValue(value.value());
-            admxValue.setValueName(value.valueName());
+            admxValue.value_name = value.valueName();
 
             if (value.key().present()) {
-                admxValue.setKey(value.key().get());
+                admxValue.has_key = true;
+                admxValue.key = value.key().get();
             }
 
             target.emplace_back();

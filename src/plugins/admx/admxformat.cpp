@@ -282,6 +282,7 @@ private:
 
             target.emplace_back();
         }
+        return target;
     }
 
 public:

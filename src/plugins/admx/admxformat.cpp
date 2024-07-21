@@ -243,6 +243,46 @@ class XsdBooleanElementAdapter : public model::admx::PolicyBoolElement
 {
 private:
     typedef ::GroupPolicy::PolicyDefinitions::BooleanElement BooleanElement;
+    typedef ::GroupPolicy::PolicyDefinitions::Value XsdValue;
+    typedef ::GroupPolicy::PolicyDefinitions::ValueList XsdList;
+    typedef ::model::admx::BooleanValue AdmxBooleanValue;
+    typedef ::model::admx::PolicyBoolElement::BooleanList AdmxBooleanList;
+
+    static AdmxBooleanValue XsdValueToAdmxBooleanValue(const XsdValue &value)
+    {
+        if (value.decimal().present()) {
+            return { value.decimal().get().value() };
+        }
+        if (value.longDecimal().present()) {
+            return { value.longDecimal().get().value() };
+        }
+        if (value.string().present()) {
+            return { value.string().get() };
+        }
+        if (value.delete_().present()) {
+            return {};
+        }
+        throw std::runtime_error("empty XsdValue");
+    }
+
+    static BooleanList XsdListToAdmxBooleanList(const XsdList &list)
+    {
+        AdmxBooleanList target;
+        auto &sourceList = list.item();
+
+        target.reserve(sourceList.size());
+
+        for (auto value : sourceList) {
+            auto admxValue = XsdValueToAdmxBooleanValue(value.value());
+            admxValue.setValueName(value.valueName());
+
+            if (value.key().present()) {
+                admxValue.setKey(value.key().get());
+            }
+
+            target.emplace_back();
+        }
+    }
 
 public:
     XsdBooleanElementAdapter(const BooleanElement &element)
@@ -250,6 +290,16 @@ public:
         adapter_base(this, element);
 
         assign_if_exists(this->valueName, element.valueName());
+
+        if (element.trueList().present()) {
+            this->hasTrueList = true;
+            this->trueList = std::move(XsdListToAdmxBooleanList(element.trueList().get()));
+        }
+
+        if (element.falseList().present()) {
+            this->hasFalseList = true;
+            this->falseList = std::move(XsdListToAdmxBooleanList(element.falseList().get()));
+        }
     }
 
     static std::unique_ptr<model::admx::PolicyBoolElement> create(const BooleanElement &element)

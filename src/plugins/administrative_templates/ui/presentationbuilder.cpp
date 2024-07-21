@@ -198,8 +198,6 @@ public:
                                     break;
                                 }
                             }
-                            /// Needed set key.value from elementInfo to true false?
-                    return;
                 }
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
                            << elementInfo.value.c_str();

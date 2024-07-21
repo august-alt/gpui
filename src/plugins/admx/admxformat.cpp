@@ -303,10 +303,20 @@ public:
             this->hasTrueList = true;
             this->trueList = std::move(XsdListToAdmxBooleanList(element.trueList().get()));
         }
+        
+        if(element.trueValue().present()) {
+            this->hasTrueList = true;
+            this->trueList.emplace_back(XsdValueToAdmxBooleanValue(element.trueValue().get()));
+        }
 
         if (element.falseList().present()) {
             this->hasFalseList = true;
             this->falseList = std::move(XsdListToAdmxBooleanList(element.falseList().get()));
+        }
+
+        if(element.falseValue().present()) {
+            this->hasFalseList = true;
+            this->trueList.emplace_back(XsdValueToAdmxBooleanValue(element.falseValue().get()));
         }
     }
 

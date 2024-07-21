@@ -43,6 +43,7 @@
 
 #include "../plugins/administrative_templates/registry/abstractregistrysource.h"
 
+#include "../plugins/administrative_templates/admx/policybooleanelement.h"
 #include "../plugins/administrative_templates/admx/policydecimalelement.h"
 #include "../plugins/administrative_templates/admx/policylistelement.h"
 #include "../plugins/administrative_templates/admx/policylongdecimalelement.h"
@@ -140,9 +141,66 @@ public:
             checkBox->connect(checkBox, &QCheckBox::toggled, []() { *m_dataChanged = true; });
 
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, checkBox, this]() {
-                if (!(*m_stateEnabled))
-                {
+            m_saveButton->connect(
+                    m_saveButton, &QPushButton::clicked, [elementInfo, checkBox, this]() {
+                        const auto booleanElement =
+                                dynamic_cast<PolicyBoolElement *>(elementInfo.element);
+
+                        if (!booleanElement) {
+                            // TODO: Write normal warning message.
+                            return;
+                        }
+
+                        if (!(*m_stateEnabled)) {
+                            return;
+                        }
+                        qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                                   << " " << elementInfo.value.c_str();
+
+                        // If has one of list.
+                        if (booleanElement->hasFalseList || booleanElement->hasTrueList) {
+                            // Select the appropriate list
+                            const auto &setList = checkBox->checkState() == Qt::Checked
+                                    ? booleanElement->trueList
+                                    : booleanElement->falseList;
+
+                            for (const auto &booleanValue : setList) {
+                                // If the key is not present, then select the one to which
+                                // elementInfo is linked
+                                const std::string &key = booleanValue.keyPresent()
+                                        ? booleanValue.key()
+                                        : elementInfo.key;
+
+                                qWarning() << "Presentation builder::save: " << key.c_str() << " "
+                                           << booleanValue.valueName().c_str();
+
+                                switch (booleanValue.type()) {
+
+                                case BooleanValue::BOOLEAN_VALUE_TYPE_DELETED:
+                                    m_source->clearValue(key, booleanValue.valueName());
+                                    break;
+
+                                case BooleanValue::BOOLEAN_VALUE_TYPE_DECIMAL:
+                                    m_source->setValue(key, booleanValue.valueName(),
+                                                       RegistryEntryType::REG_DWORD,
+                                                       booleanValue.decimal());
+                                    break;
+
+                                case BooleanValue::BOOLEAN_VALUE_TYPE_LONGDECIMAL:
+                                    m_source->setValue(key, booleanValue.valueName(),
+                                                       RegistryEntryType::REG_QWORD,
+                                                       booleanValue.longDecimal());
+                                    break;
+
+                                case BooleanValue::BOOLEAN_VALUE_TYPE_STRING:
+                                    m_source->setValue(
+                                            key, booleanValue.valueName(),
+                                            RegistryEntryType::REG_SZ,
+                                            QString::fromStdString(booleanValue.string()));
+                                    break;
+                                }
+                            }
+                            /// Needed set key.value from elementInfo to true false?
                     return;
                 }
                 qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "

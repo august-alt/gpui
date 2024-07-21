@@ -106,8 +106,7 @@ public:
     static std::unique_ptr<model::admx::AbstractRegistryValue> create(const Value &element)
     {
         if (element.decimal().present()) {
-            auto value = std::make_unique<model::admx::RegistryValue<uint32_t>>(
-                    element.decimal()->value());
+            auto value = std::make_unique<model::admx::RegistryValue<uint32_t>>(element.decimal()->value());
             value->type = model::admx::RegistryValueType::DECIMAL;
             return value;
         }

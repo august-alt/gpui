@@ -147,8 +147,8 @@ private:
     bool m_has_key;
     bool m_has_value_name;
 
-    std::string m_value_name;
-    std::string m_key;
+    std::string m_value_name{};
+    std::string m_key{};
     union {
         unsigned int m_decimal;
         unsigned long long m_long_decimal;

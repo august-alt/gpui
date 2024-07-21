@@ -30,13 +30,19 @@ namespace admx {
 /*!
  * \brief Construct BooleanValue with deleted value.
  */
-BooleanValue::BooleanValue() : m_type(BOOLEAN_VALUE_TYPE_DELETED) { }
+BooleanValue::BooleanValue()
+    : m_type(BOOLEAN_VALUE_TYPE_DELETED), m_has_key(false), m_has_value_name(false)
+{
+}
 
 /*!
  * \brief Construct BooleanValue with decimal value.
  */
 BooleanValue::BooleanValue(unsigned int decimalValue)
-    : m_type(BOOLEAN_VALUE_TYPE_DECIMAL), m_decimal(decimalValue)
+    : m_type(BOOLEAN_VALUE_TYPE_DECIMAL),
+      m_has_key(false),
+      m_has_value_name(false),
+      m_decimal(decimalValue)
 {
 }
 
@@ -44,7 +50,10 @@ BooleanValue::BooleanValue(unsigned int decimalValue)
  * \brief Construct BooleanValue with long decimal value.
  */
 BooleanValue::BooleanValue(unsigned long long longDecimalValue)
-    : m_type(BOOLEAN_VALUE_TYPE_LONGDECIMAL), m_long_decimal(longDecimalValue)
+    : m_type(BOOLEAN_VALUE_TYPE_LONGDECIMAL),
+      m_has_key(false),
+      m_has_value_name(false),
+      m_long_decimal(longDecimalValue)
 {
 }
 
@@ -52,14 +61,15 @@ BooleanValue::BooleanValue(unsigned long long longDecimalValue)
  * \brief Construct BooleanValue with string value
  */
 BooleanValue::BooleanValue(const std::string &string)
-    : m_type(BOOLEAN_VALUE_TYPE_STRING), m_string(string)
+    : m_type(BOOLEAN_VALUE_TYPE_STRING), m_has_key(false), m_has_value_name(false), m_string(string)
 {
 }
 
 /*!
  * \brief Copy-constructor
  */
-BooleanValue::BooleanValue(const BooleanValue &value) : m_type(value.m_type)
+BooleanValue::BooleanValue(const BooleanValue &value)
+    : m_type(value.m_type), m_has_key(false), m_has_value_name(false)
 {
     switch (this->m_type) {
     case BOOLEAN_VALUE_TYPE_DECIMAL:
@@ -75,7 +85,8 @@ BooleanValue::BooleanValue(const BooleanValue &value) : m_type(value.m_type)
 /*!
  * \brief Move-constructor
  */
-BooleanValue::BooleanValue(BooleanValue &&value) : m_type(value.m_type)
+BooleanValue::BooleanValue(BooleanValue &&value)
+    : m_type(value.m_type), m_has_key(false), m_has_value_name(false)
 {
     switch (this->m_type) {
     case BOOLEAN_VALUE_TYPE_DECIMAL:

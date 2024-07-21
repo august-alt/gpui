@@ -150,9 +150,39 @@ void BooleanValue::setValue(unsigned long long longDecimal)
 }
 
 /*!
+ * \brief Set value name.
+ */
+void BooleanValue::setValueName(const std::string &valueName)
+{
+    this->m_value_name = valueName;
+}
+/*!
+ * \brief Set key.
+ */
+void BooleanValue::setKey(const std::string &key)
+{
+    this->m_key = key;
+}
+
+/*!
+ * \brief Return value name.
+ */
+const std::string &BooleanValue::valueName() const
+{
+    return this->m_value_name;
+}
+/*!
+ * \brief Return key.
+ */
+const std::string &BooleanValue::key() const
+{
+    return this->m_key;
+}
+
+/*!
  * \brief Return string value.
  */
-BooleanValue::Type BooleanValue::type()
+BooleanValue::Type BooleanValue::type() const
 {
     return this->m_type;
 }
@@ -161,7 +191,7 @@ BooleanValue::Type BooleanValue::type()
  * \brief Return string value.
  * \throw std::runtime_error if BooleanValue type is't string
  */
-const std::string &BooleanValue::string()
+const std::string &BooleanValue::string() const
 {
     if (this->m_type != BOOLEAN_VALUE_TYPE_STRING) {
         throw std::runtime_error("wrong type for BooleanValue");
@@ -174,7 +204,7 @@ const std::string &BooleanValue::string()
  * \brief Return decimal value.
  * \throw std::runtime_error if BooleanValue type is't decimal
  */
-unsigned int BooleanValue::decimal()
+unsigned int BooleanValue::decimal() const
 {
     if (this->m_type != BOOLEAN_VALUE_TYPE_DECIMAL) {
         throw std::runtime_error("wrong type for BooleanValue");
@@ -186,13 +216,28 @@ unsigned int BooleanValue::decimal()
  * \brief Return decimal value.
  * \throw std::runtime_error if BooleanValue type is't decimal
  */
-unsigned long long BooleanValue::longDecimal()
+unsigned long long BooleanValue::longDecimal() const
 {
     if (this->m_type != BOOLEAN_VALUE_TYPE_LONGDECIMAL) {
         throw std::runtime_error("wrong type for BooleanValue");
     }
 
     return this->m_long_decimal;
+}
+
+/*!
+ * \brief Return true if key is present.
+ */
+bool BooleanValue::keyPresent() const
+{
+    return this->m_has_key;
+}
+/*!
+ * \brief Return true if value name is present.
+ */
+bool BooleanValue::valuePresent() const
+{
+    return this->m_has_value_name;
 }
 
 /*!

@@ -43,23 +43,14 @@ public:
     };
 
     /*!
-     * \brief Type of boolean value
-     */
-    Type type{ BOOLEAN_VALUE_TYPE_DELETED };
-    /*!
      * \brief True if the key is present, i.e. false
      */
     bool has_key{ false };
 
     /*!
-     * \brief Contain value name
+     * \brief Type of boolean value
      */
-    std::string value_name{};
-    /*!
-     * \brief Contain the key if the key is present, i.e. UB
-     */
-    std::string key{};
-
+    Type type{ BOOLEAN_VALUE_TYPE_DELETED };
     /*!
      * \brief Contains a decimal number if the type is BOOLEAN_VALUE_TYPE_DECIMAL, i.e. UB
      */
@@ -72,6 +63,15 @@ public:
      * \brief Contains a string if the type is BOOLEAN_VALUE_TYPE_STRING, i.e. UB
      */
     std::string string{};
+
+    /*!
+     * \brief Contain value name
+     */
+    std::string value_name{};
+    /*!
+     * \brief Contain the key if the key is present, i.e. UB
+     */
+    std::string key{};
 };
 } // namespace admx
 } // namespace model

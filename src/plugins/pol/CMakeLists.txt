@@ -21,6 +21,8 @@ set(SOURCES
     iconvwrapper.cpp
 )
 
+add_subdirectory(schemas)
+
 add_gpui_plugin(pol-plugin ${SOURCES})
 target_link_libraries(pol-plugin Qt5::Core)
 target_link_libraries(pol-plugin ${GPUI_LIBRARIES})

@@ -51,13 +51,33 @@ namespace model
             BooleanList falseList{};
 
             /*!
+             * \brief The trueValue the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanValue trueValue{};
+            /*!
+             * \brief The falseValue the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanValue falseValue{};
+
+            /*!
              * \brief Information about the existence of trueList
              */
-            bool hasTrueList{};
+            bool hasTrueList{ false };
             /*!
              * \brief Information about the existence of falseList
              */
-            bool hasFalseList{};
+            bool hasFalseList{ false };
+
+            /*!
+            * \brief True if has true value in trueList.
+            */
+            bool hasTrueValue{ false };
+            /*!
+            * \brief True if has false value in falseList.
+            */
+            bool hasFalseValue{ false };
 
             registry::RegistryEntryType getRegistryEntryType() const override
             {

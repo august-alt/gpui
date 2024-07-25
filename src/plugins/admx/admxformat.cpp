@@ -305,8 +305,11 @@ public:
         }
         
         if(element.trueValue().present()) {
-            this->hasTrueList = true;
-            this->trueList.emplace_back(XsdValueToAdmxBooleanValue(element.trueValue().get()));
+            this->hasTrueValue = true;
+            this->trueValue = XsdValueToAdmxBooleanValue(element.trueValue().get());
+            
+            this->trueValue.key = this->key;
+            this->trueValue.value_name = this->valueName;
         }
 
         if (element.falseList().present()) {
@@ -315,8 +318,11 @@ public:
         }
 
         if(element.falseValue().present()) {
-            this->hasFalseList = true;
-            this->trueList.emplace_back(XsdValueToAdmxBooleanValue(element.falseValue().get()));
+            this->hasFalseValue = true;
+            this->falseValue = XsdValueToAdmxBooleanValue(element.falseValue().get());
+
+            this->falseValue.key = this->key;
+            this->falseValue.value_name = this->valueName;
         }
     }
 

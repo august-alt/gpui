@@ -43,6 +43,7 @@
 
 #include "../plugins/administrative_templates/registry/abstractregistrysource.h"
 
+#include "../plugins/administrative_templates/admx/policybooleanelement.h"
 #include "../plugins/administrative_templates/admx/policydecimalelement.h"
 #include "../plugins/administrative_templates/admx/policylistelement.h"
 #include "../plugins/administrative_templates/admx/policylongdecimalelement.h"
@@ -120,6 +121,124 @@ public:
         PolicyElement *element = nullptr;
     };
 
+private:
+    static void processValue(AbstractRegistrySource *source, const ElementInfo &elementInfo, const BooleanValue &value)
+    {
+        const std::string &key =
+                value.has_key ? value.key : elementInfo.key;
+
+        qWarning() << "Presentation builder::save: " << key.c_str() << " "
+                    << value.value_name.c_str();
+
+        
+        switch (value.type) {
+        case BooleanValue::BOOLEAN_VALUE_TYPE_DELETED:
+            source->clearValue(key, value.value_name);
+            break;
+
+        case BooleanValue::BOOLEAN_VALUE_TYPE_DECIMAL:
+            source->setValue(key, value.value_name,
+                                RegistryEntryType::REG_DWORD,
+                                value.decimal);
+            break;
+
+        case BooleanValue::BOOLEAN_VALUE_TYPE_LONGDECIMAL:
+            source->setValue(key, value.value_name,
+                                RegistryEntryType::REG_QWORD,
+                                value.long_decimal);
+            break;
+
+        case BooleanValue::BOOLEAN_VALUE_TYPE_STRING:
+            source->setValue(key, value.value_name,
+                                RegistryEntryType::REG_SZ,
+                                QString::fromStdString(value.string));
+            break;
+        }
+    }
+    static void processValueList(AbstractRegistrySource *source, const ElementInfo &elementInfo, const PolicyBoolElement::BooleanList &booleanValueList)
+    {
+        for (const auto &el : booleanValueList)
+        {
+            processValue(source, elementInfo, el);
+        }
+    }
+
+    static bool checkValue(AbstractRegistrySource *source, const ElementInfo &elementInfo, const BooleanValue &booleanValue)
+    {
+        const std::string &key =
+                booleanValue.has_key ? booleanValue.key : elementInfo.key;
+        
+        if(source->isValuePresent(key, booleanValue.value_name))
+        {
+            QVariant value = source->getValue(key, booleanValue.value_name);
+
+            switch (value.type()){
+            case QVariant::UInt:
+                if(booleanValue.type == BooleanValue::BOOLEAN_VALUE_TYPE_DECIMAL)
+                {
+                    return value.toUInt() == booleanValue.decimal;
+                }
+                return false;
+            case QVariant::ULongLong:
+                if(booleanValue.type == BooleanValue::BOOLEAN_VALUE_TYPE_LONGDECIMAL)
+                {
+                    return value.toULongLong() == booleanValue.long_decimal;
+                }
+                return false;
+            break;
+            case QVariant::String:
+                if(booleanValue.type == BooleanValue::BOOLEAN_VALUE_TYPE_STRING)
+                {
+                    return value.toString().toStdString() == booleanValue.string;
+                }
+                return false;
+            break;
+            default:
+            return false;
+            }
+            return false;
+        }
+        if(booleanValue.type == BooleanValue::BOOLEAN_VALUE_TYPE_DELETED)
+        {
+            return true;
+        }
+        return false;
+    }
+    static bool checkValueList(AbstractRegistrySource *source, const ElementInfo &elementInfo, const PolicyBoolElement::BooleanList &booleanValueList)
+    {
+        for (const auto &el : booleanValueList)
+        {
+            if(!checkValue(source, elementInfo, el))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static bool checkStatus(AbstractRegistrySource *source, const ElementInfo &elementInfo)
+    {
+        const auto booleanElement =
+                dynamic_cast<PolicyBoolElement *>(elementInfo.element);
+        if (booleanElement == nullptr) {
+            qWarning() << "Presentation builder::builder: the element attached to the checkbox is not a BooleanElement";
+            return false;
+        }
+
+        if (!source->isValuePresent(elementInfo.key, elementInfo.value)) {
+            return false;
+        }
+        if (booleanElement->hasTrueValue || booleanElement->hasFalseValue)
+        {
+            return checkValue(source, elementInfo, booleanElement->trueValue);
+        }
+        if(booleanElement->hasTrueList || booleanElement->hasFalseList)
+        {
+            return checkValueList(source, elementInfo, booleanElement->trueList);
+        }
+        return source->getValue(elementInfo.key, elementInfo.value).value<bool>();
+    }
+
 public:
     virtual void visit(CheckBox &widget) const override
     {
@@ -131,24 +250,58 @@ public:
         if (m_policy && m_source)
         {
             const ElementInfo elementInfo = findElementInfo();
+            const auto booleanElement =
+                    dynamic_cast<PolicyBoolElement *>(elementInfo.element);
 
-            if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
-            {
-                checkBox->setChecked(m_source->getValue(elementInfo.key, elementInfo.value).value<bool>());
+            if (booleanElement == nullptr) {
+                qWarning() << "Presentation builder::builder: the element attached to the checkbox is not a BooleanElement";
+                return;
             }
 
+            checkBox->setChecked(checkStatus(m_source, elementInfo));
             checkBox->connect(checkBox, &QCheckBox::toggled, []() { *m_dataChanged = true; });
 
             // TODO: Implement correct type on save.
-            m_saveButton->connect(m_saveButton, &QPushButton::clicked, [elementInfo, checkBox, this]() {
-                if (!(*m_stateEnabled))
-                {
-                    return;
-                }
-                qWarning() << "Presentation builder::save: " << elementInfo.key.c_str() << " "
-                           << elementInfo.value.c_str();
-                int checked = checkBox->checkState() == Qt::Checked ? 1 : 0;
-                m_source->setValue(elementInfo.key, elementInfo.value, RegistryEntryType::REG_DWORD, checked);
+            m_saveButton->connect(
+                    m_saveButton, &QPushButton::clicked, [elementInfo, checkBox, booleanElement, this]() {
+                        int checked = checkBox->checkState() == Qt::Checked ? 1 : 0;
+
+                        if (!(*m_stateEnabled)) {
+                            return;
+                        }
+                        if (!booleanElement) {
+                            qWarning() << "Presentation builder::builder: the element attached to the checkbox is not a BooleanElement";
+                            return;
+                        }
+                        if(booleanElement->hasFalseList != booleanElement->hasTrueList)
+                        {
+                            qWarning() << "Presentation builder::save: one of trueList/falseList is't present";
+                        }
+                        if (booleanElement->hasTrueValue != booleanElement->hasFalseValue)
+                        {
+                            qWarning() << "Presentation builder::save: one of trueValue/falseValue is't present";
+                        }
+
+                        // If has one of list.
+                        if (booleanElement->hasFalseList || booleanElement->hasTrueList) {
+                            const auto &setList = checked
+                                    ? booleanElement->trueList
+                                    : booleanElement->falseList;
+
+                            processValueList(m_source, elementInfo, setList);
+                        }
+
+                        // If we has one of trueValue/falseValue, then we don't calling setValue for elementiInfo.key elementInfo.value
+                        if (booleanElement->hasTrueValue || booleanElement->hasFalseValue)
+                        {
+                            processValue(m_source, elementInfo, checked ? booleanElement->trueValue : booleanElement->falseValue);
+                            return;
+                        }
+
+                        qWarning() << "Presentation builder::save: " << elementInfo.key.c_str()
+                                << " " << elementInfo.value.c_str();
+                        m_source->setValue(elementInfo.key, elementInfo.value,
+                                        RegistryEntryType::REG_DWORD, checked);
             });
         }
 

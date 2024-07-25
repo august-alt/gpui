@@ -22,22 +22,69 @@
 #define GPUI_POLICYboolELEMENT_H
 
 #include "policyelement.h"
+#include "booleanvalue.h"
 
 #include <string>
+#include <vector>
 
 namespace model
 {
-namespace admx
-{
-/*!
- * \brief A choice element in a policy with associated values for the true and false cases.
- */
-class PolicyBoolElement : public PolicyElement
-{
-public:
-    registry::RegistryEntryType getRegistryEntryType() const override { return registry::REG_DWORD; }
-};
-} // namespace admx
+    namespace admx
+    {
+        /*!
+         * \brief A choice element in a policy with associated values for the true and false cases.
+         */
+        class PolicyBoolElement : public PolicyElement
+        {
+        public:
+            typedef std::vector<BooleanValue> BooleanList;
+
+            /*!
+             * \brief The trueValue element sets the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanList trueList{};
+            /*!
+             * \brief The falseValue element sets the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanList falseList{};
+
+            /*!
+             * \brief The trueValue the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanValue trueValue{};
+            /*!
+             * \brief The falseValue the registry value for the true condition of a boolean
+             * element.
+             */
+            BooleanValue falseValue{};
+
+            /*!
+             * \brief Information about the existence of trueList
+             */
+            bool hasTrueList{ false };
+            /*!
+             * \brief Information about the existence of falseList
+             */
+            bool hasFalseList{ false };
+
+            /*!
+            * \brief True if has true value in trueList.
+            */
+            bool hasTrueValue{ false };
+            /*!
+            * \brief True if has false value in falseList.
+            */
+            bool hasFalseValue{ false };
+
+            registry::RegistryEntryType getRegistryEntryType() const override
+            {
+                return registry::REG_DWORD;
+            }
+        };
+    } // namespace admx
 } // namespace model
 
 #endif // GPUI_POLICYboolELEMENT_H

@@ -17,6 +17,7 @@ include_directories("${CMAKE_SOURCE_DIR}/src/core")
 set(HEADERS
     administrativetemplates.h
     administrativetemplatessnapin.h
+    admx/booleanvalue.h
     admx/category.h
     admx/majorversion.h
     admx/minorversion.h

@@ -1,6 +1,6 @@
 find_package(Qt5 COMPONENTS Core LinguistTools REQUIRED)
 
-find_package(MVVM REQUIRED)
+find_package(MVVM)
 
 find_package(GPUI COMPONENTS core io gui REQUIRED)
 include_directories(${PREFERENCES_EDITOR_INCLUDE_DIRS})

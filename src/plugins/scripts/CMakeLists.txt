@@ -1,6 +1,6 @@
 find_package(GPUI COMPONENTS core io REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Core LinguistTools REQUIRED)
-find_package(MVVM REQUIRED)
+find_package(MVVM)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(Smbclient REQUIRED IMPORTED_TARGET smbclient)

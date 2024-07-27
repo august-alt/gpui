@@ -2,7 +2,7 @@ find_package(Qt5 COMPONENTS Widgets Qml LinguistTools REQUIRED)
 
 find_package(GPUI COMPONENTS core io REQUIRED)
 
-find_package(MVVM REQUIRED)
+find_package(MVVM)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

@@ -1,0 +1,23 @@
+Source: gpui
+Section: admin
+Priority: optional
+Maintainer: Vladimir Rubanov <august@altlinux.org>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13), debhelper (>= 11),
+ cmake, xsdcxx, doxygen,
+ libboost-all-dev, libxerces-c-dev,
+ qtbase5-dev, qtdeclarative5-dev,
+ libqt5help5, qttools5-dev, libldap2-dev, pkgconf, samba-dev (>=4.9), libsmbclient-dev, libkrb5-dev, libglib2.0-dev, libsasl2-dev
+Standards-Version: 4.6.2
+Homepage: https://github.com/august-alt/gpui
+Vcs-Browser: https://github.com/august-alt/gpui
+Vcs-Git: https://github.com/august-alt/gpui.git
+
+Package: gpui
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: GPUI
+ A GUI utility to manage group policy in Active Directory.

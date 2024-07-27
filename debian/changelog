@@ -1,0 +1,5 @@
+gpui (0.2.45) UNRELEASED; urgency=medium
+
+  * Fix creation of gpt.ini while saving.
+
+ -- Vladimir Rubanov <august@altlinux.org>  Thu, 6 Jun 2024 00:00:00 +0000

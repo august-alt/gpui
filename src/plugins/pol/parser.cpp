@@ -156,7 +156,7 @@ std::string PRegParser::getKey(std::istream &stream)
     // Remove last symbol
     stream.seekg(-2, std::ios::cur);
 
-    return { std::move(key) };
+    return { key };
 }
 
 std::string PRegParser::getKeypath(std::istream &stream)
@@ -221,7 +221,7 @@ std::string PRegParser::getValue(std::istream &stream)
         return {};
     }
 
-    return { std::move(result) };
+    return { result };
 }
 
 PolicyData PRegParser::getData(std::istream &stream, PolicyRegType type, uint32_t size)

@@ -19,45 +19,44 @@
 ***********************************************************************************************************************/
 
 #include "poltest.h"
-
-#include "../../../../src/io/registryfile.h"
-#include "../../../../src/plugins/administrative_templates/registry/registry.h"
-#include "../../../../src/plugins/administrative_templates/registry/registryentry.h"
-#include "../../../../src/plugins/pol/polformat.h"
+#include "binary.h"
+#include "endian.h"
+#include "generatecase.h"
 
 #include <fstream>
 #include <iostream>
 
-const std::string dataPath = "../../../data/";
-
-namespace tests
-{
+namespace tests {
 void PolTest::read()
 {
-    gpui::PolFormat format;
+    testEndian();
+    testBinary();
+    testCase("case1.pol");
+    testCase("case2.pol");
+    generateCase(100);
+    /*
+        gpui::PolFormat format;
 
-    std::ifstream file;
+        std::ifstream file;
 
-    file.open(dataPath + "example.pol", std::ifstream::in);
+        file.open(dataPath + "example.pol", std::ifstream::in);
 
-    if (file.good())
-    {
-        std::unique_ptr<io::RegistryFile> registry = std::make_unique<io::RegistryFile>();
+        if (file.good()) {
+            std::unique_ptr<io::RegistryFile> registry = std::make_unique<io::RegistryFile>();
 
-        format.read(file, registry.get());
+            format.read(file, registry.get());
 
-        for (auto &entry : registry->getRegistry()->registryEntries)
-        {
-            if (entry)
-            {
-                std::cout << "Key name " << entry->key.toStdString() << std::endl;
-                std::cout << "Value name " << entry->value.toStdString() << std::endl;
-                std::cout << "Type " << entry->type << std::endl;
+            for (auto &entry : registry->getRegistry()->registryEntries) {
+                if (entry) {
+                    std::cout << "Key name " << entry->key.toStdString() << std::endl;
+                    std::cout << "Value name " << entry->value.toStdString() << std::endl;
+                    std::cout << "Type " << entry->type << std::endl;
+                }
             }
         }
-    }
 
-    file.close();
+        file.close();
+    */
 }
 
 } // namespace tests

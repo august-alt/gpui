@@ -205,6 +205,7 @@ public:
 
             return registryEntry;
         }
+        case pol::PolicyRegType::REG_QWORD_BIG_ENDIAN:
         case pol::PolicyRegType::REG_QWORD_LITTLE_ENDIAN: {
             auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint64_t>>();
 
@@ -215,7 +216,6 @@ public:
 
             return registryEntry;
         }
-        case pol::PolicyRegType::REG_QWORD_BIG_ENDIAN:
         case pol::PolicyRegType::REG_RESOURCE_LIST:
         case pol::PolicyRegType::REG_FULL_RESOURCE_DESCRIPTOR:
         case pol::PolicyRegType::REG_RESOURCE_REQUIREMENTS_LIST:

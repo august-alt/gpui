@@ -52,7 +52,6 @@ RUN apt-get update \
     xvfb-run \
     sudo \
     ctest \
-    ragel \
     && export CURRENT_PWD=`pwd` \
     && if [ $(getent group $GROUP_ID) ]; then \
       echo "group $GROUP_ID exists."; \

@@ -150,12 +150,11 @@ pol::PolicyData generateRandomData(pol::PolicyRegType type, std::mt19937 &gen)
     }
 }
 
-void generateCase(size_t last, size_t seed = -1)
+pol::PolicyFile generateCase(size_t seed = -1)
 {
     std::mt19937 gen;
     std::uniform_int_distribution<std::mt19937::result_type> dist(0, 500);
-    auto parser = pol::createPregParser();
-    size_t current = 0;
+    pol::PolicyFile data;
 
     if (seed == -1) {
         std::random_device dev;
@@ -165,31 +164,16 @@ void generateCase(size_t last, size_t seed = -1)
         gen.seed(seed);
     }
 
-    qWarning() << "Begin test with generating cases. Seed:" << seed;
-
-    while (current <= last) {
-        std::stringstream file;
-
-        // Generate case
-        pol::PolicyFile data;
-        data.body = std::make_optional<pol::PolicyBody>();
-        size_t el = dist(gen);
-        for (size_t i = 0; i < el; i++) {
-            pol::PolicyInstruction instruction;
-            instruction.type = generateRandomType(gen);
-            instruction.data = generateRandomData(instruction.type, gen);
-            data.body->instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] =
-                    std::move(instruction);
-        }
-
-        parser->write(file, data);
-        file.seekg(0, std::ios::beg);
-
-        auto test = parser->parse(file);
-        QCOMPARE(data, test);
-
-        qDebug() << "Generated" << current << "case: OK";
-
-        ++current;
+    // Generate case
+    data.body = std::make_optional<pol::PolicyBody>();
+    size_t el = dist(gen);
+    for (size_t i = 0; i < el; i++) {
+        pol::PolicyInstruction instruction;
+        instruction.type = generateRandomType(gen);
+        instruction.data = generateRandomData(instruction.type, gen);
+        data.body->instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] =
+                std::move(instruction);
     }
+
+    return data;  
 }

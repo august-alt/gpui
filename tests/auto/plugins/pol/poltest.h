@@ -29,7 +29,11 @@ namespace tests {
         Q_OBJECT
 
         private slots:
-            void read();
+            void endianness();
+            void binary();
+            void case1();
+            void case2();
+            void autogenerateCases();
     };
 }
 

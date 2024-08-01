@@ -27,15 +27,27 @@
 #include <iostream>
 
 namespace tests {
-void PolTest::read()
+
+void PolTest::endianness()
 {
     testEndian();
+}
+void PolTest::binary()
+{
     testBinary();
+}
+void PolTest::case1()
+{
     testCase("case1.pol");
+}
+void PolTest::case2()
+{
     testCase("case2.pol");
+}
+void PolTest::autogenerateCases()
+{
     generateCase(100);
 }
-
 } // namespace tests
 
 QTEST_MAIN(tests::PolTest)

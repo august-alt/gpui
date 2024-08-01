@@ -34,29 +34,6 @@ void PolTest::read()
     testCase("case1.pol");
     testCase("case2.pol");
     generateCase(100);
-    /*
-        gpui::PolFormat format;
-
-        std::ifstream file;
-
-        file.open(dataPath + "example.pol", std::ifstream::in);
-
-        if (file.good()) {
-            std::unique_ptr<io::RegistryFile> registry = std::make_unique<io::RegistryFile>();
-
-            format.read(file, registry.get());
-
-            for (auto &entry : registry->getRegistry()->registryEntries) {
-                if (entry) {
-                    std::cout << "Key name " << entry->key.toStdString() << std::endl;
-                    std::cout << "Value name " << entry->value.toStdString() << std::endl;
-                    std::cout << "Type " << entry->type << std::endl;
-                }
-            }
-        }
-
-        file.close();
-    */
 }
 
 } // namespace tests

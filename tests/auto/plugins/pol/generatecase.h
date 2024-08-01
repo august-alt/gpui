@@ -166,7 +166,7 @@ void generateCase(size_t last, size_t seed = -1)
         gen.seed(seed);
     }
 
-    std::cout << std::endl << "Begin test with generating cases. Seed: " << seed << std::endl;
+    qWarning() << "Begin test with generating cases. Seed:" << seed;
 
     while (current <= last) {
         std::stringstream file;
@@ -188,11 +188,11 @@ void generateCase(size_t last, size_t seed = -1)
 
         auto test = parser->parse(file);
         if (data != test) {
-            std::cerr << "error: one of generated files detect error in parser." << std::endl;
+            qCritical() << "one of generated files detect error in parser";
             assert(0);
         }
 
-        std::cout << "Generated " << current << " case: OK" << std::endl;
+        qDebug() << "Generated" << current << "case: OK";
 
         ++current;
     }

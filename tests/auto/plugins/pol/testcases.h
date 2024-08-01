@@ -38,10 +38,10 @@ void testCase(std::string filename)
     auto pol2 = parser->parse(stream);
 
     if (pol != pol2) {
-        std::cout << "`" << filename << "` is rewrite: FAIL" << std::endl;
+        qCritical() << "`" + QString::fromStdString(filename) + "` << is rewrite: FAIL";
         throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                                  + ", Encountered with invalid parser/serializer work.");
     }
 
-    std::cout << "`" << filename << "` is rewrite: OK" << std::endl;
+    qDebug() << "`" << filename.c_str() << "` is rewrite: OK";
 }

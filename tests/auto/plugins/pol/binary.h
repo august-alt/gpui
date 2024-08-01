@@ -39,7 +39,7 @@ void testBufferToIntegral()
 
     assert(result.value_or(0) == num);
 
-    std::cout << "bufferToIntegral<uint32_t, true>: OK" << std::endl;
+    qDebug() << "bufferToIntegral<uint32_t, true>: OK";
 
     //----------------------------------------------//
 
@@ -53,7 +53,7 @@ void testBufferToIntegral()
     std::reverse(tmp, tmp + 4);
     assert(result.value_or(0) == num);
 
-    std::cout << "bufferToIntegral<uint32_t, false>: OK" << std::endl;
+    qDebug() << "bufferToIntegral<uint32_t, false>: OK";
 }
 
 void testIntegralToBuffer() { }

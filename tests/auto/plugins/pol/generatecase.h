@@ -26,7 +26,6 @@
 
 #include "../../../../src/plugins/pol/encoding.h"
 #include "../../../../src/plugins/pol/parser.h"
-#include "./testcases.h"
 
 std::string generateRandomKey(size_t length, std::mt19937 &gen)
 {
@@ -171,8 +170,7 @@ pol::PolicyFile generateCase(size_t seed = -1)
         pol::PolicyInstruction instruction;
         instruction.type = generateRandomType(gen);
         instruction.data = generateRandomData(instruction.type, gen);
-        data.body->instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] =
-                std::move(instruction);
+        data.body->instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] = { instruction };
     }
 
     return data;  

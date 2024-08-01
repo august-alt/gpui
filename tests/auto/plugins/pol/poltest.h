@@ -37,7 +37,7 @@ private slots:
     void autogenerateCases_data();
 
     void testCase(QString filename);
-    void autogenerateCases(pol::PolicyFile files);
+    void autogenerateCases(size_t seed);
 };
 } // namespace tests
 

@@ -87,9 +87,9 @@ void PolTest::testCase_data()
     QTest::newRow("case2") << "case2.pol";
 }
 
-void autogenerateCases_data()
+void PolTest::autogenerateCases_data()
 {
-    QTest::addColumn<pol::PolicyFile>("files");
+    QTest::addColumn<uint64_t>("seed");
 
     std::mt19937 gen;
     std::random_device dev;
@@ -99,7 +99,7 @@ void autogenerateCases_data()
 
     for (size_t i = 0; i < 50; ++i) {
         std::string name = std::to_string(i) + ". seed " + std::to_string(seed);
-        QTest::newRow(name.c_str()) << generateCase(seed);
+        QTest::newRow(name.c_str()) << seed;
     }
 }
 
@@ -120,8 +120,9 @@ void PolTest::testCase(QString filename)
     QVERIFY2(pol == pol2, failMessage.c_str());
 }
 
-void PolTest::autogenerateCases(pol::PolicyFile policyFile)
+void PolTest::autogenerateCases(size_t seed)
 {
+    pol::PolicyFile policyFile = generateCase(seed);
     std::stringstream file;
     auto parser = pol::createPregParser();
 

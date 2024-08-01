@@ -80,7 +80,7 @@ typedef struct PolicyInstruction
     PolicyData data{};
 } PolicyInstruction;
 
-typedef std::unordered_map<std::string, std::unordered_map<std::string, PolicyInstruction>>
+typedef std::unordered_map<std::string, std::unordered_map<std::string, std::vector<PolicyInstruction>>>
         PolicyTree;
 
 typedef struct PolicyBody

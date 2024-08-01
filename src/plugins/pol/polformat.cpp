@@ -49,10 +49,8 @@ public:
         if (tree.find(key) == tree.end()) {
             tree[key] = {};
         }
-        if (tree[key].find(value) != tree[key].end()) {
-            qWarning() << "Duplicate policy entry with key: " << entry->key
-                       << ", value:" << entry->value;
-            return;
+        if (tree[key].find(value) == tree[key].end()) {
+            tree[key][value] = {};
         }
 
         switch (entry->type) {
@@ -119,7 +117,7 @@ public:
         }
         }
 
-        tree[key][value] = instruction;
+        tree[key][value].emplace_back(instruction);
     }
 
     static std::unique_ptr<model::registry::AbstractRegistryEntry>
@@ -243,10 +241,12 @@ bool PolFormat::read(std::istream &input, io::RegistryFile *file)
     }
 
     for (const auto &[key, record] : result.body->instructions) {
-        for (const auto &[value, data] : record) {
-            auto registryEntry = RegistryEntryAdapter::create(data, key, value);
-            if (registryEntry.get()) {
-                registry->registryEntries.push_back(std::move(registryEntry));
+        for (const auto &[value, array] : record) {
+            for(const auto &entry : array) {
+                auto registryEntry = RegistryEntryAdapter::create(entry, key, value);
+                if (registryEntry.get()) {
+                    registry->registryEntries.push_back(std::move(registryEntry));
+                }
             }
         }
     }

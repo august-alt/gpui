@@ -69,8 +69,10 @@ bool PRegParser::write(std::ostream &stream, const PolicyFile &file)
 
     writeHeader(stream);
     for (const auto &[key, records] : file.body->instructions) {
-        for (const auto &[value, instruction] : records) {
-            writeInstruction(stream, instruction, key, value);
+        for (const auto &[value, array] : records) {
+            for (const auto &instruction : array) {
+                writeInstruction(stream, instruction, key, value);
+            }
         }
     }
 
@@ -289,12 +291,10 @@ void PRegParser::insertInstruction(std::istream &stream, PolicyTree &tree)
         if (tree.find(keyPath) == tree.end()) {
             tree[keyPath] = {};
         }
-        if (tree[keyPath].find(value) != tree[keyPath].end()) {
-            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
-                                     + ", Instruction with key: " + keyPath + ", value: " + value
-                                     + " already exists.");
+        if (tree[keyPath].find(value) == tree[keyPath].end()) {
+            tree[keyPath][value] = {};
         }
-        tree[keyPath][value] = std::move(instruction);
+        tree[keyPath][value].emplace_back(std::move(instruction));
 
     } catch (const std::exception &e) {
         throw std::runtime_error(std::string(e.what()) + "\nLINE: " + std::to_string(__LINE__)

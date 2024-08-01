@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <cassert>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -187,10 +186,7 @@ void generateCase(size_t last, size_t seed = -1)
         file.seekg(0, std::ios::beg);
 
         auto test = parser->parse(file);
-        if (data != test) {
-            qCritical() << "one of generated files detect error in parser";
-            assert(0);
-        }
+        QCOMPARE(data, test);
 
         qDebug() << "Generated" << current << "case: OK";
 

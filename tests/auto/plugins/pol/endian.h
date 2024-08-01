@@ -22,7 +22,6 @@
 
 #include "../../../../src/plugins/pol/encoding.h"
 #include <algorithm>
-#include <cassert>
 #include <cinttypes>
 #include <iostream>
 #include <sstream>
@@ -31,19 +30,18 @@ void testEndian()
 {
 
     uint8_t num1 = 0x12;
-    assert(pol::byteswap<uint8_t>(num1) == 0x12);
-    qDebug() << "byteswap<uint8_t>: OK";
+    QCOMPARE(pol::byteswap<uint8_t>(num1), 0x12);
 
     uint16_t num2 = 0x1234;
-    assert(pol::byteswap<uint16_t>(num2) == 0x3412);
+    QCOMPARE(pol::byteswap<uint16_t>(num2), 0x3412);
     qDebug() << "byteswap<uint16_t>: OK";
 
     uint32_t num3 = 0x12345678;
-    assert(pol::byteswap<uint32_t>(num3) == 0x78563412);
+    QCOMPARE(pol::byteswap<uint32_t>(num3), 0x78563412);
     qDebug() << "byteswap<uint32_t>: OK";
 
     uint64_t num4 = 0x123456789ABCDEF0;
-    assert(pol::byteswap<uint64_t>(num4) == 0xF0DEBC9A78563412);
+    QCOMPARE(pol::byteswap<uint64_t>(num4), 0xF0DEBC9A78563412);
     qDebug() << "byteswap<uint64_t>: OK";
 }
 

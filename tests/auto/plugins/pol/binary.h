@@ -22,7 +22,6 @@
 
 #include "../../../../src/plugins/pol/binary.h"
 #include <algorithm>
-#include <cassert>
 #include <iostream>
 #include <sstream>
 
@@ -35,9 +34,9 @@ void testBufferToIntegral()
     buffer.write(tmp, 4);
     buffer.seekg(0);
 
-    std::optional<uint32_t> result = pol::bufferToIntegral<uint32_t, true>(buffer);
+    uint32_t result = pol::bufferToIntegral<uint32_t, true>(buffer);
 
-    assert(result.value_or(0) == num);
+    QCOMPARE(result, num);
 
     qDebug() << "bufferToIntegral<uint32_t, true>: OK";
 
@@ -51,7 +50,7 @@ void testBufferToIntegral()
     result = pol::bufferToIntegral<uint32_t, false>(buffer);
 
     std::reverse(tmp, tmp + 4);
-    assert(result.value_or(0) == num);
+    QCOMPARE(result, num);
 
     qDebug() << "bufferToIntegral<uint32_t, false>: OK";
 }

@@ -21,48 +21,52 @@
 #ifndef PREGPARSER_COMMON
 #define PREGPARSER_COMMON
 
-#define check_stream(target)                                                                       \
-    {                                                                                              \
-        if (target.fail()) {                                                                       \
-            if (target.eof()) {                                                                    \
-                throw std::runtime_error("LINE: " + std::to_string(__LINE__)                       \
-                                         + ", FILE: " + __FILE__                                   \
-                                         + ", Failed to read/write buffer, EOF was encountered."); \
-            }                                                                                      \
-            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__   \
-                                     + ", Failed to read/write buffer, error was encountered.");   \
-        }                                                                                          \
+#include "./encoding.h"
+
+namespace pol 
+{
+inline void check_stream(std::istream &target)
+{
+    if (target.fail()) {
+        if (target.eof()) {
+            throw std::runtime_error("LINE: " + std::to_string(__LINE__)
+                                     + ", FILE: " + __FILE__
+                                     + ", Failed to read buffer, EOF was encountered.");
+        }
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__)
+                                    + ", FILE: " + __FILE__
+                                    + ", Failed to read buffer, error was encountered.");
     }
-#define check_sym(target, sym)                                                                     \
-    {                                                                                              \
-        char16_t buff;                                                                             \
-                                                                                                   \
-        target.read(reinterpret_cast<char *>(&buff), 2);                                           \
-        buff = leToNative(buff);                                                                   \
-                                                                                                   \
-        if (target.fail()) {                                                                       \
-            if (target.eof()) {                                                                    \
-                throw std::runtime_error("LINE: " + std::to_string(__LINE__)                       \
-                                         + ", FILE: " + __FILE__                                   \
-                                         + ", Failed to read/write buffer, EOF was encountered."); \
-            }                                                                                      \
-            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__   \
-                                     + ", Failed to read/write buffer, error was encountered.");   \
-        }                                                                                          \
-        if (buff != sym) {                                                                         \
-            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__   \
-                                     + ", Unexpected symbol" + std::string({ sym, '\x00' })        \
-                                     + ".");                                                       \
-        }                                                                                          \
+}
+inline void check_stream(std::ostream &target)
+{
+    if (target.fail()) {
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__)
+                                    + ", FILE: " + __FILE__
+                                    + ", Failed to write buffer, error was encountered.");
     }
-#define write_sym(target, sym)                                                                   \
-    {                                                                                            \
-        char16_t buff = leToNative(char16_t(sym));                                               \
-        target.write(reinterpret_cast<char *>(&buff), 2);                                        \
-        if (target.fail()) {                                                                     \
-            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__ \
-                                     + ", Failed to read/write buffer, error was encountered."); \
-        }                                                                                        \
+}
+inline void check_sym(std::istream &target, char16_t sym)
+{
+    char16_t buff;
+    target.read(reinterpret_cast<char *>(&buff), 2);
+    buff = leToNative(buff);
+
+    check_stream(target);
+
+    if (buff != sym) {
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__)
+                                    + ", FILE: " + __FILE__
+                                    + ", Failed to read/write buffer, invalid symbol was encountered.");
     }
+}
+inline void write_sym(std::ostream &target, char16_t sym)
+{
+    sym = nativeToLe(sym);
+    target.write(reinterpret_cast<char *>(&sym), 2);
+
+    check_stream(target);
+}
+} // namespace pol
 
 #endif // PREGPARSER_COMMON

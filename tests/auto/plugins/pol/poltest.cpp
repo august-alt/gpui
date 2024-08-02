@@ -19,10 +19,10 @@
 ***********************************************************************************************************************/
 
 #include "poltest.h"
-#include "generatecase.h"
 #include "../../../../src/plugins/pol/binary.h"
 #include "../../../../src/plugins/pol/encoding.h"
 #include "../../../../src/plugins/pol/parser.h"
+#include "generatecase.h"
 
 #include <fstream>
 #include <iostream>
@@ -49,6 +49,7 @@ void PolTest::endianness()
     QCOMPARE(pol::byteswap<uint64_t>(num4), 0xF0DEBC9A78563412);
     qDebug() << "byteswap<uint64_t>: OK";
 }
+
 void PolTest::bufferToIntegral()
 {
     std::stringstream buffer;

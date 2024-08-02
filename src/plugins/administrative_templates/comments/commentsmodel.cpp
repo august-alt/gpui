@@ -162,7 +162,7 @@ void savePolicies(const QString &pluginName, const QString &fileName, std::share
 
 QString constructCMTLFileName(const QFileInfo &fileName)
 {
-    QString admlFileName = fileName.fileName();
+    QString admlFileName = fileName.filePath();
     admlFileName.replace(admlFileName.length() - 4, 4, "cmtl");
 
     return admlFileName;

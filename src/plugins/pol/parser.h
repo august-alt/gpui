@@ -80,7 +80,8 @@ typedef struct PolicyInstruction
     PolicyData data{};
 } PolicyInstruction;
 
-typedef std::unordered_map<std::string, std::unordered_map<std::string, std::vector<PolicyInstruction>>>
+typedef std::unordered_map<std::string,
+                           std::unordered_map<std::string, std::vector<PolicyInstruction>>>
         PolicyTree;
 
 typedef struct PolicyBody
@@ -148,6 +149,26 @@ private:
      */
     void insertInstruction(std::istream &stream, PolicyTree &tree);
 
+    /*!
+     * \brief Matches regex `([\x20-\x5B\x5D-\x7E]\x00)+` and throws an
+     * std::runtime_error if it completely does not match the regex
+     */
+    void validateKey(std::string::const_iterator &begin, std::string::const_iterator &end);
+    /*!
+     * \brief Matches regex
+     * `((:?([\x20-\x5B\x5D-\x7E]\x00)+)(:?\x5C\x00([\x20-\x5B\x5D-\x7E]\x00)+)+)` and throws an
+     * std::runtime_error if it completely does not match the regex
+     */
+    void validateKeypath(std::string::const_iterator begin, std::string::const_iterator end);
+    /*!
+     * \brief Matches regex `((:?[\x20-\x7E]\x00){1,259})` and throws an
+     * std::runtime_error if it completely does not match the regex
+     */
+    void validateValue(std::string::const_iterator begin, std::string::const_iterator end);
+    /*!
+     * \brief Validate type and throw an std::runtime_error if it is invalid
+     */
+    void validateType(PolicyRegType type);
     /*!
      * \brief Put `\x50\x52\x65\x67\x01\x00\x00\x00` into stream
      */

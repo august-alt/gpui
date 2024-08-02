@@ -87,16 +87,14 @@ PRegParser::~PRegParser()
 
 void PRegParser::parseHeader(std::istream &stream)
 {
-    char header[8];
-    stream.read(header, 8);
+    char buffer[8];
+    stream.read(buffer, 8);
     check_stream(stream);
 
-    const uint32_t signature = *reinterpret_cast<uint32_t *>(&header[0]);
-    const uint32_t version = *reinterpret_cast<uint32_t *>(&header[4]);
-    const uint32_t normal_signature = *reinterpret_cast<const uint32_t *>(&valid_header[0]);
-    const uint32_t normal_version = *reinterpret_cast<const uint32_t *>(&valid_header[4]);
+    const uint64_t header = *reinterpret_cast<uint64_t *>(&buffer[0]);
+    const uint64_t normal_header = *reinterpret_cast<const uint64_t *>(&valid_header[0]);
 
-    if (signature != normal_signature && version != normal_version) {
+    if (header != normal_header) {
         throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                                  + ", Encountered with invalid header.");
     }
@@ -139,6 +137,7 @@ std::string PRegParser::getKey(std::istream &stream)
 
     stream.read(reinterpret_cast<char *>(&data), 2);
     check_stream(stream);
+
     data = leToNative(data);
 
     while (data >= 0x20 && data <= 0x7E && data != 0x5C) {
@@ -146,6 +145,7 @@ std::string PRegParser::getKey(std::istream &stream)
 
         stream.read(reinterpret_cast<char *>(&data), 2);
         check_stream(stream);
+
         data = leToNative(data);
     }
 
@@ -357,11 +357,90 @@ void PRegParser::writeHeader(std::ostream &stream)
     stream.write(valid_header, sizeof(valid_header));
 }
 
+void PRegParser::validateKey(std::string::const_iterator &begin, std::string::const_iterator &end)
+{
+    auto cursor = begin;
+
+    while (cursor != end && *cursor >= 0x20 && *cursor <= 0x7E && *cursor != 0x5C) {
+        ++cursor;
+    }
+
+    if (cursor == begin) {
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Key is empty.");
+    }
+    begin = cursor;
+}
+
+void PRegParser::validateKeypath(std::string::const_iterator begin, std::string::const_iterator end)
+{
+    if (begin == end) {
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Keypath is empty.");
+    }
+    while (begin != end) {
+        validateKey(begin, end);
+
+        if (begin != end && *begin != 0x5C) {
+            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                     + ", Invalid character in key was encountered.");
+        }
+
+        // Skip 0x5C character
+        ++begin;
+    }
+}
+void PRegParser::validateValue(std::string::const_iterator begin, std::string::const_iterator end)
+{
+    if (begin == end) {
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Value is empty.");
+    }
+
+    while (begin != end) {
+        if (*begin < 0x20 || *begin > 0x7E) {
+            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                     + ", Invalid character in value was encountered.");
+        }
+        ++begin;
+    }
+}
+
+void PRegParser::validateType(PolicyRegType type)
+{
+    switch (type) {
+    default:
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Unexpected type UNKNOWN.");
+    case PolicyRegType::REG_NONE:
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Unexpected type REG_NONE.");
+
+    case PolicyRegType::REG_SZ:
+    case PolicyRegType::REG_EXPAND_SZ:
+    case PolicyRegType::REG_BINARY:
+    case PolicyRegType::REG_DWORD_LITTLE_ENDIAN:
+    case PolicyRegType::REG_DWORD_BIG_ENDIAN:
+    case PolicyRegType::REG_LINK:
+    case PolicyRegType::REG_MULTI_SZ:
+    case PolicyRegType::REG_RESOURCE_LIST:
+    case PolicyRegType::REG_FULL_RESOURCE_DESCRIPTOR:
+    case PolicyRegType::REG_RESOURCE_REQUIREMENTS_LIST:
+    case PolicyRegType::REG_QWORD_LITTLE_ENDIAN:
+    case PolicyRegType::REG_QWORD_BIG_ENDIAN:
+        break;
+    }
+}
+
 void PRegParser::writeInstruction(std::ostream &stream, const PolicyInstruction &instruction,
                                   std::string key, std::string value)
 {
 
     try {
+        validateKeypath(key.begin(), key.end());
+        validateValue(value.begin(), value.end());
+        validateType(instruction.type);
+
         write_sym(stream, '[');
 
         stringToBuffer(stream, key);

@@ -20,319 +20,235 @@
 
 #include "polformat.h"
 
-#include "pregdata.h"
-#include "pregparser.h"
-#include "pregwriter.h"
-
 #include "../../../src/plugins/administrative_templates/registry/registry.h"
 #include "../../../src/plugins/administrative_templates/registry/registryentry.h"
 #include "../../../src/plugins/administrative_templates/registry/registryentrytype.h"
 
+#include "parser.h"
+
 #include <byteswap.h>
+#include <tuple>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 
 using namespace model::registry;
 
-namespace gpui
-{
+namespace gpui {
 class RegistryEntryAdapter
 {
-private:
-    static std::unique_ptr<model::registry::AbstractRegistryEntry> adaptCharEntry(
-        const preg::PregEntry &entry, model::registry::RegistryEntryType type)
-    {
-        auto registryEntry   = std::make_unique<model::registry::RegistryEntry<QString>>();
-        registryEntry->key   = entry.key.c_str();
-        registryEntry->type  = type;
-        registryEntry->value = entry.value.c_str();
-        if (entry.data)
-        {
-            void *pt            = entry.data;
-            size_t requiredSize = entry.size;
-            registryEntry->data = QString::fromUtf16(
-                reinterpret_cast<char16_t *>(std::align(alignof(char16_t), sizeof(char), pt, requiredSize)));
-            delete[] entry.data;
-        }
-
-        return registryEntry;
-    }
-
-    static std::unique_ptr<model::registry::AbstractRegistryEntry> adaptUInt32Entry(
-        const preg::PregEntry &entry, model::registry::RegistryEntryType type, bool bigEndian = false)
-    {
-        auto registryEntry   = std::make_unique<model::registry::RegistryEntry<uint32_t>>();
-        registryEntry->key   = entry.key.c_str();
-        registryEntry->type  = type;
-        registryEntry->value = entry.value.c_str();
-        if (entry.data)
-        {
-            uint32_t data = (uint32_t)((uint8_t) entry.data[0]) | (uint32_t)((uint8_t) entry.data[1]) << 8
-                            | (uint32_t)((uint8_t) entry.data[2]) << 16 | (uint32_t)((uint8_t) entry.data[3]) << 24;
-
-            if (bigEndian)
-            {
-                data = bswap_32(data);
-            }
-            registryEntry->data = data;
-            delete[] entry.data;
-        }
-
-        return registryEntry;
-    }
-
-    static std::unique_ptr<model::registry::AbstractRegistryEntry> adaptUInt64Entry(
-        const preg::PregEntry &entry, model::registry::RegistryEntryType type, bool bigEndian = false)
-    {
-        auto registryEntry   = std::make_unique<model::registry::RegistryEntry<uint64_t>>();
-        registryEntry->key   = entry.key.c_str();
-        registryEntry->type  = type;
-        registryEntry->value = entry.value.c_str();
-        if (entry.data)
-        {
-            uint64_t data = (uint64_t)((uint8_t) entry.data[0]) | (uint64_t)((uint8_t) entry.data[1]) << 8
-                            | (uint64_t)((uint8_t) entry.data[2]) << 16 | (uint64_t)((uint8_t) entry.data[3]) << 24
-                            | (uint64_t)((uint8_t) entry.data[4]) << 32 | (uint64_t)((uint8_t) entry.data[5]) << 40
-                            | (uint64_t)((uint8_t) entry.data[6]) << 48 | (uint64_t)((uint8_t) entry.data[7]) << 56;
-            if (bigEndian)
-            {
-                data = bswap_64(data);
-            }
-            registryEntry->data = data;
-            delete[] entry.data;
-        }
-
-        return registryEntry;
-    }
-
-    static std::unique_ptr<model::registry::AbstractRegistryEntry> adaptMultiLineEntry(
-        const preg::PregEntry &entry, model::registry::RegistryEntryType type)
-    {
-        auto registryEntry   = std::make_unique<model::registry::RegistryEntry<QStringList>>();
-        registryEntry->key   = entry.key.c_str();
-        registryEntry->type  = type;
-        registryEntry->value = entry.value.c_str();
-        if (entry.data)
-        {
-            size_t size          = entry.size - 2 > 0 ? entry.size - 2 : entry.size;
-            void *pt             = entry.data;
-            size_t requiredSize  = entry.size;
-            const char16_t *data = reinterpret_cast<const char16_t *>(
-                std::align(alignof(char16_t), sizeof(char), pt, requiredSize));
-            std::vector<std::vector<char16_t>> list;
-            std::vector<char16_t> current;
-            qWarning() << "Data: "
-                       << QString::fromUtf16(reinterpret_cast<char16_t *>(
-                                                 std::align(alignof(char16_t), sizeof(char), pt, requiredSize)),
-                                             size / 2)
-                       << " size: " << size;
-            for (size_t i = 0; i < size / 2; ++i)
-            {
-                current.push_back(data[i]);
-                if (data[i] == 0)
-                {
-                    qWarning() << current << " split at: " << i;
-                    list.emplace_back(current);
-                    current.clear();
-                }
-            }
-            for (const auto &element : list)
-            {
-                registryEntry->data.push_back(QString::fromUtf16(element.data()));
-            }
-            delete[] entry.data;
-        }
-
-        return registryEntry;
-    }
-
 public:
-    static std::unique_ptr<model::registry::AbstractRegistryEntry> create(const preg::PregEntry &entry)
+    static void addInstruction(pol::PolicyTree &tree,
+                               const std::unique_ptr<model::registry::AbstractRegistryEntry> &entry)
     {
-        switch (entry.type)
-        {
-        case preg::REG_BINARY: {
-            return adaptCharEntry(entry, model::registry::REG_BINARY);
-        }
-        break;
+        pol::PolicyInstruction instruction;
 
-        case preg::REG_DWORD_LITTLE_ENDIAN: {
-            return adaptUInt32Entry(entry, model::registry::REG_DWORD);
-        }
-        break;
+        auto key = entry->key.toStdString();
+        auto value = entry->value.toStdString();
 
-        case preg::REG_DWORD_BIG_ENDIAN: {
-            return adaptUInt32Entry(entry, model::registry::REG_DWORD_BIG_ENDIAN, true);
+        if (tree.find(key) == tree.end()) {
+            tree[key] = {};
         }
-        break;
+        if (tree[key].find(value) == tree[key].end()) {
+            tree[key][value] = {};
+        }
 
-        case preg::REG_EXPAND_SZ: {
-            return adaptCharEntry(entry, model::registry::REG_EXPAND_SZ);
+        switch (entry->type) {
+        case model::registry::RegistryEntryType::REG_SZ: {
+            auto tmp = static_cast<RegistryEntry<QString> *>(entry.get());
+            instruction.type = pol::PolicyRegType::REG_SZ;
+            instruction.data = tmp->data.toStdString();
+            break;
         }
-        break;
-
-        case preg::REG_LINK: {
-            return adaptCharEntry(entry, model::registry::REG_BINARY);
-        }
-        break;
-
-        case preg::REG_MULTI_SZ: {
-            return adaptMultiLineEntry(entry, model::registry::REG_MULTI_SZ);
-        }
-        break;
-
-        case preg::REG_NONE: {
-            return adaptCharEntry(entry, model::registry::REG_BINARY);
-        }
-        break;
-
-        case preg::REG_QWORD: {
-            return adaptUInt64Entry(entry, model::registry::REG_QWORD, true);
-        }
-        break;
-
-        case preg::REG_QWORD_LITTLE_ENDIAN: {
-            return adaptUInt64Entry(entry, model::registry::REG_QWORD);
-        }
-        break;
-
-        case preg::REG_SZ: {
-            return adaptCharEntry(entry, model::registry::REG_SZ);
-        }
-        break;
-
-        default: {
-            qWarning() << "Unrecognized data type detected! " << entry.type;
-            delete[] entry.data;
-        }
-        break;
-        };
-
-        return nullptr;
-    }
-};
-
-class PregEntryAdapter
-{
-public:
-    static preg::PregEntry create(const std::unique_ptr<model::registry::AbstractRegistryEntry> &entry)
-    {
-        auto result  = preg::PregEntry();
-        result.key   = entry->key.toStdString();
-        result.value = entry->value.toStdString();
-        result.type  = entry->type;
-
-        switch (entry->type)
-        {
-        case REG_BINARY:
-        case REG_EXPAND_SZ:
-        case REG_SZ: {
-            auto binaryEntry      = static_cast<RegistryEntry<QString> *>(entry.get());
-            auto sixteenBitString = binaryEntry->data.toStdU16String();
-            size_t bufferSize     = sixteenBitString.size() * sizeof(char16_t);
-            char *stringData      = new char[bufferSize + 2];
-            memcpy(stringData, sixteenBitString.c_str(), bufferSize);
-            stringData[bufferSize]     = '\0';
-            stringData[bufferSize + 1] = '\0';
-            result.data                = stringData;
-            result.size                = bufferSize + 2;
-        }
-        break;
-        case REG_DWORD:
-        case REG_DWORD_BIG_ENDIAN: {
-            auto uint32Entry  = static_cast<RegistryEntry<uint32_t> *>(entry.get());
-            result.size       = 4;
-            size_t bufferSize = sizeof(uint32_t);
-            char *stringData  = new char[bufferSize];
-            stringData[0]     = (uint8_t)((uint8_t *) (&uint32Entry->data))[0];
-            stringData[1]     = (uint8_t)((uint8_t *) (&uint32Entry->data))[1];
-            stringData[2]     = (uint8_t)((uint8_t *) (&uint32Entry->data))[2];
-            stringData[3]     = (uint8_t)((uint8_t *) (&uint32Entry->data))[3];
-
-            result.data = stringData;
-        }
-        break;
-        case REG_QWORD: {
-            auto uint64Entry  = static_cast<RegistryEntry<uint64_t> *>(entry.get());
-            result.size       = 8;
-            size_t bufferSize = sizeof(uint64_t);
-            char *stringData  = new char[bufferSize];
-            stringData[0]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[0];
-            stringData[1]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[1];
-            stringData[2]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[2];
-            stringData[3]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[3];
-            stringData[4]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[4];
-            stringData[5]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[5];
-            stringData[6]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[6];
-            stringData[7]     = (uint8_t)((uint8_t *) (&uint64Entry->data))[7];
-            result.data       = stringData;
-        }
-        break;
-        case REG_MULTI_SZ: {
-            auto binaryEntry = static_cast<RegistryEntry<QStringList> *>(entry.get());
-            QByteArray byteArray;
-            for (const QString &str : binaryEntry->data)
-            {
-                auto sixteenBitString = str.toStdU16String();
-                size_t size           = sixteenBitString.size() * sizeof(char16_t);
-                byteArray.append(reinterpret_cast<const char *>(sixteenBitString.c_str()), size);
-                byteArray.append(2, '\0');
-            }
-            if (byteArray.size() == 0)
-            {
-                byteArray.append(4, '\0');
-            }
-            else
-            {
-                byteArray.append(2, '\0');
-            }
-            char *stringData = new char[byteArray.size()];
-            memcpy(stringData, byteArray, byteArray.size());
-            result.data = stringData;
-            result.size = byteArray.size();
-        }
-        break;
-        default:
+        case model::registry::RegistryEntryType::REG_EXPAND_SZ: {
+            auto tmp = static_cast<RegistryEntry<QString> *>(entry.get());
+            instruction.type = pol::PolicyRegType::REG_EXPAND_SZ;
+            instruction.data = tmp->data.toStdString();
             break;
         }
 
-        return result;
+        case model::registry::RegistryEntryType::REG_BINARY: {
+            auto tmp = static_cast<RegistryEntry<QString> *>(entry.get());
+            instruction.type = pol::PolicyRegType::REG_BINARY;
+
+            auto tmp2 = tmp->data.toStdString();
+
+            std::vector<uint8_t> data;
+            data.resize(tmp->data.size());
+            memcpy(data.data(), tmp2.data(), tmp2.size());
+            instruction.data = std::move(data);
+            break;
+        }
+
+        case model::registry::RegistryEntryType::REG_MULTI_SZ: {
+            auto tmp = static_cast<RegistryEntry<QStringList> *>(entry.get());
+            instruction.type = pol::PolicyRegType::REG_MULTI_SZ;
+            std::vector<std::string> data;
+            data.reserve(tmp->data.size());
+            for (const auto &str : tmp->data) {
+                data.push_back(str.toStdString());
+            }
+            instruction.data = std::move(data);
+            break;
+        }
+
+        case model::registry::RegistryEntryType::REG_DWORD: {
+            auto tmp = static_cast<RegistryEntry<quint32> *>(entry.get());
+            instruction.type = pol::PolicyRegType::REG_DWORD_LITTLE_ENDIAN;
+            instruction.data = static_cast<uint32_t>(tmp->data);
+            break;
+        }
+
+        case model::registry::RegistryEntryType::REG_DWORD_BIG_ENDIAN: {
+            auto tmp = static_cast<RegistryEntry<quint64> *>(entry.get());
+            instruction.type = pol::PolicyRegType::REG_DWORD_BIG_ENDIAN;
+            instruction.data = static_cast<uint32_t>(tmp->data);
+            break;
+        }
+        case model::registry::RegistryEntryType::REG_QWORD: {
+            auto tmp = static_cast<RegistryEntry<quint32> *>(entry.get());
+            instruction.type = pol::PolicyRegType::REG_QWORD_LITTLE_ENDIAN;
+            instruction.data = static_cast<uint64_t>(tmp->data);
+            break;
+        }
+        default: {
+            qWarning() << "Unrecognized data type `REG_NONE` detected! ";
+            return;
+        }
+        }
+
+        tree[key][value].emplace_back(instruction);
+    }
+
+    static std::unique_ptr<model::registry::AbstractRegistryEntry>
+    create(const pol::PolicyInstruction &entry, const std::string &key, const std::string &value)
+    {
+        switch (entry.type) {
+        case pol::PolicyRegType::REG_SZ: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<QString>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_SZ;
+            registryEntry->data = QString::fromStdString(std::get<std::string>(entry.data));
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_EXPAND_SZ: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<QString>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_EXPAND_SZ;
+            registryEntry->data = QString::fromStdString(std::get<std::string>(entry.data));
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_BINARY: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<QString>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_BINARY;
+            auto &data = std::get<std::vector<uint8_t>>(entry.data);
+            registryEntry->data = QString::fromStdString(
+                    { reinterpret_cast<const char *>(data.data()), data.size() });
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_DWORD_LITTLE_ENDIAN: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint32_t>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_DWORD;
+            registryEntry->data = std::get<uint32_t>(entry.data);
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_DWORD_BIG_ENDIAN: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint32_t>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_DWORD_BIG_ENDIAN;
+            registryEntry->data = std::get<uint32_t>(entry.data);
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_LINK: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<QString>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_BINARY;
+
+            auto &data = registryEntry->data =
+                    QString::fromStdString(std::get<std::string>(entry.data));
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_MULTI_SZ: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<QStringList>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_MULTI_SZ;
+
+            auto &data = std::get<std::vector<std::string>>(entry.data);
+            registryEntry->data.reserve(data.size());
+            for (const auto &datum : data) {
+                registryEntry->data.append(QString::fromStdString(datum));
+            }
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_QWORD_BIG_ENDIAN:
+        case pol::PolicyRegType::REG_QWORD_LITTLE_ENDIAN: {
+            auto registryEntry = std::make_unique<model::registry::RegistryEntry<uint64_t>>();
+
+            registryEntry->key = QString::fromStdString(key);
+            registryEntry->value = QString::fromStdString(value);
+            registryEntry->type = model::registry::RegistryEntryType::REG_QWORD;
+            registryEntry->data = std::get<uint64_t>(entry.data);
+
+            return registryEntry;
+        }
+        case pol::PolicyRegType::REG_RESOURCE_LIST:
+        case pol::PolicyRegType::REG_FULL_RESOURCE_DESCRIPTOR:
+        case pol::PolicyRegType::REG_RESOURCE_REQUIREMENTS_LIST:
+        default:
+        case pol::PolicyRegType::REG_NONE:
+            qWarning() << "Unrecognized data type detected! " << static_cast<int>(entry.type);
+            return nullptr;
+        }
     }
 };
 
-PolFormat::PolFormat()
-    : RegistryFileFormat("pol")
-{}
+PolFormat::PolFormat() : RegistryFileFormat("pol") { }
 
 bool PolFormat::read(std::istream &input, io::RegistryFile *file)
 {
     auto registry = std::make_shared<model::registry::Registry>();
 
-    try
-    {
-        auto parser = std::make_unique<preg::PregParser>(input);
+    auto parser = pol::createPregParser();
+    pol::PolicyFile result;
+    try {
+        result = parser->parse(input);
+    } catch (const std::exception &e) {
+        qWarning() << e.what();
+        return false;
+    }
 
-        preg::PregEntry entry;
-
-        while (auto entryPointer = parser->getNextEntry())
-        {
-            auto registryEntry = RegistryEntryAdapter::create(*entryPointer);
-            if (registryEntry.get())
-            {
-                registry->registryEntries.push_back(std::move(registryEntry));
+    for (const auto &[key, record] : result.instructions) {
+        for (const auto &[value, array] : record) {
+            for(const auto &entry : array) {
+                auto registryEntry = RegistryEntryAdapter::create(entry, key, value);
+                if (registryEntry.get()) {
+                    registry->registryEntries.push_back(std::move(registryEntry));
+                }
             }
         }
-    }
-    catch (preg::InvalidMagic &e)
-    {
-        setErrorString(e.what());
-        return false;
-    }
-    catch (preg::InvalidVersion &e)
-    {
-        setErrorString(e.what());
-        return false;
     }
 
     file->setRegistry(registry);
@@ -342,34 +258,17 @@ bool PolFormat::read(std::istream &input, io::RegistryFile *file)
 
 bool PolFormat::write(std::ostream &output, io::RegistryFile *file)
 {
-    auto writer = std::make_unique<preg::PregWriter>(&output);
+    auto writer = pol::createPregParser();
+    auto result = pol::PolicyFile();
 
-    try
-    {
-        for (const auto &entry : file->getRegistry()->registryEntries)
-        {
-            auto pregEntry = PregEntryAdapter::create(entry);
-            writer->addEntry(pregEntry);
-
-            switch (pregEntry.type)
-            {
-            case REG_DWORD:
-            case REG_DWORD_BIG_ENDIAN:
-            case REG_QWORD:
-            case REG_BINARY:
-            case REG_EXPAND_SZ:
-            case REG_MULTI_SZ:
-            case REG_SZ: {
-                delete[] pregEntry.data;
-            }
-            default:
-                break;
-            }
-        }
+    for (const auto &entry : file->getRegistry()->registryEntries) {
+        RegistryEntryAdapter::addInstruction(result.instructions, entry);
     }
-    catch (std::exception &e)
-    {
-        setErrorString(e.what());
+
+    try {
+        writer->write(output, result);
+    } catch (const std::exception &e) {
+        qWarning() << e.what();
         return false;
     }
 

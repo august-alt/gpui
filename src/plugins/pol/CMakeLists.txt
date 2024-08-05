@@ -3,22 +3,21 @@ include_directories(${GPUI_INCLUDE_DIRS})
 
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
+set(CMAKE_CXX_STANDARD 17)
+
 set(HEADERS
     polformat.h
-
-    pregdata.h
-    pregparser.h
-    iconvwrapper.h
+    common.h
+    encoding.h
+    parser.h
 )
 
 set(SOURCES
+    binary.cpp
+    parser.cpp
+
     polplugin.cpp
     polformat.cpp
-
-    pregdata.cpp
-    pregparser.cpp
-    pregwriter.cpp
-    iconvwrapper.cpp
 )
 
 add_gpui_plugin(pol-plugin ${SOURCES})

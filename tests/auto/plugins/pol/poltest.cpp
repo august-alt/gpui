@@ -19,47 +19,120 @@
 ***********************************************************************************************************************/
 
 #include "poltest.h"
-
-#include "../../../../src/io/registryfile.h"
-#include "../../../../src/plugins/administrative_templates/registry/registry.h"
-#include "../../../../src/plugins/administrative_templates/registry/registryentry.h"
-#include "../../../../src/plugins/pol/polformat.h"
+#include "../../../../src/plugins/pol/binary.h"
+#include "../../../../src/plugins/pol/encoding.h"
+#include "../../../../src/plugins/pol/parser.h"
+#include "generatecase.h"
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 const std::string dataPath = "../../../data/";
 
-namespace tests
+namespace tests {
+
+void PolTest::endianness()
 {
-void PolTest::read()
-{
-    gpui::PolFormat format;
+    uint8_t num1 = 0x12;
+    QCOMPARE(pol::byteswap<uint8_t>(num1), 0x12);
 
-    std::ifstream file;
+    uint16_t num2 = 0x1234;
+    QCOMPARE(pol::byteswap<uint16_t>(num2), 0x3412);
+    qDebug() << "byteswap<uint16_t>: OK";
 
-    file.open(dataPath + "example.pol", std::ifstream::in);
+    uint32_t num3 = 0x12345678;
+    QCOMPARE(pol::byteswap<uint32_t>(num3), 0x78563412);
+    qDebug() << "byteswap<uint32_t>: OK";
 
-    if (file.good())
-    {
-        std::unique_ptr<io::RegistryFile> registry = std::make_unique<io::RegistryFile>();
-
-        format.read(file, registry.get());
-
-        for (auto &entry : registry->getRegistry()->registryEntries)
-        {
-            if (entry)
-            {
-                std::cout << "Key name " << entry->key.toStdString() << std::endl;
-                std::cout << "Value name " << entry->value.toStdString() << std::endl;
-                std::cout << "Type " << entry->type << std::endl;
-            }
-        }
-    }
-
-    file.close();
+    uint64_t num4 = 0x123456789ABCDEF0;
+    QCOMPARE(pol::byteswap<uint64_t>(num4), 0xF0DEBC9A78563412);
+    qDebug() << "byteswap<uint64_t>: OK";
 }
 
+void PolTest::bufferToIntegralLe()
+{
+    std::stringstream buffer;
+    char tmp[4] = { 0x12, 0x34, 0x56, 0x78 };
+    const uint32_t &num = *reinterpret_cast<uint32_t *>(&tmp[0]);
+
+    buffer.write(tmp, 4);
+    buffer.seekg(0);
+
+    uint32_t result = pol::readIntegralFromBuffer<uint32_t, true>(buffer);
+
+    QCOMPARE(result, num);
+}
+
+void PolTest::bufferToIntegralBe()
+{
+    std::stringstream buffer;
+    char tmp[4] = { 0x12, 0x34, 0x56, 0x78 };
+    const uint32_t &num = *reinterpret_cast<uint32_t *>(&tmp[0]);
+    uint32_t result;
+
+    buffer.write(reinterpret_cast<const char *>(&num), 4);
+    buffer.seekg(0);
+
+    result = pol::readIntegralFromBuffer<uint32_t, false>(buffer);
+
+    std::reverse(tmp, tmp + 4);
+    QCOMPARE(result, num);
+}
+
+void PolTest::testCase_data()
+{
+    QTest::addColumn<QString>("filename");
+
+    QTest::newRow("case1") << "case1.pol";
+    QTest::newRow("case2") << "case2.pol";
+}
+
+void PolTest::autogenerateCases_data()
+{
+    QTest::addColumn<uint64_t>("seed");
+
+    std::mt19937 gen;
+    std::random_device dev;
+    size_t seed = dev();
+
+    gen.seed(seed);
+
+    for (size_t i = 0; i < 50; ++i) {
+        std::string name = std::to_string(i) + ". seed " + std::to_string(seed);
+        QTest::newRow(name.c_str()) << seed;
+    }
+}
+
+void PolTest::testCase(QString filename)
+{
+    auto stdFilename = filename.toStdString();
+
+    std::ifstream file(dataPath + stdFilename, std::ios::in | std::ios::binary);
+    std::stringstream stream;
+
+    auto parser = pol::createPregParser();
+    auto pol = parser->parse(file);
+
+    parser->write(stream, pol);
+    auto pol2 = parser->parse(stream);
+
+    auto failMessage = "`" + stdFilename + "` << is rewrite failed";
+    QVERIFY2(pol == pol2, failMessage.c_str());
+}
+
+void PolTest::autogenerateCases(size_t seed)
+{
+    pol::PolicyFile policyFile = generateCase(seed);
+    std::stringstream file;
+    auto parser = pol::createPregParser();
+
+    parser->write(file, policyFile);
+    file.seekg(0, std::ios::beg);
+
+    auto test = parser->parse(file);
+    QCOMPARE(policyFile, test);
+}
 } // namespace tests
 
 QTEST_MAIN(tests::PolTest)

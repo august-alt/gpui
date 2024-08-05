@@ -22,15 +22,24 @@
 #define GPUI_POL_TEST_H
 
 #include <QtTest>
+#include "../../../../src/plugins/pol/parser.h"
 
 namespace tests {
-    class PolTest : public QObject
-    {
-        Q_OBJECT
+class PolTest : public QObject
+{
+    Q_OBJECT
 
-        private slots:
-            void read();
-    };
-}
+private slots:
+    void endianness();
+    void bufferToIntegralLe();
+    void bufferToIntegralBe();
+
+    void testCase_data();
+    void autogenerateCases_data();
+
+    void testCase(QString filename);
+    void autogenerateCases(size_t seed);
+};
+} // namespace tests
 
 #endif // GPUI_POL_TEST_H

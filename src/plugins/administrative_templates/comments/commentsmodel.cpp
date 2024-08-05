@@ -160,11 +160,10 @@ void savePolicies(const QString &pluginName, const QString &fileName, std::share
     delete format;
 }
 
-QString constructCMTLFileName(const QFileInfo &fileName)
+QString constructCMTLFileName(const QFileInfo &fileName, const QString &localeName)
 {
-    QString admlFileName = fileName.filePath();
-    admlFileName.replace(admlFileName.length() - 4, 4, "cmtl");
-
+    QString localFolder = localeName.toLower(); // en-US -> en-us. ru-RU -> ru-ru and etc.
+    QString admlFileName = fileName.absoluteDir().path() + "/" + localFolder + "/" + fileName.baseName() + ".cmtl";
     return admlFileName;
 }
 
@@ -192,8 +191,9 @@ std::string constructPolicyRef(const std::string& id)
     return id.substr(4);
 }
 
-void CommentsModel::load(const QString &cmtxFileName)
+void CommentsModel::load(const QString &cmtxFileName, const QString &localeName)
 {
+    this->clear();
     auto commentDefinitions
         = loadPolicies<io::PolicyCommentsFile, io::PolicyFileFormat<io::PolicyCommentsFile>>("cmtx", cmtxFileName);
     if (!commentDefinitions.get())
@@ -203,9 +203,10 @@ void CommentsModel::load(const QString &cmtxFileName)
     }
 
     bool noCMTL = false;
-    QString cmtlFileName = constructCMTLFileName(cmtxFileName);
+    QString cmtlFileName = constructCMTLFileName(cmtxFileName, localeName);
     auto commentTranslations
         = loadPolicies<io::CommentResourcesFile, io::PolicyFileFormat<io::CommentResourcesFile>>("cmtl", cmtlFileName);
+
     if (!commentTranslations.get())
     {
         qWarning() << "File not found: " << cmtlFileName;
@@ -298,7 +299,7 @@ void CommentsModel::save(const QString &path, const QString& localeName)
 
     commentDefinitions->resources = std::make_unique<LocalizationResourceReference>();
 
-    bool enableLocalizedComments = localeName != "en-US";
+    bool englishLocalization = localeName != "en-US";
 
     for (const auto& comment : comments)
     {
@@ -321,42 +322,36 @@ void CommentsModel::save(const QString &path, const QString& localeName)
         currentComment.commentText = "$(resource." + resourceName + ")";
 
         commentDefinitions->comments.push_back(currentComment);
-
-        commentDefinitions->resources->stringTable.emplace_back((enableLocalizedComments
-                                                                ? ""
-                                                                : comment.second.toStdString()),
-                                                                resourceName);
     }
 
-    if (enableLocalizedComments)
+    QDir().mkpath(path + localeName.toLower());
+    auto cmtlFileName = path + localeName.toLower() + "/" + "comment.cmtl";
+
+    std::shared_ptr<comments::CommentDefinitionResources> commentResources
+            = std::make_shared<comments::CommentDefinitionResources>();
+
+    for (const auto& comment : comments)
     {
-        auto cmtlFileName = path + "comment.cmtl";
+        namespaceIndex = 0;
 
-        std::shared_ptr<comments::CommentDefinitionResources> commentResources
-                = std::make_shared<comments::CommentDefinitionResources>();
-
-        for (const auto& comment : comments)
+        for (const auto& currentNamespace : commentDefinitions->policyNamespaces.using_)
         {
-            namespaceIndex = 0;
-
-            for (const auto& currentNamespace : commentDefinitions->policyNamespaces.using_)
+            if (comment.namespace_.compare(currentNamespace.namespace_.c_str()) == 0)
             {
-                if (comment.namespace_.compare(currentNamespace.namespace_.c_str()) == 0)
-                {
-                    break;
-                }
-
-                namespaceIndex++;
+                break;
             }
 
-            commentResources->stringTable.emplace_back(comment.second.toStdString(),
-                                                       "ns" + std::to_string(namespaceIndex)
-                                                       + "_" + comment.first.toStdString());
+            namespaceIndex++;
         }
 
-        savePolicies<io::CommentResourcesFile, comments::CommentDefinitionResources>("cmtl", cmtlFileName,
-                                                                                     commentResources);
+        commentResources->stringTable.emplace_back(comment.second.toStdString(),
+                                                    "ns" + std::to_string(namespaceIndex)
+                                                    + "_" + comment.first.toStdString());
     }
+
+    savePolicies<io::CommentResourcesFile, comments::CommentDefinitionResources>("cmtl", cmtlFileName,
+                                                                                    commentResources);
+
 
     auto cmtxFileName = path + "comment.cmtx";
 

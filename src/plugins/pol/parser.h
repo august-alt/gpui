@@ -84,26 +84,18 @@ typedef std::unordered_map<std::string,
                            std::unordered_map<std::string, std::vector<PolicyInstruction>>>
         PolicyTree;
 
-typedef struct PolicyBody
+typedef struct PolicyFile
 {
-    inline bool operator==(const PolicyBody &other) const
+    inline bool operator==(const PolicyFile &other) const
     {
         return instructions == other.instructions;
     }
-    inline bool operator!=(const PolicyBody &other) const
+    inline bool operator!=(const PolicyFile &other) const
     {
         return instructions != other.instructions;
     }
 
     PolicyTree instructions{};
-} PolicyBody;
-
-typedef struct PolicyFile
-{
-    inline bool operator==(const PolicyFile &other) const { return body == other.body; }
-    inline bool operator!=(const PolicyFile &other) const { return body != other.body; }
-
-    std::optional<PolicyBody> body{};
 } PolicyFile;
 
 class PRegParser

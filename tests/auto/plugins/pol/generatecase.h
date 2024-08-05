@@ -166,13 +166,12 @@ pol::PolicyFile generateCase(size_t seed = -1)
     }
 
     // Generate case
-    data.body = std::make_optional<pol::PolicyBody>();
     size_t el = dist(gen);
     for (size_t i = 0; i < el; i++) {
         pol::PolicyInstruction instruction;
         instruction.type = generateRandomType(gen);
         instruction.data = generateRandomData(instruction.type, gen);
-        data.body->instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] = { instruction };
+        data.instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] = { instruction };
     }
 
     return data;  

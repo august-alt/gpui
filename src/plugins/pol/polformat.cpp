@@ -240,7 +240,7 @@ bool PolFormat::read(std::istream &input, io::RegistryFile *file)
         return false;
     }
 
-    for (const auto &[key, record] : result.body->instructions) {
+    for (const auto &[key, record] : result.instructions) {
         for (const auto &[value, array] : record) {
             for(const auto &entry : array) {
                 auto registryEntry = RegistryEntryAdapter::create(entry, key, value);
@@ -260,10 +260,9 @@ bool PolFormat::write(std::ostream &output, io::RegistryFile *file)
 {
     auto writer = pol::createPregParser();
     auto result = pol::PolicyFile();
-    result.body = std::make_optional<pol::PolicyBody>();
 
     for (const auto &entry : file->getRegistry()->registryEntries) {
-        RegistryEntryAdapter::addInstruction(result.body->instructions, entry);
+        RegistryEntryAdapter::addInstruction(result.instructions, entry);
     }
 
     try {

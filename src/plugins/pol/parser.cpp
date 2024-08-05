@@ -48,27 +48,23 @@ PRegParser::PRegParser()
 
 PolicyFile PRegParser::parse(std::istream &stream)
 {
-    PolicyBody body;
+    PolicyTree instructions;
 
     parseHeader(stream);
 
     stream.peek();
     while (!stream.eof()) {
-        insertInstruction(stream, body.instructions);
+        insertInstruction(stream, instructions);
         stream.peek();
     }
 
-    return { body };
+    return { instructions };
 }
 
 bool PRegParser::write(std::ostream &stream, const PolicyFile &file)
 {
-    if (!file.body.has_value()) {
-        return true;
-    }
-
     writeHeader(stream);
-    for (const auto &[key, records] : file.body->instructions) {
+    for (const auto &[key, records] : file.instructions) {
         for (const auto &[value, array] : records) {
             for (const auto &instruction : array) {
                 writeInstruction(stream, instruction, key, value);

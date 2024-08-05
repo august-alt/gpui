@@ -26,7 +26,7 @@
 #include <string.h>
 #include <type_traits>
 
-#include <iconv.h>
+#include "iconv.h"
 
 namespace pol {
 
@@ -152,7 +152,7 @@ inline std::basic_string<target_char> convert(string_const_iterator<source_char>
 
     while (inbytesLeft > 0) {
         auto ret = iconv(conv, &inbuf, &inbytesLeft, &outbuf, &outbytesLeft);
-        if (ret == static_cast<size_t>(-1) && errno != E2BIG) {
+        if (ret == ICONV_ERROR_CODE && errno != E2BIG) {
             throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                                      + ", Encountered corrupted unicode string.");
         }

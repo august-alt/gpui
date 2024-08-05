@@ -32,7 +32,7 @@ std::string readStringFromBuffer(std::istream &buffer, size_t size, iconv_t conv
         custom_conv = true;
     }
 
-    if (conv == reinterpret_cast<iconv_t>(-1)) {
+    if (conv == ICONV_ERROR_DESCRIPTOR) {
         throw std::runtime_error(
                 "LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                 + ", Encountered with the inability to create a iconv descriptor.");
@@ -67,7 +67,7 @@ size_t writeStringToBuffer(std::ostream &buffer, const std::string &source, icon
         custom_conv = true;
     }
 
-    if (conv == reinterpret_cast<iconv_t>(-1)) {
+    if (conv == ICONV_ERROR_DESCRIPTOR) {
         throw std::runtime_error(
                 "LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                 + ", Encountered with the inability to create a iconv descriptor.");
@@ -97,7 +97,7 @@ std::vector<std::string> readStringsFromBuffer(std::istream &buffer, size_t size
         custom_conv = true;
     }
 
-    if (conv == reinterpret_cast<iconv_t>(-1)) {
+    if (conv == ICONV_ERROR_DESCRIPTOR) {
         throw std::runtime_error(
                 "LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                 + ", Encountered with the inability to create a iconv descriptor.");

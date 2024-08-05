@@ -28,7 +28,7 @@
 #include <variant>
 #include <vector>
 
-#include <iconv.h>
+#include "iconv.h"
 
 namespace pol {
 

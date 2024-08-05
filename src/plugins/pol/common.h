@@ -23,6 +23,8 @@
 
 #include "./encoding.h"
 
+#include "iconv.h"
+
 namespace pol 
 {
 inline void check_stream(std::istream &target)

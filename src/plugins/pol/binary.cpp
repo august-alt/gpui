@@ -19,8 +19,8 @@
  */
 #include <iostream>
 
-#include "./binary.h"
-#include "./common.h"
+#include "binary.h"
+#include "common.h"
 
 namespace pol {
 

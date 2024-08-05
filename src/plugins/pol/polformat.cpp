@@ -24,7 +24,7 @@
 #include "../../../src/plugins/administrative_templates/registry/registryentry.h"
 #include "../../../src/plugins/administrative_templates/registry/registryentrytype.h"
 
-#include "./parser.h"
+#include "parser.h"
 
 #include <byteswap.h>
 #include <tuple>

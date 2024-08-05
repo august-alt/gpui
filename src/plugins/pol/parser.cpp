@@ -21,9 +21,9 @@
 #include <sstream>
 #include <vector>
 
-#include "./binary.h"
-#include "./common.h"
-#include "./parser.h"
+#include "binary.h"
+#include "common.h"
+#include "parser.h"
 
 namespace pol {
 

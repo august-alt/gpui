@@ -50,7 +50,7 @@ void PolTest::endianness()
     qDebug() << "byteswap<uint64_t>: OK";
 }
 
-void PolTest::bufferToIntegral()
+void PolTest::bufferToIntegralLe()
 {
     std::stringstream buffer;
     char tmp[4] = { 0x12, 0x34, 0x56, 0x78 };
@@ -62,12 +62,14 @@ void PolTest::bufferToIntegral()
     uint32_t result = pol::bufferToIntegral<uint32_t, true>(buffer);
 
     QCOMPARE(result, num);
+}
 
-    qDebug() << "bufferToIntegral<uint32_t, true>: OK";
-
-    //----------------------------------------------//
-
-    buffer.seekg(0);
+void PolTest::bufferToIntegralBe()
+{
+    std::stringstream buffer;
+    char tmp[4] = { 0x12, 0x34, 0x56, 0x78 };
+    const uint32_t &num = *reinterpret_cast<uint32_t *>(&tmp[0]);
+    uint32_t result;
 
     buffer.write(reinterpret_cast<const char *>(&num), 4);
     buffer.seekg(0);
@@ -76,8 +78,6 @@ void PolTest::bufferToIntegral()
 
     std::reverse(tmp, tmp + 4);
     QCOMPARE(result, num);
-
-    qDebug() << "bufferToIntegral<uint32_t, false>: OK";
 }
 
 void PolTest::testCase_data()

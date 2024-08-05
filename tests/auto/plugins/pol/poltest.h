@@ -31,7 +31,8 @@ class PolTest : public QObject
 
 private slots:
     void endianness();
-    void bufferToIntegral();
+    void bufferToIntegralLe();
+    void bufferToIntegralBe();
 
     void testCase_data();
     void autogenerateCases_data();

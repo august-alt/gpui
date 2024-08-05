@@ -40,13 +40,13 @@ static inline bool isValueCharacter(uint8_t sym)
     return sym >= 0x20 && sym <= 0x7E;
 }
 
-PRegParser::PRegParser()
+GPUI_SYMBOL_EXPORT PRegParser::PRegParser()
 {
     this->m_iconv_read_id = ::iconv_open("UTF-8", "UTF-16LE");
     this->m_iconv_write_id = ::iconv_open("UTF-16LE", "UTF-8");
 }
 
-PolicyFile PRegParser::parse(std::istream &stream)
+GPUI_SYMBOL_EXPORT PolicyFile PRegParser::parse(std::istream &stream)
 {
     PolicyTree instructions;
 
@@ -61,7 +61,7 @@ PolicyFile PRegParser::parse(std::istream &stream)
     return { instructions };
 }
 
-bool PRegParser::write(std::ostream &stream, const PolicyFile &file)
+GPUI_SYMBOL_EXPORT bool PRegParser::write(std::ostream &stream, const PolicyFile &file)
 {
     writeHeader(stream);
     for (const auto &[key, records] : file.instructions) {
@@ -75,7 +75,7 @@ bool PRegParser::write(std::ostream &stream, const PolicyFile &file)
     return true;
 }
 
-PRegParser::~PRegParser()
+GPUI_SYMBOL_EXPORT PRegParser::~PRegParser()
 {
     ::iconv_close(this->m_iconv_read_id);
     ::iconv_close(this->m_iconv_write_id);

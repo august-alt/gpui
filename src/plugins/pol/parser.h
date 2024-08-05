@@ -20,6 +20,7 @@
 #ifndef PREGPARSER_PARSER
 #define PREGPARSER_PARSER
 
+#include "../../../src/core/core.h"
 #include <istream>
 #include <memory>
 #include <optional>
@@ -98,7 +99,7 @@ typedef struct PolicyFile
     PolicyTree instructions{};
 } PolicyFile;
 
-class PRegParser
+class GPUI_CORE_EXPORT PRegParser final
 {
 private:
     /*!
@@ -180,9 +181,9 @@ private:
 
 public:
     PRegParser();
-    virtual PolicyFile parse(std::istream &stream);
-    virtual bool write(std::ostream &stream, const PolicyFile &file);
-    virtual ~PRegParser();
+    PolicyFile parse(std::istream &stream);
+    bool write(std::ostream &stream, const PolicyFile &file);
+    ~PRegParser();
 
 private:
     PRegParser(const pol::PRegParser &) = delete;

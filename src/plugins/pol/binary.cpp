@@ -24,7 +24,7 @@
 
 namespace pol {
 
-std::string bufferToString(std::istream &buffer, size_t size, iconv_t conv)
+std::string readStringFromBuffer(std::istream &buffer, size_t size, iconv_t conv)
 {
     bool custom_conv = false;
     if (conv == nullptr) {
@@ -59,7 +59,7 @@ std::string bufferToString(std::istream &buffer, size_t size, iconv_t conv)
     return result;
 }
 
-size_t stringToBuffer(std::ostream &buffer, const std::string &source, iconv_t conv)
+size_t writeStringToBuffer(std::ostream &buffer, const std::string &source, iconv_t conv)
 {
     bool custom_conv = false;
     if (conv == nullptr) {
@@ -85,7 +85,7 @@ size_t stringToBuffer(std::ostream &buffer, const std::string &source, iconv_t c
     return (converted.size() + 1) * sizeof(char16_t);
 }
 
-std::vector<std::string> bufferToStrings(std::istream &buffer, size_t size, iconv_t conv)
+std::vector<std::string> readStringsFromBuffer(std::istream &buffer, size_t size, iconv_t conv)
 {
     bool custom_conv = false;
 
@@ -139,19 +139,19 @@ std::vector<std::string> bufferToStrings(std::istream &buffer, size_t size, icon
     return result;
 }
 
-size_t stringsToBuffer(std::ostream &buffer, const std::vector<std::string> &data, iconv_t conv)
+size_t writeStringsFromBuffer(std::ostream &buffer, const std::vector<std::string> &data, iconv_t conv)
 {
     size_t size = 0;
 
     for (const auto &str : data) {
-        auto tmp = stringToBuffer(buffer, str, conv);
+        auto tmp = writeStringToBuffer(buffer, str, conv);
         size += tmp;
     }
 
     return size;
 }
 
-std::vector<uint8_t> bufferToVector(std::istream &buffer, size_t size)
+std::vector<uint8_t> readVectorFromBuffer(std::istream &buffer, size_t size)
 {
     std::vector<uint8_t> result;
     result.resize(size);
@@ -162,7 +162,7 @@ std::vector<uint8_t> bufferToVector(std::istream &buffer, size_t size)
     return result;
 }
 
-void vectorToBuffer(std::ostream &buffer, const std::vector<uint8_t> &data)
+void writeVectorToBuffer(std::ostream &buffer, const std::vector<uint8_t> &data)
 {
     buffer.write(reinterpret_cast<const char *>(data.data()), data.size());
     check_stream(buffer);

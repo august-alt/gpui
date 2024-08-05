@@ -38,7 +38,7 @@ namespace pol {
  * \warning `conv` must be initialized by `iconv_open("UTF-8", "UTF-16LE")`
  * \warning if `conv` is (size_t)-1, then function will throw std::runtime_error
  */
-std::string bufferToString(std::istream &buffer, size_t size, iconv_t conv = nullptr);
+std::string readStringFromBuffer(std::istream &buffer, size_t size, iconv_t conv = nullptr);
 /*!
  * \brief Put string from istream (binary)
  * if conv == nullptr, then conv will be initialized inside by `iconv_open("UTF-8", "UTF-16LE")`
@@ -47,7 +47,7 @@ std::string bufferToString(std::istream &buffer, size_t size, iconv_t conv = nul
  * \warning `conv` must be initialized by `iconv_open("UTF-16LE", "UTF-8")`
  * \warning if `conv` is (size_t)-1, then function will throw std::runtime_error
  */
-size_t stringToBuffer(std::ostream &buffer, const std::string &data, iconv_t conv = nullptr);
+size_t writeStringToBuffer(std::ostream &buffer, const std::string &data, iconv_t conv = nullptr);
 
 /*!
  * \brief Get strings from istream (binary)
@@ -57,7 +57,7 @@ size_t stringToBuffer(std::ostream &buffer, const std::string &data, iconv_t con
  * \warning `conv` must be initialized by `iconv_open("UTF-8", "UTF-16LE")`
  * \warning if `conv` is (size_t)-1, then function will throw std::runtime_error
  */
-std::vector<std::string> bufferToStrings(std::istream &buffer, size_t size, iconv_t conv = nullptr);
+std::vector<std::string> readStringsFromBuffer(std::istream &buffer, size_t size, iconv_t conv = nullptr);
 /*!
  * \brief Put string from istream (binary)
  * if conv == nullptr, then conv will be initialized inside by `iconv_open("UTF-8", "UTF-16LE")`
@@ -66,17 +66,17 @@ std::vector<std::string> bufferToStrings(std::istream &buffer, size_t size, icon
  * \warning `conv` must be initialized by `iconv_open("UTF-16LE", "UTF-8")`
  * \warning if `conv` is (size_t)-1, then function will throw std::runtime_error
  */
-size_t stringsToBuffer(std::ostream &buffer, const std::vector<std::string> &data,
+size_t writeStringsFromBuffer(std::ostream &buffer, const std::vector<std::string> &data,
                        iconv_t conv = nullptr);
 /*!
  * \brief Get vector of raw data from istream (binary)
  */
-std::vector<uint8_t> bufferToVector(std::istream &buffer, size_t size);
+std::vector<uint8_t> readVectorFromBuffer(std::istream &buffer, size_t size);
 
 /*!
  * \brief Put vector of raw data to istream (binary)
  */
-void vectorToBuffer(std::ostream &buffer, const std::vector<uint8_t> &data);
+void writeVectorToBuffer(std::ostream &buffer, const std::vector<uint8_t> &data);
 
 /*!
  * \brief Get integral number from istream (binary)

@@ -235,10 +235,10 @@ PolicyData PRegParser::getData(std::istream &stream, PolicyRegType type, uint32_
     case PolicyRegType::REG_SZ:
     case PolicyRegType::REG_EXPAND_SZ:
     case PolicyRegType::REG_LINK:
-        return { bufferToString(stream, size, this->m_iconv_read_id) };
+        return { readStringFromBuffer(stream, size, this->m_iconvReadId) };
 
     case PolicyRegType::REG_BINARY:
-        return { bufferToVector(stream, size) };
+        return { readVectorFromBuffer(stream, size) };
 
     case PolicyRegType::REG_DWORD_LITTLE_ENDIAN:
         return { bufferToIntegral<uint32_t, true>(stream) };
@@ -249,7 +249,7 @@ PolicyData PRegParser::getData(std::istream &stream, PolicyRegType type, uint32_
     case PolicyRegType::REG_RESOURCE_LIST:
     case PolicyRegType::REG_FULL_RESOURCE_DESCRIPTOR: // ????
     case PolicyRegType::REG_RESOURCE_REQUIREMENTS_LIST:
-        return { bufferToStrings(stream, size, this->m_iconv_read_id) };
+        return { readStringsFromBuffer(stream, size, this->m_iconvReadId) };
 
     case PolicyRegType::REG_QWORD_LITTLE_ENDIAN:
         return { bufferToIntegral<uint64_t, true>(stream) };
@@ -312,11 +312,11 @@ std::stringstream PRegParser::getDataStream(const PolicyData &data, PolicyRegTyp
     case PolicyRegType::REG_SZ:
     case PolicyRegType::REG_EXPAND_SZ:
     case PolicyRegType::REG_LINK:
-        stringToBuffer(stream, std::get<std::string>(data), this->m_iconv_write_id);
+        writeStringToBuffer(stream, std::get<std::string>(data), this->m_iconvWriteId);
         break;
 
     case PolicyRegType::REG_BINARY:
-        vectorToBuffer(stream, std::get<std::vector<uint8_t>>(data));
+        writeVectorToBuffer(stream, std::get<std::vector<uint8_t>>(data));
         break;
 
     case PolicyRegType::REG_DWORD_LITTLE_ENDIAN:
@@ -330,7 +330,8 @@ std::stringstream PRegParser::getDataStream(const PolicyData &data, PolicyRegTyp
     case PolicyRegType::REG_RESOURCE_LIST:
     case PolicyRegType::REG_FULL_RESOURCE_DESCRIPTOR: // ????
     case PolicyRegType::REG_RESOURCE_REQUIREMENTS_LIST:
-        stringsToBuffer(stream, std::get<std::vector<std::string>>(data), this->m_iconv_write_id);
+        writeStringsFromBuffer(stream, std::get<std::vector<std::string>>(data),
+                               this->m_iconvWriteId);
         break;
 
     case PolicyRegType::REG_QWORD_LITTLE_ENDIAN:
@@ -443,11 +444,11 @@ void PRegParser::writeInstruction(std::ostream &stream, const PolicyInstruction 
 
         write_sym(stream, '[');
 
-        stringToBuffer(stream, key);
+        writeStringToBuffer(stream, key);
 
         write_sym(stream, ';');
 
-        stringToBuffer(stream, value);
+        writeStringToBuffer(stream, value);
 
         write_sym(stream, ';');
 

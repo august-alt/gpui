@@ -41,8 +41,8 @@ static inline bool isValueCharacter(uint8_t sym)
 
 GPUI_SYMBOL_EXPORT PRegParser::PRegParser()
 {
-    this->m_iconv_read_id = ::iconv_open("UTF-8", "UTF-16LE");
-    this->m_iconv_write_id = ::iconv_open("UTF-16LE", "UTF-8");
+    this->m_iconvReadId = ::iconv_open("UTF-8", "UTF-16LE");
+    this->m_iconvWriteId = ::iconv_open("UTF-16LE", "UTF-8");
 }
 
 GPUI_SYMBOL_EXPORT PolicyFile PRegParser::parse(std::istream &stream)
@@ -76,8 +76,8 @@ GPUI_SYMBOL_EXPORT bool PRegParser::write(std::ostream &stream, const PolicyFile
 
 GPUI_SYMBOL_EXPORT PRegParser::~PRegParser()
 {
-    ::iconv_close(this->m_iconv_read_id);
-    ::iconv_close(this->m_iconv_write_id);
+    ::iconv_close(this->m_iconvReadId);
+    ::iconv_close(this->m_iconvWriteId);
 }
 
 void PRegParser::parseHeader(std::istream &stream)

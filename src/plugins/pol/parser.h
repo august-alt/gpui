@@ -189,8 +189,8 @@ private:
     PRegParser(const pol::PRegParser &) = delete;
     void operator=(const pol::PRegParser &) = delete;
 
-    ::iconv_t m_iconv_read_id{};
-    ::iconv_t m_iconv_write_id{};
+    ::iconv_t m_iconvReadId{};
+    ::iconv_t m_iconvWriteId{};
 };
 
 std::unique_ptr<PRegParser> createPregParser();

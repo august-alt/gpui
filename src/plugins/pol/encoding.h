@@ -38,7 +38,7 @@ namespace pol {
 
 enum class Endian {
     BigEndian,
-    LittleEngian = 1,
+    LittleEndian = 1,
 };
 
 /*!
@@ -51,7 +51,7 @@ inline Endian getEndianess()
         char c[4];
     } bint = { 0x01020304 };
 
-    return bint.c[0] == 0x01 ? Endian::BigEndian : Endian::LittleEngian;
+    return bint.c[0] == 0x01 ? Endian::BigEndian : Endian::LittleEndian;
 }
 
 /*!
@@ -104,7 +104,7 @@ template <typename T,
 inline T leToNative(T value)
 {
     auto endianess = getEndianess();
-    if (endianess == Endian::LittleEngian) {
+    if (endianess == Endian::LittleEndian) {
         return value;
     }
     return byteswap(value);

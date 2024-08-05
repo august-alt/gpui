@@ -486,11 +486,14 @@ void AdministrativeTemplatesSnapIn::setMenuItemNames()
 
 void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {
+    QString localeName = QString::fromStdString(locale);
     d->localeName = locale;
     d->policyBundleLoad();
     setMenuItemNames();
     d->filterDialog->onLanguageChanged();
     d->updateFilter();
+    d->machineCommentsModel->load(d->machineCommentsPath + "/comment.cmtx", localeName);
+    d->userCommentsModel->load(d->userCommentsPath + "/comment.cmtx", localeName);
     setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
 }
 

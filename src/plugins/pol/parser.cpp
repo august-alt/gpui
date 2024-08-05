@@ -102,12 +102,12 @@ void PRegParser::parseHeader(std::istream &stream)
 
 uint32_t PRegParser::getSize(std::istream &stream)
 {
-    return bufferToIntegral<uint32_t, true>(stream);
+    return readIntegralFromBuffer<uint32_t, true>(stream);
 }
 
 PolicyRegType PRegParser::getType(std::istream &stream)
 {
-    PolicyRegType type = static_cast<PolicyRegType>(bufferToIntegral<uint32_t, true>(stream));
+    PolicyRegType type = static_cast<PolicyRegType>(readIntegralFromBuffer<uint32_t, true>(stream));
 
     if (type >= PolicyRegType::REG_SZ && type <= PolicyRegType::REG_QWORD_BIG_ENDIAN) {
         return type;
@@ -227,9 +227,9 @@ PolicyData PRegParser::getData(std::istream &stream, PolicyRegType type, uint32_
         return { readVectorFromBuffer(stream, size) };
 
     case PolicyRegType::REG_DWORD_LITTLE_ENDIAN:
-        return { bufferToIntegral<uint32_t, true>(stream) };
+        return { readIntegralFromBuffer<uint32_t, true>(stream) };
     case PolicyRegType::REG_DWORD_BIG_ENDIAN:
-        return { bufferToIntegral<uint32_t, false>(stream) };
+        return { readIntegralFromBuffer<uint32_t, false>(stream) };
 
     case PolicyRegType::REG_MULTI_SZ:
     case PolicyRegType::REG_RESOURCE_LIST:
@@ -238,9 +238,9 @@ PolicyData PRegParser::getData(std::istream &stream, PolicyRegType type, uint32_
         return { readStringsFromBuffer(stream, size, this->m_iconvReadId) };
 
     case PolicyRegType::REG_QWORD_LITTLE_ENDIAN:
-        return { bufferToIntegral<uint64_t, true>(stream) };
+        return { readIntegralFromBuffer<uint64_t, true>(stream) };
     case PolicyRegType::REG_QWORD_BIG_ENDIAN:
-        return { bufferToIntegral<uint64_t, false>(stream) };
+        return { readIntegralFromBuffer<uint64_t, false>(stream) };
         break;
     }
     return {};
@@ -306,10 +306,10 @@ std::stringstream PRegParser::getDataStream(const PolicyData &data, PolicyRegTyp
         break;
 
     case PolicyRegType::REG_DWORD_LITTLE_ENDIAN:
-        integralToBuffer<uint32_t, true>(stream, std::get<uint32_t>(data));
+        writeIntegralToBuffer<uint32_t, true>(stream, std::get<uint32_t>(data));
         break;
     case PolicyRegType::REG_DWORD_BIG_ENDIAN:
-        integralToBuffer<uint32_t, false>(stream, std::get<uint32_t>(data));
+        writeIntegralToBuffer<uint32_t, false>(stream, std::get<uint32_t>(data));
         break;
 
     case PolicyRegType::REG_MULTI_SZ:
@@ -321,10 +321,10 @@ std::stringstream PRegParser::getDataStream(const PolicyData &data, PolicyRegTyp
         break;
 
     case PolicyRegType::REG_QWORD_LITTLE_ENDIAN:
-        integralToBuffer<uint64_t, true>(stream, std::get<uint64_t>(data));
+        writeIntegralToBuffer<uint64_t, true>(stream, std::get<uint64_t>(data));
         break;
     case PolicyRegType::REG_QWORD_BIG_ENDIAN:
-        integralToBuffer<uint64_t, false>(stream, std::get<uint64_t>(data));
+        writeIntegralToBuffer<uint64_t, false>(stream, std::get<uint64_t>(data));
         break;
 
     case PolicyRegType::REG_NONE:
@@ -438,13 +438,13 @@ void PRegParser::writeInstruction(std::ostream &stream, const PolicyInstruction 
 
         write_sym(stream, ';');
 
-        integralToBuffer<uint32_t, true>(stream, static_cast<uint32_t>(instruction.type));
+        writeIntegralToBuffer<uint32_t, true>(stream, static_cast<uint32_t>(instruction.type));
 
         write_sym(stream, ';');
 
         auto dataStream = getDataStream(instruction.data, instruction.type);
 
-        integralToBuffer<uint32_t, true>(stream, static_cast<uint32_t>(dataStream.tellp()));
+        writeIntegralToBuffer<uint32_t, true>(stream, static_cast<uint32_t>(dataStream.tellp()));
 
         write_sym(stream, ';');
 

@@ -84,7 +84,7 @@ void writeVectorToBuffer(std::ostream &buffer, const std::vector<uint8_t> &data)
 template <typename T, bool LE = true,
           typename = std::enable_if_t<std::is_integral_v<T>
                                       && sizeof(T) <= sizeof(unsigned long long)>>
-T bufferToIntegral(std::istream &buffer)
+T readIntegralFromBuffer(std::istream &buffer)
 {
     T num = 0;
 
@@ -114,7 +114,7 @@ T bufferToIntegral(std::istream &buffer)
 template <typename T, bool LE = true,
           typename = std::enable_if_t<std::is_integral_v<T>
                                       && sizeof(T) <= sizeof(unsigned long long)>>
-void integralToBuffer(std::ostream &buffer, T num)
+void writeIntegralToBuffer(std::ostream &buffer, T num)
 {
     if constexpr (LE) {
         num = nativeToLe<T>(num);

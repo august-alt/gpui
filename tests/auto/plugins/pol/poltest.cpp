@@ -59,7 +59,7 @@ void PolTest::bufferToIntegralLe()
     buffer.write(tmp, 4);
     buffer.seekg(0);
 
-    uint32_t result = pol::bufferToIntegral<uint32_t, true>(buffer);
+    uint32_t result = pol::readIntegralFromBuffer<uint32_t, true>(buffer);
 
     QCOMPARE(result, num);
 }
@@ -74,7 +74,7 @@ void PolTest::bufferToIntegralBe()
     buffer.write(reinterpret_cast<const char *>(&num), 4);
     buffer.seekg(0);
 
-    result = pol::bufferToIntegral<uint32_t, false>(buffer);
+    result = pol::readIntegralFromBuffer<uint32_t, false>(buffer);
 
     std::reverse(tmp, tmp + 4);
     QCOMPARE(result, num);

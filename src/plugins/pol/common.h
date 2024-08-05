@@ -25,30 +25,26 @@
 #include <limits>
 
 #include "encoding.h"
-
 #include "iconv.h"
 
-namespace pol 
-{
+namespace pol {
+
 inline void check_stream(std::istream &target)
 {
     if (target.fail()) {
         if (target.eof()) {
-            throw std::runtime_error("LINE: " + std::to_string(__LINE__)
-                                     + ", FILE: " + __FILE__
+            throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                                      + ", Failed to read buffer, EOF was encountered.");
         }
-        throw std::runtime_error("LINE: " + std::to_string(__LINE__)
-                                    + ", FILE: " + __FILE__
-                                    + ", Failed to read buffer, error was encountered.");
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Failed to read buffer, error was encountered.");
     }
 }
 inline void check_stream(std::ostream &target)
 {
     if (target.fail()) {
-        throw std::runtime_error("LINE: " + std::to_string(__LINE__)
-                                    + ", FILE: " + __FILE__
-                                    + ", Failed to write buffer, error was encountered.");
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Failed to write buffer, error was encountered.");
     }
 }
 inline void check_sym(std::istream &target, char16_t sym)
@@ -60,9 +56,9 @@ inline void check_sym(std::istream &target, char16_t sym)
     check_stream(target);
 
     if (buff != sym) {
-        throw std::runtime_error("LINE: " + std::to_string(__LINE__)
-                                    + ", FILE: " + __FILE__
-                                    + ", Failed to read/write buffer, invalid symbol was encountered.");
+        throw std::runtime_error(
+                "LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                + ", Failed to read/write buffer, invalid symbol was encountered.");
     }
 }
 inline void write_sym(std::ostream &target, char16_t sym)

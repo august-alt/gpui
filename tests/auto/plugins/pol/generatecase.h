@@ -89,8 +89,9 @@ pol::PolicyData generateRandomData(pol::PolicyRegType type, std::mt19937 &gen)
 {
     iconv_t conv = iconv_open("UTF-8", "UTF-32LE");
     if (conv == pol::ICONV_ERROR_DESCRIPTOR) {
-        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
-                                 + ", Encountered with the inability to create an iconv descriptor.");
+        throw std::runtime_error(
+                "LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                + ", Encountered with the inability to create an iconv descriptor.");
     }
 
     switch (type) {
@@ -174,5 +175,5 @@ pol::PolicyFile generateCase(size_t seed = -1)
         data.instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] = { instruction };
     }
 
-    return data;  
+    return data;
 }

@@ -107,27 +107,13 @@ uint32_t PRegParser::getSize(std::istream &stream)
 
 PolicyRegType PRegParser::getType(std::istream &stream)
 {
-    uint32_t num = bufferToIntegral<uint32_t, true>(stream);
+    PolicyRegType type = static_cast<PolicyRegType>(bufferToIntegral<uint32_t, true>(stream));
 
-    switch (static_cast<PolicyRegType>(num)) {
-    case PolicyRegType::REG_SZ:
-    case PolicyRegType::REG_EXPAND_SZ:
-    case PolicyRegType::REG_BINARY:
-    case PolicyRegType::REG_DWORD_LITTLE_ENDIAN:
-    case PolicyRegType::REG_DWORD_BIG_ENDIAN:
-    case PolicyRegType::REG_LINK:
-    case PolicyRegType::REG_MULTI_SZ:
-    case PolicyRegType::REG_RESOURCE_LIST:
-    case PolicyRegType::REG_FULL_RESOURCE_DESCRIPTOR:
-    case PolicyRegType::REG_RESOURCE_REQUIREMENTS_LIST:
-    case PolicyRegType::REG_QWORD_LITTLE_ENDIAN:
-    case PolicyRegType::REG_QWORD_BIG_ENDIAN:
-        break;
-    default:
-        return {};
+    if (type >= PolicyRegType::REG_SZ && type <= PolicyRegType::REG_QWORD_BIG_ENDIAN) {
+        return type;
     }
 
-    return static_cast<PolicyRegType>(num);
+    return {};
 }
 
 std::string PRegParser::getKey(std::istream &stream)

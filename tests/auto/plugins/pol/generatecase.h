@@ -88,13 +88,15 @@ pol::PolicyRegType generateRandomType(std::mt19937 &gen)
 pol::PolicyData generateRandomData(pol::PolicyRegType type, std::mt19937 &gen)
 {
     iconv_t conv = iconv_open("UTF-8", "UTF-32LE");
-    if (conv == (decltype(conv))-1) {
-        return {};
+    if (conv == pol::ICONV_ERROR_DESCRIPTOR) {
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Encountered with the inability to create an iconv descriptor.");
     }
 
     switch (type) {
     case pol::PolicyRegType::REG_NONE:
-        return {};
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                                 + ", Unexpected type REG_NONE.");
     case pol::PolicyRegType::REG_SZ: {
         std::basic_string<char32_t> data;
         data.resize(rand() % 100);

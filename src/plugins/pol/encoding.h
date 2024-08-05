@@ -22,7 +22,10 @@
 #define PREGPARSER_ENCODING
 
 #include <array>
+#include <cerrno>
+#include <limits>
 #include <memory>
+#include <stdexcept>
 #include <string.h>
 #include <type_traits>
 

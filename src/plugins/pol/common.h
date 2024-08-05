@@ -21,6 +21,9 @@
 #ifndef PREGPARSER_COMMON
 #define PREGPARSER_COMMON
 
+#include <iostream>
+#include <limits>
+
 #include "encoding.h"
 
 #include "iconv.h"

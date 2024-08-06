@@ -322,36 +322,9 @@ void CommentsModel::save(const QString &path, const QString& localeName)
         currentComment.commentText = "$(resource." + resourceName + ")";
 
         commentDefinitions->comments.push_back(currentComment);
+
+        commentDefinitions->resources->stringTable.emplace_back((comment.second.toStdString()), resourceName);
     }
-
-    QDir().mkpath(path + localeName.toLower());
-    auto cmtlFileName = path + localeName.toLower() + "/" + "comment.cmtl";
-
-    std::shared_ptr<comments::CommentDefinitionResources> commentResources
-            = std::make_shared<comments::CommentDefinitionResources>();
-
-    for (const auto& comment : comments)
-    {
-        namespaceIndex = 0;
-
-        for (const auto& currentNamespace : commentDefinitions->policyNamespaces.using_)
-        {
-            if (comment.namespace_.compare(currentNamespace.namespace_.c_str()) == 0)
-            {
-                break;
-            }
-
-            namespaceIndex++;
-        }
-
-        commentResources->stringTable.emplace_back(comment.second.toStdString(),
-                                                    "ns" + std::to_string(namespaceIndex)
-                                                    + "_" + comment.first.toStdString());
-    }
-
-    savePolicies<io::CommentResourcesFile, comments::CommentDefinitionResources>("cmtl", cmtlFileName,
-                                                                                    commentResources);
-
 
     auto cmtxFileName = path + "comment.cmtx";
 

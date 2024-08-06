@@ -419,8 +419,6 @@ void PRegParser::writeInstruction(std::ostream &stream, const PolicyInstruction 
 {
 
     try {
-        validateKeypath(key.begin(), key.end());
-        validateValue(value.begin(), value.end());
         validateType(instruction.type);
 
         write_sym(stream, '[');

@@ -162,8 +162,7 @@ void savePolicies(const QString &pluginName, const QString &fileName, std::share
 
 QString constructCMTLFileName(const QFileInfo &fileName, const QString &localeName)
 {
-    QString localFolder = localeName.toLower(); // en-US -> en-us. ru-RU -> ru-ru and etc.
-    QString admlFileName = fileName.absoluteDir().path() + "/" + localFolder + "/" + fileName.baseName() + ".cmtl";
+    QString admlFileName = fileName.absoluteDir().path() + "/" + localeName + "/" + fileName.baseName() + ".cmtl";
     return admlFileName;
 }
 

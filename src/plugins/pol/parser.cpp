@@ -27,9 +27,12 @@
 namespace pol {
 
 /*!
- * \brief Valid POL Registery file header
+ * \brief Valid POL Registery file header. Binary equal valid header.
+ * leToNative is used because the entry 0x5052656701000000 is 
+ * equivalent to the header in case uint64_t stores a number in LittleEndian.
+ * BigEndian - 0x00 0x00 0x00 0x01 0x67 0x65 0x52 0x50
  */
-static const char valid_header[8] = { 0x50, 0x52, 0x65, 0x67, 0x01, 0x00, 0x00, 0x00 };
+static const uint64_t valid_header = leToNative<uint64_t>(0x5052656701000000);
 
 /*!
  * \brief Match regex `[\x20-\x7E]`
@@ -82,14 +85,12 @@ GPUI_SYMBOL_EXPORT PRegParser::~PRegParser()
 
 void PRegParser::parseHeader(std::istream &stream)
 {
-    char buffer[8];
-    stream.read(buffer, 8);
+    uint64_t header;
+
+    stream.read(reinterpret_cast<char*>(&header), 8);
     check_stream(stream);
 
-    const uint64_t header = *reinterpret_cast<uint64_t *>(&buffer[0]);
-    const uint64_t normal_header = *reinterpret_cast<const uint64_t *>(&valid_header[0]);
-
-    if (header != normal_header) {
+    if (header != valid_header) {
         throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                                  + ", Encountered with invalid header.");
     }
@@ -336,7 +337,7 @@ std::stringstream PRegParser::getDataStream(const PolicyData &data, PolicyRegTyp
 
 void PRegParser::writeHeader(std::ostream &stream)
 {
-    stream.write(valid_header, sizeof(valid_header));
+    stream.write(reinterpret_cast<const char*>(&valid_header), sizeof(valid_header));
 }
 
 void PRegParser::validateKey(std::string::const_iterator &begin, std::string::const_iterator &end)

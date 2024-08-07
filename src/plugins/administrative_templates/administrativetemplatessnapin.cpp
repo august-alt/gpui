@@ -438,10 +438,10 @@ void AdministrativeTemplatesSnapIn::onShutdown()
 
 void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, const std::string &locale)
 {
-    Q_UNUSED(locale);
-
     if (!policyPath.empty())
     {
+        QString localeName = QString::fromStdString(locale);
+
         d->policyPath = policyPath;
 
         d->userRegistryPath    = QString::fromStdString(policyPath) + "/User/Registry.pol";
@@ -464,8 +464,8 @@ void AdministrativeTemplatesSnapIn::onDataLoad(const std::string &policyPath, co
         d->proxyModel->setMachineRegistrySource(d->machineRegistrySource.get());
         d->filterModel->setMachineRegistrySource(d->machineRegistrySource.get());
 
-        d->machineCommentsModel->load(QString::fromStdString(policyPath) + "/Machine/comment.cmtx");
-        d->userCommentsModel->load(QString::fromStdString(policyPath) + "/User/comment.cmtx");
+        d->machineCommentsModel->load(QString::fromStdString(policyPath) + "/Machine/comment.cmtx", localeName);
+        d->userCommentsModel->load(QString::fromStdString(policyPath) + "/User/comment.cmtx", localeName);
 
         d->proxyModel->setMachineCommentModel(d->machineCommentsModel.get());
         d->proxyModel->setUserCommentModel(d->userCommentsModel.get());
@@ -486,11 +486,14 @@ void AdministrativeTemplatesSnapIn::setMenuItemNames()
 
 void AdministrativeTemplatesSnapIn::onRetranslateUI(const std::string &locale)
 {
+    QString localeName = QString::fromStdString(locale);
     d->localeName = locale;
     d->policyBundleLoad();
     setMenuItemNames();
     d->filterDialog->onLanguageChanged();
     d->updateFilter();
+    d->machineCommentsModel->load(d->machineCommentsPath + "/comment.cmtx", localeName);
+    d->userCommentsModel->load(d->userCommentsPath + "/comment.cmtx", localeName);
     setRootNode(static_cast<QAbstractItemModel *>(d->filterModel.get()));
 }
 

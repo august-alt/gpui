@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SecurityDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns:security="http://www.basealt.ru/GroupPolicy/SecurityDefinitions" xsi:schemaLocation="http://www.basealt.ru/GroupPolicy/SecurityDefinitions">
+<resources>
+	<stringTable>
+		<string id="SeDenyBatchLogonRight_Name">Deny log on as a batch job</string>
+		<string id="SeDenyBatchLogonRight_Help">
+Deny log on as a service
+
+This security setting determines which service accounts are prevented from registering a process as a service. This policy setting supersedes the Log on as a service policy setting if an account is subject to both policies.
+
+Note: This security setting does not apply to the System, Local Service, or Network Service accounts.
+
+Default: None.
+		</string>
+	</stringTable>
+    <presentationTable>
+	     <presentation id="SeDenyBatchLogonRight">
+              <ldapSearchDialog refId="SeDenyBatchLogonRight_Editor" dn="" filter="" addLabel="" removeLabel=""/>
+	     </presentation>
+     </presentationTable>
+</resources>
+</SecurityDefinitionResources>

@@ -149,19 +149,18 @@ inline std::basic_string<target_char> convert(string_const_iterator<source_char>
     char *inbuf = reinterpret_cast<char *>(const_cast<source_char *>(&*begin));
     size_t inbytesLeft = std::distance(begin, end) * sizeof(source_char);
 
-    auto temp = std::make_unique<std::array<char, 512>>();
-    char *outbuf = temp->data();
+    auto temp = std::make_unique<std::array<target_char, 512>>();
+    target_char *outbuf = temp->data();
     size_t outbytesLeft = temp->size();
 
     while (inbytesLeft > 0) {
-        auto ret = iconv(conv, &inbuf, &inbytesLeft, &outbuf, &outbytesLeft);
+        auto ret = iconv(conv, &inbuf, &inbytesLeft, reinterpret_cast<char**>(&outbuf), &outbytesLeft);
         if (ret == ICONV_ERROR_CODE && errno != E2BIG) {
             throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
                                      + ", Encountered corrupted unicode string.");
         }
 
-        result.append(reinterpret_cast<target_char *>(temp->data()),
-                      reinterpret_cast<target_char *>(outbuf));
+        result.append(temp->data(), outbuf);
         outbuf = temp->data();
         outbytesLeft = temp->size();
     }

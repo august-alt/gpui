@@ -107,6 +107,97 @@ QHBoxLayout *createCaptions()
     return horizontalLayout;
 }
 
+QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &m_source, const std::string &key, const std::string &prefix)
+{
+    QMap<std::string, QString> items;
+    std::vector<std::string> valueNames = m_source.getValueNames(key);
+    
+    // finding and erase **delvals.
+    for (auto it = valueNames.begin(); it != valueNames.end(); ++it) {
+        if (QString::fromStdString(*it).compare("**delvals.", Qt::CaseInsensitive)) {
+            it = valueNames.erase(it);
+
+            // std::vecotor<T>::erase() returning iterator that pointing 
+            // to the next element after erased
+            --it; 
+            break;
+        }
+    }
+    
+    for (auto &valueName : valueNames) {
+        items[valueName] = 
+                m_source.getValue(key, valueName).value<QString>();
+    }
+    return items;
+}
+
+void cleanUpListInRegistry(AbstractRegistrySource &m_source, const std::string &key)
+{
+    std::vector<std::string> valueNames = m_source.getValueNames(key);
+    
+    // just clean-up all values on this keypath
+    for (auto &value : valueNames) {
+        m_source.clearValue(key, value);
+    }
+}
+
+void cleanUpListInRegistry(AbstractRegistrySource &m_source, const std::string &key, const std::string &prefix)
+{
+    // small optimization
+    if (prefix.size() == 0)
+    {
+        cleanUpListInRegistry(m_source, key);
+    }
+
+    QString _prefix = QString::fromStdString(prefix);
+
+    std::vector<std::string> valueNames = m_source.getValueNames(key);
+    
+    // clean-up all values that contain `prefix` prefix (case-insensitive)
+    for (auto &value : valueNames) {
+        if (value.size() > prefix.size() && 
+            QString::fromUtf8(value.c_str(), prefix.size()).compare(_prefix, Qt::CaseInsensitive))
+        {
+            m_source.clearValue(key, value);
+        }
+    }
+}
+
+bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, std::string &prefix)
+{
+    // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc770327(v=ws.10)
+    // true represents expandable string type (REG_EXPAND_SZ) and false represents string type (REG_SZ)
+    auto type = expandable ? REG_EXPAND_SZ : REG_SZ;
+
+    if (explicitValue)
+    {
+        // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
+        // explicitValue cannot be used with the valuePrefix attribute.
+        if (prefix.length() != 0)
+        {
+            // tmp warning msg.
+            qWarning() << "Presentation builder::save: attempt to use explicitValue with the valuePrefix attribute";
+        }
+
+        for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin)
+        {
+            source.setValue(key, begin.key(), type, begin.value());
+        }
+    }
+    else 
+    {
+        size_t index = 1;
+        for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin, ++index)
+        {
+            // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc772195(v=ws.10)
+            // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
+            source.setValue(key, begin.key(), type, QString::fromStdString(prefix) + QString::number(index));
+        }
+    }
+
+    return true;
+}
+
 bool *m_dataChanged  = nullptr;
 bool *m_stateEnabled = nullptr;
 

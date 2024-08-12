@@ -41,7 +41,7 @@ public:
 public:
     CommentsModel(QObject* parent = nullptr);
 
-    void load(const QString& path);
+    void load(const QString& path, const QString &localeName);
     void save(const QString &path, const QString &localeName);
 
     QModelIndex indexFromItemReference(const QString &itemRef);

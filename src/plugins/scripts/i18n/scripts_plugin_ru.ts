@@ -278,4 +278,15 @@
         <translation>Завершение работы</translation>
     </message>
 </context>
+<context>
+    <name>scripts_plugin::ScriptsWidget</name>
+    <message>
+        <source>Script</source>
+        <translation>Сценарии</translation>
+    </message>
+    <message>
+        <source>for</source>
+        <translation>для</translation>
+    </message>
+</context>
 </TS>

@@ -280,4 +280,15 @@
         <translation>Shutdown</translation>
     </message>
 </context>
+<context>
+    <name>scripts_plugin::ScriptsWidget</name>
+    <message>
+        <source>Script</source>
+        <translation>Script</translation>
+    </message>
+    <message>
+        <source>for</source>
+        <translation>for</translation>
+    </message>
+</context>
 </TS>

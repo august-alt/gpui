@@ -262,7 +262,10 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
             {
                 ui->okPushButton->disconnect();
                 ui->cancelPushButton->disconnect();
+            }
 
+            if (commentsModel && policy)
+            {
                 auto gui = this->ui;
 
                 connect(ui->okPushButton, &QPushButton::clicked, [commentsModel, gui, policy]() -> void
@@ -275,7 +278,10 @@ void AdministrativeTemplatesWidget::setModelIndex(const QModelIndex &index)
                     commentsModel->setComment(commentText, QString::fromStdString(policy->name),
                                               QString::fromStdString(policy->namespace_));
                 });
+            }
 
+            if (presentation && policy)
+            {
                 auto layout = PresentationBuilder::build(
                     {*presentation, *policy, *source, *ui->okPushButton, d->dataChanged, d->stateEnabled});
                 connectDialogBoxSignals();

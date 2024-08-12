@@ -35,6 +35,7 @@ ScriptsWidget::ScriptsWidget(QWidget *parent)
     ui->setupUi(this);
 
     treeView = ui->treeView;
+    ui->logonLabel->setText(tr("Script") + ": \"" + " " + "\" " + tr("for") + ": \"" + " " + "\"");
 }
 
 ScriptsWidget::~ScriptsWidget()

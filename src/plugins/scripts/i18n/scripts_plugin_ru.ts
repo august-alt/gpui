@@ -279,6 +279,33 @@
     </message>
 </context>
 <context>
+    <name>scripts_plugin::ScriptsPowerShellWidget</name>
+    <message>
+        <source>Logon</source>
+        <translation>Вход в систему</translation>
+    </message>
+    <message>
+        <source>Logoff</source>
+        <translation>Выход из системы</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>Запуск</translation>
+    </message>
+    <message>
+        <source>Shutdown</source>
+        <translation>Завершение работы</translation>
+    </message>
+    <message>
+        <source>Script</source>
+        <translation>Сценарии</translation>
+    </message>
+    <message>
+        <source>for</source>
+        <translation>для</translation>
+    </message>
+</context>
+<context>
     <name>scripts_plugin::ScriptsWidget</name>
     <message>
         <source>Script</source>
@@ -287,6 +314,22 @@
     <message>
         <source>for</source>
         <translation>для</translation>
+    </message>
+    <message>
+        <source>Logon</source>
+        <translation>Вход в систему</translation>
+    </message>
+    <message>
+        <source>Logoff</source>
+        <translation>Выход из системы</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>Запуск</translation>
+    </message>
+    <message>
+        <source>Shutdown</source>
+        <translation>Завершение работы</translation>
     </message>
 </context>
 </TS>

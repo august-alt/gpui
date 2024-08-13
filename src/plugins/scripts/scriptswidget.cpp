@@ -43,7 +43,7 @@ ScriptsWidget::~ScriptsWidget()
     delete ui;
 }
 
-void ScriptsWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag)
+void ScriptsWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag, bool isUserFlag)
 {
     BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
 }

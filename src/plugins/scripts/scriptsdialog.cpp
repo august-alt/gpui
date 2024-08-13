@@ -124,7 +124,7 @@ void ScriptsDialog::setItem(ModelView::SessionItem *scriptsItem, TWidget &widget
 
     if (container)
     {
-        widget->setItem(container, isStartUpScripts);
+        widget->setItem(container, isStartUpScripts, isUserScripts);
     }
 }
 

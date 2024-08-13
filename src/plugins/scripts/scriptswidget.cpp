@@ -44,7 +44,20 @@ ScriptsWidget::~ScriptsWidget()
 
 void ScriptsWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag, bool isUserFlag)
 {
+    QString scriptName;
+
+    if (isUserFlag)
+    {
+        scriptName = isStartUpFlag ? tr("Logon") : tr("Logoff");
+    }
+    else 
+    {
+        scriptName = isStartUpFlag ? tr("Startup") : tr("Shutdown");
+    }
+
     BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
+
+    ui->logonLabel->setText(tr("Script") + ": \"" + scriptName + "\" " + tr("for") + ": \"" + " " + "\"");
 }
 
 void ScriptsWidget::on_upPushButton_clicked()

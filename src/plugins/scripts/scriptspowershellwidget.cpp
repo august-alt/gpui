@@ -44,7 +44,20 @@ ScriptsPowerShellWidget::~ScriptsPowerShellWidget()
 
 void ScriptsPowerShellWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag, bool isUserFlag)
 {
+    QString scriptName;
+
+    if (isUserFlag) 
+    {
+        scriptName = isStartUpFlag ? tr("Logon") : tr("Logoff");
+    }
+    else 
+    {
+        scriptName = isStartUpFlag ? tr("Startup") : tr("Shutdown");
+    } 
+
     BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
+
+    ui->logonLabel->setText(tr("Script") + ": \"" + scriptName + "\" " + tr("for") + ": \"" + " " + "\"");
 }
 
 void ScriptsPowerShellWidget::on_upPushButton_clicked()

@@ -35,6 +35,7 @@ ScriptsDialog::ScriptsDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ScriptsDialog())
     , isStartUpScripts(false)
+    , isUserScripts(false)
 {
     ui->setupUi(this);
 
@@ -54,6 +55,7 @@ void ScriptsDialog::setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScr
     ScriptItemContainer *powerScriptsItem = nullptr;
 
     isStartUpScripts = isOnStartUp;
+    isUserScripts    = isUser;
 
     if (isOnStartUp)
     {

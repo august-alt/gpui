@@ -87,6 +87,7 @@ private:
     Ui::ScriptsDialog *ui;
 
     bool isStartUpScripts;
+    bool isUserScripts;
 };
 
 } // namespace scripts_plugin

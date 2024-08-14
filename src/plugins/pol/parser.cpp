@@ -66,12 +66,8 @@ GPUI_SYMBOL_EXPORT PolicyFile PRegParser::parse(std::istream &stream)
 GPUI_SYMBOL_EXPORT bool PRegParser::write(std::ostream &stream, const PolicyFile &file)
 {
     writeHeader(stream);
-    for (const auto &[key, records] : file.instructions) {
-        for (const auto &[value, array] : records) {
-            for (const auto &instruction : array) {
-                writeInstruction(stream, instruction, key, value);
-            }
-        }
+    for (const auto &instruction : file.instructions) {
+        writeInstruction(stream, instruction, instruction.key, instruction.value);
     }
 
     return true;
@@ -249,11 +245,11 @@ void PRegParser::insertInstruction(std::istream &stream, PolicyTree &tree)
 
     check_sym(stream, '[');
 
-    std::string keyPath = getKeypath(stream);
+    instruction.key = getKeypath(stream);
 
     check_sym(stream, ';');
 
-    std::string value = getValue(stream);
+    instruction.value = getValue(stream);
 
     try {
         check_sym(stream, ';');
@@ -270,19 +266,13 @@ void PRegParser::insertInstruction(std::istream &stream, PolicyTree &tree)
 
         check_sym(stream, ']');
 
-        if (tree.find(keyPath) == tree.end()) {
-            tree[keyPath] = {};
-        }
-        if (tree[keyPath].find(value) == tree[keyPath].end()) {
-            tree[keyPath][value] = {};
-        }
-        tree[keyPath][value].emplace_back(std::move(instruction));
+        tree.emplace_back(std::move(instruction));
 
     } catch (const std::exception &e) {
         throw std::runtime_error(std::string(e.what()) + "\nLINE: " + std::to_string(__LINE__)
                                  + ", FILE: " + __FILE__
                                  + ", Error was encountered wile parsing instruction with key: "
-                                 + keyPath + ", value: " + value);
+                                 + instruction.key + ", value: " + instruction.value);
     }
 }
 

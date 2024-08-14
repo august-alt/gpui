@@ -39,6 +39,8 @@ private slots:
 
     void testCase(QString filename);
     void autogenerateCases(size_t seed);
+
+    void testPRegHeader();
 };
 } // namespace tests
 

@@ -132,6 +132,21 @@ void PolTest::autogenerateCases(size_t seed)
     auto test = parser->parse(file);
     QCOMPARE(policyFile, test);
 }
+
+void PolTest::testPRegHeader()
+{
+    std::stringstream stream;
+    pol::PolicyFile file;
+    auto parser = pol::createPregParser();
+    
+    parser->write(stream, file);
+    
+    std::vector<uint8_t> result(8), expected = { 0x50, 0x52, 0x65, 0x67, 0x01, 0x00, 0x00, 0x00};
+
+    stream.read(reinterpret_cast<char*>(result.data()), 8);
+    QCOMPARE(result, expected);
+}
+
 } // namespace tests
 
 QTEST_MAIN(tests::PolTest)

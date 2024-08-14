@@ -53,8 +53,8 @@ void PolTest::endianness()
 void PolTest::bufferToIntegralLe()
 {
     std::stringstream buffer;
-    char tmp[4] = { 0x12, 0x34, 0x56, 0x78 };
-    const uint32_t &num = *reinterpret_cast<uint32_t *>(&tmp[0]);
+    char tmp[4] = { 0x78, 0x56, 0x34, 0x12 };
+    const uint32_t num = (pol::getEndianess() == pol::Endian::LittleEndian) ? 0x12345678 : 0x78563412;
 
     buffer.write(tmp, 4);
     buffer.seekg(0);
@@ -68,15 +68,14 @@ void PolTest::bufferToIntegralBe()
 {
     std::stringstream buffer;
     char tmp[4] = { 0x12, 0x34, 0x56, 0x78 };
-    const uint32_t &num = *reinterpret_cast<uint32_t *>(&tmp[0]);
+    const uint32_t num = (pol::getEndianess() == pol::Endian::LittleEndian) ? 0x12345678 : 0x78563412;
     uint32_t result;
 
-    buffer.write(reinterpret_cast<const char *>(&num), 4);
+    buffer.write(tmp, 4);
     buffer.seekg(0);
 
     result = pol::readIntegralFromBuffer<uint32_t, false>(buffer);
 
-    std::reverse(tmp, tmp + 4);
     QCOMPARE(result, num);
 }
 

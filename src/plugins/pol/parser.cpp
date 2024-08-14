@@ -28,11 +28,11 @@ namespace pol {
 
 /*!
  * \brief Valid POL Registery file header. Binary equal valid header.
- * leToNative is used because the entry 0x5052656701000000 is 
+ * leToNative is used because the entry 0x0167655250 is 
  * equivalent to the header in case uint64_t stores a number in LittleEndian.
- * BigEndian - 0x00 0x00 0x00 0x01 0x67 0x65 0x52 0x50
+ * BigEndian - 0x00 0x00 0x00 0x01 0x67 0x65 0x52 0x50 (bytes must be swaped)
  */
-static const uint64_t valid_header = leToNative<uint64_t>(0x5052656701000000);
+static const uint64_t valid_header = leToNative<uint64_t>(0x0167655250);
 
 /*!
  * \brief Match regex `[\x20-\x7E]`

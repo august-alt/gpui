@@ -172,7 +172,9 @@ pol::PolicyFile generateCase(size_t seed = -1)
         pol::PolicyInstruction instruction;
         instruction.type = generateRandomType(gen);
         instruction.data = generateRandomData(instruction.type, gen);
-        data.instructions[generateRandomKeypath(gen)][generateRandomValue(gen)] = { instruction };
+        instruction.key = generateRandomKeypath(gen);
+        instruction.value = generateRandomValue(gen);
+        data.instructions.emplace_back(instruction);
     }
 
     return data;

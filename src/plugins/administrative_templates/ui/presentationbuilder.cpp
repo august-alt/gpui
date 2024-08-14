@@ -189,6 +189,10 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
     }
     else 
     {
+        // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpreg/57226664-ce00-4487-994e-a6b3820f3e49
+        // for non explicit values. Non-explicit value will be ignored.
+        source.setValue(key, "**delvals.", REG_SZ, " ");
+
         size_t index = 1;
         for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin, ++index)
         {

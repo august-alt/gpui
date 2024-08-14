@@ -235,7 +235,7 @@ bool PolFormat::read(std::istream &input, io::RegistryFile *file)
 
     for(const auto &entry : result.instructions) {
         auto registryEntry = RegistryEntryAdapter::create(entry, entry.key, entry.value);
-        if (registryEntry.get()) {
+        if (registryEntry) {
             registry->registryEntries.push_back(std::move(registryEntry));
         }
     }

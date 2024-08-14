@@ -70,7 +70,7 @@ typedef struct PolicyInstruction
 {
     inline bool operator==(const PolicyInstruction &other) const
     {
-        return key == other.key && key == other.key && value == other.value && data == other.data;
+        return key == other.key && value == other.value && type == other.type && data == other.data;
     }
     inline bool operator!=(const PolicyInstruction &other) const
     {

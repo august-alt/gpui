@@ -113,16 +113,11 @@ QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, 
     std::vector<std::string> valueNames = source.getValueNames(key);
     
     // finding and erase **delvals.
-    for (auto it = valueNames.begin(); it != valueNames.end(); ++it) {
-        if (QString::fromStdString(*it).compare("**delvals.", Qt::CaseInsensitive) == 0) {
-            it = valueNames.erase(it);
-
-            // std::vecotor<T>::erase() returning iterator that pointing 
-            // to the next element after erased
-            --it; 
-            break;
-        }
-    }
+    valueNames.erase(std::remove_if(valueNames.begin(), valueNames.end(),
+                                [](const std::string& name) {
+                                    return QString::fromStdString(name).compare("**delvals.", Qt::CaseInsensitive) == 0;
+                                }),
+                 valueNames.end());
     
     for (auto &valueName : valueNames) {
         items[valueName] = 

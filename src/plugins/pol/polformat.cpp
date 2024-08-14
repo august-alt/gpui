@@ -43,15 +43,8 @@ public:
     {
         pol::PolicyInstruction instruction;
 
-        auto key = entry->key.toStdString();
-        auto value = entry->value.toStdString();
-
-        if (tree.find(key) == tree.end()) {
-            tree[key] = {};
-        }
-        if (tree[key].find(value) == tree[key].end()) {
-            tree[key][value] = {};
-        }
+        instruction.key = entry->key.toStdString();
+        instruction.value = entry->value.toStdString();
 
         switch (entry->type) {
         case model::registry::RegistryEntryType::REG_SZ: {
@@ -117,7 +110,7 @@ public:
         }
         }
 
-        tree[key][value].emplace_back(instruction);
+        tree.emplace_back(instruction);
     }
 
     static std::unique_ptr<model::registry::AbstractRegistryEntry>
@@ -240,14 +233,10 @@ bool PolFormat::read(std::istream &input, io::RegistryFile *file)
         return false;
     }
 
-    for (const auto &[key, record] : result.instructions) {
-        for (const auto &[value, array] : record) {
-            for(const auto &entry : array) {
-                auto registryEntry = RegistryEntryAdapter::create(entry, key, value);
-                if (registryEntry.get()) {
-                    registry->registryEntries.push_back(std::move(registryEntry));
-                }
-            }
+    for(const auto &entry : result.instructions) {
+        auto registryEntry = RegistryEntryAdapter::create(entry, entry.key, entry.value);
+        if (registryEntry.get()) {
+            registry->registryEntries.push_back(std::move(registryEntry));
         }
     }
 

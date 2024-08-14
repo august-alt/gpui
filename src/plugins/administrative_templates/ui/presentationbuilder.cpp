@@ -114,7 +114,7 @@ QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &m_source
     
     // finding and erase **delvals.
     for (auto it = valueNames.begin(); it != valueNames.end(); ++it) {
-        if (QString::fromStdString(*it).compare("**delvals.", Qt::CaseInsensitive)) {
+        if (QString::fromStdString(*it).compare("**delvals.", Qt::CaseInsensitive) == 0) {
             it = valueNames.erase(it);
 
             // std::vecotor<T>::erase() returning iterator that pointing 
@@ -156,7 +156,7 @@ void cleanUpListInRegistry(AbstractRegistrySource &m_source, const std::string &
     // clean-up all values that contain `prefix` prefix (case-insensitive)
     for (auto &value : valueNames) {
         if (value.size() > prefix.size() && 
-            QString::fromUtf8(value.c_str(), prefix.size()).compare(_prefix, Qt::CaseInsensitive))
+            QString::fromUtf8(value.c_str(), prefix.size()).compare(_prefix, Qt::CaseInsensitive) == 0)
         {
             m_source.clearValue(key, value);
         }

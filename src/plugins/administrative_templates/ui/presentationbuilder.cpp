@@ -546,6 +546,14 @@ public:
                 return;
             }
 
+            // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
+            // explicitValue cannot be used with the valuePrefix attribute.
+            if (listElement->valuePrefix.size() > 0 && listElement->explicitValue)
+            {
+                qWarning() << "Unable to get valid policy listElement (explicitValue cannot be used with the valuePrefix attribute).";
+                return;
+            }
+
             RegistryEntryType registryEntryType = listElement->expandable ? RegistryEntryType::REG_EXPAND_SZ
                                                                           : RegistryEntryType::REG_SZ;
 

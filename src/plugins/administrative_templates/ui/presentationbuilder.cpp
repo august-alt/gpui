@@ -130,29 +130,19 @@ QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, 
     return items;
 }
 
-void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &key)
-{
-    std::vector<std::string> valueNames = source.getValueNames(key);
-    
-    // just clean-up all values on this keypath
-    for (auto &value : valueNames) {
-        source.clearValue(key, value);
-    }
-}
-
-void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &key, const std::string &prefix)
+void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &key, const std::string &prefix = "")
 {
     // small optimization
-    if (prefix.size() == 0)
+    if (prefix.empty())
     {
-        cleanUpListInRegistry(source, key);
+        source.clearKey(key);
     }
 
     QString _prefix = QString::fromStdString(prefix);
-
-    std::vector<std::string> valueNames = source.getValueNames(key);
+    std::vector<std::string> valueNames = source.getNonSpecialValueNames(key);
     
-    // clean-up all values that contain `prefix` prefix (case-insensitive)
+    // TODO: make case-insensitive.
+    // clean-up all values that contain `prefix` prefix (case-sensitive)
     for (auto &value : valueNames) {
         if (value.size() > prefix.size() && 
             QString::fromUtf8(value.c_str(), prefix.size()).compare(_prefix, Qt::CaseInsensitive) == 0)

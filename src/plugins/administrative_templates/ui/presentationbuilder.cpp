@@ -111,14 +111,18 @@ QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, 
 {
     QMap<std::string, QString> items;
     std::vector<std::string> valueNames = source.getValueNames(key);
-    
-    // finding and erase **delvals.
-    valueNames.erase(std::remove_if(valueNames.begin(), valueNames.end(),
-                                [](const std::string& name) {
-                                    return QString::fromStdString(name).compare("**delvals.", Qt::CaseInsensitive) == 0;
-                                }),
-                 valueNames.end());
-    
+
+    if(!prefix.empty())
+    {
+        // remove all valueNames(from return result), that doesn't have `prefix` prefix
+        valueNames.erase(std::remove_if(valueNames.begin(), valueNames.end(),
+                         [&prefix](const std::string& str)
+                         {
+                             return !(str.length() > prefix.length() && 
+                                     strncmp(str.c_str(), prefix.c_str(), prefix.length()));
+                         }), valueNames.end());
+    }
+
     for (auto &valueName : valueNames) {
         items[valueName] = 
                 source.getValue(key, valueName).value<QString>();

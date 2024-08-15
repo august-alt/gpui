@@ -110,7 +110,7 @@ QHBoxLayout *createCaptions()
 QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, const std::string &key, const std::string &prefix)
 {
     QMap<std::string, QString> items;
-    std::vector<std::string> valueNames = source.getValueNames(key);
+    std::vector<std::string> valueNames = source.getNonSpecialValueNames(key);
 
     if(!prefix.empty())
     {

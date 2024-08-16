@@ -336,6 +336,11 @@ QString MainWindow::getAdmxPath() const
     return d->options.policyBundle;
 }
 
+QString MainWindow::getPolicyName() const
+{
+    return d->options.policyName;
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     d->settings->saveSettings();

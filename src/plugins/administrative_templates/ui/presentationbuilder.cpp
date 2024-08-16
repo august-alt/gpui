@@ -107,6 +107,93 @@ QHBoxLayout *createCaptions()
     return horizontalLayout;
 }
 
+QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, const std::string &key, const std::string &prefix)
+{
+    QMap<std::string, QString> items;
+    std::vector<std::string> valueNames = source.getNonSpecialValueNames(key);
+
+    if(!prefix.empty())
+    {
+        // remove all valueNames(from return result), that doesn't have `prefix` prefix
+        valueNames.erase(std::remove_if(valueNames.begin(), valueNames.end(),
+                         [&prefix](const std::string& str)
+                         {
+                             return !(str.length() > prefix.length() && 
+                                     strncmp(str.c_str(), prefix.c_str(), prefix.length()));
+                         }), valueNames.end());
+    }
+
+    for (auto &valueName : valueNames) {
+        items[valueName] = 
+                source.getValue(key, valueName).value<QString>();
+    }
+    return items;
+}
+
+void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &key, const std::string &prefix = "")
+{
+    // small optimization
+    if (prefix.empty())
+    {
+        source.clearKey(key);
+    }
+
+    std::vector<std::string> valueNames = source.getNonSpecialValueNames(key);
+    
+    // TODO: make case-insensitive.
+    // clean-up all values that contain `prefix` prefix (case-sensitive)
+    for (auto &value : valueNames) {
+        if (value.size() > prefix.size() && 
+            strncmp(value.c_str(), prefix.c_str(), prefix.size()) == 0)
+        {
+            source.clearValue(key, value);
+        }
+    }
+}
+
+void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, std::string &prefix)
+{
+    // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
+    // explicitValue cannot be used with the valuePrefix attribute.
+    if (explicitValue && !prefix.empty())
+    {
+        qWarning() << "Presentation builder::save: attempt to use explicitValue with the valuePrefix attribute";
+    }
+
+    if (valueList.empty())
+    {
+        return;
+    }
+    
+    // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc770327(v=ws.10)
+    // true represents expandable string type (REG_EXPAND_SZ) and false represents string type (REG_SZ)
+    auto type = expandable ? REG_EXPAND_SZ : REG_SZ;
+
+    if (explicitValue)
+    {
+        for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin)
+        {
+            if (!begin.value().trimmed().isEmpty())
+            {
+                source.setValue(key, begin.key(), type, begin.value());
+            }
+        }
+        return;
+    }
+    
+    // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpreg/57226664-ce00-4487-994e-a6b3820f3e49
+    // for non explicit values. Non-explicit value will be ignored.
+    source.setValue(key, "**delvals.", REG_SZ, " ");
+
+    size_t index = 1;
+    for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin, ++index)
+    {
+        // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc772195(v=ws.10)
+        // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
+        source.setValue(key, prefix + std::to_string(index), type, begin.value());
+    }
+}
+
 bool *m_dataChanged  = nullptr;
 bool *m_stateEnabled = nullptr;
 
@@ -445,144 +532,48 @@ public:
                 return;
             }
 
+            // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
+            // explicitValue cannot be used with the valuePrefix attribute.
+            if (listElement->valuePrefix.size() > 0 && listElement->explicitValue)
+            {
+                qWarning() << "Unable to get valid policy listElement (explicitValue cannot be used with the valuePrefix attribute).";
+                return;
+            }
+
             RegistryEntryType registryEntryType = listElement->expandable ? RegistryEntryType::REG_EXPAND_SZ
                                                                           : RegistryEntryType::REG_SZ;
 
             if (listElement->explicitValue)
             {
-                {
-                    QMap<std::string, QString> items;
-                    // Create two column widget.
-                    auto valueNames = m_source->getValueNames(listElement->key);
-                    for (const auto &valueName : valueNames)
-                    {
-                        items[valueName] = m_source->getValue(listElement->key, valueName).toString();
-                    }
-                    listBox->setItems(items);
-                }
-
-                listBox->connect(listBox,
-                                 &gpui::ListBoxDialog::itemsEditingFinished,
-                                 [=](QMap<std::string, QString> currentItems) {
-                    if (!(*m_stateEnabled))
-                    {
-                        return;
-                    }
-                    qWarning() << "Items debug: " << currentItems.values();
-                    // clean-up registry values.
-                    auto valueNames = m_source->getValueNames(listElement->key);
-                    for (const auto &valueName : valueNames)
-                    {
-                        m_source->clearValue(listElement->key, valueName);
-                    }
-                    // set-up current values.
-                    for (const auto &valueName : currentItems.keys())
-                    {
-                        auto value = currentItems.value(valueName);
-                        if (!value.trimmed().isEmpty())
-                        {
-                            m_source->setValue(elementInfo.key,
-                                               valueName,
-                                               registryEntryType,
-                                               value);
-                        }
-                    }
-                    *m_dataChanged = true;
-                });
+                // two collumn ListBox
+                listBox->setItems(loadListFromRegistry(*m_source, listElement->key, listElement->valuePrefix));
             }
-            else
+            else 
             {
-                // Create one column widget.
-                QStringList items;
-
-                if (listElement->valuePrefix.size() > 0)
-                {
-                    // If there is a prefix then use prefix to load values.
-                    {
-                        auto valueNames = m_source->getValueNames(listElement->key);
-                        size_t index    = 1;
-                        auto valueName  = listElement->valuePrefix + std::to_string(index);
-                        while (m_source->isValuePresent(listElement->key, valueName))
-                        {
-                            items.append(m_source->getValue(listElement->key, valueName).toString());
-                            valueName = listElement->valuePrefix + std::to_string(++index);
-                        }
-                    }
-
-                    listBox->connect(listBox,
-                                     &gpui::ListBoxDialog::itemsEditingFinished,
-                                     [=](QMap<std::string, QString> currentItems) {
-                        if (!(*m_stateEnabled))
-                        {
-                            return;
-                        }
-                        qWarning() << "Items debug: " << currentItems.values();
-                        size_t index = 1;
-                        // clean-up registry values.
-                        auto registryValueName = listElement->valuePrefix
-                                + std::to_string(index);
-                        while (m_source->isValuePresent(listElement->key, registryValueName))
-                        {
-                            m_source->clearValue(listElement->key, registryValueName);
-                            registryValueName = listElement->valuePrefix
-                                    + std::to_string(++index);
-                        }
-                        // set-up current values.
-                        for (const auto &item : currentItems.values())
-                        {
-                            if (!item.trimmed().isEmpty())
-                            {
-                                auto valueName = listElement->valueName
-                                        + std::to_string(index);
-                                m_source->setValue(elementInfo.key,
-                                                   valueName,
-                                                   registryEntryType,
-                                                   item);
-                            }
-                        }
-                        *m_dataChanged = true;
-                    });
-                }
-                else
-                {
-                    auto valueNames = m_source->getValueNames(listElement->key);
-                    for (const auto &valueName : valueNames)
-                    {
-                        items.append(m_source->getValue(listElement->key, valueName).toString());
-                    }
-
-                    listBox->connect(listBox,
-                                     &gpui::ListBoxDialog::itemsEditingFinished,
-                                     [=](QMap<std::string, QString> currentItems) {
-                        if (!(*m_stateEnabled))
-                        {
-                            return;
-                        }
-                        qWarning() << "Items debug: " << currentItems.values();
-                        // clean-up registry values.
-                        auto registryValueNames = m_source->getValueNames(listElement->key);
-                        for (const auto &valueName : registryValueNames)
-                        {
-                            m_source->clearValue(listElement->key, valueName);
-                        }
-                        // set-up current values.
-                        for (const auto &item : currentItems.values())
-                        {
-                            if (!item.trimmed().isEmpty())
-                            {
-                                m_source->setValue(elementInfo.key,
-                                                   item.toStdString(),
-                                                   registryEntryType,
-                                                   item);
-                            }
-                        }
-                        *m_dataChanged = true;
-                    });
-                }
-
-                qWarning() << "Items debug: " << items;
-                listBox->setItems(items);
+                // one collumn ListBox
+                listBox->setItems(loadListFromRegistry(*m_source, listElement->key, listElement->valuePrefix).values());
             }
+
+            listBox->connect(listBox,
+                                &gpui::ListBoxDialog::itemsEditingFinished,
+                                [=](QMap<std::string, QString> currentItems) {
+                if (!(*m_stateEnabled))
+                {
+                    return;
+                }
+                qWarning() << "Items debug: " << currentItems.values();
+
+                cleanUpListInRegistry(*m_source, listElement->key, listElement->valuePrefix);
+
+                writeListIntoRegistry(*m_source, 
+                                      currentItems, 
+                                      listElement->key, 
+                                      listElement->explicitValue, 
+                                      listElement->expandable, 
+                                      listElement->valuePrefix);
+
+                *m_dataChanged = true;
+            });
 
             listBox->show();
         };

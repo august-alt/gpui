@@ -230,7 +230,7 @@ std::vector<std::string> PolRegistrySource::getNonSpecialValueNames(const std::s
     return result;
 }
 
-void PolRegistrySource::markValueNamesInKeyForDeletion(const std::string &key)
+void PolRegistrySource::markKeyForDeletion(const std::string &key)
 {
     std::vector<std::string> values = getValueNames(key);
     for (const auto &value : values)

@@ -56,6 +56,8 @@ public:
     ~ScriptsDialog();
 
     void setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel, bool isOnStartUp, bool isUser);
+    
+    void setDescription(const QString &policyName);
 
 private:
     template<typename TWidget>

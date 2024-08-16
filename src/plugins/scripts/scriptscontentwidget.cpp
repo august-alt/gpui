@@ -115,6 +115,8 @@ void ScriptsContentWidget::startDialog(const QModelIndex &index)
                           !isMachineNamespace);
     }
 
+    dialog->setDescription(snapIn->d->mainWindow->getPolicyName());
+
     QObject::connect(dialog, &ScriptsDialog::saveDataSignal, snapIn->d, &ScriptsSnapInPrivate::saveData);
 
     QObject::connect(dialog, &ScriptsDialog::reloaddataSignal, snapIn->d, &ScriptsSnapInPrivate::reloadData);

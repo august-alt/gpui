@@ -94,6 +94,34 @@ void ScriptsDialog::setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScr
     }
 }
 
+void ScriptsDialog::setDescription(const QString &policyName)
+{
+    QString scriptName;
+
+    if (isUserScripts) 
+    {
+        scriptName = std::move(isStartUpScripts ? tr("Logon") : tr("Logoff"));
+    }
+    else 
+    {
+        scriptName = std::move(isStartUpScripts ? tr("Startup") : tr("Shutdown"));
+    }
+
+    QString logonLabelText = tr("Script") + ": \"" + scriptName + "\" " + tr("for")
+        + (policyName.isEmpty() ? " " + tr("Default Domain Policy") : " \"" + policyName + "\"");
+
+    QLabel* logonLabel = ui->scriptsTab->findChild<QLabel *>("logonLabel");
+    if (logonLabel)
+    {
+        logonLabel->setText(logonLabelText);
+    }
+    logonLabel = ui->powerShellScriptsTab->findChild<QLabel *>("logonLabel");
+    if (logonLabel)
+    {
+        logonLabel->setText(logonLabelText);
+    }
+}
+
 ScriptItemContainer *ScriptsDialog::findItemContainer(ScriptsModel *model, std::string section)
 {
     auto containers = model->topItems();

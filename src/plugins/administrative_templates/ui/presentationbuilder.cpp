@@ -153,6 +153,13 @@ void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &ke
 
 bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, std::string &prefix)
 {
+    // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
+    // explicitValue cannot be used with the valuePrefix attribute.
+    if (explicitValue && !prefix.empty())
+    {
+        qWarning() << "Presentation builder::save: attempt to use explicitValue with the valuePrefix attribute";
+    }
+
     if (valueList.empty())
     {
         return true;
@@ -164,14 +171,6 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
 
     if (explicitValue)
     {
-        // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
-        // explicitValue cannot be used with the valuePrefix attribute.
-        if (!prefix.empty())
-        {
-            // tmp warning msg.
-            qWarning() << "Presentation builder::save: attempt to use explicitValue with the valuePrefix attribute";
-        }
-
         for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin)
         {
             if (!begin.value().trimmed().isEmpty())

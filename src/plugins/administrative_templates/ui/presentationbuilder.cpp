@@ -178,20 +178,19 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
                 source.setValue(key, begin.key(), type, begin.value());
             }
         }
+        return true;
     }
-    else 
-    {
-        // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpreg/57226664-ce00-4487-994e-a6b3820f3e49
-        // for non explicit values. Non-explicit value will be ignored.
-        source.setValue(key, "**delvals.", REG_SZ, " ");
+    
+    // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpreg/57226664-ce00-4487-994e-a6b3820f3e49
+    // for non explicit values. Non-explicit value will be ignored.
+    source.setValue(key, "**delvals.", REG_SZ, " ");
 
-        size_t index = 1;
-        for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin, ++index)
-        {
-            // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc772195(v=ws.10)
-            // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
-            source.setValue(key, prefix + std::to_string(index), type, begin.value());
-        }
+    size_t index = 1;
+    for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin, ++index)
+    {
+        // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc772195(v=ws.10)
+        // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
+        source.setValue(key, prefix + std::to_string(index), type, begin.value());
     }
 
     return true;

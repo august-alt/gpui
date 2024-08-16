@@ -64,6 +64,7 @@ void ScriptsSnapIn::onInitialize(QMainWindow *window)
     if (mainWindow)
     {
         d->localeName = mainWindow->getLanguage().toStdString();
+        d->mainWindow = mainWindow;
     }
 
     d->proxyViewModel->setSourceModel(d->viewModel.get());

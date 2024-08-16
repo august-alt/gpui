@@ -151,7 +151,7 @@ void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &ke
     }
 }
 
-bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, std::string &prefix)
+void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, std::string &prefix)
 {
     // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
     // explicitValue cannot be used with the valuePrefix attribute.
@@ -162,7 +162,7 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
 
     if (valueList.empty())
     {
-        return true;
+        return;
     }
     
     // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc770327(v=ws.10)
@@ -178,7 +178,7 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
                 source.setValue(key, begin.key(), type, begin.value());
             }
         }
-        return true;
+        return;
     }
     
     // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpreg/57226664-ce00-4487-994e-a6b3820f3e49
@@ -193,7 +193,7 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
         source.setValue(key, prefix + std::to_string(index), type, begin.value());
     }
 
-    return true;
+    return;
 }
 
 bool *m_dataChanged  = nullptr;

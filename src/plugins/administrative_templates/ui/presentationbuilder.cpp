@@ -138,14 +138,13 @@ void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &ke
         source.clearKey(key);
     }
 
-    QString _prefix = QString::fromStdString(prefix);
     std::vector<std::string> valueNames = source.getNonSpecialValueNames(key);
     
     // TODO: make case-insensitive.
     // clean-up all values that contain `prefix` prefix (case-sensitive)
     for (auto &value : valueNames) {
         if (value.size() > prefix.size() && 
-            QString::fromUtf8(value.c_str(), prefix.size()).compare(_prefix, Qt::CaseInsensitive) == 0)
+            strncmp(value.c_str(), prefix.c_str(), prefix.size()) == 0)
         {
             source.clearValue(key, value);
         }

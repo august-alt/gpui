@@ -162,7 +162,7 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
     {
         // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
         // explicitValue cannot be used with the valuePrefix attribute.
-        if (prefix.length() != 0)
+        if (!prefix.empty())
         {
             // tmp warning msg.
             qWarning() << "Presentation builder::save: attempt to use explicitValue with the valuePrefix attribute";

@@ -153,6 +153,11 @@ void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &ke
 
 bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, std::string &prefix)
 {
+    if (valueList.empty())
+    {
+        return true;
+    }
+    
     // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc770327(v=ws.10)
     // true represents expandable string type (REG_EXPAND_SZ) and false represents string type (REG_SZ)
     auto type = expandable ? REG_EXPAND_SZ : REG_SZ;

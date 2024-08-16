@@ -281,6 +281,37 @@
     </message>
 </context>
 <context>
+    <name>scripts_plugin::ScriptsDialog</name>
+    <message>
+        <source>for</source>
+        <translation>for</translation>
+    </message>
+    <message>
+        <source>Logon</source>
+        <translation>Logon</translation>
+    </message>
+    <message>
+        <source>Logoff</source>
+        <translation>Logoff</translation>
+    </message>
+    <message>
+        <source>Script</source>
+        <translation>Script</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>Startup</translation>
+    </message>
+    <message>
+        <source>Shutdown</source>
+        <translation>Shutdown</translation>
+    </message>
+    <message>
+        <source>Default Domain Policy</source>
+        <translation>Default Domain Policy</translation>
+    </message>
+</context>
+<context>
     <name>scripts_plugin::ScriptsPowerShellWidget</name>
     <message>
         <source>Logon</source>

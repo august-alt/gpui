@@ -196,6 +196,8 @@ set(HEADERS
     common/preferencestreeproxymodel.h
 
     common/preferenceswidget.h
+
+    common/inputmessagenotifier.h
 )
 
 set(SOURCES
@@ -378,6 +380,8 @@ set(SOURCES
     common/preferencestreeproxymodel.cpp
 
     common/preferenceswidget.cpp
+
+    common/inputmessagenotifier.cpp
 )
 
 set(UI_FORMS

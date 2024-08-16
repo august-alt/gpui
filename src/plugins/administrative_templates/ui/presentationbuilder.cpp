@@ -186,10 +186,7 @@ bool writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
         {
             // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc772195(v=ws.10)
             // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
-            if (!begin.value().trimmed().isEmpty())
-            {
-                source.setValue(key, prefix + std::to_string(index), type, begin.value());
-            }
+            source.setValue(key, prefix + std::to_string(index), type, begin.value());
         }
     }
 

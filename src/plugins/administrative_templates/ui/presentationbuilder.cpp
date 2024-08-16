@@ -192,8 +192,6 @@ void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
         // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
         source.setValue(key, prefix + std::to_string(index), type, begin.value());
     }
-
-    return;
 }
 
 bool *m_dataChanged  = nullptr;

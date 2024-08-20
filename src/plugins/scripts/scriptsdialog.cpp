@@ -108,7 +108,7 @@ void ScriptsDialog::setDescription(const QString &policyName)
     }
 
     QString logonLabelText = tr("Script") + ": \"" + scriptName + "\" " + tr("for")
-        + (policyName.isEmpty() ? " " + tr("Default Domain Policy") : " \"" + policyName + "\"");
+        + (policyName.isEmpty() ? " " + tr("Local Group Policy") : " \"" + policyName + "\"");
 
     QLabel* logonLabel = ui->scriptsTab->findChild<QLabel *>("logonLabel");
     if (logonLabel)

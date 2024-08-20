@@ -310,6 +310,10 @@
         <source>Default Domain Policy</source>
         <translation>Default Domain Policy</translation>
     </message>
+    <message>
+        <source>Local Group Policy</source>
+        <translation>Local Group Policy</translation>
+    </message>
 </context>
 <context>
     <name>scripts_plugin::ScriptsPowerShellWidget</name>

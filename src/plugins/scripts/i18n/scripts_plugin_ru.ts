@@ -308,6 +308,10 @@
         <source>Default Domain Policy</source>
         <translation>политики домена по умолчанию</translation>
     </message>
+    <message>
+        <source>Local Group Policy</source>
+        <translation>локальной групповой политики</translation>
+    </message>
 </context>
 <context>
     <name>scripts_plugin::ScriptsPowerShellWidget</name>

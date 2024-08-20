@@ -28,11 +28,11 @@ namespace pol {
 
 /*!
  * \brief Valid POL Registery file header. Binary equal valid header.
- * leToNative is used because the entry 0x5052656701000000 is 
+ * leToNative is used because the entry 0x0167655250 is 
  * equivalent to the header in case uint64_t stores a number in LittleEndian.
- * BigEndian - 0x00 0x00 0x00 0x01 0x67 0x65 0x52 0x50
+ * BigEndian - 0x00 0x00 0x00 0x01 0x67 0x65 0x52 0x50 (bytes must be swaped)
  */
-static const uint64_t valid_header = leToNative<uint64_t>(0x5052656701000000);
+static const uint64_t valid_header = leToNative<uint64_t>(0x0167655250);
 
 /*!
  * \brief Match regex `[\x20-\x7E]`
@@ -66,12 +66,8 @@ GPUI_SYMBOL_EXPORT PolicyFile PRegParser::parse(std::istream &stream)
 GPUI_SYMBOL_EXPORT bool PRegParser::write(std::ostream &stream, const PolicyFile &file)
 {
     writeHeader(stream);
-    for (const auto &[key, records] : file.instructions) {
-        for (const auto &[value, array] : records) {
-            for (const auto &instruction : array) {
-                writeInstruction(stream, instruction, key, value);
-            }
-        }
+    for (const auto &instruction : file.instructions) {
+        writeInstruction(stream, instruction, instruction.key, instruction.value);
     }
 
     return true;
@@ -249,11 +245,11 @@ void PRegParser::insertInstruction(std::istream &stream, PolicyTree &tree)
 
     check_sym(stream, '[');
 
-    std::string keyPath = getKeypath(stream);
+    instruction.key = getKeypath(stream);
 
     check_sym(stream, ';');
 
-    std::string value = getValue(stream);
+    instruction.value = getValue(stream);
 
     try {
         check_sym(stream, ';');
@@ -270,19 +266,13 @@ void PRegParser::insertInstruction(std::istream &stream, PolicyTree &tree)
 
         check_sym(stream, ']');
 
-        if (tree.find(keyPath) == tree.end()) {
-            tree[keyPath] = {};
-        }
-        if (tree[keyPath].find(value) == tree[keyPath].end()) {
-            tree[keyPath][value] = {};
-        }
-        tree[keyPath][value].emplace_back(std::move(instruction));
+        tree.emplace_back(std::move(instruction));
 
     } catch (const std::exception &e) {
         throw std::runtime_error(std::string(e.what()) + "\nLINE: " + std::to_string(__LINE__)
                                  + ", FILE: " + __FILE__
                                  + ", Error was encountered wile parsing instruction with key: "
-                                 + keyPath + ", value: " + value);
+                                 + instruction.key + ", value: " + instruction.value);
     }
 }
 

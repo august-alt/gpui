@@ -55,7 +55,10 @@ public:
     bool undeleteValue(const std::string &key, const std::string &valueName) override final;
     bool isValueMarkedForDeletion(const std::string &key, const std::string &valueName) const override final;
 
+    std::vector<std::string> getNonSpecialValueNames(const std::string &key) const override final;
     std::vector<std::string> getValueNames(const std::string &key) const override final;
+    void markKeyForDeletion(const std::string &key) override final;
+
     void clearKey(const std::string &key) override final;
     void clearValue(const std::string &key, const std::string &valueName) override final;
 

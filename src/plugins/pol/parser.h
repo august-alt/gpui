@@ -70,20 +70,20 @@ typedef struct PolicyInstruction
 {
     inline bool operator==(const PolicyInstruction &other) const
     {
-        return type == other.type && data == other.data;
+        return key == other.key && value == other.value && type == other.type && data == other.data;
     }
     inline bool operator!=(const PolicyInstruction &other) const
     {
-        return type != other.type && data != other.data;
+        return !this->operator==(other);
     }
 
     PolicyRegType type{};
     PolicyData data{};
+    std::string key{};
+    std::string value{};
 } PolicyInstruction;
 
-typedef std::unordered_map<std::string,
-                           std::unordered_map<std::string, std::vector<PolicyInstruction>>>
-        PolicyTree;
+typedef std::vector<PolicyInstruction> PolicyTree;
 
 typedef struct PolicyFile
 {

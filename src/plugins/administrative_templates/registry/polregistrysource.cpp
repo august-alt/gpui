@@ -207,12 +207,44 @@ std::vector<std::string> PolRegistrySource::getValueNames(const std::string &key
     return result;
 }
 
-void PolRegistrySource::clearKey(const std::string &key)
+static bool isSpecialValueName(const std::string &str)
+{
+    // TODO: make case-insensitive
+    // TODO: check for others
+    return (str == "**deletevalues") || 
+           (str == "**delvals.")     ||
+           (str == "**deletekeys")   ||
+           (str == "**securekey")    || 
+           (str.length() >= 6 && strncmp(str.c_str(), "**del.", 6)) ||
+           (str.length() >= 7 && strncmp(str.c_str(), "**soft.", 7));
+}
+
+std::vector<std::string> PolRegistrySource::getNonSpecialValueNames(const std::string &key) const 
+{
+    std::vector<std::string> result = getValueNames(key);
+
+    result.erase(std::remove_if(result.begin(), 
+                                result.end(), 
+                                &isSpecialValueName), 
+                 result.end());
+    return result;
+}
+
+void PolRegistrySource::markKeyForDeletion(const std::string &key)
 {
     std::vector<std::string> values = getValueNames(key);
     for (const auto &value : values)
     {
         markValueForDeletion(key, value);
+    }
+}
+
+void PolRegistrySource::clearKey(const std::string &key)
+{
+    std::vector<std::string> values = getValueNames(key);
+    for (const auto &value : values)
+    {
+        clearValue(key, value);
     }
 }
 

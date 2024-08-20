@@ -7,6 +7,8 @@
 #include "scriptstreemodel.h"
 #include "scriptstreeproxymodel.h"
 
+#include "../../gui/mainwindow.h"
+
 #include <QObject>
 #include <QTranslator>
 
@@ -25,6 +27,8 @@ public:
 
 public:
     std::string policyPath                = "";
+    gpui::MainWindow *mainWindow          = nullptr;
+
     std::unique_ptr<ScriptsModel> userScriptsModel         = std::make_unique<ScriptsModel>();
     std::unique_ptr<ScriptsModel> userPowerScriptsModel    = std::make_unique<ScriptsModel>();
     std::unique_ptr<ScriptsModel> machineScriptsModel      = std::make_unique<ScriptsModel>();

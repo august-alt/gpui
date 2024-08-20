@@ -56,6 +56,8 @@ public:
     ~ScriptsDialog();
 
     void setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScriptsModel, bool isOnStartUp, bool isUser);
+    
+    void setDescription(const QString &policyName);
 
 private:
     template<typename TWidget>
@@ -87,6 +89,7 @@ private:
     Ui::ScriptsDialog *ui;
 
     bool isStartUpScripts;
+    bool isUserScripts;
 };
 
 } // namespace scripts_plugin

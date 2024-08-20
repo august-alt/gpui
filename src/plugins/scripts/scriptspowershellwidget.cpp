@@ -42,9 +42,9 @@ ScriptsPowerShellWidget::~ScriptsPowerShellWidget()
     delete ui;
 }
 
-void ScriptsPowerShellWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag)
+void ScriptsPowerShellWidget::setItem(ScriptItemContainer *item, bool isStartUpFlag, bool isUserFlag)
 {
-    BaseScriptTabWidget::setItem(ui, item, isStartUpFlag);
+    BaseScriptTabWidget::setItem(ui, item, isStartUpFlag, isUserFlag);
 }
 
 void ScriptsPowerShellWidget::on_upPushButton_clicked()

@@ -69,6 +69,8 @@ public:
     void setAdmxPath(const QString &admxPath);
     QString getAdmxPath() const;
 
+    QString getPolicyName() const;
+
 signals:
     void admxPathChanged(const QString &admxPath);
 

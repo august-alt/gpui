@@ -63,12 +63,14 @@ public:
 
     QTreeView* treeView = nullptr;
 
-    bool isStartUpScripts = false;
+    bool isStartUpScripts  = false;
+    bool isUserScriptsFlag = false;
 
     template<typename TUi>
-    void setItem(TUi *ui, ScriptItemContainer *item, bool startUpScriptsFlag)
+    void setItem(TUi *ui, ScriptItemContainer *item, bool startUpScriptsFlag, bool userScriptsFlag)
     {
-        isStartUpScripts = startUpScriptsFlag;
+        isStartUpScripts   = startUpScriptsFlag;
+        isUserScriptsFlag  = userScriptsFlag;
 
         scriptsItemContainer = item;
 

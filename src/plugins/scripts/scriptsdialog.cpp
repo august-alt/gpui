@@ -35,6 +35,7 @@ ScriptsDialog::ScriptsDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ScriptsDialog())
     , isStartUpScripts(false)
+    , isUserScripts(false)
 {
     ui->setupUi(this);
 
@@ -54,6 +55,7 @@ void ScriptsDialog::setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScr
     ScriptItemContainer *powerScriptsItem = nullptr;
 
     isStartUpScripts = isOnStartUp;
+    isUserScripts    = isUser;
 
     if (isOnStartUp)
     {
@@ -92,6 +94,34 @@ void ScriptsDialog::setModels(ScriptsModel *scriptsModel, ScriptsModel *powerScr
     }
 }
 
+void ScriptsDialog::setDescription(const QString &policyName)
+{
+    QString scriptName;
+
+    if (isUserScripts) 
+    {
+        scriptName = std::move(isStartUpScripts ? tr("Logon") : tr("Logoff"));
+    }
+    else 
+    {
+        scriptName = std::move(isStartUpScripts ? tr("Startup") : tr("Shutdown"));
+    }
+
+    QString logonLabelText = tr("Script") + ": \"" + scriptName + "\" " + tr("for")
+        + (policyName.isEmpty() ? " " + tr("Local Group Policy") : " \"" + policyName + "\"");
+
+    QLabel* logonLabel = ui->scriptsTab->findChild<QLabel *>("logonLabel");
+    if (logonLabel)
+    {
+        logonLabel->setText(logonLabelText);
+    }
+    logonLabel = ui->powerShellScriptsTab->findChild<QLabel *>("logonLabel");
+    if (logonLabel)
+    {
+        logonLabel->setText(logonLabelText);
+    }
+}
+
 ScriptItemContainer *ScriptsDialog::findItemContainer(ScriptsModel *model, std::string section)
 {
     auto containers = model->topItems();
@@ -122,7 +152,7 @@ void ScriptsDialog::setItem(ModelView::SessionItem *scriptsItem, TWidget &widget
 
     if (container)
     {
-        widget->setItem(container, isStartUpScripts);
+        widget->setItem(container, isStartUpScripts, isUserScripts);
     }
 }
 

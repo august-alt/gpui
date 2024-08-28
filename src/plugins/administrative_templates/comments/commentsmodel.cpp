@@ -58,21 +58,42 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
         return policies;
     }
 
-    std::ifstream file;
+    auto stringvalues = std::make_unique<std::string>();
 
-    file.open(policyFileName.absoluteFilePath().toStdString(), std::ifstream::in);
-
-    if (file.good())
+    try
     {
+        QString qtPath = policyFileName.absoluteFilePath();
+
+        if (qtPath.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbFile(qtPath);
+            smbFile.open(QFile::ReadOnly);
+            stringvalues->resize(smbFile.size(), 0);
+            smbFile.read(&stringvalues->at(0), smbFile.size());
+            smbFile.close();
+        }
+        else
+        {
+            QFile localFile(qtPath);
+            localFile.open(QFile::ReadOnly);
+            stringvalues->resize(localFile.size(), 0);
+            localFile.read(&stringvalues->at(0), localFile.size());
+            localFile.close();
+        }
+
+        auto iss = std::make_unique<std::istringstream>(*stringvalues);
+
         policies = std::make_unique<TPolicies>();
 
-        if (!format->read(file, policies.get()))
+        if (!format->read(*iss.get(), policies.get()))
         {
             qWarning() << policyFileName.fileName() + " " + QString::fromStdString(format->getErrorString());
         }
     }
-
-    file.close();
+    catch (const std::exception &e)
+    {
+        qWarning() << e.what();
+    }
 
     delete format;
 

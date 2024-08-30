@@ -765,6 +765,44 @@ context (user policy option)</translation>
     </message>
 </context>
 <context>
+    <name>preferences::InputMessageNotifier</name>
+    <message>
+        <location filename="../inputmessagenotifier.cpp" line="27"/>
+        <source>The input field has a space at the beginning or at the end</source>
+        <translation>The input field has a space at the beginning or at the end</translation>
+    </message>
+    <message>
+        <location filename="../inputmessagenotifier.cpp" line="31"/>
+        <source>There is a folder &apos;.&apos;/&apos;..&apos; in the path input field</source>
+        <translation>There is a folder &apos;.&apos;/&apos;..&apos; in the path input field</translation>
+    </message>
+    <message>
+        <location filename="../inputmessagenotifier.cpp" line="35"/>
+        <source>The path input field contains the path to the folder</source>
+        <translation>The path input field contains the path to the folder</translation>
+    </message>
+    <message>
+        <location filename="../inputmessagenotifier.cpp" line="39"/>
+        <source>The path input field contains a path that is not compatible with windows</source>
+        <translation>The path input field contains a path that is not compatible with windows</translation>
+    </message>
+    <message>
+        <location filename="../inputmessagenotifier.cpp" line="43"/>
+        <source>The path input field contains a relative path</source>
+        <translation>The path input field contains a relative path</translation>
+    </message>
+    <message>
+        <location filename="../inputmessagenotifier.cpp" line="47"/>
+        <source>The path input field contains a path from root</source>
+        <translation>The path input field contains a path from root</translation>
+    </message>
+    <message>
+        <location filename="../inputmessagenotifier.cpp" line="51"/>
+        <source>The path input field contains a network path</source>
+        <translation>The path input field contains a network path</translation>
+    </message>
+</context>
+<context>
     <name>preferences::PreferencesTreeView</name>
     <message>
         <location filename="../preferencestreeview.cpp" line="41"/>

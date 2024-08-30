@@ -21,59 +21,104 @@
 #ifndef GPUI_INPUTMESSAGENOTIFIER_H
 #define GPUI_INPUTMESSAGENOTIFIER_H
 
-#include <QtWidgets>
 #include <QtCore>
+#include <QtWidgets>
+#include <bits/stdc++.h>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class InputMessageNotifier; }
+namespace Ui {
+class InputMessageNotifier;
+}
 QT_END_NAMESPACE
 
-namespace preferences
-{
+namespace preferences {
 
 class InputMessageNotifier : public QWidget
 {
 public:
     Q_OBJECT
-private:
-    typedef struct MessageNotifierInfoFields
-    {
-        bool invisibleSpace       : 1;  // example: ` /var/hello`
-        bool dots                 : 1;  // example: `/var/./hello` | `/var/../hello`
-        bool folderPath           : 1;  // example: `/var/hello/`
-        bool windowsCompatibility : 1;  // any path, that can't be Windows path or UNC path.
-        bool localPath            : 1;  // any path, that can't be local: `var/hello`
-        bool rootPath             : 1;  // any path, that can't be root: `/var/hello`
-        bool networkPath          : 1;  // any path, that can't be network: `smb://SMB.DOMAIN.TEST/Test/path`
-    } MessageNotifierInfoFields;
 
 public:
-    typedef union MessageNotifierInfo
-    {
-        MessageNotifierInfoFields fields;
-        uint32_t mask{0};
-    } MessageNotifierInfo;
+    typedef enum class MessageNotifierType {
+        // Warns if one of the following regular expressions is executed for the entire string
+        INVISIBLE_SPACE = 0, // " .*|.* |.+ {2}.+"
+        DOTS = 1, // ".+\.{1,2}.*"
+        FOLDER_PATH = 2, // "*./"
+        WINDOWS_COMPATIBILITY = 3, // TODO: write regex
+        RELATIVE_PATH = 4, // TODO: write regex (for linux and windows)
+        ROOT_PATH = 5, // TODO: write regex (for linux and windows)
+        NETWORK_PATH = 6, // TODO: write regex (for linux and windows)
+        MESSAGE_NOTIFIER_LENGTH,
+    } MessageNotifierType;
 
-    typedef struct MessageInstance 
+private:
+    typedef std::bitset<32> MessageNotifierInfo;
+
+    typedef struct MessageInstance
     {
-        MessageNotifierInfo trigger;
-        MessageNotifierInfo detected;
+        MessageNotifierInfo trigger{0};
+        MessageNotifierInfo detected{0};
+        QString content{};
     } MessageInstance;
 
-public:
-    explicit InputMessageNotifier(QWidget* parent = nullptr);
+    typedef QString (*MessageStringFunc)();
+    typedef bool (*CheckStringFunc)(const QString &str);
 
 private:
-    InputMessageNotifier(const InputMessageNotifier&)            = delete;   // copy ctor
-    InputMessageNotifier(InputMessageNotifier&&)                 = delete;   // move ctor
-    InputMessageNotifier& operator=(const InputMessageNotifier&) = delete;   // copy assignment
-    InputMessageNotifier& operator=(InputMessageNotifier&&)      = delete;   // move assignment
+    static QString invisibleSpaceMessage();
+    static QString dotsMessage();
+    static QString folderPathMessage();
+    static QString windowsCompatibilityMessage();
+    static QString relativePathMessage();
+    static QString rootPathMessage();
+    static QString networkPathMessage();
+
+    static bool checkInvisibleSpace(const QString &str);
+    static bool checkDots(const QString &str);
+    static bool checkFolderPath(const QString &str);
+    static bool checkWindowsCompatibility(const QString &str);
+    static bool checkRelativePath(const QString &str);
+    static bool checkRootPath(const QString &str);
+    static bool checkNetworkPath(const QString &str);
+
+    void updateState();
+
+private:
+    static constexpr std::array<MessageStringFunc,
+                                static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH)>
+            m_getMessages = { &invisibleSpaceMessage, &dotsMessage,
+                              &folderPathMessage,     &windowsCompatibilityMessage,
+                              &relativePathMessage,   &rootPathMessage,
+                              &networkPathMessage };
+    static constexpr std::array<CheckStringFunc,
+                                static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH)>
+            m_checkMessage = { &checkInvisibleSpace,       &checkDots,         &checkFolderPath,
+                               &checkWindowsCompatibility, &checkRelativePath, &checkRootPath,
+                               &checkNetworkPath };
+
+public:
+    explicit InputMessageNotifier(QWidget *parent = nullptr);
+
+    void addInstance(const QString& name);
+    void setInstanceDetection(const QString& name, MessageNotifierType type, bool detection = true);
+    void eraseInstance(const QString& name);
+    void updateInstance(const QString& name, const QString &content);
+
+    void retranslateUi();
+
+private:
+    InputMessageNotifier(const InputMessageNotifier &) = delete; // copy ctor
+    InputMessageNotifier(InputMessageNotifier &&) = delete; // move ctor
+    InputMessageNotifier &operator=(const InputMessageNotifier &) = delete; // copy assignment
+    InputMessageNotifier &operator=(InputMessageNotifier &&) = delete; // move assignment
 
 private:
     QMap<QString, MessageInstance> m_instances{};
-    QStaticArrayData<QWidget*, 7> m_messages{};
-}; 
+    QVBoxLayout* m_layout{ nullptr };
+    std::array<QLabel *, static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH)>
+            m_messages{ nullptr };
+};
 
-}
+} // namespace preferences
 
-#endif //GPUI_INPUTMESSAGENOTIFIER_H
+#endif // GPUI_INPUTMESSAGENOTIFIER_H

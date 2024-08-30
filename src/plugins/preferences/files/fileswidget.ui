@@ -118,6 +118,9 @@
     </layout>
    </item>
    <item>
+    <widget class="preferences::InputMessageNotifier" name="inputMessage" native="true"/>
+   </item>
+   <item>
     <widget class="QCheckBox" name="supressErrorsCheckBox">
      <property name="text">
       <string>Supress errors on individual file actions</string>
@@ -201,6 +204,12 @@
    <class>preferences::ShortcutLineEdit</class>
    <extends>QLineEdit</extends>
    <header>common/shortcutlineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>preferences::InputMessageNotifier</class>
+   <extends>QWidget</extends>
+   <header>common/inputmessagenotifier.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

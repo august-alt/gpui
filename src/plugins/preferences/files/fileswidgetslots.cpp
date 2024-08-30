@@ -103,6 +103,11 @@ void FilesWidget::on_destinationToolButton_clicked()
     }
 }
 
+void FilesWidget::on_destinationLineEdit_textChanged(const QString &text)
+{
+    ui->inputMessage->updateInstance("destination", text);
+}
+
 void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
 {
     if (text.contains('*') || text.contains('?'))
@@ -117,6 +122,7 @@ void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
 
         ui->destinationLabel->setText(tr("Destination file:"));
     }
+    ui->inputMessage->updateInstance("source_file", text);
 }
 
 } // namespace preferences

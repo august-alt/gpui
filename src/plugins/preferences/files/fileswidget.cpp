@@ -40,6 +40,12 @@ FilesWidget::FilesWidget(QWidget *parent, FilesItem *item)
 {
     ui->setupUi(this);
 
+    ui->inputMessage->addInstance("source_file");
+    ui->inputMessage->addInstance("destination");
+
+    ui->inputMessage->setInstanceDetection("source_file", InputMessageNotifier::MessageNotifierType::INVISIBLE_SPACE);
+    ui->inputMessage->setInstanceDetection("destination", InputMessageNotifier::MessageNotifierType::INVISIBLE_SPACE);
+
     on_actionComboBox_currentIndexChanged(ui->actionComboBox->currentIndex());
 }
 

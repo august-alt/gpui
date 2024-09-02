@@ -486,14 +486,17 @@ void MainWindow::updateStatusBar()
     QString machineExtensions = machineAdministrativeTemplates + preferecnes + machineScripts;
     QString userExtensions = userAdministrativeTemplates + preferecnes + userScripts;
 
+    ++d->machineVersion;
+    ++d->userVersion;
+
     if (guid != "")
     {
-        d->ldapImpl->setExtensions(guid, machineExtensions, userExtensions, d->machineVersion + 1, d->userVersion + 1);
+        d->ldapImpl->setExtensions(guid, machineExtensions, userExtensions, d->machineVersion, d->userVersion);
     }
 
     GptIniUtils gptUtils;
 
-    gptUtils.onIniFileSave(d->options.path + "/gpt.ini", d->options.policyName, d->machineVersion + 1, d->userVersion + 1);
+    gptUtils.onIniFileSave(d->options.path + "/gpt.ini", d->options.policyName, d->machineVersion, d->userVersion);
 
     ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);
 }

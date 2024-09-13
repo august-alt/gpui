@@ -363,7 +363,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
 
     QString adjustedPolicyName = d->options.policyName.isEmpty()
                                  ? d->options.policyName
-                                 : QString(" - %s").arg(d->options.policyName);
+                                 : QString(" - %1").arg(d->options.policyName);
 
     if (d->options.path.startsWith("smb://"))
     {

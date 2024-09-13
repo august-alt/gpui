@@ -293,7 +293,7 @@ MainWindow::MainWindow(CommandLineOptions &options,
 
     if (guid != "")
     {
-        d->options.policyName = " - " + d->ldapImpl.get()->getDisplayNameGPO(guid);
+        d->options.policyName = d->ldapImpl.get()->getDisplayNameGPO(guid);
 
        int version = d->ldapImpl->getGPOVersion(guid);
 
@@ -363,19 +363,23 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
 
     if (d->options.path.startsWith("smb://"))
     {
+        QString adjustedPolicyName = d->options.policyName.isEmpty()
+                                     ? d->options.policyName
+                                     : QString(" - %s").arg(d->options.policyName);
+
         QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
         if (domainRegexp.indexIn(d->options.path) != -1)
         {
-            visibleRootItem->setData('[' + domainRegexp.cap() + ']' + d->options.policyName, Qt::DisplayRole);
+            visibleRootItem->setData('[' + domainRegexp.cap() + ']' + adjustedPolicyName, Qt::DisplayRole);
         }
         else
         {
-            visibleRootItem->setData(QObject::tr("[Domain Group Policy]") + d->options.policyName, Qt::DisplayRole);
+            visibleRootItem->setData(QObject::tr("[Domain Group Policy]") + adjustedPolicyName, Qt::DisplayRole);
         }
     }
     else
     {
-        visibleRootItem->setData(QObject::tr("[Local Group Policy]") + d->options.policyName, Qt::DisplayRole);
+        visibleRootItem->setData(QObject::tr("[Local Group Policy]") + adjustedPolicyName, Qt::DisplayRole);
     }
 
     rootItem->appendRow(visibleRootItem);

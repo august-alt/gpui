@@ -62,11 +62,10 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
 
     try
     {
-        QString qtPath = policyFileName.absoluteFilePath();
 
-        if (qtPath.startsWith("smb://"))
+        if (policyFileName.filePath().startsWith("smb:"))
         {
-            gpui::smb::SmbFile smbFile(qtPath);
+            gpui::smb::SmbFile smbFile(policyFileName.filePath());
             smbFile.open(QFile::ReadOnly);
             stringvalues->resize(smbFile.size(), 0);
             smbFile.read(&stringvalues->at(0), smbFile.size());
@@ -74,6 +73,8 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
         }
         else
         {
+            QString qtPath = policyFileName.absoluteFilePath();
+
             QFile localFile(qtPath);
             localFile.open(QFile::ReadOnly);
             stringvalues->resize(localFile.size(), 0);

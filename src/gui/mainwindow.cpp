@@ -361,12 +361,12 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
     visibleRootItem->setData(QObject::tr("Local group policies"), model::bundle::EXPLAIN_TEXT);
     visibleRootItem->setData(static_cast<uint>(model::admx::PolicyType::Both), model::bundle::POLICY_TYPE);
 
+    QString adjustedPolicyName = d->options.policyName.isEmpty()
+                                 ? d->options.policyName
+                                 : QString(" - %s").arg(d->options.policyName);
+
     if (d->options.path.startsWith("smb://"))
     {
-        QString adjustedPolicyName = d->options.policyName.isEmpty()
-                                     ? d->options.policyName
-                                     : QString(" - %s").arg(d->options.policyName);
-
         QRegExp domainRegexp("^(?:smb?:\\/\\/)?([^:\\/\\n?]+)");
         if (domainRegexp.indexIn(d->options.path) != -1)
         {

@@ -67,7 +67,7 @@ bool GptIniUtils::onIniFileOpen(const QString &path, QString &policyName, int &m
         }
 
         auto iss = std::make_unique<std::istringstream>(*stringvalues);
-        std::string pluginName("ini");
+        std::string pluginName("ini_ascii");
 
         auto reader = std::make_unique<io::GenericReader>();
         auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile> >(*iss, pluginName);
@@ -122,7 +122,7 @@ bool GptIniUtils::onIniFileSave(const QString &path, const QString &policyName, 
     fileData->addValue("General", "Version", std::to_string(version));
 
     QString pluginName = path;
-    pluginName         = pluginName.mid(pluginName.lastIndexOf('.') + 1);
+    pluginName         = "ini_ascii";
 
     io::PolicyFileFormat<io::IniFile> *format = gpui::PluginStorage::instance()->createPluginClass<io::PolicyFileFormat<io::IniFile>>(pluginName);
 

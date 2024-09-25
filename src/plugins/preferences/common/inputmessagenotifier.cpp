@@ -19,78 +19,16 @@
 ***********************************************************************************************************************/
 
 #include "inputmessagenotifier.h"
+#include <iterator>
+#include <algorithm>
 
 namespace preferences {
-
-QString InputMessageNotifier::invisibleSpaceMessage()
-{
-    return tr("The input field has a space at the beginning or at the end");
-}
-QString InputMessageNotifier::dotsMessage()
-{
-    return tr("There is a folder '.'/'..' in the path input field");
-}
-QString InputMessageNotifier::folderPathMessage()
-{
-    return tr("The path input field contains the path to the folder");
-}
-QString InputMessageNotifier::windowsCompatibilityMessage()
-{
-    return tr("The path input field contains a path that is not compatible with windows");
-}
-QString InputMessageNotifier::relativePathMessage()
-{
-    return tr("The path input field contains a relative path");
-}
-QString InputMessageNotifier::rootPathMessage()
-{
-    return tr("The path input field contains a path from root");
-}
-QString InputMessageNotifier::networkPathMessage()
-{
-    return tr("The path input field contains a network path");
-}
-
-bool InputMessageNotifier::checkInvisibleSpace(const QString &str)
-{
-    return str.trimmed() != str;
-}
-bool InputMessageNotifier::checkDots(const QString &str)
-{
-    // TODO: Write regex
-    return false;
-}
-bool InputMessageNotifier::checkFolderPath(const QString &str)
-{
-    // TODO: Write regex
-    return false;
-}
-bool InputMessageNotifier::checkWindowsCompatibility(const QString &str)
-{
-    // TODO: Write regex
-    return false;
-}
-bool InputMessageNotifier::checkRelativePath(const QString &str)
-{
-    // TODO: Write regex
-    return false;
-}
-bool InputMessageNotifier::checkRootPath(const QString &str)
-{
-    // TODO: Write regex
-    return false;
-}
-bool InputMessageNotifier::checkNetworkPath(const QString &str)
-{
-    // TODO: Write regex
-    return false;
-}
 
 InputMessageNotifier::InputMessageNotifier(QWidget *parent) : QWidget(parent)
 {
     this->m_layout = new QVBoxLayout;
     this->setLayout(this->m_layout);
-
+/*
     for (size_t i = 0; i < static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH); ++i) {
         this->m_messages[i] = new QLabel(this);
 
@@ -101,61 +39,85 @@ InputMessageNotifier::InputMessageNotifier(QWidget *parent) : QWidget(parent)
                                            "padding: 10px;");
 
         this->m_layout->addWidget(this->m_messages[i]);
+    }*/
+}
+
+size_t InputMessageNotifier::addDetector(std::unique_ptr<IInputMessageDetector> detector)
+{
+    if (!detector)
+    {
+        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
+                + ", Encountered with null pointer raither of detector.")
     }
+    this->m_detectors[this->m_next_detector++] = std::move(detector);
 }
 
 void InputMessageNotifier::addInstance(const QString& name)
 {
-    this->m_instances[name] = {};
+    this->m_instances[name] = MessageInstance();
 }
-
-void InputMessageNotifier::setInstanceDetection(const QString& name, MessageNotifierType type,
-                                                bool detection)
-{
-    this->m_instances[name].trigger[static_cast<size_t>(type)] = detection;
-    updateState();
-}
-
 void InputMessageNotifier::eraseInstance(const QString& name)
 {
-    this->m_instances.remove(name);
-    updateState();
+    this->m_instances.erase(name);
+    updateState()
 }
-
-void InputMessageNotifier::updateInstance(const QString& name, const QString& content)
+void InputMessageNotifier::setInstanceDetection(const QString& name, size_t type, bool detect = true)
 {
-    auto &instance = this->m_instances[name];
+    if (detect)
+    {
+        this->m_instances[name].mask.insert(type);
+    }
+    else
+    {
+        this->m_instances[name].mask.erase(type);
+    }
+}
+void InputMessageNotifier::updateInstance(const QString& name, const QString &content)
+{
+    auto& instance = this->m_instances[name];
 
-    for (size_t i = 0; i < static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH); ++i) {
-        instance.detected[i] = instance.trigger[i] && this->m_checkMessage[i](content);
+    instance.content = content;
+
+    for(auto& detector : this->m_detectors)
+    {
+        if (instance.mask.find(detector.first) != instance.mask.end() && detector.second->detect(content))
+        {
+            instance.detected.insert(detector.first);
+        }
+        else 
+        {
+            instance.detected.erase(detector.first);
+        }
     }
 
-    instance.content = std::move(content);
     updateState();
 }
 
 void InputMessageNotifier::updateState()
 {
-    std::bitset<32> res{ 0 };
+    std::set<size_t> types;
 
-    for (const auto &instance : this->m_instances) {
-        res |= instance.detected;
+    for (auto& instance : this->m_instances)
+    {
+        types.insert(instance.second.detected.begin(), instance.second.detected.end());
     }
 
-    for (size_t i = 0; i < static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH); ++i) {
-        if (res[i]) {
-            this->m_messages[i]->show();
-        } else {
-            this->m_messages[i]->hide();
+    for (auto& detector : this->m_detectors)
+    {
+        if (types.find(detector.first) != types.end())
+        {
+            this->m_detectors[detector.first]->raw()->show();
+        }
+        else 
+        {
+            this->m_detectors[detector.first]->raw()->hide();
         }
     }
 }
 
 void InputMessageNotifier::retranslateUi()
 {
-    for (size_t i = 0; i < static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH); ++i) {
-        this->m_messages[i]->setText(this->m_getMessages[i]());
-    }
+
 }
 
 } // namespace preferences

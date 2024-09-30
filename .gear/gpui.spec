@@ -97,7 +97,10 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_libdir/gpui/plugins/libreg-plugin.so
 %_libdir/gpui/plugins/libspol-plugin.so
 %_libdir/gpui/plugins/libpol-plugin.so
+%_libdir/gpui/plugins/libsdml-plugin.so
+%_libdir/gpui/plugins/libsdmx-plugin.so
 %_libdir/gpui/plugins/libscripts-plugin.so
+%_libdir/gpui/plugins/libsecurity-plugin.so
 
 %_libdir/gpui/plugins/libsmb-storage-plugin.so
 

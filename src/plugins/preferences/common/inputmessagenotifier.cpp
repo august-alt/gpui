@@ -24,100 +24,197 @@
 
 namespace preferences {
 
-InputMessageNotifier::InputMessageNotifier(QWidget *parent) : QWidget(parent)
+bool WhitespaceDetector::detect(const QString& input)
+{
+    return input.trimmed() != input;
+}
+InputMessageNotifier::DetectElement::DetectElement(QWidget* parent, QLayout* layout, const QString& message, InputMessageNotifier::MessageLevel level)
+{
+    this->m_label = new QLabel(parent);
+    layout->addWidget(this->m_label);
+
+    this->m_label->hide();
+
+    this->m_label->setText(message);
+
+    switch(level)
+    {
+        case InputMessageNotifier::MessageLevel::Warning:
+            this->m_label->setStyleSheet("background-color: rgb(249, 240, 107);\n"
+                                         "color: rgb(0,0,0);\n"
+                                         "border-radius: 10px;\n"
+                                         "padding: 10px;");
+        break;
+
+        default:
+        case InputMessageNotifier::MessageLevel::Error:
+            this->m_label->setStyleSheet("background-color: rgb(246, 97, 81);\n"
+                                         "color: rgb(255, 255, 255);\n"
+                                         "border-radius: 10px;\n"
+                                         "padding: 10px;");
+        break;
+    }
+
+    this->m_level = level;
+}
+InputMessageNotifier::DetectElement::DetectElement(DetectElement&& element)
+{
+    this->m_detected = element.m_detected;
+    this->m_label = element.m_label;
+    this->m_level = element.m_level;
+    element.m_label = nullptr;
+}
+InputMessageNotifier::DetectElement& InputMessageNotifier::DetectElement::operator=(DetectElement&& element)
+{
+    if (this->m_label)
+    {
+        delete this->m_label;
+    }
+
+    this->m_detected = element.m_detected;
+    this->m_label = element.m_label;
+    this->m_level = element.m_level;
+    element.m_label = nullptr;
+
+    return *this;
+}
+
+void InputMessageNotifier::DetectElement::detect()
+{
+    this->m_label->show();
+    this->m_detected = true;
+}
+void InputMessageNotifier::DetectElement::undetect()
+{
+    this->m_label->hide();
+    this->m_detected = false;
+}
+
+bool InputMessageNotifier::DetectElement::detected()
+{
+    return this->m_detected;
+}
+
+InputMessageNotifier::MessageLevel InputMessageNotifier::DetectElement::level()
+{
+    return this->m_level;
+}
+
+void InputMessageNotifier::DetectElement::setMessage(const QString& message)
+{
+    this->m_label->setText(message);
+}
+
+InputMessageNotifier::DetectElement::~DetectElement()
+{
+    if (this->m_label)
+    {
+        delete this->m_label;
+    }
+}
+
+InputMessageNotifier::InputMessageNotifier(QWidget* widget)
+: QWidget(widget)
 {
     this->m_layout = new QVBoxLayout;
     this->setLayout(this->m_layout);
-/*
-    for (size_t i = 0; i < static_cast<size_t>(MessageNotifierType::MESSAGE_NOTIFIER_LENGTH); ++i) {
-        this->m_messages[i] = new QLabel(this);
-
-        this->m_messages[i]->setText(this->m_getMessages[i]());
-        this->m_messages[i]->hide();
-        this->m_messages[i]->setStyleSheet("background-color: rgb(249, 240, 107);\n"
-                                           "border-radius: 10px;\n"
-                                           "padding: 10px;");
-
-        this->m_layout->addWidget(this->m_messages[i]);
-    }*/
 }
 
-size_t InputMessageNotifier::addDetector(std::unique_ptr<IInputMessageDetector> detector)
+size_t InputMessageNotifier::addDetector(std::unique_ptr<InputDetector> detector)
 {
-    if (!detector)
-    {
-        throw std::runtime_error("LINE: " + std::to_string(__LINE__) + ", FILE: " + __FILE__
-                + ", Encountered with null pointer raither of detector.")
-    }
-    this->m_detectors[this->m_next_detector++] = std::move(detector);
+    this->m_detectors[this->m_nextDetector] = std::move(detector);
+    return this->m_nextDetector++;
 }
 
-void InputMessageNotifier::addInstance(const QString& name)
+void InputMessageNotifier::removeDetector(size_t id)
 {
-    this->m_instances[name] = MessageInstance();
+    this->m_detectors.erase(id);
 }
-void InputMessageNotifier::eraseInstance(const QString& name)
+
+void InputMessageNotifier::addInput(const QString& name)
+{
+    this->m_instances[name] = std::move(InputInstance());
+}
+
+
+void InputMessageNotifier::removeInput(const QString& name)
 {
     this->m_instances.erase(name);
-    updateState()
 }
-void InputMessageNotifier::setInstanceDetection(const QString& name, size_t type, bool detect = true)
-{
-    if (detect)
-    {
-        this->m_instances[name].mask.insert(type);
-    }
-    else
-    {
-        this->m_instances[name].mask.erase(type);
-    }
-}
-void InputMessageNotifier::updateInstance(const QString& name, const QString &content)
+
+void InputMessageNotifier::updateInput(const QString& name, const QString& input)
 {
     auto& instance = this->m_instances[name];
 
-    instance.content = content;
-
-    for(auto& detector : this->m_detectors)
+    for (auto& detect : instance)
     {
-        if (instance.mask.find(detector.first) != instance.mask.end() && detector.second->detect(content))
+        bool detected = this->m_detectors[detect.first]->detect(input);
+
+        if (detected && !detect.second.detected())
         {
-            instance.detected.insert(detector.first);
+            detect.second.detect();
+            this->incCounter(detect.second.level());
         }
-        else 
+        else if(!detected && detect.second.detected())
         {
-            instance.detected.erase(detector.first);
-        }
-    }
-
-    updateState();
-}
-
-void InputMessageNotifier::updateState()
-{
-    std::set<size_t> types;
-
-    for (auto& instance : this->m_instances)
-    {
-        types.insert(instance.second.detected.begin(), instance.second.detected.end());
-    }
-
-    for (auto& detector : this->m_detectors)
-    {
-        if (types.find(detector.first) != types.end())
-        {
-            this->m_detectors[detector.first]->raw()->show();
-        }
-        else 
-        {
-            this->m_detectors[detector.first]->raw()->hide();
+            detect.second.undetect();
+            this->decCounter(detect.second.level());
         }
     }
 }
 
-void InputMessageNotifier::retranslateUi()
+void InputMessageNotifier::setMessage(const QString& name, size_t detector, const QString& message)
+{
+    auto entry = this->m_instances[name].find(detector);
+    if (entry != this->m_instances[name].end())
+    {
+        entry->second.setMessage(message);
+    }
+}
+
+void InputMessageNotifier::attachDetector(const QString& name, size_t detector, const QString& message, MessageLevel level)
+{
+    this->m_instances[name].insert(std::pair<size_t, DetectElement>(detector, DetectElement(this, this->m_layout, message, level)));
+}
+
+bool InputMessageNotifier::hasAnyError()
+{
+    return this->m_errorCount != 0;
+}
+
+bool InputMessageNotifier::hasAnyWarning()
+{
+    return this->m_warningCount != 0;
+}
+
+InputMessageNotifier::~InputMessageNotifier()
 {
 
+}
+
+void InputMessageNotifier::incCounter(InputMessageNotifier::MessageLevel level)
+{
+    switch(level)
+    {
+    case InputMessageNotifier::MessageLevel::Warning:
+        ++this->m_warningCount;
+        break;
+    case InputMessageNotifier::MessageLevel::Error:
+        ++this->m_errorCount;
+        break;
+    }
+}
+void InputMessageNotifier::decCounter(MessageLevel level)
+{
+    switch(level)
+    {
+    case InputMessageNotifier::MessageLevel::Warning:
+        --this->m_warningCount;
+        break;
+    case InputMessageNotifier::MessageLevel::Error:
+        --this->m_errorCount;
+        break;
+    }
 }
 
 } // namespace preferences

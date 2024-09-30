@@ -33,68 +33,148 @@ QT_END_NAMESPACE
 
 namespace preferences {
 
-class IInputMessageDetector : public QObject
+class InputDetector : public QObject 
 {
 public:
-    Q_OBJECT
-
+    Q_OBJECT 
 public:
     virtual bool detect(const QString& input) = 0;
-    virtual QWidget* raw() = 0;
-    virtual const QString& message() = 0;
-    virtual ~IInputMessageDetector() = 0;
+    virtual ~InputDetector() = default;
 };
 
-class InputMessageWhitespaceDetector : public IInputMessageDetector
+class WhitespaceDetector: public InputDetector 
 {
 public:
     Q_OBJECT
-
 public:
     bool detect(const QString& input) override;
-    QWidget* raw() override;
-    const QString& message() override;
 };
 
-class InputMessageNotifier : public QWidget
+class InputMessageNotifier : public QWidget 
 {
 public:
+
     Q_OBJECT
+
+public: 
+
+    enum class MessageLevel
+    {
+        Warning,
+        Error,
+    };
+
 private:
 
-typedef struct MessageInstance 
-{
-    std::unordered_set<size_t> mask{};
-    std::unordered_set<size_t> detected{};
-    QString content;
-} MessageInstance;
+    typedef struct DetectElement
+    {
+    public:
+        DetectElement(QWidget* parent, QLayout* layout, const QString& message, MessageLevel level);
+        DetectElement(DetectElement&& element);
+        DetectElement& operator=(DetectElement&& element);
+
+        void detect();
+        void undetect();
+
+        bool detected();
+        MessageLevel level();
+        void setMessage(const QString& message);
+
+        ~DetectElement();
+    private:
+    DetectElement(const DetectElement&) = delete;
+    void operator=(const DetectElement&) = delete;
+
+    private:
+        bool m_detected{false};
+        QLabel* m_label{nullptr};
+        MessageLevel m_level{MessageLevel::Warning};
+    } DetectElement;
+
+    typedef std::unordered_map<size_t, DetectElement> InputInstance;
 
 public:
-    explicit InputMessageNotifier(QWidget *parent = nullptr);
 
-    size_t addDetector(std::unique_ptr<IInputMessageDetector> detector);
+    InputMessageNotifier(QWidget* widget);
 
-    void addInstance(const QString& name);
-    void eraseInstance(const QString& name);
-    void setInstanceDetection(const QString& name, size_t type, bool detect = true);
-    void updateInstance(const QString& name, const QString &content);
+    /**
+     * @brief add detector.
+     * @param detector Detector.
+     * @return Detector id.
+     */
+    size_t addDetector(std::unique_ptr<InputDetector> detector);
 
-    void retranslateUi();
+    /**
+     * @brief remove detector.
+     * @param id Detector id.
+     */
+    void removeDetector(size_t id);
+
+    /**
+     * @brief registrate input.
+     * @param name Name of input to be registrated.
+     */
+    void addInput(const QString& name);
+
+    /**
+     * @brief unregistrate input.
+     * @param name Name of input to be unregistrated.
+     */
+    void removeInput(const QString& name);
+
+    /**
+     * @brief update input content and validate it.
+     * @param name Name of registrated input.
+     * @param input Input content.
+     */
+    void updateInput(const QString& name, const QString& input);
+
+    /**
+     * @brief update input content and validate it.
+     * @param name Name of registrated input.
+     * @param detector Detector id.
+     * @param message MessageNotifier message on detect.
+     */
+    void setMessage(const QString& name, size_t detector, const QString& message);
+
+    /**
+     * @brief attach detector to input.
+     * @param name Name of registrated input.
+     * @param detector Detector id.
+     * @param level Message level(visual and see hasAnyError() and hasAnyWarning())
+     */
+    void attachDetector(const QString& name, size_t detector, const QString& message, MessageLevel level = MessageLevel::Warning);
+
+    /**
+     * @return true, if any error has been detected(on any input).
+     */
+    bool hasAnyError();
+
+    /**
+     * @return true, if any warning has been detected(on any input).
+     */
+    bool hasAnyWarning();
+
+    ~InputMessageNotifier();
 
 private:
-    InputMessageNotifier(const InputMessageNotifier &) = delete; // copy ctor
-    InputMessageNotifier(InputMessageNotifier &&) = delete; // move ctor
-    InputMessageNotifier &operator=(const InputMessageNotifier &) = delete; // copy assignment
-    InputMessageNotifier &operator=(InputMessageNotifier &&) = delete; // move assignment'
+    InputMessageNotifier(const InputMessageNotifier&) = delete;
+    void operator=(const InputMessageNotifier&) = delete;
 
-    void updateState();
+    void incCounter(MessageLevel level);
+    void decCounter(MessageLevel level);
 
 private:
-    QVBoxLayout* m_layout{nullptr};
-    std::vector<bool> triggered{};
-    std::unordered_map<QString, MessageInstance> m_instances{};
-    std::unordered_map<size_t, std::unique_ptr<IInputMessageDetector>> m_detectors{};
-    size_t m_next_detector = 0;
+
+    std::unordered_map<size_t, std::unique_ptr<InputDetector>> m_detectors{};
+    std::unordered_map<QString, InputInstance> m_instances{};
+
+    size_t m_errorCount{0};
+    size_t m_warningCount{0};
+
+    size_t m_nextDetector{0};
+
+    QLayout* m_layout{nullptr};
 };
 
 } // namespace preferences

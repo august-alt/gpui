@@ -768,39 +768,32 @@ context (user policy option)</source>
 <context>
     <name>preferences::InputMessageNotifier</name>
     <message>
-        <location filename="../inputmessagenotifier.cpp" line="27"/>
         <source>The input field has a space at the beginning or at the end</source>
-        <translation>Поле ввода содержит пробел в начале или в конце</translation>
+        <translation type="vanished">Поле ввода содержит пробел в начале или в конце</translation>
     </message>
     <message>
-        <location filename="../inputmessagenotifier.cpp" line="31"/>
         <source>There is a folder &apos;.&apos;/&apos;..&apos; in the path input field</source>
-        <translation>В поле ввода пути есть папка &quot;.&quot;/&quot;..&quot;</translation>
+        <translation type="vanished">В поле ввода пути есть папка &quot;.&quot;/&quot;..&quot;</translation>
     </message>
     <message>
-        <location filename="../inputmessagenotifier.cpp" line="35"/>
         <source>The path input field contains the path to the folder</source>
-        <translation>Поле ввода пути содержит путь к папке</translation>
+        <translation type="vanished">Поле ввода пути содержит путь к папке</translation>
     </message>
     <message>
-        <location filename="../inputmessagenotifier.cpp" line="39"/>
         <source>The path input field contains a path that is not compatible with windows</source>
-        <translation>Поле ввода path содержит путь, который несовместим с Windows</translation>
+        <translation type="vanished">Поле ввода path содержит путь, который несовместим с Windows</translation>
     </message>
     <message>
-        <location filename="../inputmessagenotifier.cpp" line="43"/>
         <source>The path input field contains a relative path</source>
-        <translation>Поле ввода path содержит относительный путь</translation>
+        <translation type="vanished">Поле ввода path содержит относительный путь</translation>
     </message>
     <message>
-        <location filename="../inputmessagenotifier.cpp" line="47"/>
         <source>The path input field contains a path from root</source>
-        <translation>Поле ввода path содержит путь от корня</translation>
+        <translation type="vanished">Поле ввода path содержит путь от корня</translation>
     </message>
     <message>
-        <location filename="../inputmessagenotifier.cpp" line="51"/>
         <source>The path input field contains a network path</source>
-        <translation>Поле ввода path содержит сетевой путь</translation>
+        <translation type="vanished">Поле ввода path содержит сетевой путь</translation>
     </message>
 </context>
 <context>

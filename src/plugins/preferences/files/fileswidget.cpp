@@ -40,11 +40,13 @@ FilesWidget::FilesWidget(QWidget *parent, FilesItem *item)
 {
     ui->setupUi(this);
 
-    ui->inputMessage->addInstance("source_file");
-    ui->inputMessage->addInstance("destination");
+    this->whitespaceDetector = ui->inputMessage->addDetector(std::unique_ptr<InputDetector>(new WhitespaceDetector));
 
-    ui->inputMessage->setInstanceDetection("source_file", InputMessageNotifier::MessageNotifierType::INVISIBLE_SPACE);
-    ui->inputMessage->setInstanceDetection("destination", InputMessageNotifier::MessageNotifierType::INVISIBLE_SPACE);
+    ui->inputMessage->addInput("source_file");
+    ui->inputMessage->addInput("destination");
+
+    ui->inputMessage->attachDetector("source_file", whitespaceDetector, tr("source_file_whitespace"));
+    ui->inputMessage->attachDetector("destination", whitespaceDetector, tr("destination_whitespace"));
 
     on_actionComboBox_currentIndexChanged(ui->actionComboBox->currentIndex());
 }

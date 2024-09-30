@@ -105,7 +105,7 @@ void FilesWidget::on_destinationToolButton_clicked()
 
 void FilesWidget::on_destinationLineEdit_textChanged(const QString &text)
 {
-    ui->inputMessage->updateInstance("destination", text);
+    ui->inputMessage->updateInput("destination", text);
 }
 
 void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
@@ -115,14 +115,16 @@ void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
         fileMode = false;
 
         ui->destinationLabel->setText(tr("Destination folder:"));
+        ui->inputMessage->setMessage("destination", this->whitespaceDetector, tr("destination_folder_whitespace"));
     }
     else
     {
         fileMode = true;
 
         ui->destinationLabel->setText(tr("Destination file:"));
+        ui->inputMessage->setMessage("destination", this->whitespaceDetector, tr("destination_whitespace"));
     }
-    ui->inputMessage->updateInstance("source_file", text);
+    ui->inputMessage->updateInput("source_file", text);
 }
 
 } // namespace preferences

@@ -33,10 +33,8 @@ QT_END_NAMESPACE
 
 namespace preferences {
 
-class InputDetector : public QObject 
+class InputDetector 
 {
-public:
-    Q_OBJECT 
 public:
     virtual bool detect(const QString& input) = 0;
     virtual ~InputDetector() = default;
@@ -44,8 +42,6 @@ public:
 
 class WhitespaceDetector: public InputDetector 
 {
-public:
-    Q_OBJECT
 public:
     bool detect(const QString& input) override;
 };

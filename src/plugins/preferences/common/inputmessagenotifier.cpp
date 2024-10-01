@@ -19,16 +19,14 @@
 ***********************************************************************************************************************/
 
 #include "inputmessagenotifier.h"
-#include <iterator>
 #include <algorithm>
+#include <iterator>
 
 namespace preferences {
 
-bool WhitespaceDetector::detect(const QString& input)
-{
-    return input.trimmed() != input;
-}
-InputMessageNotifier::DetectElement::DetectElement(QWidget* parent, QLayout* layout, const QString& message, InputMessageNotifier::MessageLevel level)
+InputMessageNotifier::DetectElement::DetectElement(QWidget *parent, QLayout *layout,
+                                                   const QString &message,
+                                                   InputMessageNotifier::MessageLevel level)
 {
     this->m_label = new QLabel(parent);
     layout->addWidget(this->m_label);
@@ -37,37 +35,36 @@ InputMessageNotifier::DetectElement::DetectElement(QWidget* parent, QLayout* lay
 
     this->m_label->setText(message);
 
-    switch(level)
-    {
-        case InputMessageNotifier::MessageLevel::Warning:
-            this->m_label->setStyleSheet("background-color: rgb(249, 240, 107);\n"
-                                         "color: rgb(0,0,0);\n"
-                                         "border-radius: 10px;\n"
-                                         "padding: 10px;");
+    switch (level) {
+    case InputMessageNotifier::MessageLevel::Warning:
+        this->m_label->setStyleSheet("background-color: rgb(249, 240, 107);\n"
+                                     "color: rgb(0,0,0);\n"
+                                     "border-radius: 10px;\n"
+                                     "padding: 10px;");
         break;
 
-        default:
-        case InputMessageNotifier::MessageLevel::Error:
-            this->m_label->setStyleSheet("background-color: rgb(246, 97, 81);\n"
-                                         "color: rgb(255, 255, 255);\n"
-                                         "border-radius: 10px;\n"
-                                         "padding: 10px;");
+    default:
+    case InputMessageNotifier::MessageLevel::Error:
+        this->m_label->setStyleSheet("background-color: rgb(246, 97, 81);\n"
+                                     "color: rgb(255, 255, 255);\n"
+                                     "border-radius: 10px;\n"
+                                     "padding: 10px;");
         break;
     }
 
     this->m_level = level;
 }
-InputMessageNotifier::DetectElement::DetectElement(DetectElement&& element)
+InputMessageNotifier::DetectElement::DetectElement(DetectElement &&element)
 {
     this->m_detected = element.m_detected;
     this->m_label = element.m_label;
     this->m_level = element.m_level;
     element.m_label = nullptr;
 }
-InputMessageNotifier::DetectElement& InputMessageNotifier::DetectElement::operator=(DetectElement&& element)
+InputMessageNotifier::DetectElement &
+InputMessageNotifier::DetectElement::operator=(DetectElement &&element)
 {
-    if (this->m_label)
-    {
+    if (this->m_label) {
         delete this->m_label;
     }
 
@@ -100,21 +97,19 @@ InputMessageNotifier::MessageLevel InputMessageNotifier::DetectElement::level()
     return this->m_level;
 }
 
-void InputMessageNotifier::DetectElement::setMessage(const QString& message)
+void InputMessageNotifier::DetectElement::setMessage(const QString &message)
 {
     this->m_label->setText(message);
 }
 
 InputMessageNotifier::DetectElement::~DetectElement()
 {
-    if (this->m_label)
-    {
+    if (this->m_label) {
         delete this->m_label;
     }
 }
 
-InputMessageNotifier::InputMessageNotifier(QWidget* widget)
-: QWidget(widget)
+InputMessageNotifier::InputMessageNotifier(QWidget *widget) : QWidget(widget)
 {
     this->m_layout = new QVBoxLayout;
     this->setLayout(this->m_layout);
@@ -131,50 +126,46 @@ void InputMessageNotifier::removeDetector(size_t id)
     this->m_detectors.erase(id);
 }
 
-void InputMessageNotifier::addInput(const QString& name)
+void InputMessageNotifier::addInput(const QString &name)
 {
     this->m_instances[name] = std::move(InputInstance());
 }
 
-
-void InputMessageNotifier::removeInput(const QString& name)
+void InputMessageNotifier::removeInput(const QString &name)
 {
     this->m_instances.erase(name);
 }
 
-void InputMessageNotifier::updateInput(const QString& name, const QString& input)
+void InputMessageNotifier::updateInput(const QString &name, const QString &input)
 {
-    auto& instance = this->m_instances[name];
+    auto &instance = this->m_instances[name];
 
-    for (auto& detect : instance)
-    {
+    for (auto &detect : instance) {
         bool detected = this->m_detectors[detect.first]->detect(input);
 
-        if (detected && !detect.second.detected())
-        {
+        if (detected && !detect.second.detected()) {
             detect.second.detect();
             this->incCounter(detect.second.level());
-        }
-        else if(!detected && detect.second.detected())
-        {
+        } else if (!detected && detect.second.detected()) {
             detect.second.undetect();
             this->decCounter(detect.second.level());
         }
     }
 }
 
-void InputMessageNotifier::setMessage(const QString& name, size_t detector, const QString& message)
+void InputMessageNotifier::setMessage(const QString &name, size_t detector, const QString &message)
 {
     auto entry = this->m_instances[name].find(detector);
-    if (entry != this->m_instances[name].end())
-    {
+    if (entry != this->m_instances[name].end()) {
         entry->second.setMessage(message);
     }
 }
 
-void InputMessageNotifier::attachDetector(const QString& name, size_t detector, const QString& message, MessageLevel level)
+void InputMessageNotifier::attachDetector(const QString &name, size_t detector,
+                                          const QString &message, MessageLevel level)
 {
-    this->m_instances[name].insert(std::pair<size_t, DetectElement>(detector, DetectElement(this, this->m_layout, message, level)));
+    this->m_instances[name].insert(std::pair<size_t, DetectElement>(
+            detector, DetectElement(this, this->m_layout, message, level)));
 }
 
 bool InputMessageNotifier::hasAnyError()
@@ -187,15 +178,11 @@ bool InputMessageNotifier::hasAnyWarning()
     return this->m_warningCount != 0;
 }
 
-InputMessageNotifier::~InputMessageNotifier()
-{
-
-}
+InputMessageNotifier::~InputMessageNotifier() { }
 
 void InputMessageNotifier::incCounter(InputMessageNotifier::MessageLevel level)
 {
-    switch(level)
-    {
+    switch (level) {
     case InputMessageNotifier::MessageLevel::Warning:
         ++this->m_warningCount;
         break;
@@ -206,8 +193,7 @@ void InputMessageNotifier::incCounter(InputMessageNotifier::MessageLevel level)
 }
 void InputMessageNotifier::decCounter(MessageLevel level)
 {
-    switch(level)
-    {
+    switch (level) {
     case InputMessageNotifier::MessageLevel::Warning:
         --this->m_warningCount;
         break;

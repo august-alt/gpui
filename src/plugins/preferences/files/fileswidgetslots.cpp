@@ -116,6 +116,7 @@ void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
 
         ui->destinationLabel->setText(tr("Destination folder:"));
         ui->inputMessage->setMessage("destination", this->whitespaceDetector, tr("destination_folder_whitespace"));
+        ui->inputMessage->setMessage("destination", this->emptyDetector, tr("destination_folder_empty"));
     }
     else
     {
@@ -123,6 +124,7 @@ void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
 
         ui->destinationLabel->setText(tr("Destination file:"));
         ui->inputMessage->setMessage("destination", this->whitespaceDetector, tr("destination_whitespace"));
+        ui->inputMessage->setMessage("destination", this->emptyDetector, tr("destination_empty"));
     }
     ui->inputMessage->updateInput("source_file", text);
 }

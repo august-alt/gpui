@@ -20,6 +20,7 @@
 
 #include "fileswidget.h"
 #include "ui_fileswidget.h"
+#include "common/inputdetectors.h"
 
 #include "common/commonutils.h"
 #include "filesitem.h"
@@ -41,12 +42,18 @@ FilesWidget::FilesWidget(QWidget *parent, FilesItem *item)
     ui->setupUi(this);
 
     this->whitespaceDetector = ui->inputMessage->addDetector(std::unique_ptr<InputDetector>(new WhitespaceDetector));
+    this->emptyDetector = ui->inputMessage->addDetector(std::unique_ptr<InputDetector>(new EmptyDetector));
 
     ui->inputMessage->addInput("source_file");
     ui->inputMessage->addInput("destination");
 
     ui->inputMessage->attachDetector("source_file", whitespaceDetector, tr("source_file_whitespace"));
+    ui->inputMessage->attachDetector("source_file", emptyDetector, tr("source_file_empty"), InputMessageNotifier::MessageLevel::Error);
+
     ui->inputMessage->attachDetector("destination", whitespaceDetector, tr("destination_whitespace"));
+    ui->inputMessage->attachDetector("destination", emptyDetector, tr("destination_empty"), InputMessageNotifier::MessageLevel::Error);
+
+    ui->sourceLineEdit->setToolTip("test");
 
     on_actionComboBox_currentIndexChanged(ui->actionComboBox->currentIndex());
 }

@@ -84,6 +84,7 @@ private:
     bool fileMode {true};
 
     size_t whitespaceDetector{0};
+    size_t emptyDetector{0};
 
 private:
     Ui::FilesWidget *ui {nullptr};

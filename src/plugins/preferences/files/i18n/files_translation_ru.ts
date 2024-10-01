@@ -134,28 +134,39 @@
 <context>
     <name>preferences::FilesWidget</name>
     <message>
-        <location filename="../fileswidget.cpp" line="48"/>
+        <location filename="../fileswidget.cpp" line="50"/>
+        <location filename="../fileswidget.cpp" line="51"/>
         <source>source_file_whitespace</source>
         <translation>Поле ввода исходного файла содержит пробел в начале или в конце</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="49"/>
-        <location filename="../fileswidgetslots.cpp" line="125"/>
+        <location filename="../fileswidgetslots.cpp" line="126"/>
         <source>destination_whitespace</source>
         <translation>Поле ввода целевого файла содержит пробел в начале или в конце</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="87"/>
+        <location filename="../fileswidget.cpp" line="53"/>
+        <source>source_file_empty</source>
+        <translation>Пустое поле ввода исходного файла</translation>
+    </message>
+    <message>
+        <location filename="../fileswidget.cpp" line="54"/>
+        <location filename="../fileswidgetslots.cpp" line="127"/>
+        <source>destination_empty</source>
+        <translation>Пустое поле ввода файла назначения</translation>
+    </message>
+    <message>
+        <location filename="../fileswidget.cpp" line="92"/>
         <source>Please enter source file(s) value.</source>
         <translation>Пожалуйста, введите источник файла(ов).</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="92"/>
+        <location filename="../fileswidget.cpp" line="97"/>
         <source>Please enter destination file(s) value.</source>
         <translation>Пожалуйста, введите место назначения файла(ов).</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="102"/>
+        <location filename="../fileswidget.cpp" line="107"/>
         <source>General</source>
         <translation>Основные настройки</translation>
     </message>
@@ -166,7 +177,7 @@
     </message>
     <message>
         <location filename="../fileswidgetslots.cpp" line="73"/>
-        <location filename="../fileswidgetslots.cpp" line="124"/>
+        <location filename="../fileswidgetslots.cpp" line="125"/>
         <source>Destination file:</source>
         <translation>Место назначения файлов:</translation>
     </message>
@@ -174,6 +185,11 @@
         <location filename="../fileswidgetslots.cpp" line="118"/>
         <source>destination_folder_whitespace</source>
         <translation>Поле ввода целевой папки содержит пробел в начале или в конце</translation>
+    </message>
+    <message>
+        <location filename="../fileswidgetslots.cpp" line="119"/>
+        <source>destination_folder_empty</source>
+        <translation>Пустое поле ввода папки назначения</translation>
     </message>
     <message>
         <source>Open</source>

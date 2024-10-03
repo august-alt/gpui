@@ -153,7 +153,7 @@ void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &ke
     }
 }
 
-void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, const std::optional<std::string> &prefix)
+void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, const std::optional<std::string> &prefix, bool additive)
 {
     // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
     // explicitValue cannot be used with the valuePrefix attribute.
@@ -185,7 +185,10 @@ void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
     
     // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpreg/57226664-ce00-4487-994e-a6b3820f3e49
     // for non explicit values. Non-explicit value will be ignored.
-    source.setValue(key, "**delvals.", REG_SZ, " ");
+    if (!additive)
+    {
+        source.setValue(key, "**delvals.", REG_SZ, " ");
+    }
 
     size_t index = 1;
 
@@ -583,7 +586,8 @@ public:
                                       listElement->key, 
                                       listElement->explicitValue, 
                                       listElement->expandable, 
-                                      listElement->valuePrefix);
+                                      listElement->valuePrefix,
+                                      listElement->additive);
 
                 *m_dataChanged = true;
             });

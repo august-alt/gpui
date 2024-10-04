@@ -107,19 +107,19 @@ QHBoxLayout *createCaptions()
     return horizontalLayout;
 }
 
-QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, const std::string &key, const std::string &prefix)
+QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, const std::string &key, const std::optional<std::string> &prefix)
 {
     QMap<std::string, QString> items;
     std::vector<std::string> valueNames = source.getNonSpecialValueNames(key);
 
-    if(!prefix.empty())
+    if (prefix && !prefix->empty())
     {
         // remove all valueNames(from return result), that doesn't have `prefix` prefix
         valueNames.erase(std::remove_if(valueNames.begin(), valueNames.end(),
                          [&prefix](const std::string& str)
                          {
-                             return !(str.length() > prefix.length() && 
-                                     strncmp(str.c_str(), prefix.c_str(), prefix.length()));
+                             return !(str.length() > prefix->length() && 
+                                     strncmp(str.c_str(), prefix->c_str(), prefix->length()));
                          }), valueNames.end());
     }
 
@@ -130,10 +130,12 @@ QMap<std::string, QString> loadListFromRegistry(AbstractRegistrySource &source, 
     return items;
 }
 
-void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &key, const std::string &prefix = "")
+void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &key, const std::optional<std::string> &prefix)
 {
     // small optimization
-    if (prefix.empty())
+    // 1 case: clear all valueNames in key.
+    // 2 case: any valueName by key has an empty prefix.
+    if (!prefix || prefix->empty())
     {
         source.clearKey(key);
     }
@@ -143,19 +145,19 @@ void cleanUpListInRegistry(AbstractRegistrySource &source, const std::string &ke
     // TODO: make case-insensitive.
     // clean-up all values that contain `prefix` prefix (case-sensitive)
     for (auto &value : valueNames) {
-        if (value.size() > prefix.size() && 
-            strncmp(value.c_str(), prefix.c_str(), prefix.size()) == 0)
+        if (value.size() > prefix->size() && 
+            strncmp(value.c_str(), prefix->c_str(), prefix->size()) == 0)
         {
             source.clearValue(key, value);
         }
     }
 }
 
-void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, std::string &prefix)
+void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QString> valueList, const std::string &key, bool explicitValue, bool expandable, const std::optional<std::string> &prefix, bool additive)
 {
     // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
     // explicitValue cannot be used with the valuePrefix attribute.
-    if (explicitValue && !prefix.empty())
+    if (prefix && explicitValue)
     {
         qWarning() << "Presentation builder::save: attempt to use explicitValue with the valuePrefix attribute";
     }
@@ -164,7 +166,7 @@ void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
     {
         return;
     }
-    
+
     // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc770327(v=ws.10)
     // true represents expandable string type (REG_EXPAND_SZ) and false represents string type (REG_SZ)
     auto type = expandable ? REG_EXPAND_SZ : REG_SZ;
@@ -183,14 +185,28 @@ void writeListIntoRegistry(AbstractRegistrySource &source, QMap<std::string, QSt
     
     // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpreg/57226664-ce00-4487-994e-a6b3820f3e49
     // for non explicit values. Non-explicit value will be ignored.
-    source.setValue(key, "**delvals.", REG_SZ, " ");
+    if (!additive)
+    {
+        source.setValue(key, "**delvals.", REG_SZ, " ");
+    }
 
     size_t index = 1;
+
+    if (prefix)
+    {
+        for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin, ++index)
+        {
+            // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc772195(v=ws.10)
+            // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
+            source.setValue(key, *prefix + std::to_string(index), type, begin.value());
+        }
+        return;
+    }
     for (auto begin = valueList.begin(), end = valueList.end(); begin != end; ++begin, ++index)
     {
         // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc772195(v=ws.10)
         // valuePrefix represents the text string to be prepended to the incremented integer for registry subkey creation.
-        source.setValue(key, prefix + std::to_string(index), type, begin.value());
+        source.setValue(key, begin.value().toStdString(), type, begin.value());
     }
 }
 
@@ -511,7 +527,7 @@ public:
                 qWarning() << "List element: " << listElement->id.c_str() << "\n"
                            << "key: " << listElement->key.c_str() << "\n"
                            << "valueName: " << listElement->valueName.c_str() << "\n"
-                           << "valuePrefix: " << listElement->valuePrefix.c_str() << "\n"
+                           << "valuePrefix: " << (listElement->valuePrefix ? listElement->valuePrefix->c_str() : "(null)") << "\n"
                            << "additive: " << listElement->additive << "\n"
                            << "expandable: " << listElement->expandable << "\n"
                            << "explicitValue" << listElement->explicitValue << "\n";
@@ -534,7 +550,7 @@ public:
 
             // https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc731025(v=ws.10)
             // explicitValue cannot be used with the valuePrefix attribute.
-            if (listElement->valuePrefix.size() > 0 && listElement->explicitValue)
+            if (listElement->valuePrefix && listElement->explicitValue)
             {
                 qWarning() << "Unable to get valid policy listElement (explicitValue cannot be used with the valuePrefix attribute).";
                 return;
@@ -570,7 +586,8 @@ public:
                                       listElement->key, 
                                       listElement->explicitValue, 
                                       listElement->expandable, 
-                                      listElement->valuePrefix);
+                                      listElement->valuePrefix,
+                                      listElement->additive);
 
                 *m_dataChanged = true;
             });

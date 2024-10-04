@@ -23,6 +23,7 @@
 
 #include "policyelement.h"
 
+#include <optional>
 #include <string>
 
 namespace model
@@ -38,7 +39,7 @@ public:
     /*!
      * \brief A prefix for value.
      */
-    std::string valuePrefix{};
+    std::optional<std::string> valuePrefix{};
 
     /*!
      * \brief additive If this option is specified true, existing subkeys are not deleted,

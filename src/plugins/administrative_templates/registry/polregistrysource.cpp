@@ -215,8 +215,8 @@ static bool isSpecialValueName(const std::string &str)
            (str == "**delvals.")     ||
            (str == "**deletekeys")   ||
            (str == "**securekey")    || 
-           (str.length() >= 6 && strncmp(str.c_str(), "**del.", 6)) ||
-           (str.length() >= 7 && strncmp(str.c_str(), "**soft.", 7));
+           (str.length() >= 6 && strncmp(str.c_str(), "**del.", 6) == 0) ||
+           (str.length() >= 7 && strncmp(str.c_str(), "**soft.", 7) == 0);
 }
 
 std::vector<std::string> PolRegistrySource::getNonSpecialValueNames(const std::string &key) const 

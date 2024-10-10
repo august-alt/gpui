@@ -1,0 +1,20 @@
+digraph "GroupPolicy::PolicyDefinitions::DataElementContent"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="GroupPolicy::PolicyDefinitions\l::DataElementContent",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Class corresponding to the DataElementContent schema type."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="xml_schema::String",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="GroupPolicy::PolicyDefinitions\l::CheckBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_check_box.html",tooltip="Class corresponding to the CheckBox schema type."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="GroupPolicy::PolicyDefinitions\l::DecimalTextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_decimal_text_box.html",tooltip="Class corresponding to the DecimalTextBox schema type."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="GroupPolicy::PolicyDefinitions\l::DropdownList",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_dropdown_list.html",tooltip="Class corresponding to the DropdownList schema type."];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="GroupPolicy::PolicyDefinitions\l::ListBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_list_box.html",tooltip="Class corresponding to the ListBox schema type."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="GroupPolicy::PolicyDefinitions\l::LongDecimalTextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_long_decimal_text_box.html",tooltip="Class corresponding to the LongDecimalTextBox schema type."];
+}

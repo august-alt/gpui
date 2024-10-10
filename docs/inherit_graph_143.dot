@@ -1,0 +1,16 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node403 [label="ModelView::SessionModel",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node403 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="preferences::Preferences\lModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_preferences_model.html",tooltip="Drives item representation for editor."];
+  Node403 -> Node405 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node405 [label="preferences::Preferences\lTreeModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_preferences_tree_model.html",tooltip=" "];
+  Node403 -> Node406 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node406 [label="scripts_plugin::ScriptsModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classscripts__plugin_1_1_scripts_model.html",tooltip=" "];
+  Node403 -> Node407 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node407 [label="scripts_plugin::ScriptsTree\lModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classscripts__plugin_1_1_scripts_tree_model.html",tooltip=" "];
+}

@@ -103,6 +103,11 @@ void FilesWidget::on_destinationToolButton_clicked()
     }
 }
 
+void FilesWidget::on_destinationLineEdit_textChanged(const QString &text)
+{
+    ui->inputMessage->updateInput("destination", text);
+}
+
 void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
 {
     if (text.contains('*') || text.contains('?'))
@@ -110,13 +115,18 @@ void FilesWidget::on_sourceLineEdit_textChanged(const QString &text)
         fileMode = false;
 
         ui->destinationLabel->setText(tr("Destination folder:"));
+        ui->inputMessage->setMessage("destination", this->whitespaceDetector, tr("destination_folder_whitespace"));
+        ui->inputMessage->setMessage("destination", this->emptyDetector, tr("destination_folder_empty"));
     }
     else
     {
         fileMode = true;
 
         ui->destinationLabel->setText(tr("Destination file:"));
+        ui->inputMessage->setMessage("destination", this->whitespaceDetector, tr("destination_whitespace"));
+        ui->inputMessage->setMessage("destination", this->emptyDetector, tr("destination_empty"));
     }
+    ui->inputMessage->updateInput("source_file", text);
 }
 
 } // namespace preferences

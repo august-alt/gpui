@@ -765,6 +765,37 @@ context (user policy option)</translation>
     </message>
 </context>
 <context>
+    <name>preferences::InputMessageNotifier</name>
+    <message>
+        <source>The input field has a space at the beginning or at the end</source>
+        <translation type="vanished">The input field has a space at the beginning or at the end</translation>
+    </message>
+    <message>
+        <source>There is a folder &apos;.&apos;/&apos;..&apos; in the path input field</source>
+        <translation type="vanished">There is a folder &apos;.&apos;/&apos;..&apos; in the path input field</translation>
+    </message>
+    <message>
+        <source>The path input field contains the path to the folder</source>
+        <translation type="vanished">The path input field contains the path to the folder</translation>
+    </message>
+    <message>
+        <source>The path input field contains a path that is not compatible with windows</source>
+        <translation type="vanished">The path input field contains a path that is not compatible with windows</translation>
+    </message>
+    <message>
+        <source>The path input field contains a relative path</source>
+        <translation type="vanished">The path input field contains a relative path</translation>
+    </message>
+    <message>
+        <source>The path input field contains a path from root</source>
+        <translation type="vanished">The path input field contains a path from root</translation>
+    </message>
+    <message>
+        <source>The path input field contains a network path</source>
+        <translation type="vanished">The path input field contains a network path</translation>
+    </message>
+</context>
+<context>
     <name>preferences::PreferencesTreeView</name>
     <message>
         <location filename="../preferencestreeview.cpp" line="41"/>

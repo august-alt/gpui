@@ -1,0 +1,30 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node289 [label="QDialog",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node289 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="gpui::AboutDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_about_dialog.html",tooltip=" "];
+  Node289 -> Node291 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node291 [label="gpui::ISnapInDetailsDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_i_snap_in_details_dialog.html",tooltip="Common interface for a details dialog."];
+  Node291 -> Node292 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node292 [label="gpui::CompositeSnapInDetails\lDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_composite_snap_in_details_dialog.html",tooltip="Shows properties and dependencies of composite snap-in."];
+  Node291 -> Node293 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node293 [label="gpui::SnapInDetailsDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_snap_in_details_dialog.html",tooltip="class SnapInDetailsDialog Shows properties of a snap-in. Provides information on snap-in name,..."];
+  Node289 -> Node294 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node294 [label="gpui::ListBoxDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_list_box_dialog.html",tooltip=" "];
+  Node289 -> Node295 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node295 [label="gpui::TemplateFilterDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_template_filter_dialog.html",tooltip=" "];
+  Node289 -> Node296 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node296 [label="preferences::GroupMember\lDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_group_member_dialog.html",tooltip=" "];
+  Node289 -> Node297 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node297 [label="preferences::Preferences\lDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_preferences_dialog.html",tooltip=" "];
+  Node289 -> Node298 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node298 [label="preferences::SelectVariable\lDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_select_variable_dialog.html",tooltip=" "];
+  Node289 -> Node299 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node299 [label="scripts_plugin::AddScript\lWidget",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classscripts__plugin_1_1_add_script_widget.html",tooltip=" "];
+  Node289 -> Node300 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node300 [label="scripts_plugin::ScriptsDialog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classscripts__plugin_1_1_scripts_dialog.html",tooltip=" "];
+}

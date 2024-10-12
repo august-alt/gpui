@@ -1,0 +1,14 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node301 [label="QIdentityProxyModel",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node301 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="gpui::AdministrativeTemplates\lProxyModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_administrative_templates_proxy_model.html",tooltip=" "];
+  Node301 -> Node303 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node303 [label="preferences::Preferences\lTreeProxyModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classpreferences_1_1_preferences_tree_proxy_model.html",tooltip=" "];
+  Node301 -> Node304 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node304 [label="scripts_plugin::ScriptsTree\lProxyModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classscripts__plugin_1_1_scripts_tree_proxy_model.html",tooltip=" "];
+}

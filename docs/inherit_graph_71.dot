@@ -1,0 +1,12 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node446 [label="xml_schema::Token",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node446 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="GroupPolicy::PolicyDefinitions\l::PolicyClass",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_policy_class.html",tooltip="Enumeration class corresponding to the PolicyClass schema type."];
+  Node446 -> Node448 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node448 [label="GroupPolicy::PolicyDefinitions\l::VersionString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_version_string.html",tooltip="Class corresponding to the versionString schema type."];
+}

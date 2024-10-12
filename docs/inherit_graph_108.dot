@@ -1,0 +1,10 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="model::admx::PolicyItem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1admx_1_1_policy_item.html",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="gpui::XsdPolicyItemAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_policy_item_adapter.html",tooltip=" "];
+}

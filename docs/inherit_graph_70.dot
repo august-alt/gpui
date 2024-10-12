@@ -1,0 +1,42 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node419 [label="xml_schema::String",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node419 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="GroupPolicy::PolicyDefinitions\l::DataElementContent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_data_element_content.html",tooltip="Class corresponding to the DataElementContent schema type."];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="GroupPolicy::PolicyDefinitions\l::CheckBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_check_box.html",tooltip="Class corresponding to the CheckBox schema type."];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="GroupPolicy::PolicyDefinitions\l::DecimalTextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_decimal_text_box.html",tooltip="Class corresponding to the DecimalTextBox schema type."];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="GroupPolicy::PolicyDefinitions\l::DropdownList",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_dropdown_list.html",tooltip="Class corresponding to the DropdownList schema type."];
+  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="GroupPolicy::PolicyDefinitions\l::ListBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_list_box.html",tooltip="Class corresponding to the ListBox schema type."];
+  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="GroupPolicy::PolicyDefinitions\l::LongDecimalTextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_long_decimal_text_box.html",tooltip="Class corresponding to the LongDecimalTextBox schema type."];
+  Node419 -> Node426 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node426 [label="GroupPolicy::PolicyDefinitions\l::FileName",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_file_name.html",tooltip="Class corresponding to the fileName schema type."];
+  Node419 -> Node427 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node427 [label="GroupPolicy::PolicyDefinitions\l::GUID",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_g_u_i_d.html",tooltip="Class corresponding to the GUID schema type."];
+  Node419 -> Node428 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node428 [label="GroupPolicy::PolicyDefinitions\l::ItemName",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_item_name.html",tooltip="Class corresponding to the itemName schema type."];
+  Node419 -> Node429 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node429 [label="GroupPolicy::PolicyDefinitions\l::ItemReference",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_item_reference.html",tooltip="Class corresponding to the itemReference schema type."];
+  Node419 -> Node430 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node430 [label="GroupPolicy::PolicyDefinitions\l::LocalizedString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_localized_string.html",tooltip="Class corresponding to the LocalizedString schema type."];
+  Node419 -> Node431 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node431 [label="GroupPolicy::PolicyDefinitions\l::PresentationReference",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_presentation_reference.html",tooltip="Class corresponding to the presentationReference schema type."];
+  Node419 -> Node432 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node432 [label="GroupPolicy::PolicyDefinitions\l::RegistryKey",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_registry_key.html",tooltip="Class corresponding to the registryKey schema type."];
+  Node419 -> Node433 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node433 [label="GroupPolicy::PolicyDefinitions\l::RegistryValueName",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_registry_value_name.html",tooltip="Class corresponding to the registryValueName schema type."];
+  Node419 -> Node434 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node434 [label="GroupPolicy::PolicyDefinitions\l::ResourceID",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_resource_i_d.html",tooltip="Class corresponding to the resourceID schema type."];
+  Node419 -> Node435 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node435 [label="GroupPolicy::PolicyDefinitions\l::String",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_string.html",tooltip="Class corresponding to the string schema type."];
+  Node419 -> Node436 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node436 [label="GroupPolicy::PolicyDefinitions\l::StringReference",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_group_policy_1_1_policy_definitions_1_1_string_reference.html",tooltip="Class corresponding to the stringReference schema type."];
+}

@@ -1,0 +1,44 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="model::presentation\l::PresentationWidget",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_presentation_widget.html",tooltip="The PresentationWidget class base class for all widgets supported by ADMX/ADML format."];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="model::presentation\l::CheckBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_check_box.html",tooltip="The CheckBox element represents a check box parameter."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="gpui::XsdCheckBoxAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_check_box_adapter.html",tooltip=" "];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="model::presentation\l::ComboBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_combo_box.html",tooltip="Represents a combo box display element with default/suggested entries."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="gpui::XsdComboBoxAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_combo_box_adapter.html",tooltip=" "];
+  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="model::presentation\l::DecimalTextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_decimal_text_box.html",tooltip="The DecimalTextBox class represents a text box with or without a spin control for entering decimal nu..."];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="gpui::XsdDecimalTextBoxAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_decimal_text_box_adapter.html",tooltip=" "];
+  Node0 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="model::presentation\l::DropdownList",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_dropdown_list.html",tooltip="The DropdownList class is a drop-down list display element, with which a user can pick one of the dis..."];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="gpui::XsdDropdownListAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_dropdown_list_adapter.html",tooltip=" "];
+  Node0 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="model::presentation\l::ListBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_list_box.html",tooltip="The ListBox class represents a listbox display element."];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="gpui::XsdListBoxAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_list_box_adapter.html",tooltip=" "];
+  Node0 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="model::presentation\l::LongDecimalTextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_long_decimal_text_box.html",tooltip="The LongDecimalTextBox class represents a text box with or without a spin control for entering 64-bit..."];
+  Node11 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="gpui::XsdLongDecimalText\lBoxAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_long_decimal_text_box_adapter.html",tooltip=" "];
+  Node0 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="model::presentation\l::MultiTextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_multi_text_box.html",tooltip="The MultiTextBox class represents a multi-line textbox display element. Can be associated with a mult..."];
+  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="gpui::XsdMultiTextBoxAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_multi_text_box_adapter.html",tooltip=" "];
+  Node0 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="model::presentation\l::Text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_text.html",tooltip="The Text class The text element, when used within the presentation element, is a localized string dis..."];
+  Node15 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="gpui::XsdTextAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_text_adapter.html",tooltip=" "];
+  Node0 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="model::presentation\l::TextBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodel_1_1presentation_1_1_text_box.html",tooltip="The TextBox class represents a text box display element."];
+  Node17 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="gpui::XsdTextBoxAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classgpui_1_1_xsd_text_box_adapter.html",tooltip=" "];
+}

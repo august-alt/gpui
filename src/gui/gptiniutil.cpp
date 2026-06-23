@@ -60,7 +60,7 @@ bool GptIniUtils::onIniFileOpen(const QString &path, QString &policyName, int &m
         else
         {
             QFile registryFile(path);
-            registryFile.open(QFile::ReadWrite);
+            (void) registryFile.open(QFile::ReadWrite);
             stringvalues->resize(registryFile.size(), 0);
             registryFile.read(&stringvalues->at(0), registryFile.size());
             registryFile.close();

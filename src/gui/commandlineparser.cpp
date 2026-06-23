@@ -62,13 +62,22 @@ CommandLineParser::CommandLineParseResult CommandLineParser::parseCommandLine(Co
 {
     QLocale locale;
     std::unique_ptr<QTranslator> qtTranslator = std::make_unique<QTranslator>();
-    qtTranslator->load(locale, "gui", "_", ":/");
+    if (!qtTranslator->load(locale, "gui", "_", ":/"))
+    {
+        qDebug() << "Unable to load translations from gui library for CommandLineParser.";
+    }
     std::unique_ptr<QTranslator> qtTranslator2 = std::make_unique<QTranslator>();
-    qtTranslator2->load(QString("qt_").append(QLocale::system().name()),
-                        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QString qtTranslationsPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#else
+    const QString qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif
+    if (!qtTranslator2->load(QString("qt_").append(QLocale::system().name()), qtTranslationsPath))
+    {
+        qDebug() << "Unable to load translations from qt library for CommandLineParser.";
+    }
     QCoreApplication::installTranslator(qtTranslator.get());
     QCoreApplication::installTranslator(qtTranslator2.get());
-
     const QCommandLineOption pathOption("p", QObject::tr("The full path of policy to edit."), QObject::tr("path"));
     const QCommandLineOption bundleOption("b",
                                           QObject::tr("The full path of policy bundle to load."),

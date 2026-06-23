@@ -61,6 +61,7 @@
 
 #include "../ldap/ldapimpl.h"
 
+#include <QRegExp>
 #include <stack>
 
 namespace gpui

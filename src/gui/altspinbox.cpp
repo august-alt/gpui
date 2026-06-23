@@ -22,6 +22,7 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QRegExp>
 
 namespace gui
 {

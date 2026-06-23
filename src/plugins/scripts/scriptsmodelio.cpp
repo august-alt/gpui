@@ -110,7 +110,7 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model, bool ma
         else
         {
             QFile registryFile(filePath);
-            registryFile.open(QFile::ReadOnly);
+            (void) registryFile.open(QFile::ReadOnly);
             stringValues->resize(registryFile.size(), 0);
             registryFile.read(&stringValues->at(0), registryFile.size());
             registryFile.close();

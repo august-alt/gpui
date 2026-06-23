@@ -18,7 +18,7 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
+        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" }, { distr: "alt:p10", artifact: "p10" } ]
         architecture: [ amd64, i386 ]
     with:
       distr: ${{ matrix.os.distr }}
@@ -30,7 +30,7 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" } ]
+        os: [ { distr: "alt:sisyphus", artifact: "sisyphus" }, { distr: "alt:p10", artifact: "p10" } ]
         architecture: [ amd64, i386 ]
       fail-fast: false
     with:

@@ -42,4 +42,5 @@ function(add_xsd_library library_name)
     )
 
     add_library(${library_name} STATIC ${OUT_FILES})
+    set_property(TARGET ${library_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 endfunction()

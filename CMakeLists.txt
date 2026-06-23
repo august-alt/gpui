@@ -16,7 +16,21 @@ list(GET GEAR_VERSION_LIST 2 GPUI_VERSION_PATCH)
 
 set(CMAKE_MODULE_PATH ${GPUI_SOURCE_DIR}/cmake)
 
+set(GPUI_MODULE_DIR ${GPUI_SOURCE_DIR}/cmake)
+
 set(GPUI_DIR "${CMAKE_BINARY_DIR}")
+
+set(QT_VERSION_MAJOR 6 CACHE STRING "Major Qt version to build against (5 or 6)")
+set_property(CACHE QT_VERSION_MAJOR PROPERTY STRINGS 5 6)
+
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets Qml LinguistTools Test)
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    find_package(Qt6 REQUIRED COMPONENTS Core5Compat)
+    set(QT_COMPAT_LIB Qt6::Core5Compat)
+else()
+    set(QT_COMPAT_LIB "")
+endif()
 
 include(TranslationUtils)
 include(FindXsd)
@@ -40,7 +54,7 @@ endif()
 
 # configure and install GPUIConfig.cmake file
 configure_file(
-    "${CMAKE_MODULE_PATH}/GPUIConfig.cmake.in"
+    "${GPUI_MODULE_DIR}/GPUIConfig.cmake.in"
     "${CMAKE_BINARY_DIR}/GPUIConfig.cmake"
     IMMEDIATE @ONLY)
 

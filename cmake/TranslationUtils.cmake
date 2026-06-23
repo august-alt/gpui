@@ -17,9 +17,14 @@ function(add_translation out_files)
     foreach(filename ${ARGN})
         get_filename_component(basename ${filename} NAME_WE)
         set(qm "${CMAKE_CURRENT_SOURCE_DIR}/${basename}.qm")
+        if(QT_VERSION_MAJOR EQUAL 6)
+            set(lrelease_command "$<TARGET_FILE:Qt6::lrelease>")
+        else()
+            set(lrelease_command "${Qt5_LRELEASE_EXECUTABLE}")
+        endif()
         add_custom_command(
             OUTPUT "${qm}"
-            COMMAND "${Qt5_LRELEASE_EXECUTABLE}"
+            COMMAND "${lrelease_command}"
             ARGS -markuntranslated "Is not translated!" -nounfinished -removeidentical -compress "${filename}" -qm "${qm}"
             DEPENDS "${filename}" VERBATIM
         )

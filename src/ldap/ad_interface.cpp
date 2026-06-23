@@ -178,7 +178,7 @@ AdInterface::AdInterface()
 
             if (AdInterfacePrivate::s_port > 0)
             {
-                out = out + ":" + AdInterfacePrivate::s_port;
+                out = out + ":" + QString::number(AdInterfacePrivate::s_port);
             }
         }
 

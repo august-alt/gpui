@@ -35,12 +35,17 @@
 #include <QDebug>
 #include <QLocale>
 #include <QString>
+#include <QTimeZone>
 #include <QTranslator>
 
 #define GENERALIZED_TIME_FORMAT_STRING "yyyyMMddhhmmss.zZ"
 #define UTC_TIME_FORMAT_STRING "yyMMddhhmmss.zZ"
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+const QDateTime ntfs_epoch = QDateTime(QDate(1601, 1, 1), QTime(), QTimeZone(QTimeZone::UTC));
+#else
 const QDateTime ntfs_epoch = QDateTime(QDate(1601, 1, 1), QTime(), Qt::UTC);
+#endif
 
 QString escape_name_for_dn(const QString &unescaped);
 
@@ -121,7 +126,11 @@ QDateTime datetime_string_to_qdatetime(const QString &attribute, const QString &
     // All datetimes are UTC by default. Calling
     // setTimeSpec() would alter the datetime so we don't
     // use that.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QDateTime utc_datetime = QDateTime(datetime.date(), datetime.time(), QTimeZone(QTimeZone::UTC));
+#else
     const QDateTime utc_datetime = QDateTime(datetime.date(), datetime.time(), Qt::UTC);
+#endif
 
     return utc_datetime;
 }

@@ -75,7 +75,12 @@ bool TranslatorStorage::loadTranslators(const QString &language, const QString &
 
 bool TranslatorStorage::loadQtTranslations(const QString &language, const QString &prefix)
 {
-    return loadTranslators(QString(prefix + "%1").arg(language), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QString translationsPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#else
+    const QString translationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif
+    return loadTranslators(QString(prefix + "%1").arg(language), translationsPath);
 }
 
 void TranslatorStorage::clearTranslators()

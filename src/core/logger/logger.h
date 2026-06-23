@@ -26,7 +26,9 @@
 
 #include <fstream>
 #include <unordered_map>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtMsgHandler>
+#endif
 
 #define LOG_LEVEL_DISABLED static_cast<QtMsgType>(-1)
 

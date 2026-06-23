@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Core Test REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -17,10 +17,10 @@ set(MOC_HEADERS
     smbsharecreator.h
 )
 
-qt5_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
+qt_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 add_executable(${TEST_NAME} ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(${TEST_NAME} ${GPUI_LIBRARIES} Qt5::Core Qt5::Test)
+target_link_libraries(${TEST_NAME} ${GPUI_LIBRARIES} Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Test)
 add_gpui_test(plugins.${TEST_NAME} ${TEST_NAME})
 
 ## samba requires libsmbclient

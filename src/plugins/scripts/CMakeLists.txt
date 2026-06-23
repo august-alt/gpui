@@ -1,5 +1,5 @@
 find_package(GPUI COMPONENTS core io REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Core LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core LinguistTools REQUIRED)
 find_package(MVVM REQUIRED)
 
 find_package(PkgConfig REQUIRED)
@@ -72,12 +72,12 @@ add_translation(QM_FILES "${TS_FILES}")
 
 add_translation_resource(RESOURCES_SRC "scripts_plugin" "${QM_FILES}")
 
-qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
+qt_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
 
 set(SOURCES ${SOURCES} ${HEADERS} ${UIFORMS})
 
 add_gpui_plugin(${PLUGIN_NAME} ${SOURCES} ${LIB_RESOURCES})
-target_link_libraries(${PLUGIN_NAME} Qt5::Core Qt5::Widgets)
+target_link_libraries(${PLUGIN_NAME} Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(${PLUGIN_NAME} ${GPUI_LIBRARIES})
 target_link_libraries(${PLUGIN_NAME} ${MVVM_LIBRARIES})
 target_link_libraries(${PLUGIN_NAME} PkgConfig::Smbclient)

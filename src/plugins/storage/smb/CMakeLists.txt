@@ -1,7 +1,7 @@
 find_package(GPUI COMPONENTS io model REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(PLUGIN_NAME smb-storage-plugin)
 set(PLUGIN_LIBRARY_NAME smb-storage-static)
@@ -20,10 +20,11 @@ set(SOURCES
 )
 
 add_gpui_plugin(${PLUGIN_NAME} ${SOURCES})
-target_link_libraries(${PLUGIN_NAME} Qt5::Core)
+target_link_libraries(${PLUGIN_NAME} Qt${QT_VERSION_MAJOR}::Core)
 
 add_library(${PLUGIN_LIBRARY_NAME} STATIC ${SOURCES})
-target_link_libraries(${PLUGIN_LIBRARY_NAME} Qt5::Core)
+set_property(TARGET ${PLUGIN_LIBRARY_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_link_libraries(${PLUGIN_LIBRARY_NAME} Qt${QT_VERSION_MAJOR}::Core)
 
 ## samba requires libsmbclient
 find_path(SAMBA_INCLUDE_DIR

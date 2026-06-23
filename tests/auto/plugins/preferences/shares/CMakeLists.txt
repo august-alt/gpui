@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Core Gui Widgets Test REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets Test REQUIRED)
 
 find_package(XercesC REQUIRED)
 
@@ -20,9 +20,9 @@ set(MOC_HEADERS
     ../../../../../src/plugins/preferences/shares/shareswidget.h
 )
 
-qt5_wrap_ui(UI_SOURCES ${UI_FORMS})
-qt5_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
+qt_wrap_ui(UI_SOURCES ${UI_FORMS})
+qt_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 add_executable(shareswidgettest ${SOURCES} ${MOC_SOURCES} ${UI_SOURCES})
-target_link_libraries(shareswidgettest ${GPUI_LIBRARIES} shares-plugin Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Test XercesC::XercesC)
+target_link_libraries(shareswidgettest ${GPUI_LIBRARIES} shares-plugin Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Test XercesC::XercesC)
 add_gpui_test(plugins.shareswidgettest shareswidgettest)

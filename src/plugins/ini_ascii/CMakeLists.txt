@@ -1,7 +1,7 @@
 find_package(GPUI COMPONENTS core io REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(PLUGIN_NAME inifile-ascii-plugin)
 
@@ -17,5 +17,5 @@ set(SOURCES
 set(SOURCES ${SOURCES} ${HEADERS})
 
 add_gpui_plugin(inifile-ascii-plugin ${SOURCES})
-target_link_libraries(inifile-ascii-plugin Qt5::Core)
+target_link_libraries(inifile-ascii-plugin Qt${QT_VERSION_MAJOR}::Core ${QT_COMPAT_LIB})
 target_link_libraries(inifile-ascii-plugin ${GPUI_LIBRARIES})

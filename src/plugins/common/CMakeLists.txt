@@ -1,7 +1,7 @@
 find_package(GPUI COMPONENTS core io REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(HEADERS
     basetypes.h
@@ -18,5 +18,6 @@ set(SOURCES
 )
 
 add_library(policy-common STATIC ${SOURCES})
-target_link_libraries(policy-common Qt5::Core)
+set_property(TARGET policy-common PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_link_libraries(policy-common Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(policy-common ${GPUI_LIBRARIES})

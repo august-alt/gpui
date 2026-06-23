@@ -1,5 +1,5 @@
 find_package(GTest)
-find_package(Qt5 COMPONENTS Core Gui Test LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Test LinguistTools REQUIRED)
 
 set(TS_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/i18n/test_ru.ts
@@ -10,7 +10,7 @@ add_translation(QM_FILES "${TS_FILES}")
 
 add_translation_resource(RESOURCES_SRC translatorstorage-tests "${QM_FILES}")
 
-qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
+qt_add_resources(LIB_RESOURCES ${RESOURCES_SRC})
 
 add_executable(translatorstorage-test
     translatorstorage-test.cpp
@@ -21,7 +21,7 @@ add_executable(translatorstorage-test
     ${LIB_RESOURCES}
 )
 
-target_link_libraries(translatorstorage-test gpui-core Qt5::Core Qt5::Gui Qt5::Test
+target_link_libraries(translatorstorage-test gpui-core Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Test
     gtest gtest_main)
 
 

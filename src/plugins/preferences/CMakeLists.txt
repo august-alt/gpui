@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Widgets Qml LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Qml LinguistTools REQUIRED)
 
 find_package(GPUI COMPONENTS core io REQUIRED)
 
@@ -478,7 +478,7 @@ add_translation(QM_FILES ${TS_FILES})
 
 add_translation_resource(RESOURCES_SRC "preferences" ${QM_FILES})
 
-qt5_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
+qt_add_resources(LIB_RESOURCES ${RESOURCES_SRC} ${ICON_RESOURCES})
 
 set(PLUGIN_SOURCES ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
 
@@ -489,7 +489,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 set(PLUGIN_NAME preferences-plugin)
 
 add_library(preferences_static STATIC ${SOURCES})
-target_link_libraries(preferences_static Qt5::Core Qt5::Widgets)
+set_property(TARGET preferences_static PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_link_libraries(preferences_static Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(preferences_static ${GPUI_LIBRARIES})
 target_link_libraries(preferences_static ${MVVM_LIBRARIES})
 

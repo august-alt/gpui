@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -24,5 +24,5 @@ add_gpui_library(gpui-core ${SOURCES})
 add_subdirectory(logger)
 target_link_libraries(gpui-core gpui-logger)
 
-target_link_libraries(gpui-core Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(gpui-core Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets)
 

@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Core Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui REQUIRED)
 find_package(Ldap REQUIRED)
 
 find_package(PkgConfig REQUIRED)
@@ -57,7 +57,8 @@ add_definitions(
 
 add_gpui_library(gpui-ldap ${HEADERS} ${SOURCES})
 target_link_libraries(gpui-ldap
-    Qt5::Core
+    Qt${QT_VERSION_MAJOR}::Core
+    ${QT_COMPAT_LIB}
     PkgConfig::Uuid
     PkgConfig::Krb5
     PkgConfig::Sasl

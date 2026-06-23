@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(HEADERS
     genericfile.h
@@ -37,4 +37,4 @@ add_definitions(
 set(SOURCES ${SOURCES} ${HEADERS})
 
 add_gpui_library(gpui-io ${SOURCES})
-target_link_libraries(gpui-io Qt5::Core)
+target_link_libraries(gpui-io Qt${QT_VERSION_MAJOR}::Core)

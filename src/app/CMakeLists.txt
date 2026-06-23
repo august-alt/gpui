@@ -19,7 +19,7 @@ endmacro(add_gpui_executable)
 find_package(GPUI COMPONENTS gui model REQUIRED)
 include_directories(${GPUI_INCLUDE_DIRS})
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(HEADERS
 )
@@ -31,4 +31,4 @@ set(SOURCES
 add_gpui_executable(main ${SOURCES})
 
 target_link_libraries(main ${GPUI_LIBRARIES})
-target_link_libraries(main Qt5::Widgets)
+target_link_libraries(main Qt${QT_VERSION_MAJOR}::Widgets)

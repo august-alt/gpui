@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -24,5 +24,6 @@ add_definitions(
 )
 
 add_library(gpui-logger STATIC ${SOURCES} ${HEADERS})
-target_include_directories(gpui-logger PUBLIC ${Qt5Gui_INCLUDE_DIRS})
-target_link_libraries(gpui-logger Qt5::Core)
+set_property(TARGET gpui-logger PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_include_directories(gpui-logger PUBLIC ${Qt${QT_VERSION_MAJOR}Gui_INCLUDE_DIRS})
+target_link_libraries(gpui-logger Qt${QT_VERSION_MAJOR}::Core)

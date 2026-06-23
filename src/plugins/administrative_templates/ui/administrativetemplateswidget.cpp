@@ -299,8 +299,10 @@ void AdministrativeTemplatesWidget::onDataChanged()
                            QObject::tr("Policy settings were modified do you want to save them?"),
                            QMessageBox::Yes | QMessageBox::No,
                            this);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     messageBox.setButtonText(QMessageBox::Yes, tr("Yes"));
     messageBox.setButtonText(QMessageBox::No, tr("No"));
+#endif
     int reply = messageBox.exec();
 
     switch (reply)

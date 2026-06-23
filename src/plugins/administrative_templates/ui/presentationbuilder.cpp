@@ -275,21 +275,25 @@ private:
         {
             QVariant value = source->getValue(key, booleanValue.value_name);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            switch (value.typeId()){
+#else
             switch (value.type()){
-            case QVariant::UInt:
+#endif
+            case QMetaType::UInt:
                 if(booleanValue.type == BooleanValue::BOOLEAN_VALUE_TYPE_DECIMAL)
                 {
                     return value.toUInt() == booleanValue.decimal;
                 }
                 return false;
-            case QVariant::ULongLong:
+            case QMetaType::ULongLong:
                 if(booleanValue.type == BooleanValue::BOOLEAN_VALUE_TYPE_LONGDECIMAL)
                 {
                     return value.toULongLong() == booleanValue.long_decimal;
                 }
                 return false;
             break;
-            case QVariant::String:
+            case QMetaType::QString:
                 if(booleanValue.type == BooleanValue::BOOLEAN_VALUE_TYPE_STRING)
                 {
                     return value.toString().toStdString() == booleanValue.string;
@@ -797,7 +801,7 @@ private:
 
             if (m_source->isValuePresent(elementInfo.key, elementInfo.value))
             {
-                edit->setText(QString(m_source->getValue(elementInfo.key, elementInfo.value).value<Number>()));
+                edit->setText(QString::number(m_source->getValue(elementInfo.key, elementInfo.value).value<Number>()));
             }
 
             edit->connect(edit, &QLineEdit::textChanged, [=]() { *m_dataChanged = true; });

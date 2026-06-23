@@ -76,7 +76,7 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
             QString qtPath = policyFileName.absoluteFilePath();
 
             QFile localFile(qtPath);
-            localFile.open(QFile::ReadOnly);
+            (void) localFile.open(QFile::ReadOnly);
             stringvalues->resize(localFile.size(), 0);
             localFile.read(&stringvalues->at(0), localFile.size());
             localFile.close();
@@ -216,7 +216,7 @@ void CommentsModel::load(const QString &cmtxFileName, const QString &localeName)
 {
     this->clear();
     auto commentDefinitions
-        = loadPolicies<io::PolicyCommentsFile, io::PolicyFileFormat<io::PolicyCommentsFile>>("cmtx", cmtxFileName);
+        = loadPolicies<io::PolicyCommentsFile, io::PolicyFileFormat<io::PolicyCommentsFile>>("cmtx", QFileInfo(cmtxFileName));
     if (!commentDefinitions.get())
     {
         qWarning() << "File not found: " << cmtxFileName;
@@ -224,9 +224,9 @@ void CommentsModel::load(const QString &cmtxFileName, const QString &localeName)
     }
 
     bool noCMTL = false;
-    QString cmtlFileName = constructCMTLFileName(cmtxFileName, localeName);
+    QString cmtlFileName = constructCMTLFileName(QFileInfo(cmtxFileName), localeName);
     auto commentTranslations
-        = loadPolicies<io::CommentResourcesFile, io::PolicyFileFormat<io::CommentResourcesFile>>("cmtl", cmtlFileName);
+        = loadPolicies<io::CommentResourcesFile, io::PolicyFileFormat<io::CommentResourcesFile>>("cmtl", QFileInfo(cmtlFileName));
 
     if (!commentTranslations.get())
     {

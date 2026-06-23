@@ -322,7 +322,7 @@ bool PolicyBundle::loadAdmxAndAdml(const QFileInfo &admxFileName)
     {
         return false;
     }
-    QString admlFileName = constructFileName(admxFileName);
+    QFileInfo admlFileName(constructFileName(admxFileName));
     auto policyResources
         = loadPolicies<io::PolicyResourcesFile, io::PolicyFileFormat<io::PolicyResourcesFile>>("adml", admlFileName);
     if (!policyResources.get())

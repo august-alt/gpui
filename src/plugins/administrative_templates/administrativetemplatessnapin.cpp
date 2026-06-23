@@ -183,8 +183,8 @@ public:
     std::string localeName = "en-US";
     std::string policyPath = "";
 
-    QAction actionEditFilter{};
-    QAction actionEnableFilter{};
+    QAction *actionEditFilter{};
+    QAction *actionEnableFilter{};
     std::unique_ptr<QMenu> filterMenu = nullptr;
 
     QAction *fileAction{};
@@ -287,7 +287,7 @@ public:
         if (filterModel != nullptr)
         {
             const gpui::TemplateFilter filter = filterDialog->getFilter();
-            const bool filterEnabled          = actionEnableFilter.isChecked();
+            const bool filterEnabled          = actionEnableFilter->isChecked();
             filterModel->setFilter(filter, filterEnabled);
         }
     }
@@ -322,7 +322,7 @@ void onPolFileOpen(const QString &path,
         else
         {
             QFile registryFile(path);
-            registryFile.open(QFile::ReadWrite);
+            (void) registryFile.open(QFile::ReadWrite);
             stringvalues->resize(registryFile.size(), 0);
             registryFile.read(&stringvalues->at(0), registryFile.size());
             registryFile.close();
@@ -376,12 +376,15 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
 
         d->filterMenu = std::make_unique<QMenu>();
 
+        d->actionEditFilter = new QAction(mainWindow);
+        d->actionEnableFilter = new QAction(mainWindow);
+
         setMenuItemNames();
 
-        d->filterMenu->addAction(&d->actionEditFilter);
-        d->filterMenu->addAction(&d->actionEnableFilter);
+        d->filterMenu->addAction(d->actionEditFilter);
+        d->filterMenu->addAction(d->actionEnableFilter);
 
-        d->actionEnableFilter.setCheckable(true);
+        d->actionEnableFilter->setCheckable(true);
 
         QMenu *viewMenu = mainWindow->menuBar()->findChild<QMenu *>("menu_View");
 
@@ -392,10 +395,10 @@ void AdministrativeTemplatesSnapIn::onInitialize(QMainWindow *window)
             QObject::connect(d->filterDialog, &QDialog::accepted, [&]() { d->updateFilter(); });
             QObject::connect(d->filterDialog, &QDialog::accepted, mainWindow, &MainWindow::updateFilterModel);
 
-            QObject::connect(&d->actionEditFilter, &QAction::triggered, d->filterDialog, &QDialog::open);
+            QObject::connect(d->actionEditFilter, &QAction::triggered, d->filterDialog, &QDialog::open);
 
-            QObject::connect(&d->actionEnableFilter, &QAction::toggled, [&]() { d->updateFilter(); });
-            QObject::connect(&d->actionEnableFilter, &QAction::toggled, mainWindow, &MainWindow::updateFilterModel);
+            QObject::connect(d->actionEnableFilter, &QAction::toggled, [&]() { d->updateFilter(); });
+            QObject::connect(d->actionEnableFilter, &QAction::toggled, mainWindow, &MainWindow::updateFilterModel);
         }
     }
 
@@ -479,8 +482,8 @@ void AdministrativeTemplatesSnapIn::onDataSave()
 
 void AdministrativeTemplatesSnapIn::setMenuItemNames()
 {
-    d->actionEnableFilter.setText(QObject::tr("Enable &filter"));
-    d->actionEditFilter.setText(QObject::tr("&Edit filter"));
+    d->actionEnableFilter->setText(QObject::tr("Enable &filter"));
+    d->actionEditFilter->setText(QObject::tr("&Edit filter"));
     d->filterMenu->menuAction()->setText(QObject::tr("&Filter"));
 }
 

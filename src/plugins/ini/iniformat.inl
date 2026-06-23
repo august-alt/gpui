@@ -23,6 +23,8 @@
 #include <codecvt>
 
 #include <QDebug>
+#include <QTextCodec>
+#include <QTextDecoder>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>

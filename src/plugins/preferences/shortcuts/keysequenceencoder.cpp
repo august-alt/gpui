@@ -893,15 +893,21 @@ uint32_t KeySequenceEncoder::encode(const QKeySequence &sequence)
     qWarning() << "Encoding sequence: " << sequence << " 0: " << sequence[0] << " 1: " << sequence[1]
                << " 2: " << sequence[2] << " 3: " << sequence[3];
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const int s0 = sequence[0].toCombined();
+#else
+    const int s0 = sequence[0];
+#endif
+
     uint32_t modifiers = 0xFF00;
-    modifiers &= sequence[0]; //mask out modifiers
+    modifiers &= s0; //mask out modifiers
     uint32_t qKey = 0x00FF;
-    qKey &= sequence[0];
+    qKey &= s0;
 
     qWarning() << "Debug: modifiers - " << modifiers << " key: " << qKey;
 
     uint32_t nativeCode = toNativeKeycode(qKey);
-    uint32_t nativeMods = toNativeModifiers(sequence[0]);
+    uint32_t nativeMods = toNativeModifiers(s0);
 
     uint32_t result = ((nativeMods << 8) ^ nativeCode);
 

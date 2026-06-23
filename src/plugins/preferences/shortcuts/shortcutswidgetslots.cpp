@@ -187,7 +187,11 @@ void ShortcutsWidget::on_shortkutKeySequenceEdit_editingFinished()
 
     if (!keySequence.isEmpty())
     {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        int value = ui->shortkutKeySequenceEdit->keySequence()[0].toCombined();
+#else
         int value = ui->shortkutKeySequenceEdit->keySequence()[0];
+#endif
         QKeySequence shortcut(value);
         ui->shortkutKeySequenceEdit->setKeySequence(shortcut);
     }

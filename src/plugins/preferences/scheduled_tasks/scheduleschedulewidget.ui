@@ -131,9 +131,6 @@
      <property name="currentSectionIndex">
       <number>2</number>
      </property>
-     <property name="timeSpec">
-      <enum>Qt::LocalTime</enum>
-     </property>
     </widget>
    </item>
    <item row="3" column="2">

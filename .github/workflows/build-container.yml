@@ -3,8 +3,8 @@ name: gpui-build-container
 on:
   workflow_call:
     inputs:
-      distr:
-        description: "Linux distribution"
+      artifact:
+        description: "Artifact"
         type: string
         required: true
       architecture:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout
         if: github.ref == 'refs/heads/master'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Login to GitHub Container Registry
         if: github.ref == 'refs/heads/master'
@@ -29,14 +29,14 @@ jobs:
       - name: Build container
         if: github.ref == 'refs/heads/master'
         run: |
-          docker buildx build -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:${{ github.run_number }} \
-          -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest \
-          --cache-from type=gha,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-image \
-          --cache-to type=gha,mode=max,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-image \
-          --build-arg DISTR=${{ inputs.distr }} --build-arg ARCH=${{ inputs.architecture }} \
+          docker buildx build -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}-${{ inputs.artifact }}:${{ github.run_number }} \
+          -t ghcr.io/${{ github.repository }}-${{ inputs.architecture }}-${{ inputs.artifact }}:latest \
+          --cache-from type=gha,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-${{ inputs.artifact }}-image \
+          --cache-to type=gha,mode=max,scope=$GITHUB_REF_NAME-${{ inputs.architecture }}-${{ inputs.artifact }}-image \
+          --build-arg DISTR=${{ inputs.artifact }} --build-arg ARCH=${{ inputs.architecture }} \
           --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --platform ${{ inputs.architecture }} .
 
       - name: Push container
         if: github.ref == 'refs/heads/master'
         run: |
-          docker push -a ghcr.io/${{ github.repository }}-${{ inputs.architecture }}
+          docker push -a ghcr.io/${{ github.repository }}-${{ inputs.architecture }}-${{ inputs.artifact }}

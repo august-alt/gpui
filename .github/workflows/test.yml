@@ -3,6 +3,10 @@ name: gpui-test
 on:
   workflow_call:
     inputs:
+      artifact:
+        description: "Artifact"
+        type: string
+        required: true
       architecture:
         description: "Architecture"
         type: string
@@ -14,12 +18,12 @@ on:
 
 jobs:
   gpui-test:
-    runs-on: ubuntu-20.04
-    container: ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+    runs-on: ubuntu-latest
+    container: ghcr.io/${{ github.repository }}-${{ inputs.architecture }}-${{ inputs.artifact }}:latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Test Clang
         if: inputs.cpp-compiler == 'clang'

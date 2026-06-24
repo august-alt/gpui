@@ -21,7 +21,7 @@ jobs:
         os: [ { distr: "alt:sisyphus", artifact: "sisyphus" }, { distr: "alt:p10", artifact: "p10" } ]
         architecture: [ amd64, i386 ]
     with:
-      distr: ${{ matrix.os.distr }}
+      artifact: ${{ matrix.os.artifact }}
       architecture: ${{ matrix.architecture }}
 
   gpui-build:
@@ -46,6 +46,7 @@ jobs:
         cpp-compiler: [ "gcc", "clang" ]
       fail-fast: false
     with:
+      artifact: "sisyphus"
       architecture: "amd64"
       cpp-compiler: ${{ matrix.cpp-compiler }}
 

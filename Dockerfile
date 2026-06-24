@@ -1,53 +1,109 @@
 ARG DISTR
 
 # Container image that runs your code
-FROM $DISTR
+FROM alt:$DISTR
 
 ARG USER_ID
 ARG GROUP_ID
 
 RUN apt-get update \
-    && apt-get install -y git \
-    gear \
-    hasher \
-    hasher-priv \
-    hasher-rich-chroot \
-    hasher-rich-chroot-user-utils \
-    rpm-utils \
-    rpm-build \
-    rpm-build-licenses \
-    rpm-macros-cmake \
-    rpm-macros-make \
-    rpm-macros-generic-compat \
-    apt-repo \
-    apt-repo-tools \
-    cmake \
-    rpm-macros-cmake \
-    cmake-modules \
-    gcc-c++ \
-    clang15.0 \
-    libsmbclient-devel \
-    libsmbclient \
-    doxygen \
-    samba-devel \
-    catch2-devel \
-    libldap-devel \
-    libsasl2-devel \
-    libuuid-devel \
-    glib2-devel \
-    libkrb5-devel \
-    libxerces-c-devel \
-    libgtest-devel \
-    xsd \
-    boost-devel-headers \
-    desktop-file-utils \
-    ImageMagick-tools \
-    libqt-mvvm-devel \
-    xorg-xvfb \
-    xvfb-run \
-    sudo \
-    ctest \
-    ragel \
+    &&  apt-get install -y \
+            qt5-base-devel \
+            qt5-declarative-devel \
+            qt5-tools-devel \
+            qt5-base-common \
+            libpcre-devel \
+			git \
+			gear \
+			hasher \
+			hasher-priv \
+			hasher-rich-chroot \
+			hasher-rich-chroot-user-utils \
+			rpm-utils \
+			rpm-build \
+			rpm-build-licenses \
+			rpm-macros-cmake \
+			rpm-macros-make \
+			rpm-macros-generic-compat \
+			apt-repo \
+			apt-repo-tools \
+			cmake \
+			rpm-macros-cmake \
+			cmake-modules \
+			gcc-c++ \
+			clang15.0 \
+			libsmbclient-devel \
+			libsmbclient \
+			doxygen \
+			samba-devel \
+			catch2-devel \
+			libldap-devel \
+			libsasl2-devel \
+			libuuid-devel \
+			glib2-devel \
+			libkrb5-devel \
+			libxerces-c-devel \
+			libgtest-devel \
+			xsd \
+			boost-devel-headers \
+			desktop-file-utils \
+			ImageMagick-tools \
+			libqt-mvvm-devel \
+			xorg-xvfb \
+			xvfb-run \
+			sudo \
+			ctest \
+			ragel \
+    else \
+        apt-get install -y \
+            qt6-base-devel \
+            qt6-declarative-devel \
+            qt6-tools-devel \
+            qt6-base-common \
+            qt6-5compat-devel \
+            libpcre2-devel; \
+			git \
+			gear \
+			hasher \
+			hasher-priv \
+			hasher-rich-chroot \
+			hasher-rich-chroot-user-utils \
+			rpm-utils \
+			rpm-build \
+			rpm-build-licenses \
+			rpm-macros-cmake \
+			rpm-macros-make \
+			rpm-macros-generic-compat \
+			apt-repo \
+			apt-repo-tools \
+			cmake \
+			rpm-macros-cmake \
+			cmake-modules \
+			gcc-c++ \
+			clang15.0 \
+			libsmbclient-devel \
+			libsmbclient \
+			doxygen \
+			samba-devel \
+			catch2-devel \
+			libldap-devel \
+			libsasl2-devel \
+			libuuid-devel \
+			glib2-devel \
+			libkrb5-devel \
+			libxerces-c-devel \
+			libgtest-devel \
+			xsd \
+			boost-devel-headers \
+			desktop-file-utils \
+			ImageMagick-tools \
+			libqt-mvvm-devel \
+			xorg-xvfb \
+			xvfb-run \
+			sudo \
+			ctest \
+			ragel \
+    fi \
     && export CURRENT_PWD=`pwd` \
     && if [ $(getent group $GROUP_ID) ]; then \
       echo "group $GROUP_ID exists."; \
@@ -63,24 +119,7 @@ RUN apt-get update \
     && echo "builder2 ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers \
     && hasher-useradd builder2 || : \
     && mkdir /app \
-    && chown $USER_ID:$GROUP_ID /app
-
-RUN if [ "$DISTR" = "alt:p10" ]; then \
-        apt-get install -y \
-            qt5-base-devel \
-            qt5-declarative-devel \
-            qt5-tools-devel \
-            qt5-base-common \
-            libpcre-devel; \
-    else \
-        apt-get install -y \
-            qt6-base-devel \
-            qt6-declarative-devel \
-            qt6-tools-devel \
-            qt6-base-common \
-            qt6-5compat-devel \
-            libpcre2-devel; \
-    fi
+    && chown $USER_ID:$GROUP_ID /app \
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY script/build.sh /build.sh

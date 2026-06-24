@@ -7,11 +7,15 @@ on:
         description: "Architecture"
         type: string
         required: true
+      artifact:
+        description: "Artifact"
+        type: string
+        required: true
 
 jobs:
   gpui-codeql-analysis:
     runs-on: ubuntu-20.04
-    container: ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+    container: ghcr.io/${{ github.repository }}-${{ inputs.architecture }}-${{ inputs.artifact }}:latest
 
     permissions:
       actions: read
@@ -20,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2

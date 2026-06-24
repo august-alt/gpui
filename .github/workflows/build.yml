@@ -18,15 +18,15 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Build GPUI packages
       run: |
         docker pull --platform linux/${{ inputs.architecture }} \
-          ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+          ghcr.io/${{ github.repository }}-${{ inputs.architecture }}-${{ inputs.artifact }}:latest
         docker run --privileged=true --name gpui-build-${{ inputs.architecture }} -i --log-driver=none \
-        -a stdin -a stdout -a stderr -v "$(pwd)":/app --platform linux/${{ inputs.architecture }} \
-        ghcr.io/${{ github.repository }}-${{ inputs.architecture }}:latest
+        -a stdin -a stdout -a stderr --user=$(id -u) -v "$(pwd)":/app --platform linux/${{ inputs.architecture }} \
+        ghcr.io/${{ github.repository }}-${{ inputs.architecture }}-${{ inputs.artifact }}:latest
 
     - name: Extract fresh packages
       if: github.ref == 'refs/heads/master'

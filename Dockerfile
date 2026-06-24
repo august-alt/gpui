@@ -6,25 +6,6 @@ FROM $DISTR
 ARG USER_ID
 ARG GROUP_ID
 
-RUN if [ "$DISTR" = "alt:p10" ]; then \
-        apt-get install -y \
-            qt5-base-devel \
-            qt5-declarative-devel \
-            qt5-tools-devel \
-            qt5-base-common \
-            libpcre-devel
-    fi
-
-RUN if [ "$DISTR" != "alt:p10" ]; then \
-        apt-get install -y \
-            qt6-base-devel \
-            qt6-declarative-devel \
-            qt6-tools-devel \
-            qt6-base-common \
-            qt6-5compat-devel \
-            libpcre2-devel
-    fi
-
 RUN apt-get update \
     && apt-get install -y git \
     gear \
@@ -83,6 +64,23 @@ RUN apt-get update \
     && hasher-useradd builder2 || : \
     && mkdir /app \
     && chown $USER_ID:$GROUP_ID /app
+
+RUN if [ "$DISTR" = "alt:p10" ]; then \
+        apt-get install -y \
+            qt5-base-devel \
+            qt5-declarative-devel \
+            qt5-tools-devel \
+            qt5-base-common \
+            libpcre-devel; \
+    else \
+        apt-get install -y \
+            qt6-base-devel \
+            qt6-declarative-devel \
+            qt6-tools-devel \
+            qt6-base-common \
+            qt6-5compat-devel \
+            libpcre2-devel; \
+    fi
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY script/build.sh /build.sh

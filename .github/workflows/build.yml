@@ -35,7 +35,7 @@ jobs:
 
     - name: Upload fresh RPM packages
       if: github.ref == 'refs/heads/master'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: gpui-${{ inputs.artifact }}-${{ inputs.architecture }}
         path: ${{ github.workspace }}/packages

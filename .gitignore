@@ -89,5 +89,7 @@ src/plugins/cmtl/schema/*.cpp
 src/plugins/cmtl/schema/*.h
 src/plugins/cmtx/schema/*.cpp
 src/plugins/cmtx/schema/*.h
+src/plugins/security/schema/*.cpp
+src/plugins/security/schema/*.h
 *.translations.qrc
 src/core/version.h

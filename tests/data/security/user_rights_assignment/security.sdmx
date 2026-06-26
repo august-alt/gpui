@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SecurityDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns:security="http://www.basealt.ru/GroupPolicy/SecurityDefinitions" xsi:schemaLocation="http://www.basealt.ru/GroupPolicy/SecurityDefinitions">
+<policyNamespaces>
+    <target prefix="startmenu" namespace="Microsoft.Policies.StartMenu" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+</policyNamespaces>
+<resources minRequiredRevision="1.0" />
+<policies>
+    <security name="SeDenyBatchLogonRight" displayName="$(string.SeDenyBatchLogonRight)" explainText="$(string.$(string.SeDenyBatchLogonRight_Help)" securityType="Machine">
+        <parentCategory ref="security:UserRightsAssignment" />
+        <elements>
+            <text id="SeDenyBatchLogonRight_Editor" sectionName="Privilege Rights" propertyName="SeDenyBatchLogonRight"/>
+        </elements>
+    </security>
+</policies>
+</SecurityDefinitions>

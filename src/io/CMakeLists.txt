@@ -1,6 +1,8 @@
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(HEADERS
+    basefile.h
+    basefile.inl
     genericfile.h
     genericfile.inl
     genericreader.h

@@ -57,32 +57,32 @@
         <translation>Destination:</translation>
     </message>
     <message>
-        <location filename="../fileswidget.ui" line="123"/>
+        <location filename="../fileswidget.ui" line="126"/>
         <source>Supress errors on individual file actions</source>
         <translation>Supress errors on individual file actions</translation>
     </message>
     <message>
-        <location filename="../fileswidget.ui" line="147"/>
+        <location filename="../fileswidget.ui" line="150"/>
         <source>Attributes</source>
         <translation>Attributes</translation>
     </message>
     <message>
-        <location filename="../fileswidget.ui" line="153"/>
+        <location filename="../fileswidget.ui" line="156"/>
         <source>Read-only</source>
         <translation>Read-only</translation>
     </message>
     <message>
-        <location filename="../fileswidget.ui" line="160"/>
+        <location filename="../fileswidget.ui" line="163"/>
         <source>Hidden</source>
         <translation>Hidden</translation>
     </message>
     <message>
-        <location filename="../fileswidget.ui" line="167"/>
+        <location filename="../fileswidget.ui" line="170"/>
         <source>Archive</source>
         <translation>Archive</translation>
     </message>
     <message>
-        <location filename="../fileswidget.ui" line="174"/>
+        <location filename="../fileswidget.ui" line="177"/>
         <source>Executable</source>
         <translation>Executable</translation>
     </message>
@@ -120,13 +120,13 @@
         <translation>Target</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="79"/>
-        <location filename="../fileswidgetslots.cpp" line="86"/>
+        <location filename="../fileswidgetslots.cpp" line="80"/>
+        <location filename="../fileswidgetslots.cpp" line="91"/>
         <source>All files (*)</source>
         <translation>All files (*)</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="90"/>
+        <location filename="../fileswidgetslots.cpp" line="99"/>
         <source>All files (*.*)</source>
         <translation>All files (*.*)</translation>
     </message>
@@ -134,17 +134,39 @@
 <context>
     <name>preferences::FilesWidget</name>
     <message>
-        <location filename="../fileswidget.cpp" line="79"/>
+        <location filename="../fileswidget.cpp" line="50"/>
+        <location filename="../fileswidget.cpp" line="51"/>
+        <source>source_file_whitespace</source>
+        <translation>The input field of the source file contains a space at the beginning or at the end</translation>
+    </message>
+    <message>
+        <location filename="../fileswidgetslots.cpp" line="126"/>
+        <source>destination_whitespace</source>
+        <translation>The input field of the destination file contains a space at the beginning or at the end</translation>
+    </message>
+    <message>
+        <location filename="../fileswidget.cpp" line="53"/>
+        <source>source_file_empty</source>
+        <translation>An empty input field for the source file</translation>
+    </message>
+    <message>
+        <location filename="../fileswidget.cpp" line="54"/>
+        <location filename="../fileswidgetslots.cpp" line="127"/>
+        <source>destination_empty</source>
+        <translation>An empty input field for the destination file</translation>
+    </message>
+    <message>
+        <location filename="../fileswidget.cpp" line="92"/>
         <source>Please enter source file(s) value.</source>
         <translation>Please enter source file(s) value.</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="84"/>
+        <location filename="../fileswidget.cpp" line="97"/>
         <source>Please enter destination file(s) value.</source>
         <translation>Please enter destination file(s) value.</translation>
     </message>
     <message>
-        <location filename="../fileswidget.cpp" line="94"/>
+        <location filename="../fileswidget.cpp" line="107"/>
         <source>General</source>
         <translation>General</translation>
     </message>
@@ -155,9 +177,19 @@
     </message>
     <message>
         <location filename="../fileswidgetslots.cpp" line="73"/>
-        <location filename="../fileswidgetslots.cpp" line="106"/>
+        <location filename="../fileswidgetslots.cpp" line="125"/>
         <source>Destination file:</source>
         <translation>Destination file:</translation>
+    </message>
+    <message>
+        <location filename="../fileswidgetslots.cpp" line="118"/>
+        <source>destination_folder_whitespace</source>
+        <translation>The input field of the destination folder contains a space at the beginning or at the end</translation>
+    </message>
+    <message>
+        <location filename="../fileswidgetslots.cpp" line="119"/>
+        <source>destination_folder_empty</source>
+        <translation>An empty input field for the destination folder</translation>
     </message>
     <message>
         <source>Open</source>
@@ -184,7 +216,7 @@
         <translation type="vanished">Open Directory</translation>
     </message>
     <message>
-        <location filename="../fileswidgetslots.cpp" line="100"/>
+        <location filename="../fileswidgetslots.cpp" line="117"/>
         <source>Destination folder:</source>
         <translation>Destination folder:</translation>
     </message>

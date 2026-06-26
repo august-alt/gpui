@@ -65,6 +65,7 @@ private slots:
     void on_actionComboBox_currentIndexChanged(int index);
     void on_destinationToolButton_clicked();
     void on_sourceLineEdit_textChanged(const QString &text);
+    void on_destinationLineEdit_textChanged(const QString &text);
     void on_sourceToolButton_clicked();
 
 private:
@@ -81,6 +82,9 @@ private:
     std::unique_ptr<ModelView::ViewModelDelegate> delegate;
 
     bool fileMode {true};
+
+    size_t whitespaceDetector{0};
+    size_t emptyDetector{0};
 
 private:
     Ui::FilesWidget *ui {nullptr};

@@ -25,7 +25,7 @@
 
 #include "commonitem.h"
 
-#include <QDate>
+#include <QDateTime>
 #include <QString>
 
 namespace preferences
@@ -99,17 +99,12 @@ protected:
     template<typename T>
     T createRootElement(const std::string &guid)
     {
-        QString dateOfChange(QDate::currentDate().toString(Qt::ISODate) + " "
-                             + QTime::currentTime().toString("hh:mm:ss"));
-
-        return T(guid, dateOfChange.toStdString(), "");
+        return T(guid, createDateOfChange(), "");
     }
 
     std::string createDateOfChange()
     {
-        QString dateOfChange(QDate::currentDate().toString(Qt::ISODate) + " "
-                             + QTime::currentTime().toString("hh:mm:ss"));
-        return dateOfChange.toStdString();
+        return QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss").toStdString();
     }
 };
 

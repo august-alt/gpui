@@ -22,14 +22,14 @@
 
 #include <fstream>
 
-#include "../../../../../src/plugins/preferences/shortcuts/modelbuilder.h"
-#include "../../../../../src/plugins/preferences/shortcuts/shortcutroles.h"
-#include "../../../../../src/plugins/preferences/shortcuts/shortcutsschema.h"
-#include "../../../../../src/plugins/preferences/shortcuts/shortcutswidget.h"
+#include "../../../../../../src/plugins/preferences/shortcuts/modelbuilder.h"
+#include "../../../../../../src/plugins/preferences/shortcuts/shortcutroles.h"
+#include "../../../../../../src/plugins/preferences/shortcuts/shortcutsschema.h"
+#include "../../../../../../src/plugins/preferences/shortcuts/shortcutswidget.h"
 
-#include "../../../../../src/plugins/preferences/common/preferencesdialog.h"
+#include "../../../../../../src/plugins/preferences/common/preferencesdialog.h"
 
-const std::string dataPath = "../../../../data/";
+const std::string dataPath = "../../../../../data/";
 
 namespace tests {
 

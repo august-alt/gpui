@@ -24,6 +24,9 @@
 
 #include <QDebug>
 
+#include <cerrno>
+#include <cstring>
+
 namespace gpui
 {
 
@@ -36,6 +39,9 @@ public:
     SmbClient client = { };
     FileHandle handle { nullptr };
     QString fileName { "" };
+    // errno of the last failed operation. It is saved right after the call because logging
+    // and any other library call in between is allowed to overwrite errno.
+    int lastError { 0 };
 };
 
 SmbFile::SmbFile(const QString& name)
@@ -93,7 +99,9 @@ bool SmbFile::open(QFile::OpenMode flags)
 
         if (d->handle == nullptr)
         {
-            qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
+            d->lastError = errno;
+
+            qWarning() << "File" << d->fileName << "Error: " << strerror(d->lastError);
         }
 
         result = d->handle != 0;
@@ -108,6 +116,16 @@ void SmbFile::close()
     {
         d->client.closeFile(d->handle);
     }
+}
+
+int SmbFile::error() const
+{
+    return d->lastError;
+}
+
+QString SmbFile::errorString() const
+{
+    return d->lastError == 0 ? QString() : QString::fromLocal8Bit(strerror(d->lastError));
 }
 
 qint64 SmbFile::size() const
@@ -125,7 +143,9 @@ qint64 SmbFile::size() const
     }
     if (!ok)
     {
-        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
+        d->lastError = errno;
+
+        qWarning() << "File" << d->fileName << "Error: " << strerror(d->lastError);
     }
 
     if (ok)
@@ -191,7 +211,9 @@ qint64 SmbFile::read(char* buffer, qint64 count)
 
     if (result < 0)
     {
-        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
+        d->lastError = errno;
+
+        qWarning() << "File" << d->fileName << "Error: " << strerror(d->lastError);
     }
 
     return result;
@@ -203,7 +225,9 @@ qint64 SmbFile::write(const char *buffer, qint64 count)
 
     if (result < 0)
     {
-        qWarning() << "File" << d->fileName << "Error: " << strerror(errno);
+        d->lastError = errno;
+
+        qWarning() << "File" << d->fileName << "Error: " << strerror(d->lastError);
     }
 
     return result;

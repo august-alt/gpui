@@ -42,6 +42,8 @@ namespace gpui
             bool copy(const QString &newName);
             bool open(QFile::OpenMode flags);
             void close();
+            int error() const;
+            QString errorString() const;
             qint64 size() const;
             bool resize(qint64 sz);
             QFile::Permissions permissions() const;

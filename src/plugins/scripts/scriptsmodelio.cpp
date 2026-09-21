@@ -104,7 +104,12 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model, bool ma
             gpui::smb::SmbFile smbLocationItemFile(filePath);
             smbLocationItemFile.open(QFile::ReadOnly);
             stringValues->resize(smbLocationItemFile.size(), 0);
-            smbLocationItemFile.read(&stringValues->at(0), smbLocationItemFile.size());
+            // An empty or unreadable file yields an empty buffer, taking its first
+            // element would throw std::out_of_range.
+            if (!stringValues->empty())
+            {
+                smbLocationItemFile.read(stringValues->data(), stringValues->size());
+            }
             smbLocationItemFile.close();
         }
         else
@@ -112,7 +117,12 @@ void ScriptsModelIo::loadIniFile(std::string &path, ScriptsModel *model, bool ma
             QFile registryFile(filePath);
             (void) registryFile.open(QFile::ReadOnly);
             stringValues->resize(registryFile.size(), 0);
-            registryFile.read(&stringValues->at(0), registryFile.size());
+            // An empty or unreadable file yields an empty buffer, taking its first
+            // element would throw std::out_of_range.
+            if (!stringValues->empty())
+            {
+                registryFile.read(stringValues->data(), stringValues->size());
+            }
             registryFile.close();
         }
 

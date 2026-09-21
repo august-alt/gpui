@@ -316,7 +316,12 @@ void onPolFileOpen(const QString &path,
             gpui::smb::SmbFile smbLocationItemFile(path);
             smbLocationItemFile.open(QFile::ReadOnly);
             stringvalues->resize(smbLocationItemFile.size(), 0);
-            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
+            // An empty or unreadable file yields an empty buffer, taking its first
+            // element would throw std::out_of_range.
+            if (!stringvalues->empty())
+            {
+                smbLocationItemFile.read(stringvalues->data(), stringvalues->size());
+            }
             smbLocationItemFile.close();
         }
         else
@@ -324,7 +329,12 @@ void onPolFileOpen(const QString &path,
             QFile registryFile(path);
             (void) registryFile.open(QFile::ReadWrite);
             stringvalues->resize(registryFile.size(), 0);
-            registryFile.read(&stringvalues->at(0), registryFile.size());
+            // An empty or unreadable file yields an empty buffer, taking its first
+            // element would throw std::out_of_range.
+            if (!stringvalues->empty())
+            {
+                registryFile.read(stringvalues->data(), stringvalues->size());
+            }
             registryFile.close();
         }
 

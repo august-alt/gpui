@@ -103,12 +103,7 @@ bool GptIniUtils::onIniFileOpen(const QString &path, QString &policyName, int &m
     }
     catch (std::exception& e)
     {
-        QMessageBox messageBox(QMessageBox::Critical,
-                    QObject::tr("Error"),
-                    QObject::tr("Error reading file:") + "\n" + qPrintable(path),
-                    QMessageBox::Ok,
-                    nullptr);
-        messageBox.exec();
+        qWarning() << QObject::tr("Error"), QObject::tr("Error reading file:") + "\n" + qPrintable(path);
     }
 
     return false;
@@ -147,11 +142,7 @@ bool GptIniUtils::onIniFileSave(const QString &path, const QString &policyName, 
     bool ifShowError = false;
 
     auto showMessageFunction = [&path]() {
-        QMessageBox messageBox(QMessageBox::Critical,
-                               QObject::tr("Error"),
-                               QObject::tr("Error writing file:") + "\n" + qPrintable(path),
-                               QMessageBox::Ok);
-        messageBox.exec();
+        qWarning() << QObject::tr("Error"), QObject::tr("Error reading file:") + "\n" + qPrintable(path);
     };
 
     try

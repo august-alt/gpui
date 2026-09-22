@@ -433,7 +433,7 @@ void MainWindow::loadPolicyModel(ISnapInManager *manager)
 
     GptIniUtils gptUtils;
 
-    gptUtils.onIniFileOpen(d->options.path + "/GPT.INI", gptIniPolicyName, gptIniMachineVersion, gptIniUserVersion);
+    gptUtils.onIniFileOpen(d->options.path + "/gpt.ini", gptIniPolicyName, gptIniMachineVersion, gptIniUserVersion);
 
     d->machineVersion = d->machineVersion >= gptIniMachineVersion ? d->machineVersion : gptIniMachineVersion;
     d->userVersion = d->userVersion >= gptIniUserVersion ? d->userVersion : gptIniUserVersion;
@@ -501,7 +501,7 @@ void MainWindow::updateStatusBar()
 
     GptIniUtils gptUtils;
 
-    gptUtils.onIniFileSave(d->options.path + "/GPT.INI", d->options.policyName, d->machineVersion, d->userVersion);
+    gptUtils.onIniFileSave(d->options.path + "/gpt.ini", d->options.policyName, d->machineVersion, d->userVersion);
 
     ui->statusbar->showMessage(tr("Applied changes for policy: ") + d->itemName);
 }

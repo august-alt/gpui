@@ -46,12 +46,7 @@ std::unique_ptr<preferences::PreferencesModel> preferences::BasePreferenceReader
             gpui::smb::SmbFile smbFile(qtPath);
             smbFile.open(QFile::ReadOnly);
             stringvalues->resize(smbFile.size(), 0);
-            // An empty or unreadable file yields an empty buffer, taking its first
-            // element would throw std::out_of_range.
-            if (!stringvalues->empty())
-            {
-                smbFile.read(stringvalues->data(), stringvalues->size());
-            }
+            smbFile.read(&stringvalues->at(0), smbFile.size());
             smbFile.close();
         }
         else
@@ -59,12 +54,7 @@ std::unique_ptr<preferences::PreferencesModel> preferences::BasePreferenceReader
             QFile registryFile(qtPath);
             (void) registryFile.open(QFile::ReadOnly);
             stringvalues->resize(registryFile.size(), 0);
-            // An empty or unreadable file yields an empty buffer, taking its first
-            // element would throw std::out_of_range.
-            if (!stringvalues->empty())
-            {
-                registryFile.read(stringvalues->data(), stringvalues->size());
-            }
+            registryFile.read(&stringvalues->at(0), registryFile.size());
             registryFile.close();
         }
 

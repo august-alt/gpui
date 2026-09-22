@@ -20,16 +20,12 @@
 
 #include "gptiniutil.h"
 
-#include <QDebug>
-#include <QFile>
 #include <QFileDialog>
+#include <QDebug>
 #include <QMessageBox>
-#include <QStringList>
 
-#include <memory>
-#include <sstream>
 #include <stdexcept>
-#include <string>
+#include <memory>
 
 #include "../io/genericreader.h"
 #include "../io/registryfile.h"
@@ -46,269 +42,34 @@
 namespace gpui
 {
 
-namespace
-{
-
-// The canonical name of the file in a GPO is GPT.INI. Depending on the file system of the
-// domain controller and on the case sensitivity settings of the share the very same file may
-// be visible as gpt.ini, so every spelling that is known to occur is probed.
-const QStringList &gptIniNameVariants()
-{
-    static const QStringList variants = { "GPT.INI", "gpt.ini", "Gpt.ini" };
-
-    return variants;
-}
-
-bool isSmbPath(const QString &path)
-{
-    return path.startsWith("smb://");
-}
-
-QString directoryOf(const QString &path)
-{
-    const int separator = path.lastIndexOf('/');
-
-    return separator < 0 ? QString() : path.left(separator);
-}
-
-bool canBeOpenedForReading(const QString &path)
-{
-    if (isSmbPath(path))
-    {
-        smb::SmbFile file(path);
-
-        if (!file.open(QFile::ReadOnly))
-        {
-            return false;
-        }
-
-        file.close();
-
-        return true;
-    }
-
-    return QFile::exists(path);
-}
-
-// Returns the spelling of GPT.INI that actually exists next to the requested one or an empty
-// string if there is none.
-QString findExistingGptIni(const QString &path)
-{
-    if (canBeOpenedForReading(path))
-    {
-        return path;
-    }
-
-    const QString directory = directoryOf(path);
-
-    if (directory.isEmpty())
-    {
-        return QString();
-    }
-
-    for (const QString &name : gptIniNameVariants())
-    {
-        const QString candidate = directory + "/" + name;
-
-        if (candidate != path && canBeOpenedForReading(candidate))
-        {
-            return candidate;
-        }
-    }
-
-    return QString();
-}
-
-bool readWholeFile(const QString &path, std::string &contents, QString &errorString)
-{
-    contents.clear();
-
-    if (isSmbPath(path))
-    {
-        smb::SmbFile file(path);
-
-        if (!file.open(QFile::ReadOnly))
-        {
-            errorString = file.errorString();
-
-            return false;
-        }
-
-        const qint64 size = file.size();
-
-        if (size > 0)
-        {
-            contents.resize(static_cast<std::size_t>(size), 0);
-
-            qint64 totalRead = 0;
-
-            // A single read is allowed to return less than requested.
-            while (totalRead < size)
-            {
-                const qint64 bytesRead = file.read(contents.data() + totalRead, size - totalRead);
-
-                if (bytesRead < 0)
-                {
-                    errorString = file.errorString();
-                    contents.clear();
-                    file.close();
-
-                    return false;
-                }
-
-                if (bytesRead == 0)
-                {
-                    break;
-                }
-
-                totalRead += bytesRead;
-            }
-
-            contents.resize(static_cast<std::size_t>(totalRead));
-        }
-
-        file.close();
-
-        return true;
-    }
-
-    QFile file(path);
-
-    if (!file.open(QFile::ReadOnly))
-    {
-        errorString = file.errorString();
-
-        return false;
-    }
-
-    const QByteArray data = file.readAll();
-    contents.assign(data.constData(), static_cast<std::size_t>(data.size()));
-    file.close();
-
-    return true;
-}
-
-bool writeWholeFile(const QString &path, const std::string &contents, QString &errorString)
-{
-    if (isSmbPath(path))
-    {
-        smb::SmbFile file(path);
-
-        if (!file.open(QFile::WriteOnly | QFile::Truncate))
-        {
-            errorString = file.errorString();
-
-            return false;
-        }
-
-        const qint64 size = static_cast<qint64>(contents.size());
-
-        bool ok = true;
-        qint64 totalWritten = 0;
-
-        // A single write is allowed to consume less than requested.
-        while (totalWritten < size)
-        {
-            const qint64 bytesWritten = file.write(contents.data() + totalWritten, size - totalWritten);
-
-            if (bytesWritten <= 0)
-            {
-                errorString = file.errorString();
-                ok          = false;
-
-                break;
-            }
-
-            totalWritten += bytesWritten;
-        }
-
-        file.close();
-
-        return ok;
-    }
-
-    QFile file(path);
-
-    if (!file.open(QFile::WriteOnly | QFile::Truncate))
-    {
-        errorString = file.errorString();
-
-        return false;
-    }
-
-    const qint64 size = static_cast<qint64>(contents.size());
-
-    bool ok = true;
-    qint64 totalWritten = 0;
-
-    while (totalWritten < size)
-    {
-        const qint64 bytesWritten = file.write(contents.data() + totalWritten, size - totalWritten);
-
-        if (bytesWritten <= 0)
-        {
-            errorString = file.errorString();
-            ok          = false;
-
-            break;
-        }
-
-        totalWritten += bytesWritten;
-    }
-
-    file.close();
-
-    return ok;
-}
-
-void showFileError(const QString &message, const QString &path, const QString &reason)
-{
-    QString text = message + "\n" + path;
-
-    if (!reason.isEmpty())
-    {
-        text += "\n" + reason;
-    }
-
-    QMessageBox messageBox(QMessageBox::Critical, QObject::tr("Error"), text, QMessageBox::Ok, nullptr);
-    messageBox.exec();
-}
-
-}
-
 bool GptIniUtils::onIniFileOpen(const QString &path, QString &policyName, int &machineVersion, int &userVersion)
 {
     qWarning() << "Path recieved: " << path;
 
-    const QString existingPath = findExistingGptIni(path);
+    auto stringvalues = std::make_unique<std::string>();
 
-    if (existingPath.isEmpty())
-    {
-        // A policy that has never been edited has no GPT.INI yet. This is not an error, the
-        // file is created on the first save with the default versions.
-        qWarning() << "No GPT.INI found for policy: " << path << " assuming a new one.";
+    try {
+        if (path.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(path);
+            smbLocationItemFile.open(QFile::ReadOnly);
+            stringvalues->resize(smbLocationItemFile.size(), 0);
+            smbLocationItemFile.read(&stringvalues->at(0), smbLocationItemFile.size());
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(path);
+            (void) registryFile.open(QFile::ReadWrite);
+            stringvalues->resize(registryFile.size(), 0);
+            registryFile.read(&stringvalues->at(0), registryFile.size());
+            registryFile.close();
+        }
 
-        return false;
-    }
-
-    std::string stringvalues;
-    QString errorString;
-
-    if (!readWholeFile(existingPath, stringvalues, errorString))
-    {
-        qWarning() << "Unable to read" << existingPath << ":" << errorString;
-
-        showFileError(QObject::tr("Error reading file:"), existingPath, errorString);
-
-        return false;
-    }
-
-    try
-    {
-        auto iss = std::make_unique<std::istringstream>(stringvalues);
+        auto iss = std::make_unique<std::istringstream>(*stringvalues);
         std::string pluginName("ini_ascii");
 
-        auto reader  = std::make_unique<io::GenericReader>();
+        auto reader = std::make_unique<io::GenericReader>();
         auto iniFile = reader->load<io::IniFile, io::PolicyFileFormat<io::IniFile> >(*iss, pluginName);
         if (!iniFile)
         {
@@ -342,9 +103,12 @@ bool GptIniUtils::onIniFileOpen(const QString &path, QString &policyName, int &m
     }
     catch (std::exception& e)
     {
-        qWarning() << "Unable to parse" << existingPath << ":" << e.what();
-
-        showFileError(QObject::tr("Error reading file:"), existingPath, QString::fromLocal8Bit(e.what()));
+        QMessageBox messageBox(QMessageBox::Critical,
+                    QObject::tr("Error"),
+                    QObject::tr("Error reading file:") + "\n" + qPrintable(path),
+                    QMessageBox::Ok,
+                    nullptr);
+        messageBox.exec();
     }
 
     return false;
@@ -357,10 +121,10 @@ bool GptIniUtils::onIniFileSave(const QString &path, const QString &policyName, 
     int version = (userVersion << 16) + machineVersion;
     fileData->addValue("General", "Version", std::to_string(version));
 
-    QString pluginName = "ini_ascii";
+    QString pluginName = path;
+    pluginName         = "ini_ascii";
 
-    std::unique_ptr<io::PolicyFileFormat<io::IniFile> > format(
-        gpui::PluginStorage::instance()->createPluginClass<io::PolicyFileFormat<io::IniFile> >(pluginName));
+    io::PolicyFileFormat<io::IniFile> *format = gpui::PluginStorage::instance()->createPluginClass<io::PolicyFileFormat<io::IniFile>>(pluginName);
 
     if (!format)
     {
@@ -378,20 +142,63 @@ bool GptIniUtils::onIniFileSave(const QString &path, const QString &policyName, 
 
     oss->flush();
 
-    // An existing GPT.INI is updated in place, otherwise the canonical spelling is created.
-    const QString existingPath = findExistingGptIni(path);
-    const QString targetPath   = existingPath.isEmpty() ? path : existingPath;
+    qWarning() << "Current string values." << oss->str().c_str();
 
-    QString errorString;
+    bool ifShowError = false;
 
-    if (!writeWholeFile(targetPath, oss->str(), errorString))
+    auto showMessageFunction = [&path]() {
+        QMessageBox messageBox(QMessageBox::Critical,
+                               QObject::tr("Error"),
+                               QObject::tr("Error writing file:") + "\n" + qPrintable(path),
+                               QMessageBox::Ok);
+        messageBox.exec();
+    };
+
+    try
     {
-        qWarning() << "Unable to write" << targetPath << ":" << errorString;
-
-        showFileError(QObject::tr("Error writing file:"), targetPath, errorString);
+        if (path.startsWith("smb://"))
+        {
+            gpui::smb::SmbFile smbLocationItemFile(path);
+            ifShowError = smbLocationItemFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = smbLocationItemFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && oss->str().size() > 0)
+            {
+                smbLocationItemFile.write(&oss->str().at(0), oss->str().size());
+            }
+            smbLocationItemFile.close();
+        }
+        else
+        {
+            QFile registryFile(path);
+            ifShowError = registryFile.open(QFile::WriteOnly | QFile::Truncate);
+            if (!ifShowError)
+            {
+                ifShowError = registryFile.open(QFile::NewOnly | QFile::WriteOnly);
+            }
+            if (ifShowError && registryFile.isWritable() && oss->str().size() > 0)
+            {
+                registryFile.write(&oss->str().at(0), oss->str().size());
+            }
+            registryFile.close();
+        }
+    }
+    catch (std::exception &e)
+    {
+        ifShowError = true;
+        showMessageFunction();
 
         return false;
     }
+
+    if (!ifShowError)
+    {
+        showMessageFunction();
+    }
+
+    delete format;
 
     return true;
 }

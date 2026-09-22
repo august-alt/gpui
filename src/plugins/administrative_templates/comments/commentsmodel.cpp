@@ -68,12 +68,7 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
             gpui::smb::SmbFile smbFile(policyFileName.filePath());
             smbFile.open(QFile::ReadOnly);
             stringvalues->resize(smbFile.size(), 0);
-            // An empty or unreadable file yields an empty buffer, taking its first
-            // element would throw std::out_of_range.
-            if (!stringvalues->empty())
-            {
-                smbFile.read(stringvalues->data(), stringvalues->size());
-            }
+            smbFile.read(&stringvalues->at(0), smbFile.size());
             smbFile.close();
         }
         else
@@ -83,12 +78,7 @@ std::unique_ptr<TPolicies> loadPolicies(const QString &pluginName, const QFileIn
             QFile localFile(qtPath);
             (void) localFile.open(QFile::ReadOnly);
             stringvalues->resize(localFile.size(), 0);
-            // An empty or unreadable file yields an empty buffer, taking its first
-            // element would throw std::out_of_range.
-            if (!stringvalues->empty())
-            {
-                localFile.read(stringvalues->data(), stringvalues->size());
-            }
+            localFile.read(&stringvalues->at(0), localFile.size());
             localFile.close();
         }
 

@@ -41,6 +41,11 @@ ScriptsSnapInPrivate::ScriptsSnapInPrivate(ScriptsSnapIn *scriptsSnapIn)
 void ScriptsSnapInPrivate::saveData()
 {
     snapIn->onDataSave();
+
+    if (mainWindow)
+    {
+        mainWindow->updateStatusBar();
+    }
 }
 
 void ScriptsSnapInPrivate::reloadData()

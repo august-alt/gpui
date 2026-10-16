@@ -25,6 +25,7 @@ set(CMAKE_AUTORCC ON)
 set(HEADERS
     ldapcontract.h
     ldapimpl.h
+    gpoextensions_p.h
     ad_config.h
     ad_config_p.h
     ad_interface.h

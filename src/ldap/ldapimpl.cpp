@@ -1,10 +1,8 @@
 #include "ldapimpl.h"
 #include "ad_filter.h"
+#include "gpoextensions_p.h"
 
 #include <QLocale>
-
-#define ATTRIBUTE_GPC_MACHINE_EXTENSION_NAMES "gPCMachineExtensionNames"
-#define ATTRIBUTE_GPC_USER_EXTENSION_NAMES    "gPCUserExtensionNames"
 
 namespace ldap {
 
@@ -107,13 +105,7 @@ bool LDAPImpl::setExtensions(const QString &guid, const QString& machineExtensio
 
     const int version = (userVersion << 16) + machineVersion;
 
-    d->adInterface->attribute_replace_string(gpc_dn, ATTRIBUTE_GPC_MACHINE_EXTENSION_NAMES, machineExtensions);
-
-    d->adInterface->attribute_replace_string(gpc_dn, ATTRIBUTE_GPC_USER_EXTENSION_NAMES, userExtensions);
-
-    d->adInterface->attribute_replace_int(gpc_dn, ATTRIBUTE_VERSION_NUMBER, version);
-
-    return true;
+    return detail::setGpoExtensions(*d->adInterface, gpc_dn, machineExtensions, userExtensions, version);
 }
 
 AdConfig* LDAPImpl::getAdConfig()
